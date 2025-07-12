@@ -1,0 +1,142 @@
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  avatar    String?
+  bio       String?
+  
+  favoriteClubId String?
+  favoriteClub   Club?   @relation(fields: [favoriteClubId], references: [id])
+  
+  collection    UserJersey[]
+  wishlist      Wishlist[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("users")
+}
+
+model Jersey {
+  id          String     @id @default(cuid())
+  name        String
+  clubId      String
+  season      String
+  type        JerseyType
+  brand       String
+  imageUrl    String
+  retailPrice Decimal?
+  
+  club        Club       @relation(fields: [clubId], references: [id])
+  collection  UserJersey[]
+  wishlist    Wishlist[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([clubId, season, type])
+  @@map("jerseys")
+}
+
+model UserJersey {
+  id              String          @id @default(cuid())
+  userId          String
+  jerseyId        String
+  size            Size?
+  condition       Condition
+  hasTags         Boolean         @default(false)
+  personalization String?
+  purchasePrice   Decimal?
+  purchaseDate    DateTime?
+  notes           String?
+  userPhotoUrl    String?
+  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jersey Jersey @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@unique([userId, jerseyId])
+  @@map("user_jerseys")
+}
+
+model Club {
+  id           String @id @default(cuid())
+  name         String
+  shortName    String
+  leagueId     String
+  logoUrl      String
+  primaryColor String
+  
+  league       League   @relation(fields: [leagueId], references: [id])
+  jerseys      Jersey[]
+  favoriteBy   User[]
+  
+  @@map("clubs")
+}
+
+model League {
+  id      String @id @default(cuid())
+  name    String
+  country String
+  logoUrl String
+  tier    Int    @default(1)
+  
+  clubs Club[]
+  
+  @@map("leagues")
+}
+
+model Wishlist {
+  id       String @id @default(cuid())
+  userId   String
+  jerseyId String
+  priority Int    @default(1)
+  
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jersey Jersey @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  
+  createdAt DateTime @default(now())
+  
+  @@unique([userId, jerseyId])
+  @@map("wishlist")
+}
+
+enum JerseyType {
+  HOME
+  AWAY
+  THIRD
+  GOALKEEPER
+  SPECIAL
+}
+
+enum Size {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+}
+
+enum Condition {
+  MINT
+  EXCELLENT
+  GOOD
+  FAIR
+  POOR
+}
