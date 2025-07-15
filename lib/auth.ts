@@ -1,65 +1,14 @@
-import { NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import { betterAuth } from "better-auth";
+import { prismaAdapter } from "better-auth/adapters/prisma";
 import { prisma } from "./prisma";
-import bcrypt from "bcryptjs";
 
-export const authOptions: NextAuthOptions = {
-  providers: [
-    CredentialsProvider({
-      name: "credentials",
-      credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
-      },
-      async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          return null;
-        }
-
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-        });
-
-        if (!user) {
-          return null;
-        }
-
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
-          user.password
-        );
-
-        if (!isPasswordValid) {
-          return null;
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          username: user.username,
-        };
-      },
-    }),
-  ],
-  session: {
-    strategy: "jwt",
+export const auth = betterAuth({
+  database: prismaAdapter(prisma, { provider: "postgresql" }),
+  emailAndPassword: { enabled: true },
+  magicLink: {
+    enabled: true,
+    redirectTo: process.env.NEXT_PUBLIC_BASE_URL! + "/auth/callback",
   },
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.username = user.username;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        session.user!.id = token.sub!;
-        session.user!.username = token.username as string;
-      }
-      return session;
-    },
-  },
-  pages: {
-    signIn: "/login",
-  },
-};
+  secret: process.env.BETTER_AUTH_SECRET!,
+  url: process.env.BETTER_AUTH_URL!,
+});

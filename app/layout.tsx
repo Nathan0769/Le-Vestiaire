@@ -1,6 +1,6 @@
-import { QueryProvider } from "@/providers/QueryProvider";
-import { SessionProvider } from "next-auth/react";
+"use client";
 import "./globals.css";
+import { AuthProvider } from "@/hooks/useAuth";
 
 export default function RootLayout({
   children,
@@ -10,9 +10,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body>
-        <SessionProvider>
-          <QueryProvider>{children}</QueryProvider>
-        </SessionProvider>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

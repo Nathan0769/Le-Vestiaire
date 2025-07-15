@@ -17,6 +17,8 @@ model User {
   lastName  String?
   avatar    String?
   bio       String?
+  betterAuthId String? @unique
+
   
   favoriteClubId String?
   favoriteClub   Club?   @relation(fields: [favoriteClubId], references: [id])
@@ -39,6 +41,7 @@ model Jersey {
   brand       String
   imageUrl    String
   retailPrice Decimal?
+  description String?
   
   club        Club       @relation(fields: [clubId], references: [id])
   collection  UserJersey[]
