@@ -13,6 +13,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { AppleIcon } from "../icons/Apple-icon";
+import { GoogleIcon } from "../icons/Google-icon";
 
 export function LoginForm({
   className,
@@ -61,11 +63,11 @@ export function LoginForm({
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full">
-                  {/* Apple SVG */}
+                  <AppleIcon />
                   Login with Apple
                 </Button>
                 <Button variant="outline" className="w-full">
-                  {/* Google SVG */}
+                  <GoogleIcon />
                   Login with Google
                 </Button>
               </div>

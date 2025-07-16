@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import LoginPage from "./login/page";
+import SignupPage from "./Authentification/page";
 
 export default function Home() {
   return (
@@ -53,6 +54,7 @@ export default function Home() {
           </a>
         </div>
         <LoginPage />
+        <SignupPage></SignupPage>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         <a

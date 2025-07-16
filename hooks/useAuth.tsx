@@ -1,6 +1,5 @@
 // hooks/useAuth.tsx
 "use client";
-
 import {
   createContext,
   useContext,
@@ -17,39 +16,40 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const { data: session, isPending: sessionLoading } = authClient.useSession();
-
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (!sessionLoading) {
-      if (session?.user) {
-        const { id, email, name } = session.user;
-        setUser({ id, email, name });
-      } else {
-        setUser(null);
-      }
+      setUser(session?.user ?? null);
       setLoading(false);
     }
   }, [session, sessionLoading]);
 
   const signIn = async (email: string, password: string) => {
     setLoading(true);
-    await authClient.signIn.email({ email, password });
+    const { error } = await authClient.signIn.email({ email, password });
+    if (error) throw new Error(error.message);
     router.push("/");
   };
 
-  const signUp = async (email: string, password: string, name: string = "") => {
+  const signUp = async (email: string, password: string, username: string) => {
     setLoading(true);
-    await authClient.signUp.email({ email, password, name });
+    const { error } = await authClient.signUp.email({
+      email,
+      password,
+      name: username,
+    });
+    if (error) throw new Error(error.message);
     router.push("/");
   };
 
   const sendMagicLink = async (email: string) => {
-    await authClient.requestPasswordReset({
+    const { error } = await authClient.requestPasswordReset({
       email,
-      redirectTo: window.location.origin + "/auth/callback",
+      redirectTo: `${window.location.origin}/auth/callback`,
     });
+    if (error) throw new Error(error.message);
   };
 
   const signOut = async () => {
@@ -69,6 +69,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth() {
   const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within <AuthProvider>");
+  if (!ctx) throw new Error("useAuth must be inside AuthProvider");
   return ctx;
 }
