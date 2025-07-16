@@ -9,6 +9,14 @@ export const auth = betterAuth({
     enabled: true,
     redirectTo: process.env.NEXT_PUBLIC_BASE_URL! + "/auth/callback",
   },
+  socialProviders: {
+    google: {
+      prompt: "select_account+consent",
+      accessType: "offline",
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
+  },
   secret: process.env.BETTER_AUTH_SECRET!,
   url: process.env.BETTER_AUTH_URL!,
 });
