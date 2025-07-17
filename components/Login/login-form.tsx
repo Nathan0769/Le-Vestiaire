@@ -20,7 +20,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const { signIn, sendMagicLink, loading } = useAuth();
+  const { signIn, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -36,23 +36,13 @@ export function LoginForm({
     }
   };
 
-  const handleMagicLink = async () => {
-    setErrorMsg(null);
-    try {
-      await sendMagicLink(email);
-    } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : String(err);
-      setErrorMsg(message || "Impossible d’envoyer le lien magique");
-    }
-  };
-
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
+          <CardTitle className="text-xl">Content de vous retrouver</CardTitle>
           <CardDescription>
-            Login with your Apple or Google account
+            Se connecter avec votre compte Apple ou Google
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -64,17 +54,17 @@ export function LoginForm({
               <div className="flex flex-col gap-4">
                 <Button variant="outline" className="w-full cursor-pointer">
                   <AppleIcon />
-                  Login with Apple
+                  Se connecter avec Apple
                 </Button>
                 <Button variant="outline" className="w-full cursor-pointer">
                   <GoogleIcon />
-                  Login with Google
+                  Se connecter avec Google
                 </Button>
               </div>
 
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
-                  Or continue with
+                  Ou continuer avec
                 </span>
               </div>
 
@@ -92,12 +82,12 @@ export function LoginForm({
                 </div>
                 <div className="grid gap-3">
                   <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">Mot de passe</Label>
                     <a
                       href="#"
                       className="ml-auto text-sm underline-offset-4 hover:underline"
                     >
-                      Forgot your password?
+                      Mot de passe oublié ?
                     </a>
                   </div>
                   <Input
@@ -108,24 +98,19 @@ export function LoginForm({
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? "Loading…" : "Login"}
-                </Button>
                 <Button
-                  type="button"
-                  variant="outline"
-                  className="w-full"
-                  onClick={handleMagicLink}
-                  disabled={loading || !email}
+                  type="submit"
+                  className="w-full cursor-pointer"
+                  disabled={loading}
                 >
-                  {loading ? "Sending…" : "Send Magic Link"}
+                  {loading ? "Chargement…" : "Se connecter"}
                 </Button>
               </div>
 
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
-                <a href="/auth/signup" className="underline underline-offset-4">
-                  Sign up
+                Vous n&apos;avez pas de compte?{" "}
+                <a href="/auth/signUp" className="underline underline-offset-4">
+                  Créer un compte
                 </a>
               </div>
             </div>
@@ -133,13 +118,13 @@ export function LoginForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground text-center text-xs">
-        By clicking continue, you agree to our{" "}
+        En cliquant sur continuer, vous acceptez nos{" "}
         <a href="#" className="underline">
-          Terms of Service
+          Conditions d&apos;utilisation
         </a>{" "}
         and{" "}
         <a href="#" className="underline">
-          Privacy Policy
+          Politique de confidentialité
         </a>
         .
       </div>

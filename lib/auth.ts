@@ -6,7 +6,7 @@ export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
   emailAndPassword: { enabled: true },
   magicLink: {
-    enabled: true,
+    enabled: false,
     redirectTo: process.env.NEXT_PUBLIC_BASE_URL! + "/auth/callback",
   },
   socialProviders: {
