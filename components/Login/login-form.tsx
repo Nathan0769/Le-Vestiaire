@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AppleIcon } from "../icons/Apple-icon";
+//import { AppleIcon } from "../icons/Apple-icon";
 import { GoogleIcon } from "../icons/Google-icon";
 
 export function LoginForm({
@@ -42,7 +42,7 @@ export function LoginForm({
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Content de vous retrouver</CardTitle>
           <CardDescription>
-            Se connecter avec votre compte Apple ou Google
+            Se connecter avec votre compte Google
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -52,10 +52,10 @@ export function LoginForm({
           <form onSubmit={handleSubmit}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
-                <Button variant="outline" className="w-full cursor-pointer">
+                {/*<Button variant="outline" className="w-full cursor-pointer">
                   <AppleIcon />
                   Se connecter avec Apple
-                </Button>
+                </Button>*/}
                 <Button variant="outline" className="w-full cursor-pointer">
                   <GoogleIcon />
                   Se connecter avec Google

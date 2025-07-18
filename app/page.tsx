@@ -1,8 +1,13 @@
 "use client";
 
+import { EditProfile } from "@/components/profiles/editProfile";
+import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/toggle-dark-mode";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="min-h-screen flex flex-col items-center justify-center gap-6 p-10">
@@ -11,21 +16,24 @@ export default function Home() {
           Connectez-vous ou créez un compte pour découvrir notre collection.
         </p>
         <div className="flex gap-4">
-          <a
-            href="/auth/login"
-            className="bg-primary text-white px-4 py-2 rounded-md"
+          <Button
+            className="cursor-pointer"
+            onClick={() => router.push("/auth/login")}
           >
             Se connecter
-          </a>
-          <a
-            href="/auth/signUp"
-            className="bg-muted text-foreground px-4 py-2 rounded-md border"
+          </Button>
+
+          <Button
+            className="cursor-pointer"
+            variant="outline"
+            onClick={() => router.push("/auth/signUp")}
           >
             Créer un compte
-          </a>
-          <ModeToggle></ModeToggle>
+          </Button>
+          <ModeToggle />
         </div>
       </main>
+      <EditProfile />
     </div>
   );
 }

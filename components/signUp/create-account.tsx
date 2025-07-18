@@ -14,9 +14,10 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AppleIcon } from "../icons/Apple-icon";
+//import { AppleIcon } from "../icons/Apple-icon";
 import { GoogleIcon } from "../icons/Google-icon";
 import { handleGoogleSignIn } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
 
 const formDefaults = {
   firstName: "",
@@ -31,10 +32,10 @@ type FieldErrors = Partial<Record<keyof typeof formDefaults, string>>;
 function SocialButtons() {
   return (
     <div className="flex flex-col gap-4">
-      <Button variant="outline" className="w-full cursor-pointer" type="button">
+      {/* <Button variant="outline" className="w-full cursor-pointer" type="button">
         <AppleIcon />
         Continuer avec Apple
-      </Button>
+      </Button>*/}
       <Button
         variant="outline"
         className="w-full cursor-pointer"
@@ -58,7 +59,10 @@ function Separator() {
   );
 }
 
-export default function SignupPage() {
+export default function SignupPage({
+  className,
+  ...props
+}: React.ComponentProps<"div">) {
   const { signUp, loading } = useAuth();
   const [formData, setFormData] = useState({ ...formDefaults });
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
@@ -106,7 +110,7 @@ export default function SignupPage() {
   };
 
   return (
-    <div className="bg-muted flex min-h-screen flex-col items-center justify-center p-6 md:p-10">
+    <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
           <CardTitle className="text-xl">Créer un compte</CardTitle>
@@ -130,7 +134,7 @@ export default function SignupPage() {
                 {(["firstName", "lastName"] as const).map((f) => (
                   <div key={f} className="grid gap-2">
                     <Label htmlFor={f}>
-                      {f === "firstName" ? "Prénom" : "Nom"}
+                      {f === "firstName" ? "Prénom *" : "Nom *"}
                     </Label>
                     <Input
                       id={f}
@@ -240,7 +244,11 @@ export default function SignupPage() {
               </div>
             </div>
 
-            <Button type="submit" className="w-full" disabled={loading}>
+            <Button
+              type="submit"
+              className="w-full cursor-pointer"
+              disabled={loading}
+            >
               {loading ? "Création du compte…" : "Créer mon compte"}
             </Button>
 

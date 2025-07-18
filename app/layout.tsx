@@ -2,6 +2,7 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 import { AuthProvider } from "@/hooks/useAuth";
+import { ApplyThemeColor } from "@/providers/themes-provider";
 
 export default function RootLayout({
   children,
@@ -17,6 +18,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <ApplyThemeColor />
           <AuthProvider>{children}</AuthProvider>
         </ThemeProvider>
       </body>
