@@ -10,21 +10,20 @@ import {
 } from "@/components/ui/select";
 
 const themeOptions = [
-  "blue",
-  "rose",
+  "bleu",
+  "rouge",
   "violet",
-  "green",
+  "vert",
   "orange",
-  "yellow",
-  "pink",
-  "purple",
-  "teal",
+  "jaune",
+  "rose",
+  "violet-leger",
+  "marine",
 ];
 
 export function ThemeColorSelect() {
   const [theme, setTheme] = useState("blue");
 
-  // Nettoyer les anciennes classes theme-*
   const applyTheme = (newTheme: string) => {
     document.documentElement.classList.forEach((cls) => {
       if (cls.startsWith("theme-")) {
