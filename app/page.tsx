@@ -2,7 +2,6 @@
 
 import { EditProfile } from "@/components/profiles/editProfile";
 import { Button } from "@/components/ui/button";
-import { ModeToggle } from "@/components/ui/toggle-dark-mode";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
@@ -30,7 +29,6 @@ export default function Home() {
           >
             Créer un compte
           </Button>
-          <ModeToggle />
         </div>
       </main>
       <EditProfile />

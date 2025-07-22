@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import {
@@ -23,14 +23,9 @@ import { ThemeColorSelect } from "./themes-color";
 export function EditProfile() {
   const [avatarUrl, setAvatarUrl] = useState("/default-avatar.png");
   const [bio, setBio] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const CLUBS = [
-    { id: "USG", name: "Union Saint Gilloise" },
-    { id: "OL", name: "Olympique Lyonnais" },
-    { id: "RMA", name: "Real Madrid" },
-  ];
+  const [clubs, setClubs] = useState<SelectOption[]>([]);
   const [favoriteClub, setFavoriteClub] = useState<SelectOption | null>(null);
+  const [loading, setLoading] = useState(false);
 
   const handleChangeAvatar = (file: File) => {
     const url = URL.createObjectURL(file);
@@ -42,28 +37,62 @@ export function EditProfile() {
       const res = await fetch("/api/user/bio", { cache: "no-store" });
       if (!res.ok) return;
       const data = await res.json();
-      if (typeof data.bio === "string") {
-        setBio(data.bio);
-      }
+      if (typeof data.bio === "string") setBio(data.bio);
     } catch (err) {
-      console.error("Erreur lors du chargement de la bio :", err);
+      console.error("Erreur chargement bio :", err);
     }
   };
+
+  const fetchFavoriteClub = async () => {
+    try {
+      const res = await fetch("/api/user/favorite-club", { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      if (data && data.id && data.name) {
+        setFavoriteClub({ id: data.id, name: data.name });
+      }
+    } catch (err) {
+      console.error("Erreur chargement club favori :", err);
+    }
+  };
+
+  const fetchClubs = useCallback(async () => {
+    try {
+      const res = await fetch("/api/clubs", { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      setClubs(data);
+    } catch (err) {
+      console.error("Erreur chargement clubs :", err);
+    }
+  }, []);
 
   const handleSave = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/user/bio", {
+
+      const resBio = await fetch("/api/user/bio", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ bio }),
       });
 
-      if (!res.ok) throw new Error("Erreur lors de la sauvegarde.");
-      toast.success("Bio mise à jour !");
+      if (!resBio.ok) throw new Error("Erreur bio");
+
+      if (favoriteClub) {
+        const resClub = await fetch("/api/user/favorite-club", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ favoriteClubId: favoriteClub.id }),
+        });
+
+        if (!resClub.ok) throw new Error("Erreur club");
+      }
+
+      toast.success("Profil mis à jour !");
     } catch (err) {
       console.error(err);
-      toast.error("Une erreur est survenue.");
+      toast.error("Erreur lors de la sauvegarde.");
     } finally {
       setLoading(false);
     }
@@ -71,7 +100,9 @@ export function EditProfile() {
 
   useEffect(() => {
     fetchBio();
-  }, []);
+    fetchFavoriteClub();
+    fetchClubs();
+  }, [fetchClubs]);
 
   return (
     <Sheet>
@@ -101,7 +132,7 @@ export function EditProfile() {
 
           <Label>Équipe favorite</Label>
           <AutocompleteSelect
-            options={CLUBS}
+            options={clubs}
             value={favoriteClub}
             onChange={setFavoriteClub}
             placeholder="Choisir une équipe"
