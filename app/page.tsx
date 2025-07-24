@@ -1,6 +1,5 @@
 "use client";
 
-import { EditProfile } from "@/components/profiles/editProfile";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
@@ -31,7 +30,6 @@ export default function Home() {
           </Button>
         </div>
       </main>
-      <EditProfile />
     </div>
   );
 }

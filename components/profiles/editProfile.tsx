@@ -107,9 +107,7 @@ export function EditProfile() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="outline" className="cursor-pointer">
-          Open
-        </Button>
+        <Button className="cursor-pointer">Modifier le profil</Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
