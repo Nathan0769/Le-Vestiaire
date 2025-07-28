@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
@@ -118,22 +117,23 @@ export function EditProfile() {
         </SheetHeader>
 
         <div className="grid flex-1 auto-rows-min gap-6 px-4">
-          <ModeToggle />
+          <div className="flex items-center justify-between">
+            <UserAvatar
+              src={avatarUrl}
+              name="X+X"
+              size="lg"
+              editable
+              onChange={handleChangeAvatar}
+            />
+            <ModeToggle />
+          </div>
 
-          <UserAvatar
-            src={avatarUrl}
-            name="X+X"
-            size="lg"
-            editable
-            onChange={handleChangeAvatar}
-          />
-
-          <Label>Équipe favorite</Label>
           <AutocompleteSelect
             options={clubs}
             value={favoriteClub}
             onChange={setFavoriteClub}
             placeholder="Choisir une équipe"
+            label="Equipe favorite"
           />
 
           <ProfileBio value={bio} onChange={setBio} />

@@ -1,5 +1,5 @@
-// hooks/useAuth.tsx
 "use client";
+
 import {
   createContext,
   useContext,
@@ -33,6 +33,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     router.push("/");
   };
 
+  const signInWithGoogle = async () => {
+    setLoading(true);
+    const { error } = await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+      errorCallbackURL: "/auth/login",
+    });
+    if (error) throw new Error(error.message);
+  };
+
   const signUp = async (email: string, password: string, username: string) => {
     setLoading(true);
     const { error } = await authClient.signUp.email({
@@ -60,7 +70,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, signIn, signUp, sendMagicLink, signOut }}
+      value={{
+        user,
+        loading,
+        signIn,
+        signInWithGoogle,
+        signUp,
+        sendMagicLink,
+        signOut,
+      }}
     >
       {children}
     </AuthContext.Provider>

@@ -20,7 +20,7 @@ export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const { signIn, loading } = useAuth();
+  const { signIn, loading, signInWithGoogle } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -33,6 +33,16 @@ export function LoginForm({
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
       setErrorMsg(message || "Erreur de connexion");
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setErrorMsg(null);
+    try {
+      await signInWithGoogle();
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      setErrorMsg(message || "Erreur de connexion avec Google");
     }
   };
 
@@ -56,7 +66,11 @@ export function LoginForm({
                   <AppleIcon />
                   Se connecter avec Apple
                 </Button>*/}
-                <Button variant="outline" className="w-full cursor-pointer">
+                <Button
+                  variant="outline"
+                  className="w-full cursor-pointer"
+                  onClick={handleGoogleSignIn}
+                >
                   <GoogleIcon />
                   Se connecter avec Google
                 </Button>

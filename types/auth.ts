@@ -11,4 +11,5 @@ export interface AuthContextValue {
   signUp: (email: string, password: string, username: string) => Promise<void>;
   sendMagicLink: (email: string) => Promise<void>;
   signOut: () => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
 }
