@@ -18,17 +18,50 @@ import { ModeToggle } from "../ui/toggle-dark-mode";
 import { AutocompleteSelect, SelectOption } from "../ui/comboBox";
 import { ProfileBio } from "@/components/profiles/profile-bio";
 import { ThemeColorSelect } from "./themes-color";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 export function EditProfile() {
-  const [avatarUrl, setAvatarUrl] = useState("/default-avatar.png");
+  const currentUser = useCurrentUser();
+  const [avatarUrl, setAvatarUrl] = useState("");
   const [bio, setBio] = useState("");
   const [clubs, setClubs] = useState<SelectOption[]>([]);
   const [favoriteClub, setFavoriteClub] = useState<SelectOption | null>(null);
   const [loading, setLoading] = useState(false);
 
-  const handleChangeAvatar = (file: File) => {
-    const url = URL.createObjectURL(file);
-    setAvatarUrl(url);
+  useEffect(() => {
+    if (currentUser?.avatarUrl) {
+      setAvatarUrl(currentUser.avatarUrl);
+    }
+  }, [currentUser]);
+
+  const handleChangeAvatar = async (file: File) => {
+    try {
+      if (!currentUser) throw new Error("Utilisateur non authentifié");
+
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const res = await fetch("/api/user/avatar/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) throw new Error("Erreur upload serveur");
+      const { url, path } = await res.json();
+
+      setAvatarUrl(url);
+
+      await fetch("/api/user/avatar", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ avatar: path }),
+      });
+
+      toast.success("Avatar mis à jour !");
+    } catch (err) {
+      console.error("Erreur upload avatar :", err);
+      toast.error("Erreur lors de l'upload de l'avatar");
+    }
   };
 
   const fetchBio = async () => {
@@ -106,7 +139,9 @@ export function EditProfile() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button className="cursor-pointer">Modifier le profil</Button>
+        <Button className="cursor-pointer" disabled={!currentUser}>
+          Modifier le profil
+        </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
@@ -120,7 +155,7 @@ export function EditProfile() {
           <div className="flex items-center justify-between">
             <UserAvatar
               src={avatarUrl}
-              name="X+X"
+              name={currentUser?.name || "?"}
               size="lg"
               editable
               onChange={handleChangeAvatar}

@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 type UserAvatarProps = {
   src?: string;
-  name: string; // ← on remplace fallback par name
+  name: string;
   size?: "sm" | "md" | "lg";
   editable?: boolean;
   onChange?: (file: File) => void;
@@ -56,7 +56,7 @@ export function UserAvatar({
           <button
             type="button"
             onClick={() => inputRef.current?.click()}
-            className="absolute bottom-0 right-0 rounded-full bg-background p-1 shadow hover:bg-muted"
+            className="absolute bottom-0 right-0 rounded-full bg-background p-1 shadow hover:bg-muted cursor-pointer"
           >
             <CameraIcon className="size-4" />
           </button>
