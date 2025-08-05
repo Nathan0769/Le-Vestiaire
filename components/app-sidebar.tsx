@@ -25,7 +25,7 @@ const items = [
   },
   {
     title: "Les Maillots",
-    url: "/whishlist",
+    url: "/leagues",
     icon: ListTodo,
   },
   {
