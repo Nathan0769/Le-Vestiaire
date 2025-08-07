@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { League } from "../../types/league";
+import { League } from "../../../types/league";
 
 type Props = {
   league: League;
@@ -13,7 +13,7 @@ export function LeagueCard({ league }: Props) {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/leagues/${league.id}`);
+    router.push(`/jerseys/${league.id}`);
   };
 
   return (

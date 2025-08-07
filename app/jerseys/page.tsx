@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { League } from "@prisma/client";
-import { LeagueGrid } from "@/components/leagues/leagues-grid";
+import { LeagueGrid } from "@/components/jerseys/leagues/leagues-grid";
 import { SearchInput } from "@/components/ui/search-input";
 
 export default function MaillotsPage() {
@@ -24,7 +24,7 @@ export default function MaillotsPage() {
   );
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-5 space-y-6">
       <h1 className="text-2xl font-semibold">Choisis ta ligue</h1>
       <SearchInput
         value={search}

@@ -1,5 +1,5 @@
-import { LeagueCard } from "./leagues-card";
-import { League } from "../../types/league";
+import { LeagueCard } from "../leagues/leagues-card";
+import { League } from "../../../types/league";
 
 type Props = {
   leagues: League[];

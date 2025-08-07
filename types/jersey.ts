@@ -1,3 +1,5 @@
+import type { JerseyType as PrismaJerseyType } from "@prisma/client";
+
 export interface Jersey {
   id: string;
   name: string;
@@ -30,13 +32,7 @@ export interface League {
   tier: number;
 }
 
-export enum JerseyType {
-  HOME = "HOME",
-  AWAY = "AWAY",
-  THIRD = "THIRD",
-  GOALKEEPER = "GOALKEEPER",
-  SPECIAL = "SPECIAL",
-}
+export type JerseyType = PrismaJerseyType;
 
 export interface JerseyFilters {
   search?: string;
@@ -46,3 +42,8 @@ export interface JerseyFilters {
   brands?: string[];
   priceRange?: [number, number];
 }
+
+export type SimpleJersey = Omit<
+  Jersey,
+  "club" | "retailPrice" | "createdAt" | "updatedAt"
+>;
