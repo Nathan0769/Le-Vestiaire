@@ -10,20 +10,47 @@ import {
 
 type Props = {
   leagueName: string;
+  leagueId: string;
+  clubName: string;
+  clubId: string;
+  jerseyName: string;
 };
 
-export function LeagueBreadcrumb({ leagueName }: Props) {
+export function JerseyBreadcrumb({
+  leagueName,
+  leagueId,
+  clubName,
+  clubId,
+  jerseyName,
+}: Props) {
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/jerseys">Les ligues</Link>
+            <Link href="/jerseys">Toutes les ligues</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
+
         <BreadcrumbItem>
-          <BreadcrumbPage>{leagueName}</BreadcrumbPage>
+          <BreadcrumbLink asChild>
+            <Link href={`/jerseys/${leagueId}`}>{leagueName}</Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+
+        <BreadcrumbItem>
+          <BreadcrumbLink asChild>
+            <Link href={`/jerseys/${leagueId}/clubs/${clubId}`}>
+              {clubName}
+            </Link>
+          </BreadcrumbLink>
+        </BreadcrumbItem>
+        <BreadcrumbSeparator />
+
+        <BreadcrumbItem>
+          <BreadcrumbPage>{jerseyName}</BreadcrumbPage>
         </BreadcrumbItem>
       </BreadcrumbList>
     </Breadcrumb>

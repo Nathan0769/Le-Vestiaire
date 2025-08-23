@@ -47,3 +47,7 @@ export type SimpleJersey = Omit<
   Jersey,
   "club" | "retailPrice" | "createdAt" | "updatedAt"
 >;
+
+export type ClubWithLeague = Club & {
+  league: League;
+};

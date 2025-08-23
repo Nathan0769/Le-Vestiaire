@@ -78,6 +78,7 @@ export default async function ClubDetailPage(props: Props) {
       <JerseysBySeason
         jerseys={club.jerseys}
         primaryColor={club.primaryColor}
+        club={club}
       />
     </div>
   );

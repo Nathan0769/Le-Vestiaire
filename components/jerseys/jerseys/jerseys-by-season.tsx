@@ -1,9 +1,10 @@
-import { SimpleJersey, JerseyType } from "@/types/jersey";
+import { SimpleJersey, JerseyType, ClubWithLeague } from "@/types/jersey";
 import { JerseyCard } from "./jersey-card";
 
 type Props = {
   jerseys: SimpleJersey[];
   primaryColor: string;
+  club: ClubWithLeague;
 };
 
 const typeOrder: Record<JerseyType, number> = {
@@ -14,7 +15,7 @@ const typeOrder: Record<JerseyType, number> = {
   GOALKEEPER: 5,
 };
 
-export function JerseysBySeason({ jerseys, primaryColor }: Props) {
+export function JerseysBySeason({ jerseys, primaryColor, club }: Props) {
   const grouped = jerseys.reduce<Record<string, SimpleJersey[]>>(
     (acc, jersey) => {
       if (!acc[jersey.season]) acc[jersey.season] = [];
@@ -47,7 +48,12 @@ export function JerseysBySeason({ jerseys, primaryColor }: Props) {
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
               {sortedJerseys.map((jersey) => (
-                <JerseyCard key={jersey.id} jersey={jersey} />
+                <JerseyCard
+                  key={jersey.id}
+                  jersey={jersey}
+                  leagueId={club.league.id}
+                  club={club}
+                />
               ))}
             </div>
           </div>

@@ -1,4 +1,11 @@
-import { ListTodo, Home, Settings, Shirt, UsersRound } from "lucide-react";
+import {
+  ListTodo,
+  Home,
+  Settings,
+  Shirt,
+  UsersRound,
+  Heart,
+} from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -21,12 +28,17 @@ const items = [
   {
     title: "Ma Collection",
     url: "/inbox",
-    icon: Shirt,
+    icon: ListTodo,
+  },
+  {
+    title: "Mes Envies",
+    url: "/whishlist",
+    icon: Heart,
   },
   {
     title: "Les Maillots",
     url: "/jerseys",
-    icon: ListTodo,
+    icon: Shirt,
   },
   {
     title: "La Communauté",
@@ -45,7 +57,7 @@ export function AppSidebar() {
     <Sidebar className="flex h-screen flex-col justify-between">
       <SidebarContent className="flex-grow">
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>Le Vestiaire</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-y-3">
               {items.map((item) => (
