@@ -4,12 +4,17 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { JerseyBreadcrumb } from "@/components/jerseys/jerseys/jerseys-bread-crumb";
 import { StarRating } from "@/components/jerseys/ratings/star-rating";
+import { WishlistButton } from "@/components/wishlist/wishlist-button";
 
 interface JerseyPageProps {
   params: {
     clubId: string;
     id: string;
   };
+}
+
+interface JerseyWithWishlist extends Jersey {
+  isInWishlist: boolean;
 }
 
 export default async function JerseyPage({ params }: JerseyPageProps) {
@@ -24,7 +29,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     notFound();
   }
 
-  const jersey: Jersey = await res.json();
+  const jersey: JerseyWithWishlist = await res.json();
 
   const getJerseyTypeLabel = (type: string) => {
     switch (type.toLowerCase()) {
@@ -118,23 +123,20 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
               {/* Star Rating Component */}
               <div className="pt-4">
                 <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                  Note du maillots :
+                  Évaluation communautaire
                 </h3>
                 <StarRating jerseyId={jersey.id} />
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 mt-8 pt-6 border-t border-border/50">
               <Button className="flex-1 h-11 font-medium shadow-sm hover:shadow-md transition-shadow cursor-pointer">
                 Ajouter à ma collection
               </Button>
-              <Button
-                variant="outline"
-                className="flex-1 h-11 font-medium shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-              >
-                Ajouter à ma wishlist
-              </Button>
+              <WishlistButton
+                jerseyId={jersey.id}
+                initialIsInWishlist={jersey.isInWishlist}
+              />
             </div>
           </div>
         </div>
