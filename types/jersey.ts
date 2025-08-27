@@ -12,7 +12,6 @@ export interface Jersey {
   club: Club;
   createdAt: Date;
   updatedAt: Date;
-  isInWishlist?: boolean;
 }
 
 export interface Club {
@@ -55,4 +54,13 @@ export type ClubWithLeague = Club & {
 
 export interface JerseyWithWishlist extends Jersey {
   isInWishlist: boolean;
+}
+
+export interface JerseyWithCollection extends Jersey {
+  isInCollection: boolean;
+}
+
+export interface JerseyWithWishlistAndCollection extends Jersey {
+  isInWishlist: boolean;
+  isInCollection: boolean;
 }

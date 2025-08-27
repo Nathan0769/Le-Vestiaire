@@ -1,20 +1,18 @@
+// app/jerseys/[leagueId]/clubs/[clubId]/jerseys/[id]/page.tsx (mise à jour)
+
 import { notFound } from "next/navigation";
-import type { Jersey } from "@/types/jersey";
+import type { JerseyWithWishlistAndCollection } from "@/types/jersey";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { JerseyBreadcrumb } from "@/components/jerseys/jerseys/jerseys-bread-crumb";
 import { StarRating } from "@/components/jerseys/ratings/star-rating";
 import { WishlistButton } from "@/components/wishlist/wishlist-button";
+import { CollectionButton } from "@/components/collection/collection-button";
 
 interface JerseyPageProps {
   params: {
     clubId: string;
     id: string;
   };
-}
-
-interface JerseyWithWishlist extends Jersey {
-  isInWishlist: boolean;
 }
 
 export default async function JerseyPage({ params }: JerseyPageProps) {
@@ -29,7 +27,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     notFound();
   }
 
-  const jersey: JerseyWithWishlist = await res.json();
+  const jersey: JerseyWithWishlistAndCollection = await res.json();
 
   const getJerseyTypeLabel = (type: string) => {
     switch (type.toLowerCase()) {
@@ -39,6 +37,8 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
         return "Extérieur";
       case "third":
         return "Third";
+      case "fourth":
+        return "Fourth";
       case "special":
         return "Spécial";
       case "goalkeeper":
@@ -129,14 +129,18 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 mt-8 pt-6 border-t border-border/50">
-              <Button className="flex-1 h-11 font-medium shadow-sm hover:shadow-md transition-shadow cursor-pointer">
-                Ajouter à ma collection
-              </Button>
-              <WishlistButton
-                jerseyId={jersey.id}
-                initialIsInWishlist={jersey.isInWishlist}
-              />
+            {/* Action Buttons */}
+            <div className="flex flex-col gap-3 mt-8 pt-6 border-t border-border/50">
+              <div className="flex flex-col sm:flex-row gap-3">
+                <CollectionButton
+                  jerseyId={jersey.id}
+                  initialIsInCollection={jersey.isInCollection}
+                />
+                <WishlistButton
+                  jerseyId={jersey.id}
+                  initialIsInWishlist={jersey.isInWishlist}
+                />
+              </div>
             </div>
           </div>
         </div>
