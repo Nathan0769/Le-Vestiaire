@@ -32,7 +32,7 @@ const items = [
   },
   {
     title: "Mes Envies",
-    url: "/whishlist",
+    url: "/wishlist",
     icon: Heart,
   },
   {

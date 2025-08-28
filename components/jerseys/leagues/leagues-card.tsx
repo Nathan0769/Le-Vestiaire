@@ -27,6 +27,7 @@ export function LeagueCard({ league }: Props) {
             src={league.logoUrl}
             alt={league.name}
             fill
+            sizes="64px"
             className="object-contain"
           />
         </div>

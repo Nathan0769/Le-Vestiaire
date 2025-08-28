@@ -195,6 +195,7 @@ enum JerseyType {
   HOME
   AWAY
   THIRD
+  FOURTH
   GOALKEEPER
   SPECIAL
 }
