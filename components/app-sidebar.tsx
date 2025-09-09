@@ -27,7 +27,7 @@ const items = [
   },
   {
     title: "Ma Collection",
-    url: "/inbox",
+    url: "/collection",
     icon: ListTodo,
   },
   {

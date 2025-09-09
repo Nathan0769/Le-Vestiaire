@@ -1,5 +1,3 @@
-// components/collection/add-to-collection-modal.tsx
-
 "use client";
 
 import { useState } from "react";
