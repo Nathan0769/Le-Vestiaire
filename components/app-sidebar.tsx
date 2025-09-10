@@ -44,6 +44,7 @@ const items = [
     title: "La Communauté",
     url: "/search",
     icon: UsersRound,
+    disabled: true,
   },
   {
     title: "Compte",
@@ -63,13 +64,25 @@ export function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
-                    asChild
-                    className="px-4 py-3 gap-3 text-base hover:bg-primary/20 rounded-md transition-colors"
+                    asChild={!item.disabled}
+                    className={`px-4 py-3 gap-3 text-base rounded-md transition-colors ${
+                      item.disabled
+                        ? "text-gray-400 cursor-not-allowed opacity-50"
+                        : "hover:bg-primary/20"
+                    }`}
+                    disabled={item.disabled}
                   >
-                    <a href={item.url} className="flex items-center w-full">
-                      <item.icon className="h-5 w-5" />
-                      <span>{item.title}</span>
-                    </a>
+                    {item.disabled ? (
+                      <div className="flex items-center w-full gap-3">
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.title}</span>
+                      </div>
+                    ) : (
+                      <a href={item.url} className="flex items-center w-full">
+                        <item.icon className="h-5 w-5" />
+                        <span>{item.title}</span>
+                      </a>
+                    )}
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
