@@ -1,35 +1,55 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import { HeroSection } from "@/components/home/hero-section";
+import { UserStatsSection } from "@/components/home/user-stats-section";
+import { TopRatedSection } from "@/components/home/top-rated-section";
+import { RecentSection } from "@/components/home/recent-section";
 
-export default function Home() {
-  const router = useRouter();
+interface UserStats {
+  collection: { total: number };
+  wishlist: { total: number };
+}
+
+export default function HomePage() {
+  const { user } = useAuth();
+  const [userStats, setUserStats] = useState<UserStats | null>(null);
+
+  useEffect(() => {
+    // Récupérer les stats utilisateur si connecté
+    if (user) {
+      const fetchUserStats = async () => {
+        try {
+          const res = await fetch("/api/home/user-stats");
+          if (res.ok) {
+            const data = await res.json();
+            setUserStats({
+              collection: { total: data.collection.total },
+              wishlist: { total: data.wishlist.total },
+            });
+          }
+        } catch (error) {
+          console.error("Erreur stats hero:", error);
+        }
+      };
+
+      fetchUserStats();
+    }
+  }, [user]);
 
   return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="min-h-screen flex flex-col items-center justify-center gap-6 p-10">
-        <h1 className="text-3xl font-bold">Bienvenue sur Le Vestiaire</h1>
-        <p className="text-muted-foreground text-center max-w-xl">
-          Connectez-vous ou créez un compte pour découvrir notre collection.
-        </p>
-        <div className="flex gap-4">
-          <Button
-            className="cursor-pointer"
-            onClick={() => router.push("/auth/login")}
-          >
-            Se connecter
-          </Button>
+    <div className="min-h-screen">
+      {/* Hero Section avec background vestiaire */}
+      <HeroSection userStats={userStats} />
 
-          <Button
-            className="cursor-pointer"
-            variant="outline"
-            onClick={() => router.push("/auth/signUp")}
-          >
-            Créer un compte
-          </Button>
-        </div>
-      </main>
+      {/* Section stats personnelles - uniquement si connecté */}
+      {user && <UserStatsSection />}
+
+      <TopRatedSection />
+
+      {/* Section nouveautés */}
+      <RecentSection />
     </div>
   );
 }

@@ -140,14 +140,15 @@ export function EditProfile() {
     <Sheet>
       <SheetTrigger asChild>
         <Button className="cursor-pointer" disabled={!currentUser}>
-          Modifier le profil
+          Modifier votre profil
         </Button>
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
+          <SheetTitle>Mon profil</SheetTitle>
           <SheetDescription>
-            Make changes to your profile here. Click save when you&apos;re done.
+            Modifiez votre profil ici. <br />
+            Cliquez sur Sauvegarder lorsque vous avez terminé.
           </SheetDescription>
         </SheetHeader>
 
