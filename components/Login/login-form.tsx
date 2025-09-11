@@ -136,7 +136,7 @@ export function LoginForm({
         <a href="#" className="underline">
           Conditions d&apos;utilisation
         </a>{" "}
-        and{" "}
+        et{" "}
         <a href="#" className="underline">
           Politique de confidentialité
         </a>

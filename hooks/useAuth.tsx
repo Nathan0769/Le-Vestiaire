@@ -28,30 +28,45 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const signIn = async (email: string, password: string) => {
     setLoading(true);
-    const { error } = await authClient.signIn.email({ email, password });
-    if (error) throw new Error(error.message);
-    router.push("/");
+    try {
+      const { error } = await authClient.signIn.email({ email, password });
+      if (error) throw new Error(error.message);
+      router.push("/");
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
   };
 
   const signInWithGoogle = async () => {
     setLoading(true);
-    const { error } = await authClient.signIn.social({
-      provider: "google",
-      callbackURL: "/",
-      errorCallbackURL: "/auth/login",
-    });
-    if (error) throw new Error(error.message);
+    try {
+      const { error } = await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+        errorCallbackURL: "/auth/login",
+      });
+      if (error) throw new Error(error.message);
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
   };
 
   const signUp = async (email: string, password: string, username: string) => {
     setLoading(true);
-    const { error } = await authClient.signUp.email({
-      email,
-      password,
-      name: username,
-    });
-    if (error) throw new Error(error.message);
-    router.push("/");
+    try {
+      const { error } = await authClient.signUp.email({
+        email,
+        password,
+        name: username,
+      });
+      if (error) throw new Error(error.message);
+      router.push("/");
+    } catch (error) {
+      setLoading(false);
+      throw error;
+    }
   };
 
   const sendMagicLink = async (email: string) => {
