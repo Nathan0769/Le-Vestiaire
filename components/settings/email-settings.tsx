@@ -24,8 +24,8 @@ export function EmailSettings({ isGoogleOnly }: EmailSettingsProps) {
 
     setIsChangingEmail(true);
     try {
-      const { error } = await authClient.updateUser({
-        email: newEmail,
+      const { error } = await authClient.changeEmail({
+        newEmail,
       });
 
       if (error) {
