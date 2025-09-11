@@ -7,7 +7,13 @@ export type CurrentUser = {
   email: string;
   name?: string;
   avatar?: string;
+  createdAt: string;
   avatarUrl?: string;
+  authProvider?: {
+    hasGoogle: boolean;
+    hasPassword: boolean;
+    isGoogleOnly: boolean;
+  };
 };
 
 export function useCurrentUser() {

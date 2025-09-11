@@ -14,7 +14,19 @@ export async function GET() {
 
   const user = await prisma.user.findUnique({
     where: { id: sessionUser.id },
-    select: { id: true, email: true, name: true, avatar: true },
+    select: {
+      id: true,
+      email: true,
+      name: true,
+      avatar: true,
+      createdAt: true,
+      accounts: {
+        select: {
+          providerId: true,
+          password: true,
+        },
+      },
+    },
   });
 
   if (!user) return NextResponse.json(null, { status: 200 });
@@ -28,8 +40,24 @@ export async function GET() {
     avatarUrl = data?.signedUrl || null;
   }
 
+  const hasGoogleAccount = user.accounts.some(
+    (account) => account.providerId === "google"
+  );
+  const hasPasswordAccount = user.accounts.some(
+    (account) => account.password !== null
+  );
+
   return NextResponse.json({
-    ...user,
+    id: user.id,
+    email: user.email,
+    name: user.name,
+    avatar: user.avatar,
     avatarUrl,
+    createdAt: user.createdAt.toISOString(),
+    authProvider: {
+      hasGoogle: hasGoogleAccount,
+      hasPassword: hasPasswordAccount,
+      isGoogleOnly: hasGoogleAccount && !hasPasswordAccount,
+    },
   });
 }
