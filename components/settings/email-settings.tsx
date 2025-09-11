@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
+import { Mail } from "lucide-react";
 import { toast } from "sonner";
 
 interface EmailSettingsProps {
@@ -50,7 +51,10 @@ export function EmailSettings({ isGoogleOnly }: EmailSettingsProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Changer d&apos;adresse email</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <Mail className="w-5 h-5" />
+          Changer d&apos;adresse email
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {isGoogleOnly ? (
