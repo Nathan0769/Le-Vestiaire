@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 export async function GET() {
   try {
     const leagues = await prisma.league.findMany({
-      orderBy: { name: "asc" },
+      orderBy: [{ tier: "asc" }, { name: "asc" }],
     });
 
     return NextResponse.json(leagues);
