@@ -2,12 +2,12 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 
-// GET - Juste vérifier si dans wishlist (pas tout le jersey)
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getCurrentUser();
 
     if (!user) {
@@ -18,7 +18,7 @@ export async function GET(
       where: {
         userId_jerseyId: {
           userId: user.id,
-          jerseyId: params.id,
+          jerseyId: id,
         },
       },
     });
@@ -35,12 +35,12 @@ export async function GET(
   }
 }
 
-// POST - Toggle wishlist (ajouter/retirer)
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getCurrentUser();
 
     if (!user) {
@@ -53,9 +53,8 @@ export async function POST(
       );
     }
 
-    const jerseyId = params.id;
+    const jerseyId = id;
 
-    // Vérifier que le maillot existe
     const jersey = await prisma.jersey.findUnique({
       where: { id: jerseyId },
     });
@@ -70,7 +69,6 @@ export async function POST(
       );
     }
 
-    // Vérifier si le maillot est déjà dans la wishlist
     const existingWishlist = await prisma.wishlist.findUnique({
       where: {
         userId_jerseyId: {
@@ -95,7 +93,6 @@ export async function POST(
         isInWishlist: false,
       });
     } else {
-      // Ajouter à la wishlist
       await prisma.wishlist.create({
         data: {
           userId: user.id,

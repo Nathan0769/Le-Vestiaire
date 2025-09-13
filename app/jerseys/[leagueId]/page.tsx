@@ -4,14 +4,14 @@ import { notFound } from "next/navigation";
 import { LeagueBreadcrumb } from "@/components/jerseys/leagues/league-bread-crumb";
 
 type Props = {
-  params: {
+  params: Promise<{
     leagueId: string;
-  };
+  }>;
 };
 
-export default async function LeagueDetailPage({
-  params: { leagueId },
-}: Props) {
+export default async function LeagueDetailPage({ params }: Props) {
+  const { leagueId } = await params;
+
   const league = await prisma.league.findUnique({
     where: { id: leagueId },
     include: {

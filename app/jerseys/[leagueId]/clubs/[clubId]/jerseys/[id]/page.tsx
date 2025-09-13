@@ -1,5 +1,3 @@
-// app/jerseys/[leagueId]/clubs/[clubId]/jerseys/[id]/page.tsx (mise à jour)
-
 import { notFound } from "next/navigation";
 import type { JerseyWithWishlistAndCollection } from "@/types/jersey";
 import Image from "next/image";
@@ -9,15 +7,17 @@ import { WishlistButton } from "@/components/wishlist/wishlist-button";
 import { CollectionButton } from "@/components/collection/collection-button";
 
 interface JerseyPageProps {
-  params: {
+  params: Promise<{
     clubId: string;
     id: string;
-  };
+  }>;
 }
 
 export default async function JerseyPage({ params }: JerseyPageProps) {
+  const { id } = await params;
+
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${params.id}`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}`,
     {
       cache: "no-store",
     }

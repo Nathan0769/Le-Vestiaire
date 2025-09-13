@@ -4,14 +4,15 @@ import { getCurrentUser } from "@/lib/get-current-user";
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getCurrentUser();
 
     const jersey = await prisma.jersey.findUnique({
       where: {
-        id: params.id,
+        id,
       },
       include: {
         club: {

@@ -11,10 +11,11 @@ interface RatingData {
 // GET - Récupérer les données de rating pour un maillot
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const jerseyId = params.id;
+    const { id } = await params;
+    const jerseyId = id;
 
     // Vérifier que le maillot existe
     const jersey = await prisma.jersey.findUnique({
@@ -70,9 +71,10 @@ export async function GET(
 // POST - Créer ou mettre à jour un rating
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getCurrentUser();
 
     if (!user) {
@@ -82,7 +84,7 @@ export async function POST(
       );
     }
 
-    const jerseyId = params.id;
+    const jerseyId = id;
     const { rating } = await request.json();
 
     // Validation du rating
@@ -139,9 +141,10 @@ export async function POST(
 // DELETE - Supprimer un rating
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getCurrentUser();
 
     if (!user) {
@@ -151,7 +154,7 @@ export async function DELETE(
       );
     }
 
-    const jerseyId = params.id;
+    const jerseyId = id;
 
     // Supprimer le rating s'il existe
     const deletedRating = await prisma.rating.deleteMany({

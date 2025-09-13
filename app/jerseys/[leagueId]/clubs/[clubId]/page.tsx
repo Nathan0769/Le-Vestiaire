@@ -11,16 +11,17 @@ import Image from "next/image";
 import Link from "next/link";
 
 type Props = {
-  params: {
+  params: Promise<{
     leagueId: string;
     clubId: string;
-  };
+  }>;
 };
 
 export default async function ClubDetailPage(props: Props) {
-  const { params } = props;
+  const { clubId } = await props.params;
+
   const club = await prisma.club.findUnique({
-    where: { id: params.clubId },
+    where: { id: clubId },
     include: {
       league: true,
       jerseys: {

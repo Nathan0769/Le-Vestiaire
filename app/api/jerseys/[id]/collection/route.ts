@@ -1,15 +1,13 @@
-// app/api/jerseys/[id]/collection/route.ts
-
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 
-// GET - Vérifier si le maillot est dans la collection
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getCurrentUser();
 
     if (!user) {
@@ -20,7 +18,7 @@ export async function GET(
       where: {
         userId_jerseyId: {
           userId: user.id,
-          jerseyId: params.id,
+          jerseyId: id,
         },
       },
     });
@@ -38,12 +36,12 @@ export async function GET(
   }
 }
 
-// POST - Ajouter à la collection
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getCurrentUser();
 
     if (!user) {
@@ -56,7 +54,7 @@ export async function POST(
       );
     }
 
-    const jerseyId = params.id;
+    const jerseyId = id;
     const {
       size,
       condition,
@@ -67,7 +65,6 @@ export async function POST(
       notes,
     } = await request.json();
 
-    // Validation des champs obligatoires
     if (!size) {
       return NextResponse.json(
         {
@@ -88,7 +85,6 @@ export async function POST(
       );
     }
 
-    // Vérifier que le maillot existe
     const jersey = await prisma.jersey.findUnique({
       where: { id: jerseyId },
     });
@@ -103,7 +99,6 @@ export async function POST(
       );
     }
 
-    // Vérifier si le maillot est déjà dans la collection
     const existingUserJersey = await prisma.userJersey.findUnique({
       where: {
         userId_jerseyId: {
@@ -123,7 +118,6 @@ export async function POST(
       );
     }
 
-    // Ajouter à la collection
     const userJersey = await prisma.userJersey.create({
       data: {
         userId: user.id,
@@ -155,12 +149,12 @@ export async function POST(
   }
 }
 
-// DELETE - Retirer de la collection
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await getCurrentUser();
 
     if (!user) {
@@ -170,9 +164,8 @@ export async function DELETE(
       );
     }
 
-    const jerseyId = params.id;
+    const jerseyId = id;
 
-    // Supprimer de la collection s'il existe
     const deletedUserJersey = await prisma.userJersey.deleteMany({
       where: {
         userId: user.id,
