@@ -7,6 +7,7 @@ import { ApplyThemeColor } from "@/providers/themes-provider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "sonner";
+import { Analytics } from "@vercel/analytics/next";
 
 export default function RootLayout({
   children,
@@ -31,6 +32,7 @@ export default function RootLayout({
               <main className="flex-1">
                 <SidebarTrigger />
                 {children}
+                <Analytics></Analytics>
               </main>
             </SidebarProvider>
           </AuthProvider>
