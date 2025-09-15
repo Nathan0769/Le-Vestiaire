@@ -19,6 +19,7 @@ const themeOptions = [
   "rose",
   "violet-leger",
   "marine",
+  "gold",
 ];
 
 export function ThemeColorSelect() {
