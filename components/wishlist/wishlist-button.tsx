@@ -79,7 +79,7 @@ export function WishlistButton({
   return (
     <Button
       variant="outline"
-      className="min-w-[220px] h-11 font-medium shadow-sm hover:shadow-md transition-shadow"
+      className="flex-1 h-11 font-medium shadow-sm hover:shadow-md transition-shadow"
       onClick={handleWishlistToggle}
       disabled={isLoading}
     >
