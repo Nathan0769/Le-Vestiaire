@@ -110,3 +110,42 @@ export interface HomeApiResponses {
   };
   userStats: UserHomeStats;
 }
+
+export type TopRatedRow = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  type: string;
+  season: string;
+  brand: string;
+  club_id: string;
+  club_name: string;
+  shortName: string;
+  logoUrl: string;
+  primaryColor: string;
+  league_id: string;
+  league_name: string;
+  country: string;
+  league_logo: string;
+  tier: number;
+  average_rating: number | null;
+  total_ratings: number;
+};
+
+export type CollectionStatsRow = {
+  total: number;
+  total_value: number | null;
+};
+
+export type WishlistStatsRow = {
+  total: number;
+};
+
+export type LeagueStatsRow = {
+  league_name: string;
+  count: number;
+};
+
+export type RecentJerseyDb = Omit<RecentJersey, "createdAt"> & {
+  createdAt: Date;
+};
