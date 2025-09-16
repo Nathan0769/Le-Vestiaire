@@ -4,67 +4,90 @@ import { UserStatsSection } from "@/components/home/user-stats-section";
 import { TopRatedSection } from "@/components/home/top-rated-section";
 import { RecentSection } from "@/components/home/recent-section";
 import prisma from "@/lib/prisma";
-import type {
-  TopRatedJersey,
-  RecentJersey,
-  UserHomeStats,
-  TopRatedRow,
-  CollectionStatsRow,
-  WishlistStatsRow,
-  LeagueStatsRow,
-} from "@/types/home";
+import type { TopRatedJersey, RecentJersey, UserHomeStats } from "@/types/home";
+
+export const revalidate = 3600;
 
 async function getTopRatedJerseys(): Promise<TopRatedJersey[]> {
-  const topRated = await prisma.$queryRaw<TopRatedRow[]>`
-    SELECT 
-      j.id, j.name, j."imageUrl", j.type, j.season, j.brand,
-      c.id as club_id, c.name as club_name, c."shortName", c."logoUrl", c."primaryColor",
-      l.id as league_id, l.name as league_name, l.country, l."logoUrl" as league_logo, l.tier,
-      COALESCE(AVG(r.rating)::numeric(3,2), 0) as average_rating,
-      COUNT(r.rating)::int as total_ratings
-    FROM jerseys j
-    JOIN clubs c ON j."clubId" = c.id
-    JOIN leagues l ON c."leagueId" = l.id
-    LEFT JOIN ratings r ON j.id = r."jerseyId"
-    GROUP BY j.id, c.id, l.id
-    HAVING COUNT(r.rating) >= 1
-    ORDER BY average_rating DESC, total_ratings DESC
-    LIMIT 6
-  `;
-
-  return topRated.map(
-    (row): TopRatedJersey => ({
-      id: row.id,
-      name: row.name,
-      imageUrl: row.imageUrl,
-      type: row.type,
-      season: row.season,
-      brand: row.brand,
+  const topRated = await prisma.jersey.findMany({
+    select: {
+      id: true,
+      name: true,
+      imageUrl: true,
+      type: true,
+      season: true,
+      brand: true,
       club: {
-        id: row.club_id,
-        name: row.club_name,
-        shortName: row.shortName,
-        leagueId: row.league_id,
-        logoUrl: row.logoUrl,
-        primaryColor: row.primaryColor,
-        league: {
-          id: row.league_id,
-          name: row.league_name,
-          country: row.country,
-          logoUrl: row.league_logo,
-          tier: row.tier,
+        select: {
+          id: true,
+          name: true,
+          shortName: true,
+          leagueId: true,
+          logoUrl: true,
+          primaryColor: true,
+          league: {
+            select: {
+              id: true,
+              name: true,
+              country: true,
+              logoUrl: true,
+              tier: true,
+            },
+          },
         },
       },
-      averageRating: Number(row.average_rating ?? 0),
-      totalRatings: Number(row.total_ratings),
+      ratings: {
+        select: {
+          rating: true,
+        },
+      },
+    },
+    where: {
+      ratings: {
+        some: {},
+      },
+    },
+    take: 10,
+  });
+
+  const jerseysWithRatings = topRated.map((jersey) => {
+    const ratings = jersey.ratings.map((r) => r.rating);
+    const avgRating =
+      ratings.length > 0 ? ratings.reduce((a, b) => a + b) / ratings.length : 0;
+
+    return {
+      id: jersey.id,
+      name: jersey.name,
+      imageUrl: jersey.imageUrl,
+      type: jersey.type,
+      season: jersey.season,
+      brand: jersey.brand,
+      club: {
+        id: jersey.club.id,
+        name: jersey.club.name,
+        shortName: jersey.club.shortName,
+        leagueId: jersey.club.leagueId,
+        logoUrl: jersey.club.logoUrl,
+        primaryColor: jersey.club.primaryColor,
+        league: jersey.club.league,
+      },
+      averageRating: Number(avgRating.toFixed(2)),
+      totalRatings: ratings.length,
+    };
+  });
+
+  return jerseysWithRatings
+    .sort((a, b) => {
+      if (b.averageRating !== a.averageRating) {
+        return b.averageRating - a.averageRating;
+      }
+      return b.totalRatings - a.totalRatings;
     })
-  );
+    .slice(0, 6);
 }
 
-type RecentJerseyDb = Omit<RecentJersey, "createdAt"> & { createdAt: Date };
-
-async function getRecentJerseys(): Promise<RecentJerseyDb[]> {
-  return await prisma.jersey.findMany({
+async function getRecentJerseys(): Promise<RecentJersey[]> {
+  const recentJerseys = await prisma.jersey.findMany({
     select: {
       id: true,
       name: true,
@@ -96,31 +119,62 @@ async function getRecentJerseys(): Promise<RecentJerseyDb[]> {
     orderBy: { createdAt: "desc" },
     take: 6,
   });
+
+  return recentJerseys.map((jersey) => ({
+    ...jersey,
+    createdAt: jersey.createdAt.toISOString(),
+  }));
 }
 
 async function getUserStats(userId: string): Promise<UserHomeStats> {
-  const [
-    collectionStats,
-    wishlistStats,
-    leagueStats,
-    recentCollectionItems,
-    recentWishlistItems,
-  ] = await Promise.all([
-    prisma.$queryRaw<CollectionStatsRow[]>`
-      SELECT 
-        COUNT(*)::int as total,
-        COALESCE(SUM("purchasePrice"), 0) as total_value
-      FROM user_jerseys 
-      WHERE "userId" = ${userId}
-    `,
+  const [collectionStats, wishlistStats, recentCollectionItems] =
+    await Promise.all([
+      prisma.userJersey.aggregate({
+        where: { userId },
+        _count: { id: true },
+        _sum: { purchasePrice: true },
+      }),
 
-    prisma.$queryRaw<WishlistStatsRow[]>`
-      SELECT COUNT(*)::int as total
-      FROM wishlist 
-      WHERE "userId" = ${userId}
-    `,
+      prisma.wishlist.aggregate({
+        where: { userId },
+        _count: { id: true },
+      }),
 
-    prisma.$queryRaw<LeagueStatsRow[]>`
+      prisma.userJersey.findMany({
+        where: { userId },
+        select: {
+          id: true,
+          purchasePrice: true,
+          createdAt: true,
+          jersey: {
+            select: {
+              id: true,
+              name: true,
+              imageUrl: true,
+              type: true,
+              club: {
+                select: {
+                  id: true,
+                  name: true,
+                  shortName: true,
+                  league: {
+                    select: {
+                      id: true,
+                      name: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+        orderBy: { createdAt: "desc" },
+        take: 3,
+      }),
+    ]);
+
+  const [leagueStats, recentWishlistItems] = await Promise.all([
+    prisma.$queryRaw<Array<{ league_name: string; count: number }>>`
       SELECT 
         l.name as league_name,
         COUNT(*)::int as count
@@ -131,38 +185,6 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
       WHERE uj."userId" = ${userId}
       GROUP BY l.name
     `,
-
-    prisma.userJersey.findMany({
-      where: { userId },
-      select: {
-        id: true,
-        purchasePrice: true,
-        createdAt: true,
-        jersey: {
-          select: {
-            id: true,
-            name: true,
-            imageUrl: true,
-            type: true,
-            club: {
-              select: {
-                id: true,
-                name: true,
-                shortName: true,
-                league: {
-                  select: {
-                    id: true,
-                    name: true,
-                  },
-                },
-              },
-            },
-          },
-        },
-      },
-      orderBy: { createdAt: "desc" },
-      take: 3,
-    }),
 
     prisma.wishlist.findMany({
       where: { userId },
@@ -195,9 +217,6 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
       take: 3,
     }),
   ]);
-
-  const collectionData = collectionStats[0];
-  const wishlistData = wishlistStats[0];
 
   const leagueStatsObject: Record<string, number> = {};
   leagueStats.forEach((stat) => {
@@ -247,15 +266,15 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
 
   return {
     collection: {
-      total: collectionData?.total || 0,
-      totalValue: collectionData?.total_value
-        ? Number(collectionData.total_value)
+      total: collectionStats._count.id || 0,
+      totalValue: collectionStats._sum.purchasePrice
+        ? Number(collectionStats._sum.purchasePrice)
         : null,
       recentItems: formattedRecentCollection,
       leagueStats: leagueStatsObject,
     },
     wishlist: {
-      total: wishlistData?.total || 0,
+      total: wishlistStats._count.id || 0,
       recentItems: formattedRecentWishlist,
     },
   };
@@ -274,15 +293,8 @@ async function getHomeData(userId?: string): Promise<{
     ]);
 
     const topRatedJerseys = topRes.status === "fulfilled" ? topRes.value : [];
-
-    const recentJerseys: RecentJersey[] =
-      recentRes.status === "fulfilled"
-        ? recentRes.value.map((jersey) => ({
-            ...jersey,
-            createdAt: jersey.createdAt.toISOString(),
-          }))
-        : [];
-
+    const recentJerseys =
+      recentRes.status === "fulfilled" ? recentRes.value : [];
     const userStats = userRes.status === "fulfilled" ? userRes.value : null;
 
     return { topRatedJerseys, recentJerseys, userStats };
