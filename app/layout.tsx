@@ -8,6 +8,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "sonner";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export default function RootLayout({
   children,
@@ -33,6 +34,7 @@ export default function RootLayout({
                 <SidebarTrigger />
                 {children}
                 <Analytics></Analytics>
+                <SpeedInsights></SpeedInsights>
               </main>
             </SidebarProvider>
           </AuthProvider>
