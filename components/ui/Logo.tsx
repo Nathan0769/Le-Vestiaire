@@ -24,7 +24,7 @@ export function Logo({
       className={`flex items-center gap-2 font-medium ${containerClass}`}
     >
       <Image
-        src="/img/logo.png"
+        src="https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/logo-app/logo.png"
         alt="Le Vestiaire logo"
         width={size}
         height={size}
