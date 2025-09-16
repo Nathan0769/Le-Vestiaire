@@ -27,11 +27,18 @@ interface RecentJersey {
   createdAt: string;
 }
 
-export function RecentSection() {
-  const [jerseys, setJerseys] = useState<RecentJersey[]>([]);
-  const [loading, setLoading] = useState(true);
+interface RecentSectionProps {
+  jerseys?: RecentJersey[];
+}
+
+export function RecentSection({
+  jerseys: ssrJerseys,
+}: RecentSectionProps = {}) {
+  const [jerseys, setJerseys] = useState<RecentJersey[]>(ssrJerseys || []);
+  const [loading, setLoading] = useState(!ssrJerseys);
 
   useEffect(() => {
+    if (ssrJerseys) return; // Pas de fetch si SSR
     const fetchRecent = async () => {
       try {
         const res = await fetch("/api/home/recent?limit=6");
@@ -45,9 +52,8 @@ export function RecentSection() {
         setLoading(false);
       }
     };
-
     fetchRecent();
-  }, []);
+  }, [ssrJerseys]);
 
   const getJerseyTypeLabel = (type: string) => {
     switch (type.toLowerCase()) {

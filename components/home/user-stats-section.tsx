@@ -1,114 +1,24 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Package, Heart, TrendingUp, ArrowRight, Trophy } from "lucide-react";
+import {
+  Package,
+  Heart,
+  TrendingUp,
+  ArrowRight,
+  Trophy,
+  Star,
+  Award,
+} from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import { UserHomeStats } from "@/types/home";
 
-interface UserStats {
-  collection: {
-    total: number;
-    totalValue: number | null;
-    recentItems: Array<{
-      id: string;
-      jersey: {
-        id: string;
-        name: string;
-        imageUrl: string;
-        type: string;
-        club: {
-          id: string;
-          name: string;
-          shortName: string;
-          league: {
-            id: string;
-            name: string;
-          };
-        };
-      };
-      purchasePrice: number | null;
-      createdAt: string;
-    }>;
-    leagueStats: Record<string, number>;
-  };
-  wishlist: {
-    total: number;
-    recentItems: Array<{
-      id: string;
-      jersey: {
-        id: string;
-        name: string;
-        imageUrl: string;
-        type: string;
-        club: {
-          id: string;
-          name: string;
-          shortName: string;
-          league: {
-            id: string;
-            name: string;
-          };
-        };
-      };
-      createdAt: string;
-    }>;
-  };
+interface UserStatsSectionProps {
+  userStats: UserHomeStats;
 }
 
-export function UserStatsSection() {
-  const [stats, setStats] = useState<UserStats | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const res = await fetch("/api/home/user-stats");
-        if (res.ok) {
-          const data = await res.json();
-          setStats(data);
-        }
-      } catch (error) {
-        console.error("Erreur stats utilisateur:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchStats();
-  }, []);
-
-  if (loading) {
-    return (
-      <section className="py-16 px-6">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {[1, 2, 3].map((i) => (
-              <Card key={i} className="animate-pulse">
-                <CardHeader className="space-y-2">
-                  <div className="h-4 bg-muted rounded w-3/4" />
-                </CardHeader>
-                <CardContent>
-                  <div className="h-8 bg-muted rounded w-1/2 mb-4" />
-                  <div className="space-y-2">
-                    <div className="h-3 bg-muted rounded" />
-                    <div className="h-3 bg-muted rounded w-5/6" />
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (!stats) {
-    return null;
-  }
-
-  const topLeague = Object.entries(stats.collection.leagueStats).sort(
+export function UserStatsSection({ userStats }: UserStatsSectionProps) {
+  const topLeague = Object.entries(userStats.collection.leagueStats).sort(
     ([, a], [, b]) => b - a
   )[0];
 
@@ -135,19 +45,19 @@ export function UserStatsSection() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold mb-2">
-                {stats.collection.total}
+                {userStats.collection.total}
               </div>
               <p className="text-sm text-muted-foreground mb-4">
-                {stats.collection.total === 1
+                {userStats.collection.total === 1
                   ? "Maillot collecté"
                   : "Maillots collectés"}
               </p>
 
-              {stats.collection.totalValue && (
+              {userStats.collection.totalValue && (
                 <div className="flex items-center gap-2 text-sm">
                   <TrendingUp className="w-4 h-4 text-green-500" />
                   <span className="font-medium">
-                    {stats.collection.totalValue.toFixed(0)}€ investis
+                    {userStats.collection.totalValue.toFixed(0)}€ investis
                   </span>
                 </div>
               )}
@@ -166,7 +76,7 @@ export function UserStatsSection() {
             </CardContent>
           </Card>
 
-          {/* wishlist */}
+          {/* Wishlist */}
           <Card className="relative overflow-hidden">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center gap-2 text-lg">
@@ -176,10 +86,10 @@ export function UserStatsSection() {
             </CardHeader>
             <CardContent>
               <div className="text-3xl font-bold mb-2">
-                {stats.wishlist.total}
+                {userStats.wishlist.total}
               </div>
               <p className="text-sm text-muted-foreground mb-4">
-                {stats.wishlist.total === 1
+                {userStats.wishlist.total === 1
                   ? "Maillot désiré"
                   : "Maillots désirés"}
               </p>
@@ -190,7 +100,7 @@ export function UserStatsSection() {
                 asChild
                 className="mt-4 p-0 h-auto hover:text-primary"
               >
-                <Link href="/wishlist" className="flex items-center gap-1 ">
+                <Link href="/wishlist" className="flex items-center gap-1">
                   Voir ma wishlist
                   <ArrowRight className="w-3 h-3" />
                 </Link>
@@ -223,18 +133,16 @@ export function UserStatsSection() {
           </Card>
         </div>
 
-        {/* Aperçu des derniers ajouts */}
-        {(stats.collection.recentItems.length > 0 ||
-          stats.wishlist.recentItems.length > 0) && (
+        {(userStats.collection.recentItems.length > 0 ||
+          userStats.wishlist.recentItems.length > 0) && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Derniers ajouts collection */}
-            {stats.collection.recentItems.length > 0 && (
+            {userStats.collection.recentItems.length > 0 && (
               <div>
                 <h3 className="text-xl font-semibold mb-4">
                   Derniers ajouts à votre collection
                 </h3>
                 <div className="space-y-3">
-                  {stats.collection.recentItems.slice(0, 3).map((item) => (
+                  {userStats.collection.recentItems.slice(0, 3).map((item) => (
                     <div
                       key={item.id}
                       className="flex items-center gap-3 p-3 bg-card rounded-lg border border-border/50"
@@ -266,14 +174,13 @@ export function UserStatsSection() {
               </div>
             )}
 
-            {/* Derniers ajouts wishlist */}
-            {stats.wishlist.recentItems.length > 0 && (
+            {userStats.wishlist.recentItems.length > 0 && (
               <div>
                 <h3 className="text-xl font-semibold mb-4">
                   Derniers ajouts à vos envies
                 </h3>
                 <div className="space-y-3">
-                  {stats.wishlist.recentItems.slice(0, 3).map((item) => (
+                  {userStats.wishlist.recentItems.slice(0, 3).map((item) => (
                     <div
                       key={item.id}
                       className="flex items-center gap-3 p-3 bg-card rounded-lg border border-border/50"
@@ -302,6 +209,139 @@ export function UserStatsSection() {
             )}
           </div>
         )}
+      </div>
+    </section>
+  );
+}
+
+interface TopRatedSectionProps {
+  jerseys: Array<{
+    id: string;
+    name: string;
+    imageUrl: string;
+    type: string;
+    season: string;
+    brand: string;
+    club: {
+      id: string;
+      name: string;
+      league: { id: string; name: string };
+    };
+    averageRating: number;
+    totalRatings: number;
+  }>;
+}
+
+export function TopRatedSection({ jerseys }: TopRatedSectionProps) {
+  const getJerseyTypeLabel = (type: string) => {
+    switch (type.toLowerCase()) {
+      case "home":
+        return "Domicile";
+      case "away":
+        return "Extérieur";
+      case "third":
+        return "Third";
+      case "fourth":
+        return "Fourth";
+      case "special":
+        return "Spécial";
+      case "goalkeeper":
+        return "Gardien";
+      default:
+        return type;
+    }
+  };
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }, (_, i) => (
+      <Star
+        key={i}
+        className={`w-3 h-3 ${
+          i < Math.floor(rating)
+            ? "text-yellow-400 fill-yellow-400"
+            : "text-muted-foreground"
+        }`}
+      />
+    ));
+  };
+
+  if (jerseys.length === 0) {
+    return null;
+  }
+
+  return (
+    <section className="py-16 px-6">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <div className="flex items-center justify-center gap-2 mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold">Les Mieux Notés</h2>
+            <Award className="w-6 h-6 text-yellow-500" />
+          </div>
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            Découvrez les maillots les plus appréciés par la communauté
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-8">
+          {jerseys.map((jersey, index) => (
+            <Link
+              key={jersey.id}
+              href={`/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.id}`}
+              className="group relative"
+            >
+              <div className="relative">
+                <div className="absolute -top-2 -left-2 z-10 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-xs font-bold text-primary-foreground">
+                  {index + 1}
+                </div>
+
+                <div className="aspect-square bg-white rounded-lg border border-border overflow-hidden mb-3 group-hover:shadow-lg transition-all duration-200">
+                  <Image
+                    src={jersey.imageUrl}
+                    alt={jersey.name}
+                    width={200}
+                    height={200}
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex items-center gap-1">
+                    {renderStars(jersey.averageRating)}
+                    <span className="text-xs text-muted-foreground ml-1">
+                      ({jersey.totalRatings})
+                    </span>
+                  </div>
+
+                  <h3 className="font-medium text-sm leading-tight line-clamp-2 group-hover:text-primary transition-colors">
+                    {jersey.club.name}
+                  </h3>
+
+                  <p className="text-xs text-muted-foreground">
+                    {getJerseyTypeLabel(jersey.type)} • {jersey.season}
+                  </p>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-medium text-primary">
+                      {jersey.averageRating.toFixed(1)} ⭐
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {jersey.brand}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="text-center">
+          <Button asChild variant="outline">
+            <Link href="/jerseys" className="gap-2">
+              Voir tous les maillots
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </Button>
+        </div>
       </div>
     </section>
   );

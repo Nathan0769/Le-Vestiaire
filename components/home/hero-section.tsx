@@ -1,23 +1,22 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
-import { useAuth } from "@/hooks/useAuth";
 import { ArrowRight, Shirt, Heart } from "lucide-react";
 import Link from "next/link";
 
 interface HeroSectionProps {
+  user?: {
+    id: string;
+    email: string;
+    name: string;
+  } | null;
   userStats?: {
     collection: { total: number };
     wishlist: { total: number };
   } | null;
 }
 
-export function HeroSection({ userStats }: HeroSectionProps) {
-  const { user } = useAuth();
-
+export function HeroSection({ user, userStats }: HeroSectionProps) {
   return (
     <section className="relative min-h-[70vh] flex items-center justify-center">
-      {/* Background Image avec overlay */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
@@ -27,7 +26,6 @@ export function HeroSection({ userStats }: HeroSectionProps) {
         <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/80 to-background/95" />
       </div>
 
-      {/* Contenu */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
         <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
           Bienvenue dans
@@ -39,7 +37,7 @@ export function HeroSection({ userStats }: HeroSectionProps) {
           de foot.
         </p>
 
-        {/* Si utilisateur connecté */}
+        {/* user connecté */}
         {user && userStats ? (
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
             <div className="flex items-center gap-6 bg-card/80 backdrop-blur-sm rounded-full px-6 py-4 border border-border/50">
@@ -69,7 +67,7 @@ export function HeroSection({ userStats }: HeroSectionProps) {
             </div>
           </div>
         ) : (
-          /* Si utilisateur non connecté */
+          /* user non connecté */
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
             <Button size="lg" asChild>
               <Link href="/auth/login" className="gap-2">
@@ -83,7 +81,6 @@ export function HeroSection({ userStats }: HeroSectionProps) {
           </div>
         )}
 
-        {/* CTA vers découverte */}
         <div className="flex items-center justify-center">
           <Button
             variant="ghost"

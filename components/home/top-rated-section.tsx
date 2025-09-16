@@ -26,11 +26,18 @@ interface TopRatedJersey {
   totalRatings: number;
 }
 
-export function TopRatedSection() {
-  const [jerseys, setJerseys] = useState<TopRatedJersey[]>([]);
-  const [loading, setLoading] = useState(true);
+interface TopRatedSectionProps {
+  jerseys?: TopRatedJersey[];
+}
+
+export function TopRatedSection({
+  jerseys: ssrJerseys,
+}: TopRatedSectionProps = {}) {
+  const [jerseys, setJerseys] = useState<TopRatedJersey[]>(ssrJerseys || []);
+  const [loading, setLoading] = useState(!ssrJerseys);
 
   useEffect(() => {
+    if (ssrJerseys) return; // Pas de fetch si SSR
     const fetchTopRated = async () => {
       try {
         const res = await fetch("/api/home/top-rated?limit=6");
@@ -44,9 +51,8 @@ export function TopRatedSection() {
         setLoading(false);
       }
     };
-
     fetchTopRated();
-  }, []);
+  }, [ssrJerseys]);
 
   const getJerseyTypeLabel = (type: string) => {
     switch (type.toLowerCase()) {
@@ -127,14 +133,12 @@ export function TopRatedSection() {
               className="group relative"
             >
               <div className="relative">
-                {/* Badge classement */}
                 {index < 6 && (
                   <div className="absolute -top-2 -left-2 z-10 w-6 h-6 bg-primary rounded-full flex items-center justify-center text-xs font-bold text-primary-foreground">
                     {index + 1}
                   </div>
                 )}
 
-                {/* Image du maillot */}
                 <div className="aspect-square bg-white rounded-lg border border-border overflow-hidden mb-3 group-hover:shadow-lg transition-all duration-200">
                   <Image
                     src={jersey.imageUrl}
@@ -145,7 +149,6 @@ export function TopRatedSection() {
                   />
                 </div>
 
-                {/* Infos maillot */}
                 <div className="space-y-2">
                   <div className="flex items-center gap-1">
                     {renderStars(jersey.averageRating)}
