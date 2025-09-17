@@ -51,9 +51,11 @@ async function getTopRatedJerseys(): Promise<TopRatedJersey[]> {
   });
 
   const jerseysWithRatings = topRated.map((jersey) => {
-    const ratings = jersey.ratings.map((r) => r.rating);
+    const ratings = jersey.ratings.map((r) => Number(r.rating));
     const avgRating =
-      ratings.length > 0 ? ratings.reduce((a, b) => a + b) / ratings.length : 0;
+      ratings.length > 0
+        ? ratings.reduce((a, b) => a + b, 0) / ratings.length
+        : 0;
 
     return {
       id: jersey.id,
