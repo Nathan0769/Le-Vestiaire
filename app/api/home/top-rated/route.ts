@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
         const totalRatings = jersey.ratings.length;
         const averageRating =
           totalRatings > 0
-            ? jersey.ratings.reduce((sum, r) => sum + r.rating, 0) /
+            ? jersey.ratings.reduce((sum, r) => sum + Number(r.rating), 0) /
               totalRatings
             : 0;
 
