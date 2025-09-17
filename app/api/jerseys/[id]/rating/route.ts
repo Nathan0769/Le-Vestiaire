@@ -83,8 +83,14 @@ export async function POST(
 
     const jerseyId = id;
     const { rating } = await request.json();
+    const ratingNumber = typeof rating === "number" ? rating : Number(rating);
 
-    if (!rating || rating < 0.5 || rating > 5 || (rating * 2) % 1 !== 0) {
+    if (
+      !ratingNumber ||
+      ratingNumber < 0.5 ||
+      ratingNumber > 5 ||
+      (ratingNumber * 2) % 1 !== 0
+    ) {
       return NextResponse.json(
         { error: "Le rating doit être entre 0.5 et 5 par pas de 0.5" },
         { status: 400 }
@@ -110,13 +116,13 @@ export async function POST(
         },
       },
       update: {
-        rating,
+        rating: ratingNumber,
         updatedAt: new Date(),
       },
       create: {
         userId: user.id,
         jerseyId,
-        rating,
+        rating: ratingNumber,
       },
     });
 
@@ -133,7 +139,7 @@ export async function POST(
         ? Number(ratingsData._avg.rating)
         : 0,
       totalRatings: ratingsData._count.rating || 0,
-      userRating: typeof rating === "number" ? rating : Number(rating),
+      userRating: ratingNumber,
     };
 
     return NextResponse.json({
