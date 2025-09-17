@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Star } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -15,6 +15,10 @@ interface RatingData {
   userRating?: number;
 }
 
+interface ApiResponse extends RatingData {
+  message?: string;
+}
+
 export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
   const [ratingData, setRatingData] = useState<RatingData>({
     averageRating: 0,
@@ -22,29 +26,62 @@ export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
   });
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [optimisticRating, setOptimisticRating] = useState<number | null>(null);
   const { user } = useAuth();
 
+  const abortControllerRef = useRef<AbortController | null>(null);
+
   useEffect(() => {
-    const fetchRatingData = async () => {
-      try {
-        const response = await fetch(`/api/jerseys/${jerseyId}/rating`);
-        if (response.ok) {
-          const data: RatingData = await response.json();
-          setRatingData(data);
-        }
-      } catch (error) {
-        console.error("Erreur lors du chargement des ratings:", error);
+    fetchRatingData();
+
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
       }
     };
-
-    fetchRatingData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [jerseyId]);
 
-  // Gérer le clic sur une étoile
-  const handleStarClick = async (rating: number) => {
+  const fetchRatingData = async () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+
+    abortControllerRef.current = new AbortController();
+
+    try {
+      const response = await fetch(`/api/jerseys/${jerseyId}/rating`, {
+        signal: abortControllerRef.current.signal,
+      });
+
+      if (response.ok) {
+        const data: RatingData = await response.json();
+        setRatingData(data);
+        setOptimisticRating(null);
+      }
+    } catch (error) {
+      if (error instanceof Error && error.name !== "AbortError") {
+        console.error("Erreur lors du chargement des ratings:", error);
+      }
+    }
+  };
+
+  const handleStarClick = async (
+    event: React.MouseEvent<HTMLDivElement>,
+    starIndex: number
+  ) => {
     if (readonly || !user || isSubmitting) return;
 
+    const rect = event.currentTarget.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+    const starWidth = rect.width;
+    const isLeftHalf = clickX < starWidth / 2;
+
+    const rating = starIndex + (isLeftHalf ? 0.5 : 1);
+
+    setOptimisticRating(rating);
     setIsSubmitting(true);
+
     try {
       const response = await fetch(`/api/jerseys/${jerseyId}/rating`, {
         method: "POST",
@@ -55,86 +92,109 @@ export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
       });
 
       if (response.ok) {
-        // Recharger les données après mise à jour
-        const updatedResponse = await fetch(`/api/jerseys/${jerseyId}/rating`);
-        if (updatedResponse.ok) {
-          const data: RatingData = await updatedResponse.json();
-          setRatingData(data);
-        }
+        const data: ApiResponse = await response.json();
+
+        setRatingData({
+          averageRating: data.averageRating,
+          totalRatings: data.totalRatings,
+          userRating: data.userRating,
+        });
+        setOptimisticRating(null);
       } else {
         const errorData = await response.json();
         console.error("Erreur:", errorData.error);
-        // Ici vous pourriez ajouter une notification d'erreur
+
+        setOptimisticRating(null);
       }
     } catch (error) {
       console.error("Erreur lors de la soumission du rating:", error);
+      setOptimisticRating(null);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Formatage de l'affichage
-  const displayRating = ratingData.averageRating.toFixed(2);
+  const getStarDisplay = (
+    starIndex: number
+  ): { fill: number; isHovered: boolean } => {
+    const starValue = starIndex + 1;
+
+    if (!readonly && user && hoverRating > 0) {
+      const hoverFill =
+        hoverRating >= starValue ? 1 : hoverRating >= starValue - 0.5 ? 0.5 : 0;
+      return { fill: hoverFill, isHovered: true };
+    }
+
+    const displayRating =
+      optimisticRating ?? ratingData.userRating ?? ratingData.averageRating;
+
+    let fill = 0;
+    if (displayRating >= starValue) {
+      fill = 1;
+    } else if (displayRating >= starValue - 0.5) {
+      fill = 0.5;
+    }
+
+    return { fill, isHovered: false };
+  };
+
+  const handleStarHover = (
+    event: React.MouseEvent<HTMLDivElement>,
+    starIndex: number
+  ) => {
+    if (readonly || !user) return;
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const hoverX = event.clientX - rect.left;
+    const starWidth = rect.width;
+    const isLeftHalf = hoverX < starWidth / 2;
+
+    setHoverRating(starIndex + (isLeftHalf ? 0.5 : 1));
+  };
+
+  const handleMouseLeave = () => {
+    if (!readonly && user) {
+      setHoverRating(0);
+    }
+  };
+
+  const displayRating = (
+    optimisticRating ??
+    ratingData.userRating ??
+    ratingData.averageRating
+  ).toFixed(1);
   const totalVotes = ratingData.totalRatings.toLocaleString();
 
   return (
     <div className="space-y-3">
-      {/* Étoiles */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1" onMouseLeave={handleMouseLeave}>
         {Array.from({ length: 5 }).map((_, index) => {
-          const starValue = index + 1;
-          const isHovered = !readonly && hoverRating >= starValue;
-
-          // Logique pour afficher les étoiles en fonction de la note moyenne
-          const averageRating = ratingData.averageRating;
-          let starDisplay: "empty" | "half" | "full";
-
-          if (averageRating >= starValue) {
-            starDisplay = "full";
-          } else if (averageRating >= starValue - 0.5) {
-            starDisplay = "half";
-          } else {
-            starDisplay = "empty";
-          }
+          const { fill, isHovered } = getStarDisplay(index);
 
           return (
-            <div key={index} className="relative">
-              {/* Étoile de base (contour) */}
+            <div
+              key={index}
+              className={`relative ${
+                !readonly && user ? "cursor-pointer" : ""
+              } ${isSubmitting ? "opacity-50" : ""}`}
+              onClick={(e) => handleStarClick(e, index)}
+              onMouseMove={(e) => handleStarHover(e, index)}
+            >
               <Star
                 className={`w-6 h-6 transition-colors ${
-                  readonly
-                    ? starDisplay !== "empty"
-                      ? "text-yellow-500 stroke-yellow-500"
-                      : "text-muted-foreground/40 stroke-muted-foreground/40"
-                    : user
-                    ? `cursor-pointer ${
-                        isHovered
-                          ? "text-yellow-500 fill-yellow-500 stroke-yellow-500"
-                          : starDisplay !== "empty"
-                          ? "text-yellow-500 stroke-yellow-500 stroke-2 hover:fill-yellow-400"
-                          : "text-muted-foreground/40 stroke-muted-foreground/40 hover:stroke-yellow-400"
-                      }`
-                    : starDisplay !== "empty"
-                    ? "text-yellow-500 stroke-yellow-500 stroke-2"
+                  fill > 0 || isHovered
+                    ? "text-yellow-500 stroke-yellow-500"
                     : "text-muted-foreground/40 stroke-muted-foreground/40"
-                } ${isSubmitting ? "opacity-50" : ""} fill-none`}
+                }`}
                 strokeWidth={2}
-                onMouseEnter={() =>
-                  !readonly && user && setHoverRating(starValue)
-                }
-                onMouseLeave={() => !readonly && user && setHoverRating(0)}
-                onClick={() => handleStarClick(starValue)}
+                fill="none"
               />
 
-              {/* Remplissage pour demi-étoile ou étoile complète */}
-              {!isHovered && starDisplay !== "empty" && (
+              {fill > 0 && (
                 <div
                   className="absolute inset-0 overflow-hidden pointer-events-none"
                   style={{
-                    clipPath:
-                      starDisplay === "half"
-                        ? "inset(0 50% 0 0)" // Moitié gauche seulement
-                        : "none",
+                    clipPath: fill === 0.5 ? "inset(0 50% 0 0)" : "none",
                   }}
                 >
                   <Star
@@ -148,7 +208,6 @@ export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
         })}
       </div>
 
-      {/* Affichage des données */}
       <div className="flex flex-col space-y-1">
         <div className="text-lg font-semibold text-foreground">
           {displayRating} / 5
@@ -165,9 +224,14 @@ export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
             Connectez-vous pour noter ce maillot
           </div>
         )}
-        {user && ratingData.userRating && (
+        {user && (optimisticRating || ratingData.userRating) && (
           <div className="text-xs text-primary">
-            Votre note : {ratingData.userRating}/5
+            Votre note : {optimisticRating || ratingData.userRating}/5
+          </div>
+        )}
+        {optimisticRating && (
+          <div className="text-xs text-primary italic">
+            Mise à jour en cours...
           </div>
         )}
       </div>

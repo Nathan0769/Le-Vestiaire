@@ -114,7 +114,7 @@ model Rating {
   id       String @id @default(cuid())
   userId   String
   jerseyId String
-  rating   Int    // 1 à 5 étoiles
+  rating   Decimal    // 1 à 5 étoiles
   
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   jersey   Jersey @relation(fields: [jerseyId], references: [id], onDelete: Cascade)

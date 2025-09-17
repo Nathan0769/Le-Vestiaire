@@ -8,7 +8,6 @@ interface RatingData {
   userRating?: number;
 }
 
-// GET - Récupérer les données de rating pour un maillot
 export async function GET(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -17,7 +16,6 @@ export async function GET(
     const { id } = await params;
     const jerseyId = id;
 
-    // Vérifier que le maillot existe
     const jersey = await prisma.jersey.findUnique({
       where: { id: jerseyId },
     });
@@ -29,33 +27,33 @@ export async function GET(
       );
     }
 
-    // Calculer la moyenne et le total des ratings
-    const ratingsData = await prisma.rating.aggregate({
-      where: { jerseyId },
-      _avg: { rating: true },
-      _count: { rating: true },
-    });
-
     const user = await getCurrentUser();
-    let userRating: number | undefined;
 
-    // Si utilisateur connecté, récupérer sa note
-    if (user) {
-      const userRatingData = await prisma.rating.findUnique({
-        where: {
-          userId_jerseyId: {
-            userId: user.id,
-            jerseyId,
-          },
-        },
-      });
-      userRating = userRatingData?.rating;
-    }
+    const [ratingsData, userRating] = await Promise.all([
+      prisma.rating.aggregate({
+        where: { jerseyId },
+        _avg: { rating: true },
+        _count: { rating: true },
+      }),
+      user
+        ? prisma.rating.findUnique({
+            where: {
+              userId_jerseyId: {
+                userId: user.id,
+                jerseyId,
+              },
+            },
+            select: { rating: true },
+          })
+        : null,
+    ]);
 
     const responseData: RatingData = {
-      averageRating: ratingsData._avg.rating || 0,
+      averageRating: ratingsData._avg.rating
+        ? Number(ratingsData._avg.rating)
+        : 0,
       totalRatings: ratingsData._count.rating || 0,
-      userRating,
+      userRating: userRating?.rating ? Number(userRating.rating) : undefined,
     };
 
     return NextResponse.json(responseData);
@@ -68,7 +66,6 @@ export async function GET(
   }
 }
 
-// POST - Créer ou mettre à jour un rating
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -87,15 +84,13 @@ export async function POST(
     const jerseyId = id;
     const { rating } = await request.json();
 
-    // Validation du rating
-    if (!rating || rating < 1 || rating > 5 || !Number.isInteger(rating)) {
+    if (!rating || rating < 0.5 || rating > 5 || (rating * 2) % 1 !== 0) {
       return NextResponse.json(
-        { error: "Le rating doit être un entier entre 1 et 5" },
+        { error: "Le rating doit être entre 0.5 et 5 par pas de 0.5" },
         { status: 400 }
       );
     }
 
-    // Vérifier que le maillot existe
     const jersey = await prisma.jersey.findUnique({
       where: { id: jerseyId },
     });
@@ -107,7 +102,7 @@ export async function POST(
       );
     }
 
-    const updatedRating = await prisma.rating.upsert({
+    await prisma.rating.upsert({
       where: {
         userId_jerseyId: {
           userId: user.id,
@@ -125,9 +120,25 @@ export async function POST(
       },
     });
 
+    const [ratingsData] = await Promise.all([
+      prisma.rating.aggregate({
+        where: { jerseyId },
+        _avg: { rating: true },
+        _count: { rating: true },
+      }),
+    ]);
+
+    const responseData: RatingData = {
+      averageRating: ratingsData._avg.rating
+        ? Number(ratingsData._avg.rating)
+        : 0,
+      totalRatings: ratingsData._count.rating || 0,
+      userRating: typeof rating === "number" ? rating : Number(rating),
+    };
+
     return NextResponse.json({
       message: "Rating mis à jour avec succès",
-      rating: updatedRating,
+      ...responseData,
     });
   } catch (error) {
     console.error("Erreur lors de la mise à jour du rating:", error);
@@ -138,7 +149,6 @@ export async function POST(
   }
 }
 
-// DELETE - Supprimer un rating
 export async function DELETE(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -156,7 +166,6 @@ export async function DELETE(
 
     const jerseyId = id;
 
-    // Supprimer le rating s'il existe
     const deletedRating = await prisma.rating.deleteMany({
       where: {
         userId: user.id,
@@ -171,8 +180,23 @@ export async function DELETE(
       );
     }
 
+    const ratingsData = await prisma.rating.aggregate({
+      where: { jerseyId },
+      _avg: { rating: true },
+      _count: { rating: true },
+    });
+
+    const responseData: RatingData = {
+      averageRating: ratingsData._avg.rating
+        ? Number(ratingsData._avg.rating)
+        : 0,
+      totalRatings: ratingsData._count.rating || 0,
+      userRating: undefined,
+    };
+
     return NextResponse.json({
       message: "Rating supprimé avec succès",
+      ...responseData,
     });
   } catch (error) {
     console.error("Erreur lors de la suppression du rating:", error);

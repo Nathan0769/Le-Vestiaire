@@ -1,0 +1,1 @@
+-- already applied on database; placeholder file to satisfy migration history
