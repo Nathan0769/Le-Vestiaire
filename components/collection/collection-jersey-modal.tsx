@@ -661,7 +661,7 @@ export function CollectionJerseyModal({
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isLoading}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 cursor-pointer"
+              className="bg-destructive hover:bg-destructive/90 cursor-pointer"
             >
               {isLoading ? (
                 <div className="flex items-center gap-2">
