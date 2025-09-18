@@ -10,12 +10,25 @@ import type { CollectionItemWithJersey } from "@/types/collection-page";
 
 interface CollectionJerseyCardProps {
   collectionItem: CollectionItemWithJersey;
+  onUpdate?: (updatedItem: CollectionItemWithJersey) => void;
+  onDelete?: (deletedItemId: string) => void;
 }
 
 export function CollectionJerseyCard({
   collectionItem,
+  onUpdate,
+  onDelete,
 }: CollectionJerseyCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [localItem, setLocalItem] = useState(collectionItem);
+
+  const handleUpdate = (updatedItem: CollectionItemWithJersey) => {
+    setLocalItem(updatedItem);
+    if (onUpdate) {
+      onUpdate(updatedItem);
+    }
+  };
 
   const getConditionColor = (condition: string) => {
     switch (condition) {
@@ -53,52 +66,48 @@ export function CollectionJerseyCard({
         onClick={() => setIsModalOpen(true)}
       >
         <CardContent className="p-3 space-y-3">
-          {/* Image du maillot */}
           <div className="relative aspect-square">
             <Image
-              src={collectionItem.jersey.imageUrl}
-              alt={collectionItem.jersey.name}
+              src={localItem.jersey.imageUrl}
+              alt={localItem.jersey.name}
               fill
               className="object-contain group-hover:scale-105 transition-transform"
             />
           </div>
 
-          {/* Infos du maillot */}
           <div className="space-y-2">
             <p className="text-s font-medium text-center line-clamp-2">
-              {collectionItem.jersey.club.name}
+              {localItem.jersey.club.name}
             </p>
             <p className="text-xs text-muted-foreground text-center">
-              {getJerseyTypeLabel(collectionItem.jersey.type)} •{" "}
-              {collectionItem.jersey.season}
+              {getJerseyTypeLabel(localItem.jersey.type)} •{" "}
+              {localItem.jersey.season}
             </p>
 
-            {/* Badges */}
             <div className="flex justify-center items-center gap-2">
               <Badge
                 variant="secondary"
                 className={`text-xs px-1.5 py-0.5 ${getConditionColor(
-                  collectionItem.condition
+                  localItem.condition
                 )}`}
               >
                 {
                   CONDITION_LABELS[
-                    collectionItem.condition as keyof typeof CONDITION_LABELS
+                    localItem.condition as keyof typeof CONDITION_LABELS
                   ]
                 }
               </Badge>
 
-              {collectionItem.size && (
+              {localItem.size && (
                 <Badge variant="outline" className="text-xs px-1.5 py-0.5">
-                  {collectionItem.size}
+                  {localItem.size}
                 </Badge>
               )}
             </div>
 
-            {/* Prix */}
-            {collectionItem.purchasePrice && (
+            {localItem.purchasePrice && (
               <p className="text-xs font-semibold text-center text-primary">
-                {collectionItem.purchasePrice}€
+                {localItem.purchasePrice}€
               </p>
             )}
           </div>
@@ -108,7 +117,9 @@ export function CollectionJerseyCard({
       <CollectionJerseyModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        collectionItem={collectionItem}
+        collectionItem={localItem}
+        onUpdate={handleUpdate}
+        onDelete={onDelete}
       />
     </>
   );

@@ -49,7 +49,27 @@ export interface AddToCollectionData {
   notes?: string;
 }
 
+export interface UpdateCollectionData {
+  size: Size;
+  condition: Condition;
+  hasTags?: boolean;
+  personalization?: string;
+  purchasePrice?: number;
+  purchaseDate?: Date;
+  notes?: string;
+}
+
 export interface CollectionResponse {
   isInCollection: boolean;
   userJersey?: UserJersey;
+}
+
+export interface UpdateCollectionResponse {
+  success: boolean;
+  message: string;
+  userJersey?: import("@/types/collection-page").CollectionItemWithJersey;
+}
+
+export interface CollectionError {
+  error: string;
 }

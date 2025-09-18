@@ -192,3 +192,118 @@ export async function DELETE(
     );
   }
 }
+
+export async function PATCH(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const user = await getCurrentUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "Vous devez être connecté pour modifier votre collection" },
+        { status: 401 }
+      );
+    }
+
+    const jerseyId = id;
+    const {
+      size,
+      condition,
+      hasTags = false,
+      personalization,
+      purchasePrice,
+      purchaseDate,
+      notes,
+    } = await request.json();
+
+    if (!size) {
+      return NextResponse.json(
+        { error: "La taille est obligatoire" },
+        { status: 400 }
+      );
+    }
+
+    if (!condition) {
+      return NextResponse.json(
+        { error: "L'état est obligatoire" },
+        { status: 400 }
+      );
+    }
+
+    const existingUserJersey = await prisma.userJersey.findUnique({
+      where: {
+        userId_jerseyId: {
+          userId: user.id,
+          jerseyId,
+        },
+      },
+    });
+
+    if (!existingUserJersey) {
+      return NextResponse.json(
+        { error: "Ce maillot n'est pas dans votre collection" },
+        { status: 404 }
+      );
+    }
+
+    const updatedUserJersey = await prisma.userJersey.update({
+      where: {
+        userId_jerseyId: {
+          userId: user.id,
+          jerseyId,
+        },
+      },
+      data: {
+        size,
+        condition,
+        hasTags,
+        personalization: personalization || null,
+        purchasePrice: purchasePrice
+          ? parseFloat(purchasePrice.toString())
+          : null,
+        purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
+        notes: notes || null,
+        updatedAt: new Date(),
+      },
+      include: {
+        jersey: {
+          include: {
+            club: {
+              include: {
+                league: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    const formattedResponse = {
+      ...updatedUserJersey,
+      purchasePrice: updatedUserJersey.purchasePrice
+        ? Number(updatedUserJersey.purchasePrice)
+        : null,
+      jersey: {
+        ...updatedUserJersey.jersey,
+        retailPrice: updatedUserJersey.jersey.retailPrice
+          ? Number(updatedUserJersey.jersey.retailPrice)
+          : null,
+      },
+    };
+
+    return NextResponse.json({
+      success: true,
+      message: "Maillot mis à jour avec succès",
+      userJersey: formattedResponse,
+    });
+  } catch (error) {
+    console.error("Erreur lors de la mise à jour de la collection:", error);
+    return NextResponse.json(
+      { error: "Erreur serveur interne" },
+      { status: 500 }
+    );
+  }
+}

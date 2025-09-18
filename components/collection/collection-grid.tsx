@@ -18,6 +18,8 @@ interface CollectionGridProps {
 export function CollectionGrid({ collectionItems }: CollectionGridProps) {
   const [sortBy, setSortBy] = useState("date-desc");
 
+  const [localItems, setLocalItems] = useState(collectionItems);
+
   const sortOptions = [
     { value: "date-desc", label: "Plus récents" },
     { value: "date-asc", label: "Plus anciens" },
@@ -28,7 +30,19 @@ export function CollectionGrid({ collectionItems }: CollectionGridProps) {
     { value: "season", label: "Saison" },
   ];
 
-  const sortedItems = [...collectionItems].sort((a, b) => {
+  const handleUpdate = (updatedItem: CollectionItemWithJersey) => {
+    setLocalItems((prevItems) =>
+      prevItems.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+  };
+
+  const handleDelete = (deletedItemId: string) => {
+    setLocalItems((prevItems) =>
+      prevItems.filter((item) => item.id !== deletedItemId)
+    );
+  };
+
+  const sortedItems = [...localItems].sort((a, b) => {
     switch (sortBy) {
       case "date-desc":
         return (
@@ -69,7 +83,6 @@ export function CollectionGrid({ collectionItems }: CollectionGridProps) {
 
   return (
     <div className="space-y-6">
-      {/* Filtre */}
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-medium">Vos maillots</h2>
         <div className="flex items-center gap-2">
@@ -89,12 +102,24 @@ export function CollectionGrid({ collectionItems }: CollectionGridProps) {
         </div>
       </div>
 
-      {/* Grille des maillots */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-        {sortedItems.map((item) => (
-          <CollectionJerseyCard key={item.id} collectionItem={item} />
-        ))}
-      </div>
+      {sortedItems.length === 0 ? (
+        <div className="text-center py-12">
+          <p className="text-muted-foreground">
+            Aucun maillot dans votre collection.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+          {sortedItems.map((item) => (
+            <CollectionJerseyCard
+              key={item.id}
+              collectionItem={item}
+              onUpdate={handleUpdate}
+              onDelete={handleDelete}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

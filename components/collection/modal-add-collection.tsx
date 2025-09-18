@@ -88,7 +88,6 @@ export function AddToCollectionModal({
 
         <form onSubmit={handleSubmit} className="space-y-6">
           <div className="grid grid-cols-2 gap-4">
-            {/* Taille */}
             <div className="space-y-2">
               <Label htmlFor="size" className="flex items-center gap-1">
                 Taille <span className="text-destructive">*</span>
@@ -113,7 +112,6 @@ export function AddToCollectionModal({
               </Select>
             </div>
 
-            {/* État */}
             <div className="space-y-2">
               <Label htmlFor="condition" className="flex items-center gap-1">
                 État <span className="text-destructive">*</span>
@@ -139,7 +137,6 @@ export function AddToCollectionModal({
             </div>
           </div>
 
-          {/* Prix d'achat */}
           <div className="space-y-2">
             <Label htmlFor="purchasePrice">Prix d&apos;achat (€)</Label>
             <Input
@@ -160,7 +157,6 @@ export function AddToCollectionModal({
             />
           </div>
 
-          {/* Date d'achat */}
           <div className="space-y-2">
             <Label htmlFor="purchaseDate">Date d&apos;achat</Label>
             <Input
@@ -182,7 +178,6 @@ export function AddToCollectionModal({
             />
           </div>
 
-          {/* Personnalisation */}
           <div className="space-y-2">
             <Label htmlFor="personalization">
               Personnalisation (nom, numéro...)
@@ -197,7 +192,6 @@ export function AddToCollectionModal({
             />
           </div>
 
-          {/* Étiquettes */}
           <div className="flex items-center space-x-2">
             <Checkbox
               id="hasTags"
@@ -209,7 +203,6 @@ export function AddToCollectionModal({
             <Label htmlFor="hasTags">Possède encore les étiquettes</Label>
           </div>
 
-          {/* Notes */}
           <div className="space-y-2">
             <Label htmlFor="notes">Notes personnelles</Label>
             <Textarea
