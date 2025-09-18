@@ -74,16 +74,48 @@ export function TopRatedSection({
   };
 
   const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }, (_, i) => (
-      <Star
-        key={i}
-        className={`w-3 h-3 ${
-          i < Math.floor(rating)
-            ? "text-yellow-400 fill-yellow-400"
-            : "text-muted-foreground"
-        }`}
-      />
-    ));
+    return Array.from({ length: 5 }, (_, index) => {
+      const starValue = index + 1;
+
+      // Détermine le remplissage de l'étoile
+      let fill = 0;
+      if (rating >= starValue) {
+        fill = 1; // Étoile complète
+      } else if (rating >= starValue - 0.5) {
+        fill = 0.5; // Demi-étoile
+      }
+      // sinon fill = 0 (étoile vide)
+
+      return (
+        <div key={index} className="relative">
+          {/* Étoile de base */}
+          <Star
+            className={`w-3 h-3 transition-colors ${
+              fill > 0
+                ? "text-yellow-400 stroke-yellow-400"
+                : "text-muted-foreground/40 stroke-muted-foreground/40"
+            }`}
+            strokeWidth={2}
+            fill="none"
+          />
+
+          {/* Remplissage pour demi-étoile ou étoile complète */}
+          {fill > 0 && (
+            <div
+              className="absolute inset-0 overflow-hidden pointer-events-none"
+              style={{
+                clipPath: fill === 0.5 ? "inset(0 50% 0 0)" : "none",
+              }}
+            >
+              <Star
+                className="w-3 h-3 text-yellow-400 fill-yellow-400 stroke-yellow-400"
+                strokeWidth={2}
+              />
+            </div>
+          )}
+        </div>
+      );
+    });
   };
 
   if (loading) {
