@@ -2,7 +2,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { JerseyCard } from "@/components/jerseys/jerseys/jersey-card";
-import { Heart } from "lucide-react";
+import { Heart, Shirt, Trophy } from "lucide-react";
 
 export default async function WishlistPage() {
   const user = await getCurrentUser();
@@ -87,11 +87,10 @@ export default async function WishlistPage() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {/* Jersey total */}
         <div className="bg-card border border-border rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-8 h-8 bg-primary/50 rounded-full flex items-center justify-center">
-              <Heart className="w-4 h-4 text-red-500" />
+              <Heart className="w-4 h-4 text-primary" />
             </div>
             <h3 className="font-medium text-muted-foreground">
               Maillots voulus
@@ -109,7 +108,7 @@ export default async function WishlistPage() {
         <div className="bg-card border border-border rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-8 h-8 bg-primary/50 rounded-full flex items-center justify-center">
-              <span className="text-primary text-sm font-bold">🏆</span>
+              <Trophy className="w-4 h-4 text-primary" />
             </div>
             <h3 className="font-medium text-muted-foreground">
               Ligues favorites
@@ -132,7 +131,7 @@ export default async function WishlistPage() {
         <div className="bg-card border border-border rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-8 h-8 bg-primary/50 rounded-full flex items-center justify-center">
-              <span className="text-primary text-sm font-bold">👕</span>
+              <Shirt className="w-4 h-4 text-primary" />
             </div>
             <h3 className="font-medium text-muted-foreground">
               Types préférés
