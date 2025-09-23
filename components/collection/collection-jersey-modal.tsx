@@ -44,6 +44,7 @@ import {
   Trash2,
   Save,
   X,
+  Gift,
 } from "lucide-react";
 import { CONDITION_LABELS, SIZE_LABELS } from "@/types/collection";
 import type { Size, Condition, UpdateCollectionData } from "@/types/collection";
@@ -79,6 +80,8 @@ export function CollectionJerseyModal({
     purchasePrice: collectionItem.purchasePrice || undefined,
     purchaseDate: collectionItem.purchaseDate || undefined,
     notes: collectionItem.notes || "",
+    isGift: collectionItem.isGift || false,
+    isFromMysteryBox: collectionItem.isFromMysteryBox || false,
   });
 
   const resetForm = () => {
@@ -90,6 +93,8 @@ export function CollectionJerseyModal({
       purchasePrice: collectionItem.purchasePrice || undefined,
       purchaseDate: collectionItem.purchaseDate || undefined,
       notes: collectionItem.notes || "",
+      isGift: collectionItem.isGift || false,
+      isFromMysteryBox: collectionItem.isFromMysteryBox || false,
     });
   };
 
@@ -255,6 +260,26 @@ export function CollectionJerseyModal({
                     <Badge variant="outline" className="text-green-600">
                       <Tag className="w-3 h-3 mr-1" />
                       Avec étiquettes
+                    </Badge>
+                  )}
+
+                  {collectionItem.isGift && (
+                    <Badge
+                      variant="outline"
+                      className="text-primary bg-primary/20"
+                    >
+                      <Gift className="w-3 h-3 mr-1" />
+                      Cadeau
+                    </Badge>
+                  )}
+
+                  {collectionItem.isFromMysteryBox && (
+                    <Badge
+                      variant="outline"
+                      className="text-primary bg-primary/20"
+                    >
+                      <Package className="w-3 h-3 mr-1" />
+                      Box mystère
                     </Badge>
                   )}
                 </div>
@@ -451,6 +476,41 @@ export function CollectionJerseyModal({
                       />
                       <Label htmlFor="hasTags">
                         Possède encore les étiquettes
+                      </Label>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="isGift"
+                        checked={formData.isGift}
+                        onCheckedChange={(checked) =>
+                          setFormData({ ...formData, isGift: !!checked })
+                        }
+                      />
+                      <Label
+                        htmlFor="isGift"
+                        className="flex items-center gap-2"
+                      >
+                        Ce maillot est un cadeau
+                      </Label>
+                    </div>
+
+                    <div className="flex items-center space-x-2">
+                      <Checkbox
+                        id="isFromMysteryBox"
+                        checked={formData.isFromMysteryBox}
+                        onCheckedChange={(checked) =>
+                          setFormData({
+                            ...formData,
+                            isFromMysteryBox: !!checked,
+                          })
+                        }
+                      />
+                      <Label
+                        htmlFor="isFromMysteryBox"
+                        className="flex items-center gap-2"
+                      >
+                        Maillot reçu dans une box mystère
                       </Label>
                     </div>
 

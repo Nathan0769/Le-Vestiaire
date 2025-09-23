@@ -24,7 +24,7 @@ model User {
   favoriteClub    Club?        @relation(fields: [favoriteClubId], references: [id])
   collection      UserJersey[]
   wishlist        Wishlist[]
-  ratings         Rating[]     // Nouvelle relation
+  ratings         Rating[]     
   // ----------------------
 
   // Relations auth
@@ -100,7 +100,7 @@ model Jersey {
   club       Club         @relation(fields: [clubId], references: [id])
   collection UserJersey[]
   wishlist   Wishlist[]
-  ratings    Rating[]     // Nouvelle relation
+  ratings    Rating[]     
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -121,7 +121,7 @@ model Rating {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([userId, jerseyId]) // Un utilisateur ne peut noter qu'une fois par maillot
+  @@unique([userId, jerseyId]) 
   @@map("ratings")
 }
 
@@ -137,6 +137,9 @@ model UserJersey {
   purchaseDate    DateTime?
   notes           String?
   userPhotoUrl    String?
+
+  isGift          Boolean   @default(false)  
+  isFromMysteryBox Boolean  @default(false)
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   jersey Jersey @relation(fields: [jerseyId], references: [id], onDelete: Cascade)

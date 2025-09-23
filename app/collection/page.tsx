@@ -29,15 +29,16 @@ export default async function CollectionPage() {
       },
     },
     orderBy: {
-      createdAt: "desc", // Plus récents en premier par défaut
+      createdAt: "desc",
     },
   });
 
-  // Convertir les Decimal en number pour éviter l'erreur de sérialisation
   const collectionItems: CollectionItemWithJersey[] = collectionItemsRaw.map(
     (item) => ({
       ...item,
       purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
+      isGift: item.isGift,
+      isFromMysteryBox: item.isFromMysteryBox,
       jersey: {
         ...item.jersey,
         retailPrice: item.jersey.retailPrice

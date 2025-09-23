@@ -1,4 +1,4 @@
-import { Package, Trophy, Shirt } from "lucide-react";
+import { Package, Trophy, Shirt, Gift } from "lucide-react";
 import { CONDITION_LABELS } from "@/types/collection";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 
@@ -23,26 +23,17 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
     return acc;
   }, {} as Record<string, number>);
 
-  // Stats par type
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const typeStats = collectionItems.reduce((acc, item) => {
-    const type = item.jersey.type;
-    acc[type] = (acc[type] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const typeLabels = {
-    HOME: "Domicile",
-    AWAY: "Extérieur",
-    THIRD: "Third",
-    FOURTH: "Fourth",
-    GOALKEEPER: "Gardien",
-    SPECIAL: "Spécial",
-  };
+  // 🆕 Stats pour les nouveaux champs
+  const giftCount = collectionItems.filter((item) => item.isGift).length;
+  const mysteryBoxCount = collectionItems.filter(
+    (item) => item.isFromMysteryBox
+  ).length;
+  const regularCount = collectionItems.filter(
+    (item) => !item.isGift && !item.isFromMysteryBox
+  ).length;
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
       {/* Maillots totaux */}
       <div className="bg-card border border-border rounded-lg p-6">
         <div className="flex items-center gap-3 mb-2">
@@ -109,6 +100,46 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
                 <span className="text-sm text-muted-foreground">{count}</span>
               </div>
             ))}
+        </div>
+      </div>
+
+      {/* 🆕 Nouvelle stat : Provenance */}
+      <div className="bg-card border border-border rounded-lg p-6">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+            <Gift className="w-4 h-4 text-primary" />
+          </div>
+          <h3 className="font-medium text-muted-foreground">Provenance</h3>
+        </div>
+        <div className="space-y-2">
+          {regularCount > 0 && (
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium">Achetés</span>
+              <span className="text-sm text-muted-foreground">
+                {regularCount}
+              </span>
+            </div>
+          )}
+          {giftCount > 0 && (
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium flex items-center gap-1">
+                <Gift className="w-3 h-3 text-pink-500" />
+                Cadeaux
+              </span>
+              <span className="text-sm text-muted-foreground">{giftCount}</span>
+            </div>
+          )}
+          {mysteryBoxCount > 0 && (
+            <div className="flex justify-between items-center">
+              <span className="text-sm font-medium flex items-center gap-1">
+                <Package className="w-3 h-3 text-purple-500" />
+                Box mystère
+              </span>
+              <span className="text-sm text-muted-foreground">
+                {mysteryBoxCount}
+              </span>
+            </div>
+          )}
         </div>
       </div>
     </div>

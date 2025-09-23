@@ -63,6 +63,8 @@ export async function POST(
       purchasePrice,
       purchaseDate,
       notes,
+      isGift,
+      isFromMysteryBox,
     } = await request.json();
 
     if (!size) {
@@ -129,6 +131,8 @@ export async function POST(
         purchasePrice: purchasePrice ? parseFloat(purchasePrice) : null,
         purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
         notes: notes || null,
+        isGift: isGift || false,
+        isFromMysteryBox: isFromMysteryBox || false,
       },
     });
 
@@ -217,6 +221,8 @@ export async function PATCH(
       purchasePrice,
       purchaseDate,
       notes,
+      isGift,
+      isFromMysteryBox,
     } = await request.json();
 
     if (!size) {
@@ -266,6 +272,8 @@ export async function PATCH(
           : null,
         purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
         notes: notes || null,
+        isGift: isGift || false,
+        isFromMysteryBox: isFromMysteryBox || false,
         updatedAt: new Date(),
       },
       include: {

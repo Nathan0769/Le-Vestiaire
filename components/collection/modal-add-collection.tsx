@@ -42,6 +42,8 @@ export function AddToCollectionModal({
     size: "M" as Size,
     condition: "MINT" as Condition,
     hasTags: false,
+    isGift: false,
+    isFromMysteryBox: false,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -65,6 +67,8 @@ export function AddToCollectionModal({
       size: "M" as Size,
       condition: "MINT" as Condition,
       hasTags: false,
+      isGift: false,
+      isFromMysteryBox: false,
     });
   };
 
@@ -201,6 +205,30 @@ export function AddToCollectionModal({
               }
             />
             <Label htmlFor="hasTags">Possède encore les étiquettes</Label>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="isGift"
+              checked={formData.isGift}
+              onCheckedChange={(checked) =>
+                setFormData({ ...formData, isGift: !!checked })
+              }
+            />
+            <Label htmlFor="isGift">Reçu en cadeau</Label>
+          </div>
+
+          <div className="flex items-center space-x-2">
+            <Checkbox
+              id="isFromMysteryBox"
+              checked={formData.isFromMysteryBox}
+              onCheckedChange={(checked) =>
+                setFormData({ ...formData, isFromMysteryBox: !!checked })
+              }
+            />
+            <Label htmlFor="isFromMysteryBox">
+              Provenant d&apos;une Box Mystère
+            </Label>
           </div>
 
           <div className="space-y-2">

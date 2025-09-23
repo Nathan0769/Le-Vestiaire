@@ -34,6 +34,8 @@ export interface UserJersey {
   purchasePrice?: number;
   purchaseDate?: Date;
   notes?: string;
+  isGift: boolean;
+  isFromMysteryBox: boolean;
   userPhotoUrl?: string;
   createdAt: Date;
   updatedAt: Date;
@@ -47,6 +49,8 @@ export interface AddToCollectionData {
   purchasePrice?: number;
   purchaseDate?: Date;
   notes?: string;
+  isGift: boolean;
+  isFromMysteryBox: boolean;
 }
 
 export interface UpdateCollectionData {
@@ -57,6 +61,8 @@ export interface UpdateCollectionData {
   purchasePrice?: number;
   purchaseDate?: Date;
   notes?: string;
+  isGift: boolean;
+  isFromMysteryBox: boolean;
 }
 
 export interface CollectionResponse {

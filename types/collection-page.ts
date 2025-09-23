@@ -1,5 +1,3 @@
-// types/collection-page.ts
-
 export type CollectionItemWithJersey = {
   id: string;
   userId: string;
@@ -8,9 +6,11 @@ export type CollectionItemWithJersey = {
   condition: string;
   hasTags: boolean;
   personalization?: string | null;
-  purchasePrice?: number | null; // Converti de Decimal à number
+  purchasePrice?: number | null;
   purchaseDate?: Date | null;
   notes?: string | null;
+  isGift: boolean;
+  isFromMysteryBox: boolean;
   userPhotoUrl?: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -21,7 +21,7 @@ export type CollectionItemWithJersey = {
     type: string;
     season: string;
     brand: string;
-    retailPrice?: number | null; // Converti de Decimal à number
+    retailPrice?: number | null;
     description?: string | null;
     club: {
       id: string;
