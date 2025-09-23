@@ -9,21 +9,18 @@ interface CollectionStatsProps {
 export function CollectionStats({ collectionItems }: CollectionStatsProps) {
   const totalJerseys = collectionItems.length;
 
-  // Stats par ligue
   const leagueStats = collectionItems.reduce((acc, item) => {
     const leagueName = item.jersey.club.league.name;
     acc[leagueName] = (acc[leagueName] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
-  // Stats par condition
   const conditionStats = collectionItems.reduce((acc, item) => {
     const condition = item.condition;
     acc[condition] = (acc[condition] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
-  // 🆕 Stats pour les nouveaux champs
   const giftCount = collectionItems.filter((item) => item.isGift).length;
   const mysteryBoxCount = collectionItems.filter(
     (item) => item.isFromMysteryBox
@@ -34,7 +31,6 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-      {/* Maillots totaux */}
       <div className="bg-card border border-border rounded-lg p-6">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
@@ -52,7 +48,6 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
         </p>
       </div>
 
-      {/* Ligues favorites */}
       <div className="bg-card border border-border rounded-lg p-6">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
@@ -75,7 +70,6 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
         </div>
       </div>
 
-      {/* États/Conditions */}
       <div className="bg-card border border-border rounded-lg p-6">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
@@ -103,7 +97,6 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
         </div>
       </div>
 
-      {/* 🆕 Nouvelle stat : Provenance */}
       <div className="bg-card border border-border rounded-lg p-6">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
@@ -123,7 +116,6 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
           {giftCount > 0 && (
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium flex items-center gap-1">
-                <Gift className="w-3 h-3 text-pink-500" />
                 Cadeaux
               </span>
               <span className="text-sm text-muted-foreground">{giftCount}</span>
@@ -132,7 +124,6 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
           {mysteryBoxCount > 0 && (
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium flex items-center gap-1">
-                <Package className="w-3 h-3 text-purple-500" />
                 Box mystère
               </span>
               <span className="text-sm text-muted-foreground">
