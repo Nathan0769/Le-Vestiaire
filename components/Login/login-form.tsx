@@ -132,12 +132,12 @@ export function LoginForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground text-center text-xs">
-        En cliquant sur continuer, vous acceptez nos{" "}
-        <a href="#" className="underline">
+        En cliquant sur se connecter, vous acceptez nos{" "}
+        <a href="/conditions-utilisation" className="underline">
           Conditions d&apos;utilisation
         </a>{" "}
         et{" "}
-        <a href="#" className="underline">
+        <a href="/politique-confidentialite" className="underline">
           Politique de confidentialité
         </a>
         .

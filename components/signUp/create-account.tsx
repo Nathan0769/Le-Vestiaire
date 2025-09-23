@@ -261,6 +261,17 @@ export default function SignupPage({
           </form>
         </CardContent>
       </Card>
+      <div className="text-muted-foreground text-center text-xs">
+        En cliquant sur créer mon compte, vous acceptez nos{" "}
+        <a href="/conditions-utilisation" className="underline">
+          Conditions d&apos;utilisation
+        </a>{" "}
+        et{" "}
+        <a href="/politique-confidentialite" className="underline">
+          Politique de confidentialité
+        </a>
+        .
+      </div>
     </div>
   );
 }
