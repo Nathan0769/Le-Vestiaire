@@ -120,15 +120,15 @@ export type TopRatedRow = {
   brand: string;
   club_id: string;
   club_name: string;
-  shortName: string;
-  logoUrl: string;
-  primaryColor: string;
-  league_id: string;
-  league_name: string;
-  country: string;
-  league_logo: string;
-  tier: number;
-  average_rating: number | null;
+  club_short_name: string;
+  club_logo_url: string | null;
+  club_primary_color: string | null;
+  league_id: string | null;
+  league_name: string | null;
+  league_country: string | null;
+  league_logo_url: string | null;
+  league_tier: number | null;
+  average_rating: number;
   total_ratings: number;
 };
 

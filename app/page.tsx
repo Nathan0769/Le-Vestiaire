@@ -4,30 +4,14 @@ import { UserStatsSection } from "@/components/home/user-stats-section";
 import { TopRatedSection } from "@/components/home/top-rated-section";
 import { RecentSection } from "@/components/home/recent-section";
 import prisma from "@/lib/prisma";
-import type { TopRatedJersey, RecentJersey, UserHomeStats } from "@/types/home";
+import type {
+  TopRatedJersey,
+  RecentJersey,
+  UserHomeStats,
+  TopRatedRow,
+} from "@/types/home";
 
 export const revalidate = 3600;
-
-type TopRatedRow = {
-  id: string;
-  name: string;
-  imageUrl: string;
-  type: string;
-  season: string;
-  brand: string;
-  club_id: string;
-  club_name: string;
-  club_short_name: string;
-  club_logo_url: string | null;
-  club_primary_color: string | null;
-  league_id: string | null;
-  league_name: string | null;
-  league_country: string | null;
-  league_logo_url: string | null;
-  league_tier: number | null;
-  average_rating: number;
-  total_ratings: number;
-};
 
 async function getTopRatedJerseys(): Promise<TopRatedJersey[]> {
   const rows = await prisma.$queryRaw<TopRatedRow[]>`
@@ -195,7 +179,7 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
 
   const [leagueStats, recentWishlistItems] = await Promise.all([
     prisma.$queryRaw<Array<{ league_name: string; count: number }>>`
-      SELECT 
+        SELECT 
         l.name as league_name,
         COUNT(*)::int as count
       FROM user_jerseys uj
