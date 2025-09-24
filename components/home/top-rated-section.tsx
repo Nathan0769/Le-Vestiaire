@@ -5,26 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Star, ArrowRight, Award } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-
-interface TopRatedJersey {
-  id: string;
-  name: string;
-  imageUrl: string;
-  type: string;
-  season: string;
-  brand: string;
-  club: {
-    id: string;
-    name: string;
-    shortName: string;
-    league: {
-      id: string;
-      name: string;
-    };
-  };
-  averageRating: number;
-  totalRatings: number;
-}
+import type { TopRatedJersey } from "@/types/home";
 
 interface TopRatedSectionProps {
   jerseys?: TopRatedJersey[];
@@ -77,18 +58,15 @@ export function TopRatedSection({
     return Array.from({ length: 5 }, (_, index) => {
       const starValue = index + 1;
 
-      // Détermine le remplissage de l'étoile
       let fill = 0;
       if (rating >= starValue) {
-        fill = 1; // Étoile complète
+        fill = 1;
       } else if (rating >= starValue - 0.5) {
-        fill = 0.5; // Demi-étoile
+        fill = 0.5;
       }
-      // sinon fill = 0 (étoile vide)
 
       return (
         <div key={index} className="relative">
-          {/* Étoile de base */}
           <Star
             className={`w-3 h-3 transition-colors ${
               fill > 0
@@ -99,7 +77,6 @@ export function TopRatedSection({
             fill="none"
           />
 
-          {/* Remplissage pour demi-étoile ou étoile complète */}
           {fill > 0 && (
             <div
               className="absolute inset-0 overflow-hidden pointer-events-none"
@@ -161,7 +138,9 @@ export function TopRatedSection({
           {jerseys.map((jersey, index) => (
             <Link
               key={jersey.id}
-              href={`/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.id}`}
+              href={`/jerseys/${jersey.club.league.id || "unknown"}/clubs/${
+                jersey.club.id
+              }/jerseys/${jersey.id}`}
               className="group relative"
             >
               <div className="relative">

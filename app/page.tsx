@@ -8,84 +8,102 @@ import type { TopRatedJersey, RecentJersey, UserHomeStats } from "@/types/home";
 
 export const revalidate = 3600;
 
+type TopRatedRow = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  type: string;
+  season: string;
+  brand: string;
+  club_id: string;
+  club_name: string;
+  club_short_name: string;
+  club_logo_url: string | null;
+  club_primary_color: string | null;
+  league_id: string | null;
+  league_name: string | null;
+  league_country: string | null;
+  league_logo_url: string | null;
+  league_tier: number | null;
+  average_rating: number;
+  total_ratings: number;
+};
+
 async function getTopRatedJerseys(): Promise<TopRatedJersey[]> {
-  const topRated = await prisma.jersey.findMany({
-    select: {
-      id: true,
-      name: true,
-      imageUrl: true,
-      type: true,
-      season: true,
-      brand: true,
+  const rows = await prisma.$queryRaw<TopRatedRow[]>`
+WITH jersey_ratings AS (
+  SELECT 
+    "jerseyId",
+    AVG(rating)::numeric(10,2) as average_rating,
+    COUNT(id)::int as total_ratings
+  FROM ratings 
+  GROUP BY "jerseyId"
+  HAVING COUNT(id) > 3 
+),
+top_rated_jerseys AS (
+  SELECT 
+    "jerseyId",
+    average_rating,
+    total_ratings
+  FROM jersey_ratings
+  ORDER BY average_rating DESC, total_ratings DESC
+  LIMIT 20  
+)
+SELECT
+  j.id,
+  j.name,
+  j."imageUrl",
+  j.type,
+  j.season,
+  j.brand,
+  c.id as club_id,
+  c.name as club_name,
+  c."shortName" as club_short_name,
+  c."logoUrl" as club_logo_url,
+  c."primaryColor" as club_primary_color,
+  l.id as league_id,
+  l.name as league_name,
+  l.country as league_country,
+  l."logoUrl" as league_logo_url,
+  l.tier as league_tier,
+  tr.average_rating,
+  tr.total_ratings
+FROM top_rated_jerseys tr
+JOIN jerseys j ON tr."jerseyId" = j.id
+JOIN clubs c ON j."clubId" = c.id
+LEFT JOIN leagues l ON c."leagueId" = l.id
+ORDER BY tr.average_rating DESC, tr.total_ratings DESC
+LIMIT 6;
+
+  `;
+
+  return rows.map(
+    (r): TopRatedJersey => ({
+      id: r.id,
+      name: r.name,
+      imageUrl: r.imageUrl,
+      type: r.type,
+      season: r.season,
+      brand: r.brand,
       club: {
-        select: {
-          id: true,
-          name: true,
-          shortName: true,
-          leagueId: true,
-          logoUrl: true,
-          primaryColor: true,
-          league: {
-            select: {
-              id: true,
-              name: true,
-              country: true,
-              logoUrl: true,
-              tier: true,
-            },
-          },
+        id: r.club_id,
+        name: r.club_name,
+        shortName: r.club_short_name,
+        logoUrl: r.club_logo_url,
+        primaryColor: r.club_primary_color,
+        leagueId: r.league_id,
+        league: {
+          id: r.league_id,
+          name: r.league_name,
+          country: r.league_country,
+          logoUrl: r.league_logo_url,
+          tier: r.league_tier,
         },
       },
-      ratings: {
-        select: {
-          rating: true,
-        },
-      },
-    },
-    where: {
-      ratings: {
-        some: {},
-      },
-    },
-    take: 10,
-  });
-
-  const jerseysWithRatings = topRated.map((jersey) => {
-    const ratings = jersey.ratings.map((r) => Number(r.rating));
-    const avgRating =
-      ratings.length > 0
-        ? ratings.reduce((a, b) => a + b, 0) / ratings.length
-        : 0;
-
-    return {
-      id: jersey.id,
-      name: jersey.name,
-      imageUrl: jersey.imageUrl,
-      type: jersey.type,
-      season: jersey.season,
-      brand: jersey.brand,
-      club: {
-        id: jersey.club.id,
-        name: jersey.club.name,
-        shortName: jersey.club.shortName,
-        leagueId: jersey.club.leagueId,
-        logoUrl: jersey.club.logoUrl,
-        primaryColor: jersey.club.primaryColor,
-        league: jersey.club.league,
-      },
-      averageRating: Number(avgRating.toFixed(2)),
-      totalRatings: ratings.length,
-    };
-  });
-
-  return jerseysWithRatings
-    .sort((a, b) => {
-      if (b.averageRating !== a.averageRating) {
-        return b.averageRating - a.averageRating;
-      }
-      return b.totalRatings - a.totalRatings;
+      averageRating: Number(r.average_rating),
+      totalRatings: r.total_ratings,
     })
-    .slice(0, 6);
+  );
 }
 
 async function getRecentJerseys(): Promise<RecentJersey[]> {

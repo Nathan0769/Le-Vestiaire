@@ -1,4 +1,4 @@
-export interface TopRatedJersey {
+export type TopRatedJersey = {
   id: string;
   name: string;
   imageUrl: string;
@@ -9,20 +9,20 @@ export interface TopRatedJersey {
     id: string;
     name: string;
     shortName: string;
-    leagueId: string;
-    logoUrl: string;
-    primaryColor: string;
+    logoUrl: string | null;
+    primaryColor: string | null;
+    leagueId: string | null;
     league: {
-      id: string;
-      name: string;
-      country: string;
-      logoUrl: string;
-      tier: number;
+      id: string | null;
+      name: string | null;
+      country: string | null;
+      logoUrl: string | null;
+      tier: number | null;
     };
   };
   averageRating: number;
   totalRatings: number;
-}
+};
 
 export interface RecentJersey {
   id: string;
