@@ -19,9 +19,9 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Le Vestiaire - Votre Collection de Maillots de Football",
+    name: "Le Vestiaire Foot - Votre Collection de Maillots de Football",
     description:
-      "Découvrez, collectionnez et partagez votre passion pour les maillots de football. Créez votre collection personnelle et partagez avec la communauté",
+      "Découvrez, collectionnez et partagez votre passion pour les maillots de football. Créez votre collection personnelle et partagez la avec la communauté",
     url: "https://le-vestiaire-foot.fr",
     potentialAction: {
       "@type": "SearchAction",
@@ -58,7 +58,7 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           <header>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
-              Bienvenue dans
+              Bienvenue dans{" "}
               <span className="text-primary block mt-2">Le Vestiaire</span>
             </h1>
 
