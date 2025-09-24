@@ -5,6 +5,7 @@ import { JerseyBreadcrumb } from "@/components/jerseys/jerseys/jerseys-bread-cru
 import { StarRating } from "@/components/jerseys/ratings/star-rating";
 import { WishlistButton } from "@/components/wishlist/wishlist-button";
 import { CollectionButton } from "@/components/collection/collection-button";
+import { JerseyStats } from "@/components/jerseys/stats/jersey-stats";
 
 interface JerseyPageProps {
   params: Promise<{
@@ -59,7 +60,6 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
       />
 
       <main className="flex flex-col lg:flex-row gap-8 p-6 max-w-6xl mx-auto">
-        {/* Jersey Image */}
         <div className="w-full lg:w-1/2">
           <Image
             src={jersey.imageUrl}
@@ -70,17 +70,14 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
           />
         </div>
 
-        {/* Jersey Info Card */}
         <div className="w-full lg:w-1/2">
           <div className="bg-card border border-border rounded-xl shadow-lg p-6 h-full flex flex-col justify-between">
-            {/* Header Section */}
             <div className="space-y-6">
               <div>
                 <h1 className="text-3xl font-bold text-foreground mb-4">
                   {jersey.name}
                 </h1>
 
-                {/* Jersey Details - One per line */}
                 <div className="space-y-3">
                   <div className="flex items-center justify-between py-2 border-b border-border/50">
                     <span className="text-sm font-medium text-muted-foreground">
@@ -120,16 +117,20 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                 </div>
               </div>
 
-              {/* Star Rating Component */}
-              <div className="pt-4">
-                <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                  Évaluation communautaire
-                </h3>
-                <StarRating jerseyId={jersey.id} />
+              <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <h3 className="text-sm font-medium text-muted-foreground mb-3">
+                    Note moyenne
+                  </h3>
+                  <StarRating jerseyId={jersey.id} />
+                </div>
+
+                <div>
+                  <JerseyStats jerseyId={jersey.id} />
+                </div>
               </div>
             </div>
 
-            {/* Action Buttons */}
             <div className="flex flex-col gap-3 mt-8 pt-6 border-t border-border/50">
               <div className="flex flex-col sm:flex-row gap-3">
                 <CollectionButton
