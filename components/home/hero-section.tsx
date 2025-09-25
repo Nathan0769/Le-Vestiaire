@@ -118,19 +118,25 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
               className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
               aria-label="Actions d'authentification"
             >
-              <Button size="lg" asChild>
+              <Button size="lg" asChild className="w-[200px] sm:w-auto">
                 <Link
                   href="/auth/login"
-                  className="gap-2"
+                  className="gap-2 justify-center"
                   aria-label="Se connecter à votre compte Le Vestiaire"
                 >
                   Se connecter
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" asChild>
+              <Button
+                size="lg"
+                variant="outline"
+                asChild
+                className="w-[200px] sm:w-auto"
+              >
                 <Link
                   href="/auth/signUp"
+                  className="justify-center"
                   aria-label="Créer un compte pour commencer votre collection de maillots"
                 >
                   Créer un compte
