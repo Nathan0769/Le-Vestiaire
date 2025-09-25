@@ -1,20 +1,29 @@
+import { auth } from "@/lib/auth";
 import { cookies } from "next/headers";
 
 export async function getCurrentUser() {
-  const cookieStore = await cookies();
+  console.time("🚀 getCurrentUser - Direct");
 
-  const res = await fetch(
-    `${process.env.BETTER_AUTH_URL}/api/auth/get-session`,
-    {
-      headers: {
+  try {
+    const cookieStore = await cookies();
+
+    const session = await auth.api.getSession({
+      headers: new Headers({
         cookie: cookieStore.toString(),
-      },
-      credentials: "include",
-    }
-  );
+      }),
+    });
 
-  if (!res.ok) return null;
+    console.timeEnd("🚀 getCurrentUser - Direct");
+    console.log(
+      `👤 User: ${
+        session?.user ? `${session.user.id} (connecté)` : "non connecté"
+      }`
+    );
 
-  const session = await res.json();
-  return session?.user ?? null;
+    return session?.user ?? null;
+  } catch (error) {
+    console.error("❌ Direct auth error:", error);
+    console.timeEnd("🚀 getCurrentUser - Direct");
+    return null;
+  }
 }

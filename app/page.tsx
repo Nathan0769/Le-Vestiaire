@@ -9,11 +9,15 @@ import type {
   RecentJersey,
   UserHomeStats,
   TopRatedRow,
+  RawResult,
 } from "@/types/home";
 
 export const revalidate = 3600;
 
 async function getTopRatedJerseys(): Promise<TopRatedJersey[]> {
+  console.time("⏱️ getTopRatedJerseys - Total");
+  console.time("⏱️ getTopRatedJerseys - Query");
+
   const rows = await prisma.$queryRaw<TopRatedRow[]>`
 WITH jersey_ratings AS (
   SELECT 
@@ -57,11 +61,13 @@ JOIN jerseys j ON tr."jerseyId" = j.id
 JOIN clubs c ON j."clubId" = c.id
 LEFT JOIN leagues l ON c."leagueId" = l.id
 ORDER BY tr.average_rating DESC, tr.total_ratings DESC
-LIMIT 6;
+LIMIT 6`;
 
-  `;
+  console.timeEnd("⏱️ getTopRatedJerseys - Query");
+  console.log(`📊 getTopRatedJerseys - Résultats trouvés: ${rows.length}`);
+  console.time("⏱️ getTopRatedJerseys - Mapping");
 
-  return rows.map(
+  const result = rows.map(
     (r): TopRatedJersey => ({
       id: r.id,
       name: r.name,
@@ -88,49 +94,59 @@ LIMIT 6;
       totalRatings: r.total_ratings,
     })
   );
+
+  console.timeEnd("⏱️ getTopRatedJerseys - Mapping");
+  console.timeEnd("⏱️ getTopRatedJerseys - Total");
+  return result;
 }
 
 async function getRecentJerseys(): Promise<RecentJersey[]> {
-  const recentJerseys = await prisma.jersey.findMany({
-    select: {
-      id: true,
-      name: true,
-      imageUrl: true,
-      type: true,
-      season: true,
-      brand: true,
-      createdAt: true,
+  console.time("⚡ getRecentJerseys - Raw SQL");
+
+  const jerseys = (await prisma.$queryRaw`
+   WITH latest_jerseys AS (
+  SELECT id, name, "imageUrl", type, season, brand, "createdAt", "clubId"
+  FROM jerseys
+  ORDER BY "createdAt" DESC
+  LIMIT 6
+)
+SELECT 
+    j.id, j.name, j."imageUrl", j.type, j.season, j.brand, j."createdAt",
+    c.id AS club_id, c.name AS club_name,
+    l.id AS league_id, l.name AS league_name
+FROM latest_jerseys j
+JOIN clubs c ON j."clubId" = c.id
+JOIN leagues l ON c."leagueId" = l.id;
+
+  `) as RawResult[];
+
+  console.timeEnd("⚡ getRecentJerseys - Raw SQL");
+
+  return jerseys.map(
+    (j): RecentJersey => ({
+      id: j.id,
+      name: j.name,
+      imageUrl: j.imageUrl,
+      type: j.type,
+      season: j.season,
+      brand: j.brand,
+      createdAt: j.createdAt.toISOString(),
       club: {
-        select: {
-          id: true,
-          name: true,
-          shortName: true,
-          leagueId: true,
-          logoUrl: true,
-          primaryColor: true,
-          league: {
-            select: {
-              id: true,
-              name: true,
-              country: true,
-              logoUrl: true,
-              tier: true,
-            },
-          },
+        id: j.club_id,
+        name: j.club_name,
+        league: {
+          id: j.league_id,
+          name: j.league_name || "N/A",
         },
       },
-    },
-    orderBy: { createdAt: "desc" },
-    take: 6,
-  });
-
-  return recentJerseys.map((jersey) => ({
-    ...jersey,
-    createdAt: jersey.createdAt.toISOString(),
-  }));
+    })
+  );
 }
 
 async function getUserStats(userId: string): Promise<UserHomeStats> {
+  console.time("⏱️ getUserStats - Total");
+  console.time("⏱️ getUserStats - First Promise.all");
+
   const [collectionStats, wishlistStats, recentCollectionItems] =
     await Promise.all([
       prisma.userJersey.aggregate({
@@ -177,6 +193,12 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
       }),
     ]);
 
+  console.timeEnd("⏱️ getUserStats - First Promise.all");
+  console.log(
+    `📊 getUserStats - Collection: ${collectionStats._count.id} items, Wishlist: ${wishlistStats._count.id} items`
+  );
+  console.time("⏱️ getUserStats - Second Promise.all");
+
   const [leagueStats, recentWishlistItems] = await Promise.all([
     prisma.$queryRaw<Array<{ league_name: string; count: number }>>`
         SELECT 
@@ -221,6 +243,12 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
       take: 3,
     }),
   ]);
+
+  console.timeEnd("⏱️ getUserStats - Second Promise.all");
+  console.log(
+    `📊 getUserStats - Leagues: ${leagueStats.length}, Recent wishlist: ${recentWishlistItems.length}`
+  );
+  console.time("⏱️ getUserStats - Data Processing");
 
   const leagueStatsObject: Record<string, number> = {};
   leagueStats.forEach((stat) => {
@@ -268,6 +296,9 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
     createdAt: item.createdAt.toISOString(),
   }));
 
+  console.timeEnd("⏱️ getUserStats - Data Processing");
+  console.timeEnd("⏱️ getUserStats - Total");
+
   return {
     collection: {
       total: collectionStats._count.id || 0,
@@ -289,6 +320,9 @@ async function getHomeData(userId?: string): Promise<{
   recentJerseys: RecentJersey[];
   userStats: UserHomeStats | null;
 }> {
+  console.time("⏱️ getHomeData - Total");
+  console.time("⏱️ getHomeData - Promise.allSettled");
+
   try {
     const [topRes, recentRes, userRes] = await Promise.allSettled([
       getTopRatedJerseys(),
@@ -296,23 +330,53 @@ async function getHomeData(userId?: string): Promise<{
       userId ? getUserStats(userId) : Promise.resolve(null),
     ]);
 
+    console.timeEnd("⏱️ getHomeData - Promise.allSettled");
+    console.time("⏱️ getHomeData - Result Processing");
+
     const topRatedJerseys = topRes.status === "fulfilled" ? topRes.value : [];
     const recentJerseys =
       recentRes.status === "fulfilled" ? recentRes.value : [];
     const userStats = userRes.status === "fulfilled" ? userRes.value : null;
 
+    // Log des erreurs si nécessaire
+    if (topRes.status === "rejected") {
+      console.error("❌ getTopRatedJerseys failed:", topRes.reason);
+    }
+    if (recentRes.status === "rejected") {
+      console.error("❌ getRecentJerseys failed:", recentRes.reason);
+    }
+    if (userRes.status === "rejected") {
+      console.error("❌ getUserStats failed:", userRes.reason);
+    }
+
+    console.timeEnd("⏱️ getHomeData - Result Processing");
+    console.timeEnd("⏱️ getHomeData - Total");
+    console.log("🏁 HomePage data loading complete");
+
     return { topRatedJerseys, recentJerseys, userStats };
   } catch (error) {
-    console.error("Home data error:", error);
+    console.error("❌ Home data error:", error);
+    console.timeEnd("⏱️ getHomeData - Promise.allSettled");
+    console.timeEnd("⏱️ getHomeData - Total");
     return { topRatedJerseys: [], recentJerseys: [], userStats: null };
   }
 }
 
 export default async function HomePage() {
+  console.time("⏱️ HomePage - Total Render");
+  console.time("⏱️ HomePage - Get Current User");
+
   const user = await getCurrentUser();
+
+  console.timeEnd("⏱️ HomePage - Get Current User");
+  console.log(`👤 User: ${user ? `${user.id} (connecté)` : "non connecté"}`);
+
   const { topRatedJerseys, recentJerseys, userStats } = await getHomeData(
     user?.id
   );
+
+  console.timeEnd("⏱️ HomePage - Total Render");
+  console.log("=====================================");
 
   return (
     <div className="min-h-screen">

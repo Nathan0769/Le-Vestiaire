@@ -7,25 +7,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
 import { fr } from "date-fns/locale";
-
-interface RecentJersey {
-  id: string;
-  name: string;
-  imageUrl: string;
-  type: string;
-  season: string;
-  brand: string;
-  club: {
-    id: string;
-    name: string;
-    shortName: string;
-    league: {
-      id: string;
-      name: string;
-    };
-  };
-  createdAt: string;
-}
+import type { RecentJersey } from "@/types/home";
 
 interface RecentSectionProps {
   jerseys?: RecentJersey[];
@@ -38,7 +20,7 @@ export function RecentSection({
   const [loading, setLoading] = useState(!ssrJerseys);
 
   useEffect(() => {
-    if (ssrJerseys) return; // Pas de fetch si SSR
+    if (ssrJerseys) return;
     const fetchRecent = async () => {
       try {
         const res = await fetch("/api/home/recent?limit=6");
@@ -146,7 +128,6 @@ export function RecentSection({
                   />
                 </div>
 
-                {/* Infos maillot */}
                 <div className="space-y-2">
                   <div className="flex items-center gap-1 text-xs text-muted-foreground">
                     <Clock className="w-3 h-3" />

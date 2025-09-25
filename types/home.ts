@@ -31,22 +31,15 @@ export interface RecentJersey {
   type: string;
   season: string;
   brand: string;
+  createdAt: string;
   club: {
     id: string;
     name: string;
-    shortName: string;
-    leagueId: string;
-    logoUrl: string;
-    primaryColor: string;
     league: {
-      id: string;
+      id: string | null;
       name: string;
-      country: string;
-      logoUrl: string;
-      tier: number;
     };
   };
-  createdAt: string;
 }
 
 export interface UserHomeStats {
@@ -149,3 +142,29 @@ export type LeagueStatsRow = {
 export type RecentJerseyDb = Omit<RecentJersey, "createdAt"> & {
   createdAt: Date;
 };
+
+export type RecentJerseyRow = {
+  id: string;
+  name: string;
+  imageUrl: string;
+  type: string;
+  season: string;
+  brand: string;
+  createdAt: Date;
+  club_id: string;
+  club_name: string;
+};
+
+export interface RawResult {
+  id: string;
+  name: string;
+  imageUrl: string;
+  type: string;
+  season: string;
+  brand: string;
+  createdAt: Date;
+  club_id: string;
+  club_name: string;
+  league_id: string | null;
+  league_name: string | null;
+}
