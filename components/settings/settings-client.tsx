@@ -39,10 +39,19 @@ export function SettingsClient() {
           hasPassword={currentUser.authProvider?.hasPassword ?? true}
           isGoogleOnly={currentUser.authProvider?.isGoogleOnly ?? false}
         />
-
         <Separator />
-
         <SessionSettings />
+        <div className="text-muted-foreground text-center text-xs">
+          En utilisant votre compte, vous acceptez nos{" "}
+          <a href="/conditions-utilisation" className="underline">
+            Conditions d&apos;utilisation
+          </a>{" "}
+          et{" "}
+          <a href="/politique-confidentialite" className="underline">
+            Politique de confidentialité
+          </a>
+          .
+        </div>
       </div>
     </div>
   );
