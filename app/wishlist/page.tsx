@@ -49,6 +49,7 @@ export default async function WishlistPage() {
     HOME: "Domicile",
     AWAY: "Extérieur",
     THIRD: "Third",
+    FOURTH: "Fourth",
     GOALKEEPER: "Gardien",
     SPECIAL: "Spécial",
   };

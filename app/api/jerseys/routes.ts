@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 
-// Types pour les paramètres de requête
 interface JerseysQueryParams {
   page?: string;
   limit?: string;
@@ -10,12 +9,11 @@ interface JerseysQueryParams {
   leagueId?: string;
   clubId?: string;
   season?: string;
-  type?: "HOME" | "AWAY" | "THIRD" | "GOALKEEPER" | "SPECIAL";
+  type?: "HOME" | "AWAY" | "THIRD" | "FOURTH" | "GOALKEEPER" | "SPECIAL";
   sortBy?: "createdAt" | "name" | "season";
   sortOrder?: "asc" | "desc";
 }
 
-// Type pour la réponse
 interface JerseysResponse {
   jerseys: JerseyWithRelations[];
   pagination: {
@@ -28,7 +26,6 @@ interface JerseysResponse {
   };
 }
 
-// Type pour un maillot avec ses relations (adapté à ton schéma actuel)
 type JerseyWithRelations = Prisma.JerseyGetPayload<{
   include: {
     club: {
@@ -43,7 +40,6 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
 
-    // Extraction et validation des paramètres
     const params: JerseysQueryParams = {
       page: searchParams.get("page") || "1",
       limit: searchParams.get("limit") || "12",
@@ -55,6 +51,7 @@ export async function GET(request: NextRequest) {
         | "HOME"
         | "AWAY"
         | "THIRD"
+        | "FOURTH"
         | "GOALKEEPER"
         | undefined,
       sortBy:
@@ -63,15 +60,12 @@ export async function GET(request: NextRequest) {
       sortOrder: (searchParams.get("sortOrder") as "asc" | "desc") || "desc",
     };
 
-    // Validation des paramètres numériques
     const page = Math.max(1, parseInt(params.page || "1"));
-    const limit = Math.min(50, Math.max(1, parseInt(params.limit || "12"))); // Max 50 pour éviter la surcharge
+    const limit = Math.min(50, Math.max(1, parseInt(params.limit || "12")));
     const skip = (page - 1) * limit;
 
-    // Construction du filtre Where
     const where: Prisma.JerseyWhereInput = {};
 
-    // Filtre par recherche (nom du maillot)
     if (params.search) {
       where.name = {
         contains: params.search,
@@ -79,29 +73,24 @@ export async function GET(request: NextRequest) {
       };
     }
 
-    // Filtre par club
     if (params.clubId) {
       where.clubId = params.clubId;
     }
 
-    // Filtre par ligue (via le club)
     if (params.leagueId) {
       where.club = {
         leagueId: params.leagueId,
       };
     }
 
-    // Filtre par saison
     if (params.season) {
       where.season = params.season;
     }
 
-    // Filtre par type de maillot
     if (params.type) {
       where.type = params.type;
     }
 
-    // Construction du tri
     const orderBy: Prisma.JerseyOrderByWithRelationInput = {};
 
     switch (params.sortBy) {
@@ -117,7 +106,6 @@ export async function GET(request: NextRequest) {
         break;
     }
 
-    // Requête principale avec comptage
     const [jerseys, total] = await Promise.all([
       prisma.jersey.findMany({
         where,
@@ -135,7 +123,6 @@ export async function GET(request: NextRequest) {
       prisma.jersey.count({ where }),
     ]);
 
-    // Calcul de la pagination
     const totalPages = Math.ceil(total / limit);
     const hasNext = page < totalPages;
     const hasPrev = page > 1;
@@ -156,7 +143,6 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error("Erreur API /api/jerseys:", error);
 
-    // Gestion spécifique des erreurs Prisma
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
       return NextResponse.json(
         { error: "Erreur de base de données", code: error.code },
@@ -164,7 +150,6 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Erreur générique
     return NextResponse.json(
       { error: "Erreur serveur interne" },
       { status: 500 }
