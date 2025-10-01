@@ -3,11 +3,11 @@ import { getSharedWishlist } from "@/lib/shorten-wishlist";
 import SharedWishlistClient from "./shared-wishlist-client";
 
 interface PageProps {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function SharedWishlistPage({ params }: PageProps) {
-  const { id } = params;
+  const { id } = await params;
 
   const shareData = await getSharedWishlist(id);
 
