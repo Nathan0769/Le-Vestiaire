@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import { JerseyCard } from "@/components/jerseys/jerseys/jersey-card";
 import { Heart, Shirt, Trophy } from "lucide-react";
+import { WishlistShareButton } from "@/components/wishlist/wishlist-share-button";
 
 export default async function WishlistPage() {
   const user = await getCurrentUser();
@@ -54,6 +55,20 @@ export default async function WishlistPage() {
     SPECIAL: "Spécial",
   };
 
+  const shareableWishlistItems = wishlistItems.map((item) => ({
+    id: item.id,
+    jersey: {
+      id: item.jersey.id,
+      name: item.jersey.name,
+      imageUrl: item.jersey.imageUrl,
+      type: item.jersey.type,
+      season: item.jersey.season,
+      club: {
+        name: item.jersey.club.name,
+      },
+    },
+  }));
+
   if (wishlistItems.length === 0) {
     return (
       <div className="p-6">
@@ -81,12 +96,15 @@ export default async function WishlistPage() {
 
   return (
     <div className="p-6 space-y-8">
-      <div className="flex items-center gap-3">
-        <Heart className="w-6 h-6 text-primary" />
-        <h1 className="text-2xl font-semibold">Mes Envies</h1>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Heart className="w-6 h-6 text-primary" />
+          <h1 className="text-2xl font-semibold">Mes Envies</h1>
+        </div>
+
+        <WishlistShareButton wishlistItems={shareableWishlistItems} />
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-card border border-border rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
@@ -105,7 +123,6 @@ export default async function WishlistPage() {
           </p>
         </div>
 
-        {/* Leagues */}
         <div className="bg-card border border-border rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-8 h-8 bg-primary/50 rounded-full flex items-center justify-center">
@@ -128,7 +145,6 @@ export default async function WishlistPage() {
           </div>
         </div>
 
-        {/* Type */}
         <div className="bg-card border border-border rounded-lg p-6">
           <div className="flex items-center gap-3 mb-2">
             <div className="w-8 h-8 bg-primary/50 rounded-full flex items-center justify-center">
