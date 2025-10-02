@@ -11,9 +11,9 @@ const typeOrder: Record<JerseyType, number> = {
   HOME: 1,
   AWAY: 2,
   THIRD: 3,
-  FOURTH: 6,
-  SPECIAL: 4,
-  GOALKEEPER: 5,
+  FOURTH: 4,
+  SPECIAL: 5,
+  GOALKEEPER: 6,
 };
 
 export function JerseysBySeason({ jerseys, primaryColor, club }: Props) {
