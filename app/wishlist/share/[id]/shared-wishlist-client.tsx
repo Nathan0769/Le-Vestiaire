@@ -144,7 +144,10 @@ export default function SharedWishlistClient({
                     <Badge variant="secondary" className={config.badge}>
                       {getJerseyTypeLabel(jersey.type)}
                     </Badge>
-                    <Badge variant="outline" className="bg-white/50">
+                    <Badge
+                      variant="outline"
+                      className="bg-white/50 text-gray-800 border border-gray-300"
+                    >
                       {jersey.season}
                     </Badge>
                   </div>

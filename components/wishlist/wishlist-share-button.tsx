@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Share2, Heart, List, ChevronDown } from "lucide-react";
 import { WishlistSelectionModal } from "./wishlist-selection-modal";
+import { WishlistThemeModal } from "./wishlist-theme-modal";
 import { ShareFormatModal } from "./share-format-modal";
 
 import type { Theme } from "@/types/theme";
@@ -27,7 +28,7 @@ export function WishlistShareButton({
 }: WishlistShareButtonProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showSelectionModal, setShowSelectionModal] = useState(false);
-
+  const [showThemeModal, setShowThemeModal] = useState(false);
   const [showFormatModal, setShowFormatModal] = useState(false);
 
   const [selectedItems, setSelectedItems] = useState<ShareableWishlistItem[]>(
@@ -38,20 +39,22 @@ export function WishlistShareButton({
   const [theme, setTheme] = useState<Theme>("christmas");
 
   const handleShareAll = () => {
-    setSelectedItems(wishlistItems);
-    setTitle("Ma liste de Noël 🎄");
-    setMessage(
-      "Salut ! Voici quelques idées de maillots qui me feraient plaisir 😊"
-    );
-    setTheme("christmas");
-
     setIsDropdownOpen(false);
-    setShowFormatModal(true);
+    setShowThemeModal(true);
   };
 
   const handleShareSelection = () => {
     setShowSelectionModal(true);
     setIsDropdownOpen(false);
+  };
+
+  const handleThemeNext = (selection: ShareSelection) => {
+    setSelectedItems(selection.selectedItems);
+    setTitle(selection.title);
+    setMessage(selection.message);
+    setTheme(selection.theme);
+    setShowThemeModal(false);
+    setShowFormatModal(true);
   };
 
   const handleSelectionNext = (selection: ShareSelection) => {
@@ -65,6 +68,7 @@ export function WishlistShareButton({
 
   const handleCloseModals = () => {
     setShowSelectionModal(false);
+    setShowThemeModal(false);
     setShowFormatModal(false);
     setSelectedItems([]);
     setTitle("");
@@ -123,6 +127,13 @@ export function WishlistShareButton({
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <WishlistThemeModal
+        isOpen={showThemeModal}
+        onClose={handleCloseModals}
+        wishlistItems={wishlistItems}
+        onNext={handleThemeNext}
+      />
 
       <WishlistSelectionModal
         isOpen={showSelectionModal}
