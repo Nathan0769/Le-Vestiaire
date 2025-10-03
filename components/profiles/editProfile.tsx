@@ -18,15 +18,18 @@ import { ModeToggle } from "../ui/toggle-dark-mode";
 import { AutocompleteSelect, SelectOption } from "../ui/comboBox";
 import { ProfileBio } from "@/components/profiles/profile-bio";
 import { ThemeColorSelect } from "./themes-color";
+import { UsernameInput } from "@/components/profiles/username-input";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 export function EditProfile() {
   const currentUser = useCurrentUser();
   const [avatarUrl, setAvatarUrl] = useState("");
+  const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
   const [clubs, setClubs] = useState<SelectOption[]>([]);
   const [favoriteClub, setFavoriteClub] = useState<SelectOption | null>(null);
   const [loading, setLoading] = useState(false);
+  const [isUsernameValid, setIsUsernameValid] = useState(false);
 
   useEffect(() => {
     if (currentUser?.avatarUrl) {
@@ -61,6 +64,18 @@ export function EditProfile() {
     } catch (err) {
       console.error("Erreur upload avatar :", err);
       toast.error("Erreur lors de l'upload de l'avatar");
+    }
+  };
+
+  const fetchUsername = async () => {
+    try {
+      const res = await fetch("/api/user/username", { cache: "no-store" });
+      if (res.ok) {
+        const data = await res.json();
+        if (typeof data.username === "string") setUsername(data.username);
+      }
+    } catch (err) {
+      console.error("Erreur chargement username :", err);
     }
   };
 
@@ -103,6 +118,19 @@ export function EditProfile() {
     try {
       setLoading(true);
 
+      if (username && isUsernameValid) {
+        const resUsername = await fetch("/api/user/username", {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username }),
+        });
+
+        if (!resUsername.ok) {
+          const errorData = await resUsername.json();
+          throw new Error(errorData.error || "Erreur username");
+        }
+      }
+
       const resBio = await fetch("/api/user/bio", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
@@ -124,17 +152,37 @@ export function EditProfile() {
       toast.success("Profil mis à jour !");
     } catch (err) {
       console.error(err);
-      toast.error("Erreur lors de la sauvegarde.");
+      toast.error(
+        err instanceof Error ? err.message : "Erreur lors de la sauvegarde."
+      );
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    fetchUsername();
     fetchBio();
     fetchFavoriteClub();
     fetchClubs();
   }, [fetchClubs]);
+
+  useEffect(() => {
+    const handler = () => {
+      fetchUsername();
+    };
+    if (typeof window !== "undefined") {
+      window.addEventListener("username-generated", handler as EventListener);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener(
+          "username-generated",
+          handler as EventListener
+        );
+      }
+    };
+  }, []);
 
   return (
     <Sheet>
@@ -163,6 +211,12 @@ export function EditProfile() {
             />
             <ModeToggle />
           </div>
+
+          <UsernameInput
+            value={username}
+            onChange={setUsername}
+            onValidationChange={setIsUsernameValid}
+          />
 
           <AutocompleteSelect
             options={clubs}

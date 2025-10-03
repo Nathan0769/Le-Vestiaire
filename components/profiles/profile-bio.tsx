@@ -22,7 +22,7 @@ export function ProfileBio({
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Écris quelques mots sur toi…"
-        className="min-h-[100px]"
+        className="min-h-[70px]"
         maxLength={maxLength}
       />
       <p className="text-muted-foreground text-sm text-right">

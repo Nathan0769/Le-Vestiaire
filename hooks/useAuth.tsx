@@ -1,11 +1,11 @@
 "use client";
-
 import {
   createContext,
   useContext,
   useEffect,
   useState,
   ReactNode,
+  useRef,
 } from "react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
@@ -18,6 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const { data: session, isPending: sessionLoading } = authClient.useSession();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const hasAttemptedUsernameGeneration = useRef(false);
 
   useEffect(() => {
     if (!sessionLoading) {
@@ -25,6 +26,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     }
   }, [session, sessionLoading]);
+
+  useEffect(() => {
+    const maybeGenerateUsername = async () => {
+      if (hasAttemptedUsernameGeneration.current) return;
+      if (!session?.user?.id) return;
+
+      hasAttemptedUsernameGeneration.current = true;
+      try {
+        const res = await fetch("/api/user/username/generate", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: session.user.name || session.user.email,
+          }),
+        });
+        if (res.ok && typeof window !== "undefined") {
+          window.dispatchEvent(new CustomEvent("username-generated"));
+        }
+      } catch (err) {
+        console.error("Erreur génération username post-auth:", err);
+      }
+    };
+
+    if (!sessionLoading) {
+      void maybeGenerateUsername();
+    }
+  }, [
+    sessionLoading,
+    session?.user?.id,
+    session?.user?.name,
+    session?.user?.email,
+  ]);
 
   const signIn = async (email: string, password: string) => {
     setLoading(true);
@@ -41,12 +74,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signInWithGoogle = async () => {
     setLoading(true);
     try {
-      const { error } = await authClient.signIn.social({
+      const { error, data } = await authClient.signIn.social({
         provider: "google",
         callbackURL: "/",
         errorCallbackURL: "/auth/login",
       });
+
       if (error) throw new Error(error.message);
+
+      if (data && "user" in data && data.user?.id) {
+        try {
+          const res = await fetch("/api/user/username/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: data.user.name || data.user.email,
+            }),
+          });
+          if (res.ok && typeof window !== "undefined") {
+            window.dispatchEvent(new CustomEvent("username-generated"));
+          }
+        } catch (err) {
+          console.error("Erreur génération username:", err);
+        }
+      }
     } catch (error) {
       setLoading(false);
       throw error;
@@ -56,12 +107,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const signUp = async (email: string, password: string, username: string) => {
     setLoading(true);
     try {
-      const { error } = await authClient.signUp.email({
+      const { error, data } = await authClient.signUp.email({
         email,
         password,
         name: username,
       });
+
       if (error) throw new Error(error.message);
+
+      if (data?.user?.id) {
+        try {
+          await fetch("/api/user/username/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              userId: data.user.id,
+              name: username,
+            }),
+          });
+        } catch (err) {
+          console.error("Erreur génération username:", err);
+        }
+      }
+
       router.push("/");
     } catch (error) {
       setLoading(false);
