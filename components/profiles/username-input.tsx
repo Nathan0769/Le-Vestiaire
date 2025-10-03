@@ -10,26 +10,29 @@ interface UsernameInputProps {
   value: string;
   onChange: (value: string) => void;
   onValidationChange?: (isValid: boolean) => void;
-  initialUsername?: string;
 }
 
 export function UsernameInput({
   value,
   onChange,
   onValidationChange,
-  initialUsername,
 }: UsernameInputProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
+  const [initialValue, setInitialValue] = useState(value);
   const [availability, setAvailability] = useState<{
     available: boolean;
     error?: string;
-    isCurrent?: boolean;
   } | null>(null);
   const debouncedUsername = useDebounce(value, 500);
 
   useEffect(() => {
-    // Ne pas vérifier si on n'est pas en mode édition
+    if (!isEditing && value) {
+      setInitialValue(value);
+    }
+  }, [value, isEditing]);
+
+  useEffect(() => {
     if (!isEditing) {
       setAvailability(null);
       onValidationChange?.(true);
@@ -40,6 +43,12 @@ export function UsernameInput({
       if (!debouncedUsername || debouncedUsername.length < 5) {
         setAvailability(null);
         onValidationChange?.(false);
+        return;
+      }
+
+      if (debouncedUsername.toLowerCase() === initialValue?.toLowerCase()) {
+        setAvailability({ available: true });
+        onValidationChange?.(true);
         return;
       }
 
@@ -64,7 +73,7 @@ export function UsernameInput({
     };
 
     checkAvailability();
-  }, [debouncedUsername, onValidationChange, isEditing]);
+  }, [debouncedUsername, onValidationChange, isEditing, initialValue]);
 
   const getStatusIcon = () => {
     if (!isEditing) return null;
@@ -89,6 +98,11 @@ export function UsernameInput({
     if (value.length < 5) {
       return "5-20 caractères • Lettres, chiffres, tirets et underscores uniquement";
     }
+
+    if (value.toLowerCase() === initialValue?.toLowerCase()) {
+      return;
+    }
+
     if (availability && !availability.available) {
       return availability.error || "Ce pseudo n'est pas disponible";
     }
@@ -102,6 +116,11 @@ export function UsernameInput({
     if (!isEditing) return "text-muted-foreground";
 
     if (value.length < 5) return "text-muted-foreground";
+
+    if (value.toLowerCase() === initialValue?.toLowerCase()) {
+      return "text-blue-600";
+    }
+
     if (availability && !availability.available) return "text-red-600";
     if (availability && availability.available) return "text-green-600";
     return "text-muted-foreground";
@@ -113,13 +132,17 @@ export function UsernameInput({
 
   const handleCancel = () => {
     setIsEditing(false);
-    onChange(initialUsername || "");
+    onChange(initialValue || "");
     setAvailability(null);
   };
 
   const handleConfirm = () => {
-    if (availability?.available) {
+    if (
+      availability?.available ||
+      value.toLowerCase() === initialValue?.toLowerCase()
+    ) {
       setIsEditing(false);
+      setInitialValue(value);
     }
   };
 
@@ -168,7 +191,10 @@ export function UsernameInput({
               className="cursor-pointer"
               size="icon"
               onClick={handleConfirm}
-              disabled={!availability?.available}
+              disabled={
+                !availability?.available &&
+                value.toLowerCase() !== initialValue?.toLowerCase()
+              }
             >
               <Check className="w-4 h-4" />
             </Button>
