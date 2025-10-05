@@ -42,9 +42,9 @@ const items = [
   },
   {
     title: "La Communauté",
-    url: "/search",
+    url: "/friends",
     icon: UsersRound,
-    disabled: true,
+    disabled: false,
   },
   {
     title: "Compte",
