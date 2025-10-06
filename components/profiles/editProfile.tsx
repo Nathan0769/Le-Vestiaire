@@ -7,7 +7,6 @@ import {
   SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
@@ -206,8 +205,8 @@ export function EditProfile() {
           Modifier votre profil
         </Button>
       </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
+      <SheetContent className="flex flex-col h-[100dvh] overflow-hidden">
+        <SheetHeader className="flex-shrink-0 px-4 pt-6">
           <SheetTitle>Mon profil</SheetTitle>
           <SheetDescription>
             Modifiez votre profil ici. <br />
@@ -215,65 +214,67 @@ export function EditProfile() {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="grid flex-1 auto-rows-min gap-6 px-4">
-          <div className="flex items-center justify-between">
-            <UserAvatar
-              src={avatarUrl}
-              name={currentUser?.name || "?"}
-              size="lg"
-              editable
-              onChange={handleChangeAvatar}
+        <div className="flex-1 overflow-y-auto overflow-x-hidden px-4">
+          <div className="grid auto-rows-min gap-6 pb-4">
+            <div className="flex items-center justify-between">
+              <UserAvatar
+                src={avatarUrl}
+                name={currentUser?.name || "?"}
+                size="lg"
+                editable
+                onChange={handleChangeAvatar}
+              />
+              <ModeToggle />
+            </div>
+
+            <div className="grid gap-2">
+              <Link
+                href="/friends"
+                className="hover:text-primary transition-colors w-fit"
+              >
+                <label className="text-sm font-medium flex items-center gap-1.5 cursor-pointer">
+                  <Users className="w-4 h-4" />
+                  {loadingFriends
+                    ? "..."
+                    : `${friendsCount} ami${friendsCount !== 1 ? "s" : ""}`}
+                </label>
+              </Link>
+            </div>
+
+            <UsernameInput
+              value={username}
+              onChange={setUsername}
+              onValidationChange={setIsUsernameValid}
             />
-            <ModeToggle />
+
+            <AutocompleteSelect
+              options={clubs}
+              value={favoriteClub}
+              onChange={setFavoriteClub}
+              placeholder="Choisir une équipe"
+              label="Equipe favorite"
+            />
+
+            <ProfileBio value={bio} onChange={setBio} />
+            <ThemeColorSelect />
           </div>
-
-          <div className="grid gap-2">
-            <Link
-              href="/friends"
-              className="hover:text-primary transition-colors w-fit"
-            >
-              <label className="text-sm font-medium flex items-center gap-1.5 cursor-pointer">
-                <Users className="w-4 h-4" />
-                {loadingFriends
-                  ? "..."
-                  : `${friendsCount} ami${friendsCount !== 1 ? "s" : ""}`}
-              </label>
-            </Link>
-          </div>
-
-          <UsernameInput
-            value={username}
-            onChange={setUsername}
-            onValidationChange={setIsUsernameValid}
-          />
-
-          <AutocompleteSelect
-            options={clubs}
-            value={favoriteClub}
-            onChange={setFavoriteClub}
-            placeholder="Choisir une équipe"
-            label="Equipe favorite"
-          />
-
-          <ProfileBio value={bio} onChange={setBio} />
-          <ThemeColorSelect />
         </div>
 
-        <SheetFooter>
+        <div className="flex-shrink-0 border-t bg-background px-4 py-3 space-y-2">
           <Button
             type="button"
-            className="cursor-pointer"
+            className="w-full cursor-pointer"
             disabled={loading}
             onClick={handleSave}
           >
             {loading ? "Sauvegarde…" : "Sauvegarder les changements"}
           </Button>
           <SheetClose asChild>
-            <Button variant="outline" className="cursor-pointer">
+            <Button variant="outline" className="w-full cursor-pointer">
               Fermer
             </Button>
           </SheetClose>
-        </SheetFooter>
+        </div>
       </SheetContent>
     </Sheet>
   );
