@@ -221,9 +221,9 @@ export function EditProfile() {
           <div className="grid gap-2">
             <Link
               href="/friends"
-              className="cursor-pointer hover:text-primary transition-colors w-fit"
+              className="hover:text-primary transition-colors w-fit"
             >
-              <label className="text-sm font-medium flex items-center gap-1.5">
+              <label className="text-sm font-medium flex items-center gap-1.5 cursor-pointer">
                 <Users className="w-4 h-4" />
                 {loadingFriends
                   ? "..."
