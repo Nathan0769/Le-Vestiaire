@@ -3,7 +3,7 @@
 import { UserAvatar } from "@/components/profiles/user-avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { UserPlus, Clock, Users, Ban } from "lucide-react";
+import { UserPlus, Clock, Users, Ban, Heart } from "lucide-react";
 import type { SearchUserResult } from "@/types/friendship";
 
 interface UserSearchResultProps {
@@ -72,9 +72,16 @@ export function UserSearchResult({
             <UserAvatar src={user.avatarUrl} name={user.name} size="sm" />
             <div className="flex-1 min-w-0">
               <p className="font-medium text-sm truncate">{user.username}</p>
-              <p className="text-xs text-muted-foreground truncate">
-                {user.name}
-              </p>
+              <div className="flex items-center gap-1 text-xs text-muted-foreground truncate pt-0.5">
+                {user.favoriteClub?.name ? (
+                  <>
+                    <Heart className="w-3 h-3 text-red-500 flex-shrink-0" />
+                    <span>{user.favoriteClub.name}</span>
+                  </>
+                ) : (
+                  <span>Pas d&apos;équipe favorite</span>
+                )}
+              </div>
               {user.bio && (
                 <p className="text-xs text-muted-foreground line-clamp-1 mt-0.5">
                   {user.bio}

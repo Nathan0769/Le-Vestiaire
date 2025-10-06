@@ -15,7 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoreVertical, UserMinus, Ban } from "lucide-react";
+import { MoreVertical, UserMinus, Ban, Heart } from "lucide-react";
 import type { FriendWithUser } from "@/types/friendship";
 import { toast } from "sonner";
 
@@ -62,19 +62,24 @@ export function FriendCard({ friend, onRemove, onBlock }: FriendCardProps) {
               <CardTitle className="text-base">
                 {friend.user.username}
               </CardTitle>
-              <CardDescription className="text-sm">
-                {friend.user.name}
+              <CardDescription className="text-sm flex items-center gap-1 pt-0.5">
+                {friend.user.favoriteClub ? (
+                  <>
+                    <Heart className="w-3 h-3 text-red-500" />
+                    <span>{friend.user.favoriteClub.name}</span>
+                  </>
+                ) : (
+                  <span className="text-muted-foreground">
+                    Pas d&apos;équipe favorite
+                  </span>
+                )}
               </CardDescription>
             </div>
           </div>
 
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 cursor-pointer"
-              >
+              <Button variant="ghost" size="icon" className="h-8 w-8">
                 <MoreVertical className="h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>

@@ -16,6 +16,11 @@ export interface FriendUser {
   avatar?: string;
   avatarUrl?: string;
   bio?: string;
+  favoriteClub?: {
+    // 👈 ENLEVER le "| null"
+    id: string;
+    name: string;
+  };
 }
 
 export interface FriendWithUser extends Friendship {
@@ -39,6 +44,16 @@ export interface SearchUserResult {
   friendshipStatus?: FriendshipStatus | null;
 }
 
-export interface SearchUsersResponse {
-  users: SearchUserResult[];
+export interface SearchUserResult {
+  id: string;
+  username: string;
+  name: string;
+  avatar?: string;
+  avatarUrl?: string;
+  bio?: string;
+  friendshipStatus?: FriendshipStatus | null;
+  favoriteClub?: {
+    id: string;
+    name: string;
+  };
 }

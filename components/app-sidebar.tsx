@@ -1,3 +1,5 @@
+"use client";
+
 import {
   ListTodo,
   Home,
@@ -28,6 +30,7 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import React from "react";
+import { usePendingRequestsCount } from "@/hooks/usePendingRequestsCount";
 
 const items = [
   {
@@ -65,6 +68,8 @@ const items = [
 
 export function AppSidebar() {
   const [openCommunaute, setOpenCommunaute] = React.useState(false);
+  const { count: pendingCount } = usePendingRequestsCount();
+
   return (
     <Sidebar className="flex h-screen flex-col justify-between">
       <SidebarContent className="flex-grow">
@@ -82,15 +87,15 @@ export function AppSidebar() {
                       className="group/collapsible"
                     >
                       <SidebarMenuItem>
-                        <div className="flex w-full items-center ">
+                        <div className="flex w-full items-center">
                           <CollapsibleTrigger asChild>
                             <SidebarMenuButton
                               asChild={false}
                               className={`px-4 py-3 gap-3 text-base cursor-pointer rounded-md transition-colors flex-1 text-left hover:bg-primary/20 data-[state=open]:text-foreground data-[state=open]:hover:bg-primary/20`}
                               disabled={item.disabled}
                             >
-                              <span className="flex items-center gap-3 ">
-                                <item.icon className="h-5 w-5 " />
+                              <span className="flex items-center gap-3">
+                                <item.icon className="h-5 w-5" />
                                 <span>{item.title}</span>
                               </span>
                             </SidebarMenuButton>
@@ -117,27 +122,36 @@ export function AppSidebar() {
                               <SidebarMenuSubButton
                                 href="/friends"
                                 isActive={false}
-                                className="hover:bg-primary/20"
+                                className="hover:bg-primary/20 flex items-center justify-between"
                               >
-                                Amis
+                                <span>Amis</span>
+                                {pendingCount > 0 && (
+                                  <span className="px-2 py-0.5 bg-red-500 text-white rounded-full text-xs font-medium">
+                                    {pendingCount}
+                                  </span>
+                                )}
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                             <SidebarMenuSubItem>
                               <SidebarMenuSubButton
-                                href="/friends?tab=requests"
+                                href="/"
                                 isActive={false}
-                                className="hover:bg-primary/20"
+                                className=" text-gray-400 opacity-50"
+                                onClick={(e) => e.preventDefault()}
+                                tabIndex={-1}
                               >
-                                Demandes
+                                Collection des amis
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                             <SidebarMenuSubItem>
                               <SidebarMenuSubButton
-                                href="/friends?tab=search"
+                                href="/"
                                 isActive={false}
-                                className="hover:bg-primary/20"
+                                className=" text-gray-400 opacity-50"
+                                onClick={(e) => e.preventDefault()}
+                                tabIndex={-1}
                               >
-                                Rechercher
+                                Ajout de maillots
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                           </SidebarMenuSub>

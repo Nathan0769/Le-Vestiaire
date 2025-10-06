@@ -57,6 +57,12 @@ export async function GET(request: NextRequest) {
         name: true,
         avatar: true,
         bio: true,
+        favoriteClub: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
       },
       take: 10,
       orderBy: {
@@ -90,6 +96,7 @@ export async function GET(request: NextRequest) {
           avatar: foundUser.avatar,
           avatarUrl,
           bio: foundUser.bio,
+          favoriteClub: foundUser.favoriteClub || undefined,
           friendshipStatus: friendship?.status || null,
         };
       })

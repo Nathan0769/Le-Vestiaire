@@ -30,6 +30,13 @@ export async function GET() {
             name: true,
             avatar: true,
             bio: true,
+            favoriteClubId: true,
+            favoriteClub: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         },
         receiver: {
@@ -39,6 +46,13 @@ export async function GET() {
             name: true,
             avatar: true,
             bio: true,
+            favoriteClubId: true,
+            favoriteClub: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         },
       },
@@ -76,6 +90,7 @@ export async function GET() {
             avatar: friend.avatar,
             avatarUrl,
             bio: friend.bio,
+            favoriteClub: friend.favoriteClub || null,
           },
         };
       })
@@ -163,7 +178,6 @@ export async function POST(request: Request) {
           { status: 400 }
         );
       }
-
       if (existing.status === "REJECTED") {
         const updated = await prisma.friendship.update({
           where: { id: existing.id },

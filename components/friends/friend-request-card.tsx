@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Check, X } from "lucide-react";
+import { Check, X, Heart } from "lucide-react";
 import type { FriendshipRequest } from "@/types/friendship";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
@@ -62,8 +62,18 @@ export function FriendRequestCard({
             <CardTitle className="text-base">
               {request.sender.username}
             </CardTitle>
-            <CardDescription className="text-sm">
-              {request.sender.name}
+
+            <CardDescription className="text-sm flex items-center gap-1 pt-0.5">
+              {request.sender.favoriteClub?.name ? (
+                <>
+                  <Heart className="w-3 h-3 text-red-500" />
+                  <span>{request.sender.favoriteClub.name}</span>
+                </>
+              ) : (
+                <span className="text-muted-foreground">
+                  Pas d&apos;équipe favorite
+                </span>
+              )}
             </CardDescription>
           </div>
         </div>
