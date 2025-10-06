@@ -20,9 +20,13 @@ import { ProfileBio } from "@/components/profiles/profile-bio";
 import { ThemeColorSelect } from "./themes-color";
 import { UsernameInput } from "@/components/profiles/username-input";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useFriendsCount } from "@/hooks/useFriendsCount";
+import { Users } from "lucide-react";
+import Link from "next/link";
 
 export function EditProfile() {
   const currentUser = useCurrentUser();
+  const { count: friendsCount, loading: loadingFriends } = useFriendsCount();
   const [avatarUrl, setAvatarUrl] = useState("");
   const [username, setUsername] = useState("");
   const [bio, setBio] = useState("");
@@ -92,7 +96,9 @@ export function EditProfile() {
 
   const fetchFavoriteClub = async () => {
     try {
-      const res = await fetch("/api/user/favorite-club", { cache: "no-store" });
+      const res = await fetch("/api/user/favorite-club", {
+        cache: "no-store",
+      });
       if (!res.ok) return;
       const data = await res.json();
       if (data && data.id && data.name) {
@@ -210,6 +216,20 @@ export function EditProfile() {
               onChange={handleChangeAvatar}
             />
             <ModeToggle />
+          </div>
+
+          <div className="grid gap-2">
+            <Link
+              href="/friends"
+              className="cursor-pointer hover:text-primary transition-colors w-fit"
+            >
+              <label className="text-sm font-medium flex items-center gap-1.5">
+                <Users className="w-4 h-4" />
+                {loadingFriends
+                  ? "..."
+                  : `${friendsCount} ami${friendsCount !== 1 ? "s" : ""}`}
+              </label>
+            </Link>
           </div>
 
           <UsernameInput

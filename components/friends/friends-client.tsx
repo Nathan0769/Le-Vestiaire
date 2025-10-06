@@ -64,7 +64,7 @@ export function FriendsClient() {
 
       <Tabs defaultValue="friends" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="friends" className="gap-2">
+          <TabsTrigger value="friends" className="gap-2 cursor-pointer">
             <Users className="w-4 h-4" />
             Amis
             {friends.length > 0 && (
@@ -73,7 +73,7 @@ export function FriendsClient() {
               </span>
             )}
           </TabsTrigger>
-          <TabsTrigger value="requests" className="gap-2">
+          <TabsTrigger value="requests" className="gap-2 cursor-pointer">
             <Clock className="w-4 h-4" />
             En attente
             {requests.length > 0 && (
@@ -82,7 +82,7 @@ export function FriendsClient() {
               </span>
             )}
           </TabsTrigger>
-          <TabsTrigger value="search" className="gap-2">
+          <TabsTrigger value="search" className="gap-2 cursor-pointer">
             <UserPlus className="w-4 h-4" />
             Rechercher
           </TabsTrigger>
