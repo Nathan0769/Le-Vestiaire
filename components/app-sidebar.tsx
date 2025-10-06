@@ -16,8 +16,18 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubItem,
+  SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
 import { EditProfile } from "@/components/profiles/editProfile";
+import {
+  Collapsible,
+  CollapsibleTrigger,
+  CollapsibleContent,
+} from "@/components/ui/collapsible";
+import { ChevronDown } from "lucide-react";
+import React from "react";
 
 const items = [
   {
@@ -54,6 +64,7 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const [openCommunaute, setOpenCommunaute] = React.useState(false);
   return (
     <Sidebar className="flex h-screen flex-col justify-between">
       <SidebarContent className="flex-grow">
@@ -61,31 +72,106 @@ export function AppSidebar() {
           <SidebarGroupLabel>Le Vestiaire</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-y-3">
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild={!item.disabled}
-                    className={`px-4 py-3 gap-3 text-base rounded-md transition-colors ${
-                      item.disabled
-                        ? "text-gray-400 cursor-not-allowed opacity-50"
-                        : "hover:bg-primary/20"
-                    }`}
-                    disabled={item.disabled}
-                  >
-                    {item.disabled ? (
-                      <div className="flex items-center w-full gap-3">
-                        <item.icon className="h-5 w-5" />
-                        <span>{item.title}</span>
-                      </div>
-                    ) : (
-                      <a href={item.url} className="flex items-center w-full">
-                        <item.icon className="h-5 w-5" />
-                        <span>{item.title}</span>
-                      </a>
-                    )}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {items.map((item) => {
+                if (item.title === "La Communauté") {
+                  return (
+                    <Collapsible
+                      key={item.title}
+                      open={openCommunaute}
+                      onOpenChange={setOpenCommunaute}
+                      className="group/collapsible"
+                    >
+                      <SidebarMenuItem>
+                        <div className="flex w-full items-center ">
+                          <CollapsibleTrigger asChild>
+                            <SidebarMenuButton
+                              asChild={false}
+                              className={`px-4 py-3 gap-3 text-base cursor-pointer rounded-md transition-colors flex-1 text-left hover:bg-primary/20 data-[state=open]:text-foreground data-[state=open]:hover:bg-primary/20`}
+                              disabled={item.disabled}
+                            >
+                              <span className="flex items-center gap-3 ">
+                                <item.icon className="h-5 w-5 " />
+                                <span>{item.title}</span>
+                              </span>
+                            </SidebarMenuButton>
+                          </CollapsibleTrigger>
+                          <button
+                            type="button"
+                            aria-label={
+                              openCommunaute
+                                ? "Fermer le menu"
+                                : "Ouvrir le menu"
+                            }
+                            onClick={() => setOpenCommunaute((v) => !v)}
+                            className={`ml-2 cursor-pointer transition-transform ${
+                              openCommunaute ? "rotate-180" : ""
+                            }`}
+                            tabIndex={-1}
+                          >
+                            <ChevronDown className="w-4 h-4 text-primary" />
+                          </button>
+                        </div>
+                        <CollapsibleContent>
+                          <SidebarMenuSub>
+                            <SidebarMenuSubItem>
+                              <SidebarMenuSubButton
+                                href="/friends"
+                                isActive={false}
+                                className="hover:bg-primary/20"
+                              >
+                                Amis
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                            <SidebarMenuSubItem>
+                              <SidebarMenuSubButton
+                                href="/friends?tab=requests"
+                                isActive={false}
+                                className="hover:bg-primary/20"
+                              >
+                                Demandes
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                            <SidebarMenuSubItem>
+                              <SidebarMenuSubButton
+                                href="/friends?tab=search"
+                                isActive={false}
+                                className="hover:bg-primary/20"
+                              >
+                                Rechercher
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                          </SidebarMenuSub>
+                        </CollapsibleContent>
+                      </SidebarMenuItem>
+                    </Collapsible>
+                  );
+                }
+                return (
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild={!item.disabled}
+                      className={`px-4 py-3 gap-3 text-base rounded-md transition-colors ${
+                        item.disabled
+                          ? "text-gray-400 cursor-not-allowed opacity-50"
+                          : "hover:bg-primary/20"
+                      }`}
+                      disabled={item.disabled}
+                    >
+                      {item.disabled ? (
+                        <div className="flex items-center w-full gap-3">
+                          <item.icon className="h-5 w-5" />
+                          <span>{item.title}</span>
+                        </div>
+                      ) : (
+                        <a href={item.url} className="flex items-center w-full">
+                          <item.icon className="h-5 w-5" />
+                          <span>{item.title}</span>
+                        </a>
+                      )}
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
