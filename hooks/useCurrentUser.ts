@@ -9,6 +9,7 @@ export type CurrentUser = {
   avatar?: string;
   createdAt: string;
   avatarUrl?: string;
+  username: string;
   authProvider?: {
     hasGoogle: boolean;
     hasPassword: boolean;

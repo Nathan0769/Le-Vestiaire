@@ -124,7 +124,7 @@ export function EditProfile() {
     try {
       setLoading(true);
 
-      if (username && isUsernameValid) {
+      if (username && isUsernameValid && username !== currentUser?.username) {
         const resUsername = await fetch("/api/user/username", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

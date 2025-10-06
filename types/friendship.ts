@@ -17,7 +17,6 @@ export interface FriendUser {
   avatarUrl?: string;
   bio?: string;
   favoriteClub?: {
-    // 👈 ENLEVER le "| null"
     id: string;
     name: string;
   };
