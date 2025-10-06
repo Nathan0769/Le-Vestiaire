@@ -27,8 +27,10 @@ import Link from "next/link";
 export function EditProfile() {
   const currentUser = useCurrentUser();
   const { count: friendsCount, loading: loadingFriends } = useFriendsCount();
+  const [isOpen, setIsOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
   const [username, setUsername] = useState("");
+  const [initialUsername, setInitialUsername] = useState("");
   const [bio, setBio] = useState("");
   const [clubs, setClubs] = useState<SelectOption[]>([]);
   const [favoriteClub, setFavoriteClub] = useState<SelectOption | null>(null);
@@ -76,7 +78,10 @@ export function EditProfile() {
       const res = await fetch("/api/user/username", { cache: "no-store" });
       if (res.ok) {
         const data = await res.json();
-        if (typeof data.username === "string") setUsername(data.username);
+        if (typeof data.username === "string") {
+          setUsername(data.username);
+          setInitialUsername(data.username);
+        }
       }
     } catch (err) {
       console.error("Erreur chargement username :", err);
@@ -124,7 +129,7 @@ export function EditProfile() {
     try {
       setLoading(true);
 
-      if (username && isUsernameValid && username !== currentUser?.username) {
+      if (username && isUsernameValid && username !== initialUsername) {
         const resUsername = await fetch("/api/user/username", {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
@@ -135,6 +140,7 @@ export function EditProfile() {
           const errorData = await resUsername.json();
           throw new Error(errorData.error || "Erreur username");
         }
+        setInitialUsername(username);
       }
 
       const resBio = await fetch("/api/user/bio", {
@@ -156,6 +162,7 @@ export function EditProfile() {
       }
 
       toast.success("Profil mis à jour !");
+      setIsOpen(false);
     } catch (err) {
       console.error(err);
       toast.error(
@@ -167,11 +174,13 @@ export function EditProfile() {
   };
 
   useEffect(() => {
-    fetchUsername();
-    fetchBio();
-    fetchFavoriteClub();
-    fetchClubs();
-  }, [fetchClubs]);
+    if (isOpen) {
+      fetchUsername();
+      fetchBio();
+      fetchFavoriteClub();
+      fetchClubs();
+    }
+  }, [isOpen, fetchClubs]);
 
   useEffect(() => {
     const handler = () => {
@@ -191,7 +200,7 @@ export function EditProfile() {
   }, []);
 
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button className="cursor-pointer" disabled={!currentUser}>
           Modifier votre profil
