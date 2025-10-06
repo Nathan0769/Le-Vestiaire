@@ -16,17 +16,41 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url);
-    const username = searchParams.get("username");
+    const query = searchParams.get("q");
 
-    if (!username) {
-      return NextResponse.json(
-        { error: "Nom d'utilisateur manquant" },
-        { status: 400 }
-      );
+    if (!query || query.length < 2) {
+      return NextResponse.json({ users: [] });
     }
 
-    const foundUser = await prisma.user.findUnique({
-      where: { username },
+    const blockedRelations = await prisma.friendship.findMany({
+      where: {
+        OR: [
+          { senderId: user.id, status: "BLOCKED" },
+          { receiverId: user.id, status: "BLOCKED" },
+        ],
+      },
+      select: {
+        senderId: true,
+        receiverId: true,
+      },
+    });
+
+    const blockedIds = blockedRelations.flatMap((rel) => [
+      rel.senderId,
+      rel.receiverId,
+    ]);
+    const uniqueBlockedIds = [...new Set(blockedIds)].filter(
+      (id) => id !== user.id
+    );
+
+    const foundUsers = await prisma.user.findMany({
+      where: {
+        AND: [
+          { username: { contains: query, mode: "insensitive" } },
+          { id: { not: user.id } },
+          { id: { notIn: uniqueBlockedIds } },
+        ],
+      },
       select: {
         id: true,
         username: true,
@@ -34,48 +58,44 @@ export async function GET(request: NextRequest) {
         avatar: true,
         bio: true,
       },
-    });
-
-    if (!foundUser) {
-      return NextResponse.json({ user: null });
-    }
-
-    if (foundUser.id === user.id) {
-      return NextResponse.json({ user: null });
-    }
-
-    const friendship = await prisma.friendship.findFirst({
-      where: {
-        OR: [
-          { senderId: user.id, receiverId: foundUser.id },
-          { senderId: foundUser.id, receiverId: user.id },
-        ],
+      take: 10,
+      orderBy: {
+        username: "asc",
       },
     });
 
-    if (friendship?.status === "BLOCKED") {
-      return NextResponse.json({ user: null });
-    }
+    const usersWithStatus = await Promise.all(
+      foundUsers.map(async (foundUser) => {
+        const friendship = await prisma.friendship.findFirst({
+          where: {
+            OR: [
+              { senderId: user.id, receiverId: foundUser.id },
+              { senderId: foundUser.id, receiverId: user.id },
+            ],
+          },
+        });
 
-    let avatarUrl = null;
-    if (foundUser.avatar) {
-      const { data } = await supabaseAdmin.storage
-        .from("avatar")
-        .createSignedUrl(foundUser.avatar, 60 * 60);
-      avatarUrl = data?.signedUrl || null;
-    }
+        let avatarUrl = null;
+        if (foundUser.avatar) {
+          const { data } = await supabaseAdmin.storage
+            .from("avatar")
+            .createSignedUrl(foundUser.avatar, 60 * 60);
+          avatarUrl = data?.signedUrl || null;
+        }
 
-    return NextResponse.json({
-      user: {
-        id: foundUser.id,
-        username: foundUser.username,
-        name: foundUser.name,
-        avatar: foundUser.avatar,
-        avatarUrl,
-        bio: foundUser.bio,
-        friendshipStatus: friendship?.status || null,
-      },
-    });
+        return {
+          id: foundUser.id,
+          username: foundUser.username,
+          name: foundUser.name,
+          avatar: foundUser.avatar,
+          avatarUrl,
+          bio: foundUser.bio,
+          friendshipStatus: friendship?.status || null,
+        };
+      })
+    );
+
+    return NextResponse.json({ users: usersWithStatus });
   } catch (error) {
     console.error("Erreur search:", error);
     return NextResponse.json(

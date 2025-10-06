@@ -2,39 +2,48 @@
 
 import { useState } from "react";
 import type { SearchUserResult } from "@/types/friendship";
+import { useDebounce } from "@/hooks/useDebounce";
+import { useEffect } from "react";
 
 export function useSearchUsers() {
-  const [result, setResult] = useState<SearchUserResult | null>(null);
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState<SearchUserResult[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const searchUser = async (username: string) => {
-    if (!username.trim()) {
-      setResult(null);
-      return;
-    }
+  const debouncedQuery = useDebounce(query, 155);
 
-    try {
-      setLoading(true);
-      setError(null);
-
-      const res = await fetch(
-        `/api/friends/search?username=${encodeURIComponent(username.trim())}`
-      );
-
-      if (!res.ok) {
-        throw new Error("Erreur lors de la recherche");
+  useEffect(() => {
+    const searchUsers = async () => {
+      if (!debouncedQuery.trim() || debouncedQuery.length < 2) {
+        setResults([]);
+        return;
       }
 
-      const data = await res.json();
-      setResult(data.user);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erreur inconnue");
-      setResult(null);
-    } finally {
-      setLoading(false);
-    }
-  };
+      try {
+        setLoading(true);
+        setError(null);
+
+        const res = await fetch(
+          `/api/friends/search?q=${encodeURIComponent(debouncedQuery.trim())}`
+        );
+
+        if (!res.ok) {
+          throw new Error("Erreur lors de la recherche");
+        }
+
+        const data = await res.json();
+        setResults(data.users || []);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Erreur inconnue");
+        setResults([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    searchUsers();
+  }, [debouncedQuery]);
 
   const sendFriendRequest = async (userId: string) => {
     try {
@@ -51,12 +60,11 @@ export function useSearchUsers() {
 
       const data = await res.json();
 
-      if (result && result.id === userId) {
-        setResult({
-          ...result,
-          friendshipStatus: "PENDING",
-        });
-      }
+      setResults((prev) =>
+        prev.map((user) =>
+          user.id === userId ? { ...user, friendshipStatus: "PENDING" } : user
+        )
+      );
 
       return { success: true, data };
     } catch (err) {
@@ -77,7 +85,7 @@ export function useSearchUsers() {
         throw new Error("Erreur lors du blocage");
       }
 
-      setResult(null);
+      setResults((prev) => prev.filter((user) => user.id !== userId));
       return { success: true };
     } catch (err) {
       return {
@@ -88,15 +96,17 @@ export function useSearchUsers() {
   };
 
   const reset = () => {
-    setResult(null);
+    setQuery("");
+    setResults([]);
     setError(null);
   };
 
   return {
-    result,
+    query,
+    setQuery,
+    results,
     loading,
     error,
-    searchUser,
     sendFriendRequest,
     blockUser,
     reset,

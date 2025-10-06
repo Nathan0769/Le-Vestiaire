@@ -38,3 +38,7 @@ export interface SearchUserResult {
   bio?: string;
   friendshipStatus?: FriendshipStatus | null;
 }
+
+export interface SearchUsersResponse {
+  users: SearchUserResult[];
+}

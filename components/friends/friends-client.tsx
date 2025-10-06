@@ -56,7 +56,7 @@ export function FriendsClient() {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-6">
+    <div className="p-6 space-y-8">
       <div className="flex items-center gap-3">
         <Users className="w-6 h-6 text-primary" />
         <h1 className="text-2xl font-semibold">Mes Amis</h1>
