@@ -134,13 +134,11 @@ export function AppSidebar() {
                             </SidebarMenuSubItem>
                             <SidebarMenuSubItem>
                               <SidebarMenuSubButton
-                                href="/"
+                                href="/friends/collections"
                                 isActive={false}
-                                className=" text-gray-400 opacity-50"
-                                onClick={(e) => e.preventDefault()}
-                                tabIndex={-1}
+                                className="hover:bg-primary/20"
                               >
-                                Collection des amis
+                                Collections des amis
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                             <SidebarMenuSubItem>
