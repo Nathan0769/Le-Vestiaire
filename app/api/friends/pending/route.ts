@@ -28,6 +28,12 @@ export async function GET() {
             name: true,
             avatar: true,
             bio: true,
+            favoriteClub: {
+              select: {
+                id: true,
+                name: true,
+              },
+            },
           },
         },
       },
@@ -55,6 +61,7 @@ export async function GET() {
             avatar: request.sender.avatar,
             avatarUrl,
             bio: request.sender.bio,
+            favoriteClub: request.sender.favoriteClub || null,
           },
           status: request.status,
           createdAt: request.createdAt.toISOString(),
