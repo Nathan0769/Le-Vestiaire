@@ -66,7 +66,7 @@ export function FriendsClient() {
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="friends" className="gap-2 cursor-pointer">
             <Users className="w-4 h-4" />
-            Amis
+            <span className="hidden sm:inline">Amis</span>
             {friends.length > 0 && (
               <span className="ml-1 px-2 py-0.5 bg-primary/20 text-primary rounded-full text-xs">
                 {friends.length}
@@ -75,7 +75,7 @@ export function FriendsClient() {
           </TabsTrigger>
           <TabsTrigger value="requests" className="gap-2 cursor-pointer">
             <Clock className="w-4 h-4" />
-            En attente
+            <span className="hidden sm:inline">En attente</span>
             {requests.length > 0 && (
               <span className="ml-1 px-2 py-0.5 bg-red-500/20 text-red-600 rounded-full text-xs">
                 {requests.length}
@@ -84,7 +84,7 @@ export function FriendsClient() {
           </TabsTrigger>
           <TabsTrigger value="search" className="gap-2 cursor-pointer">
             <UserPlus className="w-4 h-4" />
-            Rechercher
+            <span className="hidden sm:inline">Rechercher</span>
           </TabsTrigger>
         </TabsList>
 
