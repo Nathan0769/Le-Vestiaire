@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import { redirect } from "next/navigation";
-import { Users, Package } from "lucide-react";
+import { Users, Package, Heart } from "lucide-react";
 import Link from "next/link";
 import { UserAvatar } from "@/components/profiles/user-avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -149,7 +149,8 @@ export default async function FriendsCollectionsPage() {
                       </CardTitle>
                       {friend.favoriteClub && (
                         <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
-                          ⚽ {friend.favoriteClub.name}
+                          <Heart className="w-3 h-3 text-red-500" />{" "}
+                          {friend.favoriteClub.name}
                         </p>
                       )}
                     </div>
