@@ -7,6 +7,7 @@ import {
   Shirt,
   UsersRound,
   Heart,
+  Shield,
 } from "lucide-react";
 import {
   Sidebar,
@@ -58,6 +59,11 @@ const items = [
     url: "/friends",
     icon: UsersRound,
     disabled: false,
+  },
+  {
+    title: "Authentification",
+    url: "/authentification",
+    icon: Shield,
   },
   {
     title: "Compte",
@@ -149,7 +155,7 @@ export function AppSidebar() {
                                 onClick={(e) => e.preventDefault()}
                                 tabIndex={-1}
                               >
-                                Ajout de maillots
+                                Suggestion de maillots
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                           </SidebarMenuSub>
