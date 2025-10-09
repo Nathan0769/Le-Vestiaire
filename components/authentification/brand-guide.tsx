@@ -14,6 +14,8 @@ interface BrandGuideComponentProps {
 }
 
 export function BrandGuideComponent({ guide }: BrandGuideComponentProps) {
+  const showVisualExamples = guide.brand === "adidas" || guide.brand === "nike";
+
   return (
     <div className="space-y-8">
       <div className="space-y-2">
@@ -51,8 +53,8 @@ export function BrandGuideComponent({ guide }: BrandGuideComponentProps) {
                 </CardContent>
               </Card>
 
-              {guide.brand === "adidas" && (
-                <VisualExample stepNumber={index + 1} />
+              {showVisualExamples && (
+                <VisualExample stepNumber={index + 1} brand={guide.brand} />
               )}
             </div>
           ))}
