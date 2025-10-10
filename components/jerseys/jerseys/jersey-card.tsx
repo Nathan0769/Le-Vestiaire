@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { JerseyType } from "@prisma/client";
 import { Club } from "@prisma/client";
+import { getJerseyUrl } from "@/lib/jersey-url";
 
 type Props = {
   jersey: {
@@ -12,6 +13,7 @@ type Props = {
     name: string;
     imageUrl: string;
     type: JerseyType;
+    slug?: string | null;
   };
   leagueId: string;
   club: Club;
@@ -21,7 +23,9 @@ export function JerseyCard({ jersey, leagueId, club }: Props) {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/jerseys/${leagueId}/clubs/${club.id}/jerseys/${jersey.id}`);
+    const identifier = jersey.slug || jersey.id;
+    const url = getJerseyUrl(leagueId, club.id, identifier);
+    router.push(url);
   };
 
   return (

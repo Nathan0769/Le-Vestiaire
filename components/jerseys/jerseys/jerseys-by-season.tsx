@@ -2,7 +2,7 @@ import { SimpleJersey, JerseyType, ClubWithLeague } from "@/types/jersey";
 import { JerseyCard } from "./jersey-card";
 
 type Props = {
-  jerseys: SimpleJersey[];
+  jerseys: (SimpleJersey & { slug?: string | null })[];
   primaryColor: string;
   club: ClubWithLeague;
 };

@@ -37,6 +37,7 @@ export default async function ClubDetailPage(props: Props) {
           brand: true,
           clubId: true,
           description: true,
+          slug: true,
         },
       },
     },

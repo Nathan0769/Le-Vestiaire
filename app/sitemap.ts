@@ -36,6 +36,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "monthly",
         priority: 0.3,
       },
+      {
+        url: `${baseUrl}/authentification`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.4,
+      },
     ];
 
     const leagues = await prisma.league.findMany({
@@ -50,10 +56,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     });
 
-    const dynamicRoutes: MetadataRoute.Sitemap = [];
+    const leagueAndClubRoutes: MetadataRoute.Sitemap = [];
 
     leagues.forEach((league) => {
-      dynamicRoutes.push({
+      leagueAndClubRoutes.push({
         url: `${baseUrl}/jerseys/${league.id}`,
         lastModified: new Date(),
         changeFrequency: "weekly",
@@ -61,7 +67,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
 
       league.clubs.forEach((club) => {
-        dynamicRoutes.push({
+        leagueAndClubRoutes.push({
           url: `${baseUrl}/jerseys/${league.id}/clubs/${club.id}`,
           lastModified: new Date(),
           changeFrequency: "monthly",
@@ -70,9 +76,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     });
 
-    return [...staticRoutes, ...dynamicRoutes];
+    const jerseys = await prisma.jersey.findMany({
+      select: {
+        slug: true,
+        updatedAt: true,
+        club: {
+          select: {
+            id: true,
+            league: {
+              select: {
+                id: true,
+              },
+            },
+          },
+        },
+      },
+      where: {
+        slug: {
+          not: null,
+        },
+      },
+    });
+
+    const jerseyRoutes: MetadataRoute.Sitemap = jerseys.map((jersey) => ({
+      url: `${baseUrl}/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.slug}`,
+      lastModified: jersey.updatedAt,
+      changeFrequency: "monthly",
+      priority: 0.6,
+    }));
+
+    console.log(`✅ Sitemap généré : ${jerseyRoutes.length} maillots`);
+
+    return [...staticRoutes, ...leagueAndClubRoutes, ...jerseyRoutes];
   } catch (error) {
-    console.error("Erreur génération sitemap:", error);
+    console.error("❌ Erreur génération sitemap:", error);
     return [];
   }
 }

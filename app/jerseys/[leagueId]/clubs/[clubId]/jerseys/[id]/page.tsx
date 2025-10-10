@@ -1,4 +1,5 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
+import { isSlug } from "@/lib/slug-generator";
 import type { JerseyWithWishlistAndCollection } from "@/types/jersey";
 import Image from "next/image";
 import { JerseyBreadcrumb } from "@/components/jerseys/jerseys/jerseys-bread-crumb";
@@ -9,19 +10,20 @@ import { JerseyStats } from "@/components/jerseys/stats/jersey-stats";
 
 interface JerseyPageProps {
   params: Promise<{
+    leagueId: string;
     clubId: string;
     id: string;
   }>;
 }
 
 export default async function JerseyPage({ params }: JerseyPageProps) {
-  const { id } = await params;
+  const { leagueId, clubId, id } = await params;
+
+  const isSlugParam = isSlug(id);
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}`,
-    {
-      cache: "no-store",
-    }
+    { cache: "no-store" }
   );
 
   if (!res.ok) {
@@ -29,6 +31,10 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   }
 
   const jersey: JerseyWithWishlistAndCollection = await res.json();
+
+  if (!isSlugParam && jersey.slug) {
+    redirect(`/jerseys/${leagueId}/clubs/${clubId}/jerseys/${jersey.slug}`);
+  }
 
   const getJerseyTypeLabel = (type: string) => {
     switch (type.toLowerCase()) {

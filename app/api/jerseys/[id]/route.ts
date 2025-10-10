@@ -1,19 +1,20 @@
 import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
+import { NextResponse, NextRequest } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { isSlug } from "@/lib/slug-generator";
 
 export async function GET(
-  request: Request,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const { id } = await params;
     const user = await getCurrentUser();
 
+    const searchBySlug = isSlug(id);
+
     const jersey = await prisma.jersey.findUnique({
-      where: {
-        id,
-      },
+      where: searchBySlug ? { slug: id } : { id },
       include: {
         club: {
           include: {

@@ -16,7 +16,7 @@ model User {
   emailVerified Boolean  @default(false)
   image         String?
 
-  // --- Champs métier ---
+
   firstName       String?
   lastName        String?
   avatar          String?
@@ -99,6 +99,7 @@ model Jersey {
   imageUrl    String
   retailPrice Decimal?
   description String?
+  slug        String?    @unique
 
   club       Club         @relation(fields: [clubId], references: [id])
   collection UserJersey[]
