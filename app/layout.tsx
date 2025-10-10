@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     canonical: "https://le-vestiaire-foot.fr",
   },
   openGraph: {
-    title: "Le Vestiaire Foot - Collection Maillots Football",
+    title: "Le Vestiaire Foot - Collection de Maillots de Football",
     description:
       "La plus grande base de données de maillots de football. Tous les clubs, toutes les saisons depuis 25 ans ⚽",
     url: "https://le-vestiaire-foot.fr",

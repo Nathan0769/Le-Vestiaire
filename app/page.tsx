@@ -301,7 +301,6 @@ async function getHomeData(userId?: string): Promise<{
       recentRes.status === "fulfilled" ? recentRes.value : [];
     const userStats = userRes.status === "fulfilled" ? userRes.value : null;
 
-    // Log des erreurs si nécessaire
     if (topRes.status === "rejected") {
       console.error("❌ getTopRatedJerseys failed:", topRes.reason);
     }
