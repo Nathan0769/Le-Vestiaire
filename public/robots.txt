@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /auth/
+Disallow: /settings
+Disallow: /api/
+Disallow: /friends
+
+Sitemap: https://le-vestiaire-foot.fr/sitemap.xml
