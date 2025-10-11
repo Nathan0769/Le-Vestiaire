@@ -140,7 +140,7 @@
 }
 
 .theme-jaune {
-  --primary: oklch(0.92 0.19 104);
+  --primary: oklch(0.92 0.55 104);
   --primary-foreground: oklch(0.15 0.02 100);
 }
 
