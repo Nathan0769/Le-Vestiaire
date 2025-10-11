@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { isSlug } from "@/lib/slug-generator";
 import type { JerseyWithWishlistAndCollection } from "@/types/jersey";
+import type { Metadata } from "next";
 import Image from "next/image";
 import { JerseyBreadcrumb } from "@/components/jerseys/jerseys/jerseys-bread-crumb";
 import { StarRating } from "@/components/jerseys/ratings/star-rating";
@@ -14,6 +15,127 @@ interface JerseyPageProps {
     clubId: string;
     id: string;
   }>;
+}
+
+export async function generateMetadata({
+  params,
+}: JerseyPageProps): Promise<Metadata> {
+  const { leagueId, clubId, id } = await params;
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}`,
+      { cache: "no-store" }
+    );
+
+    if (!res.ok) {
+      return {
+        title: "Maillot introuvable - Le Vestiaire",
+        description: "Ce maillot n'existe pas ou n'est plus disponible.",
+      };
+    }
+
+    const jersey: JerseyWithWishlistAndCollection = await res.json();
+
+    const getJerseyTypeLabel = (type: string): string => {
+      const labels: Record<string, string> = {
+        HOME: "Domicile",
+        AWAY: "Extérieur",
+        THIRD: "Third",
+        FOURTH: "Fourth",
+        GOALKEEPER: "Gardien",
+        SPECIAL: "Spécial",
+      };
+      return labels[type.toUpperCase()] || type;
+    };
+
+    const typeLabel = getJerseyTypeLabel(jersey.type);
+    const typeLower = typeLabel.toLowerCase();
+
+    let ratingText = "";
+    try {
+      const ratingRes = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}/rating`,
+        { cache: "no-store" }
+      );
+      if (ratingRes.ok) {
+        const ratingData = await ratingRes.json();
+        if (ratingData.totalRatings > 0) {
+          ratingText = ` - Note ${ratingData.averageRating.toFixed(1)}/5 ⭐`;
+        }
+      }
+    } catch {}
+
+    const title = `Maillot ${jersey.club.name} ${typeLabel} ${jersey.season} ${jersey.brand}${ratingText} | Le Vestiaire`;
+
+    const description = `Découvrez le maillot ${typeLower} du ${jersey.club.name} pour la saison ${jersey.season}. Conçu par ${jersey.brand}, ce maillot ${jersey.club.league.name} est une pièce de collection. Ajoutez-le à votre collection et évaluez-le !`;
+
+    const keywords = [
+      `maillot ${jersey.club.name}`,
+      `${jersey.club.name} ${jersey.season}`,
+      `maillot ${jersey.brand} ${jersey.club.name}`,
+      `maillot foot ${jersey.club.name}`,
+      `maillot ${typeLower} ${jersey.club.name}`,
+      `collection maillot ${jersey.club.league.name}`,
+      `maillot vintage ${jersey.club.name}`,
+      `jersey ${jersey.club.name} ${jersey.season}`,
+      `${jersey.brand} football shirt ${jersey.season}`,
+    ];
+
+    const canonicalUrl = `https://le-vestiaire-foot.fr/jerseys/${leagueId}/clubs/${clubId}/jerseys/${
+      jersey.slug || id
+    }`;
+
+    return {
+      title,
+      description,
+      keywords: keywords.join(", "),
+
+      openGraph: {
+        title: `${jersey.club.name} ${typeLabel} ${jersey.season}`,
+        description: `Maillot ${typeLower} ${jersey.club.name} par ${jersey.brand}. ${jersey.club.league.name} • Saison ${jersey.season}`,
+        images: [
+          {
+            url: jersey.imageUrl,
+            width: 800,
+            height: 800,
+            alt: `Maillot ${jersey.club.name} ${jersey.season} ${jersey.brand}`,
+          },
+        ],
+        type: "website",
+        siteName: "Le Vestiaire Foot",
+        locale: "fr_FR",
+      },
+
+      twitter: {
+        card: "summary_large_image",
+        title: `${jersey.club.name} ${typeLabel} ${jersey.season}`,
+        description: `Maillot ${jersey.brand} • ${jersey.club.league.name}`,
+        images: [jersey.imageUrl],
+      },
+
+      alternates: {
+        canonical: canonicalUrl,
+      },
+
+      robots: {
+        index: true,
+        follow: true,
+        googleBot: {
+          index: true,
+          follow: true,
+          "max-image-preview": "large",
+          "max-snippet": -1,
+        },
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: "Maillot de football - Le Vestiaire",
+      description: "Collection de maillots de football vintage et récents",
+    };
+  }
 }
 
 export default async function JerseyPage({ params }: JerseyPageProps) {
@@ -69,10 +191,11 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
         <div className="w-full lg:w-1/2">
           <Image
             src={jersey.imageUrl}
-            alt={jersey.name}
+            alt={`Maillot ${jersey.club.name} ${jersey.season} ${jersey.brand}`}
             width={800}
             height={800}
             className="rounded-xl object-contain w-full h-auto max-h-[600px] bg-white"
+            priority
           />
         </div>
 

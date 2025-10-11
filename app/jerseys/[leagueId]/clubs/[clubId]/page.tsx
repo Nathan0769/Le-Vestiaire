@@ -9,6 +9,7 @@ import {
 import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 
 type Props = {
   params: Promise<{
@@ -16,6 +17,65 @@ type Props = {
     clubId: string;
   }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { clubId } = await params;
+
+  const club = await prisma.club.findUnique({
+    where: { id: clubId },
+    include: {
+      league: true,
+      jerseys: {
+        select: { season: true },
+        orderBy: { season: "desc" },
+        take: 1,
+      },
+    },
+  });
+
+  if (!club) {
+    return {
+      title: "Club introuvable - Le Vestiaire",
+    };
+  }
+
+  const latestSeason = club.jerseys[0]?.season || "";
+  const title = `Maillots ${club.name} - Toutes les saisons | Le Vestiaire`;
+  const description = `Collection complète des maillots du ${club.name} (${
+    club.league.name
+  }). Découvrez tous les maillots domicile, extérieur et third ${
+    latestSeason ? `depuis ${latestSeason.split("-")[0]}` : "du club"
+  }. Ajoutez-les à votre collection !`;
+
+  return {
+    title,
+    description,
+    keywords: [
+      `maillots ${club.name}`,
+      `${club.name} collection`,
+      `maillots ${club.league.name}`,
+      `histoire maillots ${club.name}`,
+      `tous les maillots ${club.name}`,
+      `collection ${club.name}`,
+    ].join(", "),
+    openGraph: {
+      title: `Tous les maillots ${club.name}`,
+      description,
+      images: [
+        {
+          url: club.logoUrl,
+          width: 200,
+          height: 200,
+          alt: `Logo ${club.name}`,
+        },
+      ],
+      type: "website",
+    },
+    alternates: {
+      canonical: `https://le-vestiaire-foot.fr/jerseys/${club.league.id}/clubs/${clubId}`,
+    },
+  };
+}
 
 export default async function ClubDetailPage(props: Props) {
   const { clubId } = await props.params;
@@ -69,7 +129,7 @@ export default async function ClubDetailPage(props: Props) {
         <div className="relative w-12 h-12 sm:w-16 sm:h-16">
           <Image
             src={club.logoUrl}
-            alt={club.name}
+            alt={`Logo ${club.name}`}
             fill
             className="object-contain"
           />
