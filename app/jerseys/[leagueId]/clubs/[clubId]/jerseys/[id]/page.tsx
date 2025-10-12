@@ -211,7 +211,9 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
           <div className="w-full lg:w-1/2">
             <Image
               src={jersey.imageUrl}
-              alt={`Maillot ${jersey.club.name} ${jersey.season} ${jersey.brand}`}
+              alt={`Maillot ${jersey.club.name} ${jersey.season} ${
+                jersey.brand
+              } - ${getJerseyTypeLabel(jersey.type)}`}
               width={800}
               height={800}
               className="rounded-xl object-contain w-full h-auto max-h-[600px] bg-white"
