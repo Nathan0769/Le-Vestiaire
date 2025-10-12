@@ -63,8 +63,8 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
             </h1>
 
             <h2 className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Découvrez, collectionnez et partagez votre passion pour les
-              maillots de football avec une communauté de collectionneurs.
+              Gérez votre collection de maillots de football, créez votre
+              wishlist et rejoignez une communauté de passionnés.
             </h2>
           </header>
 

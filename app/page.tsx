@@ -11,6 +11,8 @@ import type {
   TopRatedRow,
   RawResult,
 } from "@/types/home";
+import { FAQSection } from "@/components/home/faq-section";
+import { FeaturesSection } from "@/components/home/features-section";
 
 export const revalidate = 3600;
 
@@ -343,6 +345,9 @@ export default async function HomePage() {
       {user && userStats && <UserStatsSection userStats={userStats} />}
       <TopRatedSection jerseys={topRatedJerseys} />
       <RecentSection jerseys={recentJerseys} />
+
+      <FeaturesSection />
+      <FAQSection />
     </div>
   );
 }
