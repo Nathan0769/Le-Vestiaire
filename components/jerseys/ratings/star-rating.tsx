@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { Star } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
@@ -31,17 +31,7 @@ export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    fetchRatingData();
-
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, [jerseyId]);
-
-  const fetchRatingData = async () => {
+  const fetchRatingData = useCallback(async () => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
     }
@@ -63,7 +53,17 @@ export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
         console.error("Erreur lors du chargement des ratings:", error);
       }
     }
-  };
+  }, [jerseyId]);
+
+  useEffect(() => {
+    fetchRatingData();
+
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, [fetchRatingData]);
 
   const handleStarClick = async (
     event: React.MouseEvent<HTMLDivElement>,
