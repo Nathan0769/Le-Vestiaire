@@ -26,7 +26,7 @@ export async function generateMetadata({
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}`,
-      { cache: "no-store" }
+      { next: { revalidate: 3600 } }
     );
 
     if (!res.ok) {
