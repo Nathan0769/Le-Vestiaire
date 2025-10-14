@@ -7,6 +7,7 @@ import { AccountInfo } from "./account-info";
 import { EmailSettings } from "./email-settings";
 import { PasswordSettings } from "./password-settings";
 import { SessionSettings } from "./session-settings";
+import { LeaderboardPrivacySettings } from "./leaderboard-privacy-settings";
 
 export function SettingsClient() {
   const currentUser = useCurrentUser();
@@ -30,6 +31,7 @@ export function SettingsClient() {
 
       <div className="grid gap-6">
         <AccountInfo user={currentUser} />
+        <LeaderboardPrivacySettings userId={currentUser.id} />
 
         <EmailSettings
           isGoogleOnly={currentUser.authProvider?.isGoogleOnly ?? false}

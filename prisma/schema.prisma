@@ -23,11 +23,13 @@ model User {
   bio             String?
   favoriteClubId  String?
   favoriteClub    Club?        @relation(fields: [favoriteClubId], references: [id])
+  leaderboardAnonymous Boolean @default(true) @map("leaderboard_anonymous")
   collection      UserJersey[]
   wishlist        Wishlist[]
   ratings         Rating[]     
   sentFriendships     Friendship[] @relation("SentFriendships")
   receivedFriendships Friendship[] @relation("ReceivedFriendships")
+  achievements    Achievement[]
   // ----------------------
 
   // Relations auth
@@ -214,6 +216,23 @@ model Friendship {
   @@index([receiverId])
   @@index([status])
   @@map("friendships")
+}
+
+model Achievement {
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  badgeType  String   @map("badge_type")  
+  badgeMonth String?  @map("badge_month") 
+  rank       Int                          
+  category   String                       
+  metadata   Json?                        
+  earnedAt   DateTime @default(now()) @map("earned_at")
+  createdAt  DateTime @default(now()) @map("created_at")
+  
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  @@unique([userId, badgeType, badgeMonth, category], name: "unique_monthly_badge")
+  @@map("achievements")
 }
 
 enum FriendshipStatus {

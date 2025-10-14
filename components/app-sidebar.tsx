@@ -8,6 +8,7 @@ import {
   UsersRound,
   Heart,
   Shield,
+  Trophy,
 } from "lucide-react";
 import {
   Sidebar,
@@ -59,6 +60,11 @@ const items = [
     url: "/friends",
     icon: UsersRound,
     disabled: false,
+  },
+  {
+    title: "Classement",
+    url: "/leaderboard",
+    icon: Trophy,
   },
   {
     title: "Authentification",
