@@ -1,6 +1,12 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export async function GET(
   request: Request,
@@ -23,9 +29,22 @@ export async function GET(
       },
     });
 
+    let userPhotoUrl = null;
+    if (userJersey?.userPhotoUrl) {
+      const { data } = await supabaseAdmin.storage
+        .from("user-jersey-photos")
+        .createSignedUrl(userJersey.userPhotoUrl, 60 * 60);
+      userPhotoUrl = data?.signedUrl || null;
+    }
+
     return NextResponse.json({
       isInCollection: !!userJersey,
-      userJersey: userJersey || null,
+      userJersey: userJersey
+        ? {
+            ...userJersey,
+            userPhotoUrl: userPhotoUrl,
+          }
+        : null,
     });
   } catch (error) {
     console.error("GET Collection error:", error);
@@ -65,6 +84,7 @@ export async function POST(
       notes,
       isGift,
       isFromMysteryBox,
+      userPhotoUrl,
     } = await request.json();
 
     if (!size) {
@@ -133,6 +153,7 @@ export async function POST(
         notes: notes || null,
         isGift: isGift || false,
         isFromMysteryBox: isFromMysteryBox || false,
+        userPhotoUrl: userPhotoUrl || null,
       },
     });
 
@@ -169,6 +190,25 @@ export async function DELETE(
     }
 
     const jerseyId = id;
+
+    const userJersey = await prisma.userJersey.findUnique({
+      where: {
+        userId_jerseyId: {
+          userId: user.id,
+          jerseyId,
+        },
+      },
+    });
+
+    if (userJersey?.userPhotoUrl) {
+      try {
+        await supabaseAdmin.storage
+          .from("user-jersey-photos")
+          .remove([userJersey.userPhotoUrl]);
+      } catch (err) {
+        console.error("Erreur suppression photo:", err);
+      }
+    }
 
     const deletedUserJersey = await prisma.userJersey.deleteMany({
       where: {
@@ -223,6 +263,7 @@ export async function PATCH(
       notes,
       isGift,
       isFromMysteryBox,
+      userPhotoUrl,
     } = await request.json();
 
     if (!size) {
@@ -255,6 +296,16 @@ export async function PATCH(
       );
     }
 
+    if (userPhotoUrl === null && existingUserJersey.userPhotoUrl) {
+      try {
+        await supabaseAdmin.storage
+          .from("user-jersey-photos")
+          .remove([existingUserJersey.userPhotoUrl]);
+      } catch (err) {
+        console.error("Erreur suppression ancienne photo:", err);
+      }
+    }
+
     const updatedUserJersey = await prisma.userJersey.update({
       where: {
         userId_jerseyId: {
@@ -274,6 +325,7 @@ export async function PATCH(
         notes: notes || null,
         isGift: isGift || false,
         isFromMysteryBox: isFromMysteryBox || false,
+        userPhotoUrl: userPhotoUrl || null,
         updatedAt: new Date(),
       },
       include: {
@@ -289,11 +341,20 @@ export async function PATCH(
       },
     });
 
+    let signedUserPhotoUrl = null;
+    if (updatedUserJersey.userPhotoUrl) {
+      const { data } = await supabaseAdmin.storage
+        .from("user-jersey-photos")
+        .createSignedUrl(updatedUserJersey.userPhotoUrl, 60 * 60);
+      signedUserPhotoUrl = data?.signedUrl || null;
+    }
+
     const formattedResponse = {
       ...updatedUserJersey,
       purchasePrice: updatedUserJersey.purchasePrice
         ? Number(updatedUserJersey.purchasePrice)
         : null,
+      userPhotoUrl: signedUserPhotoUrl,
       jersey: {
         ...updatedUserJersey.jersey,
         retailPrice: updatedUserJersey.jersey.retailPrice

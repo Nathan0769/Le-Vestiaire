@@ -31,7 +31,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import Image from "next/image";
 import {
   Calendar,
   Euro,
@@ -45,6 +44,8 @@ import {
   Save,
   X,
   Gift,
+  Camera,
+  Upload,
 } from "lucide-react";
 import { CONDITION_LABELS, SIZE_LABELS } from "@/types/collection";
 import type { Size, Condition, UpdateCollectionData } from "@/types/collection";
@@ -52,6 +53,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
+import { ImageCarousel } from "./image-carousel";
 
 interface CollectionJerseyModalProps {
   isOpen: boolean;
@@ -72,6 +74,10 @@ export function CollectionJerseyModal({
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+
   const [formData, setFormData] = useState<UpdateCollectionData>({
     size: (collectionItem.size || "M") as Size,
     condition: collectionItem.condition as Condition,
@@ -82,6 +88,7 @@ export function CollectionJerseyModal({
     notes: collectionItem.notes || "",
     isGift: collectionItem.isGift || false,
     isFromMysteryBox: collectionItem.isFromMysteryBox || false,
+    userPhotoUrl: collectionItem.userPhotoUrl || undefined,
   });
 
   const resetForm = () => {
@@ -95,7 +102,10 @@ export function CollectionJerseyModal({
       notes: collectionItem.notes || "",
       isGift: collectionItem.isGift || false,
       isFromMysteryBox: collectionItem.isFromMysteryBox || false,
+      userPhotoUrl: collectionItem.userPhotoUrl || undefined,
     });
+    setPhotoFile(null);
+    setPhotoPreview(null);
   };
 
   const handleEdit = () => {
@@ -108,6 +118,35 @@ export function CollectionJerseyModal({
     resetForm();
   };
 
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Le fichier doit être une image");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("La photo ne doit pas dépasser 5MB");
+      return;
+    }
+
+    setPhotoFile(file);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPhotoPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemovePhoto = () => {
+    setPhotoFile(null);
+    setPhotoPreview(null);
+    setFormData({ ...formData, userPhotoUrl: undefined });
+  };
+
   const handleSave = async () => {
     if (!formData.size || !formData.condition) {
       toast.error("La taille et l'état sont obligatoires");
@@ -115,6 +154,39 @@ export function CollectionJerseyModal({
     }
 
     setIsLoading(true);
+
+    const dataToSave = { ...formData };
+
+    if (photoFile) {
+      setIsUploadingPhoto(true);
+      try {
+        const uploadFormData = new FormData();
+        uploadFormData.append("file", photoFile);
+        uploadFormData.append("userJerseyId", collectionItem.id);
+
+        const response = await fetch("/api/user/jersey-photo/upload", {
+          method: "POST",
+          body: uploadFormData,
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || "Erreur lors de l'upload");
+        }
+
+        const { path } = await response.json();
+        dataToSave.userPhotoUrl = path;
+      } catch (error) {
+        console.error("Erreur upload photo:", error);
+        toast.error("Erreur lors de l'upload de la photo");
+        setIsUploadingPhoto(false);
+        setIsLoading(false);
+        return;
+      } finally {
+        setIsUploadingPhoto(false);
+      }
+    }
+
     try {
       const response = await fetch(
         `/api/jerseys/${collectionItem.jerseyId}/collection`,
@@ -124,11 +196,12 @@ export function CollectionJerseyModal({
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            ...formData,
-            purchasePrice: formData.purchasePrice || null,
-            purchaseDate: formData.purchaseDate || null,
-            personalization: formData.personalization || null,
-            notes: formData.notes || null,
+            ...dataToSave,
+            purchasePrice: dataToSave.purchasePrice || null,
+            purchaseDate: dataToSave.purchaseDate || null,
+            personalization: dataToSave.personalization || null,
+            notes: dataToSave.notes || null,
+            userPhotoUrl: dataToSave.userPhotoUrl || null,
           }),
         }
       );
@@ -213,6 +286,28 @@ export function CollectionJerseyModal({
     return typeLabels[type as keyof typeof typeLabels] || type;
   };
 
+  const carouselImages = [];
+
+  if (photoPreview) {
+    carouselImages.push({
+      src: photoPreview,
+      alt: "Votre photo",
+      label: "Votre photo",
+    });
+  } else if (collectionItem.userPhotoUrl) {
+    carouselImages.push({
+      src: collectionItem.userPhotoUrl,
+      alt: "Votre photo",
+      label: "Votre photo",
+    });
+  }
+
+  carouselImages.push({
+    src: collectionItem.jersey.imageUrl,
+    alt: collectionItem.jersey.name,
+    label: "Photo officielle",
+  });
+
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
@@ -228,14 +323,51 @@ export function CollectionJerseyModal({
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
-              <div className="relative aspect-square bg-white rounded-lg border">
-                <Image
-                  src={collectionItem.jersey.imageUrl}
-                  alt={collectionItem.jersey.name}
-                  fill
-                  className="object-contain rounded-lg"
-                />
-              </div>
+              <ImageCarousel images={carouselImages} />
+
+              {isEditing && (
+                <div className="space-y-2">
+                  <Label className="flex items-center gap-2">
+                    <Camera className="w-4 h-4" />
+                    {collectionItem.userPhotoUrl || photoPreview
+                      ? "Modifier votre photo"
+                      : "Ajouter votre photo"}
+                  </Label>
+                  <div className="flex gap-2">
+                    <label className="flex-1">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-full cursor-pointer"
+                        asChild
+                      >
+                        <span>
+                          <Upload className="w-4 h-4 mr-2" />
+                          Choisir une photo
+                        </span>
+                      </Button>
+                      <input
+                        type="file"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={handlePhotoChange}
+                      />
+                    </label>
+                    {(collectionItem.userPhotoUrl || photoPreview) && (
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        onClick={handleRemovePhoto}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
+                    )}
+                  </div>
+                  <p className="text-xs text-muted-foreground">
+                    PNG, JPG, WEBP (Max 5MB)
+                  </p>
+                </div>
+              )}
 
               {!isEditing && (
                 <div className="flex flex-wrap gap-2">
@@ -650,7 +782,7 @@ export function CollectionJerseyModal({
                 <Button
                   variant="outline"
                   onClick={handleCancel}
-                  disabled={isLoading}
+                  disabled={isLoading || isUploadingPhoto}
                   className="flex-1 cursor-pointer"
                 >
                   <X className="w-4 h-4 mr-2" />
@@ -658,10 +790,15 @@ export function CollectionJerseyModal({
                 </Button>
                 <Button
                   onClick={handleSave}
-                  disabled={isLoading}
+                  disabled={isLoading || isUploadingPhoto}
                   className="flex-1 cursor-pointer"
                 >
-                  {isLoading ? (
+                  {isUploadingPhoto ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
+                      <span>Upload...</span>
+                    </div>
+                  ) : isLoading ? (
                     <div className="flex items-center gap-2">
                       <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
                       <span>Sauvegarde...</span>

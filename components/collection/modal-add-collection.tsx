@@ -22,6 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
+import { Camera, X } from "lucide-react";
+import Image from "next/image";
 import type { Size, Condition, AddToCollectionData } from "@/types/collection";
 import { SIZE_LABELS, CONDITION_LABELS } from "@/types/collection";
 
@@ -46,6 +48,39 @@ export function AddToCollectionModal({
     isFromMysteryBox: false,
   });
 
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Le fichier doit être une image");
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error("La photo ne doit pas dépasser 5MB");
+      return;
+    }
+
+    setPhotoFile(file);
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setPhotoPreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleRemovePhoto = () => {
+    setPhotoFile(null);
+    setPhotoPreview(null);
+    setFormData({ ...formData, userPhotoUrl: undefined });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -59,7 +94,38 @@ export function AddToCollectionModal({
       return;
     }
 
-    await onSubmit(formData);
+    const dataToSubmit = { ...formData };
+
+    if (photoFile) {
+      setIsUploadingPhoto(true);
+      try {
+        const uploadFormData = new FormData();
+        uploadFormData.append("file", photoFile);
+        uploadFormData.append("userJerseyId", "temp-" + Date.now());
+
+        const response = await fetch("/api/user/jersey-photo/upload", {
+          method: "POST",
+          body: uploadFormData,
+        });
+
+        if (!response.ok) {
+          const error = await response.json();
+          throw new Error(error.error || "Erreur lors de l'upload");
+        }
+
+        const { path } = await response.json();
+        dataToSubmit.userPhotoUrl = path;
+      } catch (error) {
+        console.error("Erreur upload photo:", error);
+        toast.error("Erreur lors de l'upload de la photo");
+        setIsUploadingPhoto(false);
+        return;
+      } finally {
+        setIsUploadingPhoto(false);
+      }
+    }
+
+    await onSubmit(dataToSubmit);
   };
 
   const handleReset = () => {
@@ -70,6 +136,8 @@ export function AddToCollectionModal({
       isGift: false,
       isFromMysteryBox: false,
     });
+    setPhotoFile(null);
+    setPhotoPreview(null);
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -250,6 +318,52 @@ export function AddToCollectionModal({
                 rows={3}
               />
             </div>
+            <div className="space-y-2">
+              <Label className="flex items-center gap-2">
+                Photo personnelle (optionnelle)
+              </Label>
+
+              {photoPreview ? (
+                <div className="relative w-full aspect-square bg-muted rounded-lg overflow-hidden">
+                  <Image
+                    src={photoPreview}
+                    alt="Aperçu"
+                    fill
+                    className="object-contain"
+                  />
+                  <Button
+                    type="button"
+                    variant="destructive"
+                    size="icon"
+                    className="absolute top-2 right-2 h-8 w-8"
+                    onClick={handleRemovePhoto}
+                  >
+                    <X className="w-4 h-4" />
+                  </Button>
+                </div>
+              ) : (
+                <label className="flex flex-col items-center justify-center w-full border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                    <Camera className="w-12 h-12 mb-3 text-muted-foreground" />
+                    <p className="mb-2 text-sm text-muted-foreground">
+                      <span className="font-semibold">
+                        Cliquez pour ajouter
+                      </span>{" "}
+                      votre photo
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      PNG, JPG, WEBP (Max 5MB)
+                    </p>
+                  </div>
+                  <input
+                    type="file"
+                    className="hidden"
+                    accept="image/*"
+                    onChange={handlePhotoChange}
+                  />
+                </label>
+              )}
+            </div>
           </form>
         </div>
 
@@ -259,17 +373,22 @@ export function AddToCollectionModal({
             variant="outline"
             className="cursor-pointer"
             onClick={() => handleOpenChange(false)}
-            disabled={isLoading}
+            disabled={isLoading || isUploadingPhoto}
           >
             Annuler
           </Button>
           <Button
             type="submit"
             form="collection-form"
-            disabled={isLoading}
+            disabled={isLoading || isUploadingPhoto}
             className="cursor-pointer"
           >
-            {isLoading ? (
+            {isUploadingPhoto ? (
+              <div className="flex items-center gap-2">
+                <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
+                <span>Upload photo...</span>
+              </div>
+            ) : isLoading ? (
               <div className="flex items-center gap-2">
                 <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
                 <span>Ajout...</span>

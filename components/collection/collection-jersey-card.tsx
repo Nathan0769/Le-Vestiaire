@@ -68,7 +68,7 @@ export function CollectionJerseyCard({
         <CardContent className="p-3 space-y-3">
           <div className="relative aspect-square">
             <Image
-              src={localItem.jersey.imageUrl}
+              src={localItem.userPhotoUrl || localItem.jersey.imageUrl}
               alt={localItem.jersey.name}
               fill
               className="object-contain group-hover:scale-105 transition-transform"

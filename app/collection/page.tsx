@@ -5,6 +5,12 @@ import { CollectionStats } from "@/components/collection/collection-stats";
 import { CollectionGrid } from "@/components/collection/collection-grid";
 import { Package } from "lucide-react";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseAdmin = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+);
 
 export default async function CollectionPage() {
   const user = await getCurrentUser();
@@ -33,18 +39,30 @@ export default async function CollectionPage() {
     },
   });
 
-  const collectionItems: CollectionItemWithJersey[] = collectionItemsRaw.map(
-    (item) => ({
-      ...item,
-      purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
-      isGift: item.isGift,
-      isFromMysteryBox: item.isFromMysteryBox,
-      jersey: {
-        ...item.jersey,
-        retailPrice: item.jersey.retailPrice
-          ? Number(item.jersey.retailPrice)
-          : null,
-      },
+  const collectionItems: CollectionItemWithJersey[] = await Promise.all(
+    collectionItemsRaw.map(async (item) => {
+      let userPhotoUrl = null;
+
+      if (item.userPhotoUrl) {
+        const { data } = await supabaseAdmin.storage
+          .from("user-jersey-photos")
+          .createSignedUrl(item.userPhotoUrl, 60 * 60);
+        userPhotoUrl = data?.signedUrl || null;
+      }
+
+      return {
+        ...item,
+        purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
+        isGift: item.isGift,
+        isFromMysteryBox: item.isFromMysteryBox,
+        userPhotoUrl: userPhotoUrl,
+        jersey: {
+          ...item.jersey,
+          retailPrice: item.jersey.retailPrice
+            ? Number(item.jersey.retailPrice)
+            : null,
+        },
+      };
     })
   );
 
@@ -84,10 +102,8 @@ export default async function CollectionPage() {
         </span>
       </div>
 
-      {/* Stats*/}
       <CollectionStats collectionItems={collectionItems} />
 
-      {/* Grille des maillots */}
       <CollectionGrid collectionItems={collectionItems} />
     </div>
   );

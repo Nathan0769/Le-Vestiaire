@@ -51,6 +51,7 @@ export interface AddToCollectionData {
   notes?: string;
   isGift: boolean;
   isFromMysteryBox: boolean;
+  userPhotoUrl?: string;
 }
 
 export interface UpdateCollectionData {
@@ -63,6 +64,7 @@ export interface UpdateCollectionData {
   notes?: string;
   isGift: boolean;
   isFromMysteryBox: boolean;
+  userPhotoUrl?: string;
 }
 
 export interface CollectionResponse {
