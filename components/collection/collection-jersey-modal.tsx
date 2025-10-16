@@ -6,7 +6,6 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
@@ -34,11 +33,8 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
-  Calendar,
-  Euro,
   FileText,
   Tag,
-  User,
   Package,
   Star,
   Edit3,
@@ -321,11 +317,6 @@ export function CollectionJerseyModal({
                 ? "Modifier votre maillot"
                 : "Détails de votre maillot"}
             </DialogTitle>
-            <DialogDescription>
-              {isEditing
-                ? "Modifiez les informations de votre maillot"
-                : "Consultez les détails de votre maillot"}
-            </DialogDescription>
           </DialogHeader>
 
           <div className="flex-1 overflow-y-auto px-6 py-4">
@@ -366,7 +357,6 @@ export function CollectionJerseyModal({
                           type="button"
                           variant="destructive"
                           onClick={handleRemovePhoto}
-                          className="cursor-pointer"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
@@ -671,12 +661,11 @@ export function CollectionJerseyModal({
                       </div>
                     </div>
                   ) : (
-                    <div className="space-y-3 text-sm">
+                    <div className="space-y-2 text-sm">
                       {collectionItem.purchasePrice && (
-                        <div className="flex items-center gap-2">
-                          <Euro className="w-4 h-4 text-muted-foreground" />
+                        <div className="flex items-center justify-between">
                           <span className="text-muted-foreground">
-                            Prix d&apos;achat :
+                            Prix d&apos;achat
                           </span>
                           <span className="font-semibold text-primary">
                             {collectionItem.purchasePrice}€
@@ -685,10 +674,9 @@ export function CollectionJerseyModal({
                       )}
 
                       {collectionItem.purchaseDate && (
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <div className="flex items-center justify-between">
                           <span className="text-muted-foreground">
-                            Acheté le :
+                            Acheté le
                           </span>
                           <span className="font-medium">
                             {format(
@@ -701,65 +689,54 @@ export function CollectionJerseyModal({
                       )}
 
                       {collectionItem.personalization && (
-                        <div className="space-y-2">
-                          <div className="flex items-center gap-2">
-                            <User className="w-4 h-4 text-muted-foreground" />
-                            <span className="text-muted-foreground">
-                              Personnalisation :
-                            </span>
-                          </div>
-                          <div className="ml-6 space-y-1 text-sm">
-                            {(() => {
-                              const parts =
-                                collectionItem.personalization!.split(" ");
-                              if (parts.length >= 2) {
-                                const number = parts[parts.length - 1];
-                                const playerName = parts.slice(0, -1).join(" ");
+                        <>
+                          {(() => {
+                            const parts =
+                              collectionItem.personalization!.split(" ");
+                            if (parts.length >= 2) {
+                              const number = parts[parts.length - 1];
+                              const playerName = parts.slice(0, -1).join(" ");
 
-                                if (/^\d+$/.test(number)) {
-                                  return (
-                                    <>
-                                      <div className="flex justify-between">
-                                        <span className="text-muted-foreground">
-                                          Joueur :
-                                        </span>
-                                        <span className="font-medium">
-                                          {playerName}
-                                        </span>
-                                      </div>
-                                      <div className="flex justify-between">
-                                        <span className="text-muted-foreground">
-                                          Numéro :
-                                        </span>
-                                        <span className="font-medium">
-                                          {number}
-                                        </span>
-                                      </div>
-                                    </>
-                                  );
-                                }
+                              if (/^\d+$/.test(number)) {
+                                return (
+                                  <>
+                                    <div className="flex items-center justify-between">
+                                      <span className="text-muted-foreground">
+                                        Joueur
+                                      </span>
+                                      <span className="font-medium">
+                                        {playerName}
+                                      </span>
+                                    </div>
+                                    <div className="flex items-center justify-between">
+                                      <span className="text-muted-foreground">
+                                        Numéro
+                                      </span>
+                                      <span className="font-medium">
+                                        {number}
+                                      </span>
+                                    </div>
+                                  </>
+                                );
                               }
+                            }
 
-                              return (
-                                <div className="flex justify-between">
-                                  <span className="text-muted-foreground">
-                                    Texte :
-                                  </span>
-                                  <span className="font-medium">
-                                    {collectionItem.personalization}
-                                  </span>
-                                </div>
-                              );
-                            })()}
-                          </div>
-                        </div>
+                            return (
+                              <div className="flex items-center justify-between">
+                                <span className="text-muted-foreground">
+                                  Personnalisation
+                                </span>
+                                <span className="font-medium">
+                                  {collectionItem.personalization}
+                                </span>
+                              </div>
+                            );
+                          })()}
+                        </>
                       )}
 
-                      <div className="flex items-center gap-2">
-                        <Package className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">
-                          Ajouté le :
-                        </span>
+                      <div className="flex items-center justify-between">
+                        <span className="text-muted-foreground">Ajouté le</span>
                         <span className="font-medium">
                           {format(
                             new Date(collectionItem.createdAt),
