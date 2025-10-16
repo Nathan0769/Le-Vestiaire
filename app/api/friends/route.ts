@@ -189,6 +189,18 @@ export async function POST(request: Request) {
           },
         });
 
+        try {
+          const channel = supabaseAdmin.channel(`friendship:${receiverId}`);
+          await channel.send({
+            type: "broadcast",
+            event: "friendship:update",
+            payload: { kind: "PENDING_CREATED", id: updated.id },
+          });
+          await supabaseAdmin.removeChannel(channel);
+        } catch {
+          // ignore realtime errors
+        }
+
         return NextResponse.json({
           success: true,
           message: "Demande renvoyée",
@@ -208,6 +220,18 @@ export async function POST(request: Request) {
         status: "PENDING",
       },
     });
+
+    try {
+      const channel = supabaseAdmin.channel(`friendship:${receiverId}`);
+      await channel.send({
+        type: "broadcast",
+        event: "friendship:update",
+        payload: { kind: "PENDING_CREATED", id: friendship.id },
+      });
+      await supabaseAdmin.removeChannel(channel);
+    } catch {
+      // ignore realtime errors
+    }
 
     return NextResponse.json({
       success: true,
