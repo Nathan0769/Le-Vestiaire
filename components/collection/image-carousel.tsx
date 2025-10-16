@@ -85,24 +85,6 @@ export function ImageCarousel({ images, className }: ImageCarouselProps) {
               <ChevronRight className="w-4 h-4" />
             </Button>
 
-            <Button
-              variant="secondary"
-              size="icon"
-              className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 cursor-pointer md:hidden bg-white/90 hover:bg-white"
-              onClick={goToPrevious}
-            >
-              <ChevronLeft className="w-4 h-4" />
-            </Button>
-
-            <Button
-              variant="secondary"
-              size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 cursor-pointer md:hidden bg-white/90 hover:bg-white"
-              onClick={goToNext}
-            >
-              <ChevronRight className="w-4 h-4" />
-            </Button>
-
             {images[currentIndex].label && (
               <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-xs py-1 px-2 text-center">
                 {images[currentIndex].label}
