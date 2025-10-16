@@ -36,11 +36,37 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         changeFrequency: "monthly",
         priority: 0.3,
       },
+
       {
         url: `${baseUrl}/authentification`,
         lastModified: new Date(),
         changeFrequency: "monthly",
-        priority: 0.4,
+        priority: 0.75,
+      },
+
+      {
+        url: `${baseUrl}/authentification/adidas`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.75,
+      },
+      {
+        url: `${baseUrl}/authentification/nike`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.75,
+      },
+      {
+        url: `${baseUrl}/authentification/puma`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.65,
+      },
+      {
+        url: `${baseUrl}/authentification/hummel`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.55,
       },
     ];
 
@@ -105,7 +131,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }));
 
-    console.log(`✅ Sitemap généré : ${jerseyRoutes.length} maillots`);
+    console.log(
+      `✅ Sitemap généré : ${jerseyRoutes.length} maillots + 4 guides authentification`
+    );
 
     return [...staticRoutes, ...leagueAndClubRoutes, ...jerseyRoutes];
   } catch (error) {
