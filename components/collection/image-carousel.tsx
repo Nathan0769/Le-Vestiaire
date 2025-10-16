@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, TouchEvent } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -17,6 +17,8 @@ interface ImageCarouselProps {
 
 export function ImageCarousel({ images, className }: ImageCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const touchStartX = useRef<number>(0);
+  const touchEndX = useRef<number>(0);
 
   if (images.length === 0) return null;
 
@@ -28,11 +30,34 @@ export function ImageCarousel({ images, className }: ImageCarouselProps) {
     setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
+  const handleTouchStart = (e: TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (touchStartX.current - touchEndX.current > 50) {
+      goToNext();
+    }
+
+    if (touchStartX.current - touchEndX.current < -50) {
+      goToPrevious();
+    }
+  };
+
   const singleImage = images.length === 1;
 
   return (
     <div className={cn("space-y-3", className)}>
-      <div className="relative aspect-square bg-white rounded-lg border overflow-hidden group">
+      <div
+        className="relative aspect-square bg-white rounded-lg border overflow-hidden group"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <Image
           src={images[currentIndex].src}
           alt={images[currentIndex].alt}
@@ -45,7 +70,7 @@ export function ImageCarousel({ images, className }: ImageCarouselProps) {
             <Button
               variant="secondary"
               size="icon"
-              className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 cursor-pointer"
+              className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 cursor-pointer hidden md:flex"
               onClick={goToPrevious}
             >
               <ChevronLeft className="w-4 h-4" />
@@ -54,7 +79,25 @@ export function ImageCarousel({ images, className }: ImageCarouselProps) {
             <Button
               variant="secondary"
               size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 cursor-pointer hidden md:flex"
+              onClick={goToNext}
+            >
+              <ChevronRight className="w-4 h-4" />
+            </Button>
+
+            <Button
+              variant="secondary"
+              size="icon"
+              className="absolute left-2 top-1/2 -translate-y-1/2 h-8 w-8 cursor-pointer md:hidden bg-white/90 hover:bg-white"
+              onClick={goToPrevious}
+            >
+              <ChevronLeft className="w-4 h-4" />
+            </Button>
+
+            <Button
+              variant="secondary"
+              size="icon"
+              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 cursor-pointer md:hidden bg-white/90 hover:bg-white"
               onClick={goToNext}
             >
               <ChevronRight className="w-4 h-4" />
