@@ -11,6 +11,7 @@ import {
 
 const themeOptions = [
   "bleu",
+  "bleu-nuit",
   "rouge",
   "violet",
   "vert",
