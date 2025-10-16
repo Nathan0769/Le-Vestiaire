@@ -6,6 +6,8 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -311,472 +313,484 @@ export function CollectionJerseyModal({
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
-          <DialogHeader>
+        <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] flex flex-col p-0">
+          <DialogHeader className="px-6 py-4 border-b">
             <DialogTitle className="flex items-center gap-2">
               <Package className="w-5 h-5 text-primary" />
               {isEditing
                 ? "Modifier votre maillot"
                 : "Détails de votre maillot"}
             </DialogTitle>
+            <DialogDescription>
+              {isEditing
+                ? "Modifiez les informations de votre maillot"
+                : "Consultez les détails de votre maillot"}
+            </DialogDescription>
           </DialogHeader>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <ImageCarousel images={carouselImages} />
+          <div className="flex-1 overflow-y-auto px-6 py-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-4">
+                <ImageCarousel images={carouselImages} />
 
-              {isEditing && (
-                <div className="space-y-2">
-                  <Label className="flex items-center gap-2">
-                    <Camera className="w-4 h-4" />
-                    {collectionItem.userPhotoUrl || photoPreview
-                      ? "Modifier votre photo"
-                      : "Ajouter votre photo"}
-                  </Label>
-                  <div className="flex gap-2">
-                    <label className="flex-1">
-                      <Button
-                        type="button"
+                {isEditing && (
+                  <div className="space-y-2">
+                    <Label className="flex items-center gap-2">
+                      <Camera className="w-4 h-4" />
+                      {collectionItem.userPhotoUrl || photoPreview
+                        ? "Modifier votre photo"
+                        : "Ajouter votre photo"}
+                    </Label>
+                    <div className="flex gap-2">
+                      <label className="flex-1">
+                        <Button
+                          type="button"
+                          variant="outline"
+                          className="w-full cursor-pointer"
+                          asChild
+                        >
+                          <span>
+                            <Upload className="w-4 h-4 mr-2" />
+                            Choisir une photo
+                          </span>
+                        </Button>
+                        <input
+                          type="file"
+                          className="hidden"
+                          accept="image/*"
+                          onChange={handlePhotoChange}
+                        />
+                      </label>
+                      {(collectionItem.userPhotoUrl || photoPreview) && (
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          onClick={handleRemovePhoto}
+                          className="cursor-pointer"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      )}
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      PNG, JPG, WEBP (Max 5MB)
+                    </p>
+                  </div>
+                )}
+
+                {!isEditing && (
+                  <div className="flex flex-wrap gap-2">
+                    <Badge
+                      variant="secondary"
+                      className={`${getConditionColor(
+                        collectionItem.condition
+                      )}`}
+                    >
+                      {
+                        CONDITION_LABELS[
+                          collectionItem.condition as keyof typeof CONDITION_LABELS
+                        ]
+                      }
+                    </Badge>
+
+                    {collectionItem.size && (
+                      <Badge variant="outline">
+                        Taille {collectionItem.size}
+                      </Badge>
+                    )}
+
+                    {collectionItem.hasTags && (
+                      <Badge variant="outline" className="text-green-600">
+                        <Tag className="w-3 h-3 mr-1" />
+                        Avec étiquettes
+                      </Badge>
+                    )}
+
+                    {collectionItem.isGift && (
+                      <Badge
                         variant="outline"
-                        className="w-full cursor-pointer"
-                        asChild
+                        className="text-primary bg-primary/20"
                       >
-                        <span>
-                          <Upload className="w-4 h-4 mr-2" />
-                          Choisir une photo
-                        </span>
-                      </Button>
-                      <input
-                        type="file"
-                        className="hidden"
-                        accept="image/*"
-                        onChange={handlePhotoChange}
-                      />
-                    </label>
-                    {(collectionItem.userPhotoUrl || photoPreview) && (
-                      <Button
-                        type="button"
-                        variant="destructive"
-                        onClick={handleRemovePhoto}
+                        <Gift className="w-3 h-3 mr-1" />
+                        Cadeau
+                      </Badge>
+                    )}
+
+                    {collectionItem.isFromMysteryBox && (
+                      <Badge
+                        variant="outline"
+                        className="text-primary bg-primary/20"
                       >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+                        <Package className="w-3 h-3 mr-1" />
+                        Box mystère
+                      </Badge>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground">
-                    PNG, JPG, WEBP (Max 5MB)
-                  </p>
-                </div>
-              )}
-
-              {!isEditing && (
-                <div className="flex flex-wrap gap-2">
-                  <Badge
-                    variant="secondary"
-                    className={`${getConditionColor(collectionItem.condition)}`}
-                  >
-                    {
-                      CONDITION_LABELS[
-                        collectionItem.condition as keyof typeof CONDITION_LABELS
-                      ]
-                    }
-                  </Badge>
-
-                  {collectionItem.size && (
-                    <Badge variant="outline">
-                      Taille {collectionItem.size}
-                    </Badge>
-                  )}
-
-                  {collectionItem.hasTags && (
-                    <Badge variant="outline" className="text-green-600">
-                      <Tag className="w-3 h-3 mr-1" />
-                      Avec étiquettes
-                    </Badge>
-                  )}
-
-                  {collectionItem.isGift && (
-                    <Badge
-                      variant="outline"
-                      className="text-primary bg-primary/20"
-                    >
-                      <Gift className="w-3 h-3 mr-1" />
-                      Cadeau
-                    </Badge>
-                  )}
-
-                  {collectionItem.isFromMysteryBox && (
-                    <Badge
-                      variant="outline"
-                      className="text-primary bg-primary/20"
-                    >
-                      <Package className="w-3 h-3 mr-1" />
-                      Box mystère
-                    </Badge>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-lg mb-3">
-                  {collectionItem.jersey.name}
-                </h3>
-
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Club</span>
-                    <span className="font-medium">
-                      {collectionItem.jersey.club.name}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Ligue</span>
-                    <span className="font-medium">
-                      {collectionItem.jersey.club.league.name}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Type</span>
-                    <span className="font-medium">
-                      {getJerseyTypeLabel(collectionItem.jersey.type)}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Saison</span>
-                    <span className="font-medium">
-                      {collectionItem.jersey.season}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Marque</span>
-                    <span className="font-medium">
-                      {collectionItem.jersey.brand}
-                    </span>
-                  </div>
-                </div>
+                )}
               </div>
 
-              <Separator />
+              <div className="space-y-6">
+                <div>
+                  <h3 className="font-semibold text-lg mb-3">
+                    {collectionItem.jersey.name}
+                  </h3>
 
-              <div>
-                <h4 className="font-semibold mb-3 flex items-center gap-2">
-                  <Star className="w-4 h-4" />
-                  Votre maillot
-                </h4>
-
-                {isEditing ? (
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-2">
-                        <Label
-                          htmlFor="size"
-                          className="flex items-center gap-1"
-                        >
-                          Taille <span className="text-destructive">*</span>
-                        </Label>
-                        <Select
-                          value={formData.size}
-                          onValueChange={(value: Size) =>
-                            setFormData({ ...formData, size: value })
-                          }
-                          required
-                        >
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {Object.entries(SIZE_LABELS).map(
-                              ([value, label]) => (
-                                <SelectItem key={value} value={value}>
-                                  {label}
-                                </SelectItem>
-                              )
-                            )}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label
-                          htmlFor="condition"
-                          className="flex items-center gap-1"
-                        >
-                          État <span className="text-destructive">*</span>
-                        </Label>
-                        <Select
-                          value={formData.condition}
-                          onValueChange={(value: Condition) =>
-                            setFormData({ ...formData, condition: value })
-                          }
-                          required
-                        >
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {Object.entries(CONDITION_LABELS).map(
-                              ([value, label]) => (
-                                <SelectItem key={value} value={value}>
-                                  {label}
-                                </SelectItem>
-                              )
-                            )}
-                          </SelectContent>
-                        </Select>
-                      </div>
+                  <div className="space-y-2 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Club</span>
+                      <span className="font-medium">
+                        {collectionItem.jersey.club.name}
+                      </span>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="purchasePrice">
-                        Prix d&apos;achat (€)
-                      </Label>
-                      <Input
-                        id="purchasePrice"
-                        type="number"
-                        step="1"
-                        min="0"
-                        placeholder="Ex: 90"
-                        value={formData.purchasePrice || ""}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            purchasePrice: e.target.value
-                              ? parseFloat(e.target.value)
-                              : undefined,
-                          })
-                        }
-                      />
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Ligue</span>
+                      <span className="font-medium">
+                        {collectionItem.jersey.club.league.name}
+                      </span>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="purchaseDate">Date d&apos;achat</Label>
-                      <Input
-                        id="purchaseDate"
-                        type="date"
-                        value={
-                          formData.purchaseDate
-                            ? formData.purchaseDate instanceof Date
-                              ? formData.purchaseDate
-                                  .toISOString()
-                                  .split("T")[0]
-                              : new Date(formData.purchaseDate)
-                                  .toISOString()
-                                  .split("T")[0]
-                            : ""
-                        }
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            purchaseDate: e.target.value
-                              ? new Date(e.target.value)
-                              : undefined,
-                          })
-                        }
-                      />
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Type</span>
+                      <span className="font-medium">
+                        {getJerseyTypeLabel(collectionItem.jersey.type)}
+                      </span>
                     </div>
 
-                    <div className="space-y-2">
-                      <Label htmlFor="personalization">
-                        Personnalisation (nom, numéro...)
-                      </Label>
-                      <Input
-                        id="personalization"
-                        placeholder="Ex: MESSI 10"
-                        value={formData.personalization || ""}
-                        onChange={(e) =>
-                          setFormData({
-                            ...formData,
-                            personalization: e.target.value,
-                          })
-                        }
-                      />
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Saison</span>
+                      <span className="font-medium">
+                        {collectionItem.jersey.season}
+                      </span>
                     </div>
 
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="hasTags"
-                        checked={formData.hasTags}
-                        onCheckedChange={(checked) =>
-                          setFormData({ ...formData, hasTags: !!checked })
-                        }
-                      />
-                      <Label htmlFor="hasTags">
-                        Possède encore les étiquettes
-                      </Label>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="isGift"
-                        checked={formData.isGift}
-                        onCheckedChange={(checked) =>
-                          setFormData({ ...formData, isGift: !!checked })
-                        }
-                      />
-                      <Label
-                        htmlFor="isGift"
-                        className="flex items-center gap-2"
-                      >
-                        Ce maillot est un cadeau
-                      </Label>
-                    </div>
-
-                    <div className="flex items-center space-x-2">
-                      <Checkbox
-                        id="isFromMysteryBox"
-                        checked={formData.isFromMysteryBox}
-                        onCheckedChange={(checked) =>
-                          setFormData({
-                            ...formData,
-                            isFromMysteryBox: !!checked,
-                          })
-                        }
-                      />
-                      <Label
-                        htmlFor="isFromMysteryBox"
-                        className="flex items-center gap-2"
-                      >
-                        Maillot reçu dans une box mystère
-                      </Label>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="notes">Notes personnelles</Label>
-                      <Textarea
-                        id="notes"
-                        placeholder="Ajoutez vos commentaires sur ce maillot..."
-                        value={formData.notes || ""}
-                        onChange={(e) =>
-                          setFormData({ ...formData, notes: e.target.value })
-                        }
-                        rows={3}
-                      />
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Marque</span>
+                      <span className="font-medium">
+                        {collectionItem.jersey.brand}
+                      </span>
                     </div>
                   </div>
-                ) : (
-                  <div className="space-y-3 text-sm">
-                    {collectionItem.purchasePrice && (
-                      <div className="flex items-center gap-2">
-                        <Euro className="w-4 h-4 text-muted-foreground" />
-                        <span className="text-muted-foreground">
-                          Prix d&apos;achat :
-                        </span>
-                        <span className="font-semibold text-primary">
-                          {collectionItem.purchasePrice}€
-                        </span>
-                      </div>
-                    )}
+                </div>
 
-                    {collectionItem.purchaseDate && (
+                <Separator />
+
+                <div>
+                  <h4 className="font-semibold mb-3 flex items-center gap-2">
+                    <Star className="w-4 h-4" />
+                    Votre maillot
+                  </h4>
+
+                  {isEditing ? (
+                    <div className="space-y-4">
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="space-y-2">
+                          <Label
+                            htmlFor="size"
+                            className="flex items-center gap-1"
+                          >
+                            Taille <span className="text-destructive">*</span>
+                          </Label>
+                          <Select
+                            value={formData.size}
+                            onValueChange={(value: Size) =>
+                              setFormData({ ...formData, size: value })
+                            }
+                            required
+                          >
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.entries(SIZE_LABELS).map(
+                                ([value, label]) => (
+                                  <SelectItem key={value} value={value}>
+                                    {label}
+                                  </SelectItem>
+                                )
+                              )}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        <div className="space-y-2">
+                          <Label
+                            htmlFor="condition"
+                            className="flex items-center gap-1"
+                          >
+                            État <span className="text-destructive">*</span>
+                          </Label>
+                          <Select
+                            value={formData.condition}
+                            onValueChange={(value: Condition) =>
+                              setFormData({ ...formData, condition: value })
+                            }
+                            required
+                          >
+                            <SelectTrigger>
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {Object.entries(CONDITION_LABELS).map(
+                                ([value, label]) => (
+                                  <SelectItem key={value} value={value}>
+                                    {label}
+                                  </SelectItem>
+                                )
+                              )}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="purchasePrice">
+                          Prix d&apos;achat (€)
+                        </Label>
+                        <Input
+                          id="purchasePrice"
+                          type="number"
+                          step="1"
+                          min="0"
+                          placeholder="Ex: 90"
+                          value={formData.purchasePrice || ""}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              purchasePrice: e.target.value
+                                ? parseFloat(e.target.value)
+                                : undefined,
+                            })
+                          }
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="purchaseDate">Date d&apos;achat</Label>
+                        <Input
+                          id="purchaseDate"
+                          type="date"
+                          value={
+                            formData.purchaseDate
+                              ? formData.purchaseDate instanceof Date
+                                ? formData.purchaseDate
+                                    .toISOString()
+                                    .split("T")[0]
+                                : new Date(formData.purchaseDate)
+                                    .toISOString()
+                                    .split("T")[0]
+                              : ""
+                          }
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              purchaseDate: e.target.value
+                                ? new Date(e.target.value)
+                                : undefined,
+                            })
+                          }
+                        />
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="personalization">
+                          Personnalisation (nom, numéro...)
+                        </Label>
+                        <Input
+                          id="personalization"
+                          placeholder="Ex: MESSI 10"
+                          value={formData.personalization || ""}
+                          onChange={(e) =>
+                            setFormData({
+                              ...formData,
+                              personalization: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="hasTags"
+                          checked={formData.hasTags}
+                          onCheckedChange={(checked) =>
+                            setFormData({ ...formData, hasTags: !!checked })
+                          }
+                        />
+                        <Label htmlFor="hasTags">
+                          Possède encore les étiquettes
+                        </Label>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="isGift"
+                          checked={formData.isGift}
+                          onCheckedChange={(checked) =>
+                            setFormData({ ...formData, isGift: !!checked })
+                          }
+                        />
+                        <Label
+                          htmlFor="isGift"
+                          className="flex items-center gap-2"
+                        >
+                          Ce maillot est un cadeau
+                        </Label>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="isFromMysteryBox"
+                          checked={formData.isFromMysteryBox}
+                          onCheckedChange={(checked) =>
+                            setFormData({
+                              ...formData,
+                              isFromMysteryBox: !!checked,
+                            })
+                          }
+                        />
+                        <Label
+                          htmlFor="isFromMysteryBox"
+                          className="flex items-center gap-2"
+                        >
+                          Maillot reçu dans une box mystère
+                        </Label>
+                      </div>
+
+                      <div className="space-y-2">
+                        <Label htmlFor="notes">Notes personnelles</Label>
+                        <Textarea
+                          id="notes"
+                          placeholder="Ajoutez vos commentaires sur ce maillot..."
+                          value={formData.notes || ""}
+                          onChange={(e) =>
+                            setFormData({ ...formData, notes: e.target.value })
+                          }
+                          rows={3}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="space-y-3 text-sm">
+                      {collectionItem.purchasePrice && (
+                        <div className="flex items-center gap-2">
+                          <Euro className="w-4 h-4 text-muted-foreground" />
+                          <span className="text-muted-foreground">
+                            Prix d&apos;achat :
+                          </span>
+                          <span className="font-semibold text-primary">
+                            {collectionItem.purchasePrice}€
+                          </span>
+                        </div>
+                      )}
+
+                      {collectionItem.purchaseDate && (
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4 text-muted-foreground" />
+                          <span className="text-muted-foreground">
+                            Acheté le :
+                          </span>
+                          <span className="font-medium">
+                            {format(
+                              new Date(collectionItem.purchaseDate),
+                              "dd MMMM yyyy",
+                              { locale: fr }
+                            )}
+                          </span>
+                        </div>
+                      )}
+
+                      {collectionItem.personalization && (
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2">
+                            <User className="w-4 h-4 text-muted-foreground" />
+                            <span className="text-muted-foreground">
+                              Personnalisation :
+                            </span>
+                          </div>
+                          <div className="ml-6 space-y-1 text-sm">
+                            {(() => {
+                              const parts =
+                                collectionItem.personalization!.split(" ");
+                              if (parts.length >= 2) {
+                                const number = parts[parts.length - 1];
+                                const playerName = parts.slice(0, -1).join(" ");
+
+                                if (/^\d+$/.test(number)) {
+                                  return (
+                                    <>
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">
+                                          Joueur :
+                                        </span>
+                                        <span className="font-medium">
+                                          {playerName}
+                                        </span>
+                                      </div>
+                                      <div className="flex justify-between">
+                                        <span className="text-muted-foreground">
+                                          Numéro :
+                                        </span>
+                                        <span className="font-medium">
+                                          {number}
+                                        </span>
+                                      </div>
+                                    </>
+                                  );
+                                }
+                              }
+
+                              return (
+                                <div className="flex justify-between">
+                                  <span className="text-muted-foreground">
+                                    Texte :
+                                  </span>
+                                  <span className="font-medium">
+                                    {collectionItem.personalization}
+                                  </span>
+                                </div>
+                              );
+                            })()}
+                          </div>
+                        </div>
+                      )}
+
                       <div className="flex items-center gap-2">
-                        <Calendar className="w-4 h-4 text-muted-foreground" />
+                        <Package className="w-4 h-4 text-muted-foreground" />
                         <span className="text-muted-foreground">
-                          Acheté le :
+                          Ajouté le :
                         </span>
                         <span className="font-medium">
                           {format(
-                            new Date(collectionItem.purchaseDate),
+                            new Date(collectionItem.createdAt),
                             "dd MMMM yyyy",
                             { locale: fr }
                           )}
                         </span>
                       </div>
-                    )}
-
-                    {collectionItem.personalization && (
-                      <div className="space-y-2">
-                        <div className="flex items-center gap-2">
-                          <User className="w-4 h-4 text-muted-foreground" />
-                          <span className="text-muted-foreground">
-                            Personnalisation :
-                          </span>
-                        </div>
-                        <div className="ml-6 space-y-1 text-sm">
-                          {(() => {
-                            const parts =
-                              collectionItem.personalization!.split(" ");
-                            if (parts.length >= 2) {
-                              const number = parts[parts.length - 1];
-                              const playerName = parts.slice(0, -1).join(" ");
-
-                              if (/^\d+$/.test(number)) {
-                                return (
-                                  <>
-                                    <div className="flex justify-between">
-                                      <span className="text-muted-foreground">
-                                        Joueur :
-                                      </span>
-                                      <span className="font-medium">
-                                        {playerName}
-                                      </span>
-                                    </div>
-                                    <div className="flex justify-between">
-                                      <span className="text-muted-foreground">
-                                        Numéro :
-                                      </span>
-                                      <span className="font-medium">
-                                        {number}
-                                      </span>
-                                    </div>
-                                  </>
-                                );
-                              }
-                            }
-
-                            return (
-                              <div className="flex justify-between">
-                                <span className="text-muted-foreground">
-                                  Texte :
-                                </span>
-                                <span className="font-medium">
-                                  {collectionItem.personalization}
-                                </span>
-                              </div>
-                            );
-                          })()}
-                        </div>
-                      </div>
-                    )}
-
-                    <div className="flex items-center gap-2">
-                      <Package className="w-4 h-4 text-muted-foreground" />
-                      <span className="text-muted-foreground">Ajouté le :</span>
-                      <span className="font-medium">
-                        {format(
-                          new Date(collectionItem.createdAt),
-                          "dd MMMM yyyy",
-                          { locale: fr }
-                        )}
-                      </span>
                     </div>
-                  </div>
+                  )}
+                </div>
+
+                {!isEditing && collectionItem.notes && (
+                  <>
+                    <Separator />
+                    <div>
+                      <h4 className="font-semibold mb-2 flex items-center gap-2">
+                        <FileText className="w-4 h-4" />
+                        Notes personnelles
+                      </h4>
+                      <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                        {collectionItem.notes}
+                      </p>
+                    </div>
+                  </>
                 )}
               </div>
-
-              {!isEditing && collectionItem.notes && (
-                <>
-                  <Separator />
-                  <div>
-                    <h4 className="font-semibold mb-2 flex items-center gap-2">
-                      <FileText className="w-4 h-4" />
-                      Notes personnelles
-                    </h4>
-                    <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
-                      {collectionItem.notes}
-                    </p>
-                  </div>
-                </>
-              )}
             </div>
           </div>
 
-          <div className="flex gap-2 pt-4 border-t">
+          <DialogFooter className="px-6 py-4 border-t flex-row gap-2">
             {isEditing ? (
               <>
                 <Button
@@ -838,7 +852,7 @@ export function CollectionJerseyModal({
                 </Button>
               </>
             )}
-          </div>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
 
