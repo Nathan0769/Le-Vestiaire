@@ -29,7 +29,8 @@ export function FriendRequestCard({
   const handleAccept = async () => {
     try {
       await onAccept(request.id);
-      toast.success(`Vous êtes maintenant ami avec ${request.sender.username}`);
+      const displayName = request.sender.username ?? "cet utilisateur";
+      toast.success(`Vous êtes maintenant ami avec ${displayName}`);
     } catch {
       toast.error("Erreur lors de l'acceptation");
     }
@@ -60,7 +61,7 @@ export function FriendRequestCard({
           />
           <div className="flex-1">
             <CardTitle className="text-base">
-              {request.sender.username}
+              {request.sender.username ?? "Utilisateur"}
             </CardTitle>
 
             <CardDescription className="text-sm flex items-center gap-1 pt-0.5">

@@ -95,8 +95,11 @@ export default async function FriendsCollectionsPage() {
     })
   );
 
+  const sortKey = (u: { username?: string | null; name?: string | null }) =>
+    u.username?.trim() || u.name?.trim() || "";
+
   friends.sort((a, b) =>
-    a.username.localeCompare(b.username, "fr", { sensitivity: "base" })
+    sortKey(a).localeCompare(sortKey(b), "fr", { sensitivity: "base" })
   );
 
   return (
@@ -145,7 +148,7 @@ export default async function FriendsCollectionsPage() {
                     />
                     <div className="flex-1 min-w-0">
                       <CardTitle className="text-base truncate group-hover:text-primary transition-colors">
-                        {friend.username}
+                        {friend.username ?? friend.name ?? "Utilisateur"}
                       </CardTitle>
                       {friend.favoriteClub && (
                         <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">

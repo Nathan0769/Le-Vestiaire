@@ -126,7 +126,7 @@ export function LeaderboardCard({
             >
               <div className="flex items-center gap-1.5 leading-tight">
                 <p className="font-semibold text-sm sm:text-base truncate">
-                  {entry.username}
+                  {entry.username ?? "Utilisateur"}
                 </p>
                 {isCurrentUser && (
                   <span className="text-[10px] sm:text-xs text-primary flex-shrink-0 font-medium">

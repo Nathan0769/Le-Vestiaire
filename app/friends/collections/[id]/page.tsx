@@ -162,8 +162,12 @@ export async function generateMetadata({ params }: FriendCollectionPageProps) {
   }
 
   return {
-    title: `Collection de ${data.user.username} - Le Vestiaire`,
-    description: `Découvrez la collection de ${data.user.username} : ${data.stats.total} maillots de football`,
+    title: `Collection de ${
+      data.user.username ?? "Utilisateur"
+    } - Le Vestiaire`,
+    description: `Découvrez la collection de ${
+      data.user.username ?? "Utilisateur"
+    } : ${data.stats.total} maillots de football`,
   };
 }
 
@@ -196,7 +200,7 @@ export default async function FriendCollectionPage({
         <div className="flex items-center gap-3">
           <Package className="w-6 h-6 text-primary" />
           <h1 className="text-2xl font-semibold">
-            Collection de {user.username}
+            Collection de {user.username ?? "Utilisateur"}
           </h1>
           <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium">
             {stats.total} maillot{stats.total > 1 ? "s" : ""}
@@ -212,7 +216,9 @@ export default async function FriendCollectionPage({
             size="lg"
           />
           <div className="flex-1">
-            <h2 className="text-xl font-semibold">{user.username}</h2>
+            <h2 className="text-xl font-semibold">
+              {user.username ?? "Utilisateur"}
+            </h2>
             {user.favoriteClub && (
               <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
                 <Heart className="w-4 h-4 text-red-500" />
@@ -235,8 +241,8 @@ export default async function FriendCollectionPage({
             Collection vide
           </h3>
           <p className="text-sm text-muted-foreground max-w-md">
-            {user.username} n&apos;a pas encore ajouté de maillots à sa
-            collection.
+            {user.username ?? "Cet utilisateur"} n&apos;a pas encore ajouté de
+            maillots à sa collection.
           </p>
         </div>
       ) : (

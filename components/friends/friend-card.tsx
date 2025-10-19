@@ -27,7 +27,8 @@ interface FriendCardProps {
 
 export function FriendCard({ friend, onRemove, onBlock }: FriendCardProps) {
   const handleRemove = async () => {
-    if (!confirm(`Retirer ${friend.user.username} de vos amis ?`)) return;
+    const displayName = friend.user.username ?? "cet utilisateur";
+    if (!confirm(`Retirer ${displayName} de vos amis ?`)) return;
 
     try {
       await onRemove(friend.id);
@@ -38,7 +39,8 @@ export function FriendCard({ friend, onRemove, onBlock }: FriendCardProps) {
   };
 
   const handleBlock = async () => {
-    if (!confirm(`Bloquer ${friend.user.username} ?`)) return;
+    const displayName = friend.user.username ?? "cet utilisateur";
+    if (!confirm(`Bloquer ${displayName} ?`)) return;
 
     try {
       await onBlock(friend.user.id);
@@ -60,7 +62,7 @@ export function FriendCard({ friend, onRemove, onBlock }: FriendCardProps) {
             />
             <div>
               <CardTitle className="text-base">
-                {friend.user.username}
+                {friend.user.username ?? "Utilisateur"}
               </CardTitle>
               <CardDescription className="text-sm flex items-center gap-1 pt-0.5">
                 {friend.user.favoriteClub ? (

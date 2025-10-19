@@ -87,8 +87,11 @@ export async function GET() {
       })
     );
 
+    const sortKey = (u: { username?: string | null; name?: string | null }) =>
+      u.username?.trim() || u.name?.trim() || "";
+
     friendsData.sort((a, b) =>
-      a.username.localeCompare(b.username, "fr", { sensitivity: "base" })
+      sortKey(a).localeCompare(sortKey(b), "fr", { sensitivity: "base" })
     );
 
     return NextResponse.json({ friends: friendsData });
