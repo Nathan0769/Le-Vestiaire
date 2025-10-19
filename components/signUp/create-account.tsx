@@ -23,7 +23,6 @@ const formDefaults = {
   firstName: "",
   lastName: "",
   email: "",
-  username: "",
   password: "",
   confirmPassword: "",
 };
@@ -78,15 +77,13 @@ export default function SignupPage({
 
   const validate = (): boolean => {
     const errors: FieldErrors = {};
-    const { firstName, lastName, email, username, password, confirmPassword } =
-      formData;
+    const { firstName, lastName, email, password, confirmPassword } = formData;
 
     if (!firstName) errors.firstName = "Prénom requis";
     if (!lastName) errors.lastName = "Nom requis";
     if (!email) errors.email = "Email requis";
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       errors.email = "Email invalide";
-    if (!username) errors.username = "Nom d’utilisateur requis";
     if (!password) errors.password = "Mot de passe requis";
     else if (password.length < 8) errors.password = "Au moins 8 caractères";
     if (confirmPassword !== password)
@@ -102,7 +99,7 @@ export default function SignupPage({
     if (!validate()) return;
 
     try {
-      await signUp(formData.email, formData.password, formData.username);
+      await signUp(formData.email, formData.password);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       setErrorMsg(msg || "Erreur lors de l’inscription");
@@ -159,21 +156,6 @@ export default function SignupPage({
                 />
                 {fieldErrors.email && (
                   <p className="text-xs text-red-600">{fieldErrors.email}</p>
-                )}
-              </div>
-
-              <div className="grid gap-2">
-                <Label htmlFor="username">Nom d’utilisateur *</Label>
-                <Input
-                  id="username"
-                  value={formData.username}
-                  onChange={(e) =>
-                    handleChange("username", e.currentTarget.value)
-                  }
-                  required
-                />
-                {fieldErrors.username && (
-                  <p className="text-xs text-red-600">{fieldErrors.username}</p>
                 )}
               </div>
 

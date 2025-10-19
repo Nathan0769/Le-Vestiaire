@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { authClient } from "@/lib/auth-client";
 
 export type CurrentUser = {
   id: string;
@@ -21,6 +22,7 @@ export function useCurrentUser() {
   const [user, setUser] = useState<CurrentUser | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [loading, setLoading] = useState(true);
+  const { data: session, isPending: sessionLoading } = authClient.useSession();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -37,8 +39,10 @@ export function useCurrentUser() {
       }
     };
 
-    fetchUser();
-  }, []);
+    if (!sessionLoading) {
+      void fetchUser();
+    }
+  }, [sessionLoading, session?.user?.id]);
 
   return user;
 }

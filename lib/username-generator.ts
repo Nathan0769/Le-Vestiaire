@@ -1,31 +1,53 @@
 import prisma from "@/lib/prisma";
 
-export async function generateUniqueUsername(name: string): Promise<string> {
-  let baseUsername = name
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "")
-    .substring(0, 10);
-
-  if (baseUsername.length < 3) {
-    baseUsername = "user";
-  }
-
-  if (!(await usernameExists(baseUsername)) && baseUsername.length >= 5) {
-    return baseUsername;
-  }
-
-  for (let i = 0; i < 100; i++) {
-    const suffix = Math.floor(10000 + Math.random() * 90000).toString();
-    const username = `${baseUsername}${suffix}`;
-
-    if (username.length >= 5 && username.length <= 20) {
-      if (!(await usernameExists(username))) {
-        return username;
-      }
+export async function generateUniqueUsername(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  _ignored?: string
+): Promise<string> {
+  for (let attempt = 0; attempt < 200; attempt++) {
+    const candidate = generateRandomUsername();
+    if (!(await usernameExists(candidate))) {
+      return candidate;
     }
   }
 
-  return `${baseUsername}${Date.now().toString().slice(-5)}`;
+  const fallback = `${generateRandomUsername()}${Date.now()
+    .toString()
+    .slice(-4)}`;
+  return fallback.slice(0, 20);
+}
+
+function generateRandomUsername(): string {
+  const adjectives = [
+    "swift",
+    "brave",
+    "calm",
+    "bright",
+    "royal",
+    "vivid",
+    "lucky",
+    "sharp",
+    "rapid",
+    "bold",
+  ];
+  const nouns = [
+    "stripe",
+    "kit",
+    "boots",
+    "ball",
+    "goal",
+    "badge",
+    "scarf",
+    "fan",
+    "club",
+    "team",
+  ];
+
+  const adj = adjectives[Math.floor(Math.random() * adjectives.length)];
+  const noun = nouns[Math.floor(Math.random() * nouns.length)];
+  const digits = Math.floor(1000 + Math.random() * 9000).toString();
+  const handle = `${adj}${noun}${digits}`;
+  return handle.slice(0, 20);
 }
 
 export async function usernameExists(username: string): Promise<boolean> {

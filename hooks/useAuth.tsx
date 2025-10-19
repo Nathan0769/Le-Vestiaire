@@ -104,13 +104,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, password: string, username: string) => {
+  const signUp = async (email: string, password: string) => {
     setLoading(true);
     try {
       const { error, data } = await authClient.signUp.email({
         email,
         password,
-        name: username,
+        name: email.split("@")[0],
       });
 
       if (error) throw new Error(error.message);
@@ -120,10 +120,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           await fetch("/api/user/username/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              userId: data.user.id,
-              name: username,
-            }),
+            body: JSON.stringify({}),
           });
         } catch (err) {
           console.error("Erreur génération username:", err);
