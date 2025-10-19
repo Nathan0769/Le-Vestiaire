@@ -47,7 +47,10 @@ export async function PATCH(request: Request) {
       select: { username: true },
     });
 
-    if (currentUser?.username.toLowerCase() === username.toLowerCase()) {
+    if (
+      currentUser?.username &&
+      currentUser?.username.toLowerCase() === username.toLowerCase()
+    ) {
       return NextResponse.json(
         { error: "C'est déjà votre pseudo actuel" },
         { status: 400 }
