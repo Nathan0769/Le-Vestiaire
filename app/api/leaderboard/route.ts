@@ -98,7 +98,7 @@ async function getCollectionSizeLeaderboard(
         userId: user.id,
         username: isAnonymous
           ? `Collectionneur #${user.id.slice(-4).toUpperCase()}`
-          : user.username,
+          : user.username ?? `Utilisateur #${user.id.slice(-4).toUpperCase()}`,
         name: isAnonymous ? "Anonyme" : user.name,
         avatar: isAnonymous ? null : user.avatar,
         favoriteClub: isAnonymous ? null : user.favoriteClub,
@@ -183,7 +183,7 @@ async function getCollectionDiversityLeaderboard(): Promise<
       userId: user.id,
       username: isAnonymous
         ? `Collectionneur #${user.id.slice(-4).toUpperCase()}`
-        : user.username,
+        : user.username ?? `Utilisateur #${user.id.slice(-4).toUpperCase()}`,
       name: isAnonymous ? "Anonyme" : user.name,
       avatar: isAnonymous ? null : user.avatar,
       favoriteClub: isAnonymous ? null : user.favoriteClub,
@@ -260,7 +260,7 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
       userId: user.id,
       username: isAnonymous
         ? `Collectionneur #${user.id.slice(-4).toUpperCase()}`
-        : user.username,
+        : user.username ?? `Utilisateur #${user.id.slice(-4).toUpperCase()}`,
       name: isAnonymous ? "Anonyme" : user.name,
       avatar: isAnonymous ? null : user.avatar,
       favoriteClub: isAnonymous ? null : user.favoriteClub,
@@ -337,7 +337,7 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
       userId: user.id,
       username: isAnonymous
         ? `Collectionneur #${user.id.slice(-4).toUpperCase()}`
-        : user.username,
+        : user.username ?? `Utilisateur #${user.id.slice(-4).toUpperCase()}`,
       name: isAnonymous ? "Anonyme" : user.name,
       avatar: isAnonymous ? null : user.avatar,
       favoriteClub: isAnonymous ? null : user.favoriteClub,

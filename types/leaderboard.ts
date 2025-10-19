@@ -10,7 +10,7 @@ export type LeaderboardPeriod = "month" | "all_time";
 export interface LeaderboardEntry {
   rank: number;
   userId: string;
-  username: string;
+  username: string | null;
   name: string;
   avatar: string | null;
   avatarUrl: string | null;
