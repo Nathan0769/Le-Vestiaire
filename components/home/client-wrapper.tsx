@@ -7,8 +7,8 @@ import { ApplyThemeColor } from "@/providers/themes-provider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "sonner";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { CookieConsent } from "@/components/ui/cookie-consent";
+import { AnalyticsWrapper } from "@/components/analytics-wrapper";
 
 export default function ClientWrapper({
   children,
@@ -31,12 +31,22 @@ export default function ClientWrapper({
           <main className="flex-1">
             <SidebarTrigger />
             {children}
-            <Analytics />
-            <SpeedInsights />
+            <AnalyticsWrapper />
           </main>
         </SidebarProvider>
       </AuthProvider>
       <Toaster position="top-right" duration={1500} richColors />
+      <CookieConsent
+        variant="default"
+        description="Nous utilisons des cookies pour améliorer votre expérience sur Le Vestiaire. Ces cookies nous permettent d'analyser l'utilisation du site et d'améliorer nos services."
+        learnMoreHref="/politique-cookies"
+        onAcceptCallback={() => {
+          console.log("Cookies acceptés");
+        }}
+        onDeclineCallback={() => {
+          console.log("Cookies refusés");
+        }}
+      />
     </ThemeProvider>
   );
 }

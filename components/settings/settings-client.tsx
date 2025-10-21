@@ -8,6 +8,7 @@ import { EmailSettings } from "./email-settings";
 import { PasswordSettings } from "./password-settings";
 import { SessionSettings } from "./session-settings";
 import { LeaderboardPrivacySettings } from "./leaderboard-privacy-settings";
+import { CookieSettings } from "./cookie-settings";
 
 export function SettingsClient() {
   const currentUser = useCurrentUser();
@@ -43,14 +44,19 @@ export function SettingsClient() {
         />
         <Separator />
         <SessionSettings />
+        <CookieSettings />
         <div className="text-muted-foreground text-center text-xs">
           En utilisant votre compte, vous acceptez nos{" "}
           <a href="/conditions-utilisation" className="underline">
             Conditions d&apos;utilisation
-          </a>{" "}
-          et{" "}
+          </a>
+          ,{" "}
           <a href="/politique-confidentialite" className="underline">
             Politique de confidentialité
+          </a>{" "}
+          et{" "}
+          <a href="/politique-cookies" className="underline">
+            Politique de cookies
           </a>
           .
         </div>
