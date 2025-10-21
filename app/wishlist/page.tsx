@@ -1,47 +1,94 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
-import { redirect } from "next/navigation";
 import { JerseyCard } from "@/components/jerseys/jerseys/jersey-card";
 import { Heart, Shirt, Trophy } from "lucide-react";
 import { WishlistShareButton } from "@/components/wishlist/wishlist-share-button";
+import WishlistLanding from "@/components/wishlist/wishlist-landing";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title:
+    "Ma Wishlist de Maillots de Foot | Le Vestiaire - Liste d'Envies à Partager",
+  description:
+    "Créez votre wishlist de maillots de football et partagez-la facilement avec vos proches. Formats lien, image et PDF disponibles pour Noël, anniversaires et occasions spéciales.",
+  keywords: [
+    "wishlist maillots foot",
+    "liste envies maillots football",
+    "partager wishlist maillots",
+    "idées cadeaux maillots foot",
+    "liste noel maillots football",
+    "liste anniversaire maillots",
+    "wishlist maillots à partager",
+    "souhaits maillots football",
+    "liste cadeaux maillots foot",
+    "wishlist football personnalisée",
+  ],
+  openGraph: {
+    title: "Wishlist de Maillots | Le Vestiaire Foot",
+    description:
+      "Créez et partagez votre liste d'envies de maillots de football avec vos proches",
+    type: "website",
+  },
+};
 
 export default async function WishlistPage() {
   const user = await getCurrentUser();
 
   if (!user) {
-    redirect("/auth/login");
+    return <WishlistLanding />;
   }
 
-  const wishlistItems = await prisma.wishlist.findMany({
-    where: {
-      userId: user.id,
-    },
-    include: {
-      jersey: {
-        include: {
-          club: {
-            include: {
-              league: true,
+  let wishlistItems;
+  try {
+    wishlistItems = await prisma.wishlist.findMany({
+      where: {
+        userId: user.id,
+      },
+      include: {
+        jersey: {
+          include: {
+            club: {
+              include: {
+                league: true,
+              },
             },
           },
         },
       },
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-  });
+      orderBy: {
+        createdAt: "desc",
+      },
+      take: 1000, // Limite raisonnable pour éviter les problèmes de performance
+    });
+  } catch (error) {
+    console.error("Erreur lors de la récupération de la wishlist:", error);
+    return (
+      <div className="p-6">
+        <div className="flex flex-col items-center justify-center py-16 text-center">
+          <Heart className="w-16 h-16 text-destructive/30 mb-6" />
+          <h2 className="text-xl font-medium text-muted-foreground mb-2">
+            Erreur lors du chargement de votre wishlist
+          </h2>
+          <p className="text-muted-foreground max-w-md">
+            Une erreur est survenue. Veuillez réessayer plus tard.
+          </p>
+        </div>
+      </div>
+    );
+  }
 
   const totalJerseys = wishlistItems.length;
 
   const leagueStats = wishlistItems.reduce((acc, item) => {
-    const leagueName = item.jersey.club.league.name;
+    const leagueName = item.jersey?.club?.league?.name;
+    if (!leagueName) return acc;
     acc[leagueName] = (acc[leagueName] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
   const typeStats = wishlistItems.reduce((acc, item) => {
-    const type = item.jersey.type;
+    const type = item.jersey?.type;
+    if (!type) return acc;
     acc[type] = (acc[type] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -158,14 +205,19 @@ export default async function WishlistPage() {
             {Object.entries(typeStats)
               .sort(([, a], [, b]) => b - a)
               .slice(0, 3)
-              .map(([type, count]) => (
-                <div key={type} className="flex justify-between items-center">
-                  <span className="text-sm font-medium">
-                    {typeLabels[type as keyof typeof typeLabels] || type}
-                  </span>
-                  <span className="text-sm text-muted-foreground">{count}</span>
-                </div>
-              ))}
+              .map(([type, count]) => {
+                const typeLabel = type in typeLabels
+                  ? typeLabels[type as keyof typeof typeLabels]
+                  : type;
+                return (
+                  <div key={type} className="flex justify-between items-center">
+                    <span className="text-sm font-medium">
+                      {typeLabel}
+                    </span>
+                    <span className="text-sm text-muted-foreground">{count}</span>
+                  </div>
+                );
+              })}
           </div>
         </div>
       </div>
