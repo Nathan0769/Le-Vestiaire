@@ -1,36 +1,135 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Le Vestiaire
 
-## Getting Started
+Une application web moderne pour gérer et partager votre collection de maillots de football.
 
-First, run the development server:
+## À propos
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+**Le Vestiaire** est une plateforme dédiée aux passionnés de maillots de football. Organisez votre collection, créez votre wishlist, découvrez les maillots les mieux notés et connectez-vous avec d'autres collectionneurs.
+
+### Fonctionnalités principales
+
+- **Collection personnalisée** : Ajoutez vos maillots avec tous les détails (taille, condition, prix d'achat, personnalisation, photos)
+- **Wishlist** : Créez votre liste de souhaits avec système de priorités
+- **Système de notation** : Notez les maillots et découvrez les mieux notés par la communauté
+- **Classement** : Participez au leaderboard et débloquez des achievements
+- **Réseau social** : Ajoutez des amis et découvrez leurs collections
+- **Statistiques** : Visualisez vos statistiques de collection par ligue, valeur totale, etc.
+- **Recherche avancée** : Filtrez les maillots par club, saison, type, ligue
+
+## Stack Technique
+
+### Framework & Langage
+
+- **Next.js 15** (App Router) - Framework React pour la production
+- **React 19** - Bibliothèque UI
+- **TypeScript** - Typage statique
+
+### Base de données & Backend
+
+- **PostgreSQL** - Base de données relationnelle
+- **Prisma** - ORM moderne pour TypeScript
+- **Supabase** - Backend as a Service
+- **Upstash Redis** - Cache et sessions
+
+### Authentification
+
+- **Better Auth** - Solution d'authentification moderne
+- **Next Auth** - Authentification supplémentaire
+
+### UI & Styling
+
+- **TailwindCSS 4** - Framework CSS utility-first
+- **Radix UI** - Composants accessibles et non stylés
+- **Lucide React** & **Tabler Icons** - Icônes
+- **Framer Motion** - Animations fluides
+
+### Formulaires & Validation
+
+- **React Hook Form** - Gestion de formulaires performante
+- **Zod** - Validation de schémas TypeScript-first
+
+### État & Requêtes
+
+- **TanStack Query (React Query)** - Gestion d'état serveur
+- **React Query Devtools** - Outils de développement
+
+### Outils & Analytics
+
+- **Vercel Analytics** - Analytique
+- **Vercel Speed Insights** - Performance monitoring
+- **ESLint** - Linter JavaScript/TypeScript
+
+## Scripts disponibles
+
+- `npm run dev` - Lance le serveur de développement
+- `npm run build` - Compile l'application pour la production
+- `npm run start` - Lance le serveur de production
+- `npm run lint` - Vérifie le code avec ESLint
+- `npx prisma studio` - Ouvre l'interface Prisma Studio
+- `npx prisma db seed` - Remplit la base de données avec des données de test
+
+## Structure du projet
+
+```
+le-vestiare/
+├── app/                      # Routes Next.js (App Router)
+│   ├── api/                  # Routes API
+│   ├── auth/                 # Pages d'authentification
+│   ├── collection/           # Gestion de collection
+│   ├── wishlist/             # Liste de souhaits
+│   ├── leaderboard/          # Classement
+│   ├── friends/              # Réseau social
+│   └── settings/             # Paramètres utilisateur
+├── components/               # Composants React réutilisables
+│   ├── ui/                   # Composants UI de base
+│   ├── home/                 # Composants page d'accueil
+│   ├── collection/           # Composants collection
+│   └── ...
+├── lib/                      # Utilitaires et helpers
+├── hooks/                    # Custom React hooks
+├── types/                    # Types TypeScript
+├── prisma/                   # Schéma et migrations Prisma
+│   ├── schema.prisma         # Modèle de données
+│   └── seed.ts               # Script de seed
+├── public/                   # Assets statiques
+└── scripts/                  # Scripts utilitaires
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Modèle de données
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Le projet utilise Prisma avec PostgreSQL. Principaux modèles :
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **User** : Utilisateurs avec profils et préférences
+- **Jersey** : Maillots avec détails (club, saison, type, marque)
+- **UserJersey** : Collection personnelle (taille, condition, prix, photos)
+- **Wishlist** : Liste de souhaits avec priorités
+- **Rating** : Notes des maillots par les utilisateurs
+- **Club** & **League** : Organisation des équipes et ligues
+- **Friendship** : Relations entre utilisateurs
+- **Achievement** : Badges et accomplissements
 
-## Learn More
+## Déploiement
 
-To learn more about Next.js, take a look at the following resources:
+L'application est optimisée pour un déploiement sur **Vercel** :
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Connectez votre repository à Vercel
+2. Configurez les variables d'environnement
+3. Déployez automatiquement à chaque push sur `main`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Pour d'autres plateformes, consultez la [documentation Next.js](https://nextjs.org/docs/app/building-your-application/deploying).
 
-## Deploy on Vercel
+## Contribution
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Licence
+
+Ce projet est privé et propriétaire.
+
+## Support
+
+Pour toute question ou assistance, ouvrez une issue sur le repository.
+
+---
+
+Développé avec par l'équipe Le Vestiaire
