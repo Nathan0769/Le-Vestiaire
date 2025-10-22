@@ -306,6 +306,25 @@ export async function PATCH(
       }
     }
 
+    // Préparer les données à mettre à jour
+    const updateData: any = {
+      size,
+      condition,
+      hasTags,
+      personalization: personalization || null,
+      purchasePrice: purchasePrice ? parseFloat(purchasePrice.toString()) : null,
+      purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
+      notes: notes || null,
+      isGift: isGift || false,
+      isFromMysteryBox: isFromMysteryBox || false,
+      updatedAt: new Date(),
+    };
+
+    // Seulement mettre à jour userPhotoUrl si elle est explicitement fournie dans le body
+    if (userPhotoUrl !== undefined) {
+      updateData.userPhotoUrl = userPhotoUrl || null;
+    }
+
     const updatedUserJersey = await prisma.userJersey.update({
       where: {
         userId_jerseyId: {
@@ -313,21 +332,7 @@ export async function PATCH(
           jerseyId,
         },
       },
-      data: {
-        size,
-        condition,
-        hasTags,
-        personalization: personalization || null,
-        purchasePrice: purchasePrice
-          ? parseFloat(purchasePrice.toString())
-          : null,
-        purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
-        notes: notes || null,
-        isGift: isGift || false,
-        isFromMysteryBox: isFromMysteryBox || false,
-        userPhotoUrl: userPhotoUrl || null,
-        updatedAt: new Date(),
-      },
+      data: updateData,
       include: {
         jersey: {
           include: {

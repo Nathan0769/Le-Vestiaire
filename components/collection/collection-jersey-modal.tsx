@@ -186,6 +186,28 @@ export function CollectionJerseyModal({
     }
 
     try {
+      // Préparer le payload - ne pas envoyer userPhotoUrl si elle n'a pas été modifiée
+      const payload: any = {
+        size: dataToSave.size,
+        condition: dataToSave.condition,
+        hasTags: dataToSave.hasTags,
+        personalization: dataToSave.personalization || null,
+        purchasePrice: dataToSave.purchasePrice || null,
+        purchaseDate: dataToSave.purchaseDate || null,
+        notes: dataToSave.notes || null,
+        isGift: dataToSave.isGift || false,
+        isFromMysteryBox: dataToSave.isFromMysteryBox || false,
+      };
+
+      // Seulement inclure userPhotoUrl si une nouvelle photo a été uploadée ou si elle a été supprimée
+      if (photoFile) {
+        payload.userPhotoUrl = dataToSave.userPhotoUrl;
+      } else if (dataToSave.userPhotoUrl === undefined && collectionItem.userPhotoUrl) {
+        // L'utilisateur a cliqué sur supprimer
+        payload.userPhotoUrl = null;
+      }
+      // Sinon on n'envoie pas userPhotoUrl du tout pour garder l'existante
+
       const response = await fetch(
         `/api/jerseys/${collectionItem.jerseyId}/collection`,
         {
@@ -193,14 +215,7 @@ export function CollectionJerseyModal({
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({
-            ...dataToSave,
-            purchasePrice: dataToSave.purchasePrice || null,
-            purchaseDate: dataToSave.purchaseDate || null,
-            personalization: dataToSave.personalization || null,
-            notes: dataToSave.notes || null,
-            userPhotoUrl: dataToSave.userPhotoUrl || null,
-          }),
+          body: JSON.stringify(payload),
         }
       );
 
@@ -540,9 +555,9 @@ export function CollectionJerseyModal({
                         <Input
                           id="purchasePrice"
                           type="number"
-                          step="0.1"
+                          step="0.01"
                           min="0"
-                          placeholder="Ex: 90.99"
+                          placeholder="Ex: 90.50"
                           value={formData.purchasePrice || ""}
                           onChange={(e) =>
                             setFormData({
