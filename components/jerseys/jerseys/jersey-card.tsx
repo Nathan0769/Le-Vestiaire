@@ -14,18 +14,32 @@ type Props = {
     imageUrl: string;
     type: JerseyType;
     slug?: string | null;
+    season?: string;
   };
   leagueId: string;
   club: Club;
+  showFullInfo?: boolean;
 };
 
-export function JerseyCard({ jersey, leagueId, club }: Props) {
+export function JerseyCard({ jersey, leagueId, club, showFullInfo }: Props) {
   const router = useRouter();
 
   const handleClick = () => {
     const identifier = jersey.slug || jersey.id;
     const url = getJerseyUrl(leagueId, club.id, identifier);
     router.push(url);
+  };
+
+  const getJerseyTypeLabel = (type: string) => {
+    const typeLabels = {
+      HOME: "Domicile",
+      AWAY: "Extérieur",
+      THIRD: "Third",
+      FOURTH: "Fourth",
+      GOALKEEPER: "Gardien",
+      SPECIAL: "Spécial",
+    };
+    return typeLabels[type as keyof typeof typeLabels] || type;
   };
 
   return (
@@ -42,9 +56,20 @@ export function JerseyCard({ jersey, leagueId, club }: Props) {
             className="object-contain"
           />
         </div>
-        <p className="text-sm font-medium capitalize text-center">
-          {jersey.type.toLowerCase()}
-        </p>
+        {showFullInfo ? (
+          <div className="space-y-1 w-full">
+            <p className="text-sm font-medium text-center line-clamp-2">
+              {club.name}
+            </p>
+            <p className="text-xs text-muted-foreground text-center">
+              {getJerseyTypeLabel(jersey.type)} • {jersey.season}
+            </p>
+          </div>
+        ) : (
+          <p className="text-sm font-medium capitalize text-center">
+            {jersey.type.toLowerCase()}
+          </p>
+        )}
       </CardContent>
     </Card>
   );

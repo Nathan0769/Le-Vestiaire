@@ -233,9 +233,11 @@ export default async function WishlistPage() {
                 name: item.jersey.name,
                 imageUrl: item.jersey.imageUrl,
                 type: item.jersey.type,
+                season: item.jersey.season,
               }}
               leagueId={item.jersey.club.league.id}
               club={item.jersey.club}
+              showFullInfo={true}
             />
           ))}
         </div>
