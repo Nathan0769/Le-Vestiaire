@@ -540,9 +540,9 @@ export function CollectionJerseyModal({
                         <Input
                           id="purchasePrice"
                           type="number"
-                          step="1"
+                          step="0.1"
                           min="0"
-                          placeholder="Ex: 90"
+                          placeholder="Ex: 90.99"
                           value={formData.purchasePrice || ""}
                           onChange={(e) =>
                             setFormData({
