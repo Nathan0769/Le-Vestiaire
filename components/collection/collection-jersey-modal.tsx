@@ -186,27 +186,39 @@ export function CollectionJerseyModal({
     }
 
     try {
-      // Préparer le payload - ne pas envoyer userPhotoUrl si elle n'a pas été modifiée
-      const payload: any = {
+      type PayloadType = {
+        size: Size;
+        condition: Condition;
+        hasTags: boolean;
+        personalization: string | null;
+        purchasePrice: number | null;
+        purchaseDate: Date | null;
+        notes: string | null;
+        isGift: boolean;
+        isFromMysteryBox: boolean;
+        userPhotoUrl?: string | null;
+      };
+
+      const payload: PayloadType = {
         size: dataToSave.size,
         condition: dataToSave.condition,
-        hasTags: dataToSave.hasTags,
+        hasTags: dataToSave.hasTags ?? false,
         personalization: dataToSave.personalization || null,
         purchasePrice: dataToSave.purchasePrice || null,
         purchaseDate: dataToSave.purchaseDate || null,
         notes: dataToSave.notes || null,
-        isGift: dataToSave.isGift || false,
-        isFromMysteryBox: dataToSave.isFromMysteryBox || false,
+        isGift: dataToSave.isGift ?? false,
+        isFromMysteryBox: dataToSave.isFromMysteryBox ?? false,
       };
 
-      // Seulement inclure userPhotoUrl si une nouvelle photo a été uploadée ou si elle a été supprimée
       if (photoFile) {
         payload.userPhotoUrl = dataToSave.userPhotoUrl;
-      } else if (dataToSave.userPhotoUrl === undefined && collectionItem.userPhotoUrl) {
-        // L'utilisateur a cliqué sur supprimer
+      } else if (
+        dataToSave.userPhotoUrl === undefined &&
+        collectionItem.userPhotoUrl
+      ) {
         payload.userPhotoUrl = null;
       }
-      // Sinon on n'envoie pas userPhotoUrl du tout pour garder l'existante
 
       const response = await fetch(
         `/api/jerseys/${collectionItem.jerseyId}/collection`,
