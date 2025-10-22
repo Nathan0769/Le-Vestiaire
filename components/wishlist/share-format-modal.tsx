@@ -24,7 +24,6 @@ import {
   generateWishlistImage,
   downloadImage,
 } from "@/lib/generate-wishlist-image";
-import { generateWishlistPDF, downloadPDF } from "@/lib/generate-wishlist-pdf";
 import type { Theme } from "@/types/theme";
 import type { ShareableWishlistItem } from "@/types/wishlist-share";
 
@@ -158,21 +157,41 @@ export function ShareFormatModal({
           season: item.jersey.season,
           clubName: item.jersey.club.name,
         })),
+        theme,
       };
 
-      const blob = await generateWishlistPDF({
-        title: data.title,
-        message: data.message,
-        items: data.items,
-        theme: theme,
+      // Appeler la nouvelle API Puppeteer
+      const response = await fetch("/api/wishlist/generate-pdf", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       });
 
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || "Erreur lors de la génération du PDF");
+      }
+
+      // Récupérer le blob du PDF
+      const blob = await response.blob();
+
+      // Télécharger le PDF
       const now = new Date();
       const filename = `wishlist-${now.getFullYear()}-${(now.getMonth() + 1)
         .toString()
         .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}.pdf`;
 
-      downloadPDF(blob, filename);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
       toast.success("PDF téléchargé avec succès !");
     } catch (error) {
       console.error("Erreur génération PDF:", error);
