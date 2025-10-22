@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { createClient } from "@supabase/supabase-js";
+import { Prisma } from "@prisma/client";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -107,6 +108,39 @@ export async function POST(
       );
     }
 
+    if (personalization && personalization.length > 200) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "La personnalisation ne peut pas dépasser 200 caractères",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (notes && notes.length > 1000) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "Les notes ne peuvent pas dépasser 1000 caractères",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (purchasePrice) {
+      const parsedPrice = parseFloat(purchasePrice.toString());
+      if (isNaN(parsedPrice) || parsedPrice < 0) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Le prix d'achat doit être un nombre positif valide",
+          },
+          { status: 400 }
+        );
+      }
+    }
+
     const jersey = await prisma.jersey.findUnique({
       where: { id: jerseyId },
     });
@@ -140,6 +174,10 @@ export async function POST(
       );
     }
 
+    const parsedPurchasePrice = purchasePrice
+      ? parseFloat(purchasePrice.toString())
+      : null;
+
     const userJersey = await prisma.userJersey.create({
       data: {
         userId: user.id,
@@ -148,7 +186,7 @@ export async function POST(
         condition,
         hasTags,
         personalization: personalization || null,
-        purchasePrice: purchasePrice ? parseFloat(purchasePrice) : null,
+        purchasePrice: parsedPurchasePrice,
         purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
         notes: notes || null,
         isGift: isGift || false,
@@ -280,6 +318,30 @@ export async function PATCH(
       );
     }
 
+    if (personalization && personalization.length > 200) {
+      return NextResponse.json(
+        { error: "La personnalisation ne peut pas dépasser 200 caractères" },
+        { status: 400 }
+      );
+    }
+
+    if (notes && notes.length > 1000) {
+      return NextResponse.json(
+        { error: "Les notes ne peuvent pas dépasser 1000 caractères" },
+        { status: 400 }
+      );
+    }
+
+    if (purchasePrice) {
+      const parsedPrice = parseFloat(purchasePrice.toString());
+      if (isNaN(parsedPrice) || parsedPrice < 0) {
+        return NextResponse.json(
+          { error: "Le prix d'achat doit être un nombre positif valide" },
+          { status: 400 }
+        );
+      }
+    }
+
     const existingUserJersey = await prisma.userJersey.findUnique({
       where: {
         userId_jerseyId: {
@@ -306,24 +368,23 @@ export async function PATCH(
       }
     }
 
-    // Préparer les données à mettre à jour
-    const updateData: any = {
+    const parsedPurchasePrice = purchasePrice
+      ? parseFloat(purchasePrice.toString())
+      : null;
+
+    const updateData: Prisma.UserJerseyUpdateInput = {
       size,
       condition,
       hasTags,
       personalization: personalization || null,
-      purchasePrice: purchasePrice ? parseFloat(purchasePrice.toString()) : null,
+      purchasePrice: parsedPurchasePrice,
       purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
       notes: notes || null,
       isGift: isGift || false,
       isFromMysteryBox: isFromMysteryBox || false,
       updatedAt: new Date(),
+      ...(userPhotoUrl !== undefined && { userPhotoUrl: userPhotoUrl || null }),
     };
-
-    // Seulement mettre à jour userPhotoUrl si elle est explicitement fournie dans le body
-    if (userPhotoUrl !== undefined) {
-      updateData.userPhotoUrl = userPhotoUrl || null;
-    }
 
     const updatedUserJersey = await prisma.userJersey.update({
       where: {
