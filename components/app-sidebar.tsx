@@ -25,6 +25,7 @@ import {
   SidebarMenuSubButton,
 } from "@/components/ui/sidebar";
 import { EditProfile } from "@/components/profiles/editProfile";
+import { SocialLinks } from "@/components/ui/social-links";
 import {
   Collapsible,
   CollapsibleTrigger,
@@ -84,7 +85,7 @@ export function AppSidebar() {
 
   return (
     <Sidebar className="flex h-screen flex-col justify-between">
-      <SidebarContent className="flex-grow">
+      <SidebarContent className="flex-grow flex flex-col">
         <SidebarGroup>
           <SidebarGroupLabel>Le Vestiaire</SidebarGroupLabel>
           <SidebarGroupContent>
@@ -199,6 +200,10 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        <div className="mt-auto px-4 pb-2">
+          <SocialLinks />
+        </div>
       </SidebarContent>
 
       <SidebarFooter className="border-t px-4 py-2">
