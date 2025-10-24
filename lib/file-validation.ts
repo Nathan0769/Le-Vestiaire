@@ -3,14 +3,9 @@ import { fileTypeFromBuffer } from "file-type";
 /**
  * Types d'images autorisés pour les uploads
  */
-const ALLOWED_IMAGE_TYPES = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-] as const;
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
 
-const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "gif"] as const;
+const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"] as const;
 
 /**
  * Taille maximale par défaut : 5MB
@@ -40,7 +35,6 @@ export async function validateImageFile(
   file: File,
   maxSize: number = MAX_FILE_SIZE
 ): Promise<FileValidationResult> {
-  // Vérifier la taille
   if (file.size > maxSize) {
     const maxSizeMB = maxSize / (1024 * 1024);
     return {
@@ -49,7 +43,6 @@ export async function validateImageFile(
     };
   }
 
-  // Vérifier la taille minimale (1KB)
   if (file.size < 1024) {
     return {
       valid: false,
@@ -58,11 +51,9 @@ export async function validateImageFile(
   }
 
   try {
-    // Lire le fichier en ArrayBuffer
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Détecter le type réel via les magic bytes
     const fileType = await fileTypeFromBuffer(buffer);
 
     if (!fileType) {
@@ -72,16 +63,16 @@ export async function validateImageFile(
       };
     }
 
-    // Vérifier que c'est bien un type d'image autorisé
-    if (!ALLOWED_IMAGE_TYPES.includes(fileType.mime as any)) {
+    if (!(ALLOWED_IMAGE_TYPES as readonly string[]).includes(fileType.mime)) {
       return {
         valid: false,
-        error: `Type de fichier non autorisé. Types acceptés : ${ALLOWED_IMAGE_EXTENSIONS.join(", ")}`,
+        error: `Type de fichier non autorisé. Types acceptés : ${ALLOWED_IMAGE_EXTENSIONS.join(
+          ", "
+        )}`,
         detectedType: fileType.mime,
       };
     }
 
-    // Tout est OK
     return {
       valid: true,
       detectedType: fileType.mime,
@@ -106,7 +97,6 @@ export function validateImageFileBasic(
   file: File,
   maxSize: number = MAX_FILE_SIZE
 ): FileValidationResult {
-  // Vérifier la taille
   if (file.size > maxSize) {
     const maxSizeMB = maxSize / (1024 * 1024);
     return {
@@ -115,11 +105,12 @@ export function validateImageFileBasic(
     };
   }
 
-  // Vérifier le type déclaré (première barrière, pas fiable à 100%)
-  if (!ALLOWED_IMAGE_TYPES.includes(file.type as any)) {
+  if (!(ALLOWED_IMAGE_TYPES as readonly string[]).includes(file.type)) {
     return {
       valid: false,
-      error: `Type de fichier non autorisé. Types acceptés : ${ALLOWED_IMAGE_EXTENSIONS.join(", ")}`,
+      error: `Type de fichier non autorisé. Types acceptés : ${ALLOWED_IMAGE_EXTENSIONS.join(
+        ", "
+      )}`,
     };
   }
 
