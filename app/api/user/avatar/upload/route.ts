@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { createClient } from "@supabase/supabase-js";
+import { validateImageFile, MAX_FILE_SIZE } from "@/lib/file-validation";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -24,11 +25,25 @@ export async function POST(req: Request) {
       );
     }
 
-    const filePath = `${user.id}/${Date.now()}-${file.name}`;
+    // Validation stricte du fichier avec magic bytes
+    const validation = await validateImageFile(file, MAX_FILE_SIZE);
+    if (!validation.valid) {
+      return NextResponse.json(
+        { error: validation.error },
+        { status: 400 }
+      );
+    }
+
+    // Générer un nom de fichier sécurisé basé sur le type détecté
+    const extension = validation.detectedType?.split("/")[1] || "jpg";
+    const filePath = `${user.id}/${Date.now()}.${extension}`;
 
     const { error: uploadError } = await supabaseAdmin.storage
       .from("avatar")
-      .upload(filePath, file, { upsert: true });
+      .upload(filePath, file, {
+        upsert: true,
+        contentType: validation.detectedType, // Utiliser le type détecté par magic bytes
+      });
 
     if (uploadError) {
       console.error("Erreur upload Supabase:", uploadError.message);
