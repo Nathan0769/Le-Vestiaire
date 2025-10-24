@@ -2,6 +2,11 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { createClient } from "@supabase/supabase-js";
 import { validateImageFile, MAX_FILE_SIZE } from "@/lib/file-validation";
+import {
+  moderateRateLimit,
+  getRateLimitIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -13,6 +18,29 @@ export async function POST(req: Request) {
     const user = await getCurrentUser();
     if (!user) {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
+    }
+
+    // Rate limiting : 10 uploads par heure
+    const identifier = await getRateLimitIdentifier(user.id);
+    const rateLimitResult = await checkRateLimit(moderateRateLimit, identifier);
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          error: "Trop de uploads. Réessayez plus tard.",
+          limit: rateLimitResult.limit,
+          remaining: rateLimitResult.remaining,
+          reset: rateLimitResult.reset,
+        },
+        {
+          status: 429,
+          headers: {
+            "X-RateLimit-Limit": rateLimitResult.limit.toString(),
+            "X-RateLimit-Remaining": rateLimitResult.remaining.toString(),
+            "X-RateLimit-Reset": rateLimitResult.reset.toString(),
+          },
+        }
+      );
     }
 
     const formData = await req.formData();

@@ -7,6 +7,11 @@ import type {
   LeaderboardPeriod,
   LeaderboardEntry,
 } from "@/types/leaderboard";
+import {
+  generousRateLimit,
+  getRateLimitIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,13 +20,26 @@ const supabaseAdmin = createClient(
 
 export async function GET(request: NextRequest) {
   try {
+    // Rate limiting : 60 requêtes par minute (généreux car endpoint public)
+    const currentUser = await getCurrentUser();
+    const identifier = await getRateLimitIdentifier(currentUser?.id);
+    const rateLimitResult = await checkRateLimit(generousRateLimit, identifier);
+
+    if (!rateLimitResult.success) {
+      return NextResponse.json(
+        {
+          error: "Trop de requêtes au leaderboard. Attendez un moment.",
+          remaining: rateLimitResult.remaining,
+        },
+        { status: 429 }
+      );
+    }
+
     const { searchParams } = new URL(request.url);
     const period = (searchParams.get("period") ||
       "all_time") as LeaderboardPeriod;
     const category = (searchParams.get("category") ||
       "collection_size") as LeaderboardCategory;
-
-    const currentUser = await getCurrentUser();
 
     let entries: LeaderboardEntry[] = [];
 

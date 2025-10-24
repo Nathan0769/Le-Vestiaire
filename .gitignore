@@ -42,3 +42,9 @@ next-env.d.ts
 
 /app/generated/prisma
 scripts/
+
+# commands directory
+/commands
+
+# documentation locale
+RATE_LIMITING_INFO.md
