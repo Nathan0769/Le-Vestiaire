@@ -9,6 +9,7 @@ import { PasswordSettings } from "./password-settings";
 import { SessionSettings } from "./session-settings";
 import { LeaderboardPrivacySettings } from "./leaderboard-privacy-settings";
 import { CookieSettings } from "./cookie-settings";
+import { Link } from "@/i18n/routing";
 
 export function SettingsClient() {
   const currentUser = useCurrentUser();
@@ -47,17 +48,17 @@ export function SettingsClient() {
         <CookieSettings />
         <div className="text-muted-foreground text-center text-xs">
           En utilisant votre compte, vous acceptez nos{" "}
-          <a href="/conditions-utilisation" className="underline">
+          <Link href="/conditions-utilisation" className="underline">
             Conditions d&apos;utilisation
-          </a>
+          </Link>
           ,{" "}
-          <a href="/politique-confidentialite" className="underline">
+          <Link href="/politique-confidentialite" className="underline">
             Politique de confidentialité
-          </a>{" "}
+          </Link>{" "}
           et{" "}
-          <a href="/politique-cookies" className="underline">
+          <Link href="/politique-cookies" className="underline">
             Politique de cookies
-          </a>
+          </Link>
           .
         </div>
       </div>

@@ -4,6 +4,7 @@ import { FormEvent, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
+import { Link } from "@/i18n/routing";
 import {
   Card,
   CardContent,
@@ -123,9 +124,9 @@ export function LoginForm({
 
               <div className="text-center text-sm">
                 Vous n&apos;avez pas de compte?{" "}
-                <a href="/auth/signUp" className="underline underline-offset-4">
+                <Link href="/auth/signUp" className="underline underline-offset-4">
                   Créer un compte
-                </a>
+                </Link>
               </div>
             </div>
           </form>
@@ -133,13 +134,13 @@ export function LoginForm({
       </Card>
       <div className="text-muted-foreground text-center text-xs">
         En cliquant sur se connecter, vous acceptez nos{" "}
-        <a href="/conditions-utilisation" className="underline">
+        <Link href="/conditions-utilisation" className="underline">
           Conditions d&apos;utilisation
-        </a>{" "}
+        </Link>{" "}
         et{" "}
-        <a href="/politique-confidentialite" className="underline">
+        <Link href="/politique-confidentialite" className="underline">
           Politique de confidentialité
-        </a>
+        </Link>
         .
       </div>
     </div>

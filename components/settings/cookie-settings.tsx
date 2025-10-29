@@ -4,6 +4,7 @@ import { Cookie } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { clearConsent } from "@/lib/cookie-consent";
+import { Link } from "@/i18n/routing";
 
 export function CookieSettings() {
   return (
@@ -33,12 +34,12 @@ export function CookieSettings() {
           </p>
         </div>
         <div className="pt-2 border-t">
-          <a
+          <Link
             href="/politique-cookies"
             className="text-sm text-primary hover:underline"
           >
             Voir la politique de cookies complète
-          </a>
+          </Link>
         </div>
       </CardContent>
     </Card>

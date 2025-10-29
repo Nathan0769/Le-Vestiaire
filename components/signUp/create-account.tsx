@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FormEvent, useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { useAuth } from "@/hooks/useAuth";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -245,13 +245,13 @@ export default function SignupPage({
       </Card>
       <div className="text-muted-foreground text-center text-xs">
         En cliquant sur créer mon compte, vous acceptez nos{" "}
-        <a href="/conditions-utilisation" className="underline">
+        <Link href="/conditions-utilisation" className="underline">
           Conditions d&apos;utilisation
-        </a>{" "}
+        </Link>{" "}
         et{" "}
-        <a href="/politique-confidentialite" className="underline">
+        <Link href="/politique-confidentialite" className="underline">
           Politique de confidentialité
-        </a>
+        </Link>
         .
       </div>
     </div>
