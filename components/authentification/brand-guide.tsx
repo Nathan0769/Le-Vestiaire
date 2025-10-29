@@ -30,7 +30,7 @@ export function BrandGuideComponent({ guide }: BrandGuideComponentProps) {
           </h2>
         </div>
 
-        <div className="grid gap-6">
+        <div className="grid gap-4 md:gap-6">
           {guide.criteria.map((criterion, index) => (
             <div key={index} className="space-y-4">
               <Card>

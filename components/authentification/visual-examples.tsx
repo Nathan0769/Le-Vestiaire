@@ -191,7 +191,7 @@ export function VisualExample({
         <CardDescription>{example.description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4 md:gap-6">
           {/* Authentique */}
           <div className="space-y-4">
             <div className="relative aspect-[4/3] bg-green-50 dark:bg-green-950/20 rounded-lg overflow-hidden border-2 border-green-200 dark:border-green-800">
