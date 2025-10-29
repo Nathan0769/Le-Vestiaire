@@ -1,0 +1,104 @@
+{
+  "Sidebar": {
+    "appName": "Le Vestiaire",
+    "home": "Accueil",
+    "collection": "Ma Collection",
+    "wishlist": "Mes Envies",
+    "jerseys": "Les Maillots",
+    "community": "La Communauté",
+    "leaderboard": "Classement",
+    "authentication": "Authentification",
+    "settings": "Compte",
+    "friends": "Amis",
+    "friendsCollections": "Collections des amis",
+    "jerseySuggestions": "Suggestion de maillots",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu"
+  },
+  "Common": {
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "search": "Rechercher",
+    "back": "Retour",
+    "next": "Suivant",
+    "previous": "Précédent",
+    "confirm": "Confirmer",
+    "close": "Fermer"
+  },
+  "JerseyType": {
+    "HOME": "Domicile",
+    "AWAY": "Extérieur",
+    "THIRD": "Third",
+    "FOURTH": "Fourth",
+    "GOALKEEPER": "Gardien",
+    "SPECIAL": "Spécial"
+  },
+  "Size": {
+    "XS": "XS",
+    "S": "S",
+    "M": "M",
+    "L": "L",
+    "XL": "XL",
+    "XXL": "XXL"
+  },
+  "Condition": {
+    "MINT": "Neuf",
+    "EXCELLENT": "Excellent",
+    "GOOD": "Bon",
+    "FAIR": "Correct",
+    "POOR": "Mauvais"
+  },
+  "Auth": {
+    "login": "Connexion",
+    "logout": "Déconnexion",
+    "signup": "Inscription",
+    "email": "Email",
+    "password": "Mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "noAccount": "Pas encore de compte ?",
+    "hasAccount": "Déjà un compte ?",
+    "continueWithGoogle": "Continuer avec Google"
+  },
+  "Errors": {
+    "required": "Ce champ est requis",
+    "invalidEmail": "Email invalide",
+    "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+    "generic": "Une erreur est survenue",
+    "unauthorized": "Non autorisé",
+    "notFound": "Non trouvé",
+    "rateLimited": "Trop de requêtes, veuillez réessayer plus tard"
+  },
+  "HomePage": {
+    "hero": {
+      "title": "Bienvenue dans",
+      "appName": "Le Vestiaire",
+      "subtitle": "Gérez votre collection de maillots de football, créez votre wishlist et rejoignez une communauté de passionnés.",
+      "myCollection": "Ma Collection",
+      "myWishlist": "Mes Envies",
+      "login": "Se connecter",
+      "signup": "Créer un compte",
+      "discoverJerseys": "Découvrir les maillots",
+      "ariaLabelBanner": "Section d'accueil - Collection de maillots de football",
+      "ariaLabelStats": "Statistiques de votre collection de maillots",
+      "ariaLabelAuth": "Actions d'authentification",
+      "ariaLabelCollectionCount": "{count} maillots dans votre collection",
+      "ariaLabelWishlistCount": "{count} maillots dans votre liste d'envies"
+    },
+    "topRated": {
+      "title": "Maillots les mieux notés",
+      "subtitle": "Découvrez les maillots préférés de la communauté",
+      "viewAll": "Voir tous les maillots"
+    },
+    "recent": {
+      "title": "Derniers maillots ajoutés",
+      "subtitle": "Les nouveautés du catalogue",
+      "viewAll": "Voir tous les maillots"
+    }
+  }
+}

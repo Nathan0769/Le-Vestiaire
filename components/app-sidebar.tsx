@@ -34,64 +34,86 @@ import {
 import { ChevronDown } from "lucide-react";
 import React from "react";
 import { usePendingRequestsCount } from "@/hooks/usePendingRequestsCount";
-
-const items = [
-  {
-    title: "Accueil",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Ma Collection",
-    url: "/collection",
-    icon: ListTodo,
-  },
-  {
-    title: "Mes Envies",
-    url: "/wishlist",
-    icon: Heart,
-  },
-  {
-    title: "Les Maillots",
-    url: "/jerseys",
-    icon: Shirt,
-  },
-  {
-    title: "La Communauté",
-    url: "/friends",
-    icon: UsersRound,
-    disabled: false,
-  },
-  {
-    title: "Classement",
-    url: "/leaderboard",
-    icon: Trophy,
-  },
-  {
-    title: "Authentification",
-    url: "/authentification",
-    icon: Shield,
-  },
-  {
-    title: "Compte",
-    url: "/settings",
-    icon: Settings,
-  },
-];
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { isHotkeyPressed } from "react-hotkeys-hook";
+import { useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
 export function AppSidebar() {
+  const t = useTranslations("Sidebar");
   const [openCommunaute, setOpenCommunaute] = React.useState(false);
   const { count: pendingCount } = usePendingRequestsCount();
+  const currentUser = useCurrentUser();
+  const router = useRouter();
+
+  const isAdmin =
+    currentUser?.role === "admin" || currentUser?.role === "superadmin";
+
+  const items = [
+    {
+      title: t("home"),
+      url: "/",
+      icon: Home,
+    },
+    {
+      title: t("collection"),
+      url: "/collection",
+      icon: ListTodo,
+    },
+    {
+      title: t("wishlist"),
+      url: "/wishlist",
+      icon: Heart,
+    },
+    {
+      title: t("jerseys"),
+      url: "/jerseys",
+      icon: Shirt,
+    },
+    {
+      title: t("community"),
+      url: "/friends",
+      icon: UsersRound,
+      disabled: false,
+    },
+    {
+      title: t("leaderboard"),
+      url: "/leaderboard",
+      icon: Trophy,
+    },
+    {
+      title: t("authentication"),
+      url: "/authentification",
+      icon: Shield,
+    },
+    {
+      title: t("settings"),
+      url: "/settings",
+      icon: Settings,
+    },
+  ];
+
+  const handleVestiaireClick = () => {
+    if (isHotkeyPressed("shift") && isAdmin) {
+      router.push("/admin");
+    }
+  };
 
   return (
     <Sidebar className="flex h-screen flex-col justify-between">
       <SidebarContent className="flex-grow flex flex-col">
         <SidebarGroup>
-          <SidebarGroupLabel>Le Vestiaire</SidebarGroupLabel>
+          <SidebarGroupLabel
+            onClick={handleVestiaireClick}
+            className={isAdmin ? "cursor-pointer select-none" : ""}
+          >
+            {t("appName")}
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="gap-y-3">
               {items.map((item) => {
-                if (item.title === "La Communauté") {
+                if (item.url === "/friends") {
                   return (
                     <Collapsible
                       key={item.title}
@@ -116,9 +138,7 @@ export function AppSidebar() {
                           <button
                             type="button"
                             aria-label={
-                              openCommunaute
-                                ? "Fermer le menu"
-                                : "Ouvrir le menu"
+                              openCommunaute ? t("closeMenu") : t("openMenu")
                             }
                             onClick={() => setOpenCommunaute((v) => !v)}
                             className={`ml-2 cursor-pointer transition-transform ${
@@ -137,7 +157,7 @@ export function AppSidebar() {
                                 isActive={false}
                                 className="hover:bg-primary/20 flex items-center justify-between"
                               >
-                                <span>Amis</span>
+                                <span>{t("friends")}</span>
                                 {pendingCount > 0 && (
                                   <span className="px-2 py-0.5 bg-red-500 text-white rounded-full text-xs font-medium">
                                     {pendingCount}
@@ -151,7 +171,7 @@ export function AppSidebar() {
                                 isActive={false}
                                 className="hover:bg-primary/20"
                               >
-                                Collections des amis
+                                {t("friendsCollections")}
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                             <SidebarMenuSubItem>
@@ -162,7 +182,7 @@ export function AppSidebar() {
                                 onClick={(e) => e.preventDefault()}
                                 tabIndex={-1}
                               >
-                                Suggestion de maillots
+                                {t("jerseySuggestions")}
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                           </SidebarMenuSub>
@@ -201,8 +221,11 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
 
-        <div className="mt-auto px-4 pb-2">
-          <SocialLinks />
+        <div className="mt-auto">
+          <LanguageSwitcher />
+          <div className="px-4 pb-2">
+            <SocialLinks />
+          </div>
         </div>
       </SidebarContent>
 

@@ -1,0 +1,104 @@
+{
+  "Sidebar": {
+    "appName": "The Locker Room",
+    "home": "Home",
+    "collection": "My Collection",
+    "wishlist": "My Wishlist",
+    "jerseys": "Jerseys",
+    "community": "Community",
+    "leaderboard": "Leaderboard",
+    "authentication": "Authentication",
+    "settings": "Account",
+    "friends": "Friends",
+    "friendsCollections": "Friends' Collections",
+    "jerseySuggestions": "Jersey Suggestions",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "confirm": "Confirm",
+    "close": "Close"
+  },
+  "JerseyType": {
+    "HOME": "Home",
+    "AWAY": "Away",
+    "THIRD": "Third",
+    "FOURTH": "Fourth",
+    "GOALKEEPER": "Goalkeeper",
+    "SPECIAL": "Special"
+  },
+  "Size": {
+    "XS": "XS",
+    "S": "S",
+    "M": "M",
+    "L": "L",
+    "XL": "XL",
+    "XXL": "XXL"
+  },
+  "Condition": {
+    "MINT": "Mint",
+    "EXCELLENT": "Excellent",
+    "GOOD": "Good",
+    "FAIR": "Fair",
+    "POOR": "Poor"
+  },
+  "Auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "signup": "Sign up",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "continueWithGoogle": "Continue with Google"
+  },
+  "Errors": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email",
+    "passwordTooShort": "Password must be at least 8 characters",
+    "generic": "An error occurred",
+    "unauthorized": "Unauthorized",
+    "notFound": "Not found",
+    "rateLimited": "Too many requests, please try again later"
+  },
+  "HomePage": {
+    "hero": {
+      "title": "Welcome to",
+      "appName": "The Locker Room",
+      "subtitle": "Manage your football jersey collection, create your wishlist and join a community of passionate fans.",
+      "myCollection": "My Collection",
+      "myWishlist": "My Wishlist",
+      "login": "Sign in",
+      "signup": "Create account",
+      "discoverJerseys": "Discover jerseys",
+      "ariaLabelBanner": "Home section - Football jersey collection",
+      "ariaLabelStats": "Your jersey collection statistics",
+      "ariaLabelAuth": "Authentication actions",
+      "ariaLabelCollectionCount": "{count} jerseys in your collection",
+      "ariaLabelWishlistCount": "{count} jerseys in your wishlist"
+    },
+    "topRated": {
+      "title": "Top Rated Jerseys",
+      "subtitle": "Discover the community's favorite jerseys",
+      "viewAll": "View all jerseys"
+    },
+    "recent": {
+      "title": "Recently Added Jerseys",
+      "subtitle": "New additions to the catalog",
+      "viewAll": "View all jerseys"
+    }
+  }
+}

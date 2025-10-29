@@ -1,7 +1,10 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shirt, Heart } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface HeroSectionProps {
   user?: {
@@ -16,6 +19,8 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ user, userStats }: HeroSectionProps) {
+  const t = useTranslations("HomePage.hero");
+
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -40,7 +45,7 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
       <section
         className="relative min-h-[70vh] flex items-center justify-center"
         role="banner"
-        aria-label="Section d'accueil - Collection de maillots de football"
+        aria-label={t("ariaLabelBanner")}
       >
         <div className="absolute inset-0">
           <Image
@@ -58,13 +63,12 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
         <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
           <header>
             <h1 className="text-4xl md:text-6xl font-bold mb-6 text-foreground">
-              Bienvenue dans{" "}
-              <span className="text-primary block mt-2">Le Vestiaire</span>
+              {t("title")}{" "}
+              <span className="text-primary block mt-2">{t("appName")}</span>
             </h1>
 
             <h2 className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Gérez votre collection de maillots de football, créez votre
-              wishlist et rejoignez une communauté de passionnés.
+              {t("subtitle")}
             </h2>
           </header>
 
@@ -77,7 +81,7 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
               <div
                 className="flex items-center gap-6 bg-card/80 backdrop-blur-sm rounded-full px-6 py-4 border border-border/50"
                 role="region"
-                aria-label="Statistiques de votre collection de maillots"
+                aria-label={t("ariaLabelStats")}
               >
                 <div className="flex items-center gap-2 text-center">
                   <Shirt className="w-5 h-5 text-primary" aria-hidden="true" />
@@ -85,12 +89,14 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
                     <div
                       className="text-2xl font-bold text-foreground"
                       itemProp="owns"
-                      aria-label={`${userStats.collection.total} maillots dans votre collection`}
+                      aria-label={t("ariaLabelCollectionCount", {
+                        count: userStats.collection.total,
+                      })}
                     >
                       {userStats.collection.total}
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      Ma Collection
+                      {t("myCollection")}
                     </div>
                   </div>
                 </div>
@@ -102,12 +108,14 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
                   <div>
                     <div
                       className="text-2xl font-bold text-foreground"
-                      aria-label={`${userStats.wishlist.total} maillots dans votre liste d'envies`}
+                      aria-label={t("ariaLabelWishlistCount", {
+                        count: userStats.wishlist.total,
+                      })}
                     >
                       {userStats.wishlist.total}
                     </div>
                     <div className="text-xs text-muted-foreground">
-                      Mes Envies
+                      {t("myWishlist")}
                     </div>
                   </div>
                 </div>
@@ -116,15 +124,11 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
           ) : (
             <nav
               className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8"
-              aria-label="Actions d'authentification"
+              aria-label={t("ariaLabelAuth")}
             >
               <Button size="lg" asChild className="w-[200px] sm:w-auto">
-                <Link
-                  href="/auth/login"
-                  className="gap-2 justify-center"
-                  aria-label="Se connecter à votre compte Le Vestiaire"
-                >
-                  Se connecter
+                <Link href="/auth/login" className="gap-2 justify-center">
+                  {t("login")}
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               </Button>
@@ -134,12 +138,8 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
                 asChild
                 className="w-[200px] sm:w-auto"
               >
-                <Link
-                  href="/auth/signUp"
-                  className="justify-center"
-                  aria-label="Créer un compte pour commencer votre collection de maillots"
-                >
-                  Créer un compte
+                <Link href="/auth/signUp" className="justify-center">
+                  {t("signup")}
                 </Link>
               </Button>
             </nav>
@@ -151,12 +151,8 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
               asChild
               className="text-muted-foreground hover:text-primary"
             >
-              <Link
-                href="/jerseys"
-                className="gap-2"
-                aria-label="Découvrir tous les maillots de football disponibles"
-              >
-                Découvrir les maillots
+              <Link href="/jerseys" className="gap-2">
+                {t("discoverJerseys")}
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             </Button>

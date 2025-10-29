@@ -3,9 +3,11 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Star, ArrowRight, Award } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import type { TopRatedJersey } from "@/types/home";
+import { useTranslations } from "next-intl";
+import { useJerseyTypeTranslation } from "@/lib/translations";
 
 interface TopRatedSectionProps {
   jerseys?: TopRatedJersey[];
@@ -14,6 +16,8 @@ interface TopRatedSectionProps {
 export function TopRatedSection({
   jerseys: ssrJerseys,
 }: TopRatedSectionProps = {}) {
+  const t = useTranslations("HomePage.topRated");
+  const jerseyType = useJerseyTypeTranslation();
   const [jerseys, setJerseys] = useState<TopRatedJersey[]>(ssrJerseys || []);
   const [loading, setLoading] = useState(!ssrJerseys);
 
@@ -34,25 +38,6 @@ export function TopRatedSection({
     };
     fetchTopRated();
   }, [ssrJerseys]);
-
-  const getJerseyTypeLabel = (type: string) => {
-    switch (type.toLowerCase()) {
-      case "home":
-        return "Domicile";
-      case "away":
-        return "Extérieur";
-      case "third":
-        return "Third";
-      case "fourth":
-        return "Fourth";
-      case "special":
-        return "Spécial";
-      case "goalkeeper":
-        return "Gardien";
-      default:
-        return type;
-    }
-  };
 
   const renderStars = (rating: number) => {
     return Array.from({ length: 5 }, (_, index) => {
@@ -126,11 +111,11 @@ export function TopRatedSection({
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <h2 className="text-3xl md:text-4xl font-bold">Les Mieux Notés</h2>
+            <h2 className="text-3xl md:text-4xl font-bold">{t("title")}</h2>
             <Award className="w-6 h-6 text-yellow-500" />
           </div>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Découvrez les maillots les plus appréciés par la communauté
+            {t("subtitle")}
           </p>
         </div>
 
@@ -173,7 +158,7 @@ export function TopRatedSection({
                   </h3>
 
                   <p className="text-xs text-muted-foreground">
-                    {getJerseyTypeLabel(jersey.type)} • {jersey.season}
+                    {jerseyType(jersey.type)} • {jersey.season}
                   </p>
 
                   <div className="flex items-center justify-between">
@@ -193,7 +178,7 @@ export function TopRatedSection({
         <div className="text-center">
           <Button asChild variant="outline">
             <Link href="/jerseys" className="gap-2">
-              Voir tous les maillots
+              {t("viewAll")}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>

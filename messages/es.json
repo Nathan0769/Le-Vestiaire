@@ -1,0 +1,104 @@
+{
+  "Sidebar": {
+    "appName": "El Vestuario",
+    "home": "Inicio",
+    "collection": "Mi Colección",
+    "wishlist": "Mi Lista de Deseos",
+    "jerseys": "Camisetas",
+    "community": "Comunidad",
+    "leaderboard": "Clasificación",
+    "authentication": "Autenticación",
+    "settings": "Cuenta",
+    "friends": "Amigos",
+    "friendsCollections": "Colecciones de Amigos",
+    "jerseySuggestions": "Sugerencias de Camisetas",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú"
+  },
+  "Common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Añadir",
+    "search": "Buscar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "confirm": "Confirmar",
+    "close": "Cerrar"
+  },
+  "JerseyType": {
+    "HOME": "Local",
+    "AWAY": "Visitante",
+    "THIRD": "Tercera",
+    "FOURTH": "Cuarta",
+    "GOALKEEPER": "Portero",
+    "SPECIAL": "Especial"
+  },
+  "Size": {
+    "XS": "XS",
+    "S": "S",
+    "M": "M",
+    "L": "L",
+    "XL": "XL",
+    "XXL": "XXL"
+  },
+  "Condition": {
+    "MINT": "Nuevo",
+    "EXCELLENT": "Excelente",
+    "GOOD": "Bueno",
+    "FAIR": "Aceptable",
+    "POOR": "Malo"
+  },
+  "Auth": {
+    "login": "Iniciar sesión",
+    "logout": "Cerrar sesión",
+    "signup": "Registrarse",
+    "email": "Email",
+    "password": "Contraseña",
+    "forgotPassword": "¿Olvidaste tu contraseña?",
+    "noAccount": "¿No tienes cuenta?",
+    "hasAccount": "¿Ya tienes cuenta?",
+    "continueWithGoogle": "Continuar con Google"
+  },
+  "Errors": {
+    "required": "Este campo es obligatorio",
+    "invalidEmail": "Email inválido",
+    "passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+    "generic": "Ocurrió un error",
+    "unauthorized": "No autorizado",
+    "notFound": "No encontrado",
+    "rateLimited": "Demasiadas solicitudes, intenta de nuevo más tarde"
+  },
+  "HomePage": {
+    "hero": {
+      "title": "Bienvenido a",
+      "appName": "El Vestuario",
+      "subtitle": "Gestiona tu colección de camisetas de fútbol, crea tu lista de deseos y únete a una comunidad de apasionados.",
+      "myCollection": "Mi Colección",
+      "myWishlist": "Mi Lista de Deseos",
+      "login": "Iniciar sesión",
+      "signup": "Crear cuenta",
+      "discoverJerseys": "Descubrir camisetas",
+      "ariaLabelBanner": "Sección de inicio - Colección de camisetas de fútbol",
+      "ariaLabelStats": "Estadísticas de tu colección de camisetas",
+      "ariaLabelAuth": "Acciones de autenticación",
+      "ariaLabelCollectionCount": "{count} camisetas en tu colección",
+      "ariaLabelWishlistCount": "{count} camisetas en tu lista de deseos"
+    },
+    "topRated": {
+      "title": "Camisetas Mejor Valoradas",
+      "subtitle": "Descubre las camisetas favoritas de la comunidad",
+      "viewAll": "Ver todas las camisetas"
+    },
+    "recent": {
+      "title": "Camisetas Añadidas Recientemente",
+      "subtitle": "Nuevas incorporaciones al catálogo",
+      "viewAll": "Ver todas las camisetas"
+    }
+  }
+}
