@@ -7,14 +7,15 @@ import { routing, type Locale } from "@/i18n/routing";
 
 type Props = {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 };
 
 export async function generateMetadata({
-  params: { locale },
+  params,
 }: {
-  params: { locale: string };
+  params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
+  const { locale } = await params;
   const localeMap: Record<string, string> = {
     fr: "fr_FR",
     en: "en_US",
@@ -23,7 +24,7 @@ export async function generateMetadata({
 
   const titles: Record<string, string> = {
     fr: "Le Vestiaire Foot - Gérez votre Collection de Maillots de Foot | Application Gratuite",
-    en: "The Wardrobe - Manage Your Football Jersey Collection | Free App",
+    en: "The Locker Room - Manage Your Football Jersey Collection | Free App",
     es: "El Vestuario - Gestiona tu Colección de Camisetas de Fútbol | App Gratuita",
   };
 
@@ -90,8 +91,10 @@ export function generateStaticParams() {
 
 export default async function LocaleLayout({
   children,
-  params: { locale },
+  params,
 }: Props) {
+  const { locale } = await params;
+
   if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
