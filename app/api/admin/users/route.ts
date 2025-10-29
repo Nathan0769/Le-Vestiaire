@@ -12,6 +12,7 @@ import prisma from "@/lib/prisma";
  * Liste tous les utilisateurs avec leurs rôles
  * Réservé aux admins
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export async function GET(request: Request) {
   // Vérifier que l'utilisateur est admin
   const { error, session } = await requirePermission(undefined, true);
@@ -22,14 +23,10 @@ export async function GET(request: Request) {
   const rateLimitResult = await checkRateLimit(standardRateLimit, identifier);
 
   if (!rateLimitResult.success) {
-    return NextResponse.json(
-      { error: "Trop de requêtes" },
-      { status: 429 }
-    );
+    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
   }
 
   try {
-    // Récupérer tous les utilisateurs
     const users = await prisma.user.findMany({
       select: {
         id: true,
