@@ -74,6 +74,24 @@
     "notFound": "Non trouvé",
     "rateLimited": "Trop de requêtes, veuillez réessayer plus tard"
   },
+  "Profile": {
+    "editButton": "Modifier votre profil",
+    "title": "Mon profil",
+    "description": "Modifiez votre profil ici. Cliquez sur Sauvegarder lorsque vous avez terminé.",
+    "friends": "{count} ami",
+    "friends_other": "{count} amis",
+    "favoriteTeam": "Equipe favorite",
+    "choosePlaceholder": "Choisir une équipe",
+    "saveChanges": "Sauvegarder les changements",
+    "saving": "Sauvegarde…",
+    "close": "Fermer",
+    "updateSuccess": "Profil mis à jour !",
+    "avatarUpdateSuccess": "Avatar mis à jour !",
+    "avatarUploadError": "Erreur lors de l'upload de l'avatar",
+    "userNotAuthenticated": "Utilisateur non authentifié",
+    "serverUploadError": "Erreur upload serveur",
+    "saveError": "Erreur lors de la sauvegarde."
+  },
   "HomePage": {
     "hero": {
       "title": "Bienvenue dans",

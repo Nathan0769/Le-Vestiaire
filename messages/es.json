@@ -74,6 +74,24 @@
     "notFound": "No encontrado",
     "rateLimited": "Demasiadas solicitudes, intenta de nuevo más tarde"
   },
+  "Profile": {
+    "editButton": "Editar tu perfil",
+    "title": "Mi perfil",
+    "description": "Edita tu perfil aquí. Haz clic en Guardar cuando hayas terminado.",
+    "friends": "{count} amigo",
+    "friends_other": "{count} amigos",
+    "favoriteTeam": "Equipo favorito",
+    "choosePlaceholder": "Elegir un equipo",
+    "saveChanges": "Guardar cambios",
+    "saving": "Guardando…",
+    "close": "Cerrar",
+    "updateSuccess": "¡Perfil actualizado!",
+    "avatarUpdateSuccess": "¡Avatar actualizado!",
+    "avatarUploadError": "Error al subir el avatar",
+    "userNotAuthenticated": "Usuario no autenticado",
+    "serverUploadError": "Error de subida al servidor",
+    "saveError": "Error al guardar."
+  },
   "HomePage": {
     "hero": {
       "title": "Bienvenido a",

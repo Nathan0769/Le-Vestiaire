@@ -21,9 +21,11 @@ import { UsernameInput } from "@/components/profiles/username-input";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useFriendsCount } from "@/hooks/useFriendsCount";
 import { Users } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export function EditProfile() {
+  const t = useTranslations("Profile");
   const currentUser = useCurrentUser();
   const { count: friendsCount, loading: loadingFriends } = useFriendsCount();
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +46,7 @@ export function EditProfile() {
 
   const handleChangeAvatar = async (file: File) => {
     try {
-      if (!currentUser) throw new Error("Utilisateur non authentifié");
+      if (!currentUser) throw new Error(t("userNotAuthenticated"));
 
       const formData = new FormData();
       formData.append("file", file);
@@ -54,7 +56,7 @@ export function EditProfile() {
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Erreur upload serveur");
+      if (!res.ok) throw new Error(t("serverUploadError"));
       const { url, path } = await res.json();
 
       setAvatarUrl(url);
@@ -65,10 +67,10 @@ export function EditProfile() {
         body: JSON.stringify({ avatar: path }),
       });
 
-      toast.success("Avatar mis à jour !");
+      toast.success(t("avatarUpdateSuccess"));
     } catch (err) {
       console.error("Erreur upload avatar :", err);
-      toast.error("Erreur lors de l'upload de l'avatar");
+      toast.error(t("avatarUploadError"));
     }
   };
 
@@ -160,13 +162,11 @@ export function EditProfile() {
         if (!resClub.ok) throw new Error("Erreur club");
       }
 
-      toast.success("Profil mis à jour !");
+      toast.success(t("updateSuccess"));
       setIsOpen(false);
     } catch (err) {
       console.error(err);
-      toast.error(
-        err instanceof Error ? err.message : "Erreur lors de la sauvegarde."
-      );
+      toast.error(err instanceof Error ? err.message : t("saveError"));
     } finally {
       setLoading(false);
     }
@@ -202,16 +202,13 @@ export function EditProfile() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetTrigger asChild>
         <Button className="cursor-pointer" disabled={!currentUser}>
-          Modifier votre profil
+          {t("editButton")}
         </Button>
       </SheetTrigger>
       <SheetContent className="flex flex-col h-[100dvh] overflow-hidden">
         <SheetHeader className="flex-shrink-0 px-4 pt-6">
-          <SheetTitle>Mon profil</SheetTitle>
-          <SheetDescription>
-            Modifiez votre profil ici. <br />
-            Cliquez sur Sauvegarder lorsque vous avez terminé.
-          </SheetDescription>
+          <SheetTitle>{t("title")}</SheetTitle>
+          <SheetDescription>{t("description")}</SheetDescription>
         </SheetHeader>
 
         <div className="flex-1 overflow-y-auto overflow-x-hidden px-4">
@@ -236,7 +233,10 @@ export function EditProfile() {
                   <Users className="w-4 h-4" />
                   {loadingFriends
                     ? "..."
-                    : `${friendsCount} ami${friendsCount !== 1 ? "s" : ""}`}
+                    : t(
+                        friendsCount === 1 ? "friends" : "friends_other",
+                        { count: friendsCount }
+                      )}
                 </label>
               </Link>
             </div>
@@ -251,8 +251,8 @@ export function EditProfile() {
               options={clubs}
               value={favoriteClub}
               onChange={setFavoriteClub}
-              placeholder="Choisir une équipe"
-              label="Equipe favorite"
+              placeholder={t("choosePlaceholder")}
+              label={t("favoriteTeam")}
             />
 
             <ProfileBio value={bio} onChange={setBio} />
@@ -267,11 +267,11 @@ export function EditProfile() {
             disabled={loading}
             onClick={handleSave}
           >
-            {loading ? "Sauvegarde…" : "Sauvegarder les changements"}
+            {loading ? t("saving") : t("saveChanges")}
           </Button>
           <SheetClose asChild>
             <Button variant="outline" className="w-full cursor-pointer">
-              Fermer
+              {t("close")}
             </Button>
           </SheetClose>
         </div>
