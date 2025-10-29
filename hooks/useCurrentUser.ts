@@ -11,6 +11,7 @@ export type CurrentUser = {
   createdAt: string;
   avatarUrl?: string;
   username: string;
+  role?: string;
   authProvider?: {
     hasGoogle: boolean;
     hasPassword: boolean;

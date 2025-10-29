@@ -21,6 +21,7 @@ export async function GET() {
       avatar: true,
       createdAt: true,
       username: true,
+      role: true,
       accounts: {
         select: {
           providerId: true,
@@ -56,6 +57,7 @@ export async function GET() {
     avatarUrl,
     createdAt: user.createdAt.toISOString(),
     username: user.username,
+    role: user.role,
     authProvider: {
       hasGoogle: hasGoogleAccount,
       hasPassword: hasPasswordAccount,

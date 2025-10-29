@@ -11,11 +11,16 @@ datasource db {
 model User {
   id            String   @id @default(cuid())
   name          String
-  username      String?  @unique 
+  username      String?  @unique
   email         String   @unique(map: "user_email_key")
   emailVerified Boolean  @default(false)
   image         String?
 
+  // Better Auth Admin fields
+  role          String   @default("user")
+  banned        Boolean  @default(false)
+  banReason     String?
+  banExpiresIn  BigInt?
 
   firstName       String?
   lastName        String?
