@@ -99,6 +99,52 @@
       "title": "Recently Added Jerseys",
       "subtitle": "New additions to the catalog",
       "viewAll": "View all jerseys"
+    },
+    "features": {
+      "title": "Why choose The Locker Room?",
+      "subtitle": "The free app designed by collectors, for collectors",
+      "catalogCollection": {
+        "title": "Catalog your collection",
+        "description": "Record all your jerseys with their details: size, condition, purchase price, customization. Track the value of your collection."
+      },
+      "shareableWishlist": {
+        "title": "Shareable wishlist",
+        "description": "Create your wishlist and easily share it with your loved ones for Christmas, birthdays or any special occasion."
+      },
+      "authentication": {
+        "title": "Jersey authentication",
+        "description": "Learn to recognize authentic jerseys from counterfeits with our detailed guides for each brand (Nike, Adidas, Puma...)."
+      },
+      "community": {
+        "title": "Community of enthusiasts",
+        "description": "Connect with other collectors, share your finds and discover your friends' collections."
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Everything you need to know about The Locker Room",
+      "questions": {
+        "addToCollection": {
+          "question": "How do I add a jersey to my collection?",
+          "answer": "It's very simple! Search for the jersey you own in our database, then click 'Add to my collection'. You can then fill in all the details: size, condition, purchase price, etc."
+        },
+        "shareWishlist": {
+          "question": "Can I share my wishlist for Christmas or my birthday?",
+          "answer": "Absolutely! Create your wishlist, customize it with a message, and generate a unique link to share with your loved ones. They'll be able to see your wishes without needing to create an account."
+        },
+        "authenticateJersey": {
+          "question": "How can I spot a fake jersey?",
+          "answer": "Check out our 'Authentication' section where you'll find detailed guides for each brand. We explain how to verify labels, stitching, logos and other details that distinguish an authentic jersey from a counterfeit."
+        },
+        "availableClubs": {
+          "question": "What clubs and leagues are available?",
+          "answer": "Our database includes jerseys from all major European leagues (Ligue 1, Premier League, La Liga, Serie A, Bundesliga) as well as many international clubs and minor leagues. We regularly add new jerseys!"
+        },
+        "dataSecurity": {
+          "question": "Is my data secure?",
+          "answer": "Yes, we take security very seriously. Your data is hosted in Europe (France) and protected according to GDPR standards. You remain the owner of your collection and can export it at any time."
+        }
+      }
     }
   }
 }

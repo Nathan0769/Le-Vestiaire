@@ -99,6 +99,52 @@
       "title": "Derniers maillots ajoutés",
       "subtitle": "Les nouveautés du catalogue",
       "viewAll": "Voir tous les maillots"
+    },
+    "features": {
+      "title": "Pourquoi choisir Le Vestiaire ?",
+      "subtitle": "L'application gratuite pensée par des collectionneurs, pour des collectionneurs",
+      "catalogCollection": {
+        "title": "Cataloguez votre collection",
+        "description": "Enregistrez tous vos maillots avec leurs détails : taille, état, prix d'achat, personnalisation. Suivez la valeur de votre collection."
+      },
+      "shareableWishlist": {
+        "title": "Wishlist partageable",
+        "description": "Créez votre liste d'envies et partagez-la facilement avec vos proches pour Noël, anniversaires ou toute occasion spéciale."
+      },
+      "authentication": {
+        "title": "Authentification des maillots",
+        "description": "Apprenez à reconnaître les vrais maillots des contrefaçons grâce à nos guides détaillés pour chaque marque (Nike, Adidas, Puma...)."
+      },
+      "community": {
+        "title": "Communauté de passionnés",
+        "description": "Connectez-vous avec d'autres collectionneurs, partagez vos trouvailles et découvrez les collections de vos amis."
+      }
+    },
+    "faq": {
+      "title": "Questions fréquentes",
+      "subtitle": "Tout ce que vous devez savoir sur Le Vestiaire",
+      "questions": {
+        "addToCollection": {
+          "question": "Comment ajouter un maillot à ma collection ?",
+          "answer": "C'est très simple ! Recherchez le maillot que vous possédez dans notre base de données, puis cliquez sur 'Ajouter à ma collection'. Vous pourrez ensuite renseigner tous les détails : taille, état, prix d'achat, etc."
+        },
+        "shareWishlist": {
+          "question": "Puis-je partager ma wishlist pour Noël ou mon anniversaire ?",
+          "answer": "Absolument ! Créez votre wishlist, personnalisez-la avec un message, et générez un lien unique à partager avec vos proches. Ils pourront voir vos envies sans avoir besoin de créer un compte."
+        },
+        "authenticateJersey": {
+          "question": "Comment reconnaître un faux maillot ?",
+          "answer": "Consultez notre section 'Authentification' où vous trouverez des guides détaillés pour chaque marque. Nous vous expliquons comment vérifier les étiquettes, les coutures, les logos et autres détails qui différencient un vrai maillot d'une contrefaçon."
+        },
+        "availableClubs": {
+          "question": "Quels clubs et ligues sont disponibles ?",
+          "answer": "Notre base de données inclut des maillots de toutes les grandes ligues européennes (Ligue 1, Premier League, Liga, Serie A, Bundesliga) ainsi que de nombreux clubs internationaux et ligues mineures. Nous ajoutons régulièrement de nouveaux maillots !"
+        },
+        "dataSecurity": {
+          "question": "Est-ce que mes données sont sécurisées ?",
+          "answer": "Oui, nous prenons la sécurité très au sérieux. Vos données sont hébergées en Europe (France) et protégées selon les normes RGPD. Vous restez propriétaire de votre collection et pouvez l'exporter à tout moment."
+        }
+      }
     }
   }
 }

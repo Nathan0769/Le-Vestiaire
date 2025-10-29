@@ -99,6 +99,52 @@
       "title": "Camisetas Añadidas Recientemente",
       "subtitle": "Nuevas incorporaciones al catálogo",
       "viewAll": "Ver todas las camisetas"
+    },
+    "features": {
+      "title": "¿Por qué elegir El Vestuario?",
+      "subtitle": "La aplicación gratuita diseñada por coleccionistas, para coleccionistas",
+      "catalogCollection": {
+        "title": "Cataloga tu colección",
+        "description": "Registra todas tus camisetas con sus detalles: talla, estado, precio de compra, personalización. Sigue el valor de tu colección."
+      },
+      "shareableWishlist": {
+        "title": "Lista de deseos compartible",
+        "description": "Crea tu lista de deseos y compártela fácilmente con tus seres queridos para Navidad, cumpleaños o cualquier ocasión especial."
+      },
+      "authentication": {
+        "title": "Autenticación de camisetas",
+        "description": "Aprende a reconocer las camisetas auténticas de las falsificaciones con nuestras guías detalladas para cada marca (Nike, Adidas, Puma...)."
+      },
+      "community": {
+        "title": "Comunidad de apasionados",
+        "description": "Conéctate con otros coleccionistas, comparte tus hallazgos y descubre las colecciones de tus amigos."
+      }
+    },
+    "faq": {
+      "title": "Preguntas Frecuentes",
+      "subtitle": "Todo lo que necesitas saber sobre El Vestuario",
+      "questions": {
+        "addToCollection": {
+          "question": "¿Cómo añado una camiseta a mi colección?",
+          "answer": "¡Es muy sencillo! Busca la camiseta que posees en nuestra base de datos, luego haz clic en 'Añadir a mi colección'. Después podrás completar todos los detalles: talla, estado, precio de compra, etc."
+        },
+        "shareWishlist": {
+          "question": "¿Puedo compartir mi lista de deseos para Navidad o mi cumpleaños?",
+          "answer": "¡Por supuesto! Crea tu lista de deseos, personalízala con un mensaje y genera un enlace único para compartir con tus seres queridos. Podrán ver tus deseos sin necesidad de crear una cuenta."
+        },
+        "authenticateJersey": {
+          "question": "¿Cómo reconocer una camiseta falsa?",
+          "answer": "Consulta nuestra sección 'Autenticación' donde encontrarás guías detalladas para cada marca. Te explicamos cómo verificar las etiquetas, las costuras, los logos y otros detalles que diferencian una camiseta auténtica de una falsificación."
+        },
+        "availableClubs": {
+          "question": "¿Qué clubes y ligas están disponibles?",
+          "answer": "Nuestra base de datos incluye camisetas de todas las grandes ligas europeas (Ligue 1, Premier League, La Liga, Serie A, Bundesliga) así como muchos clubes internacionales y ligas menores. ¡Añadimos regularmente nuevas camisetas!"
+        },
+        "dataSecurity": {
+          "question": "¿Están seguros mis datos?",
+          "answer": "Sí, nos tomamos la seguridad muy en serio. Tus datos están alojados en Europa (Francia) y protegidos según las normas RGPD. Sigues siendo el propietario de tu colección y puedes exportarla en cualquier momento."
+        }
+      }
     }
   }
 }
