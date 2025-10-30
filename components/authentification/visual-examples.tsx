@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { CheckCircle2, XCircle } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface VisualExample {
   step: number;
@@ -179,16 +180,37 @@ export function VisualExample({
   stepNumber,
   brand = "adidas",
 }: VisualExampleProps) {
-  const examples = brand === "nike" ? NIKE_EXAMPLES : ADIDAS_EXAMPLES;
-  const example = examples.find((ex) => ex.step === stepNumber);
+  const t = useTranslations(`Authentication.${brand}.visualExamples`);
+  const tCommon = useTranslations("Authentication.common");
 
-  if (!example) return null;
+  const examples = brand === "nike" ? NIKE_EXAMPLES : ADIDAS_EXAMPLES;
+  const staticExample = examples.find((ex) => ex.step === stepNumber);
+
+  if (!staticExample) return null;
+
+  const exampleIndex = examples.findIndex((ex) => ex.step === stepNumber) + 1;
+  const exampleKey = `example${exampleIndex}`;
+
+  const title = t(`${exampleKey}.title`);
+  const description = t(`${exampleKey}.description`);
+
+  const authenticPoints = t.raw(`${exampleKey}.authentic.points`) as Record<
+    string,
+    string
+  >;
+  const authenticPointsArray = Object.values(authenticPoints);
+
+  const fakePoints = t.raw(`${exampleKey}.fake.points`) as Record<
+    string,
+    string
+  >;
+  const fakePointsArray = Object.values(fakePoints);
 
   return (
     <Card className="overflow-hidden">
       <CardHeader>
-        <CardTitle>{example.title}</CardTitle>
-        <CardDescription>{example.description}</CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid md:grid-cols-2 gap-4 md:gap-6">
@@ -196,18 +218,18 @@ export function VisualExample({
           <div className="space-y-4">
             <div className="relative aspect-[4/3] bg-green-50 dark:bg-green-950/20 rounded-lg overflow-hidden border-2 border-green-200 dark:border-green-800">
               <Image
-                src={example.authentic.image}
-                alt={example.authentic.label}
+                src={staticExample.authentic.image}
+                alt={tCommon("authentic")}
                 fill
                 className="object-cover"
               />
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-green-600 dark:text-green-400 font-semibold">
-                {example.authentic.label}
+                {tCommon("authentic")}
               </div>
               <ul className="space-y-1.5 text-sm">
-                {example.authentic.points.map((point, i) => (
+                {authenticPointsArray.map((point, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
                     <span>{point}</span>
@@ -221,18 +243,18 @@ export function VisualExample({
           <div className="space-y-4">
             <div className="relative aspect-[4/3] bg-red-50 dark:bg-red-950/20 rounded-lg overflow-hidden border-2 border-red-200 dark:border-red-800">
               <Image
-                src={example.fake.image}
-                alt={example.fake.label}
+                src={staticExample.fake.image}
+                alt={tCommon("counterfeit")}
                 fill
                 className="object-cover"
               />
             </div>
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-red-600 dark:text-red-400 font-semibold">
-                {example.fake.label}
+                {tCommon("counterfeit")}
               </div>
               <ul className="space-y-1.5 text-sm">
-                {example.fake.points.map((point, i) => (
+                {fakePointsArray.map((point, i) => (
                   <li key={i} className="flex items-start gap-2">
                     <XCircle className="w-4 h-4 text-red-600 dark:text-red-400 mt-0.5 flex-shrink-0" />
                     <span>{point}</span>

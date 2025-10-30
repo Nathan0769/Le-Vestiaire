@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Card,
   CardContent,
@@ -8,12 +10,14 @@ import {
 import { CheckCircle2, XCircle, Lightbulb } from "lucide-react";
 import type { BrandGuide } from "@/types/authentication";
 import { VisualExample } from "./visual-examples";
+import { useTranslations } from "next-intl";
 
 interface BrandGuideComponentProps {
   guide: BrandGuide;
 }
 
 export function BrandGuideComponent({ guide }: BrandGuideComponentProps) {
+  const t = useTranslations("Authentication.common");
   const showVisualExamples = guide.brand === "adidas" || guide.brand === "nike";
 
   return (
@@ -25,9 +29,7 @@ export function BrandGuideComponent({ guide }: BrandGuideComponentProps) {
 
       <div className="space-y-6">
         <div className="flex items-center gap-2">
-          <h2 className="text-2xl font-semibold">
-            Étapes pour l&apos;authentification
-          </h2>
+          <h2 className="text-2xl font-semibold">{t("authenticationSteps")}</h2>
         </div>
 
         <div className="grid gap-4 md:gap-6">
@@ -66,11 +68,9 @@ export function BrandGuideComponent({ guide }: BrandGuideComponentProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-red-700 dark:text-red-400">
               <XCircle className="w-5 h-5" />
-              Signes de contrefaçon courants
+              {t("commonFakes")}
             </CardTitle>
-            <CardDescription>
-              Attention à ces éléments qui indiquent un faux maillot
-            </CardDescription>
+            <CardDescription>{t("commonFakesDescription")}</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">
@@ -90,11 +90,9 @@ export function BrandGuideComponent({ guide }: BrandGuideComponentProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-blue-700 dark:text-blue-400">
               <Lightbulb className="w-5 h-5" />
-              Conseils d&apos;achat
+              {t("buyingTips")}
             </CardTitle>
-            <CardDescription>
-              Recommandations pour acheter en toute sécurité
-            </CardDescription>
+            <CardDescription>{t("buyingTipsDescription")}</CardDescription>
           </CardHeader>
           <CardContent>
             <ul className="space-y-2">

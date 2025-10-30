@@ -164,5 +164,600 @@
         }
       }
     }
+  },
+  "Authentication": {
+    "title": "Autenticación de Camisetas",
+    "subtitle": "Aprende a identificar camisetas de fútbol auténticas de las falsificaciones",
+    "page": {
+      "protectInvestment": {
+        "title": "Protege tu inversión",
+        "description": "El mercado de camisetas de fútbol está desafortunadamente inundado de falsificaciones. Nuestras guías te ayudan a identificar camisetas auténticas y evitar estafas."
+      },
+      "whyImportant": {
+        "title": "¿Por qué es importante la autenticación?",
+        "reason1": "Las falsificaciones representan hasta el 30% del mercado de camisetas en línea",
+        "reason2": "Una camiseta falsa se deteriora rápidamente y no tiene valor de reventa",
+        "reason3": "Comprar una falsificación financia redes de contrabando",
+        "reason4": "Las camisetas auténticas garantizan calidad, comodidad y durabilidad"
+      }
+    },
+    "brands": {
+      "adidas": {
+        "name": "Adidas",
+        "description": "Verifica la autenticidad de tus camisetas Adidas"
+      },
+      "nike": {
+        "name": "Nike",
+        "description": "Verifica la autenticidad de tus camisetas Nike"
+      },
+      "puma": {
+        "name": "Puma",
+        "description": "Verifica la autenticidad de tus camisetas Puma"
+      },
+      "hummel": {
+        "name": "Hummel",
+        "description": "Verifica la autenticidad de tus camisetas Hummel"
+      }
+    },
+    "common": {
+      "authenticationSteps": "Pasos para la Autenticación",
+      "commonFakes": "Señales Comunes de Falsificación",
+      "commonFakesDescription": "Ten cuidado con estos elementos que indican una camiseta falsa",
+      "buyingTips": "Consejos de Compra",
+      "buyingTipsDescription": "Recomendaciones para comprar de forma segura",
+      "authentic": "AUTÉNTICA",
+      "counterfeit": "FALSIFICACIÓN",
+      "scanFeature": {
+        "title": "Próximamente: Escáner Automático",
+        "description": "Estamos trabajando en una función de escaneo para autenticar tus camisetas {brand} al instante.",
+        "howItWorks": "Cómo funcionará:",
+        "step1": "Toma una foto de las etiquetas",
+        "step2": "Nuestra IA analiza los códigos y detalles",
+        "step3": "Recibe un resultado de autenticación",
+        "notify": "Avisarme en el lanzamiento"
+      },
+      "scanPlaceholder": {
+        "title": "Escanear la Etiqueta",
+        "description": "Verificación automática mediante inteligencia artificial",
+        "comingSoon": "¡Función próximamente disponible!",
+        "kitlegitInfo": "Estamos trabajando en la integración de {kitlegit}, una solución de autenticación por IA especializada en camisetas de fútbol.",
+        "kitlegit": "KitLegit",
+        "manualGuide": "Mientras tanto, utiliza la guía anterior para verificar manualmente la autenticidad de tu camiseta {brand}.",
+        "scanButton": "Escanear mi etiqueta (Próximamente)",
+        "photosRequired": "El escaneo automático requerirá de 3 a 8 fotos de tu camiseta para un análisis completo."
+      }
+    },
+    "metadata": {
+      "notFound": "Marca no encontrada - El Vestuario",
+      "titleTemplate": "Autenticar una Camiseta {brand} - Guía Completa",
+      "ogTitleTemplate": "Guía de Autenticación Camiseta {brand}",
+      "twitterTitleTemplate": "Cómo Autenticar una Camiseta {brand}",
+      "adidas": {
+        "description": "Guía completa para autenticar una camiseta Adidas. Verifica el código de producto, etiqueta de tienda, código de barras y detecta señales de falsificación. Método detallado con ejemplos visuales.",
+        "ogDescription": "Aprende a reconocer una camiseta Adidas auténtica de una falsificación"
+      },
+      "nike": {
+        "description": "Aprende a reconocer una camiseta Nike auténtica: código de producto, código de producción, etiqueta de tienda y etiqueta de seguridad. Guía completa anti-falsificación con fotos comparativas.",
+        "ogDescription": "Aprende a reconocer una camiseta Nike auténtica de una falsificación"
+      },
+      "puma": {
+        "description": "Autenticación camiseta Puma: código de producto, fecha de producción, código QR, etiqueta de seguridad. Reconoce el 'Fat Cat' y otras señales de camiseta Puma falsa.",
+        "ogDescription": "Aprende a reconocer una camiseta Puma auténtica de una falsificación"
+      },
+      "hummel": {
+        "description": "Guía de autenticación para camisetas Hummel: chevrones característicos, etiquetas, calidad textil y acabados. Evita las falsificaciones.",
+        "ogDescription": "Aprende a reconocer una camiseta Hummel auténtica de una falsificación"
+      }
+    },
+    "adidas": {
+      "title": "Guía de Autenticación Adidas",
+      "description": "Método completo para verificar la autenticidad de una camiseta Adidas usando códigos de producto y etiquetas",
+      "criteria": {
+        "step1": {
+          "title": "Paso 1: Localizar la etiqueta con el código de producto",
+          "description": "La etiqueta suele estar en el cuello a la derecha, o a veces en la parte inferior de la camiseta con las instrucciones de lavado",
+          "points": {
+            "point1": "Busca la etiqueta cosida en el cuello (lado derecho)",
+            "point2": "Si no está en el cuello, verifica en la parte inferior de la camiseta cerca de las instrucciones de lavado",
+            "point3": "Esta etiqueta contiene 3 códigos esenciales: talla, código de producto (medio) y código de fabricación",
+            "point4": "Si la etiqueta ha sido cortada por el vendedor, es imposible verificar la autenticidad"
+          }
+        },
+        "step2": {
+          "title": "Paso 2: El código de producto (CÓDIGO MÁS IMPORTANTE)",
+          "description": "El código de producto del medio es la clave para verificar la autenticidad. Ejemplo: IB0907",
+          "points": {
+            "point1": "Identifica el código en el MEDIO de la etiqueta (ej: IB0907, HS5184, P95985)",
+            "point2": "Este código es único por modelo de camiseta (local, visitante, tercera)",
+            "point3": "Escribe este código en Google Imágenes: los resultados deben coincidir EXACTAMENTE con tu camiseta",
+            "point4": "Ejemplo: 'IB0907' = Camiseta visitante Lyon 2023/2024 solamente",
+            "point5": "Si el código corresponde a otro club/temporada = ES FALSA",
+            "point6": "Excepción: Algunos clubes pequeños comparten el mismo código (plantillas comunes), pero es raro"
+          }
+        },
+        "step3": {
+          "title": "Paso 3: La etiqueta de tienda (si está presente)",
+          "description": "La etiqueta de cartón colgada en la camiseta nueva contiene información valiosa",
+          "points": {
+            "point1": "En una camiseta REAL: El nombre del club está claramente indicado (ej: 'OL', 'Manchester United')",
+            "point2": "La mención del tipo está presente: 'H' (Home), 'A' (Away), 'T' (Third)",
+            "point3": "El código de producto está escrito encima del nombre del modelo",
+            "point4": "FALSA si marca solo 'adidas JSY' sin nombre del club = FALSIFICACIÓN",
+            "point5": "Advertencia: ¡Estas etiquetas pueden ser removidas y puestas en una camiseta falsa!"
+          }
+        },
+        "step4": {
+          "title": "Paso 4: El código de barras numérico (verificación adicional)",
+          "description": "El código de barras de la etiqueta de tienda permite una verificación precisa",
+          "points": {
+            "point1": "Encuentra el código numérico bajo el código de barras (ej: 4066761557500)",
+            "point2": "Ve a ean-search.org e ingresa este código",
+            "point3": "El resultado debe coincidir EXACTAMENTE con tu camiseta",
+            "point4": "Ejemplo: 4066761557500 = 'adidas Lyon Away Shirt 2023/24'",
+            "point5": "Si el código corresponde a otra camiseta = FALSA",
+            "point6": "Nota: Adidas NO imprime este código en la etiqueta cosida, solo en la etiqueta de tienda"
+          }
+        },
+        "step5": {
+          "title": "Paso 5: Verificaciones visuales complementarias",
+          "description": "Después de verificar los códigos, examina la calidad general",
+          "points": {
+            "point1": "Logo Adidas: Las 3 rayas deben estar perfectamente alineadas y bordadas limpiamente",
+            "point2": "Costuras: Rectas, regulares, sin hilos que sobresalgan",
+            "point3": "Tela: Material técnico (Climalite, Climacool, Aeroready) mencionado en la etiqueta",
+            "point4": "Sin olor químico fuerte o pegamento visible"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Etiqueta de tienda marcada 'adidas JSY' sin nombre del club",
+        "fake2": "Código de producto que corresponde a otra camiseta (ej: HS5184 para Man Utd = camiseta de Flamengo)",
+        "fake3": "Código de barras numérico incorrecto (ej: corresponde a Alemania 2017 en lugar de Man Utd 2024)",
+        "fake4": "Etiqueta del cuello cortada o ausente (vendedor sospechoso)",
+        "fake5": "Sin resultados en Google Imágenes para el código de producto",
+        "fake6": "Logo Adidas deformado, mal bordado o impreso (en lugar de bordado)",
+        "fake7": "Precio anormalmente bajo (50-70% más barato que el precio oficial)",
+        "fake8": "Vendedor que se niega a mostrar la etiqueta del cuello en fotos"
+      },
+      "tips": {
+        "tip1": "SIEMPRE pide una foto de la etiqueta del cuello antes de comprar",
+        "tip2": "Verifica el código de producto en Google Imágenes (método más confiable)",
+        "tip3": "Prefiere vendedores con reputación establecida y opiniones positivas",
+        "tip4": "Compara con fotos oficiales del sitio de Adidas o del club",
+        "tip5": "Desconfía de precios demasiado atractivos (descuento > 50% = sospechoso)",
+        "tip6": "Este método funciona incluso para camisetas antiguas (años 2000+)",
+        "tip7": "Usa ean-search.org para el código de barras si la etiqueta de tienda está presente",
+        "tip8": "En caso de duda: No compres. Una camiseta real mantiene su valor, una falsa no"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Ejemplo 1: Etiqueta con código de producto",
+          "description": "Así es como identificar el código de producto en la etiqueta del cuello",
+          "authentic": {
+            "points": {
+              "point1": "Código de producto visible: JL9623",
+              "point2": "Fecha de impresión relacionada con el año de la camiseta",
+              "point3": "3 códigos correctamente alineados",
+              "point4": "Logo Adidas bien definido"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Código H13881 corresponde a Man United en lugar de México en nuestro ejemplo",
+              "point2": "Impresión borrosa o mal alineada",
+              "point3": "Caracteres irregulares"
+            }
+          }
+        },
+        "example2": {
+          "title": "Ejemplo 2: Etiqueta de tienda",
+          "description": "La etiqueta de cartón colgada en las camisetas nuevas",
+          "authentic": {
+            "points": {
+              "point1": "Nombre del club indicado: 'OL'",
+              "point2": "Mención del tipo: '75' (Camiseta 75 años OL)",
+              "point3": "Código de producto visible",
+              "point4": "Código QR hacia la camiseta correcta"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Marcada solo 'adidas JSY'",
+              "point2": "Sin nombre del club",
+              "point3": "Código de barras incorrecto"
+            }
+          }
+        }
+      }
+    },
+    "nike": {
+      "title": "Guía de Autenticación Nike",
+      "description": "Método completo para verificar la autenticidad de una camiseta Nike usando códigos de producto, etiquetas y detalles de fabricación",
+      "criteria": {
+        "step1": {
+          "title": "Paso 1: El código de producto",
+          "description": "Ubicado en la etiqueta pequeña debajo de la etiqueta de lavado, el código de producto es tu primer indicador",
+          "points": {
+            "point1": "Formato: 6 dígitos para el estilo + 3 dígitos para el color (ej: 894430-010)",
+            "point2": "El código de estilo identifica el diseño/plantilla de la camiseta",
+            "point3": "El código de color (después del guión) identifica la variante de color específica",
+            "point4": "Escribe el código completo en Google Imágenes para verificar que coincida EXACTAMENTE con tu camiseta",
+            "point5": "ADVERTENCIA: ¡Las falsas a menudo reutilizan códigos reales! Si el código es para Francia 2020 Away (CD0069-100) pero en una camiseta de otro equipo = FALSA",
+            "point6": "Las camisetas antiguas (antes de 2010) pueden no tener el código de color, esto es normal"
+          }
+        },
+        "step2": {
+          "title": "Paso 2: El código de producción",
+          "description": "En la misma etiqueta pequeña, este código revela cuándo se fabricó la camiseta",
+          "points": {
+            "point1": "Formato: HO150407SYG (ejemplo = Holiday 2015, fabricada de Abril a Julio)",
+            "point2": "Los primeros 2-3 caracteres = la temporada: SP (Primavera), SU (Verano), FA (Otoño), HO (Holiday/Invierno)",
+            "point3": "Los siguientes 2 dígitos = el año (15 = 2015, 23 = 2023)",
+            "point4": "Los siguientes 4 dígitos = meses de inicio y fin de producción (0407 = abril a julio)",
+            "point5": "¡Este código debe ser coherente con la temporada de la camiseta! Una camiseta 2023/24 no puede tener un código HO15",
+            "point6": "Las falsas a menudo reutilizan etiquetas en diferentes camisetas, creando incoherencias"
+          }
+        },
+        "step3": {
+          "title": "Paso 3: La etiqueta de tienda",
+          "description": "La etiqueta de cartón adjunta a las camisetas nuevas contiene información crucial",
+          "points": {
+            "point1": "Colocación moderna (desde 2021/22): una sola etiqueta en la manga IZQUIERDA únicamente",
+            "point2": "2016-2020: dos etiquetas, una bajo cada manga (axilas)",
+            "point3": "Antes de 2016: etiqueta adjunta al cuello",
+            "point4": "La calcomanía debe ser una VERDADERA calcomanía física, nunca impresa directamente",
+            "point5": "El barb (sujeción de plástico) es SIEMPRE negro en las Nike reales",
+            "point6": "El código de producto en la etiqueta de tienda DEBE coincidir con la etiqueta interna",
+            "point7": "Barra de color de talla: Gris=XS, Amarillo=S, Azul=M, Rojo=L, Verde=XL, Blanco=XXL+"
+          }
+        },
+        "step4": {
+          "title": "Paso 4: La etiqueta de talla en el cuello",
+          "description": "La etiqueta del cuello contiene información regional importante",
+          "points": {
+            "point1": "El país de fabricación ('Made in...') DEBE coincidir entre la etiqueta del cuello y la etiqueta de lavado",
+            "point2": "Ejemplo: si el cuello dice 'Made in Indonesia', la etiqueta interior debe decir lo mismo",
+            "point3": "Verifica las correspondencias de tallas regionales, especialmente la talla japonesa (J)",
+            "point4": "Error frecuente en las falsas: talla japonesa incorrecta (ej: 'J: S' para un US L en lugar de 'J: 2XO')",
+            "point5": "Tabla correcta: US S=J M, US M=J L, US L=J 2XO, US XL=J 3XO, US XXL=J 4XO"
+          }
+        },
+        "step5": {
+          "title": "Paso 5: La etiqueta de seguridad",
+          "description": "Ubicada en la parte inferior derecha de la camiseta, la etiqueta de seguridad contiene un código único",
+          "points": {
+            "point1": "El código alfanumérico DEBE ser único para tu camiseta",
+            "point2": "Si encuentras el mismo código en varios anuncios en línea = FALSA",
+            "point3": "En camisetas recientes: tira metálica/holográfica de calidad que cambia bajo la luz",
+            "point4": "Las falsas a menudo usan una simple impresión plana en lugar de la tira metálica",
+            "point5": "Versión jugador: acentos dorados/metálicos | Versión aficionado: acentos plateados",
+            "point6": "Algunos detalles ocultos: mini logos Nike o fragmentos de la palabra 'SECURITY' en la tira",
+            "point7": "Algunas versiones antiguas: letras 'HEN' o ambas 'T' de 'AUTHENTIC' en material brillante"
+          }
+        },
+        "step6": {
+          "title": "Paso 6: El Swoosh y los escudos",
+          "description": "La calidad de aplicación del logo Nike y del escudo del club es reveladora",
+          "points": {
+            "point1": "El Swoosh debe ser PERFECTO: forma precisa, bordes limpios, sin hilos visibles",
+            "point2": "En una camiseta NUEVA, la tela alrededor del Swoosh debe estar PLANA (sin arrugas)",
+            "point3": "Voltea la camiseta: el interior detrás del Swoosh/escudo debe estar limpio, sin exceso de tela",
+            "point4": "Escudo bordado = versión aficionado | Escudo termoadhesivo/silicona = versión jugador",
+            "point5": "Verifica que el tipo de escudo corresponda a la versión (aficionado o jugador)",
+            "point6": "Cuidado con escudos mal colocados, demasiado grandes/pequeños, o con costuras gruesas"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Código de producto correcto pero para otra camiseta/equipo (ej: código Francia 2020 en camiseta de Alemania)",
+        "fake2": "Código de producción incoherente con la temporada (camiseta 2024 con código HO15)",
+        "fake3": "Etiqueta de tienda con calcomanía impresa en lugar de calcomanía física real",
+        "fake4": "Sujeción barb de la etiqueta que no es negra",
+        "fake5": "'Made in...' diferente entre etiqueta del cuello y etiqueta de lavado",
+        "fake6": "Talla japonesa incorrecta en la etiqueta del cuello",
+        "fake7": "Código de seguridad idéntico encontrado en varios anuncios en línea",
+        "fake8": "Tira de seguridad sin efecto holográfico/metálico (impresión plana)",
+        "fake9": "Swoosh con tela arrugada alrededor en camiseta nueva",
+        "fake10": "Interior sucio detrás del Swoosh/escudo (exceso de tela, costuras gruesas)",
+        "fake11": "Código de color incoherente (ej: camiseta roja con código 100-199)",
+        "fake12": "Etiqueta de tienda mal colocada (ej: en el cuello en camiseta post-2021)",
+        "fake13": "Barra de color de talla incorrecta o ausente en la etiqueta de tienda"
+      },
+      "tips": {
+        "tip1": "SIEMPRE verifica el código de producto completo (estilo + color) en Google Imágenes",
+        "tip2": "Compara el código de producción con la temporada de la camiseta para detectar incoherencias",
+        "tip3": "Solicita fotos de TODAS las etiquetas: cuello, lavado, pequeña etiqueta de producto, etiqueta de tienda",
+        "tip4": "Verifica la coherencia de 'Made in...' entre todas las etiquetas",
+        "tip5": "Para camisetas nuevas: exige foto de la etiqueta de tienda con su sujeción negra",
+        "tip6": "Busca el código de seguridad en línea para verificar su unicidad",
+        "tip7": "Examina la calidad del Swoosh y del escudo (voltea la camiseta si es posible)",
+        "tip8": "Usa la tabla de tallas regionales para verificar la coherencia de la etiqueta del cuello",
+        "tip9": "Las camisetas versión jugador sin etiqueta de tienda son normales (distribución directa a equipos)",
+        "tip10": "Desconfía de precios demasiado bajos: las Nike reales mantienen su valor",
+        "tip11": "En caso de duda sobre cualquier etiqueta o código: no compres"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Ejemplo 1: Código de producto y código de producción",
+          "description": "La pequeña etiqueta debajo de la etiqueta de lavado contiene los códigos esenciales",
+          "authentic": {
+            "points": {
+              "point1": "Código de producto visible: 658789-426 (estilo + color)",
+              "point2": "Código de producción coherente: HO150710 (Holiday 2015, julio-octubre)",
+              "point3": "Impresión nítida y legible",
+              "point4": "Formato correcto y alineación perfecta"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Código de producto para otra camiseta (Aquí camiseta PSG con FN8721-456 = Barcelona Home 24/25)",
+              "point2": "Código de producción incoherente con la temporada",
+              "point3": "Impresión borrosa o caracteres irregulares",
+              "point4": "Mala alineación o formato incorrecto"
+            }
+          }
+        },
+        "example2": {
+          "title": "Ejemplo 2: Etiqueta de tienda",
+          "description": "La etiqueta de cartón adjunta a las camisetas nuevas",
+          "authentic": {
+            "points": {
+              "point1": "Calcomanía física (no impresa)",
+              "point2": "Sujeción barb negra",
+              "point3": "Barra de color de talla correcta",
+              "point4": "Código de producto coincide con la etiqueta interna",
+              "point5": "Colocación correcta según el año (manga izquierda post-2021)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Calcomanía impresa (no una calcomanía real)",
+              "point2": "Sujeción barb blanca o color incorrecto",
+              "point3": "Barra de color ausente o incorrecta",
+              "point4": "Código de producto no coincide (CD0699-100 = Francia 2020/22)"
+            }
+          }
+        },
+        "example3": {
+          "title": "Ejemplo 3: Etiqueta de seguridad",
+          "description": "La etiqueta en la parte inferior derecha de la camiseta con código único y tira metálica",
+          "authentic": {
+            "points": {
+              "point1": "Tira metálica/holográfica de calidad",
+              "point2": "Efecto cambiante bajo la luz",
+              "point3": "Código alfanumérico único",
+              "point4": "Costuras limpias y regulares",
+              "point5": "Acentos dorados (versión jugador) o plateados (versión aficionado)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Tira plana impresa (sin efecto holográfico)",
+              "point2": "Código repetido en varias camisetas",
+              "point3": "Costuras gruesas",
+              "point4": "Sin efecto metálico"
+            }
+          }
+        }
+      }
+    },
+    "puma": {
+      "title": "Guía de Autenticación Puma",
+      "description": "Método completo para verificar la autenticidad de una camiseta Puma usando códigos de producto, etiquetas y detalles de fabricación",
+      "criteria": {
+        "step1": {
+          "title": "Paso 1: El código de producto (Style No / Article No)",
+          "description": "Se encuentra en una etiqueta grande cosida en el lado izquierdo de la camiseta",
+          "points": {
+            "point1": "Formato: 6 dígitos + 2 dígitos de variación (ej: 736251-01)",
+            "point2": "Los primeros 6 dígitos = el modelo base de la camiseta",
+            "point3": "Los últimos 2 dígitos = la variación de color (más reciente, ausente en camisetas antiguas)",
+            "point4": "Escribe el código en kitcod.es o Google Imágenes para verificar que coincida EXACTAMENTE con tu camiseta",
+            "point5": "ADVERTENCIA: ¡Las falsas a menudo reutilizan códigos reales! Si el código es para Marsella pero en una camiseta del Milán = FALSA",
+            "point6": "Las camisetas antes del 2000 pueden no tener etiqueta con código de producto, esto es normal"
+          }
+        },
+        "step2": {
+          "title": "Paso 2: La fecha de producción",
+          "description": "En las versiones recientes de la etiqueta, Puma indica la fecha exacta de producción",
+          "points": {
+            "point1": "Formato reciente: Fecha completa visible (ej: 15/03/2023)",
+            "point2": "Esta fecha debe ser coherente con la temporada de la camiseta",
+            "point3": "Una camiseta temporada 2023/24 no puede tener una fecha de producción en 2020",
+            "point4": "Las falsas a menudo reutilizan la misma etiqueta en diferentes camisetas, creando incoherencias",
+            "point5": "Si la fecha no corresponde a la temporada = SEÑAL DE ALERTA mayor"
+          }
+        },
+        "step3": {
+          "title": "Paso 3: El código de región de producción",
+          "description": "Código alfanumérico debajo de la fecha de producción indicando la fábrica",
+          "points": {
+            "point1": "Formato: TVNAO (ejemplo para Vietnam, fábrica Alliance One)",
+            "point2": "Primer carácter = Probablemente 'T' para Textile",
+            "point3": "Siguientes 2 caracteres = Código de país ISO (VN=Vietnam, TH=Tailandia, TR=Turquía)",
+            "point4": "Últimos 2 caracteres = Identificador específico de la fábrica",
+            "point5": "El código de país DEBE corresponder al 'Made in...' en la etiqueta",
+            "point6": "Puedes verificar las fábricas oficiales de Puma con sus listas públicas (2018, 2023, 2025)"
+          }
+        },
+        "step4": {
+          "title": "Paso 4: El código de mercado regional",
+          "description": "Código en el lado izquierdo de la etiqueta indicando el mercado de destino",
+          "points": {
+            "point1": "AM = Americas (Américas)",
+            "point2": "AP = Asia Pacific (Asia-Pacífico)",
+            "point3": "EU = Europe (Europa)",
+            "point4": "Este código indica DÓNDE se vendería el producto, no dónde se fabricó",
+            "point5": "Útil para coleccionistas que buscan lanzamientos regionales específicos",
+            "point6": "Puede tener ligeras variaciones en el embalaje o información de cumplimiento"
+          }
+        },
+        "step5": {
+          "title": "Paso 5: El código QR",
+          "description": "Las etiquetas Puma recientes incluyen un código QR con un número AD único",
+          "points": {
+            "point1": "Código QR generalmente ubicado debajo del código de producto",
+            "point2": "Escanear el código redirige a puma.com con un número 'AD' como parámetro",
+            "point3": "Formato del enlace: https://www.puma.com?TSL1D33P02450",
+            "point4": "El número AD está impreso encima del código QR",
+            "point5": "Este código sirve para el seguimiento interno y autenticación Puma",
+            "point6": "Ausencia de código QR en camisetas antiguas es normal"
+          }
+        },
+        "step6": {
+          "title": "Paso 6: La etiqueta de tienda",
+          "description": "La etiqueta de cartón adjunta al cuello de las camisetas nuevas",
+          "points": {
+            "point1": "La calcomanía debe ser una VERDADERA calcomanía física, nunca impresa directamente",
+            "point2": "El código de producto en la etiqueta de tienda DEBE corresponder a la etiqueta interna",
+            "point3": "Las falsas a menudo usan una etiqueta genérica tipo 'Puma Shirt' sin detalles",
+            "point4": "Una etiqueta real menciona: Nombre del club + Tipo de camiseta (Home/Away) + Color",
+            "point5": "Verifica las convenciones de talla regionales: Brasil/Canadá = 'G' (Grande) en lugar de 'L'",
+            "point6": "Japón puede usar '2XO' en lugar de 'XL' - verifica la coherencia con la región"
+          }
+        },
+        "step7": {
+          "title": "Paso 7: La etiqueta del cuello y 'Made in'",
+          "description": "La etiqueta del cuello contiene información regional importante",
+          "points": {
+            "point1": "El país de fabricación ('Made in...') DEBE corresponder entre el cuello y todas las etiquetas internas",
+            "point2": "Ejemplo: si el cuello dice 'Made in Vietnam', la etiqueta de lavado debe decir lo mismo",
+            "point3": "Verifica las correspondencias de tallas regionales, especialmente la talla japonesa (J)",
+            "point4": "Tabla correcta: US S=J M, US M=J O (o L reciente), US L=J 2XO, US XL=J 3XO, US XXL=J 4XO",
+            "point5": "Nota: Puma reciente a veces usa 'L' en lugar de 'O' para Japón (alineación occidental)",
+            "point6": "Error frecuente en las falsas: talla japonesa incorrecta (ej: 'J: S' para un US L)"
+          }
+        },
+        "step8": {
+          "title": "Paso 8: La etiqueta de seguridad",
+          "description": "Pequeña etiqueta negra en la parte inferior izquierda de la camiseta (vista de frente)",
+          "points": {
+            "point1": "En modelos recientes: simplemente marcada 'Authentic Licensed Football'",
+            "point2": "En modelos antiguos: código alfanumérico único",
+            "point3": "Este código NO debería aparecer en las búsquedas (excepto si es falsa)",
+            "point4": "La etiqueta debe estar cosida limpiamente con hilo de calidad",
+            "point5": "Ausencia total de etiqueta en camiseta reciente = sospechoso"
+          }
+        },
+        "step9": {
+          "title": "Paso 9: El logo Puma (cuidado con el 'Fat Cat')",
+          "description": "El logo del felino saltando debe ser perfecto - cuidado con el 'Fat Cat'",
+          "points": {
+            "point1": "El Puma debe ser ELEGANTE y atlético, no robusto o hinchado",
+            "point2": "El 'Fat Cat' = defecto típico de las falsas: gato demasiado grueso, deformado, que parece 'musculoso'",
+            "point3": "Forma característica bien definida con proporciones exactas",
+            "point4": "Bordado o flocado de calidad con bordes limpios",
+            "point5": "Posición exacta según el modelo (generalmente pecho derecho)",
+            "point6": "Siempre compara con fotos oficiales - incluso una ligera diferencia = sospechoso"
+          }
+        },
+        "step10": {
+          "title": "Paso 10: El escudo del club",
+          "description": "El escudo debe estar aplicado con precisión",
+          "points": {
+            "point1": "Bordado preciso O termoadhesivo de calidad según el modelo",
+            "point2": "Bordes limpios sin manchas",
+            "point3": "Todos los elementos (estrellas, texto, bordes) perfectamente alineados",
+            "point4": "Espaciado correcto y proporciones respetadas",
+            "point5": "Sin texto borroso, descentrado o mal espaciado",
+            "point6": "Compara con el escudo oficial del club - incluso los pequeños detalles importan"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Código de producto correcto pero para otra camiseta/equipo (ej: código Marsella en camiseta Milán)",
+        "fake2": "Fecha de producción incoherente con la temporada de la camiseta",
+        "fake3": "Código de región de producción (ej: TVNAO) no correspondiente al 'Made in...'",
+        "fake4": "Etiqueta de tienda genérica marcada 'Puma Shirt' sin mención del club",
+        "fake5": "Calcomanía impresa en la etiqueta de tienda en lugar de una calcomanía real",
+        "fake6": "'Made in...' diferente entre etiqueta del cuello y etiqueta de lavado/producto",
+        "fake7": "Talla japonesa incorrecta en la etiqueta del cuello (ej: J:S para US L en lugar de J:2XO)",
+        "fake8": "Código de seguridad que aparece en varias camisetas en línea (debería ser único)",
+        "fake9": "El famoso 'Fat Cat' - logo Puma deformado, robusto o demasiado grueso",
+        "fake10": "Escudo del club con texto borroso, elementos descentrados o proporciones incorrectas",
+        "fake11": "Costuras gruesas o hilos aparentes en el logo/escudo",
+        "fake12": "Ausencia de etiqueta de seguridad en camiseta reciente",
+        "fake13": "Errores tipográficos o gramática incorrecta en las etiquetas de lavado",
+        "fake14": "Código QR ausente en camiseta muy reciente (post-2020)"
+      },
+      "tips": {
+        "tip1": "SIEMPRE verifica el código de producto completo en kitcod.es o Google Imágenes",
+        "tip2": "Verifica que la fecha de producción corresponda a la temporada de la camiseta",
+        "tip3": "Compara el código de región (TVNAO) con el 'Made in...' para coherencia",
+        "tip4": "Solicita fotos de TODAS las etiquetas: cuello, lavado, etiqueta grande de producto, etiqueta de tienda",
+        "tip5": "Escanea el código QR si está presente y verifica que lleve a puma.com con un parámetro AD",
+        "tip6": "Examina el logo Puma DE CERCA - el 'Fat Cat' es un defecto muy común de las falsas",
+        "tip7": "Compara el escudo del club píxel por píxel con fotos oficiales",
+        "tip8": "Verifica la coherencia de las tallas regionales en la etiqueta del cuello (especialmente talla japonesa)",
+        "tip9": "Consulta las listas oficiales de fábricas Puma si quieres verificar el código de fábrica",
+        "tip10": "Para camisetas nuevas: exige foto de la etiqueta de tienda con nombre del club visible",
+        "tip11": "Desconfía de precios demasiado bajos: las Puma reales mantienen su valor",
+        "tip12": "En caso de duda sobre cualquier etiqueta, logo o código: no compres"
+      }
+    },
+    "hummel": {
+      "title": "Guía de Autenticación Hummel",
+      "description": "Aprende a identificar camisetas Hummel genuinas con estos criterios esenciales",
+      "criteria": {
+        "step1": {
+          "title": "La etiqueta principal",
+          "description": "La etiqueta Hummel tiene características específicas",
+          "points": {
+            "point1": "Logo Hummel con los chevrones distintivos",
+            "point2": "Código de producto único",
+            "point3": "Información de talla y composición",
+            "point4": "Origen de fabricación indicado",
+            "point5": "Impresión nítida y duradera"
+          }
+        },
+        "step2": {
+          "title": "Los chevrones Hummel",
+          "description": "Los chevrones son la firma de la marca",
+          "points": {
+            "point1": "Forma en V característica",
+            "point2": "Ángulos precisos de 45 grados",
+            "point3": "Bordado de calidad superior",
+            "point4": "Alineación perfecta de los chevrones",
+            "point5": "Colores vivos y contrastados"
+          }
+        },
+        "step3": {
+          "title": "La calidad del textil",
+          "description": "Hummel usa materiales de calidad",
+          "points": {
+            "point1": "Tela técnica transpirable",
+            "point2": "Material agradable al tacto",
+            "point3": "Resistencia al desgaste",
+            "point4": "Colores que no destiñen",
+            "point5": "Propiedades anti-transpiración"
+          }
+        },
+        "step4": {
+          "title": "Los acabados",
+          "description": "Los detalles de acabado son importantes",
+          "points": {
+            "point1": "Costuras rectas y sólidas",
+            "point2": "Cuello bien estructurado y cómodo",
+            "point3": "Escudo del club de calidad premium",
+            "point4": "Impresión de números duradera",
+            "point5": "Ensamblaje cuidadoso"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Chevrones mal alineados o deformados",
+        "fake2": "Etiqueta borrosa o con errores",
+        "fake3": "Tela de calidad inferior",
+        "fake4": "Logo Hummel aproximado",
+        "fake5": "Costuras que se deshacen rápidamente"
+      },
+      "tips": {
+        "tip1": "Compra en distribuidores Hummel autorizados",
+        "tip2": "Compara los chevrones con modelos auténticos",
+        "tip3": "Verifica la calidad general de fabricación",
+        "tip4": "Examina la etiqueta en detalle",
+        "tip5": "Un precio demasiado bajo debe alertar"
+      }
+    }
   }
 }

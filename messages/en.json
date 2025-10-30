@@ -164,5 +164,600 @@
         }
       }
     }
+  },
+  "Authentication": {
+    "title": "Jersey Authentication",
+    "subtitle": "Learn to identify authentic football jerseys from counterfeits",
+    "page": {
+      "protectInvestment": {
+        "title": "Protect your investment",
+        "description": "The football jersey market is unfortunately flooded with counterfeits. Our guides help you identify authentic jerseys and avoid scams."
+      },
+      "whyImportant": {
+        "title": "Why is authentication important?",
+        "reason1": "Counterfeits represent up to 30% of the online jersey market",
+        "reason2": "A fake jersey deteriorates quickly and has no resale value",
+        "reason3": "Buying a counterfeit finances smuggling networks",
+        "reason4": "Authentic jerseys guarantee quality, comfort and durability"
+      }
+    },
+    "brands": {
+      "adidas": {
+        "name": "Adidas",
+        "description": "Verify the authenticity of your Adidas jerseys"
+      },
+      "nike": {
+        "name": "Nike",
+        "description": "Verify the authenticity of your Nike jerseys"
+      },
+      "puma": {
+        "name": "Puma",
+        "description": "Verify the authenticity of your Puma jerseys"
+      },
+      "hummel": {
+        "name": "Hummel",
+        "description": "Verify the authenticity of your Hummel jerseys"
+      }
+    },
+    "common": {
+      "authenticationSteps": "Authentication Steps",
+      "commonFakes": "Common Counterfeit Signs",
+      "commonFakesDescription": "Watch out for these elements that indicate a fake jersey",
+      "buyingTips": "Buying Tips",
+      "buyingTipsDescription": "Recommendations for safe purchasing",
+      "authentic": "AUTHENTIC",
+      "counterfeit": "COUNTERFEIT",
+      "scanFeature": {
+        "title": "Coming Soon: Automatic Scanner",
+        "description": "We're working on a scan feature to authenticate your {brand} jerseys instantly.",
+        "howItWorks": "How it will work:",
+        "step1": "Take a photo of the labels",
+        "step2": "Our AI analyzes codes and details",
+        "step3": "Receive an authentication result",
+        "notify": "Notify me at launch"
+      },
+      "scanPlaceholder": {
+        "title": "Scan the Label",
+        "description": "Automatic verification using artificial intelligence",
+        "comingSoon": "Feature coming soon!",
+        "kitlegitInfo": "We're working on integrating {kitlegit}, an AI authentication solution specialized in football jerseys.",
+        "kitlegit": "KitLegit",
+        "manualGuide": "In the meantime, use the guide above to manually verify the authenticity of your {brand} jersey.",
+        "scanButton": "Scan my label (Coming soon)",
+        "photosRequired": "Automatic scanning will require 3 to 8 photos of your jersey for complete analysis."
+      }
+    },
+    "metadata": {
+      "notFound": "Brand not found - The Locker Room",
+      "titleTemplate": "Authenticate a {brand} Jersey - Complete Guide",
+      "ogTitleTemplate": "{brand} Jersey Authentication Guide",
+      "twitterTitleTemplate": "How to Authenticate a {brand} Jersey",
+      "adidas": {
+        "description": "Complete guide to authenticate an Adidas jersey. Verify product code, swing tag, barcode and spot counterfeit signs. Detailed method with visual examples.",
+        "ogDescription": "Learn to recognize an authentic Adidas jersey from a counterfeit"
+      },
+      "nike": {
+        "description": "Learn to recognize an authentic Nike jersey: product code, production code, swing tag, and security tag. Complete anti-counterfeit guide with comparative photos.",
+        "ogDescription": "Learn to recognize an authentic Nike jersey from a counterfeit"
+      },
+      "puma": {
+        "description": "Puma jersey authentication: product code, production date, QR code, security tag. Recognize the 'Fat Cat' and other fake Puma jersey signs.",
+        "ogDescription": "Learn to recognize an authentic Puma jersey from a counterfeit"
+      },
+      "hummel": {
+        "description": "Authentication guide for Hummel jerseys: characteristic chevrons, labels, textile quality and finishes. Avoid counterfeits.",
+        "ogDescription": "Learn to recognize an authentic Hummel jersey from a counterfeit"
+      }
+    },
+    "adidas": {
+      "title": "Adidas Authentication Guide",
+      "description": "Complete method to verify the authenticity of an Adidas jersey using product codes and labels",
+      "criteria": {
+        "step1": {
+          "title": "Step 1: Locate the label with the product code",
+          "description": "The label is usually found in the collar on the right, or sometimes at the bottom of the jersey with washing instructions",
+          "points": {
+            "point1": "Look for the label sewn in the collar (right side)",
+            "point2": "If not in the collar, check at the bottom of the jersey near washing instructions",
+            "point3": "This label contains 3 essential codes: size, product code (middle), and manufacturing code",
+            "point4": "If the label has been cut off by the seller, it's impossible to verify authenticity"
+          }
+        },
+        "step2": {
+          "title": "Step 2: The product code (MOST IMPORTANT CODE)",
+          "description": "The middle product code is the key to verifying authenticity. Example: IB0907",
+          "points": {
+            "point1": "Identify the code in the MIDDLE of the label (e.g., IB0907, HS5184, P95985)",
+            "point2": "This code is unique per jersey model (home, away, third)",
+            "point3": "Type this code in Google Images: results must match your jersey EXACTLY",
+            "point4": "Example: 'IB0907' = Lyon Away Jersey 2023/2024 only",
+            "point5": "If the code matches another club/season = IT'S A FAKE",
+            "point6": "Exception: Some small clubs share the same code (common templates), but it's rare"
+          }
+        },
+        "step3": {
+          "title": "Step 3: The swing tag (if present)",
+          "description": "The cardboard label attached to the new jersey contains valuable information",
+          "points": {
+            "point1": "On a REAL jersey: The club name is clearly indicated (e.g., 'OL', 'Manchester United')",
+            "point2": "The type mention is present: 'H' (Home), 'A' (Away), 'T' (Third)",
+            "point3": "The product code is written above the model name",
+            "point4": "FAKE if marked only 'adidas JSY' without club name = COUNTERFEIT",
+            "point5": "Warning: These labels can be removed and reattached to a fake jersey!"
+          }
+        },
+        "step4": {
+          "title": "Step 4: The barcode number (additional verification)",
+          "description": "The swing tag barcode allows for precise verification",
+          "points": {
+            "point1": "Find the numeric code under the barcode (e.g., 4066761557500)",
+            "point2": "Go to ean-search.org and enter this code",
+            "point3": "The result must match your jersey EXACTLY",
+            "point4": "Example: 4066761557500 = 'adidas Lyon Away Shirt 2023/24'",
+            "point5": "If the code matches another jersey = FAKE",
+            "point6": "Note: Adidas does NOT print this code on the sewn label, only on the swing tag"
+          }
+        },
+        "step5": {
+          "title": "Step 5: Additional visual checks",
+          "description": "After verifying codes, examine the overall quality",
+          "points": {
+            "point1": "Adidas logo: The 3 stripes must be perfectly aligned and neatly embroidered",
+            "point2": "Stitching: Straight, regular, no loose threads",
+            "point3": "Fabric: Technical material (Climalite, Climacool, Aeroready) mentioned on the label",
+            "point4": "No strong chemical smell or visible glue"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Swing tag marked 'adidas JSY' without club name",
+        "fake2": "Product code that matches another jersey (e.g., HS5184 for Man Utd = Flamengo jersey)",
+        "fake3": "Incorrect barcode number (e.g., matches Germany 2017 instead of Man Utd 2024)",
+        "fake4": "Collar label cut off or absent (suspicious seller)",
+        "fake5": "No results on Google Images for the product code",
+        "fake6": "Deformed Adidas logo, poorly embroidered or printed (instead of embroidered)",
+        "fake7": "Abnormally low price (50-70% cheaper than official price)",
+        "fake8": "Seller who refuses to show collar label in photos"
+      },
+      "tips": {
+        "tip1": "ALWAYS ask for a photo of the collar label before buying",
+        "tip2": "Verify the product code on Google Images (most reliable method)",
+        "tip3": "Prefer sellers with established reputation and positive reviews",
+        "tip4": "Compare with official photos from Adidas website or club",
+        "tip5": "Beware of too attractive prices (discount > 50% = suspicious)",
+        "tip6": "This method works even for old jerseys (2000s+)",
+        "tip7": "Use ean-search.org for the barcode if swing tag is present",
+        "tip8": "When in doubt: Don't buy. A real jersey holds its value, a fake doesn't"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Example 1: Label with product code",
+          "description": "Here's how to identify the product code on the collar label",
+          "authentic": {
+            "points": {
+              "point1": "Visible product code: JL9623",
+              "point2": "Print date linked to the jersey year",
+              "point3": "3 codes correctly aligned",
+              "point4": "Well-defined Adidas logo"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Code H13881 matches Man United instead of Mexico in our example",
+              "point2": "Blurry or misaligned print",
+              "point3": "Irregular characters"
+            }
+          }
+        },
+        "example2": {
+          "title": "Example 2: Swing tag",
+          "description": "The cardboard label attached to new jerseys",
+          "authentic": {
+            "points": {
+              "point1": "Club name indicated: 'OL'",
+              "point2": "Type mention: '75' (OL 75th Anniversary Jersey)",
+              "point3": "Visible product code",
+              "point4": "QR Code to correct jersey"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Marked only 'adidas JSY'",
+              "point2": "No club name",
+              "point3": "Incorrect barcode"
+            }
+          }
+        }
+      }
+    },
+    "nike": {
+      "title": "Nike Authentication Guide",
+      "description": "Complete method to verify the authenticity of a Nike jersey using product codes, labels and manufacturing details",
+      "criteria": {
+        "step1": {
+          "title": "Step 1: The product code",
+          "description": "Located on the small label under the wash label, the product code is your first indicator",
+          "points": {
+            "point1": "Format: 6 digits for style + 3 digits for color (e.g., 894430-010)",
+            "point2": "The style code identifies the jersey design/template",
+            "point3": "The color code (after the dash) identifies the specific color variant",
+            "point4": "Type the complete code in Google Images to verify it matches your jersey EXACTLY",
+            "point5": "WARNING: Fakes often reuse real codes! If the code is for France 2020 Away (CD0069-100) but on another team's jersey = FAKE",
+            "point6": "Old jerseys (before 2010) may not have the color code, this is normal"
+          }
+        },
+        "step2": {
+          "title": "Step 2: The production code",
+          "description": "On the same small label, this code reveals when the jersey was manufactured",
+          "points": {
+            "point1": "Format: HO150407SYG (example = Holiday 2015, manufactured April to July)",
+            "point2": "First 2-3 characters = season: SP (Spring), SU (Summer), FA (Fall), HO (Holiday/Winter)",
+            "point3": "Next 2 digits = year (15 = 2015, 23 = 2023)",
+            "point4": "Next 4 digits = start and end production months (0407 = April to July)",
+            "point5": "This code must be consistent with the jersey season! A 2023/24 jersey cannot have an HO15 code",
+            "point6": "Fakes often reuse labels on different jerseys, creating inconsistencies"
+          }
+        },
+        "step3": {
+          "title": "Step 3: The swing tag",
+          "description": "The cardboard label attached to new jerseys contains crucial information",
+          "points": {
+            "point1": "Modern placement (since 2021/22): single label on LEFT sleeve only",
+            "point2": "2016-2020: two labels, one under each sleeve (armpits)",
+            "point3": "Before 2016: label attached to collar",
+            "point4": "The sticker must be a REAL physical sticker, never printed directly",
+            "point5": "The barb (plastic attachment) is ALWAYS black on real Nike",
+            "point6": "The product code on the swing tag MUST match the internal label",
+            "point7": "Size color bar: Gray=XS, Yellow=S, Blue=M, Red=L, Green=XL, White=XXL+"
+          }
+        },
+        "step4": {
+          "title": "Step 4: The collar size label",
+          "description": "The collar label contains important regional information",
+          "points": {
+            "point1": "The country of manufacture ('Made in...') MUST match between collar label and wash label",
+            "point2": "Example: if the collar says 'Made in Indonesia', the interior label must say the same",
+            "point3": "Check regional size correspondences, especially Japanese size (J)",
+            "point4": "Common error on fakes: incorrect Japanese size (e.g., 'J: S' for US L instead of 'J: 2XO')",
+            "point5": "Correct table: US S=J M, US M=J L, US L=J 2XO, US XL=J 3XO, US XXL=J 4XO"
+          }
+        },
+        "step5": {
+          "title": "Step 5: The security tag",
+          "description": "Located at bottom right of jersey, the security tag contains a unique code",
+          "points": {
+            "point1": "The alphanumeric code MUST be unique to your jersey",
+            "point2": "If you find the same code on multiple online listings = FAKE",
+            "point3": "On recent jerseys: quality metallic/holographic strip that changes under light",
+            "point4": "Fakes often use simple flat printing instead of metallic strip",
+            "point5": "Player version: gold/metallic accents | Fan version: silver accents",
+            "point6": "Some hidden details: mini Nike logos or fragments of the word 'SECURITY' in the strip",
+            "point7": "Some older versions: letters 'HEN' or both 'T's of 'AUTHENTIC' in shiny material"
+          }
+        },
+        "step6": {
+          "title": "Step 6: The Swoosh and badges",
+          "description": "The quality of application of the Nike logo and club badge is revealing",
+          "points": {
+            "point1": "The Swoosh must be PERFECT: precise shape, clean edges, no visible threads",
+            "point2": "On a NEW jersey, the fabric around the Swoosh must be FLAT (no wrinkles)",
+            "point3": "Turn the jersey over: the inside behind the Swoosh/badge must be clean, without excess fabric",
+            "point4": "Embroidered badge = fan version | Heat-pressed/silicone badge = player version",
+            "point5": "Verify that the badge type matches the version (fan or player)",
+            "point6": "Watch for misplaced badges, too large/small, or with coarse stitching"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Correct product code but for another jersey/team (e.g., France 2020 code on Germany jersey)",
+        "fake2": "Inconsistent production code with season (2024 jersey with HO15 code)",
+        "fake3": "Swing tag with printed sticker instead of real physical sticker",
+        "fake4": "Label barb attachment that isn't black",
+        "fake5": "'Made in...' different between collar label and wash label",
+        "fake6": "Incorrect Japanese size on collar label",
+        "fake7": "Identical security code found on multiple online listings",
+        "fake8": "Security strip without holographic/metallic effect (flat printing)",
+        "fake9": "Swoosh with wrinkled fabric around it on new jersey",
+        "fake10": "Dirty inside behind Swoosh/badge (excess fabric, coarse stitching)",
+        "fake11": "Inconsistent color code (e.g., red jersey with 100-199 code)",
+        "fake12": "Misplaced swing tag (e.g., on collar for post-2021 jersey)",
+        "fake13": "Incorrect or absent size color bar on swing tag"
+      },
+      "tips": {
+        "tip1": "ALWAYS verify complete product code (style + color) on Google Images",
+        "tip2": "Compare production code with jersey season to detect inconsistencies",
+        "tip3": "Request photos of ALL labels: collar, wash, small product label, swing tag",
+        "tip4": "Verify 'Made in...' consistency across all labels",
+        "tip5": "For new jerseys: require photo of swing tag with black attachment",
+        "tip6": "Search security code online to verify uniqueness",
+        "tip7": "Examine Swoosh and badge quality (flip jersey if possible)",
+        "tip8": "Use regional size table to verify collar label consistency",
+        "tip9": "Player version jerseys without swing tag are normal (direct team distribution)",
+        "tip10": "Beware of too low prices: real Nike jerseys hold their value",
+        "tip11": "When in doubt about any label or code: don't buy"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Example 1: Product code and production code",
+          "description": "The small label under the wash label contains essential codes",
+          "authentic": {
+            "points": {
+              "point1": "Visible product code: 658789-426 (style + color)",
+              "point2": "Consistent production code: HO150710 (Holiday 2015, July-October)",
+              "point3": "Clear and readable printing",
+              "point4": "Correct format and perfect alignment"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Product code for another jersey (Here PSG jersey with FN8721-456 = Barcelona Home 24/25)",
+              "point2": "Production code inconsistent with season",
+              "point3": "Blurry printing or irregular characters",
+              "point4": "Poor alignment or incorrect format"
+            }
+          }
+        },
+        "example2": {
+          "title": "Example 2: Swing tag",
+          "description": "The cardboard label attached to new jerseys",
+          "authentic": {
+            "points": {
+              "point1": "Physical sticker (not printed)",
+              "point2": "Black barb attachment",
+              "point3": "Correct size color bar",
+              "point4": "Product code matches internal label",
+              "point5": "Correct placement for the year (left sleeve post-2021)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Printed sticker (not a real sticker)",
+              "point2": "White barb attachment or incorrect color",
+              "point3": "Absent or incorrect color bar",
+              "point4": "Product code doesn't match (CD0699-100 = France 2020/22)"
+            }
+          }
+        },
+        "example3": {
+          "title": "Example 3: Security tag",
+          "description": "The tag at bottom right of jersey with unique code and metallic strip",
+          "authentic": {
+            "points": {
+              "point1": "Quality metallic/holographic strip",
+              "point2": "Color-changing effect under light",
+              "point3": "Unique alphanumeric code",
+              "point4": "Clean and regular stitching",
+              "point5": "Gold accents (player version) or silver (fan version)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Flat printed strip (no holographic effect)",
+              "point2": "Code repeated on multiple jerseys",
+              "point3": "Coarse stitching",
+              "point4": "No metallic effect"
+            }
+          }
+        }
+      }
+    },
+    "puma": {
+      "title": "Puma Authentication Guide",
+      "description": "Complete method to verify the authenticity of a Puma jersey using product codes, labels and manufacturing details",
+      "criteria": {
+        "step1": {
+          "title": "Step 1: The product code (Style No / Article No)",
+          "description": "Found on a large label sewn on the left side of the jersey",
+          "points": {
+            "point1": "Format: 6 digits + 2 variation digits (e.g., 736251-01)",
+            "point2": "First 6 digits = base jersey model",
+            "point3": "Last 2 digits = color variation (more recent, absent on old jerseys)",
+            "point4": "Type code on kitcod.es or Google Images to verify it matches your jersey EXACTLY",
+            "point5": "WARNING: Fakes often reuse real codes! If code is for Marseille but on Milan jersey = FAKE",
+            "point6": "Jerseys before 2000 may not have label with product code, this is normal"
+          }
+        },
+        "step2": {
+          "title": "Step 2: The production date",
+          "description": "On recent label versions, Puma indicates exact production date",
+          "points": {
+            "point1": "Recent format: Complete visible date (e.g., 15/03/2023)",
+            "point2": "This date must be consistent with jersey season",
+            "point3": "A 2023/24 season jersey cannot have production date in 2020",
+            "point4": "Fakes often reuse same label on different jerseys, creating inconsistencies",
+            "point5": "If date doesn't match season = major RED FLAG"
+          }
+        },
+        "step3": {
+          "title": "Step 3: The production region code",
+          "description": "Alphanumeric code under production date indicating factory",
+          "points": {
+            "point1": "Format: TVNAO (example for Vietnam, Alliance One factory)",
+            "point2": "First character = Probably 'T' for Textile",
+            "point3": "Next 2 characters = ISO country code (VN=Vietnam, TH=Thailand, TR=Turkey)",
+            "point4": "Last 2 characters = Specific factory identifier",
+            "point5": "Country code MUST match 'Made in...' on label",
+            "point6": "You can verify official Puma factories with their public lists (2018, 2023, 2025)"
+          }
+        },
+        "step4": {
+          "title": "Step 4: The regional market code",
+          "description": "Code on left side of label indicating destination market",
+          "points": {
+            "point1": "AM = Americas",
+            "point2": "AP = Asia Pacific",
+            "point3": "EU = Europe",
+            "point4": "This code indicates WHERE product was meant to be sold, not where manufactured",
+            "point5": "Useful for collectors seeking specific regional releases",
+            "point6": "May have slight variations in packaging or compliance information"
+          }
+        },
+        "step5": {
+          "title": "Step 5: The QR Code",
+          "description": "Recent Puma labels include QR code with unique AD number",
+          "points": {
+            "point1": "QR code generally located under product code",
+            "point2": "Scanning code redirects to puma.com with 'AD' number parameter",
+            "point3": "Link format: https://www.puma.com?TSL1D33P02450",
+            "point4": "AD number is printed above QR code",
+            "point5": "This code serves for internal tracking and Puma authentication",
+            "point6": "Absence of QR code on old jerseys is normal"
+          }
+        },
+        "step6": {
+          "title": "Step 6: The swing tag",
+          "description": "Cardboard label attached to collar of new jerseys",
+          "points": {
+            "point1": "Sticker must be REAL physical sticker, never printed directly",
+            "point2": "Product code on swing tag MUST match internal label",
+            "point3": "Fakes often use generic label like 'Puma Shirt' without details",
+            "point4": "Real label mentions: Club name + Jersey type (Home/Away) + Color",
+            "point5": "Check regional size conventions: Brazil/Canada = 'G' (Grande) instead of 'L'",
+            "point6": "Japan may use '2XO' instead of 'XL' - verify consistency with region"
+          }
+        },
+        "step7": {
+          "title": "Step 7: The collar label and 'Made in'",
+          "description": "Collar label contains important regional information",
+          "points": {
+            "point1": "Country of manufacture ('Made in...') MUST match between collar and all internal labels",
+            "point2": "Example: if collar says 'Made in Vietnam', wash label must say same",
+            "point3": "Check regional size correspondences, especially Japanese size (J)",
+            "point4": "Correct table: US S=J M, US M=J O (or recent L), US L=J 2XO, US XL=J 3XO, US XXL=J 4XO",
+            "point5": "Note: Recent Puma sometimes uses 'L' instead of 'O' for Japan (Western alignment)",
+            "point6": "Common error on fakes: incorrect Japanese size (e.g., 'J: S' for US L)"
+          }
+        },
+        "step8": {
+          "title": "Step 8: The security tag",
+          "description": "Small black tag at bottom left of jersey (front view)",
+          "points": {
+            "point1": "On recent models: simply marked 'Authentic Licensed Football'",
+            "point2": "On older models: unique alphanumeric code",
+            "point3": "This code should NOT appear in searches (unless it's fake)",
+            "point4": "Tag must be neatly sewn with quality thread",
+            "point5": "Complete absence of tag on recent jersey = suspicious"
+          }
+        },
+        "step9": {
+          "title": "Step 9: The Puma logo (beware of 'Fat Cat')",
+          "description": "Leaping cat logo must be perfect - beware of 'Fat Cat'",
+          "points": {
+            "point1": "Puma must be ELEGANT and athletic, not stocky or puffed up",
+            "point2": "'Fat Cat' = typical fake defect: cat too thick, deformed, looks 'muscular'",
+            "point3": "Well-defined characteristic shape with exact proportions",
+            "point4": "Quality embroidery or flocking with clean edges",
+            "point5": "Exact position according to model (usually right chest)",
+            "point6": "Always compare with official photos - even slight difference = suspicious"
+          }
+        },
+        "step10": {
+          "title": "Step 10: The club badge",
+          "description": "Badge must be applied with precision",
+          "points": {
+            "point1": "Precise embroidery OR quality heat transfer depending on model",
+            "point2": "Clean edges without smudging",
+            "point3": "All elements (stars, text, borders) perfectly aligned",
+            "point4": "Correct spacing and respected proportions",
+            "point5": "No blurry, off-center or poorly spaced text",
+            "point6": "Compare with official club badge - even small details matter"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Correct product code but for another jersey/team (e.g., Marseille code on Milan jersey)",
+        "fake2": "Production date inconsistent with jersey season",
+        "fake3": "Production region code (e.g., TVNAO) not matching 'Made in...'",
+        "fake4": "Generic swing tag marked 'Puma Shirt' without club mention",
+        "fake5": "Printed sticker on swing tag instead of real sticker",
+        "fake6": "'Made in...' different between collar label and wash/product label",
+        "fake7": "Incorrect Japanese size on collar label (e.g., J:S for US L instead of J:2XO)",
+        "fake8": "Security code appearing on multiple online jerseys (should be unique)",
+        "fake9": "The famous 'Fat Cat' - deformed, stocky or too thick Puma logo",
+        "fake10": "Club badge with blurry text, off-center elements or incorrect proportions",
+        "fake11": "Coarse stitching or visible threads on logo/badge",
+        "fake12": "Absence of security tag on recent jersey",
+        "fake13": "Typos or incorrect grammar on wash labels",
+        "fake14": "Missing QR code on very recent jersey (post-2020)"
+      },
+      "tips": {
+        "tip1": "ALWAYS verify complete product code on kitcod.es or Google Images",
+        "tip2": "Verify production date matches jersey season",
+        "tip3": "Compare region code (TVNAO) with 'Made in...' for consistency",
+        "tip4": "Request photos of ALL labels: collar, wash, large product label, swing tag",
+        "tip5": "Scan QR code if present and verify it leads to puma.com with AD parameter",
+        "tip6": "Examine Puma logo CLOSELY - 'Fat Cat' is very common fake defect",
+        "tip7": "Compare club badge pixel by pixel with official photos",
+        "tip8": "Verify regional size consistency on collar label (especially Japanese size)",
+        "tip9": "Consult official Puma factory lists if you want to verify factory code",
+        "tip10": "For new jerseys: require photo of swing tag with visible club name",
+        "tip11": "Beware of too low prices: real Puma jerseys hold their value",
+        "tip12": "When in doubt about any label, logo or code: don't buy"
+      }
+    },
+    "hummel": {
+      "title": "Hummel Authentication Guide",
+      "description": "Learn to identify genuine Hummel jerseys with these essential criteria",
+      "criteria": {
+        "step1": {
+          "title": "The main label",
+          "description": "Hummel label has specific characteristics",
+          "points": {
+            "point1": "Hummel logo with distinctive chevrons",
+            "point2": "Unique product code",
+            "point3": "Size and composition information",
+            "point4": "Indicated country of manufacture",
+            "point5": "Clear and durable printing"
+          }
+        },
+        "step2": {
+          "title": "Hummel chevrons",
+          "description": "Chevrons are the brand's signature",
+          "points": {
+            "point1": "Characteristic V shape",
+            "point2": "Precise 45-degree angles",
+            "point3": "Superior quality embroidery",
+            "point4": "Perfect chevron alignment",
+            "point5": "Bright and contrasted colors"
+          }
+        },
+        "step3": {
+          "title": "Textile quality",
+          "description": "Hummel uses quality materials",
+          "points": {
+            "point1": "Breathable technical fabric",
+            "point2": "Pleasant material to touch",
+            "point3": "Resistance to wear",
+            "point4": "Colors that don't fade",
+            "point5": "Anti-perspiration properties"
+          }
+        },
+        "step4": {
+          "title": "Finishing touches",
+          "description": "Finishing details are important",
+          "points": {
+            "point1": "Straight and solid stitching",
+            "point2": "Well-structured and comfortable collar",
+            "point3": "Premium quality club badge",
+            "point4": "Durable number printing",
+            "point5": "Careful assembly"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Misaligned or deformed chevrons",
+        "fake2": "Blurry label or with errors",
+        "fake3": "Lower quality fabric",
+        "fake4": "Approximate Hummel logo",
+        "fake5": "Stitching that comes undone quickly"
+      },
+      "tips": {
+        "tip1": "Buy from authorized Hummel retailers",
+        "tip2": "Compare chevrons with authentic models",
+        "tip3": "Check overall manufacturing quality",
+        "tip4": "Examine label in detail",
+        "tip5": "Too low price should alert"
+      }
+    }
   }
 }

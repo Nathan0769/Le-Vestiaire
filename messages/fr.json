@@ -164,5 +164,600 @@
         }
       }
     }
+  },
+  "Authentication": {
+    "title": "Authentification des maillots",
+    "subtitle": "Apprenez à identifier les vrais maillots de foot des contrefaçons",
+    "page": {
+      "protectInvestment": {
+        "title": "Protégez votre investissement",
+        "description": "Le marché des maillots de football est malheureusement inondé de contrefaçons. Nos guides vous aident à identifier les vrais maillots et à éviter les arnaques."
+      },
+      "whyImportant": {
+        "title": "Pourquoi l'authentification est importante ?",
+        "reason1": "Les contrefaçons représentent jusqu'à 30% du marché des maillots en ligne",
+        "reason2": "Un faux maillot se détériore rapidement et n'a aucune valeur de revente",
+        "reason3": "Acheter une contrefaçon finance des réseaux de contrebande",
+        "reason4": "Les maillots authentiques garantissent qualité, confort et durabilité"
+      }
+    },
+    "brands": {
+      "adidas": {
+        "name": "Adidas",
+        "description": "Vérifiez l'authenticité de vos maillots Adidas"
+      },
+      "nike": {
+        "name": "Nike",
+        "description": "Vérifiez l'authenticité de vos maillots Nike"
+      },
+      "puma": {
+        "name": "Puma",
+        "description": "Vérifiez l'authenticité de vos maillots Puma"
+      },
+      "hummel": {
+        "name": "Hummel",
+        "description": "Vérifiez l'authenticité de vos maillots Hummel"
+      }
+    },
+    "common": {
+      "authenticationSteps": "Étapes pour l'authentification",
+      "commonFakes": "Signes de contrefaçon courants",
+      "commonFakesDescription": "Attention à ces éléments qui indiquent un faux maillot",
+      "buyingTips": "Conseils d'achat",
+      "buyingTipsDescription": "Recommandations pour acheter en toute sécurité",
+      "authentic": "AUTHENTIQUE",
+      "counterfeit": "CONTREFAÇON",
+      "scanFeature": {
+        "title": "Bientôt : Scanner automatique",
+        "description": "Nous travaillons sur une fonctionnalité de scan pour authentifier vos maillots {brand} instantanément.",
+        "howItWorks": "Comment ça marchera :",
+        "step1": "Prenez une photo des étiquettes",
+        "step2": "Notre IA analyse les codes et détails",
+        "step3": "Recevez un résultat d'authentification",
+        "notify": "M'avertir lors du lancement"
+      },
+      "scanPlaceholder": {
+        "title": "Scanner l'étiquette",
+        "description": "Vérification automatique par intelligence artificielle",
+        "comingSoon": "Fonctionnalité bientôt disponible !",
+        "kitlegitInfo": "Nous travaillons sur l'intégration de {kitlegit}, une solution d'authentification par IA spécialisée dans les maillots de football.",
+        "kitlegit": "KitLegit",
+        "manualGuide": "En attendant, utilisez le guide ci-dessus pour vérifier manuellement l'authenticité de votre maillot {brand}.",
+        "scanButton": "Scanner mon étiquette (Bientôt disponible)",
+        "photosRequired": "Le scan automatique nécessitera 3 à 8 photos de votre maillot pour une analyse complète."
+      }
+    },
+    "metadata": {
+      "notFound": "Marque introuvable - Le Vestiaire",
+      "titleTemplate": "Authentifier un Maillot {brand} - Guide Complet",
+      "ogTitleTemplate": "Guide Authentification Maillot {brand}",
+      "twitterTitleTemplate": "Comment Authentifier un Maillot {brand}",
+      "adidas": {
+        "description": "Guide complet pour authentifier un maillot Adidas. Vérifiez le code produit, l'étiquette boutique, le code-barres et repérez les signes de contrefaçon. Méthode détaillée avec exemples visuels.",
+        "ogDescription": "Apprenez à reconnaître un vrai maillot Adidas d'une contrefaçon"
+      },
+      "nike": {
+        "description": "Apprenez à reconnaître un vrai maillot Nike : code produit, code de production, étiquette boutique, swing tag et étiquette de sécurité. Guide complet anti-contrefaçon avec photos comparatives.",
+        "ogDescription": "Apprenez à reconnaître un vrai maillot Nike d'une contrefaçon"
+      },
+      "puma": {
+        "description": "Authentification maillot Puma : code produit, date de production, QR code, étiquette de sécurité. Reconnaissez le 'Fat Cat' et autres signes de faux maillot Puma.",
+        "ogDescription": "Apprenez à reconnaître un vrai maillot Puma d'une contrefaçon"
+      },
+      "hummel": {
+        "description": "Guide d'authentification pour maillots Hummel : chevrons caractéristiques, étiquettes, qualité textile et finitions. Évitez les contrefaçons.",
+        "ogDescription": "Apprenez à reconnaître un vrai maillot Hummel d'une contrefaçon"
+      }
+    },
+    "adidas": {
+      "title": "Guide d'authentification Adidas",
+      "description": "Méthode complète pour vérifier l'authenticité d'un maillot Adidas grâce aux codes produits et étiquettes",
+      "criteria": {
+        "step1": {
+          "title": "Étape 1 : Localiser l'étiquette avec le code produit",
+          "description": "L'étiquette se trouve généralement dans le col à droite, ou parfois en bas du maillot avec les instructions de lavage",
+          "points": {
+            "point1": "Cherchez l'étiquette cousue dans le col (côté droit)",
+            "point2": "Si elle n'est pas dans le col, regardez en bas du maillot près des instructions de lavage",
+            "point3": "Cette étiquette contient 3 codes essentiels : taille, code produit (milieu), et code fabrication",
+            "point4": "Si l'étiquette a été découpée par le vendeur, impossible de vérifier l'authenticité"
+          }
+        },
+        "step2": {
+          "title": "Étape 2 : Le code produit (CODE LE PLUS IMPORTANT)",
+          "description": "Le code produit du milieu est la clé pour vérifier l'authenticité. Exemple : IB0907",
+          "points": {
+            "point1": "Identifiez le code au MILIEU de l'étiquette (ex: IB0907, HS5184, P95985)",
+            "point2": "Ce code est unique par modèle de maillot (domicile, extérieur, third)",
+            "point3": "Tapez ce code dans Google Images : les résultats doivent correspondre EXACTEMENT à votre maillot",
+            "point4": "Exemple : 'IB0907' = Maillot extérieur OL 2023/2024 uniquement",
+            "point5": "Si le code correspond à un autre club/saison = C'EST UN FAUX",
+            "point6": "Exception : Certains petits clubs partagent le même code (templates communs), mais c'est rare"
+          }
+        },
+        "step3": {
+          "title": "Étape 3 : L'étiquette boutique (si présente)",
+          "description": "L'étiquette cartonnée accrochée au maillot neuf contient des informations précieuses",
+          "points": {
+            "point1": "Sur un VRAI maillot : Le nom du club est clairement indiqué (ex: 'OL', 'Manchester United')",
+            "point2": "La mention du type est présente : 'H' (Home), 'A' (Away), 'T' (Third)",
+            "point3": "Le code produit est écrit au-dessus du nom du modèle",
+            "point4": "FAUX si marqué uniquement 'adidas JSY' sans nom de club = CONTREFAÇON",
+            "point5": "Attention : Ces étiquettes peuvent être retirées et remises sur un faux maillot !"
+          }
+        },
+        "step4": {
+          "title": "Étape 4 : Le code-barres numérique (vérification supplémentaire)",
+          "description": "Le code-barres de l'étiquette boutique permet une vérification précise",
+          "points": {
+            "point1": "Trouvez le code numérique sous le code-barres (ex: 4066761557500)",
+            "point2": "Allez sur ean-search.org et entrez ce code",
+            "point3": "Le résultat doit correspondre EXACTEMENT à votre maillot",
+            "point4": "Exemple : 4066761557500 = 'adidas Lyon Away Shirt 2023/24'",
+            "point5": "Si le code correspond à un autre maillot = FAUX",
+            "point6": "Note : Adidas n'inscrit PAS ce code sur l'étiquette cousue, uniquement sur l'étiquette boutique"
+          }
+        },
+        "step5": {
+          "title": "Étape 5 : Vérifications visuelles complémentaires",
+          "description": "Après avoir vérifié les codes, examinez la qualité générale",
+          "points": {
+            "point1": "Logo Adidas : Les 3 bandes doivent être parfaitement alignées et brodées proprement",
+            "point2": "Coutures : Droites, régulières, sans fils qui dépassent",
+            "point3": "Tissu : Matière technique (Climalite, Climacool, Aeroready) mentionnée sur l'étiquette",
+            "point4": "Pas d'odeur chimique forte ou de colle visible"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Étiquette boutique marquée 'adidas JSY' sans nom de club",
+        "fake2": "Code produit qui correspond à un autre maillot (ex: HS5184 pour Man Utd = maillot de Flamengo)",
+        "fake3": "Code-barres numérique incorrect (ex: correspond à Allemagne 2017 au lieu de Man Utd 2024)",
+        "fake4": "Étiquette dans le col découpée ou absente (vendeur suspect)",
+        "fake5": "Aucun résultat sur Google Images pour le code produit",
+        "fake6": "Logo Adidas déformé, mal brodé ou imprimé (au lieu de brodé)",
+        "fake7": "Prix anormalement bas (50-70% moins cher que le prix officiel)",
+        "fake8": "Vendeur qui refuse de montrer l'étiquette du col en photo"
+      },
+      "tips": {
+        "tip1": "TOUJOURS demander une photo de l'étiquette dans le col avant d'acheter",
+        "tip2": "Vérifier le code produit sur Google Images (méthode la plus fiable)",
+        "tip3": "Privilégier les vendeurs avec réputation établie et avis positifs",
+        "tip4": "Comparer avec les photos officielles du site Adidas ou du club",
+        "tip5": "Méfiez-vous des prix trop attractifs (réduction > 50% = suspect)",
+        "tip6": "Cette méthode fonctionne même pour les vieux maillots (années 2000+)",
+        "tip7": "Utiliser ean-search.org pour le code-barres si étiquette boutique présente",
+        "tip8": "En cas de doute : Ne pas acheter. Un vrai maillot garde sa valeur, un faux non"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Exemple 1 : Étiquette avec code produit",
+          "description": "Voici comment identifier le code produit sur l'étiquette dans le col",
+          "authentic": {
+            "points": {
+              "point1": "Code produit visible : JL9623",
+              "point2": "Date d'impression en lien avec l'année du maillot",
+              "point3": "3 codes alignés correctement",
+              "point4": "Logo Adidas bien défini"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Code H13881 correspond à Man United au lieu du Mexique dans notre exemple",
+              "point2": "Impression floue ou mal alignée",
+              "point3": "Caractères irréguliers"
+            }
+          }
+        },
+        "example2": {
+          "title": "Exemple 2 : Étiquette boutique",
+          "description": "L'étiquette cartonnée accrochée sur les maillots neufs",
+          "authentic": {
+            "points": {
+              "point1": "Nom du club indiqué : 'OL'",
+              "point2": "Mention du type : '75' (Maillot 75ans OL)",
+              "point3": "Code produit visible",
+              "point4": "QR Code vers le maillot correct"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Marqué uniquement 'adidas JSY'",
+              "point2": "Pas de nom de club",
+              "point3": "Code-barres incorrect"
+            }
+          }
+        }
+      }
+    },
+    "nike": {
+      "title": "Guide d'authentification Nike",
+      "description": "Méthode complète pour vérifier l'authenticité d'un maillot Nike grâce aux codes produits, étiquettes et détails de fabrication",
+      "criteria": {
+        "step1": {
+          "title": "Étape 1 : Le code produit (Product Code)",
+          "description": "Situé sur la petite étiquette sous l'étiquette de lavage, le code produit est votre premier indicateur",
+          "points": {
+            "point1": "Format : 6 chiffres pour le style + 3 chiffres pour la couleur (ex: 894430-010)",
+            "point2": "Le code style identifie le design/template du maillot",
+            "point3": "Le code couleur (après le tiret) identifie la variante de couleur spécifique",
+            "point4": "Tapez le code complet dans Google Images pour vérifier qu'il correspond EXACTEMENT à votre maillot",
+            "point5": "ATTENTION : Les faux réutilisent souvent de vrais codes ! Si le code est pour la France 2020 Away (CD0069-100) mais sur un maillot d'une autre équipe = FAUX",
+            "point6": "Les vieux maillots (avant 2010) peuvent ne pas avoir le code couleur, c'est normal"
+          }
+        },
+        "step2": {
+          "title": "Étape 2 : Le code de production (Production Code)",
+          "description": "Sur la même petite étiquette, ce code révèle quand le maillot a été fabriqué",
+          "points": {
+            "point1": "Format : HO150407SYG (exemple = Holiday 2015, fabriqué d'Avril à Juillet)",
+            "point2": "Les 2-3 premiers caractères = la saison : SP (Printemps), SU (Été), FA (Automne), HO (Holiday/Hiver)",
+            "point3": "Les 2 chiffres suivants = l'année (15 = 2015, 23 = 2023)",
+            "point4": "Les 4 chiffres suivants = mois de début et fin de production (0407 = avril à juillet)",
+            "point5": "Ce code doit être cohérent avec la saison du maillot ! Un maillot 2023/24 ne peut pas avoir un code HO15",
+            "point6": "Les faux réutilisent souvent des étiquettes sur différents maillots, créant des incohérences"
+          }
+        },
+        "step3": {
+          "title": "Étape 3 : L'étiquette boutique (Swing Tag)",
+          "description": "L'étiquette cartonnée attachée aux maillots neufs contient des informations cruciales",
+          "points": {
+            "point1": "Placement moderne (depuis 2021/22) : une seule étiquette sur la manche GAUCHE uniquement",
+            "point2": "2016-2020 : deux étiquettes, une sous chaque manche (aisselles)",
+            "point3": "Avant 2016 : étiquette attachée au col",
+            "point4": "L'autocollant doit être un VRAI autocollant physique, jamais imprimé directement",
+            "point5": "Le barb (attache plastique) est TOUJOURS noir sur les vrais Nike",
+            "point6": "Le code produit sur l'étiquette boutique DOIT correspondre à celui de la petite étiquette interne",
+            "point7": "Barre de couleur de taille : Gris=XS, Jaune=S, Bleu=M, Rouge=L, Vert=XL, Blanc=XXL+"
+          }
+        },
+        "step4": {
+          "title": "Étape 4 : L'étiquette de taille dans le col",
+          "description": "L'étiquette du col contient des informations régionales importantes",
+          "points": {
+            "point1": "Le pays de fabrication ('Made in...') DOIT correspondre entre l'étiquette col et l'étiquette de lavage",
+            "point2": "Exemple : si le col dit 'Made in Indonesia', l'étiquette intérieure doit dire la même chose",
+            "point3": "Vérifiez les correspondances de tailles régionales, surtout la taille japonaise (J)",
+            "point4": "Erreur fréquente sur les faux : taille japonaise incorrecte (ex: 'J: S' pour un US L au lieu de 'J: 2XO')",
+            "point5": "Tableau correct : US S=J M, US M=J L, US L=J 2XO, US XL=J 3XO, US XXL=J 4XO"
+          }
+        },
+        "step5": {
+          "title": "Étape 5 : L'étiquette de sécurité (Security Tag)",
+          "description": "Située en bas à droite du maillot, l'étiquette de sécurité contient un code unique",
+          "points": {
+            "point1": "Le code alphanumérique DOIT être unique à votre maillot",
+            "point2": "Si vous trouvez le même code sur plusieurs annonces en ligne = FAUX",
+            "point3": "Sur les maillots récents : bande métallique/holographique de qualité qui change sous la lumière",
+            "point4": "Les faux utilisent souvent une simple impression plate au lieu de la bande métallique",
+            "point5": "Version joueur : accents dorés/métalliques | Version fan : accents argentés",
+            "point6": "Certains détails cachés : mini logos Nike ou fragments du mot 'SECURITY' dans la bande",
+            "point7": "Certaines versions anciennes : lettres 'HEN' ou les deux 'T' de 'AUTHENTIC' en matière brillante"
+          }
+        },
+        "step6": {
+          "title": "Étape 6 : Le Swoosh et les écussons",
+          "description": "La qualité d'application du logo Nike et de l'écusson du club est révélatrice",
+          "points": {
+            "point1": "Le Swoosh doit être PARFAIT : forme précise, bords nets, pas de fils apparents",
+            "point2": "Sur un maillot NEUF, le tissu autour du Swoosh doit être PLAT (pas de plissements)",
+            "point3": "Retournez le maillot : l'intérieur derrière le Swoosh/écusson doit être propre, sans excès de tissu",
+            "point4": "Écusson brodé = version fan | Écusson thermocollé/silicone = version joueur",
+            "point5": "Vérifiez que le type d'écusson correspond bien à la version (fan ou joueur)",
+            "point6": "Attention aux écussons mal placés, trop grands/petits, ou avec des coutures grossières"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Code produit correct mais pour un autre maillot/équipe (ex: code France 2020 sur un maillot Allemagne)",
+        "fake2": "Code de production incohérent avec la saison (maillot 2024 avec code HO15)",
+        "fake3": "Étiquette boutique avec autocollant imprimé au lieu d'un vrai sticker physique",
+        "fake4": "Barb d'attache de l'étiquette qui n'est pas noir",
+        "fake5": "'Made in...' différent entre l'étiquette col et l'étiquette de lavage",
+        "fake6": "Taille japonaise incorrecte dans l'étiquette du col",
+        "fake7": "Code de sécurité identique trouvé sur plusieurs annonces en ligne",
+        "fake8": "Bande de sécurité sans effet holographique/métallique (impression plate)",
+        "fake9": "Swoosh avec tissu plissé autour sur un maillot neuf",
+        "fake10": "Intérieur sale derrière le Swoosh/écusson (excès de tissu, coutures grossières)",
+        "fake11": "Code couleur incohérent (ex: maillot rouge avec code 100-199)",
+        "fake12": "Étiquette boutique mal placée (ex: au col sur un maillot post-2021)",
+        "fake13": "Barre de couleur de taille incorrecte ou absente sur l'étiquette boutique"
+      },
+      "tips": {
+        "tip1": "TOUJOURS vérifier le code produit complet (style + couleur) sur Google Images",
+        "tip2": "Comparer le code de production avec la saison du maillot pour détecter les incohérences",
+        "tip3": "Demander des photos de TOUTES les étiquettes : col, lavage, petite étiquette produit, étiquette boutique",
+        "tip4": "Vérifier la cohérence 'Made in...' entre toutes les étiquettes",
+        "tip5": "Pour les maillots neufs : exiger une photo de l'étiquette boutique avec son attache noire",
+        "tip6": "Chercher le code de sécurité en ligne pour vérifier son unicité",
+        "tip7": "Examiner la qualité du Swoosh et de l'écusson (retourner le maillot si possible)",
+        "tip8": "Utiliser le tableau des tailles régionales pour vérifier la cohérence de l'étiquette col",
+        "tip9": "Les maillots version joueur sans étiquette boutique sont normaux (distribution directe aux équipes)",
+        "tip10": "Méfiez-vous des prix trop bas : les vrais Nike gardent leur valeur",
+        "tip11": "En cas de doute sur n'importe quelle étiquette ou code : ne pas acheter"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Exemple 1 : Code produit et code de production",
+          "description": "La petite étiquette sous l'étiquette de lavage contient les codes essentiels",
+          "authentic": {
+            "points": {
+              "point1": "Code produit visible : 658789-426 (style + couleur)",
+              "point2": "Code de production cohérent : HO150710 (Holiday 2015, juillet-octobre)",
+              "point3": "Impression nette et lisible",
+              "point4": "Format correct et alignement parfait"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Code produit pour un autre maillot (Ici maillot PSG avec FN8721-456 = Barcelone Home 24/25)",
+              "point2": "Code de production incohérent avec la saison",
+              "point3": "Impression floue ou caractères irréguliers",
+              "point4": "Mauvais alignement ou format incorrect"
+            }
+          }
+        },
+        "example2": {
+          "title": "Exemple 2 : Étiquette boutique (Swing Tag)",
+          "description": "L'étiquette cartonnée accrochée aux maillots neufs",
+          "authentic": {
+            "points": {
+              "point1": "Autocollant physique (pas imprimé)",
+              "point2": "Barb d'attache noir",
+              "point3": "Barre de couleur de taille correcte",
+              "point4": "Code produit correspond à l'étiquette interne",
+              "point5": "Placement correct selon l'année (manche gauche post-2021)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Autocollant imprimé (pas un vrai sticker)",
+              "point2": "Barb d'attache blanc ou couleur incorrecte",
+              "point3": "Barre de couleur absente ou incorrecte",
+              "point4": "Code produit ne correspond pas (CD0699-100 = France 2020/22)"
+            }
+          }
+        },
+        "example3": {
+          "title": "Exemple 3 : Étiquette de sécurité",
+          "description": "L'étiquette en bas à droite du maillot avec code unique et bande métallique",
+          "authentic": {
+            "points": {
+              "point1": "Bande métallique/holographique de qualité",
+              "point2": "Effet changeant sous la lumière",
+              "point3": "Code alphanumérique unique",
+              "point4": "Coutures propres et régulières",
+              "point5": "Accents dorés (version joueur) ou argentés (version fan)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Bande plate imprimée (pas d'effet holographique)",
+              "point2": "Code répété sur plusieurs maillots",
+              "point3": "Coutures grossières",
+              "point4": "Pas d'effet métallique"
+            }
+          }
+        }
+      }
+    },
+    "puma": {
+      "title": "Guide d'authentification Puma",
+      "description": "Méthode complète pour vérifier l'authenticité d'un maillot Puma grâce aux codes produits, étiquettes et détails de fabrication",
+      "criteria": {
+        "step1": {
+          "title": "Étape 1 : Le code produit (Style No / Article No)",
+          "description": "Trouvé sur une grande étiquette cousue sur le côté gauche du maillot",
+          "points": {
+            "point1": "Format : 6 chiffres + 2 chiffres de variation (ex: 736251-01)",
+            "point2": "Les 6 premiers chiffres = le modèle de base du maillot",
+            "point3": "Les 2 derniers chiffres = la variation de couleur (plus récent, absent sur vieux maillots)",
+            "point4": "Tapez le code sur kitcod.es ou Google Images pour vérifier qu'il correspond EXACTEMENT à votre maillot",
+            "point5": "ATTENTION : Les faux réutilisent souvent de vrais codes ! Si le code est pour Marseille mais sur un maillot Milan = FAUX",
+            "point6": "Les maillots avant 2000 peuvent ne pas avoir d'étiquette avec code produit, c'est normal"
+          }
+        },
+        "step2": {
+          "title": "Étape 2 : La date de production",
+          "description": "Sur les versions récentes de l'étiquette, Puma indique la date de production exacte",
+          "points": {
+            "point1": "Format récent : Date complète visible (ex: 15/03/2023)",
+            "point2": "Cette date doit être cohérente avec la saison du maillot",
+            "point3": "Un maillot saison 2023/24 ne peut pas avoir une date de production en 2020",
+            "point4": "Les faux réutilisent souvent la même étiquette sur différents maillots, créant des incohérences",
+            "point5": "Si la date ne correspond pas à la saison = RED FLAG majeur"
+          }
+        },
+        "step3": {
+          "title": "Étape 3 : Le code de région de production",
+          "description": "Code alphanumérique sous la date de production indiquant l'usine",
+          "points": {
+            "point1": "Format : TVNAO (exemple pour Vietnam, usine Alliance One)",
+            "point2": "Premier caractère = Probablement 'T' pour Textile",
+            "point3": "2 caractères suivants = Code pays ISO (VN=Vietnam, TH=Thaïlande, TR=Turquie)",
+            "point4": "2 derniers caractères = Identifiant de l'usine spécifique",
+            "point5": "Le code pays DOIT correspondre au 'Made in...' sur l'étiquette",
+            "point6": "Vous pouvez vérifier les usines Puma officielles avec leurs listes publiques (2018, 2023, 2025)"
+          }
+        },
+        "step4": {
+          "title": "Étape 4 : Le code de marché régional",
+          "description": "Code sur le côté gauche de l'étiquette indiquant le marché de destination",
+          "points": {
+            "point1": "AM = Americas (Amériques)",
+            "point2": "AP = Asia Pacific (Asie-Pacifique)",
+            "point3": "EU = Europe",
+            "point4": "Ce code indique OÙ le produit devait être vendu, pas où il a été fabriqué",
+            "point5": "Utile pour les collectionneurs cherchant des releases régionales spécifiques",
+            "point6": "Peut avoir de légères variations dans l'emballage ou les informations de conformité"
+          }
+        },
+        "step5": {
+          "title": "Étape 5 : Le QR Code",
+          "description": "Les étiquettes Puma récentes incluent un QR code avec un numéro AD unique",
+          "points": {
+            "point1": "QR code généralement situé sous le code produit",
+            "point2": "Scanner le code redirige vers puma.com avec un numéro 'AD' en paramètre",
+            "point3": "Format du lien : https://www.puma.com?TSL1D33P02450",
+            "point4": "Le numéro AD est imprimé au-dessus du QR code",
+            "point5": "Ce code sert au tracking interne et à l'authentification Puma",
+            "point6": "Absence de QR code sur vieux maillots est normale"
+          }
+        },
+        "step6": {
+          "title": "Étape 6 : L'étiquette boutique (Swing Tag)",
+          "description": "L'étiquette cartonnée attachée au col des maillots neufs",
+          "points": {
+            "point1": "L'autocollant doit être un VRAI autocollant physique, jamais imprimé directement",
+            "point2": "Le code produit sur l'étiquette boutique DOIT correspondre à l'étiquette interne",
+            "point3": "Les faux utilisent souvent un label générique type 'Puma Shirt' sans détails",
+            "point4": "Un vrai label mentionne : Nom du club + Type de maillot (Home/Away) + Couleur",
+            "point5": "Vérifiez les conventions de taille régionales : Brésil/Canada = 'G' (Grande) au lieu de 'L'",
+            "point6": "Japon peut utiliser '2XO' au lieu de 'XL' - vérifiez la cohérence avec la région"
+          }
+        },
+        "step7": {
+          "title": "Étape 7 : L'étiquette du col et 'Made in'",
+          "description": "L'étiquette du col contient des informations régionales importantes",
+          "points": {
+            "point1": "Le pays de fabrication ('Made in...') DOIT correspondre entre le col et toutes les étiquettes internes",
+            "point2": "Exemple : si le col dit 'Made in Vietnam', l'étiquette de lavage doit dire la même chose",
+            "point3": "Vérifiez les correspondances de tailles régionales, surtout la taille japonaise (J)",
+            "point4": "Tableau correct : US S=J M, US M=J O (ou L récent), US L=J 2XO, US XL=J 3XO, US XXL=J 4XO",
+            "point5": "Note : Puma récent utilise parfois 'L' au lieu de 'O' pour le Japon (alignement occidental)",
+            "point6": "Erreur fréquente sur les faux : taille japonaise incorrecte (ex: 'J: S' pour un US L)"
+          }
+        },
+        "step8": {
+          "title": "Étape 8 : L'étiquette de sécurité",
+          "description": "Petite étiquette noire en bas à gauche du maillot (vue de face)",
+          "points": {
+            "point1": "Sur les modèles récents : simplement marquée 'Authentic Licensed Football'",
+            "point2": "Sur les anciens modèles : code alphanumérique unique",
+            "point3": "Ce code ne devrait PAS apparaître dans les recherches (sauf si c'est un faux)",
+            "point4": "L'étiquette doit être cousue proprement avec du fil de qualité",
+            "point5": "Absence totale d'étiquette sur maillot récent = suspect"
+          }
+        },
+        "step9": {
+          "title": "Étape 9 : Le logo Puma (attention au 'Fat Cat')",
+          "description": "Le logo du félin bondissant doit être parfait - méfiez-vous du 'Fat Cat'",
+          "points": {
+            "point1": "Le Puma doit être ÉLÉGANT et athlétique, pas trapu ou gonflé",
+            "point2": "Le 'Fat Cat' = défaut typique des faux : chat trop épais, déformé, qui a l'air 'musclé'",
+            "point3": "Forme caractéristique bien définie avec proportions exactes",
+            "point4": "Broderie ou flocage de qualité avec bords nets",
+            "point5": "Position exacte selon le modèle (généralement poitrine droite)",
+            "point6": "Comparez toujours avec des photos officielles - même une légère différence = suspect"
+          }
+        },
+        "step10": {
+          "title": "Étape 10 : L'écusson du club",
+          "description": "L'écusson doit être appliqué avec précision",
+          "points": {
+            "point1": "Broderie précise OU thermocollage de qualité selon le modèle",
+            "point2": "Bords nets sans bavures",
+            "point3": "Tous les éléments (étoiles, texte, bordures) parfaitement alignés",
+            "point4": "Espacement correct et proportions respectées",
+            "point5": "Pas de texte flou, décentré ou mal espacé",
+            "point6": "Comparez avec l'écusson officiel du club - même les petits détails comptent"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Code produit correct mais pour un autre maillot/équipe (ex: code Marseille sur maillot Milan)",
+        "fake2": "Date de production incohérente avec la saison du maillot",
+        "fake3": "Code de région de production (ex: TVNAO) ne correspondant pas au 'Made in...'",
+        "fake4": "Étiquette boutique générique marquée 'Puma Shirt' sans mention du club",
+        "fake5": "Autocollant imprimé sur l'étiquette boutique au lieu d'un vrai sticker",
+        "fake6": "'Made in...' différent entre l'étiquette col et l'étiquette de lavage/produit",
+        "fake7": "Taille japonaise incorrecte dans l'étiquette du col (ex: J:S pour US L au lieu de J:2XO)",
+        "fake8": "Code de sécurité qui apparaît sur plusieurs maillots en ligne (devrait être unique)",
+        "fake9": "Le fameux 'Fat Cat' - logo Puma déformé, trapu ou trop épais",
+        "fake10": "Écusson du club avec texte flou, éléments décentrés ou proportions incorrectes",
+        "fake11": "Coutures grossières ou fils apparents sur le logo/écusson",
+        "fake12": "Absence d'étiquette de sécurité sur un maillot récent",
+        "fake13": "Fautes de frappe ou grammaire incorrecte sur les étiquettes de lavage",
+        "fake14": "QR code absent sur maillot très récent (post-2020)"
+      },
+      "tips": {
+        "tip1": "TOUJOURS vérifier le code produit complet sur kitcod.es ou Google Images",
+        "tip2": "Vérifier que la date de production correspond bien à la saison du maillot",
+        "tip3": "Comparer le code de région (TVNAO) avec le 'Made in...' pour cohérence",
+        "tip4": "Demander des photos de TOUTES les étiquettes : col, lavage, grande étiquette produit, étiquette boutique",
+        "tip5": "Scanner le QR code si présent et vérifier qu'il mène bien vers puma.com avec un paramètre AD",
+        "tip6": "Examiner le logo Puma de PRÈS - le 'Fat Cat' est un défaut très courant des faux",
+        "tip7": "Comparer l'écusson du club pixel par pixel avec des photos officielles",
+        "tip8": "Vérifier la cohérence des tailles régionales dans l'étiquette col (surtout taille japonaise)",
+        "tip9": "Consulter les listes officielles d'usines Puma si vous voulez vérifier le code d'usine",
+        "tip10": "Pour les maillots neufs : exiger une photo de l'étiquette boutique avec le nom du club visible",
+        "tip11": "Méfiez-vous des prix trop bas : les vrais Puma gardent leur valeur",
+        "tip12": "En cas de doute sur n'importe quelle étiquette, logo ou code : ne pas acheter"
+      }
+    },
+    "hummel": {
+      "title": "Guide d'authentification Hummel",
+      "description": "Apprenez à identifier un véritable maillot Hummel avec ces critères essentiels",
+      "criteria": {
+        "step1": {
+          "title": "L'étiquette principale",
+          "description": "L'étiquette Hummel a des caractéristiques spécifiques",
+          "points": {
+            "point1": "Logo Hummel avec les chevrons distinctifs",
+            "point2": "Code produit unique",
+            "point3": "Informations de taille et composition",
+            "point4": "Origine de fabrication indiquée",
+            "point5": "Impression nette et durable"
+          }
+        },
+        "step2": {
+          "title": "Les chevrons Hummel",
+          "description": "Les chevrons sont la signature de la marque",
+          "points": {
+            "point1": "Forme en V caractéristique",
+            "point2": "Angles précis à 45 degrés",
+            "point3": "Broderie de qualité supérieure",
+            "point4": "Alignement parfait des chevrons",
+            "point5": "Couleurs vives et contrastées"
+          }
+        },
+        "step3": {
+          "title": "La qualité du textile",
+          "description": "Hummel utilise des matériaux de qualité",
+          "points": {
+            "point1": "Tissu technique respirant",
+            "point2": "Matière agréable au toucher",
+            "point3": "Résistance à l'usure",
+            "point4": "Couleurs qui ne délavent pas",
+            "point5": "Propriétés anti-transpiration"
+          }
+        },
+        "step4": {
+          "title": "Les finitions",
+          "description": "Les détails de finition sont importants",
+          "points": {
+            "point1": "Coutures droites et solides",
+            "point2": "Col bien structuré et confortable",
+            "point3": "Badge du club de qualité premium",
+            "point4": "Impression des numéros durable",
+            "point5": "Assemblage soigné"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Chevrons mal alignés ou déformés",
+        "fake2": "Étiquette floue ou avec erreurs",
+        "fake3": "Tissu de qualité inférieure",
+        "fake4": "Logo Hummel approximatif",
+        "fake5": "Coutures qui se défont rapidement"
+      },
+      "tips": {
+        "tip1": "Achetez chez des revendeurs Hummel agréés",
+        "tip2": "Comparez les chevrons avec des modèles authentiques",
+        "tip3": "Vérifiez la qualité générale de fabrication",
+        "tip4": "Examinez l'étiquette en détail",
+        "tip5": "Un prix trop bas doit alerter"
+      }
+    }
   }
 }

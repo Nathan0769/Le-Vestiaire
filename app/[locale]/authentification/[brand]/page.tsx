@@ -12,6 +12,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
 interface BrandPageProps {
@@ -24,71 +25,25 @@ export async function generateMetadata({
   params,
 }: BrandPageProps): Promise<Metadata> {
   const { brand } = await params;
-  const brandInfo = getBrandInfo(brand);
+  const brandInfo = await getBrandInfo(brand);
+  const t = await getTranslations("Authentication.metadata");
 
   if (!brandInfo) {
     return {
-      title: "Marque introuvable - Le Vestiaire",
+      title: t("notFound"),
     };
   }
 
-  const brandDescriptions: Record<string, string> = {
-    adidas:
-      "Guide complet pour authentifier un maillot Adidas. Vérifiez le code produit, l'étiquette boutique, le code-barres et repérez les signes de contrefaçon. Méthode détaillée avec exemples visuels.",
-    nike: "Apprenez à reconnaître un vrai maillot Nike : code produit, code de production, étiquette boutique, swing tag et étiquette de sécurité. Guide complet anti-contrefaçon avec photos comparatives.",
-    puma: "Authentification maillot Puma : code produit, date de production, QR code, étiquette de sécurité. Reconnaissez le 'Fat Cat' et autres signes de faux maillot Puma.",
-    hummel:
-      "Guide d'authentification pour maillots Hummel : chevrons caractéristiques, étiquettes, qualité textile et finitions. Évitez les contrefaçons.",
-  };
-
-  const brandKeywords: Record<string, string[]> = {
-    adidas: [
-      "authentification maillot adidas",
-      "code produit adidas",
-      "faux maillot adidas",
-      "vérifier maillot adidas",
-      "étiquette adidas authentique",
-      "code barres maillot adidas",
-      "contrefaçon adidas",
-    ],
-    nike: [
-      "authentification maillot nike",
-      "code produit nike",
-      "faux maillot nike",
-      "swing tag nike",
-      "vérifier maillot nike",
-      "étiquette de sécurité nike",
-      "code de production nike",
-    ],
-    puma: [
-      "authentification maillot puma",
-      "code produit puma",
-      "faux maillot puma",
-      "fat cat puma",
-      "QR code maillot puma",
-      "vérifier maillot puma",
-      "étiquette puma",
-    ],
-    hummel: [
-      "authentification maillot hummel",
-      "chevrons hummel",
-      "faux maillot hummel",
-      "vérifier maillot hummel",
-    ],
-  };
+  const description = t(`${brand}.description`);
+  const ogDescription = t(`${brand}.ogDescription`);
 
   return {
-    title: `Authentifier un Maillot ${brandInfo.name} - Guide Complet`,
-    description:
-      brandDescriptions[brand] ||
-      `Guide complet pour vérifier l'authenticité d'un maillot ${brandInfo.name}. Critères détaillés et conseils d'experts.`,
-    keywords: brandKeywords[brand] || [],
+    title: t("titleTemplate", { brand: brandInfo.name }),
+    description,
 
     openGraph: {
-      title: `Guide Authentification Maillot ${brandInfo.name}`,
-      description:
-        brandDescriptions[brand] ||
-        `Apprenez à reconnaître un vrai maillot ${brandInfo.name} d'une contrefaçon`,
+      title: t("ogTitleTemplate", { brand: brandInfo.name }),
+      description: ogDescription,
       url: `https://le-vestiaire-foot.fr/authentification/${brand}`,
       siteName: "Le Vestiaire Foot",
       type: "article",
@@ -102,16 +57,12 @@ export async function generateMetadata({
       ],
     },
 
-    // ✅ SEO : Twitter Card
     twitter: {
       card: "summary_large_image",
-      title: `Comment Authentifier un Maillot ${brandInfo.name}`,
-      description:
-        brandDescriptions[brand]?.slice(0, 150) ||
-        `Guide complet ${brandInfo.name}`,
+      title: t("twitterTitleTemplate", { brand: brandInfo.name }),
+      description: description.slice(0, 150),
     },
 
-    // ✅ SEO : Canonical URL
     alternates: {
       canonical: `https://le-vestiaire-foot.fr/authentification/${brand}`,
     },
@@ -120,8 +71,9 @@ export async function generateMetadata({
 
 export default async function BrandAuthPage({ params }: BrandPageProps) {
   const { brand } = await params;
-  const guide = getBrandGuide(brand);
-  const brandInfo = getBrandInfo(brand);
+  const guide = await getBrandGuide(brand);
+  const brandInfo = await getBrandInfo(brand);
+  const t = await getTranslations("Authentication");
 
   if (!guide || !brandInfo) {
     notFound();
@@ -136,7 +88,7 @@ export default async function BrandAuthPage({ params }: BrandPageProps) {
           <BreadcrumbList className="flex-wrap">
             <BreadcrumbItem>
               <BreadcrumbLink asChild>
-                <Link href="/authentification">Authentification</Link>
+                <Link href="/authentification">{t("title")}</Link>
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
