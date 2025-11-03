@@ -22,6 +22,10 @@ model User {
   banReason     String?
   banExpiresIn  BigInt?
 
+  // Contribution stats
+  contributionsCount         Int @default(0)
+  approvedContributionsCount Int @default(0)
+
   firstName       String?
   lastName        String?
   avatar          String?
@@ -31,10 +35,12 @@ model User {
   leaderboardAnonymous Boolean @default(true) @map("leaderboard_anonymous")
   collection      UserJersey[]
   wishlist        Wishlist[]
-  ratings         Rating[]     
+  ratings         Rating[]
   sentFriendships     Friendship[] @relation("SentFriendships")
   receivedFriendships Friendship[] @relation("ReceivedFriendships")
   achievements    Achievement[]
+  jerseyProposals JerseyProposal[]
+  contributionHistory ContributionHistory[]
   // ----------------------
 
   // Relations auth
@@ -170,9 +176,10 @@ model Club {
   logoUrl      String
   primaryColor String
 
-  league     League   @relation(fields: [leagueId], references: [id])
-  jerseys    Jersey[]
-  favoriteBy User[]
+  league          League           @relation(fields: [leagueId], references: [id])
+  jerseys         Jersey[]
+  favoriteBy      User[]
+  jerseyProposals JerseyProposal[]
 
   @@map("clubs")
 }
@@ -271,4 +278,39 @@ enum Condition {
   GOOD
   FAIR
   POOR
+}
+
+model JerseyProposal {
+  id          String     @id @default(cuid())
+  userId      String
+  name        String
+  clubId      String
+  season      String
+  type        JerseyType
+  brand       String
+  imageUrl    String
+  description String?
+
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  club   Club @relation(fields: [clubId], references: [id], onDelete: Restrict)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([clubId])
+  @@map("jersey_proposals")
+}
+
+model ContributionHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  jerseyId  String?
+  action    String
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("contribution_history")
 }

@@ -32,7 +32,9 @@ export default function AdminPage() {
           </CardHeader>
           <CardContent>
             <Link href="/admin/users">
-              <Button className="w-full">Voir les utilisateurs</Button>
+              <Button className="w-full cursor-pointer">
+                Voir les utilisateurs
+              </Button>
             </Link>
           </CardContent>
         </Card>
@@ -48,9 +50,11 @@ export default function AdminPage() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button className="w-full" disabled>
-              Bientôt disponible
-            </Button>
+            <Link href="/admin/proposals">
+              <Button className="w-full cursor-pointer">
+                Gérer les propositions
+              </Button>
+            </Link>
           </CardContent>
         </Card>
       </div>

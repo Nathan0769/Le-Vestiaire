@@ -8,9 +8,9 @@ const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
 const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"] as const;
 
 /**
- * Taille maximale par défaut : 5MB
+ * Taille maximale par défaut : 2MB
  */
-export const MAX_FILE_SIZE = 5 * 1024 * 1024;
+export const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
 /**
  * Résultat de la validation

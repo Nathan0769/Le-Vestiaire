@@ -45,10 +45,10 @@ const ROLE_LABELS: Record<string, string> = {
 };
 
 const ROLE_COLORS: Record<string, string> = {
-  user: "bg-gray-500",
-  contributor: "bg-blue-500",
-  admin: "bg-purple-500",
-  superadmin: "bg-red-500",
+  user: "bg-gray-500 text-white",
+  contributor: "bg-blue-500 text-white",
+  admin: "bg-purple-500 text-white",
+  superadmin: "bg-red-500 text-white",
 };
 
 export default function AdminUsersPage() {

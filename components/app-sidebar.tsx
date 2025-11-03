@@ -42,13 +42,18 @@ import { LanguageSwitcher } from "@/components/ui/language-switcher";
 
 export function AppSidebar() {
   const t = useTranslations("Sidebar");
-  const [openCommunaute, setOpenCommunaute] = React.useState(false);
+  const [openCommunaute, setOpenCommunaute] = React.useState(true);
   const { count: pendingCount } = usePendingRequestsCount();
   const currentUser = useCurrentUser();
   const router = useRouter();
 
   const isAdmin =
     currentUser?.role === "admin" || currentUser?.role === "superadmin";
+
+  const isContributor =
+    currentUser?.role === "contributor" ||
+    currentUser?.role === "admin" ||
+    currentUser?.role === "superadmin";
 
   const items = [
     {
@@ -176,11 +181,23 @@ export function AppSidebar() {
                             </SidebarMenuSubItem>
                             <SidebarMenuSubItem>
                               <SidebarMenuSubButton
-                                href="/"
+                                href={
+                                  isContributor
+                                    ? "/community/propose-jersey"
+                                    : "/"
+                                }
                                 isActive={false}
-                                className=" text-gray-400 opacity-50"
-                                onClick={(e) => e.preventDefault()}
-                                tabIndex={-1}
+                                className={
+                                  isContributor
+                                    ? "hover:bg-primary/20"
+                                    : "text-gray-400 opacity-50"
+                                }
+                                onClick={
+                                  isContributor
+                                    ? undefined
+                                    : (e) => e.preventDefault()
+                                }
+                                tabIndex={isContributor ? 0 : -1}
                               >
                                 {t("jerseySuggestions")}
                               </SidebarMenuSubButton>

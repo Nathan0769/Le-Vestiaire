@@ -61,6 +61,17 @@ export const generousRateLimit = new Ratelimit({
 });
 
 /**
+ * PROPOSALS : Pour les propositions de maillots
+ * 50 requêtes par heure
+ */
+export const proposalsRateLimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(50, "1 h"),
+  analytics: true,
+  prefix: "@upstash/ratelimit/proposals",
+});
+
+/**
  * Récupère l'identifiant pour le rate limiting
  * Utilise userId si disponible, sinon l'IP
  */

@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 export async function GET() {
   try {
     const clubs = await prisma.club.findMany({
-      select: { id: true, name: true },
+      select: { id: true, name: true, shortName: true },
       orderBy: { name: "asc" },
     });
 
