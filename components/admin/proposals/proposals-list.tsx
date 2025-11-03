@@ -240,7 +240,6 @@ export function ProposalsList() {
                   </div>
                 </div>
 
-                {/* Actions */}
                 <div className="flex flex-col gap-2 justify-center">
                   <Button
                     onClick={() => openDialog(proposal, "approve")}

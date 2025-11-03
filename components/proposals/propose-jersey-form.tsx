@@ -260,7 +260,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6 max-w-2xl">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div className="space-y-2">
         <Label htmlFor="name" className="flex items-center gap-1">
           Nom du maillot{" "}
@@ -277,7 +277,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
         />
       </div>
 
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="space-y-2">
           <Label htmlFor="club" className="flex items-center gap-1">
             Club <span className="text-destructive">*</span>
@@ -368,7 +368,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
             }
             required
           >
-            <SelectTrigger>
+            <SelectTrigger className="w-full">
               <SelectValue placeholder="Type de maillot" />
             </SelectTrigger>
             <SelectContent>
@@ -473,11 +473,11 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
         )}
       </div>
 
-      <div className="flex gap-3 pt-4">
+      <div className="flex justify-center pt-4">
         <Button
           type="submit"
           disabled={isSubmitting || isUploadingPhoto}
-          className="cursor-pointer"
+          className="cursor-pointer w-full md:w-64"
         >
           {isUploadingPhoto ? (
             <div className="flex items-center gap-2">
