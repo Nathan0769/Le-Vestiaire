@@ -116,7 +116,27 @@
     "recent": {
       "title": "Recently Added Jerseys",
       "subtitle": "New additions to the catalog",
-      "viewAll": "View all jerseys"
+      "viewAll": "View all jerseys",
+      "new": "New",
+      "recently": "Recently"
+    },
+    "userStats": {
+      "title": "Your Collection",
+      "subtitle": "An overview of your passion for football jerseys",
+      "myCollection": "My Collection",
+      "jerseyCollected": "Jersey collected",
+      "jerseysCollected": "Jerseys collected",
+      "invested": "invested",
+      "viewMyCollection": "View my collection",
+      "myWishlist": "My Wishlist",
+      "jerseyDesired": "Jersey desired",
+      "jerseysDesired": "Jerseys desired",
+      "viewMyWishlist": "View my wishlist",
+      "favoriteLeague": "Favorite League",
+      "jerseysFrom": "Jerseys from",
+      "startCollection": "Start your collection to see your stats!",
+      "recentAdditionsCollection": "Recent additions to your collection",
+      "recentAdditionsWishlist": "Recent additions to your wishlist"
     },
     "features": {
       "title": "Why choose The Locker Room?",

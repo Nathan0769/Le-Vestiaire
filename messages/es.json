@@ -116,7 +116,27 @@
     "recent": {
       "title": "Camisetas Añadidas Recientemente",
       "subtitle": "Nuevas incorporaciones al catálogo",
-      "viewAll": "Ver todas las camisetas"
+      "viewAll": "Ver todas las camisetas",
+      "new": "Nuevo",
+      "recently": "Recientemente"
+    },
+    "userStats": {
+      "title": "Tu Colección",
+      "subtitle": "Una visión general de tu pasión por las camisetas de fútbol",
+      "myCollection": "Mi Colección",
+      "jerseyCollected": "Camiseta coleccionada",
+      "jerseysCollected": "Camisetas coleccionadas",
+      "invested": "invertidos",
+      "viewMyCollection": "Ver mi colección",
+      "myWishlist": "Mi Lista de Deseos",
+      "jerseyDesired": "Camiseta deseada",
+      "jerseysDesired": "Camisetas deseadas",
+      "viewMyWishlist": "Ver mi lista de deseos",
+      "favoriteLeague": "Liga Favorita",
+      "jerseysFrom": "Camisetas de",
+      "startCollection": "¡Comienza tu colección para ver tus estadísticas!",
+      "recentAdditionsCollection": "Últimas adiciones a tu colección",
+      "recentAdditionsWishlist": "Últimas adiciones a tu lista de deseos"
     },
     "features": {
       "title": "¿Por qué elegir El Vestuario?",

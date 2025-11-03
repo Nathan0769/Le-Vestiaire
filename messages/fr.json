@@ -116,7 +116,27 @@
     "recent": {
       "title": "Derniers maillots ajoutés",
       "subtitle": "Les nouveautés du catalogue",
-      "viewAll": "Voir tous les maillots"
+      "viewAll": "Voir tous les maillots",
+      "new": "Nouveau",
+      "recently": "Récemment"
+    },
+    "userStats": {
+      "title": "Votre Collection",
+      "subtitle": "Un aperçu de votre passion pour les maillots de football",
+      "myCollection": "Ma Collection",
+      "jerseyCollected": "Maillot collecté",
+      "jerseysCollected": "Maillots collectés",
+      "invested": "investis",
+      "viewMyCollection": "Voir ma collection",
+      "myWishlist": "Mes Envies",
+      "jerseyDesired": "Maillot désiré",
+      "jerseysDesired": "Maillots désirés",
+      "viewMyWishlist": "Voir ma wishlist",
+      "favoriteLeague": "Ligue Favorite",
+      "jerseysFrom": "Maillots de",
+      "startCollection": "Commencez votre collection pour voir vos stats !",
+      "recentAdditionsCollection": "Derniers ajouts à votre collection",
+      "recentAdditionsWishlist": "Derniers ajouts à vos envies"
     },
     "features": {
       "title": "Pourquoi choisir Le Vestiaire ?",

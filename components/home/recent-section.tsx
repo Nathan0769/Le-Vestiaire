@@ -3,11 +3,13 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Clock, ArrowRight, Sparkles } from "lucide-react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
-import { fr } from "date-fns/locale";
+import { fr, enUS, es } from "date-fns/locale";
 import type { RecentJersey } from "@/types/home";
+import { useTranslations, useLocale } from "next-intl";
+import { useJerseyTypeTranslation } from "@/lib/translations";
 
 interface RecentSectionProps {
   jerseys?: RecentJersey[];
@@ -16,6 +18,9 @@ interface RecentSectionProps {
 export function RecentSection({
   jerseys: ssrJerseys,
 }: RecentSectionProps = {}) {
+  const t = useTranslations("HomePage.recent");
+  const jerseyType = useJerseyTypeTranslation();
+  const locale = useLocale();
   const [jerseys, setJerseys] = useState<RecentJersey[]>(ssrJerseys || []);
   const [loading, setLoading] = useState(!ssrJerseys);
 
@@ -37,22 +42,15 @@ export function RecentSection({
     fetchRecent();
   }, [ssrJerseys]);
 
-  const getJerseyTypeLabel = (type: string) => {
-    switch (type.toLowerCase()) {
-      case "home":
-        return "Domicile";
-      case "away":
-        return "Extérieur";
-      case "third":
-        return "Third";
-      case "fourth":
-        return "Fourth";
-      case "special":
-        return "Spécial";
-      case "goalkeeper":
-        return "Gardien";
+  const getDateFnsLocale = () => {
+    switch (locale) {
+      case "en":
+        return enUS;
+      case "es":
+        return es;
+      case "fr":
       default:
-        return type;
+        return fr;
     }
   };
 
@@ -60,10 +58,10 @@ export function RecentSection({
     try {
       return formatDistanceToNow(new Date(dateString), {
         addSuffix: true,
-        locale: fr,
+        locale: getDateFnsLocale(),
       });
     } catch {
-      return "Récemment";
+      return t("recently");
     }
   };
 
@@ -99,10 +97,10 @@ export function RecentSection({
         <div className="text-center mb-12">
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-6 h-6 text-primary" />
-            <h2 className="text-3xl md:text-4xl font-bold">Nouveautés</h2>
+            <h2 className="text-3xl md:text-4xl font-bold">{t("title")}</h2>
           </div>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Les derniers maillots ajoutés à notre collection
+            {t("subtitle")}
           </p>
         </div>
 
@@ -115,7 +113,7 @@ export function RecentSection({
             >
               <div className="relative">
                 <div className="absolute -top-2 -right-2 z-10 bg-primary text-primary-foreground text-xs font-bold px-2 py-1 rounded-full">
-                  Nouveau
+                  {t("new")}
                 </div>
 
                 <div className="aspect-square bg-white rounded-lg border border-border overflow-hidden mb-3 group-hover:shadow-lg transition-all duration-200">
@@ -139,7 +137,7 @@ export function RecentSection({
                   </h3>
 
                   <p className="text-xs text-muted-foreground">
-                    {getJerseyTypeLabel(jersey.type)} • {jersey.season}
+                    {jerseyType(jersey.type)} • {jersey.season}
                   </p>
 
                   <div className="flex items-center justify-between">
@@ -159,7 +157,7 @@ export function RecentSection({
         <div className="text-center">
           <Button asChild variant="outline">
             <Link href="/jerseys" className="gap-2">
-              Voir tous les maillots
+              {t("viewAll")}
               <ArrowRight className="w-4 h-4" />
             </Link>
           </Button>
