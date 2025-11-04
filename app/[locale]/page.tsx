@@ -101,13 +101,14 @@ async function getRecentJerseys(): Promise<RecentJersey[]> {
   ORDER BY "createdAt" DESC
   LIMIT 6
 )
-SELECT 
+SELECT
     j.id, j.name, j."imageUrl", j.type, j.season, j.brand, j."createdAt",
     c.id AS club_id, c.name AS club_name,
     l.id AS league_id, l.name AS league_name
 FROM latest_jerseys j
 JOIN clubs c ON j."clubId" = c.id
-JOIN leagues l ON c."leagueId" = l.id;
+JOIN leagues l ON c."leagueId" = l.id
+ORDER BY j."createdAt" DESC;
 
   `) as RawResult[];
 
