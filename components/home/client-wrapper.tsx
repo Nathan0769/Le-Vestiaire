@@ -38,7 +38,6 @@ export default function ClientWrapper({
       <Toaster position="top-right" duration={1500} richColors />
       <CookieConsent
         variant="default"
-        description="Nous utilisons des cookies pour améliorer votre expérience sur Le Vestiaire. Ces cookies nous permettent d'analyser l'utilisation du site et d'améliorer nos services."
         learnMoreHref="/politique-cookies"
         onAcceptCallback={() => {
           console.log("Cookies acceptés");

@@ -12,6 +12,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 interface CookieConsentProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "small" | "mini";
@@ -30,14 +31,17 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
       onAcceptCallback = () => {},
       onDeclineCallback = () => {},
       className,
-      description = "Nous utilisons des cookies pour améliorer votre expérience. Ces cookies nous permettent d'analyser l'utilisation du site.",
+      description,
       learnMoreHref = "#",
       ...props
     },
     ref
   ) => {
+    const t = useTranslations("CookieConsent");
     const [isOpen, setIsOpen] = React.useState(false);
     const [hide, setHide] = React.useState(false);
+
+    const defaultDescription = t("defaultDescription");
 
     const handleAccept = React.useCallback(() => {
       setIsOpen(false);
@@ -101,24 +105,21 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
         <div {...commonWrapperProps}>
           <Card className="m-3 shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-lg">Utilisation des cookies</CardTitle>
+              <CardTitle className="text-lg">{t("title")}</CardTitle>
               <Cookie className="h-5 w-5" />
             </CardHeader>
             <CardContent className="space-y-2">
               <CardDescription className="text-sm">
-                {description}
+                {description || defaultDescription}
               </CardDescription>
               <p className="text-xs text-muted-foreground">
-                En cliquant sur{" "}
-                <span className="font-medium">&quot;Accepter&quot;</span>, vous
-                acceptez l&apos;utilisation de cookies d&apos;analyse. Les
-                cookies essentiels restent actifs.
+                {t("acceptInfo")}
               </p>
               <a
                 href={learnMoreHref}
                 className="text-xs text-primary underline underline-offset-4 hover:no-underline"
               >
-                En savoir plus
+                {t("learnMore")}
               </a>
             </CardContent>
             <CardFooter className="flex gap-2 pt-2">
@@ -127,10 +128,10 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
                 variant="secondary"
                 className="flex-1 cursor-pointer"
               >
-                Refuser
+                {t("decline")}
               </Button>
               <Button onClick={handleAccept} className="flex-1 cursor-pointer">
-                Accepter
+                {t("accept")}
               </Button>
             </CardFooter>
           </Card>
@@ -144,13 +145,13 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
           <Card className="m-3 shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 h-0 px-4">
               <CardTitle className="text-base">
-                Utilisation des cookies
+                {t("title")}
               </CardTitle>
               <Cookie className="h-4 w-4" />
             </CardHeader>
             <CardContent className="pt-0 pb-2 px-4">
               <CardDescription className="text-sm">
-                {description}
+                {description || defaultDescription}
               </CardDescription>
             </CardContent>
             <CardFooter className="flex gap-2 h-0 py-2 px-4">
@@ -160,14 +161,14 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
                 size="sm"
                 className="flex-1 rounded-full cursor-pointer"
               >
-                Refuser
+                {t("decline")}
               </Button>
               <Button
                 onClick={handleAccept}
                 size="sm"
                 className="flex-1 rounded-full cursor-pointer"
               >
-                Accepter
+                {t("accept")}
               </Button>
             </CardFooter>
           </Card>
@@ -181,7 +182,7 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
           <Card className="mx-3 p-0 py-3 shadow-lg">
             <CardContent className="sm:flex grid gap-4 p-0 px-3.5">
               <CardDescription className="text-xs sm:text-sm flex-1">
-                {description}
+                {description || defaultDescription}
               </CardDescription>
               <div className="flex items-center gap-2 justify-end sm:gap-3">
                 <Button
@@ -190,16 +191,16 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
                   variant="secondary"
                   className="text-xs h-7 cursor-pointer"
                 >
-                  Refuser
-                  <span className="sr-only sm:hidden">Refuser</span>
+                  {t("decline")}
+                  <span className="sr-only sm:hidden">{t("decline")}</span>
                 </Button>
                 <Button
                   onClick={handleAccept}
                   size="sm"
                   className="text-xs h-7 cursor-pointer"
                 >
-                  Accepter
-                  <span className="sr-only sm:hidden">Accepter</span>
+                  {t("accept")}
+                  <span className="sr-only sm:hidden">{t("accept")}</span>
                 </Button>
               </div>
             </CardContent>

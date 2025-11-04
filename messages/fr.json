@@ -779,5 +779,81 @@
         "tip5": "Un prix trop bas doit alerter"
       }
     }
+  },
+  "CookiesPolicy": {
+    "title": "Politique de Cookies",
+    "lastUpdate": "Dernière mise à jour",
+    "whatIsCookie": {
+      "title": "Qu'est-ce qu'un cookie ?",
+      "description": "Un cookie est un petit fichier texte stocké sur votre appareil lorsque vous visitez un site web. Les cookies nous aident à offrir une meilleure expérience utilisateur et à améliorer nos services."
+    },
+    "cookiesUsed": {
+      "title": "Cookies utilisés sur Le Vestiaire",
+      "necessary": {
+        "title": "1. Cookies strictement nécessaires",
+        "description": "Ces cookies sont essentiels au fonctionnement du site et ne peuvent pas être désactivés.",
+        "auth": {
+          "label": "Cookies d'authentification",
+          "description": "Permettent de vous connecter et maintenir votre session active"
+        },
+        "consent": {
+          "label": "cookieConsent",
+          "description": "Mémorise votre choix concernant les cookies"
+        }
+      },
+      "analytics": {
+        "title": "2. Cookies d'analyse et de performance",
+        "description": "Ces cookies nous aident à comprendre comment vous utilisez le site pour améliorer nos services.",
+        "vercel": {
+          "label": "Vercel Analytics",
+          "description": "Analyse du trafic et du comportement des utilisateurs"
+        },
+        "insights": {
+          "label": "Vercel Speed Insights",
+          "description": "Mesure des performances du site"
+        },
+        "optOut": "Vous pouvez refuser ces cookies via la bannière de consentement sans affecter votre expérience de navigation."
+      }
+    },
+    "preferences": {
+      "title": "Gestion de vos préférences",
+      "description": "Vous pouvez à tout moment modifier vos préférences concernant les cookies :",
+      "options": {
+        "browser": "En supprimant les cookies depuis les paramètres de votre navigateur",
+        "banner": "En effaçant le cookie \"cookieConsent\" pour faire réapparaître la bannière",
+        "contact": "En contactant notre équipe à"
+      }
+    },
+    "retention": {
+      "title": "Durée de conservation",
+      "session": {
+        "label": "Cookies de session",
+        "description": "Supprimés à la fermeture du navigateur"
+      },
+      "consent": {
+        "label": "Cookie de consentement",
+        "description": "Conservé jusqu'en 2099 ou jusqu'à suppression manuelle"
+      },
+      "analytics": {
+        "label": "Cookies d'analytics",
+        "description": "13 mois maximum"
+      }
+    },
+    "rights": {
+      "title": "Vos droits (RGPD)",
+      "description": "Conformément au Règlement Général sur la Protection des Données (RGPD), vous disposez d'un droit d'accès, de rectification et de suppression de vos données personnelles. Pour exercer ces droits, contactez-nous à"
+    },
+    "modifications": {
+      "title": "Modifications de cette politique",
+      "description": "Nous nous réservons le droit de modifier cette politique de cookies à tout moment. Les modifications prendront effet dès leur publication sur cette page. Nous vous encourageons à consulter régulièrement cette page."
+    }
+  },
+  "CookieConsent": {
+    "title": "Utilisation des cookies",
+    "defaultDescription": "Nous utilisons des cookies pour améliorer votre expérience sur Le Vestiaire. Ces cookies nous permettent d'analyser l'utilisation du site et d'améliorer nos services.",
+    "acceptInfo": "En cliquant sur \"Accepter\", vous acceptez l'utilisation de cookies d'analyse. Les cookies essentiels restent actifs.",
+    "learnMore": "En savoir plus",
+    "decline": "Refuser",
+    "accept": "Accepter"
   }
 }

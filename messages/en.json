@@ -779,5 +779,81 @@
         "tip5": "Too low price should alert"
       }
     }
+  },
+  "CookiesPolicy": {
+    "title": "Cookie Policy",
+    "lastUpdate": "Last updated",
+    "whatIsCookie": {
+      "title": "What is a cookie?",
+      "description": "A cookie is a small text file stored on your device when you visit a website. Cookies help us provide a better user experience and improve our services."
+    },
+    "cookiesUsed": {
+      "title": "Cookies used on Le Vestiaire",
+      "necessary": {
+        "title": "1. Strictly necessary cookies",
+        "description": "These cookies are essential for the site to function and cannot be disabled.",
+        "auth": {
+          "label": "Authentication cookies",
+          "description": "Allow you to log in and maintain your active session"
+        },
+        "consent": {
+          "label": "cookieConsent",
+          "description": "Remembers your choice regarding cookies"
+        }
+      },
+      "analytics": {
+        "title": "2. Analytics and performance cookies",
+        "description": "These cookies help us understand how you use the site to improve our services.",
+        "vercel": {
+          "label": "Vercel Analytics",
+          "description": "Traffic analysis and user behavior"
+        },
+        "insights": {
+          "label": "Vercel Speed Insights",
+          "description": "Site performance measurement"
+        },
+        "optOut": "You can refuse these cookies via the consent banner without affecting your browsing experience."
+      }
+    },
+    "preferences": {
+      "title": "Managing your preferences",
+      "description": "You can modify your cookie preferences at any time:",
+      "options": {
+        "browser": "By deleting cookies from your browser settings",
+        "banner": "By clearing the \"cookieConsent\" cookie to make the banner reappear",
+        "contact": "By contacting our team at"
+      }
+    },
+    "retention": {
+      "title": "Retention period",
+      "session": {
+        "label": "Session cookies",
+        "description": "Deleted when the browser is closed"
+      },
+      "consent": {
+        "label": "Consent cookie",
+        "description": "Kept until 2099 or until manual deletion"
+      },
+      "analytics": {
+        "label": "Analytics cookies",
+        "description": "13 months maximum"
+      }
+    },
+    "rights": {
+      "title": "Your rights (GDPR)",
+      "description": "In accordance with the General Data Protection Regulation (GDPR), you have the right to access, rectify and delete your personal data. To exercise these rights, contact us at"
+    },
+    "modifications": {
+      "title": "Changes to this policy",
+      "description": "We reserve the right to modify this cookie policy at any time. Changes will take effect upon publication on this page. We encourage you to review this page regularly."
+    }
+  },
+  "CookieConsent": {
+    "title": "Cookie Usage",
+    "defaultDescription": "We use cookies to improve your experience on Le Vestiaire. These cookies allow us to analyze site usage and improve our services.",
+    "acceptInfo": "By clicking \"Accept\", you agree to the use of analytics cookies. Essential cookies remain active.",
+    "learnMore": "Learn more",
+    "decline": "Decline",
+    "accept": "Accept"
   }
 }

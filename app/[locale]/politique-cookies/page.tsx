@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 export const metadata: Metadata = {
   title: "Politique de Cookies - Le Vestiaire Foot",
@@ -6,74 +7,65 @@ export const metadata: Metadata = {
     "Découvrez comment Le Vestiaire utilise les cookies pour améliorer votre expérience.",
 };
 
-export default function PolitiqueCookiesPage() {
+export default async function PolitiqueCookiesPage() {
+  const t = await getTranslations("CookiesPolicy");
+
   return (
     <div className="container mx-auto max-w-4xl px-4 py-12">
-      <h1 className="text-4xl font-bold mb-8">Politique de Cookies</h1>
+      <h1 className="text-4xl font-bold mb-8">{t("title")}</h1>
 
       <div className="prose prose-gray dark:prose-invert max-w-none">
         <p className="text-lg text-muted-foreground mb-6">
-          Dernière mise à jour : {new Date().toLocaleDateString("fr-FR")}
+          {t("lastUpdate")} : {new Date().toLocaleDateString("fr-FR")}
         </p>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">
-            Qu&apos;est-ce qu&apos;un cookie ?
+            {t("whatIsCookie.title")}
           </h2>
-          <p>
-            Un cookie est un petit fichier texte stocké sur votre appareil
-            lorsque vous visitez un site web. Les cookies nous aident à offrir
-            une meilleure expérience utilisateur et à améliorer nos services.
-          </p>
+          <p>{t("whatIsCookie.description")}</p>
         </section>
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">
-            Cookies utilisés sur Le Vestiaire
+            {t("cookiesUsed.title")}
           </h2>
 
           <div className="space-y-6">
             <div className="border rounded-lg p-4">
               <h3 className="text-xl font-semibold mb-2">
-                1. Cookies strictement nécessaires
+                {t("cookiesUsed.necessary.title")}
               </h3>
-              <p className="mb-2">
-                Ces cookies sont essentiels au fonctionnement du site et ne
-                peuvent pas être désactivés.
-              </p>
+              <p className="mb-2">{t("cookiesUsed.necessary.description")}</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
-                  <strong>Cookies d&apos;authentification :</strong> Permettent
-                  de vous connecter et maintenir votre session active
+                  <strong>{t("cookiesUsed.necessary.auth.label")}:</strong>{" "}
+                  {t("cookiesUsed.necessary.auth.description")}
                 </li>
                 <li>
-                  <strong>cookieConsent :</strong> Mémorise votre choix
-                  concernant les cookies
+                  <strong>{t("cookiesUsed.necessary.consent.label")}:</strong>{" "}
+                  {t("cookiesUsed.necessary.consent.description")}
                 </li>
               </ul>
             </div>
 
             <div className="border rounded-lg p-4">
               <h3 className="text-xl font-semibold mb-2">
-                2. Cookies d&apos;analyse et de performance
+                {t("cookiesUsed.analytics.title")}
               </h3>
-              <p className="mb-2">
-                Ces cookies nous aident à comprendre comment vous utilisez le
-                site pour améliorer nos services.
-              </p>
+              <p className="mb-2">{t("cookiesUsed.analytics.description")}</p>
               <ul className="list-disc pl-6 space-y-1">
                 <li>
-                  <strong>Vercel Analytics :</strong> Analyse du trafic et du
-                  comportement des utilisateurs
+                  <strong>{t("cookiesUsed.analytics.vercel.label")}:</strong>{" "}
+                  {t("cookiesUsed.analytics.vercel.description")}
                 </li>
                 <li>
-                  <strong>Vercel Speed Insights :</strong> Mesure des
-                  performances du site
+                  <strong>{t("cookiesUsed.analytics.insights.label")}:</strong>{" "}
+                  {t("cookiesUsed.analytics.insights.description")}
                 </li>
               </ul>
               <p className="text-sm text-muted-foreground mt-2">
-                Vous pouvez refuser ces cookies via la bannière de consentement
-                sans affecter votre expérience de navigation.
+                {t("cookiesUsed.analytics.optOut")}
               </p>
             </div>
           </div>
@@ -81,23 +73,14 @@ export default function PolitiqueCookiesPage() {
 
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">
-            Gestion de vos préférences
+            {t("preferences.title")}
           </h2>
-          <p className="mb-4">
-            Vous pouvez à tout moment modifier vos préférences concernant les
-            cookies :
-          </p>
+          <p className="mb-4">{t("preferences.description")}</p>
           <ul className="list-disc pl-6 space-y-2">
+            <li>{t("preferences.options.browser")}</li>
+            <li>{t("preferences.options.banner")}</li>
             <li>
-              En supprimant les cookies depuis les paramètres de votre
-              navigateur
-            </li>
-            <li>
-              En effaçant le cookie &quot;cookieConsent&quot; pour faire
-              réapparaître la bannière
-            </li>
-            <li>
-              En contactant notre équipe à{" "}
+              {t("preferences.options.contact")}{" "}
               <a
                 href="mailto:contact.levestiaire.foot@gmail.com"
                 className="text-primary hover:underline"
@@ -109,31 +92,29 @@ export default function PolitiqueCookiesPage() {
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">Durée de conservation</h2>
+          <h2 className="text-2xl font-semibold mb-4">
+            {t("retention.title")}
+          </h2>
           <ul className="list-disc pl-6 space-y-1">
             <li>
-              <strong>Cookies de session :</strong> Supprimés à la fermeture du
-              navigateur
+              <strong>{t("retention.session.label")}:</strong>{" "}
+              {t("retention.session.description")}
             </li>
             <li>
-              <strong>Cookie de consentement :</strong> Conservé jusqu&apos;en
-              2099 ou jusqu&apos;à suppression manuelle
+              <strong>{t("retention.consent.label")}:</strong>{" "}
+              {t("retention.consent.description")}
             </li>
             <li>
-              <strong>Cookies d&apos;analytics :</strong> 13 mois maximum
+              <strong>{t("retention.analytics.label")}:</strong>{" "}
+              {t("retention.analytics.description")}
             </li>
           </ul>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-2xl font-semibold mb-4">
-            Vos droits (RGPD)
-          </h2>
+          <h2 className="text-2xl font-semibold mb-4">{t("rights.title")}</h2>
           <p>
-            Conformément au Règlement Général sur la Protection des Données
-            (RGPD), vous disposez d&apos;un droit d&apos;accès, de
-            rectification et de suppression de vos données personnelles. Pour
-            exercer ces droits, contactez-nous à{" "}
+            {t("rights.description")}{" "}
             <a
               href="mailto:contact@le-vestiaire-foot.fr"
               className="text-primary hover:underline"
@@ -146,14 +127,9 @@ export default function PolitiqueCookiesPage() {
 
         <section>
           <h2 className="text-2xl font-semibold mb-4">
-            Modifications de cette politique
+            {t("modifications.title")}
           </h2>
-          <p>
-            Nous nous réservons le droit de modifier cette politique de cookies
-            à tout moment. Les modifications prendront effet dès leur
-            publication sur cette page. Nous vous encourageons à consulter
-            régulièrement cette page.
-          </p>
+          <p>{t("modifications.description")}</p>
         </section>
       </div>
     </div>
