@@ -18,6 +18,7 @@ import { Label } from "@/components/ui/label";
 import { GoogleIcon } from "../icons/Google-icon";
 import { handleGoogleSignIn } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
+import { useTranslations } from "next-intl";
 
 const formDefaults = {
   firstName: "",
@@ -29,6 +30,8 @@ const formDefaults = {
 type FieldErrors = Partial<Record<keyof typeof formDefaults, string>>;
 
 function SocialButtons() {
+  const t = useTranslations("SignUp");
+
   return (
     <div className="flex flex-col gap-4">
       {/* <Button variant="outline" className="w-full cursor-pointer" type="button">
@@ -42,17 +45,19 @@ function SocialButtons() {
         onClick={handleGoogleSignIn}
       >
         <GoogleIcon />
-        Continuer avec Google
+        {t("continueWithGoogle")}
       </Button>
     </div>
   );
 }
 
 function Separator() {
+  const t = useTranslations("SignUp");
+
   return (
     <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
       <span className="bg-card text-muted-foreground relative z-10 px-2">
-        Ou continuer avec
+        {t("orContinueWith")}
       </span>
     </div>
   );
@@ -62,6 +67,7 @@ export default function SignupPage({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const t = useTranslations("SignUp");
   const { signUp, loading } = useAuth();
   const [formData, setFormData] = useState({ ...formDefaults });
   const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
@@ -79,15 +85,15 @@ export default function SignupPage({
     const errors: FieldErrors = {};
     const { firstName, lastName, email, password, confirmPassword } = formData;
 
-    if (!firstName) errors.firstName = "Prénom requis";
-    if (!lastName) errors.lastName = "Nom requis";
-    if (!email) errors.email = "Email requis";
+    if (!firstName) errors.firstName = t("errors.firstNameRequired");
+    if (!lastName) errors.lastName = t("errors.lastNameRequired");
+    if (!email) errors.email = t("errors.emailRequired");
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
-      errors.email = "Email invalide";
-    if (!password) errors.password = "Mot de passe requis";
-    else if (password.length < 8) errors.password = "Au moins 8 caractères";
+      errors.email = t("errors.emailInvalid");
+    if (!password) errors.password = t("errors.passwordRequired");
+    else if (password.length < 8) errors.password = t("errors.passwordTooShort");
     if (confirmPassword !== password)
-      errors.confirmPassword = "Les mots de passe ne correspondent pas";
+      errors.confirmPassword = t("errors.passwordMismatch");
 
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
@@ -102,7 +108,7 @@ export default function SignupPage({
       await signUp(formData.email, formData.password);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
-      setErrorMsg(msg || "Erreur lors de l’inscription");
+      setErrorMsg(msg || t("errors.signupError"));
     }
   };
 
@@ -110,10 +116,8 @@ export default function SignupPage({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Créer un compte</CardTitle>
-          <CardDescription>
-            Rejoignez la communauté des collectionneurs de maillots
-          </CardDescription>
+          <CardTitle className="text-xl">{t("title")}</CardTitle>
+          <CardDescription>{t("subtitle")}</CardDescription>
         </CardHeader>
         <CardContent>
           {errorMsg && (
@@ -131,7 +135,7 @@ export default function SignupPage({
                 {(["firstName", "lastName"] as const).map((f) => (
                   <div key={f} className="grid gap-2">
                     <Label htmlFor={f}>
-                      {f === "firstName" ? "Prénom *" : "Nom *"}
+                      {t(`form.${f}`)} {t("form.required")}
                     </Label>
                     <Input
                       id={f}
@@ -146,7 +150,9 @@ export default function SignupPage({
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="email">Email *</Label>
+                <Label htmlFor="email">
+                  {t("form.email")} {t("form.required")}
+                </Label>
                 <Input
                   id="email"
                   type="email"
@@ -160,12 +166,14 @@ export default function SignupPage({
               </div>
 
               <div className="grid gap-2">
-                <Label htmlFor="password">Mot de passe *</Label>
+                <Label htmlFor="password">
+                  {t("form.password")} {t("form.required")}
+                </Label>
                 <div className="relative">
                   <Input
                     id="password"
                     type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
+                    placeholder={t("form.passwordPlaceholder")}
                     value={formData.password}
                     onChange={(e) =>
                       handleChange("password", e.currentTarget.value)
@@ -192,13 +200,13 @@ export default function SignupPage({
 
               <div className="grid gap-2">
                 <Label htmlFor="confirmPassword">
-                  Confirmer le mot de passe *
+                  {t("form.confirmPassword")} {t("form.required")}
                 </Label>
                 <div className="relative">
                   <Input
                     id="confirmPassword"
                     type={showConfirm ? "text" : "password"}
-                    placeholder="••••••••"
+                    placeholder={t("form.passwordPlaceholder")}
                     value={formData.confirmPassword}
                     onChange={(e) =>
                       handleChange("confirmPassword", e.currentTarget.value)
@@ -231,26 +239,26 @@ export default function SignupPage({
               className="w-full cursor-pointer"
               disabled={loading}
             >
-              {loading ? "Création du compte…" : "Créer mon compte"}
+              {loading ? t("button.creating") : t("button.create")}
             </Button>
 
             <p className="text-center text-sm">
-              Vous avez déjà un compte ?{" "}
+              {t("hasAccount")}{" "}
               <Link href="/auth/login" className="underline hover:text-primary">
-                Se connecter
+                {t("signIn")}
               </Link>
             </p>
           </form>
         </CardContent>
       </Card>
       <div className="text-muted-foreground text-center text-xs">
-        En cliquant sur créer mon compte, vous acceptez nos{" "}
+        {t("terms.text")}{" "}
         <Link href="/conditions-utilisation" className="underline">
-          Conditions d&apos;utilisation
+          {t("terms.termsOfService")}
         </Link>{" "}
-        et{" "}
+        {t("terms.and")}{" "}
         <Link href="/politique-confidentialite" className="underline">
-          Politique de confidentialité
+          {t("terms.privacyPolicy")}
         </Link>
         .
       </div>

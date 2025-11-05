@@ -65,6 +65,71 @@
     "hasAccount": "Already have an account?",
     "continueWithGoogle": "Continue with Google"
   },
+  "SignUp": {
+    "title": "Create an account",
+    "subtitle": "Join the jersey collectors community",
+    "continueWithGoogle": "Continue with Google",
+    "orContinueWith": "Or continue with",
+    "form": {
+      "firstName": "First name",
+      "lastName": "Last name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "required": "*",
+      "passwordPlaceholder": "••••••••"
+    },
+    "button": {
+      "creating": "Creating account…",
+      "create": "Create my account"
+    },
+    "hasAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "terms": {
+      "text": "By clicking create my account, you agree to our",
+      "termsOfService": "Terms of Service",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "errors": {
+      "firstNameRequired": "First name required",
+      "lastNameRequired": "Last name required",
+      "emailRequired": "Email required",
+      "emailInvalid": "Invalid email",
+      "passwordRequired": "Password required",
+      "passwordTooShort": "At least 8 characters",
+      "passwordMismatch": "Passwords do not match",
+      "signupError": "Error during sign up"
+    }
+  },
+  "Login": {
+    "title": "Welcome back",
+    "subtitle": "Sign in with your Google account",
+    "signInWithGoogle": "Sign in with Google",
+    "orContinueWith": "Or continue with",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "m@example.com",
+      "password": "Password",
+      "forgotPassword": "Forgot password?"
+    },
+    "button": {
+      "loading": "Loading…",
+      "signIn": "Sign in"
+    },
+    "noAccount": "Don't have an account?",
+    "createAccount": "Create an account",
+    "terms": {
+      "text": "By clicking sign in, you agree to our",
+      "termsOfService": "Terms of Service",
+      "and": "and",
+      "privacyPolicy": "Privacy Policy"
+    },
+    "errors": {
+      "signInError": "Sign in error",
+      "googleSignInError": "Error signing in with Google"
+    }
+  },
   "Errors": {
     "required": "This field is required",
     "invalidEmail": "Invalid email",

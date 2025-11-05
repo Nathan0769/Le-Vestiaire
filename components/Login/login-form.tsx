@@ -16,11 +16,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 //import { AppleIcon } from "../icons/Apple-icon";
 import { GoogleIcon } from "../icons/Google-icon";
+import { useTranslations } from "next-intl";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const t = useTranslations("Login");
   const { signIn, loading, signInWithGoogle } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +35,7 @@ export function LoginForm({
       await signIn(email, password);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
-      setErrorMsg(message || "Erreur de connexion");
+      setErrorMsg(message || t("errors.signInError"));
     }
   };
 
@@ -43,7 +45,7 @@ export function LoginForm({
       await signInWithGoogle();
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
-      setErrorMsg(message || "Erreur de connexion avec Google");
+      setErrorMsg(message || t("errors.googleSignInError"));
     }
   };
 
@@ -51,10 +53,8 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Content de vous retrouver</CardTitle>
-          <CardDescription>
-            Se connecter avec votre compte Google
-          </CardDescription>
+          <CardTitle className="text-xl">{t("title")}</CardTitle>
+          <CardDescription>{t("subtitle")}</CardDescription>
         </CardHeader>
         <CardContent>
           {errorMsg && (
@@ -73,23 +73,23 @@ export function LoginForm({
                   onClick={handleGoogleSignIn}
                 >
                   <GoogleIcon />
-                  Se connecter avec Google
+                  {t("signInWithGoogle")}
                 </Button>
               </div>
 
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
-                  Ou continuer avec
+                  {t("orContinueWith")}
                 </span>
               </div>
 
               <div className="grid gap-6">
                 <div className="grid gap-3">
-                  <Label htmlFor="email">Email</Label>
+                  <Label htmlFor="email">{t("form.email")}</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
+                    placeholder={t("form.emailPlaceholder")}
                     value={email}
                     onChange={(e) => setEmail(e.currentTarget.value)}
                     required
@@ -97,12 +97,12 @@ export function LoginForm({
                 </div>
                 <div className="grid gap-3">
                   <div className="flex items-center">
-                    <Label htmlFor="password">Mot de passe</Label>
+                    <Label htmlFor="password">{t("form.password")}</Label>
                     <a
                       href="#"
                       className="ml-auto text-sm underline-offset-4 hover:underline"
                     >
-                      Mot de passe oublié ?
+                      {t("form.forgotPassword")}
                     </a>
                   </div>
                   <Input
@@ -118,14 +118,14 @@ export function LoginForm({
                   className="w-full cursor-pointer"
                   disabled={loading}
                 >
-                  {loading ? "Chargement…" : "Se connecter"}
+                  {loading ? t("button.loading") : t("button.signIn")}
                 </Button>
               </div>
 
               <div className="text-center text-sm">
-                Vous n&apos;avez pas de compte?{" "}
+                {t("noAccount")}{" "}
                 <Link href="/auth/signUp" className="underline underline-offset-4">
-                  Créer un compte
+                  {t("createAccount")}
                 </Link>
               </div>
             </div>
@@ -133,13 +133,13 @@ export function LoginForm({
         </CardContent>
       </Card>
       <div className="text-muted-foreground text-center text-xs">
-        En cliquant sur se connecter, vous acceptez nos{" "}
+        {t("terms.text")}{" "}
         <Link href="/conditions-utilisation" className="underline">
-          Conditions d&apos;utilisation
+          {t("terms.termsOfService")}
         </Link>{" "}
-        et{" "}
+        {t("terms.and")}{" "}
         <Link href="/politique-confidentialite" className="underline">
-          Politique de confidentialité
+          {t("terms.privacyPolicy")}
         </Link>
         .
       </div>

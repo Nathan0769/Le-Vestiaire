@@ -65,6 +65,71 @@
     "hasAccount": "Déjà un compte ?",
     "continueWithGoogle": "Continuer avec Google"
   },
+  "SignUp": {
+    "title": "Créer un compte",
+    "subtitle": "Rejoignez la communauté des collectionneurs de maillots",
+    "continueWithGoogle": "Continuer avec Google",
+    "orContinueWith": "Ou continuer avec",
+    "form": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "required": "*",
+      "passwordPlaceholder": "••••••••"
+    },
+    "button": {
+      "creating": "Création du compte…",
+      "create": "Créer mon compte"
+    },
+    "hasAccount": "Vous avez déjà un compte ?",
+    "signIn": "Se connecter",
+    "terms": {
+      "text": "En cliquant sur créer mon compte, vous acceptez nos",
+      "termsOfService": "Conditions d'utilisation",
+      "and": "et",
+      "privacyPolicy": "Politique de confidentialité"
+    },
+    "errors": {
+      "firstNameRequired": "Prénom requis",
+      "lastNameRequired": "Nom requis",
+      "emailRequired": "Email requis",
+      "emailInvalid": "Email invalide",
+      "passwordRequired": "Mot de passe requis",
+      "passwordTooShort": "Au moins 8 caractères",
+      "passwordMismatch": "Les mots de passe ne correspondent pas",
+      "signupError": "Erreur lors de l'inscription"
+    }
+  },
+  "Login": {
+    "title": "Content de vous retrouver",
+    "subtitle": "Se connecter avec votre compte Google",
+    "signInWithGoogle": "Se connecter avec Google",
+    "orContinueWith": "Ou continuer avec",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "m@example.com",
+      "password": "Mot de passe",
+      "forgotPassword": "Mot de passe oublié ?"
+    },
+    "button": {
+      "loading": "Chargement…",
+      "signIn": "Se connecter"
+    },
+    "noAccount": "Vous n'avez pas de compte?",
+    "createAccount": "Créer un compte",
+    "terms": {
+      "text": "En cliquant sur se connecter, vous acceptez nos",
+      "termsOfService": "Conditions d'utilisation",
+      "and": "et",
+      "privacyPolicy": "Politique de confidentialité"
+    },
+    "errors": {
+      "signInError": "Erreur de connexion",
+      "googleSignInError": "Erreur de connexion avec Google"
+    }
+  },
   "Errors": {
     "required": "Ce champ est requis",
     "invalidEmail": "Email invalide",
