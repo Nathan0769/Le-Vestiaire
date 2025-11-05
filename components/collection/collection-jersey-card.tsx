@@ -5,8 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { CollectionJerseyModal } from "./collection-jersey-modal";
-import { CONDITION_LABELS } from "@/types/collection";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
+import { useTranslations } from "next-intl";
 
 interface CollectionJerseyCardProps {
   collectionItem: CollectionItemWithJersey;
@@ -19,6 +19,8 @@ export function CollectionJerseyCard({
   onUpdate,
   onDelete,
 }: CollectionJerseyCardProps) {
+  const tJerseyType = useTranslations("JerseyType");
+  const tCondition = useTranslations("Condition");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [localItem, setLocalItem] = useState(collectionItem);
@@ -48,15 +50,7 @@ export function CollectionJerseyCard({
   };
 
   const getJerseyTypeLabel = (type: string) => {
-    const typeLabels = {
-      HOME: "Domicile",
-      AWAY: "Extérieur",
-      THIRD: "Third",
-      FOURTH: "Fourth",
-      GOALKEEPER: "Gardien",
-      SPECIAL: "Spécial",
-    };
-    return typeLabels[type as keyof typeof typeLabels] || type;
+    return tJerseyType(type as "HOME" | "AWAY" | "THIRD" | "FOURTH" | "GOALKEEPER" | "SPECIAL");
   };
 
   return (
@@ -91,11 +85,7 @@ export function CollectionJerseyCard({
                   localItem.condition
                 )}`}
               >
-                {
-                  CONDITION_LABELS[
-                    localItem.condition as keyof typeof CONDITION_LABELS
-                  ]
-                }
+                {tCondition(localItem.condition as "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR")}
               </Badge>
 
               {localItem.size && (

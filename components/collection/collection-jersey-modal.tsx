@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -45,7 +46,7 @@ import {
   Camera,
   Upload,
 } from "lucide-react";
-import { CONDITION_LABELS, SIZE_LABELS } from "@/types/collection";
+import { SIZE_LABELS } from "@/types/collection";
 import type { Size, Condition, UpdateCollectionData } from "@/types/collection";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -68,6 +69,10 @@ export function CollectionJerseyModal({
   onUpdate,
   onDelete,
 }: CollectionJerseyModalProps) {
+  const t = useTranslations("Collection.modal.view");
+  const tDelete = useTranslations("Collection.modal.delete");
+  const tJerseyType = useTranslations("JerseyType");
+  const tCondition = useTranslations("Condition");
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -121,12 +126,12 @@ export function CollectionJerseyModal({
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      toast.error("Le fichier doit être une image");
+      toast.error(t("toast.fileNotImage"));
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      toast.error("La photo ne doit pas dépasser 5MB");
+      toast.error(t("toast.fileTooLarge"));
       return;
     }
 
@@ -147,7 +152,7 @@ export function CollectionJerseyModal({
 
   const handleSave = async () => {
     if (!formData.size || !formData.condition) {
-      toast.error("La taille et l'état sont obligatoires");
+      toast.error(t("toast.sizeConditionRequired"));
       return;
     }
 
@@ -176,7 +181,7 @@ export function CollectionJerseyModal({
         dataToSave.userPhotoUrl = path;
       } catch (error) {
         console.error("Erreur upload photo:", error);
-        toast.error("Erreur lors de l'upload de la photo");
+        toast.error(t("toast.uploadError"));
         setIsUploadingPhoto(false);
         setIsLoading(false);
         return;
@@ -235,17 +240,17 @@ export function CollectionJerseyModal({
 
       if (response.ok && result.success) {
         setIsEditing(false);
-        toast.success("Maillot mis à jour avec succès");
+        toast.success(t("toast.updated"));
 
         if (onUpdate && result.userJersey) {
           onUpdate(result.userJersey);
         }
       } else {
-        toast.error(result.error || "Une erreur est survenue");
+        toast.error(result.error || t("toast.error"));
       }
     } catch (error) {
       console.error("Erreur lors de la mise à jour:", error);
-      toast.error("Erreur de connexion. Veuillez réessayer.");
+      toast.error(t("toast.connectionError"));
     } finally {
       setIsLoading(false);
     }
@@ -264,7 +269,7 @@ export function CollectionJerseyModal({
       const result = await response.json();
 
       if (response.ok && result.success) {
-        toast.success("Maillot supprimé de votre collection");
+        toast.success(t("toast.deleted"));
         setShowDeleteDialog(false);
         onClose();
 
@@ -272,11 +277,11 @@ export function CollectionJerseyModal({
           onDelete(collectionItem.id);
         }
       } else {
-        toast.error(result.error || "Une erreur est survenue");
+        toast.error(result.error || t("toast.error"));
       }
     } catch (error) {
       console.error("Erreur lors de la suppression:", error);
-      toast.error("Erreur de connexion. Veuillez réessayer.");
+      toast.error(t("toast.connectionError"));
     } finally {
       setIsLoading(false);
     }
@@ -300,15 +305,7 @@ export function CollectionJerseyModal({
   };
 
   const getJerseyTypeLabel = (type: string) => {
-    const typeLabels = {
-      HOME: "Domicile",
-      AWAY: "Extérieur",
-      THIRD: "Third",
-      FOURTH: "Fourth",
-      GOALKEEPER: "Gardien",
-      SPECIAL: "Spécial",
-    };
-    return typeLabels[type as keyof typeof typeLabels] || type;
+    return tJerseyType(type as "HOME" | "AWAY" | "THIRD" | "FOURTH" | "GOALKEEPER" | "SPECIAL");
   };
 
   const carouselImages = [];
@@ -316,21 +313,21 @@ export function CollectionJerseyModal({
   if (photoPreview) {
     carouselImages.push({
       src: photoPreview,
-      alt: "Votre photo",
-      label: "Votre photo",
+      alt: t("yourPhoto"),
+      label: t("yourPhoto"),
     });
   } else if (collectionItem.userPhotoUrl) {
     carouselImages.push({
       src: collectionItem.userPhotoUrl,
-      alt: "Votre photo",
-      label: "Votre photo",
+      alt: t("yourPhoto"),
+      label: t("yourPhoto"),
     });
   }
 
   carouselImages.push({
     src: collectionItem.jersey.imageUrl,
     alt: collectionItem.jersey.name,
-    label: "Photo officielle",
+    label: t("officialPhoto"),
   });
 
   return (
@@ -341,8 +338,8 @@ export function CollectionJerseyModal({
             <DialogTitle className="flex items-center gap-2">
               <Package className="w-5 h-5 text-primary" />
               {isEditing
-                ? "Modifier votre maillot"
-                : "Détails de votre maillot"}
+                ? t("titleEdit")
+                : t("titleView")}
             </DialogTitle>
           </DialogHeader>
 
@@ -356,8 +353,8 @@ export function CollectionJerseyModal({
                     <Label className="flex items-center gap-2">
                       <Camera className="w-4 h-4" />
                       {collectionItem.userPhotoUrl || photoPreview
-                        ? "Modifier votre photo"
-                        : "Ajouter votre photo"}
+                        ? t("modifyPhoto")
+                        : t("addPhoto")}
                     </Label>
                     <div className="flex gap-2">
                       <label className="flex-1">
@@ -369,7 +366,7 @@ export function CollectionJerseyModal({
                         >
                           <span>
                             <Upload className="w-4 h-4 mr-2" />
-                            Choisir une photo
+                            {t("choosePhoto")}
                           </span>
                         </Button>
                         <input
@@ -390,7 +387,7 @@ export function CollectionJerseyModal({
                       )}
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      PNG, JPG, WEBP (Max 5MB)
+                      {t("photoFormats")}
                     </p>
                   </div>
                 )}
@@ -403,23 +400,19 @@ export function CollectionJerseyModal({
                         collectionItem.condition
                       )}`}
                     >
-                      {
-                        CONDITION_LABELS[
-                          collectionItem.condition as keyof typeof CONDITION_LABELS
-                        ]
-                      }
+                      {tCondition(collectionItem.condition as "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR")}
                     </Badge>
 
                     {collectionItem.size && (
                       <Badge variant="outline">
-                        Taille {collectionItem.size}
+                        {t("size")} {collectionItem.size}
                       </Badge>
                     )}
 
                     {collectionItem.hasTags && (
                       <Badge variant="outline" className="text-green-600">
                         <Tag className="w-3 h-3 mr-1" />
-                        Avec étiquettes
+                        {t("withTags")}
                       </Badge>
                     )}
 
@@ -429,7 +422,7 @@ export function CollectionJerseyModal({
                         className="text-primary bg-primary/20"
                       >
                         <Gift className="w-3 h-3 mr-1" />
-                        Cadeau
+                        {t("gift")}
                       </Badge>
                     )}
 
@@ -439,7 +432,7 @@ export function CollectionJerseyModal({
                         className="text-primary bg-primary/20"
                       >
                         <Package className="w-3 h-3 mr-1" />
-                        Box mystère
+                        {t("mysteryBox")}
                       </Badge>
                     )}
                   </div>
@@ -454,35 +447,35 @@ export function CollectionJerseyModal({
 
                   <div className="space-y-2 text-sm">
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Club</span>
+                      <span className="text-muted-foreground">{t("club")}</span>
                       <span className="font-medium">
                         {collectionItem.jersey.club.name}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Ligue</span>
+                      <span className="text-muted-foreground">{t("league")}</span>
                       <span className="font-medium">
                         {collectionItem.jersey.club.league.name}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Type</span>
+                      <span className="text-muted-foreground">{t("type")}</span>
                       <span className="font-medium">
                         {getJerseyTypeLabel(collectionItem.jersey.type)}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Saison</span>
+                      <span className="text-muted-foreground">{t("season")}</span>
                       <span className="font-medium">
                         {collectionItem.jersey.season}
                       </span>
                     </div>
 
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Marque</span>
+                      <span className="text-muted-foreground">{t("brand")}</span>
                       <span className="font-medium">
                         {collectionItem.jersey.brand}
                       </span>
@@ -495,7 +488,7 @@ export function CollectionJerseyModal({
                 <div>
                   <h4 className="font-semibold mb-3 flex items-center gap-2">
                     <Star className="w-4 h-4" />
-                    Votre maillot
+                    {t("yourJersey")}
                   </h4>
 
                   {isEditing ? (
@@ -506,7 +499,7 @@ export function CollectionJerseyModal({
                             htmlFor="size"
                             className="flex items-center gap-1"
                           >
-                            Taille <span className="text-destructive">*</span>
+                            {t("size")} <span className="text-destructive">{t("sizeRequired")}</span>
                           </Label>
                           <Select
                             value={formData.size}
@@ -535,7 +528,7 @@ export function CollectionJerseyModal({
                             htmlFor="condition"
                             className="flex items-center gap-1"
                           >
-                            État <span className="text-destructive">*</span>
+                            {t("condition")} <span className="text-destructive">{t("conditionRequired")}</span>
                           </Label>
                           <Select
                             value={formData.condition}
@@ -548,10 +541,10 @@ export function CollectionJerseyModal({
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                              {Object.entries(CONDITION_LABELS).map(
-                                ([value, label]) => (
+                              {(["MINT", "EXCELLENT", "GOOD", "FAIR", "POOR"] as const).map(
+                                (value) => (
                                   <SelectItem key={value} value={value}>
-                                    {label}
+                                    {tCondition(value)}
                                   </SelectItem>
                                 )
                               )}
@@ -562,14 +555,14 @@ export function CollectionJerseyModal({
 
                       <div className="space-y-2">
                         <Label htmlFor="purchasePrice">
-                          Prix d&apos;achat (€)
+                          {t("purchasePrice")}
                         </Label>
                         <Input
                           id="purchasePrice"
                           type="number"
                           step="0.01"
                           min="0"
-                          placeholder="Ex: 90.50"
+                          placeholder={t("purchasePricePlaceholder")}
                           value={formData.purchasePrice || ""}
                           onChange={(e) =>
                             setFormData({
@@ -583,7 +576,7 @@ export function CollectionJerseyModal({
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="purchaseDate">Date d&apos;achat</Label>
+                        <Label htmlFor="purchaseDate">{t("purchaseDate")}</Label>
                         <Input
                           id="purchaseDate"
                           type="date"
@@ -611,11 +604,11 @@ export function CollectionJerseyModal({
 
                       <div className="space-y-2">
                         <Label htmlFor="personalization">
-                          Personnalisation (nom, numéro...)
+                          {t("personalization")}
                         </Label>
                         <Input
                           id="personalization"
-                          placeholder="Ex: MESSI 10"
+                          placeholder={t("personalizationPlaceholder")}
                           value={formData.personalization || ""}
                           onChange={(e) =>
                             setFormData({
@@ -635,7 +628,7 @@ export function CollectionJerseyModal({
                           }
                         />
                         <Label htmlFor="hasTags">
-                          Possède encore les étiquettes
+                          {t("hasTags")}
                         </Label>
                       </div>
 
@@ -651,7 +644,7 @@ export function CollectionJerseyModal({
                           htmlFor="isGift"
                           className="flex items-center gap-2"
                         >
-                          Ce maillot est un cadeau
+                          {t("isGift")}
                         </Label>
                       </div>
 
@@ -670,15 +663,15 @@ export function CollectionJerseyModal({
                           htmlFor="isFromMysteryBox"
                           className="flex items-center gap-2"
                         >
-                          Maillot reçu dans une box mystère
+                          {t("isFromMysteryBox")}
                         </Label>
                       </div>
 
                       <div className="space-y-2">
-                        <Label htmlFor="notes">Notes personnelles</Label>
+                        <Label htmlFor="notes">{t("notes")}</Label>
                         <Textarea
                           id="notes"
-                          placeholder="Ajoutez vos commentaires sur ce maillot..."
+                          placeholder={t("notesPlaceholder")}
                           value={formData.notes || ""}
                           onChange={(e) =>
                             setFormData({ ...formData, notes: e.target.value })
@@ -692,7 +685,7 @@ export function CollectionJerseyModal({
                       {collectionItem.purchasePrice && (
                         <div className="flex items-center justify-between">
                           <span className="text-muted-foreground">
-                            Prix d&apos;achat
+                            {t("purchasePrice")}
                           </span>
                           <span className="font-semibold text-primary">
                             {collectionItem.purchasePrice}€
@@ -703,7 +696,7 @@ export function CollectionJerseyModal({
                       {collectionItem.purchaseDate && (
                         <div className="flex items-center justify-between">
                           <span className="text-muted-foreground">
-                            Acheté le
+                            {t("purchasedOn")}
                           </span>
                           <span className="font-medium">
                             {format(
@@ -729,7 +722,7 @@ export function CollectionJerseyModal({
                                   <>
                                     <div className="flex items-center justify-between">
                                       <span className="text-muted-foreground">
-                                        Joueur
+                                        {t("player")}
                                       </span>
                                       <span className="font-medium">
                                         {playerName}
@@ -737,7 +730,7 @@ export function CollectionJerseyModal({
                                     </div>
                                     <div className="flex items-center justify-between">
                                       <span className="text-muted-foreground">
-                                        Numéro
+                                        {t("number")}
                                       </span>
                                       <span className="font-medium">
                                         {number}
@@ -751,7 +744,7 @@ export function CollectionJerseyModal({
                             return (
                               <div className="flex items-center justify-between">
                                 <span className="text-muted-foreground">
-                                  Personnalisation
+                                  {t("personalization")}
                                 </span>
                                 <span className="font-medium">
                                   {collectionItem.personalization}
@@ -763,7 +756,7 @@ export function CollectionJerseyModal({
                       )}
 
                       <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Ajouté le</span>
+                        <span className="text-muted-foreground">{t("addedOn")}</span>
                         <span className="font-medium">
                           {format(
                             new Date(collectionItem.createdAt),
@@ -782,7 +775,7 @@ export function CollectionJerseyModal({
                     <div>
                       <h4 className="font-semibold mb-2 flex items-center gap-2">
                         <FileText className="w-4 h-4" />
-                        Notes personnelles
+                        {t("personalNotes")}
                       </h4>
                       <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
                         {collectionItem.notes}
@@ -804,7 +797,7 @@ export function CollectionJerseyModal({
                   className="flex-1 cursor-pointer"
                 >
                   <X className="w-4 h-4 mr-2" />
-                  Annuler
+                  {t("cancel")}
                 </Button>
                 <Button
                   onClick={handleSave}
@@ -814,17 +807,17 @@ export function CollectionJerseyModal({
                   {isUploadingPhoto ? (
                     <div className="flex items-center gap-2">
                       <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-                      <span>Upload...</span>
+                      <span>{t("uploading")}</span>
                     </div>
                   ) : isLoading ? (
                     <div className="flex items-center gap-2">
                       <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-                      <span>Sauvegarde...</span>
+                      <span>{t("saving")}</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-2">
                       <Save className="w-4 h-4" />
-                      <span>Sauvegarder</span>
+                      <span>{t("save")}</span>
                     </div>
                   )}
                 </Button>
@@ -836,7 +829,7 @@ export function CollectionJerseyModal({
                   onClick={onClose}
                   className="flex-1 cursor-pointer"
                 >
-                  Fermer
+                  {t("close")}
                 </Button>
                 <Button
                   variant="outline"
@@ -844,7 +837,7 @@ export function CollectionJerseyModal({
                   className="flex-1 cursor-pointer"
                 >
                   <Edit3 className="w-4 h-4 mr-2" />
-                  Modifier
+                  {t("edit")}
                 </Button>
                 <Button
                   variant="destructive"
@@ -852,7 +845,7 @@ export function CollectionJerseyModal({
                   className="flex-1 cursor-pointer"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  Supprimer
+                  {t("delete")}
                 </Button>
               </>
             )}
@@ -863,15 +856,14 @@ export function CollectionJerseyModal({
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Supprimer le maillot ?</AlertDialogTitle>
+            <AlertDialogTitle>{tDelete("title")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Êtes-vous sûr de vouloir supprimer ce maillot de votre collection
-              ? Cette action ne peut pas être annulée.
+              {tDelete("description")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel disabled={isLoading} className="cursor-pointer">
-              Annuler
+              {tDelete("cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDelete}
@@ -881,10 +873,10 @@ export function CollectionJerseyModal({
               {isLoading ? (
                 <div className="flex items-center gap-2">
                   <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-                  <span>Suppression...</span>
+                  <span>{tDelete("deleting")}</span>
                 </div>
               ) : (
-                "Supprimer"
+                tDelete("confirm")
               )}
             </AlertDialogAction>
           </AlertDialogFooter>

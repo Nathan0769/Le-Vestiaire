@@ -102,6 +102,236 @@
       "signupError": "Erreur lors de l'inscription"
     }
   },
+  "Collection": {
+    "button": {
+      "loading": "Chargement...",
+      "inCollection": "Dans ma collection",
+      "addToCollection": "Ajouter à ma collection",
+      "toast": {
+        "mustBeConnected": "Vous devez être connecté pour ajouter à votre collection",
+        "added": "Maillot ajouté à votre collection",
+        "removed": "Maillot retiré de votre collection",
+        "error": "Une erreur est survenue",
+        "connectionError": "Erreur de connexion. Veuillez réessayer.",
+        "manageError": "Vous devez être connecté pour gérer votre collection"
+      }
+    },
+    "stats": {
+      "owned": "Maillots possédés",
+      "jerseyInCollection": "Maillot dans votre collection",
+      "jerseysInCollection": "Maillots dans votre collection",
+      "favoriteLeagues": "Ligues favorites",
+      "conditions": "États",
+      "source": "Provenance",
+      "purchased": "Achetés",
+      "gifts": "Cadeaux",
+      "mysteryBox": "Box mystère"
+    },
+    "landing": {
+      "badge": "Gestion de Collection",
+      "title": "Gérez votre collection de",
+      "titleHighlight": "maillots de foot",
+      "subtitle": "Cataloguez, organisez et suivez l'évolution de votre collection. Rejoignez",
+      "subtitleHighlight": "plus de 100 collectionneurs",
+      "subtitleEnd": "passionnés.",
+      "signIn": "Se connecter",
+      "signUp": "Créer un compte",
+      "exampleTitle": "Une collection, mille possibilités",
+      "exampleSubtitle": "Exemple de collection avec 24 maillots",
+      "statsTotal": "Total",
+      "statsTotalDesc": "Maillots possédés",
+      "statsValue": "Valeur",
+      "statsValueDesc": "Valeur totale",
+      "statsLeagues": "Ligues",
+      "statsConditions": "États",
+      "moreJerseys": "+ 18 autres maillots dans cette collection",
+      "createCollection": "Créer ma collection",
+      "featuresTitle": "Tout ce dont vous avez besoin",
+      "featuresSubtitle": "Des fonctionnalités pensées pour les collectionneurs",
+      "features": {
+        "catalog": {
+          "title": "Cataloguez tout",
+          "description": "Taille, état, prix d'achat, date, personnalisation... Gérez chaque détail de vos maillots"
+        },
+        "photos": {
+          "title": "Ajoutez vos photos",
+          "description": "Immortalisez votre collection avec vos propres photos en complément des visuels officiels"
+        },
+        "stats": {
+          "title": "Statistiques détaillées",
+          "description": "Valeur totale, répartition par ligue, conditions, types... Analysez votre collection"
+        },
+        "evolution": {
+          "title": "Suivez votre évolution",
+          "description": "Observez la croissance de votre collection au fil du temps avec des graphiques"
+        },
+        "security": {
+          "title": "Sécurisé & Privé",
+          "description": "Vos données sont protégées. Vous choisissez ce que vous partagez avec la communauté"
+        },
+        "friends": {
+          "title": "Comparez avec vos amis",
+          "description": "Ajoutez des amis, découvrez leurs collections et échangez sur votre passion"
+        }
+      },
+      "testimonialsTitle": "Ils ont partagé leur collection",
+      "testimonialsSubtitle": "Des milliers d'utilisateurs satisfaits",
+      "testimonials": {
+        "thomas": "Enfin une app pour gérer ma collection ! Les stats par ligue sont top 🔥",
+        "julie": "Je peux enfin tracker la valeur de ma collection. Interface ultra intuitive !",
+        "alexandre": "L'upload de photos perso est génial. Ma collection n'a jamais été aussi bien organisée."
+      },
+      "ctaTitle": "Prêt à gérer votre collection ?",
+      "ctaSubtitle": "Cataloguez vos maillots et suivez l'évolution de votre collection en quelques clics",
+      "ctaButton": "Créer mon compte gratuitement",
+      "ctaSignIn": "Se connecter",
+      "ctaSecure": "100% sécurisé",
+      "ctaNoCommitment": "Sans engagement",
+      "faqTitle": "Questions fréquentes",
+      "faqSubtitle": "Tout ce que vous devez savoir sur Le Vestiaire",
+      "faqs": {
+        "addJersey": {
+          "q": "Comment ajouter un maillot à ma collection ?",
+          "a": "Parcourez notre catalogue de milliers de maillots, cliquez sur un maillot puis sur 'Ajouter à ma collection'. Vous pourrez renseigner la taille, l'état, le prix d'achat et bien plus."
+        },
+        "customPhotos": {
+          "q": "Puis-je ajouter mes propres photos ?",
+          "a": "Oui ! En plus des photos officielles, vous pouvez uploader vos propres photos pour chaque maillot de votre collection."
+        },
+        "privacy": {
+          "q": "Ma collection est-elle privée ?",
+          "a": "Oui, par défaut votre collection est privée. Vous pouvez choisir de la partager avec vos amis ou de rester anonyme dans les classements."
+        },
+        "pricing": {
+          "q": "L'application est-elle gratuite ?",
+          "a": "Oui, Le Vestiaire est 100% gratuit pour gérer votre collection, wishlist et profiter de toutes les fonctionnalités."
+        }
+      }
+    },
+    "modal": {
+      "add": {
+        "title": "Ajouter à ma collection",
+        "description": "Renseignez les informations de votre maillot.",
+        "size": "Taille",
+        "sizeRequired": "*",
+        "sizePlaceholder": "Taille",
+        "condition": "État",
+        "conditionRequired": "*",
+        "conditionPlaceholder": "État",
+        "purchasePrice": "Prix d'achat (€)",
+        "purchasePricePlaceholder": "Ex: 90.99",
+        "purchaseDate": "Date d'achat",
+        "personalization": "Personnalisation (nom, numéro...)",
+        "personalizationPlaceholder": "Ex: MESSI 10",
+        "hasTags": "Possède encore les étiquettes",
+        "isGift": "Reçu en cadeau",
+        "isFromMysteryBox": "Provenant d'une Box Mystère",
+        "notes": "Notes personnelles",
+        "notesPlaceholder": "Ajoutez vos commentaires sur ce maillot...",
+        "photo": "Photo personnelle (optionnelle)",
+        "photoClickToAdd": "Cliquez pour ajouter",
+        "photoYourPhoto": "votre photo",
+        "photoFormats": "PNG, JPG, WEBP (Max 5MB)",
+        "cancel": "Annuler",
+        "uploadPhoto": "Upload photo...",
+        "adding": "Ajout...",
+        "addToCollection": "Ajouter à ma collection",
+        "toast": {
+          "fileNotImage": "Le fichier doit être une image",
+          "fileTooLarge": "La photo ne doit pas dépasser 5MB",
+          "sizeRequired": "La taille est obligatoire",
+          "conditionRequired": "L'état est obligatoire",
+          "uploadError": "Erreur lors de l'upload de la photo"
+        }
+      },
+      "view": {
+        "titleEdit": "Modifier votre maillot",
+        "titleView": "Détails de votre maillot",
+        "yourPhoto": "Votre photo",
+        "officialPhoto": "Photo officielle",
+        "modifyPhoto": "Modifier votre photo",
+        "addPhoto": "Ajouter votre photo",
+        "choosePhoto": "Choisir une photo",
+        "withTags": "Avec étiquettes",
+        "gift": "Cadeau",
+        "mysteryBox": "Box mystère",
+        "club": "Club",
+        "league": "Ligue",
+        "type": "Type",
+        "season": "Saison",
+        "brand": "Marque",
+        "yourJersey": "Votre maillot",
+        "purchasePrice": "Prix d'achat",
+        "purchasedOn": "Acheté le",
+        "player": "Joueur",
+        "number": "Numéro",
+        "personalization": "Personnalisation",
+        "addedOn": "Ajouté le",
+        "personalNotes": "Notes personnelles",
+        "close": "Fermer",
+        "edit": "Modifier",
+        "delete": "Supprimer",
+        "cancel": "Annuler",
+        "save": "Sauvegarder",
+        "uploading": "Upload...",
+        "saving": "Sauvegarde...",
+        "size": "Taille",
+        "sizeRequired": "*",
+        "condition": "État",
+        "conditionRequired": "*",
+        "isGift": "Ce maillot est un cadeau",
+        "isFromMysteryBox": "Maillot reçu dans une box mystère",
+        "hasTags": "Possède encore les étiquettes",
+        "purchaseDate": "Date d'achat",
+        "notes": "Notes personnelles",
+        "personalizationPlaceholder": "Ex: MESSI 10",
+        "notesPlaceholder": "Ajoutez vos commentaires sur ce maillot...",
+        "photoFormats": "PNG, JPG, WEBP (Max 5MB)",
+        "purchasePricePlaceholder": "Ex: 90.50",
+        "toast": {
+          "fileNotImage": "Le fichier doit être une image",
+          "fileTooLarge": "La photo ne doit pas dépasser 5MB",
+          "sizeConditionRequired": "La taille et l'état sont obligatoires",
+          "uploadError": "Erreur lors de l'upload de la photo",
+          "updated": "Maillot mis à jour avec succès",
+          "error": "Une erreur est survenue",
+          "connectionError": "Erreur de connexion. Veuillez réessayer.",
+          "deleted": "Maillot supprimé de votre collection"
+        }
+      },
+      "delete": {
+        "title": "Supprimer le maillot ?",
+        "description": "Êtes-vous sûr de vouloir supprimer ce maillot de votre collection ? Cette action ne peut pas être annulée.",
+        "cancel": "Annuler",
+        "confirm": "Supprimer",
+        "deleting": "Suppression..."
+      }
+    },
+    "grid": {
+      "title": "Vos maillots",
+      "sortBy": "Trier par :",
+      "sortOptions": {
+        "dateDesc": "Plus récents",
+        "dateAsc": "Plus anciens",
+        "priceDesc": "Prix décroissant",
+        "priceAsc": "Prix croissant",
+        "condition": "État",
+        "club": "Club (A-Z)",
+        "season": "Saison"
+      },
+      "noJerseys": "Aucun maillot dans votre collection."
+    },
+    "page": {
+      "title": "Ma Collection",
+      "jersey": "maillot",
+      "jerseys": "maillots",
+      "emptyTitle": "Votre collection est vide",
+      "emptyDescription": "Commencez à construire votre collection en ajoutant vos premiers maillots !",
+      "errorTitle": "Erreur de chargement",
+      "errorDescription": "Une erreur est survenue lors du chargement de votre collection. Veuillez rafraîchir la page ou réessayer ultérieurement.",
+      "reload": "Recharger la page"
+    }
+  },
   "Login": {
     "title": "Content de vous retrouver",
     "subtitle": "Se connecter avec votre compte Google",

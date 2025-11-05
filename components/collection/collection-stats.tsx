@@ -1,12 +1,14 @@
 import { Package, Trophy, Shirt, Gift } from "lucide-react";
-import { CONDITION_LABELS } from "@/types/collection";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
+import { useTranslations } from "next-intl";
 
 interface CollectionStatsProps {
   collectionItems: CollectionItemWithJersey[];
 }
 
 export function CollectionStats({ collectionItems }: CollectionStatsProps) {
+  const t = useTranslations("Collection.stats");
+  const tCondition = useTranslations("Condition");
   const totalJerseys = collectionItems.length;
 
   const leagueStats = collectionItems.reduce((acc, item) => {
@@ -36,15 +38,11 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
           <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
             <Package className="w-4 h-4 text-primary" />
           </div>
-          <h3 className="font-medium text-muted-foreground">
-            Maillots possédés
-          </h3>
+          <h3 className="font-medium text-muted-foreground">{t("owned")}</h3>
         </div>
         <p className="text-2xl font-bold">{totalJerseys}</p>
         <p className="text-sm text-muted-foreground mt-1">
-          {totalJerseys === 1
-            ? "Maillot dans votre collection"
-            : "Maillots dans votre collection"}
+          {totalJerseys === 1 ? t("jerseyInCollection") : t("jerseysInCollection")}
         </p>
       </div>
 
@@ -54,7 +52,7 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
             <Trophy className="w-4 h-4 text-primary" />
           </div>
           <h3 className="font-medium text-muted-foreground">
-            Ligues favorites
+            {t("favoriteLeagues")}
           </h3>
         </div>
         <div className="space-y-2">
@@ -75,7 +73,7 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
           <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
             <Shirt className="w-4 h-4 text-primary" />
           </div>
-          <h3 className="font-medium text-muted-foreground">États</h3>
+          <h3 className="font-medium text-muted-foreground">{t("conditions")}</h3>
         </div>
         <div className="space-y-2">
           {Object.entries(conditionStats)
@@ -87,9 +85,7 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
                 className="flex justify-between items-center"
               >
                 <span className="text-sm font-medium">
-                  {CONDITION_LABELS[
-                    condition as keyof typeof CONDITION_LABELS
-                  ] || condition}
+                  {tCondition(condition as "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR")}
                 </span>
                 <span className="text-sm text-muted-foreground">{count}</span>
               </div>
@@ -102,12 +98,12 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
           <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
             <Gift className="w-4 h-4 text-primary" />
           </div>
-          <h3 className="font-medium text-muted-foreground">Provenance</h3>
+          <h3 className="font-medium text-muted-foreground">{t("source")}</h3>
         </div>
         <div className="space-y-2">
           {regularCount > 0 && (
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium">Achetés</span>
+              <span className="text-sm font-medium">{t("purchased")}</span>
               <span className="text-sm text-muted-foreground">
                 {regularCount}
               </span>
@@ -116,7 +112,7 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
           {giftCount > 0 && (
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium flex items-center gap-1">
-                Cadeaux
+                {t("gifts")}
               </span>
               <span className="text-sm text-muted-foreground">{giftCount}</span>
             </div>
@@ -124,7 +120,7 @@ export function CollectionStats({ collectionItems }: CollectionStatsProps) {
           {mysteryBoxCount > 0 && (
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium flex items-center gap-1">
-                Box mystère
+                {t("mysteryBox")}
               </span>
               <span className="text-sm text-muted-foreground">
                 {mysteryBoxCount}

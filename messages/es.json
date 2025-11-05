@@ -102,6 +102,236 @@
       "signupError": "Error durante el registro"
     }
   },
+  "Collection": {
+    "button": {
+      "loading": "Cargando...",
+      "inCollection": "En mi colección",
+      "addToCollection": "Añadir a mi colección",
+      "toast": {
+        "mustBeConnected": "Debes iniciar sesión para añadir a tu colección",
+        "added": "Camiseta añadida a tu colección",
+        "removed": "Camiseta eliminada de tu colección",
+        "error": "Ha ocurrido un error",
+        "connectionError": "Error de conexión. Por favor, inténtalo de nuevo.",
+        "manageError": "Debes iniciar sesión para gestionar tu colección"
+      }
+    },
+    "stats": {
+      "owned": "Camisetas poseídas",
+      "jerseyInCollection": "Camiseta en tu colección",
+      "jerseysInCollection": "Camisetas en tu colección",
+      "favoriteLeagues": "Ligas favoritas",
+      "conditions": "Estados",
+      "source": "Procedencia",
+      "purchased": "Compradas",
+      "gifts": "Regalos",
+      "mysteryBox": "Caja misteriosa"
+    },
+    "landing": {
+      "badge": "Gestión de Colección",
+      "title": "Gestiona tu colección de",
+      "titleHighlight": "camisetas de fútbol",
+      "subtitle": "Cataloga, organiza y sigue la evolución de tu colección. Únete a",
+      "subtitleHighlight": "más de 100 coleccionistas",
+      "subtitleEnd": "apasionados.",
+      "signIn": "Iniciar sesión",
+      "signUp": "Crear una cuenta",
+      "exampleTitle": "Una colección, mil posibilidades",
+      "exampleSubtitle": "Ejemplo de colección con 24 camisetas",
+      "statsTotal": "Total",
+      "statsTotalDesc": "Camisetas poseídas",
+      "statsValue": "Valor",
+      "statsValueDesc": "Valor total",
+      "statsLeagues": "Ligas",
+      "statsConditions": "Estados",
+      "moreJerseys": "+ 18 camisetas más en esta colección",
+      "createCollection": "Crear mi colección",
+      "featuresTitle": "Todo lo que necesitas",
+      "featuresSubtitle": "Funcionalidades diseñadas para coleccionistas",
+      "features": {
+        "catalog": {
+          "title": "Cataloga todo",
+          "description": "Talla, estado, precio de compra, fecha, personalización... Gestiona cada detalle de tus camisetas"
+        },
+        "photos": {
+          "title": "Añade tus fotos",
+          "description": "Inmortaliza tu colección con tus propias fotos además de las imágenes oficiales"
+        },
+        "stats": {
+          "title": "Estadísticas detalladas",
+          "description": "Valor total, distribución por liga, condiciones, tipos... Analiza tu colección"
+        },
+        "evolution": {
+          "title": "Sigue tu evolución",
+          "description": "Observa el crecimiento de tu colección a lo largo del tiempo con gráficos"
+        },
+        "security": {
+          "title": "Seguro y Privado",
+          "description": "Tus datos están protegidos. Tú decides qué compartir con la comunidad"
+        },
+        "friends": {
+          "title": "Compara con amigos",
+          "description": "Añade amigos, descubre sus colecciones y comparte tu pasión"
+        }
+      },
+      "testimonialsTitle": "Ellos compartieron su colección",
+      "testimonialsSubtitle": "Miles de usuarios satisfechos",
+      "testimonials": {
+        "thomas": "¡Por fin una app para gestionar mi colección! Las estadísticas por liga son geniales 🔥",
+        "julie": "Por fin puedo hacer seguimiento del valor de mi colección. ¡Interfaz súper intuitiva!",
+        "alexandre": "La subida de fotos personalizadas es genial. Mi colección nunca ha estado tan bien organizada."
+      },
+      "ctaTitle": "¿Listo para gestionar tu colección?",
+      "ctaSubtitle": "Cataloga tus camisetas y sigue la evolución de tu colección en pocos clics",
+      "ctaButton": "Crear mi cuenta gratis",
+      "ctaSignIn": "Iniciar sesión",
+      "ctaSecure": "100% seguro",
+      "ctaNoCommitment": "Sin compromiso",
+      "faqTitle": "Preguntas frecuentes",
+      "faqSubtitle": "Todo lo que necesitas saber sobre Le Vestiaire",
+      "faqs": {
+        "addJersey": {
+          "q": "¿Cómo añado una camiseta a mi colección?",
+          "a": "Navega por nuestro catálogo de miles de camisetas, haz clic en una camiseta y luego en 'Añadir a mi colección'. Podrás introducir la talla, el estado, el precio de compra y mucho más."
+        },
+        "customPhotos": {
+          "q": "¿Puedo añadir mis propias fotos?",
+          "a": "¡Sí! Además de las fotos oficiales, puedes subir tus propias fotos para cada camiseta de tu colección."
+        },
+        "privacy": {
+          "q": "¿Es privada mi colección?",
+          "a": "Sí, por defecto tu colección es privada. Puedes elegir compartirla con tus amigos o permanecer anónimo en las clasificaciones."
+        },
+        "pricing": {
+          "q": "¿Es gratuita la aplicación?",
+          "a": "Sí, Le Vestiaire es 100% gratuito para gestionar tu colección, lista de deseos y disfrutar de todas las funcionalidades."
+        }
+      }
+    },
+    "modal": {
+      "add": {
+        "title": "Añadir a mi colección",
+        "description": "Ingresa los detalles de tu camiseta.",
+        "size": "Talla",
+        "sizeRequired": "*",
+        "sizePlaceholder": "Talla",
+        "condition": "Estado",
+        "conditionRequired": "*",
+        "conditionPlaceholder": "Estado",
+        "purchasePrice": "Precio de compra (€)",
+        "purchasePricePlaceholder": "Ej: 90.99",
+        "purchaseDate": "Fecha de compra",
+        "personalization": "Personalización (nombre, número...)",
+        "personalizationPlaceholder": "Ej: MESSI 10",
+        "hasTags": "Todavía tiene etiquetas",
+        "isGift": "Recibido como regalo",
+        "isFromMysteryBox": "De una caja misteriosa",
+        "notes": "Notas personales",
+        "notesPlaceholder": "Añade tus comentarios sobre esta camiseta...",
+        "photo": "Foto personal (opcional)",
+        "photoClickToAdd": "Haz clic para añadir",
+        "photoYourPhoto": "tu foto",
+        "photoFormats": "PNG, JPG, WEBP (Máx 5MB)",
+        "cancel": "Cancelar",
+        "uploadPhoto": "Subiendo foto...",
+        "adding": "Añadiendo...",
+        "addToCollection": "Añadir a mi colección",
+        "toast": {
+          "fileNotImage": "El archivo debe ser una imagen",
+          "fileTooLarge": "La foto no debe superar los 5MB",
+          "sizeRequired": "La talla es obligatoria",
+          "conditionRequired": "El estado es obligatorio",
+          "uploadError": "Error al subir la foto"
+        }
+      },
+      "view": {
+        "titleEdit": "Editar tu camiseta",
+        "titleView": "Detalles de tu camiseta",
+        "yourPhoto": "Tu foto",
+        "officialPhoto": "Foto oficial",
+        "modifyPhoto": "Modificar tu foto",
+        "addPhoto": "Añadir tu foto",
+        "choosePhoto": "Elegir una foto",
+        "withTags": "Con etiquetas",
+        "gift": "Regalo",
+        "mysteryBox": "Caja misteriosa",
+        "club": "Club",
+        "league": "Liga",
+        "type": "Tipo",
+        "season": "Temporada",
+        "brand": "Marca",
+        "yourJersey": "Tu camiseta",
+        "purchasePrice": "Precio de compra",
+        "purchasedOn": "Comprado el",
+        "player": "Jugador",
+        "number": "Número",
+        "personalization": "Personalización",
+        "addedOn": "Añadido el",
+        "personalNotes": "Notas personales",
+        "close": "Cerrar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "uploading": "Subiendo...",
+        "saving": "Guardando...",
+        "size": "Talla",
+        "sizeRequired": "*",
+        "condition": "Estado",
+        "conditionRequired": "*",
+        "isGift": "Esta camiseta es un regalo",
+        "isFromMysteryBox": "Camiseta recibida en una caja misteriosa",
+        "hasTags": "Todavía tiene etiquetas",
+        "purchaseDate": "Fecha de compra",
+        "notes": "Notas personales",
+        "personalizationPlaceholder": "Ej: MESSI 10",
+        "notesPlaceholder": "Añade tus comentarios sobre esta camiseta...",
+        "photoFormats": "PNG, JPG, WEBP (Máx 5MB)",
+        "purchasePricePlaceholder": "Ej: 90.50",
+        "toast": {
+          "fileNotImage": "El archivo debe ser una imagen",
+          "fileTooLarge": "La foto no debe superar los 5MB",
+          "sizeConditionRequired": "La talla y el estado son obligatorios",
+          "uploadError": "Error al subir la foto",
+          "updated": "Camiseta actualizada con éxito",
+          "error": "Ha ocurrido un error",
+          "connectionError": "Error de conexión. Por favor, inténtalo de nuevo.",
+          "deleted": "Camiseta eliminada de tu colección"
+        }
+      },
+      "delete": {
+        "title": "¿Eliminar camiseta?",
+        "description": "¿Estás seguro de que quieres eliminar esta camiseta de tu colección? Esta acción no se puede deshacer.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "deleting": "Eliminando..."
+      }
+    },
+    "grid": {
+      "title": "Tus camisetas",
+      "sortBy": "Ordenar por:",
+      "sortOptions": {
+        "dateDesc": "Más recientes",
+        "dateAsc": "Más antiguas",
+        "priceDesc": "Precio descendente",
+        "priceAsc": "Precio ascendente",
+        "condition": "Estado",
+        "club": "Club (A-Z)",
+        "season": "Temporada"
+      },
+      "noJerseys": "No hay camisetas en tu colección."
+    },
+    "page": {
+      "title": "Mi Colección",
+      "jersey": "camiseta",
+      "jerseys": "camisetas",
+      "emptyTitle": "Tu colección está vacía",
+      "emptyDescription": "¡Comienza a construir tu colección añadiendo tus primeras camisetas!",
+      "errorTitle": "Error de carga",
+      "errorDescription": "Ha ocurrido un error al cargar tu colección. Por favor, actualiza la página o inténtalo de nuevo más tarde.",
+      "reload": "Recargar página"
+    }
+  },
   "Login": {
     "title": "Bienvenido de nuevo",
     "subtitle": "Inicia sesión con tu cuenta de Google",

@@ -22,9 +22,18 @@ import {
 import { Button } from "../ui/button";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { AnimatedTestimonials } from "../ui/animated-testimonials";
+import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
+
+const AnimatedTestimonials = dynamic(
+  () => import("../ui/animated-testimonials").then(mod => mod.AnimatedTestimonials),
+  { ssr: false }
+);
 
 export default function CollectionLanding() {
+  const t = useTranslations("Collection.landing");
+  const tCondition = useTranslations("Condition");
+  const tJerseyType = useTranslations("JerseyType");
   const mockCollection = [
     {
       id: 1,
@@ -32,7 +41,7 @@ export default function CollectionLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/ligue-1/psg/2025-26/home.jpg",
       season: "2025/26",
-      type: "Domicile",
+      type: "HOME" as const,
     },
     {
       id: 2,
@@ -40,7 +49,7 @@ export default function CollectionLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/la-liga/real-madrid/2022-23/home.jpg",
       season: "2022/23",
-      type: "Domicile",
+      type: "HOME" as const,
     },
     {
       id: 3,
@@ -48,7 +57,7 @@ export default function CollectionLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/premier-league/manchester-united/2022-23/home.jpg",
       season: "2022/23",
-      type: "Domicile",
+      type: "HOME" as const,
     },
     {
       id: 4,
@@ -56,7 +65,7 @@ export default function CollectionLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/la-liga/barcelone/2022-23/third.jpg",
       season: "2022/23",
-      type: "Third",
+      type: "THIRD" as const,
     },
     {
       id: 5,
@@ -64,7 +73,7 @@ export default function CollectionLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/ligue-1/lyon/2023-24/domicile.webp",
       season: "2023/24",
-      type: "Domicile",
+      type: "HOME" as const,
     },
     {
       id: 6,
@@ -72,30 +81,30 @@ export default function CollectionLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/premier-league/liverpool/2024-25/home.jpg",
       season: "2024/25",
-      type: "Domicile",
+      type: "HOME" as const,
     },
   ];
 
   const faqs = [
     {
       id: "add-jersey",
-      q: "Comment ajouter un maillot à ma collection ?",
-      a: "Parcourez notre catalogue de milliers de maillots, cliquez sur un maillot puis sur 'Ajouter à ma collection'. Vous pourrez renseigner la taille, l'état, le prix d'achat et bien plus.",
+      q: t("faqs.addJersey.q"),
+      a: t("faqs.addJersey.a"),
     },
     {
       id: "custom-photos",
-      q: "Puis-je ajouter mes propres photos ?",
-      a: "Oui ! En plus des photos officielles, vous pouvez uploader vos propres photos pour chaque maillot de votre collection.",
+      q: t("faqs.customPhotos.q"),
+      a: t("faqs.customPhotos.a"),
     },
     {
       id: "privacy",
-      q: "Ma collection est-elle privée ?",
-      a: "Oui, par défaut votre collection est privée. Vous pouvez choisir de la partager avec vos amis ou de rester anonyme dans les classements.",
+      q: t("faqs.privacy.q"),
+      a: t("faqs.privacy.a"),
     },
     {
       id: "pricing",
-      q: "L'application est-elle gratuite ?",
-      a: "Oui, Le Vestiaire est 100% gratuit pour gérer votre collection, wishlist et profiter de toutes les fonctionnalités.",
+      q: t("faqs.pricing.q"),
+      a: t("faqs.pricing.a"),
     },
   ];
 
@@ -114,44 +123,38 @@ export default function CollectionLanding() {
     {
       id: "catalog",
       icon: <Package className="w-6 h-6" />,
-      title: "Cataloguez tout",
-      description:
-        "Taille, état, prix d'achat, date, personnalisation... Gérez chaque détail de vos maillots",
+      title: t("features.catalog.title"),
+      description: t("features.catalog.description"),
     },
     {
       id: "photos",
       icon: <Camera className="w-6 h-6" />,
-      title: "Ajoutez vos photos",
-      description:
-        "Immortalisez votre collection avec vos propres photos en complément des visuels officiels",
+      title: t("features.photos.title"),
+      description: t("features.photos.description"),
     },
     {
       id: "stats",
       icon: <BarChart3 className="w-6 h-6" />,
-      title: "Statistiques détaillées",
-      description:
-        "Valeur totale, répartition par ligue, conditions, types... Analysez votre collection",
+      title: t("features.stats.title"),
+      description: t("features.stats.description"),
     },
     {
       id: "evolution",
       icon: <TrendingUp className="w-6 h-6" />,
-      title: "Suivez votre évolution",
-      description:
-        "Observez la croissance de votre collection au fil du temps avec des graphiques",
+      title: t("features.evolution.title"),
+      description: t("features.evolution.description"),
     },
     {
       id: "security",
       icon: <ShieldCheck className="w-6 h-6" />,
-      title: "Sécurisé & Privé",
-      description:
-        "Vos données sont protégées. Vous choisissez ce que vous partagez avec la communauté",
+      title: t("features.security.title"),
+      description: t("features.security.description"),
     },
     {
       id: "friends",
       icon: <Users className="w-6 h-6" />,
-      title: "Comparez avec vos amis",
-      description:
-        "Ajoutez des amis, découvrez leurs collections et échangez sur votre passion",
+      title: t("features.friends.title"),
+      description: t("features.friends.description"),
     },
   ];
 
@@ -210,7 +213,7 @@ export default function CollectionLanding() {
               className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-sm font-medium text-primary mb-4 backdrop-blur-sm border border-primary/20"
             >
               <Package className="w-4 h-4" />
-              Gestion de Collection
+              {t("badge")}
             </motion.div>
 
             <motion.h1
@@ -219,10 +222,10 @@ export default function CollectionLanding() {
               transition={{ delay: 0.3, duration: 0.8 }}
               className="text-4xl md:text-6xl font-bold leading-tight"
             >
-              Gérez votre collection de
+              {t("title")}
               <br />
               <span className="bg-gradient-to-r from-primary via-purple-500 to-primary bg-clip-text text-transparent">
-                maillots de foot
+                {t("titleHighlight")}
               </span>
             </motion.h1>
 
@@ -232,12 +235,11 @@ export default function CollectionLanding() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-xl text-muted-foreground max-w-2xl mx-auto"
             >
-              Cataloguez, organisez et suivez l&apos;évolution de votre
-              collection. Rejoignez{" "}
+              {t("subtitle")}{" "}
               <span className="font-semibold text-foreground">
-                plus de 100 collectionneurs
+                {t("subtitleHighlight")}
               </span>{" "}
-              passionnés.
+              {t("subtitleEnd")}
             </motion.p>
 
             <motion.nav
@@ -257,7 +259,7 @@ export default function CollectionLanding() {
                   className="gap-2 justify-center"
                   aria-label="Se connecter à votre compte Le Vestiaire"
                 >
-                  Se connecter
+                  {t("signIn")}
                   <ArrowRight className="w-4 h-4" aria-hidden="true" />
                 </Link>
               </Button>
@@ -272,7 +274,7 @@ export default function CollectionLanding() {
                   className="justify-center"
                   aria-label="Créer un compte pour commencer votre collection de maillots"
                 >
-                  Créer un compte
+                  {t("signUp")}
                 </Link>
               </Button>
             </motion.nav>
@@ -283,11 +285,9 @@ export default function CollectionLanding() {
       <section className="px-6 py-16 bg-gradient-to-b from-background via-purple-500/5 to-primary/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">
-              Une collection, mille possibilités
-            </h2>
+            <h2 className="text-3xl font-bold mb-4">{t("exampleTitle")}</h2>
             <p className="text-muted-foreground text-lg">
-              Exemple de collection avec 24 maillots
+              {t("exampleSubtitle")}
             </p>
           </div>
 
@@ -298,11 +298,11 @@ export default function CollectionLanding() {
                 <div className="w-10 h-10 bg-primary/20 rounded-full flex items-center justify-center">
                   <Package className="w-5 h-5 text-primary" />
                 </div>
-                <h3 className="font-medium text-muted-foreground">Total</h3>
+                <h3 className="font-medium text-muted-foreground">{t("statsTotal")}</h3>
               </div>
               <p className="text-3xl font-bold">{stats.total}</p>
               <p className="text-sm text-muted-foreground mt-1">
-                Maillots possédés
+                {t("statsTotalDesc")}
               </p>
             </div>
 
@@ -311,11 +311,11 @@ export default function CollectionLanding() {
                 <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center">
                   <TrendingUp className="w-5 h-5 text-green-600" />
                 </div>
-                <h3 className="font-medium text-muted-foreground">Valeur</h3>
+                <h3 className="font-medium text-muted-foreground">{t("statsValue")}</h3>
               </div>
               <p className="text-3xl font-bold">{stats.value}€</p>
               <p className="text-sm text-muted-foreground mt-1">
-                Valeur totale
+                {t("statsValueDesc")}
               </p>
             </div>
 
@@ -324,7 +324,7 @@ export default function CollectionLanding() {
                 <div className="w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center">
                   <BarChart3 className="w-5 h-5 text-blue-600" />
                 </div>
-                <h3 className="font-medium text-muted-foreground">Ligues</h3>
+                <h3 className="font-medium text-muted-foreground">{t("statsLeagues")}</h3>
               </div>
               <div className="space-y-1">
                 <div className="flex justify-between text-sm ">
@@ -343,15 +343,15 @@ export default function CollectionLanding() {
                 <div className="w-10 h-10 bg-purple-500/20 rounded-full flex items-center justify-center">
                   <ShieldCheck className="w-5 h-5 text-purple-600" />
                 </div>
-                <h3 className="font-medium text-muted-foreground">États</h3>
+                <h3 className="font-medium text-muted-foreground">{t("statsConditions")}</h3>
               </div>
               <div className="space-y-1">
                 <div className="flex justify-between text-sm">
-                  <span>Excellent</span>
+                  <span>{tCondition("EXCELLENT")}</span>
                   <span className="font-semibold">12</span>
                 </div>
                 <div className="flex justify-between text-sm text-muted-foreground">
-                  <span>Neuf</span>
+                  <span>{tCondition("MINT")}</span>
                   <span>7</span>
                 </div>
               </div>
@@ -379,7 +379,7 @@ export default function CollectionLanding() {
                     {jersey.club}
                   </p>
                   <p className="text-xs text-muted-foreground">
-                    {jersey.type} • {jersey.season}
+                    {tJerseyType(jersey.type)} • {jersey.season}
                   </p>
                 </div>
               </div>
@@ -387,16 +387,14 @@ export default function CollectionLanding() {
           </div>
 
           <div className="text-center mt-8">
-            <p className="text-muted-foreground mb-4">
-              + 18 autres maillots dans cette collection
-            </p>
+            <p className="text-muted-foreground mb-4">{t("moreJerseys")}</p>
             <Button
               size="lg"
               asChild
               className="px-6 sm:px-8 py-6 bg-primary text-primary-foreground hover:bg-primary hover:scale-105 hover:shadow-2xl hover:shadow-primary/50 font-semibold transition-all duration-300"
             >
               <Link href="/auth/signUp" className="gap-2 justify-center">
-                Créer ma collection
+                {t("createCollection")}
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </Button>
@@ -407,11 +405,9 @@ export default function CollectionLanding() {
       <section className="px-4 sm:px-6 py-16 bg-gradient-to-b from-background via-purple-500/5 to-primary/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">
-              Tout ce dont vous avez besoin
-            </h2>
+            <h2 className="text-3xl font-bold mb-4">{t("featuresTitle")}</h2>
             <p className="text-muted-foreground text-lg">
-              Des fonctionnalités pensées pour les collectionneurs
+              {t("featuresSubtitle")}
             </p>
           </div>
 
@@ -436,10 +432,10 @@ export default function CollectionLanding() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">
-              Ils ont partagé leur collection
+              {t("testimonialsTitle")}
             </h2>
             <p className="text-muted-foreground text-lg">
-              Des milliers d&apos;utilisateurs satisfaits
+              {t("testimonialsSubtitle")}
             </p>
           </div>
           <AnimatedTestimonials
@@ -447,22 +443,19 @@ export default function CollectionLanding() {
               {
                 name: "Thomas M.",
                 designation: "⭐️⭐️⭐️⭐️⭐️",
-                quote:
-                  "Enfin une app pour gérer ma collection ! Les stats par ligue sont top 🔥",
+                quote: t("testimonials.thomas"),
                 src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona4.jpg",
               },
               {
                 name: "Julie D.",
                 designation: "⭐️⭐️⭐️⭐️⭐️",
-                quote:
-                  "Je peux enfin tracker la valeur de ma collection. Interface ultra intuitive !",
+                quote: t("testimonials.julie"),
                 src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona5.jpeg",
               },
               {
                 name: "Alexandre R.",
                 designation: "⭐️⭐️⭐️⭐️⭐️",
-                quote:
-                  "L'upload de photos perso est génial. Ma collection n'a jamais été aussi bien organisée.",
+                quote: t("testimonials.alexandre"),
                 src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona6.jpeg",
               },
             ]}
@@ -482,11 +475,10 @@ export default function CollectionLanding() {
             <div className="absolute inset-0 bg-gradient-to-r from-primary/60 via-purple-600 to-primary/60 animate-gradient-x" />
             <div className="relative bg-slate-900/90 backdrop-blur-xl m-[2px] rounded-3xl p-6 sm:p-12 text-center border border-primary/20">
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 text-white">
-                Prêt à gérer votre collection ?
+                {t("ctaTitle")}
               </h2>
               <p className="text-base sm:text-lg mb-8 text-neutral-300 max-w-2xl mx-auto px-4">
-                Cataloguez vos maillots et suivez l&apos;évolution de votre
-                collection en quelques clics
+                {t("ctaSubtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
@@ -494,7 +486,7 @@ export default function CollectionLanding() {
                   className="w-full sm:w-auto px-6 sm:px-8 py-6 bg-white text-black hover:bg-white hover:scale-105 hover:shadow-2xl hover:shadow-primary/50 font-semibold text-base sm:text-lg transition-all duration-300"
                   asChild
                 >
-                  <Link href="/auth/signUp">Créer mon compte gratuitement</Link>
+                  <Link href="/auth/signUp">{t("ctaButton")}</Link>
                 </Button>
                 <Button
                   size="lg"
@@ -502,17 +494,17 @@ export default function CollectionLanding() {
                   className="w-full sm:w-auto px-6 sm:px-8 py-6 border-2 border-white/40 text-white hover:bg-white hover:text-black hover:border-white hover:scale-105 hover:shadow-2xl hover:shadow-primary/50 text-base sm:text-lg bg-transparent transition-all duration-300"
                   asChild
                 >
-                  <Link href="/auth/login">Se connecter</Link>
+                  <Link href="/auth/login">{t("ctaSignIn")}</Link>
                 </Button>
               </div>
               <div className="flex items-center justify-center gap-6 mt-8 text-sm text-neutral-400">
                 <div className="flex items-center gap-2">
                   <Shield className="w-4 h-4" />
-                  <span>100% sécurisé</span>
+                  <span>{t("ctaSecure")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Sans engagement</span>
+                  <span>{t("ctaNoCommitment")}</span>
                 </div>
               </div>
             </div>
@@ -524,10 +516,10 @@ export default function CollectionLanding() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Questions fréquentes
+              {t("faqTitle")}
             </h2>
             <p className="text-muted-foreground text-lg">
-              Tout ce que vous devez savoir sur Le Vestiaire
+              {t("faqSubtitle")}
             </p>
           </div>
 

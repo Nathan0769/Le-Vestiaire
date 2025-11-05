@@ -8,6 +8,7 @@ import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
 export const metadata: Metadata = {
   title:
@@ -37,6 +38,7 @@ export const metadata: Metadata = {
 export const revalidate = 3600;
 
 export default async function CollectionPage() {
+  const t = await getTranslations("Collection.page");
   const user = await getCurrentUser();
 
   if (!user) {
@@ -105,20 +107,19 @@ export default async function CollectionPage() {
         <div className="p-6">
           <div className="flex items-center gap-3 mb-8">
             <Package className="w-6 h-6 text-primary" />
-            <h1 className="text-2xl font-semibold">Ma Collection</h1>
+            <h1 className="text-2xl font-semibold">{t("title")}</h1>
             <span className="px-3 py-1 bg-muted rounded-full text-sm font-medium">
-              0 maillot
+              0 {t("jersey")}
             </span>
           </div>
 
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <Package className="w-16 h-16 text-muted-foreground/30 mb-6" />
             <h2 className="text-xl font-medium text-muted-foreground mb-2">
-              Votre collection est vide
+              {t("emptyTitle")}
             </h2>
             <p className="text-muted-foreground max-w-md">
-              Commencez à construire votre collection en ajoutant vos premiers
-              maillots !
+              {t("emptyDescription")}
             </p>
           </div>
         </div>
@@ -129,10 +130,9 @@ export default async function CollectionPage() {
       <div className="p-6 space-y-8">
         <div className="flex items-center gap-3">
           <Package className="w-6 h-6 text-primary" />
-          <h1 className="text-2xl font-semibold">Ma Collection</h1>
+          <h1 className="text-2xl font-semibold">{t("title")}</h1>
           <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium">
-            {collectionItems.length} maillot
-            {collectionItems.length > 1 ? "s" : ""}
+            {collectionItems.length} {collectionItems.length > 1 ? t("jerseys") : t("jersey")}
           </span>
         </div>
 
@@ -148,24 +148,23 @@ export default async function CollectionPage() {
       <div className="p-6">
         <div className="flex items-center gap-3 mb-8">
           <Package className="w-6 h-6 text-primary" />
-          <h1 className="text-2xl font-semibold">Ma Collection</h1>
+          <h1 className="text-2xl font-semibold">{t("title")}</h1>
         </div>
 
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <AlertCircle className="w-16 h-16 text-destructive/50 mb-6" />
           <h2 className="text-xl font-medium text-destructive mb-2">
-            Erreur de chargement
+            {t("errorTitle")}
           </h2>
           <p className="text-muted-foreground max-w-md mb-6">
-            Une erreur est survenue lors du chargement de votre collection.
-            Veuillez rafraîchir la page ou réessayer ultérieurement.
+            {t("errorDescription")}
           </p>
           <Link
             href="/collection"
             className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
           >
             <RefreshCw className="w-4 h-4" />
-            Recharger la page
+            {t("reload")}
           </Link>
         </div>
       </div>

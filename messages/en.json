@@ -102,6 +102,236 @@
       "signupError": "Error during sign up"
     }
   },
+  "Collection": {
+    "button": {
+      "loading": "Loading...",
+      "inCollection": "In my collection",
+      "addToCollection": "Add to my collection",
+      "toast": {
+        "mustBeConnected": "You must be logged in to add to your collection",
+        "added": "Jersey added to your collection",
+        "removed": "Jersey removed from your collection",
+        "error": "An error occurred",
+        "connectionError": "Connection error. Please try again.",
+        "manageError": "You must be logged in to manage your collection"
+      }
+    },
+    "stats": {
+      "owned": "Jerseys owned",
+      "jerseyInCollection": "Jersey in your collection",
+      "jerseysInCollection": "Jerseys in your collection",
+      "favoriteLeagues": "Favorite leagues",
+      "conditions": "Conditions",
+      "source": "Source",
+      "purchased": "Purchased",
+      "gifts": "Gifts",
+      "mysteryBox": "Mystery box"
+    },
+    "landing": {
+      "badge": "Collection Management",
+      "title": "Manage your collection of",
+      "titleHighlight": "football jerseys",
+      "subtitle": "Catalog, organize and track your collection's evolution. Join",
+      "subtitleHighlight": "over 100 collectors",
+      "subtitleEnd": "passionate about jerseys.",
+      "signIn": "Sign in",
+      "signUp": "Create an account",
+      "exampleTitle": "One collection, a thousand possibilities",
+      "exampleSubtitle": "Example collection with 24 jerseys",
+      "statsTotal": "Total",
+      "statsTotalDesc": "Jerseys owned",
+      "statsValue": "Value",
+      "statsValueDesc": "Total value",
+      "statsLeagues": "Leagues",
+      "statsConditions": "Conditions",
+      "moreJerseys": "+ 18 other jerseys in this collection",
+      "createCollection": "Create my collection",
+      "featuresTitle": "Everything you need",
+      "featuresSubtitle": "Features designed for collectors",
+      "features": {
+        "catalog": {
+          "title": "Catalog everything",
+          "description": "Size, condition, purchase price, date, personalization... Manage every detail of your jerseys"
+        },
+        "photos": {
+          "title": "Add your photos",
+          "description": "Immortalize your collection with your own photos in addition to official visuals"
+        },
+        "stats": {
+          "title": "Detailed statistics",
+          "description": "Total value, distribution by league, conditions, types... Analyze your collection"
+        },
+        "evolution": {
+          "title": "Track your evolution",
+          "description": "Watch your collection grow over time with graphs"
+        },
+        "security": {
+          "title": "Secure & Private",
+          "description": "Your data is protected. You choose what you share with the community"
+        },
+        "friends": {
+          "title": "Compare with friends",
+          "description": "Add friends, discover their collections and share your passion"
+        }
+      },
+      "testimonialsTitle": "They shared their collection",
+      "testimonialsSubtitle": "Thousands of satisfied users",
+      "testimonials": {
+        "thomas": "Finally an app to manage my collection! League stats are awesome 🔥",
+        "julie": "I can finally track my collection's value. Super intuitive interface!",
+        "alexandre": "Custom photo upload is great. My collection has never been so well organized."
+      },
+      "ctaTitle": "Ready to manage your collection?",
+      "ctaSubtitle": "Catalog your jerseys and track your collection's evolution in a few clicks",
+      "ctaButton": "Create my free account",
+      "ctaSignIn": "Sign in",
+      "ctaSecure": "100% secure",
+      "ctaNoCommitment": "No commitment",
+      "faqTitle": "Frequently asked questions",
+      "faqSubtitle": "Everything you need to know about Le Vestiaire",
+      "faqs": {
+        "addJersey": {
+          "q": "How do I add a jersey to my collection?",
+          "a": "Browse our catalog of thousands of jerseys, click on a jersey then on 'Add to my collection'. You can enter size, condition, purchase price and much more."
+        },
+        "customPhotos": {
+          "q": "Can I add my own photos?",
+          "a": "Yes! In addition to official photos, you can upload your own photos for each jersey in your collection."
+        },
+        "privacy": {
+          "q": "Is my collection private?",
+          "a": "Yes, by default your collection is private. You can choose to share it with your friends or remain anonymous in rankings."
+        },
+        "pricing": {
+          "q": "Is the app free?",
+          "a": "Yes, Le Vestiaire is 100% free to manage your collection, wishlist and enjoy all features."
+        }
+      }
+    },
+    "modal": {
+      "add": {
+        "title": "Add to my collection",
+        "description": "Enter your jersey details.",
+        "size": "Size",
+        "sizeRequired": "*",
+        "sizePlaceholder": "Size",
+        "condition": "Condition",
+        "conditionRequired": "*",
+        "conditionPlaceholder": "Condition",
+        "purchasePrice": "Purchase price (€)",
+        "purchasePricePlaceholder": "Ex: 90.99",
+        "purchaseDate": "Purchase date",
+        "personalization": "Personalization (name, number...)",
+        "personalizationPlaceholder": "Ex: MESSI 10",
+        "hasTags": "Still has tags",
+        "isGift": "Received as a gift",
+        "isFromMysteryBox": "From a Mystery Box",
+        "notes": "Personal notes",
+        "notesPlaceholder": "Add your comments about this jersey...",
+        "photo": "Personal photo (optional)",
+        "photoClickToAdd": "Click to add",
+        "photoYourPhoto": "your photo",
+        "photoFormats": "PNG, JPG, WEBP (Max 5MB)",
+        "cancel": "Cancel",
+        "uploadPhoto": "Uploading photo...",
+        "adding": "Adding...",
+        "addToCollection": "Add to my collection",
+        "toast": {
+          "fileNotImage": "The file must be an image",
+          "fileTooLarge": "The photo must not exceed 5MB",
+          "sizeRequired": "Size is required",
+          "conditionRequired": "Condition is required",
+          "uploadError": "Error uploading photo"
+        }
+      },
+      "view": {
+        "titleEdit": "Edit your jersey",
+        "titleView": "Your jersey details",
+        "yourPhoto": "Your photo",
+        "officialPhoto": "Official photo",
+        "modifyPhoto": "Modify your photo",
+        "addPhoto": "Add your photo",
+        "choosePhoto": "Choose a photo",
+        "withTags": "With tags",
+        "gift": "Gift",
+        "mysteryBox": "Mystery box",
+        "club": "Club",
+        "league": "League",
+        "type": "Type",
+        "season": "Season",
+        "brand": "Brand",
+        "yourJersey": "Your jersey",
+        "purchasePrice": "Purchase price",
+        "purchasedOn": "Purchased on",
+        "player": "Player",
+        "number": "Number",
+        "personalization": "Personalization",
+        "addedOn": "Added on",
+        "personalNotes": "Personal notes",
+        "close": "Close",
+        "edit": "Edit",
+        "delete": "Delete",
+        "cancel": "Cancel",
+        "save": "Save",
+        "uploading": "Uploading...",
+        "saving": "Saving...",
+        "size": "Size",
+        "sizeRequired": "*",
+        "condition": "Condition",
+        "conditionRequired": "*",
+        "isGift": "This jersey is a gift",
+        "isFromMysteryBox": "Jersey received in a mystery box",
+        "hasTags": "Still has tags",
+        "purchaseDate": "Purchase date",
+        "notes": "Personal notes",
+        "personalizationPlaceholder": "Ex: MESSI 10",
+        "notesPlaceholder": "Add your comments about this jersey...",
+        "photoFormats": "PNG, JPG, WEBP (Max 5MB)",
+        "purchasePricePlaceholder": "Ex: 90.50",
+        "toast": {
+          "fileNotImage": "The file must be an image",
+          "fileTooLarge": "The photo must not exceed 5MB",
+          "sizeConditionRequired": "Size and condition are required",
+          "uploadError": "Error uploading photo",
+          "updated": "Jersey updated successfully",
+          "error": "An error occurred",
+          "connectionError": "Connection error. Please try again.",
+          "deleted": "Jersey removed from your collection"
+        }
+      },
+      "delete": {
+        "title": "Delete jersey?",
+        "description": "Are you sure you want to remove this jersey from your collection? This action cannot be undone.",
+        "cancel": "Cancel",
+        "confirm": "Delete",
+        "deleting": "Deleting..."
+      }
+    },
+    "grid": {
+      "title": "Your jerseys",
+      "sortBy": "Sort by:",
+      "sortOptions": {
+        "dateDesc": "Most recent",
+        "dateAsc": "Oldest",
+        "priceDesc": "Price descending",
+        "priceAsc": "Price ascending",
+        "condition": "Condition",
+        "club": "Club (A-Z)",
+        "season": "Season"
+      },
+      "noJerseys": "No jerseys in your collection."
+    },
+    "page": {
+      "title": "My Collection",
+      "jersey": "jersey",
+      "jerseys": "jerseys",
+      "emptyTitle": "Your collection is empty",
+      "emptyDescription": "Start building your collection by adding your first jerseys!",
+      "errorTitle": "Loading error",
+      "errorDescription": "An error occurred while loading your collection. Please refresh the page or try again later.",
+      "reload": "Reload page"
+    }
+  },
   "Login": {
     "title": "Welcome back",
     "subtitle": "Sign in with your Google account",

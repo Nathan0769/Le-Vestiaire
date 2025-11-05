@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -25,7 +26,7 @@ import { toast } from "sonner";
 import { Camera, X } from "lucide-react";
 import Image from "next/image";
 import type { Size, Condition, AddToCollectionData } from "@/types/collection";
-import { SIZE_LABELS, CONDITION_LABELS } from "@/types/collection";
+import { SIZE_LABELS } from "@/types/collection";
 
 interface AddToCollectionModalProps {
   open: boolean;
@@ -40,6 +41,8 @@ export function AddToCollectionModal({
   onSubmit,
   isLoading,
 }: AddToCollectionModalProps) {
+  const t = useTranslations("Collection.modal.add");
+  const tCondition = useTranslations("Condition");
   const [formData, setFormData] = useState<AddToCollectionData>({
     size: "M" as Size,
     condition: "MINT" as Condition,
@@ -57,12 +60,12 @@ export function AddToCollectionModal({
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      toast.error("Le fichier doit être une image");
+      toast.error(t("toast.fileNotImage"));
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      toast.error("La photo ne doit pas dépasser 5MB");
+      toast.error(t("toast.fileTooLarge"));
       return;
     }
 
@@ -85,12 +88,12 @@ export function AddToCollectionModal({
     e.preventDefault();
 
     if (!formData.size) {
-      toast.error("La taille est obligatoire");
+      toast.error(t("toast.sizeRequired"));
       return;
     }
 
     if (!formData.condition) {
-      toast.error("L'état est obligatoire");
+      toast.error(t("toast.conditionRequired"));
       return;
     }
 
@@ -117,7 +120,7 @@ export function AddToCollectionModal({
         dataToSubmit.userPhotoUrl = path;
       } catch (error) {
         console.error("Erreur upload photo:", error);
-        toast.error("Erreur lors de l'upload de la photo");
+        toast.error(t("toast.uploadError"));
         setIsUploadingPhoto(false);
         return;
       } finally {
@@ -151,9 +154,9 @@ export function AddToCollectionModal({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="w-[95vw] max-w-lg max-h-[90dvh] flex flex-col p-0">
         <DialogHeader className="px-6 py-4 border-b">
-          <DialogTitle>Ajouter à ma collection</DialogTitle>
+          <DialogTitle>{t("title")}</DialogTitle>
           <DialogDescription>
-            Renseignez les informations de votre maillot.
+            {t("description")}
           </DialogDescription>
         </DialogHeader>
 
@@ -166,7 +169,7 @@ export function AddToCollectionModal({
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="size" className="flex items-center gap-1">
-                  Taille <span className="text-destructive">*</span>
+                  {t("size")} <span className="text-destructive">{t("sizeRequired")}</span>
                 </Label>
                 <Select
                   value={formData.size}
@@ -176,7 +179,7 @@ export function AddToCollectionModal({
                   required
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Taille" />
+                    <SelectValue placeholder={t("sizePlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
                     {Object.entries(SIZE_LABELS).map(([value, label]) => (
@@ -190,7 +193,7 @@ export function AddToCollectionModal({
 
               <div className="space-y-2">
                 <Label htmlFor="condition" className="flex items-center gap-1">
-                  État <span className="text-destructive">*</span>
+                  {t("condition")} <span className="text-destructive">{t("conditionRequired")}</span>
                 </Label>
                 <Select
                   value={formData.condition}
@@ -200,12 +203,12 @@ export function AddToCollectionModal({
                   required
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="État" />
+                    <SelectValue placeholder={t("conditionPlaceholder")} />
                   </SelectTrigger>
                   <SelectContent>
-                    {Object.entries(CONDITION_LABELS).map(([value, label]) => (
+                    {(["MINT", "EXCELLENT", "GOOD", "FAIR", "POOR"] as const).map((value) => (
                       <SelectItem key={value} value={value}>
-                        {label}
+                        {tCondition(value)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -214,13 +217,13 @@ export function AddToCollectionModal({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="purchasePrice">Prix d&apos;achat (€)</Label>
+              <Label htmlFor="purchasePrice">{t("purchasePrice")}</Label>
               <Input
                 id="purchasePrice"
                 type="number"
                 step="0.1"
                 min="0"
-                placeholder="Ex: 90.99"
+                placeholder={t("purchasePricePlaceholder")}
                 value={formData.purchasePrice || ""}
                 onChange={(e) =>
                   setFormData({
@@ -234,7 +237,7 @@ export function AddToCollectionModal({
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="purchaseDate">Date d&apos;achat</Label>
+              <Label htmlFor="purchaseDate">{t("purchaseDate")}</Label>
               <Input
                 id="purchaseDate"
                 type="date"
@@ -257,11 +260,11 @@ export function AddToCollectionModal({
 
             <div className="space-y-2">
               <Label htmlFor="personalization">
-                Personnalisation (nom, numéro...)
+                {t("personalization")}
               </Label>
               <Input
                 id="personalization"
-                placeholder="Ex: MESSI 10"
+                placeholder={t("personalizationPlaceholder")}
                 value={formData.personalization || ""}
                 onChange={(e) =>
                   setFormData({ ...formData, personalization: e.target.value })
@@ -278,7 +281,7 @@ export function AddToCollectionModal({
                     setFormData({ ...formData, hasTags: !!checked })
                   }
                 />
-                <Label htmlFor="hasTags">Possède encore les étiquettes</Label>
+                <Label htmlFor="hasTags">{t("hasTags")}</Label>
               </div>
 
               <div className="flex items-center space-x-2">
@@ -289,7 +292,7 @@ export function AddToCollectionModal({
                     setFormData({ ...formData, isGift: !!checked })
                   }
                 />
-                <Label htmlFor="isGift">Reçu en cadeau</Label>
+                <Label htmlFor="isGift">{t("isGift")}</Label>
               </div>
 
               <div className="flex items-center space-x-2">
@@ -301,16 +304,16 @@ export function AddToCollectionModal({
                   }
                 />
                 <Label htmlFor="isFromMysteryBox">
-                  Provenant d&apos;une Box Mystère
+                  {t("isFromMysteryBox")}
                 </Label>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="notes">Notes personnelles</Label>
+              <Label htmlFor="notes">{t("notes")}</Label>
               <Textarea
                 id="notes"
-                placeholder="Ajoutez vos commentaires sur ce maillot..."
+                placeholder={t("notesPlaceholder")}
                 value={formData.notes || ""}
                 onChange={(e) =>
                   setFormData({ ...formData, notes: e.target.value })
@@ -320,7 +323,7 @@ export function AddToCollectionModal({
             </div>
             <div className="space-y-2">
               <Label className="flex items-center gap-2">
-                Photo personnelle (optionnelle)
+                {t("photo")}
               </Label>
 
               {photoPreview ? (
@@ -347,12 +350,12 @@ export function AddToCollectionModal({
                     <Camera className="w-12 h-12 mb-3 text-muted-foreground" />
                     <p className="mb-2 text-sm text-muted-foreground">
                       <span className="font-semibold">
-                        Cliquez pour ajouter
+                        {t("photoClickToAdd")}
                       </span>{" "}
-                      votre photo
+                      {t("photoYourPhoto")}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      PNG, JPG, WEBP (Max 5MB)
+                      {t("photoFormats")}
                     </p>
                   </div>
                   <input
@@ -375,7 +378,7 @@ export function AddToCollectionModal({
             onClick={() => handleOpenChange(false)}
             disabled={isLoading || isUploadingPhoto}
           >
-            Annuler
+            {t("cancel")}
           </Button>
           <Button
             type="submit"
@@ -386,15 +389,15 @@ export function AddToCollectionModal({
             {isUploadingPhoto ? (
               <div className="flex items-center gap-2">
                 <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-                <span>Upload photo...</span>
+                <span>{t("uploadPhoto")}</span>
               </div>
             ) : isLoading ? (
               <div className="flex items-center gap-2">
                 <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-                <span>Ajout...</span>
+                <span>{t("adding")}</span>
               </div>
             ) : (
-              <span>Ajouter à ma collection</span>
+              <span>{t("addToCollection")}</span>
             )}
           </Button>
         </DialogFooter>

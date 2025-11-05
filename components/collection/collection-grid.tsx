@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import {
   Select,
   SelectContent,
@@ -16,18 +17,19 @@ interface CollectionGridProps {
 }
 
 export function CollectionGrid({ collectionItems }: CollectionGridProps) {
+  const t = useTranslations("Collection.grid");
   const [sortBy, setSortBy] = useState("date-desc");
 
   const [localItems, setLocalItems] = useState(collectionItems);
 
   const sortOptions = [
-    { value: "date-desc", label: "Plus récents" },
-    { value: "date-asc", label: "Plus anciens" },
-    { value: "price-desc", label: "Prix décroissant" },
-    { value: "price-asc", label: "Prix croissant" },
-    { value: "condition", label: "État" },
-    { value: "club", label: "Club (A-Z)" },
-    { value: "season", label: "Saison" },
+    { value: "date-desc", label: t("sortOptions.dateDesc") },
+    { value: "date-asc", label: t("sortOptions.dateAsc") },
+    { value: "price-desc", label: t("sortOptions.priceDesc") },
+    { value: "price-asc", label: t("sortOptions.priceAsc") },
+    { value: "condition", label: t("sortOptions.condition") },
+    { value: "club", label: t("sortOptions.club") },
+    { value: "season", label: t("sortOptions.season") },
   ];
 
   const handleUpdate = (updatedItem: CollectionItemWithJersey) => {
@@ -84,9 +86,9 @@ export function CollectionGrid({ collectionItems }: CollectionGridProps) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-medium">Vos maillots</h2>
+        <h2 className="text-lg font-medium">{t("title")}</h2>
         <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">Trier par :</span>
+          <span className="text-sm text-muted-foreground">{t("sortBy")}</span>
           <Select value={sortBy} onValueChange={setSortBy}>
             <SelectTrigger className="w-40">
               <SelectValue />
@@ -105,7 +107,7 @@ export function CollectionGrid({ collectionItems }: CollectionGridProps) {
       {sortedItems.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-muted-foreground">
-            Aucun maillot dans votre collection.
+            {t("noJerseys")}
           </p>
         </div>
       ) : (

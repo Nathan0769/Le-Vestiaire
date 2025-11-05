@@ -9,6 +9,7 @@ import type {
   AddToCollectionData,
   CollectionResponse,
 } from "@/types/collection";
+import { useTranslations } from "next-intl";
 
 interface CollectionButtonProps {
   jerseyId: string;
@@ -19,6 +20,7 @@ export function CollectionButton({
   jerseyId,
   initialIsInCollection = false,
 }: CollectionButtonProps) {
+  const t = useTranslations("Collection.button");
   const [isInCollection, setIsInCollection] = useState(initialIsInCollection);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -47,7 +49,7 @@ export function CollectionButton({
 
   const handleAddToCollection = async (data: AddToCollectionData) => {
     if (!user) {
-      toast.error("Vous devez être connecté pour ajouter à votre collection");
+      toast.error(t("toast.mustBeConnected"));
       return;
     }
 
@@ -66,13 +68,13 @@ export function CollectionButton({
       if (response.ok && result.success) {
         setIsInCollection(true);
         setShowModal(false);
-        toast.success("Maillot ajouté à votre collection");
+        toast.success(t("toast.added"));
       } else {
-        toast.error(result.error || "Une erreur est survenue");
+        toast.error(result.error || t("toast.error"));
       }
     } catch (error) {
       console.error("Erreur lors de l'ajout à la collection:", error);
-      toast.error("Erreur de connexion. Veuillez réessayer.");
+      toast.error(t("toast.connectionError"));
     } finally {
       setIsLoading(false);
     }
@@ -91,13 +93,13 @@ export function CollectionButton({
 
       if (response.ok && result.success) {
         setIsInCollection(false);
-        toast.success("Maillot retiré de votre collection");
+        toast.success(t("toast.removed"));
       } else {
-        toast.error(result.error || "Une erreur est survenue");
+        toast.error(result.error || t("toast.error"));
       }
     } catch (error) {
       console.error("Erreur lors de la suppression de la collection:", error);
-      toast.error("Erreur de connexion. Veuillez réessayer.");
+      toast.error(t("toast.connectionError"));
     } finally {
       setIsLoading(false);
     }
@@ -105,7 +107,7 @@ export function CollectionButton({
 
   const handleButtonClick = () => {
     if (!user) {
-      toast.error("Vous devez être connecté pour gérer votre collection");
+      toast.error(t("toast.manageError"));
       return;
     }
 
@@ -126,17 +128,17 @@ export function CollectionButton({
         {isLoading ? (
           <div className="flex items-center gap-2">
             <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-            <span>Chargement...</span>
+            <span>{t("loading")}</span>
           </div>
         ) : (
           <div className="flex items-center gap-2">
             {isInCollection ? (
               <>
-                <span>Dans ma collection</span>
+                <span>{t("inCollection")}</span>
               </>
             ) : (
               <>
-                <span>Ajouter à ma collection</span>
+                <span>{t("addToCollection")}</span>
               </>
             )}
           </div>
