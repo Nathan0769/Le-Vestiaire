@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useTranslations } from "next-intl";
 
 const themeOptions = [
   "bleu",
@@ -24,6 +25,7 @@ const themeOptions = [
 ];
 
 export function ThemeColorSelect() {
+  const t = useTranslations("Profile.themeColor");
   const [theme, setTheme] = useState("blue");
 
   const applyTheme = (newTheme: string) => {
@@ -51,15 +53,15 @@ export function ThemeColorSelect() {
 
   return (
     <div className="grid gap-2">
-      <label className="text-sm font-medium">Couleur du thème</label>
+      <label className="text-sm font-medium">{t("label")}</label>
       <Select value={theme} onValueChange={handleChange}>
         <SelectTrigger className="w-full">
-          <SelectValue placeholder="Choisir une couleur" />
+          <SelectValue placeholder={t("placeholder")} />
         </SelectTrigger>
         <SelectContent>
           {themeOptions.map((color) => (
             <SelectItem key={color} value={color}>
-              <span className="capitalize">{color}</span>
+              {t(`colors.${color}`)}
             </SelectItem>
           ))}
         </SelectContent>

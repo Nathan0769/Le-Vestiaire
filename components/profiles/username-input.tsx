@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Check, X, Loader2, Pencil } from "lucide-react";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useTranslations } from "next-intl";
 
 interface UsernameInputProps {
   value: string;
@@ -17,6 +18,7 @@ export function UsernameInput({
   onChange,
   onValidationChange,
 }: UsernameInputProps) {
+  const t = useTranslations("Profile.username");
   const [isEditing, setIsEditing] = useState(false);
   const [isChecking, setIsChecking] = useState(false);
   const [initialValue, setInitialValue] = useState(value);
@@ -96,7 +98,7 @@ export function UsernameInput({
     }
 
     if (value.length < 5) {
-      return "5-20 caractères • Lettres, chiffres, tirets et underscores uniquement";
+      return t("rules");
     }
 
     if (value.toLowerCase() === initialValue?.toLowerCase()) {
@@ -104,12 +106,12 @@ export function UsernameInput({
     }
 
     if (availability && !availability.available) {
-      return availability.error || "Ce pseudo n'est pas disponible";
+      return availability.error || t("notAvailable");
     }
     if (availability && availability.available) {
-      return "✓ Ce pseudo est disponible";
+      return t("available");
     }
-    return "5-20 caractères • Lettres, chiffres, tirets et underscores uniquement";
+    return t("rules");
   };
 
   const getHelperColor = () => {
@@ -148,14 +150,14 @@ export function UsernameInput({
 
   return (
     <div className="grid gap-2">
-      <Label htmlFor="username">Pseudo</Label>
+      <Label htmlFor="username">{t("label")}</Label>
       <div className="relative flex gap-2">
         <div className="relative flex-1">
           <Input
             id="username"
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            placeholder="mon_pseudo"
+            placeholder={t("placeholder")}
             maxLength={20}
             className="pr-10"
             disabled={!isEditing}

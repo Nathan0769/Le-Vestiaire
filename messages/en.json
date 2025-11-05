@@ -90,7 +90,36 @@
     "avatarUploadError": "Error uploading avatar",
     "userNotAuthenticated": "User not authenticated",
     "serverUploadError": "Server upload error",
-    "saveError": "Error saving."
+    "saveError": "Error saving.",
+    "bio": {
+      "label": "Bio",
+      "placeholder": "Write a few words about yourself…",
+      "charactersCount": "{current}/{max} characters"
+    },
+    "themeColor": {
+      "label": "Theme color",
+      "placeholder": "Choose a color",
+      "colors": {
+        "bleu": "Blue",
+        "bleu-nuit": "Night blue",
+        "rouge": "Red",
+        "violet": "Purple",
+        "vert": "Green",
+        "orange": "Orange",
+        "jaune": "Yellow",
+        "rose": "Pink",
+        "violet-leger": "Light purple",
+        "marine": "Navy",
+        "gold": "Gold"
+      }
+    },
+    "username": {
+      "label": "Username",
+      "placeholder": "my_username",
+      "rules": "5-20 characters • Letters, numbers, dashes and underscores only",
+      "notAvailable": "This username is not available",
+      "available": "✓ This username is available"
+    }
   },
   "HomePage": {
     "hero": {

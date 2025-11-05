@@ -90,7 +90,36 @@
     "avatarUploadError": "Erreur lors de l'upload de l'avatar",
     "userNotAuthenticated": "Utilisateur non authentifié",
     "serverUploadError": "Erreur upload serveur",
-    "saveError": "Erreur lors de la sauvegarde."
+    "saveError": "Erreur lors de la sauvegarde.",
+    "bio": {
+      "label": "Bio",
+      "placeholder": "Écris quelques mots sur toi…",
+      "charactersCount": "{current}/{max} caractères"
+    },
+    "themeColor": {
+      "label": "Couleur du thème",
+      "placeholder": "Choisir une couleur",
+      "colors": {
+        "bleu": "Bleu",
+        "bleu-nuit": "Bleu nuit",
+        "rouge": "Rouge",
+        "violet": "Violet",
+        "vert": "Vert",
+        "orange": "Orange",
+        "jaune": "Jaune",
+        "rose": "Rose",
+        "violet-leger": "Violet léger",
+        "marine": "Marine",
+        "gold": "Or"
+      }
+    },
+    "username": {
+      "label": "Pseudo",
+      "placeholder": "mon_pseudo",
+      "rules": "5-20 caractères • Lettres, chiffres, tirets et underscores uniquement",
+      "notAvailable": "Ce pseudo n'est pas disponible",
+      "available": "✓ Ce pseudo est disponible"
+    }
   },
   "HomePage": {
     "hero": {
