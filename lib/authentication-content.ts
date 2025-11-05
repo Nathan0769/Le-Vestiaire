@@ -8,17 +8,17 @@ const BRAND_STATIC_DATA: Record<
   adidas: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/logo.png",
     color: "#000000",
-    scanAvailable: true,
+    scanAvailable: false,
   },
   nike: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/logo.png",
     color: "#FF3B00",
-    scanAvailable: true,
+    scanAvailable: false,
   },
   puma: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/puma/logo.png",
     color: "#000000",
-    scanAvailable: true,
+    scanAvailable: false,
   },
   hummel: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/hummel/logo.png",
