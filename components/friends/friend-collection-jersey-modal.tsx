@@ -5,16 +5,17 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import Image from "next/image";
-import { Calendar, Euro, Tag, User, Package, Star, Gift } from "lucide-react";
+import { Tag, Package, Star, Gift } from "lucide-react";
 import { CONDITION_LABELS } from "@/types/collection";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import type { FriendCollectionItem } from "@/types/friend-collection";
+import { ImageCarousel } from "@/components/collection/image-carousel";
 
 interface FriendCollectionJerseyModalProps {
   isOpen: boolean;
@@ -56,154 +57,161 @@ export function FriendCollectionJerseyModal({
     return typeLabels[type as keyof typeof typeLabels] || type;
   };
 
+  const carouselImages = [];
+
+  if (collectionItem.userPhotoUrl) {
+    carouselImages.push({
+      src: collectionItem.userPhotoUrl,
+      alt: "Photo personnelle",
+      label: "Photo personnelle",
+    });
+  }
+
+  carouselImages.push({
+    src: collectionItem.jersey.imageUrl,
+    alt: collectionItem.jersey.name,
+    label: "Photo officielle",
+  });
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
-        <DialogHeader>
+      <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] flex flex-col p-0">
+        <DialogHeader className="px-6 py-4 border-b">
           <DialogTitle className="flex items-center gap-2">
             <Package className="w-5 h-5 text-primary" />
             Détails du maillot
           </DialogTitle>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div className="relative aspect-square bg-white rounded-lg border">
-              <Image
-                src={collectionItem.jersey.imageUrl}
-                alt={collectionItem.jersey.name}
-                fill
-                className="object-contain rounded-lg"
-              />
-            </div>
+        <div className="flex-1 overflow-y-auto px-6 py-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="space-y-4">
+              <ImageCarousel images={carouselImages} />
 
-            <div className="flex flex-wrap gap-2">
-              <Badge
-                variant="secondary"
-                className={`${getConditionColor(collectionItem.condition)}`}
-              >
-                {
-                  CONDITION_LABELS[
-                    collectionItem.condition as keyof typeof CONDITION_LABELS
-                  ]
-                }
-              </Badge>
-
-              {collectionItem.size && (
-                <Badge variant="outline">Taille {collectionItem.size}</Badge>
-              )}
-
-              {collectionItem.hasTags && (
-                <Badge variant="outline" className="text-green-600">
-                  <Tag className="w-3 h-3 mr-1" />
-                  Avec étiquettes
+              <div className="flex flex-wrap gap-2">
+                <Badge
+                  variant="secondary"
+                  className={`${getConditionColor(collectionItem.condition)}`}
+                >
+                  {
+                    CONDITION_LABELS[
+                      collectionItem.condition as keyof typeof CONDITION_LABELS
+                    ]
+                  }
                 </Badge>
-              )}
 
-              {collectionItem.isGift && (
-                <Badge variant="outline" className="text-primary bg-primary/20">
-                  <Gift className="w-3 h-3 mr-1" />
-                  Cadeau
-                </Badge>
-              )}
+                {collectionItem.size && (
+                  <Badge variant="outline">Taille {collectionItem.size}</Badge>
+                )}
 
-              {collectionItem.isFromMysteryBox && (
-                <Badge variant="outline" className="text-primary bg-primary/20">
-                  <Package className="w-3 h-3 mr-1" />
-                  Box mystère
-                </Badge>
-              )}
-            </div>
-          </div>
+                {collectionItem.hasTags && (
+                  <Badge variant="outline" className="text-green-600">
+                    <Tag className="w-3 h-3 mr-1" />
+                    Avec étiquettes
+                  </Badge>
+                )}
 
-          <div className="space-y-6">
-            <div>
-              <h3 className="font-semibold text-lg mb-3">
-                {collectionItem.jersey.name}
-              </h3>
+                {collectionItem.isGift && (
+                  <Badge
+                    variant="outline"
+                    className="text-primary bg-primary/20"
+                  >
+                    <Gift className="w-3 h-3 mr-1" />
+                    Cadeau
+                  </Badge>
+                )}
 
-              <div className="space-y-2 text-sm">
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Club</span>
-                  <span className="font-medium">
-                    {collectionItem.jersey.club.name}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Ligue</span>
-                  <span className="font-medium">
-                    {collectionItem.jersey.club.league.name}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Type</span>
-                  <span className="font-medium">
-                    {getJerseyTypeLabel(collectionItem.jersey.type)}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Saison</span>
-                  <span className="font-medium">
-                    {collectionItem.jersey.season}
-                  </span>
-                </div>
-
-                <div className="flex items-center justify-between">
-                  <span className="text-muted-foreground">Marque</span>
-                  <span className="font-medium">
-                    {collectionItem.jersey.brand}
-                  </span>
-                </div>
+                {collectionItem.isFromMysteryBox && (
+                  <Badge
+                    variant="outline"
+                    className="text-primary bg-primary/20"
+                  >
+                    <Package className="w-3 h-3 mr-1" />
+                    Box mystère
+                  </Badge>
+                )}
               </div>
             </div>
 
-            <Separator />
+            <div className="space-y-6">
+              <div>
+                <h3 className="font-semibold text-lg mb-3">
+                  {collectionItem.jersey.name}
+                </h3>
 
-            <div>
-              <h4 className="font-semibold mb-3 flex items-center gap-2">
-                <Star className="w-4 h-4" />
-                Informations de collection
-              </h4>
-
-              <div className="space-y-3 text-sm">
-                {collectionItem.purchasePrice && (
-                  <div className="flex items-center gap-2">
-                    <Euro className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">
-                      Prix d&apos;achat :
-                    </span>
-                    <span className="font-semibold text-primary">
-                      {collectionItem.purchasePrice}€
-                    </span>
-                  </div>
-                )}
-
-                {collectionItem.purchaseDate && (
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-muted-foreground" />
-                    <span className="text-muted-foreground">Acheté le :</span>
+                <div className="space-y-2 text-sm">
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Club</span>
                     <span className="font-medium">
-                      {format(
-                        new Date(collectionItem.purchaseDate),
-                        "dd MMMM yyyy",
-                        { locale: fr }
-                      )}
+                      {collectionItem.jersey.club.name}
                     </span>
                   </div>
-                )}
 
-                {collectionItem.personalization && (
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2">
-                      <User className="w-4 h-4 text-muted-foreground" />
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Ligue</span>
+                    <span className="font-medium">
+                      {collectionItem.jersey.club.league.name}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Type</span>
+                    <span className="font-medium">
+                      {getJerseyTypeLabel(collectionItem.jersey.type)}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Saison</span>
+                    <span className="font-medium">
+                      {collectionItem.jersey.season}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Marque</span>
+                    <span className="font-medium">
+                      {collectionItem.jersey.brand}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <Separator />
+
+              <div>
+                <h4 className="font-semibold mb-3 flex items-center gap-2">
+                  <Star className="w-4 h-4" />
+                  Informations de collection
+                </h4>
+
+                <div className="space-y-2 text-sm">
+                  {collectionItem.purchasePrice && (
+                    <div className="flex items-center justify-between">
                       <span className="text-muted-foreground">
-                        Personnalisation :
+                        Prix d&apos;achat
+                      </span>
+                      <span className="font-semibold text-primary">
+                        {collectionItem.purchasePrice}€
                       </span>
                     </div>
-                    <div className="ml-6 space-y-1 text-sm">
+                  )}
+
+                  {collectionItem.purchaseDate && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Acheté le</span>
+                      <span className="font-medium">
+                        {format(
+                          new Date(collectionItem.purchaseDate),
+                          "dd MMMM yyyy",
+                          { locale: fr }
+                        )}
+                      </span>
+                    </div>
+                  )}
+
+                  {collectionItem.personalization && (
+                    <>
                       {(() => {
                         const parts =
                           collectionItem.personalization!.split(" ");
@@ -214,17 +222,17 @@ export function FriendCollectionJerseyModal({
                           if (/^\d+$/.test(number)) {
                             return (
                               <>
-                                <div className="flex justify-between">
+                                <div className="flex items-center justify-between">
                                   <span className="text-muted-foreground">
-                                    Joueur :
+                                    Joueur
                                   </span>
                                   <span className="font-medium">
                                     {playerName}
                                   </span>
                                 </div>
-                                <div className="flex justify-between">
+                                <div className="flex items-center justify-between">
                                   <span className="text-muted-foreground">
-                                    Numéro :
+                                    Numéro
                                   </span>
                                   <span className="font-medium">{number}</span>
                                 </div>
@@ -234,9 +242,9 @@ export function FriendCollectionJerseyModal({
                         }
 
                         return (
-                          <div className="flex justify-between">
+                          <div className="flex items-center justify-between">
                             <span className="text-muted-foreground">
-                              Texte :
+                              Personnalisation
                             </span>
                             <span className="font-medium">
                               {collectionItem.personalization}
@@ -244,27 +252,26 @@ export function FriendCollectionJerseyModal({
                           </div>
                         );
                       })()}
-                    </div>
-                  </div>
-                )}
+                    </>
+                  )}
 
-                <div className="flex items-center gap-2">
-                  <Package className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">Ajouté le :</span>
-                  <span className="font-medium">
-                    {format(
-                      new Date(collectionItem.createdAt),
-                      "dd MMMM yyyy",
-                      { locale: fr }
-                    )}
-                  </span>
+                  <div className="flex items-center justify-between">
+                    <span className="text-muted-foreground">Ajouté le</span>
+                    <span className="font-medium">
+                      {format(
+                        new Date(collectionItem.createdAt),
+                        "dd MMMM yyyy",
+                        { locale: fr }
+                      )}
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="flex gap-2 pt-4 border-t">
+        <DialogFooter className="px-6 py-4 border-t flex-row gap-2">
           <Button
             variant="outline"
             onClick={onClose}
@@ -272,7 +279,7 @@ export function FriendCollectionJerseyModal({
           >
             Fermer
           </Button>
-        </div>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

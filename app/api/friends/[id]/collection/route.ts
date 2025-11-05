@@ -81,6 +81,7 @@ export async function GET(
         purchaseDate: true,
         isGift: true,
         isFromMysteryBox: true,
+        userPhotoUrl: true,
         createdAt: true,
         updatedAt: true,
         jersey: {
@@ -98,16 +99,29 @@ export async function GET(
       },
     });
 
-    const formattedCollection = collectionItems.map((item) => ({
-      ...item,
-      purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
-      jersey: {
-        ...item.jersey,
-        retailPrice: item.jersey.retailPrice
-          ? Number(item.jersey.retailPrice)
-          : null,
-      },
-    }));
+    const formattedCollection = await Promise.all(
+      collectionItems.map(async (item) => {
+        let userPhotoSignedUrl = null;
+        if (item.userPhotoUrl) {
+          const { data } = await supabaseAdmin.storage
+            .from("jersey-photos")
+            .createSignedUrl(item.userPhotoUrl, 60 * 60);
+          userPhotoSignedUrl = data?.signedUrl || null;
+        }
+
+        return {
+          ...item,
+          userPhotoUrl: userPhotoSignedUrl,
+          purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
+          jersey: {
+            ...item.jersey,
+            retailPrice: item.jersey.retailPrice
+              ? Number(item.jersey.retailPrice)
+              : null,
+          },
+        };
+      })
+    );
 
     const totalJerseys = collectionItems.length;
 

@@ -23,6 +23,7 @@ export interface FriendCollectionItem {
   purchaseDate: Date | null;
   isGift: boolean;
   isFromMysteryBox: boolean;
+  userPhotoUrl: string | null;
   createdAt: Date;
   updatedAt: Date;
   jersey: {
