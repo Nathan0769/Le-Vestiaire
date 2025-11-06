@@ -460,7 +460,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
                 photo
               </p>
               <p className="text-xs text-muted-foreground">
-                PNG, JPG, WEBP (Max 2MB)
+                PNG, JPG, WEBP, AVIF (Max 2MB)
               </p>
             </div>
             <input

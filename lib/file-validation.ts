@@ -3,9 +3,9 @@ import { fileTypeFromBuffer } from "file-type";
 /**
  * Types d'images autorisés pour les uploads
  */
-const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
+const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avif"] as const;
 
-const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp"] as const;
+const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"] as const;
 
 /**
  * Taille maximale par défaut : 2MB

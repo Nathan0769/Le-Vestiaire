@@ -55,6 +55,14 @@ describe("file-validation", () => {
       expect(result.valid).toBe(true);
     });
 
+    it("accepte un type MIME valide (AVIF)", () => {
+      const file = createMockFile(5000, "image.avif", "image/avif");
+
+      const result = validateImageFileBasic(file);
+
+      expect(result.valid).toBe(true);
+    });
+
     it("refuse un type MIME invalide", () => {
       const file = createMockFile(5000, "document.pdf", "application/pdf");
 
