@@ -6,8 +6,10 @@ import { Star, ArrowRight, Award } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import type { TopRatedJersey } from "@/types/home";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useJerseyTypeTranslation } from "@/lib/translations";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
+import type { JerseyType } from "@/types/jersey";
 
 interface TopRatedSectionProps {
   jerseys?: TopRatedJersey[];
@@ -17,9 +19,24 @@ export function TopRatedSection({
   jerseys: ssrJerseys,
 }: TopRatedSectionProps = {}) {
   const t = useTranslations("HomePage.topRated");
+  const tJerseyType = useTranslations("JerseyType");
   const jerseyType = useJerseyTypeTranslation();
+  const locale = useLocale();
   const [jerseys, setJerseys] = useState<TopRatedJersey[]>(ssrJerseys || []);
   const [loading, setLoading] = useState(!ssrJerseys);
+
+  const getTranslatedName = (jersey: TopRatedJersey) => {
+    return translateJerseyName({
+      jersey: {
+        name: jersey.name,
+        type: jersey.type as JerseyType,
+        season: jersey.season,
+        clubShortName: jersey.club.shortName,
+      },
+      locale,
+      typeTranslation: tJerseyType(jersey.type as JerseyType),
+    });
+  };
 
   useEffect(() => {
     if (ssrJerseys) return; // Pas de fetch si SSR
@@ -138,7 +155,7 @@ export function TopRatedSection({
                 <div className="aspect-square bg-white rounded-lg border border-border overflow-hidden mb-3 group-hover:shadow-lg transition-all duration-200">
                   <Image
                     src={jersey.imageUrl}
-                    alt={jersey.name}
+                    alt={getTranslatedName(jersey)}
                     width={200}
                     height={200}
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-200"

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -50,6 +50,7 @@ import { SIZE_LABELS } from "@/types/collection";
 import type { Size, Condition, UpdateCollectionData } from "@/types/collection";
 import type { JerseyType } from "@/types/jersey";
 import { format } from "date-fns";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
@@ -70,6 +71,7 @@ export function CollectionJerseyModal({
   onUpdate,
   onDelete,
 }: CollectionJerseyModalProps) {
+  const locale = useLocale();
   const t = useTranslations("Collection.modal.view");
   const tDelete = useTranslations("Collection.modal.delete");
   const tJerseyType = useTranslations("JerseyType");
@@ -309,6 +311,17 @@ export function CollectionJerseyModal({
     return tJerseyType(type as JerseyType);
   };
 
+  const translatedJerseyName = translateJerseyName({
+    jersey: {
+      name: collectionItem.jersey.name,
+      type: collectionItem.jersey.type as JerseyType,
+      season: collectionItem.jersey.season,
+      clubShortName: collectionItem.jersey.club.shortName,
+    },
+    locale,
+    typeTranslation: tJerseyType(collectionItem.jersey.type as JerseyType),
+  });
+
   const carouselImages = [];
 
   if (photoPreview) {
@@ -443,7 +456,7 @@ export function CollectionJerseyModal({
               <div className="space-y-6">
                 <div>
                   <h3 className="font-semibold text-lg mb-3">
-                    {collectionItem.jersey.name}
+                    {translatedJerseyName}
                   </h3>
 
                   <div className="space-y-2 text-sm">

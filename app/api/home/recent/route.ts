@@ -27,7 +27,12 @@ export async function GET(request: NextRequest) {
       type: jersey.type,
       season: jersey.season,
       brand: jersey.brand,
-      club: jersey.club,
+      club: {
+        id: jersey.club.id,
+        name: jersey.club.name,
+        shortName: jersey.club.shortName,
+        league: jersey.club.league,
+      },
       createdAt: jersey.createdAt,
     }));
 

@@ -35,6 +35,7 @@ export interface RecentJersey {
   club: {
     id: string;
     name: string;
+    shortName: string;
     league: {
       id: string | null;
       name: string;
@@ -53,6 +54,7 @@ export interface UserHomeStats {
         name: string;
         imageUrl: string;
         type: string;
+        season: string;
         club: {
           id: string;
           name: string;
@@ -77,6 +79,7 @@ export interface UserHomeStats {
         name: string;
         imageUrl: string;
         type: string;
+        season: string;
         club: {
           id: string;
           name: string;
@@ -165,6 +168,7 @@ export interface RawResult {
   createdAt: Date;
   club_id: string;
   club_name: string;
+  club_short_name: string;
   league_id: string | null;
   league_name: string | null;
 }

@@ -103,7 +103,7 @@ async function getRecentJerseys(): Promise<RecentJersey[]> {
 )
 SELECT
     j.id, j.name, j."imageUrl", j.type, j.season, j.brand, j."createdAt",
-    c.id AS club_id, c.name AS club_name,
+    c.id AS club_id, c.name AS club_name, c."shortName" AS club_short_name,
     l.id AS league_id, l.name AS league_name
 FROM latest_jerseys j
 JOIN clubs c ON j."clubId" = c.id
@@ -124,6 +124,7 @@ ORDER BY j."createdAt" DESC;
       club: {
         id: j.club_id,
         name: j.club_name,
+        shortName: j.club_short_name,
         league: {
           id: j.league_id,
           name: j.league_name || "N/A",
@@ -159,6 +160,7 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
               name: true,
               imageUrl: true,
               type: true,
+              season: true,
               club: {
                 select: {
                   id: true,
@@ -204,6 +206,7 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
             name: true,
             imageUrl: true,
             type: true,
+            season: true,
             club: {
               select: {
                 id: true,
@@ -237,6 +240,7 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
       name: item.jersey.name,
       imageUrl: item.jersey.imageUrl,
       type: item.jersey.type,
+      season: item.jersey.season,
       club: {
         id: item.jersey.club.id,
         name: item.jersey.club.name,
@@ -258,6 +262,7 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
       name: item.jersey.name,
       imageUrl: item.jersey.imageUrl,
       type: item.jersey.type,
+      season: item.jersey.season,
       club: {
         id: item.jersey.club.id,
         name: item.jersey.club.name,

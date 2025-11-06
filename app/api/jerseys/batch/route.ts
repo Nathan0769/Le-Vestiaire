@@ -17,7 +17,10 @@ export async function POST(request: Request) {
       },
       include: {
         club: {
-          include: {
+          select: {
+            id: true,
+            name: true,
+            shortName: true,
             league: true,
           },
         },

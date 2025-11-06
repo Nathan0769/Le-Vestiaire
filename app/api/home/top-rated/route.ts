@@ -44,7 +44,15 @@ export async function GET(request: NextRequest) {
           type: jersey.type,
           season: jersey.season,
           brand: jersey.brand,
-          club: jersey.club,
+          club: {
+            id: jersey.club.id,
+            name: jersey.club.name,
+            shortName: jersey.club.shortName,
+            logoUrl: jersey.club.logoUrl,
+            primaryColor: jersey.club.primaryColor,
+            leagueId: jersey.club.leagueId,
+            league: jersey.club.league,
+          },
           averageRating: Math.round(averageRating * 10) / 10,
           totalRatings,
         };

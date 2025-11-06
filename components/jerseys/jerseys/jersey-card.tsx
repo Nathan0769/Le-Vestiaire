@@ -6,7 +6,8 @@ import Image from "next/image";
 import { JerseyType } from "@prisma/client";
 import { Club } from "@prisma/client";
 import { getJerseyUrl } from "@/lib/jersey-url";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
 
 type Props = {
   jersey: {
@@ -24,7 +25,19 @@ type Props = {
 
 export function JerseyCard({ jersey, leagueId, club, showFullInfo }: Props) {
   const router = useRouter();
+  const locale = useLocale();
   const tJerseyType = useTranslations("JerseyType");
+
+  const translatedJerseyName = translateJerseyName({
+    jersey: {
+      name: jersey.name,
+      type: jersey.type as JerseyType,
+      season: jersey.season || "",
+      clubShortName: club.shortName,
+    },
+    locale,
+    typeTranslation: tJerseyType(jersey.type),
+  });
 
   const handleClick = () => {
     const identifier = jersey.slug || jersey.id;

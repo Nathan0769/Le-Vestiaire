@@ -6,8 +6,9 @@ import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { CollectionJerseyModal } from "./collection-jersey-modal";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import type { JerseyType } from "@/types/jersey";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
 
 interface CollectionJerseyCardProps {
   collectionItem: CollectionItemWithJersey;
@@ -20,11 +21,23 @@ export function CollectionJerseyCard({
   onUpdate,
   onDelete,
 }: CollectionJerseyCardProps) {
+  const locale = useLocale();
   const tJerseyType = useTranslations("JerseyType");
   const tCondition = useTranslations("Condition");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [localItem, setLocalItem] = useState(collectionItem);
+
+  const translatedJerseyName = translateJerseyName({
+    jersey: {
+      name: localItem.jersey.name,
+      type: localItem.jersey.type as JerseyType,
+      season: localItem.jersey.season,
+      clubShortName: localItem.jersey.club.shortName,
+    },
+    locale,
+    typeTranslation: tJerseyType(localItem.jersey.type as JerseyType),
+  });
 
   const handleUpdate = (updatedItem: CollectionItemWithJersey) => {
     setLocalItem(updatedItem);
@@ -64,7 +77,7 @@ export function CollectionJerseyCard({
           <div className="relative aspect-square">
             <Image
               src={localItem.userPhotoUrl || localItem.jersey.imageUrl}
-              alt={localItem.jersey.name}
+              alt={translatedJerseyName}
               fill
               className="object-contain group-hover:scale-105 transition-transform"
             />

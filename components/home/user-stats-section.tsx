@@ -10,7 +10,9 @@ import {
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { UserHomeStats } from "@/types/home";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
+import type { JerseyType } from "@/types/jersey";
 
 interface UserStatsSectionProps {
   userStats: UserHomeStats;
@@ -18,10 +20,25 @@ interface UserStatsSectionProps {
 
 export function UserStatsSection({ userStats }: UserStatsSectionProps) {
   const t = useTranslations("HomePage.userStats");
+  const tJerseyType = useTranslations("JerseyType");
+  const locale = useLocale();
 
   const topLeague = Object.entries(userStats.collection.leagueStats).sort(
     ([, a], [, b]) => b - a
   )[0];
+
+  const getTranslatedName = (jersey: { name: string; type: string; season: string; club: { shortName: string } }) => {
+    return translateJerseyName({
+      jersey: {
+        name: jersey.name,
+        type: jersey.type as JerseyType,
+        season: jersey.season,
+        clubShortName: jersey.club.shortName,
+      },
+      locale,
+      typeTranslation: tJerseyType(jersey.type as JerseyType),
+    });
+  };
 
   return (
     <section className="py-16 px-6 bg-muted/30">
@@ -151,14 +168,14 @@ export function UserStatsSection({ userStats }: UserStatsSectionProps) {
                       <div className="relative w-12 h-12 bg-white rounded-md overflow-hidden flex-shrink-0">
                         <Image
                           src={item.jersey.imageUrl}
-                          alt={item.jersey.name}
+                          alt={getTranslatedName(item.jersey)}
                           fill
                           className="object-contain"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-medium truncate">
-                          {item.jersey.name}
+                          {getTranslatedName(item.jersey)}
                         </p>
                         <p className="text-sm text-muted-foreground">
                           {item.jersey.club.name}
@@ -189,14 +206,14 @@ export function UserStatsSection({ userStats }: UserStatsSectionProps) {
                       <div className="relative w-12 h-12 bg-white rounded-md overflow-hidden flex-shrink-0">
                         <Image
                           src={item.jersey.imageUrl}
-                          alt={item.jersey.name}
+                          alt={getTranslatedName(item.jersey)}
                           fill
                           className="object-contain"
                         />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="font-medium truncate">
-                          {item.jersey.name}
+                          {getTranslatedName(item.jersey)}
                         </p>
                         <p className="text-sm text-muted-foreground">
                           {item.jersey.club.name}
