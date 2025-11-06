@@ -28,6 +28,7 @@ export function JerseyCard({ jersey, leagueId, club, showFullInfo }: Props) {
   const locale = useLocale();
   const tJerseyType = useTranslations("JerseyType");
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const translatedJerseyName = translateJerseyName({
     jersey: {
       name: jersey.name,
