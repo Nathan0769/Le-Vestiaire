@@ -62,11 +62,11 @@ export const generousRateLimit = new Ratelimit({
 
 /**
  * PROPOSALS : Pour les propositions de maillots
- * 50 requêtes par heure
+ * 200 requêtes par heure
  */
 export const proposalsRateLimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(50, "1 h"),
+  limiter: Ratelimit.slidingWindow(200, "1 h"),
   analytics: true,
   prefix: "@upstash/ratelimit/proposals",
 });

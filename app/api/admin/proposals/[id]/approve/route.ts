@@ -1,10 +1,5 @@
 import { NextResponse } from "next/server";
 import { requirePermission } from "@/lib/check-permission";
-import {
-  moderateRateLimit,
-  getRateLimitIdentifier,
-  checkRateLimit,
-} from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
 import { createClient } from "@supabase/supabase-js";
 
@@ -19,15 +14,8 @@ export async function POST(
 ) {
   const { id } = await params;
 
-  const { error, session } = await requirePermission({ proposal: ["approve"] });
+  const { error } = await requirePermission({ proposal: ["approve"] });
   if (error) return error;
-
-  const identifier = await getRateLimitIdentifier(session!.user.id);
-  const rateLimitResult = await checkRateLimit(moderateRateLimit, identifier);
-
-  if (!rateLimitResult.success) {
-    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
-  }
 
   try {
     const proposal = await prisma.jerseyProposal.findUnique({
