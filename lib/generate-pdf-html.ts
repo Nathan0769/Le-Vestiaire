@@ -17,6 +17,19 @@ interface GeneratePDFHTMLOptions {
   locale?: string;
 }
 
+interface Translations {
+  JerseyType: Record<string, string>;
+  Wishlist: {
+    sharedClient: {
+      wishlist: string;
+      createdWith: string;
+      brandName: string;
+      createOwn: string;
+      shareWithLovedOnes: string;
+    };
+  };
+}
+
 const THEME_CONFIG = {
   christmas: {
     gradient: "from-red-50 via-green-50 to-red-50",
@@ -52,17 +65,17 @@ const THEME_CONFIG = {
   },
 };
 
-async function loadTranslations(locale: string) {
+async function loadTranslations(locale: string): Promise<Translations> {
   const messages = await import(`@/messages/${locale}.json`);
-  return messages.default;
+  return messages.default as Translations;
 }
 
-function getJerseyTypeLabel(type: string, translations: any): string {
+function getJerseyTypeLabel(type: string, translations: Translations): string {
   const jerseyTypes = translations.JerseyType;
   return jerseyTypes[type] || type;
 }
 
-function formatJerseyCount(count: number, translations: any, locale: string): string {
+function formatJerseyCount(count: number, translations: Translations, locale: string): string {
   const jerseyWord: Record<string, { one: string; other: string }> = {
     fr: { one: "maillot", other: "maillots" },
     en: { one: "jersey", other: "jerseys" },

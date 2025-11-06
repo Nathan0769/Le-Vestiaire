@@ -15,12 +15,22 @@ interface GenerateImageOptions {
   locale?: string;
 }
 
-async function loadTranslations(locale: string) {
-  const messages = await import(`@/messages/${locale}.json`);
-  return messages.default;
+interface Translations {
+  JerseyType: Record<string, string>;
+  Wishlist: {
+    sharedClient: {
+      createdWith: string;
+      brandName: string;
+    };
+  };
 }
 
-function getJerseyTypeLabel(type: string, translations: any): string {
+async function loadTranslations(locale: string): Promise<Translations> {
+  const messages = await import(`@/messages/${locale}.json`);
+  return messages.default as Translations;
+}
+
+function getJerseyTypeLabel(type: string, translations: Translations): string {
   const jerseyTypes = translations.JerseyType;
   return jerseyTypes[type] || type;
 }
