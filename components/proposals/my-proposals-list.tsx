@@ -6,15 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { JerseyType } from "@prisma/client";
 import { toast } from "sonner";
 import { Clock } from "lucide-react";
-
-const JERSEY_TYPE_LABELS: Record<JerseyType, string> = {
-  HOME: "Domicile",
-  AWAY: "Extérieur",
-  THIRD: "Third",
-  FOURTH: "Fourth",
-  GOALKEEPER: "Gardien",
-  SPECIAL: "Spécial",
-};
+import { useTranslations } from "next-intl";
 
 interface Proposal {
   id: string;
@@ -34,6 +26,7 @@ interface Proposal {
 }
 
 export function MyProposalsList() {
+  const tJerseyType = useTranslations("JerseyType");
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -123,7 +116,7 @@ export function MyProposalsList() {
               <span>•</span>
               <span>{proposal.season}</span>
               <span>•</span>
-              <span>{JERSEY_TYPE_LABELS[proposal.type]}</span>
+              <span>{tJerseyType(proposal.type)}</span>
             </div>
 
             <div className="text-xs text-muted-foreground mb-3">

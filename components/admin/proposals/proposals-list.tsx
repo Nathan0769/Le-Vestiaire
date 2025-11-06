@@ -17,15 +17,7 @@ import {
 import { JerseyType } from "@prisma/client";
 import { toast } from "sonner";
 import { Check, X, Clock, Loader2 } from "lucide-react";
-
-const JERSEY_TYPE_LABELS: Record<JerseyType, string> = {
-  HOME: "Domicile",
-  AWAY: "Extérieur",
-  THIRD: "Third",
-  FOURTH: "Fourth",
-  GOALKEEPER: "Gardien",
-  SPECIAL: "Spécial",
-};
+import { useTranslations } from "next-intl";
 
 interface ProposalUser {
   id: string;
@@ -59,6 +51,7 @@ interface Proposal {
 type ActionType = "approve" | "reject" | null;
 
 export function ProposalsList() {
+  const tJerseyType = useTranslations("JerseyType");
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
@@ -206,7 +199,7 @@ export function ProposalsList() {
                       <span>{proposal.season}</span>
                       <span>•</span>
                       <Badge variant="secondary" className="text-xs">
-                        {JERSEY_TYPE_LABELS[proposal.type]}
+                        {tJerseyType(proposal.type)}
                       </Badge>
                     </div>
                   </div>

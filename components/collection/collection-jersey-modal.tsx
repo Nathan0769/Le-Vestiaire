@@ -48,7 +48,7 @@ import {
 } from "lucide-react";
 import { SIZE_LABELS } from "@/types/collection";
 import type { Size, Condition, UpdateCollectionData } from "@/types/collection";
-import type { JerseyTypeKey } from "@/types/jersey";
+import type { JerseyType } from "@/types/jersey";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { toast } from "sonner";
@@ -306,7 +306,7 @@ export function CollectionJerseyModal({
   };
 
   const getJerseyTypeLabel = (type: string) => {
-    return tJerseyType(type as JerseyTypeKey);
+    return tJerseyType(type as JerseyType);
   };
 
   const carouselImages = [];

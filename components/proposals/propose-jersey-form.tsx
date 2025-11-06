@@ -31,15 +31,7 @@ import { Camera, X } from "lucide-react";
 import Image from "next/image";
 import { JerseyType } from "@prisma/client";
 import { CreateProposalData } from "@/types/proposal";
-
-const JERSEY_TYPE_LABELS: Record<JerseyType, string> = {
-  HOME: "Domicile",
-  AWAY: "Extérieur",
-  THIRD: "Third",
-  FOURTH: "Fourth",
-  GOALKEEPER: "Gardien",
-  SPECIAL: "Spécial",
-};
+import { useTranslations } from "next-intl";
 
 interface Club {
   id: string;
@@ -52,6 +44,7 @@ interface ProposeJerseyFormProps {
 }
 
 export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
+  const tJerseyType = useTranslations("JerseyType");
   const [clubs, setClubs] = useState<Club[]>([]);
   const [filteredClubs, setFilteredClubs] = useState<Club[]>([]);
   const [clubSearchQuery, setClubSearchQuery] = useState("");
@@ -119,8 +112,8 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
 
     const typeLabel =
       formData.type === "SPECIAL"
-        ? specialName.trim() || "Spécial"
-        : JERSEY_TYPE_LABELS[formData.type];
+        ? specialName.trim() || tJerseyType("SPECIAL")
+        : tJerseyType(formData.type);
 
     const generatedName = `Maillot ${typeLabel} ${selectedClub.shortName} ${formData.season}`;
 
@@ -372,9 +365,9 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
               <SelectValue placeholder="Type de maillot" />
             </SelectTrigger>
             <SelectContent>
-              {Object.entries(JERSEY_TYPE_LABELS).map(([value, label]) => (
-                <SelectItem key={value} value={value}>
-                  {label}
+              {Object.values(JerseyType).map((type) => (
+                <SelectItem key={type} value={type}>
+                  {tJerseyType(type)}
                 </SelectItem>
               ))}
             </SelectContent>

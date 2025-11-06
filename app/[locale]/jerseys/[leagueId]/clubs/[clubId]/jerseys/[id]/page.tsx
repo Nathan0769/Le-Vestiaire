@@ -1,7 +1,6 @@
 import { notFound, redirect } from "next/navigation";
 import { isSlug } from "@/lib/slug-generator";
-import type { JerseyWithWishlistAndCollection } from "@/types/jersey";
-import type { JerseyTypeKey } from "@/types/jersey";
+import type { JerseyWithWishlistAndCollection, JerseyType } from "@/types/jersey";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { JerseyBreadcrumb } from "@/components/jerseys/jerseys/jerseys-bread-crumb";
@@ -41,7 +40,7 @@ export async function generateMetadata({
     const jersey: JerseyWithWishlistAndCollection = await res.json();
     const tJerseyType = await getTranslations("JerseyType");
 
-    const typeLabel = tJerseyType(jersey.type as JerseyTypeKey);
+    const typeLabel = tJerseyType(jersey.type as JerseyType);
     const typeLower = typeLabel.toLowerCase();
 
     let ratingText = "";
@@ -162,7 +161,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
 
   const tJerseyType = await getTranslations("JerseyType");
   const getJerseyTypeLabel = (type: string) => {
-    return tJerseyType(type as JerseyTypeKey);
+    return tJerseyType(type as JerseyType);
   };
 
   return (
