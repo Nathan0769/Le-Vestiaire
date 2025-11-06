@@ -3,7 +3,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { createClient } from "@supabase/supabase-js";
 import { validateImageFile, MAX_FILE_SIZE } from "@/lib/file-validation";
 import {
-  moderateRateLimit,
+  proposalsRateLimit,
   getRateLimitIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit";
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     }
 
     const identifier = await getRateLimitIdentifier(user.id);
-    const rateLimitResult = await checkRateLimit(moderateRateLimit, identifier);
+    const rateLimitResult = await checkRateLimit(proposalsRateLimit, identifier);
 
     if (!rateLimitResult.success) {
       return NextResponse.json(
