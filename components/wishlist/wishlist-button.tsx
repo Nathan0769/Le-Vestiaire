@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Heart, HeartOff } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface WishlistButtonProps {
   jerseyId: string;
@@ -15,6 +16,7 @@ export function WishlistButton({
   jerseyId,
   initialIsInWishlist,
 }: WishlistButtonProps) {
+  const t = useTranslations("Wishlist.button");
   const [isInWishlist, setIsInWishlist] = useState(initialIsInWishlist);
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAuth();
@@ -42,7 +44,7 @@ export function WishlistButton({
 
   const handleWishlistToggle = async () => {
     if (!user) {
-      toast.error("Vous devez être connecté pour ajouter à votre wishlist");
+      toast.error(t("toast.mustBeConnected"));
       return;
     }
 
@@ -61,16 +63,16 @@ export function WishlistButton({
         setIsInWishlist(data.isInWishlist);
 
         if (data.isInWishlist) {
-          toast.success("Maillot ajouté à votre wishlist");
+          toast.success(t("toast.added"));
         } else {
-          toast.success("Maillot retiré de votre wishlist");
+          toast.success(t("toast.removed"));
         }
       } else {
-        toast.error(data.error || "Une erreur est survenue");
+        toast.error(data.error || t("toast.error"));
       }
     } catch (error) {
       console.error("Erreur lors de la mise à jour de la wishlist:", error);
-      toast.error("Erreur de connexion. Veuillez réessayer.");
+      toast.error(t("toast.connectionError"));
     } finally {
       setIsLoading(false);
     }
@@ -86,19 +88,19 @@ export function WishlistButton({
       {isLoading ? (
         <div className="flex items-center gap-2">
           <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-          <span>Chargement...</span>
+          <span>{t("loading")}</span>
         </div>
       ) : (
         <div className="flex items-center gap-2">
           {isInWishlist ? (
             <>
               <HeartOff className="w-4 h-4" />
-              <span>Retirer de ma wishlist</span>
+              <span>{t("removeFromWishlist")}</span>
             </>
           ) : (
             <>
               <Heart className="w-4 h-4" />
-              <span>Ajouter à ma wishlist</span>
+              <span>{t("addToWishlist")}</span>
             </>
           )}
         </div>

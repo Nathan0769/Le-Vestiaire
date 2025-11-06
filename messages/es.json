@@ -231,7 +231,7 @@
         "photo": "Foto personal (opcional)",
         "photoClickToAdd": "Haz clic para añadir",
         "photoYourPhoto": "tu foto",
-        "photoFormats": "PNG, JPG, WEBP (Máx 5MB)",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Máx 5MB)",
         "cancel": "Cancelar",
         "uploadPhoto": "Subiendo foto...",
         "adding": "Añadiendo...",
@@ -286,7 +286,7 @@
         "notes": "Notas personales",
         "personalizationPlaceholder": "Ej: MESSI 10",
         "notesPlaceholder": "Añade tus comentarios sobre esta camiseta...",
-        "photoFormats": "PNG, JPG, WEBP (Máx 5MB)",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Máx 5MB)",
         "purchasePricePlaceholder": "Ej: 90.50",
         "toast": {
           "fileNotImage": "El archivo debe ser una imagen",
@@ -330,6 +330,255 @@
       "errorTitle": "Error de carga",
       "errorDescription": "Ha ocurrido un error al cargar tu colección. Por favor, actualiza la página o inténtalo de nuevo más tarde.",
       "reload": "Recargar página"
+    }
+  },
+  "Wishlist": {
+    "button": {
+      "loading": "Cargando...",
+      "addToWishlist": "Añadir a mi lista de deseos",
+      "removeFromWishlist": "Quitar de la lista",
+      "toast": {
+        "mustBeConnected": "Debes iniciar sesión para añadir a tu lista de deseos",
+        "added": "Camiseta añadida a tu lista de deseos",
+        "removed": "Camiseta eliminada de tu lista de deseos",
+        "error": "Ha ocurrido un error",
+        "connectionError": "Error de conexión. Por favor, inténtalo de nuevo."
+      }
+    },
+    "share": {
+      "button": "Compartir",
+      "shareAll": "Toda mi lista",
+      "shareAllCount": "{count, plural, =0 {0 camisetas} one {# camiseta} other {# camisetas}}",
+      "shareSelection": "Una selección",
+      "shareSelectionDesc": "Elegir camisetas para compartir"
+    },
+    "selectionModal": {
+      "title": "Compartir mi lista de deseos",
+      "chooseTheme": "Elige un tema",
+      "listTitle": "Título de tu lista",
+      "listTitlePlaceholder": "Ej: Mi lista de Navidad 🎄",
+      "personalMessage": "Mensaje personal",
+      "personalMessagePlaceholder": "Añade un mensaje para tus seres queridos...",
+      "charactersCount": "{count}/500 caracteres",
+      "selectJerseys": "Selecciona tus camisetas ({selected}/{total})",
+      "selectAll": "Seleccionar todo",
+      "deselectAll": "Deseleccionar todo",
+      "cancel": "Cancelar",
+      "share": "Compartir ({count, plural, one {# camiseta} other {# camisetas}})"
+    },
+    "themeModal": {
+      "title": "Personalizar mi lista de deseos",
+      "selectedCount": "{count, plural, one {# camiseta seleccionada} other {# camisetas seleccionadas}}",
+      "chooseTheme": "Elige un tema",
+      "listTitle": "Título de tu lista",
+      "listTitlePlaceholder": "Ej: Mi lista de Navidad 🎄",
+      "personalMessage": "Mensaje personal",
+      "personalMessagePlaceholder": "Añade un mensaje para tus seres queridos...",
+      "charactersCount": "{count}/500 caracteres",
+      "cancel": "Cancelar",
+      "continue": "Continuar",
+      "themes": {
+        "christmas": {
+          "name": "Navidad",
+          "defaultTitle": "Mi lista de Navidad 🎄",
+          "defaultMessage": "¡Hola! Aquí hay algunas ideas de camisetas que me encantarían 😊"
+        },
+        "birthday": {
+          "name": "Cumpleaños",
+          "defaultTitle": "Mi lista de cumpleaños 🎂",
+          "defaultMessage": "¡Pronto es mi cumpleaños! Aquí están mis deseos de camisetas 🎉"
+        },
+        "valentine": {
+          "name": "San Valentín",
+          "defaultTitle": "Mi lista de San Valentín 💝",
+          "defaultMessage": "Algunas ideas de camisetas que me harían muy feliz ❤️"
+        },
+        "default": {
+          "name": "Clásico",
+          "defaultTitle": "Mi lista de camisetas ⚽",
+          "defaultMessage": "¡Aquí hay algunas camisetas que me gustaría añadir a mi colección!"
+        }
+      }
+    },
+    "shareFormatModal": {
+      "title": "¿Cómo quieres compartir tu lista?",
+      "selectedCount": "{count, plural, one {# camiseta seleccionada} other {# camisetas seleccionadas}}",
+      "formats": {
+        "link": {
+          "title": "Enlace para compartir",
+          "description": "Página web visible en móvil y PC"
+        },
+        "image": {
+          "title": "Descargar imagen",
+          "description": "Perfecto para historias de Instagram o WhatsApp"
+        },
+        "pdf": {
+          "title": "Descargar PDF",
+          "description": "Documento limpio para imprimir o enviar"
+        }
+      },
+      "generating": "Generando...",
+      "creatingLink": "Creando tu enlace",
+      "creatingImage": "Creando tu imagen",
+      "creatingPdf": "Creando tu PDF",
+      "ready": "¡Listo!",
+      "yourShareLink": "Tu enlace para compartir:",
+      "copyLink": "Copiar enlace",
+      "copied": "¡Copiado!",
+      "share": "Compartir",
+      "close": "Cerrar",
+      "toast": {
+        "linkGenerated": "¡Enlace generado!",
+        "linkError": "Error al generar el enlace",
+        "imageDownloaded": "¡Imagen descargada con éxito!",
+        "imageError": "Error al generar la imagen",
+        "pdfDownloaded": "¡PDF descargado con éxito!",
+        "pdfError": "Error al generar el PDF",
+        "linkCopied": "¡Enlace copiado!"
+      }
+    },
+    "landing": {
+      "badge": "Lista de deseos",
+      "hero": {
+        "title": "Crea tu lista de deseos de",
+        "titleHighlight": "camisetas de fútbol",
+        "subtitle": "Lista tus deseos y compártelos fácilmente con tus seres queridos, con animaciones fluidas y diseño premium.",
+        "signIn": "Iniciar sesión",
+        "signUp": "Crear cuenta"
+      },
+      "example": {
+        "badge": "Ejemplo de lista de deseos",
+        "title": "Mi lista de Navidad 🎄",
+        "message": "Algunas ideas de camisetas que me harían feliz 😊",
+        "jerseyCount": "{count, plural, one {# camiseta} other {# camisetas}}",
+        "createdWith": "Creado con Le Vestiaire Foot ⚽",
+        "createButton": "Crear mi lista de deseos"
+      },
+      "shareSection": {
+        "title": "Comparte como quieras",
+        "subtitle": "3 formatos para adaptarse a todas tus necesidades"
+      },
+      "featuresSection": {
+        "title": "Todo está previsto",
+        "subtitle": "Funcionalidades diseñadas para facilitarte la vida",
+        "features": {
+          "create": {
+            "title": "Crea tu lista",
+            "description": "Añade todas las camisetas que te hacen soñar con un clic desde nuestro catálogo"
+          },
+          "share": {
+            "title": "Comparte fácilmente",
+            "description": "Genera un enlace, imagen o PDF para compartir con tus seres queridos para Navidad, cumpleaños..."
+          },
+          "customize": {
+            "title": "Personaliza el tema",
+            "description": "Elige entre varios temas (Navidad, Cumpleaños, Estándar) y añade un mensaje personal"
+          },
+          "manage": {
+            "title": "Gestiona tus ocasiones",
+            "description": "Crea múltiples listas de deseos para diferentes ocasiones: Navidad, cumpleaños, objetivos personales..."
+          },
+          "noDuplicates": {
+            "title": "Evita duplicados",
+            "description": "Una vez añadida a tu colección, la camiseta desaparece automáticamente de tu lista de deseos"
+          },
+          "free": {
+            "title": "100% gratis",
+            "description": "Crea y comparte tantas listas de deseos como quieras sin ningún coste"
+          }
+        }
+      },
+      "useCasesSection": {
+        "title": "Para todas las ocasiones",
+        "subtitle": "Una lista de deseos para cada momento importante",
+        "useCases": {
+          "christmas": {
+            "title": "Se acerca la Navidad",
+            "description": "Crea tu lista de Navidad y compártela con tu familia. ¡Se acabaron los regalos no deseados!"
+          },
+          "birthday": {
+            "title": "Cumpleaños",
+            "description": "Comparte tus deseos de camisetas para tu cumpleaños. Tus amigos sabrán qué regalarte."
+          },
+          "collection": {
+            "title": "Objetivos de colección",
+            "description": "Lista las camisetas que buscas para completar tu colección. Mantén tus objetivos a la vista."
+          },
+          "valentine": {
+            "title": "San Valentín",
+            "description": "Comparte tus deseos de camisetas en pareja: dúos de clubes, ediciones especiales e ideas de regalos para celebrar vuestra pasión juntos."
+          }
+        }
+      },
+      "testimonialsSection": {
+        "title": "Ellos compartieron su lista de deseos",
+        "subtitle": "Miles de usuarios satisfechos"
+      },
+      "ctaSection": {
+        "title": "¿Listo para crear tu lista de deseos?",
+        "subtitle": "Lista tus deseos y compártelos en unos pocos clics con tus seres queridos",
+        "signUpButton": "Crear mi cuenta gratis",
+        "signInButton": "Iniciar sesión",
+        "secure": "100% seguro",
+        "noCommitment": "Sin compromiso"
+      },
+      "faqSection": {
+        "title": "Preguntas frecuentes",
+        "faqs": {
+          "howToCreate": {
+            "question": "¿Cómo creo mi lista de deseos?",
+            "answer": "¡Es simple! Navega por nuestro catálogo, haz clic en el corazón para añadir una camiseta a tu lista de deseos. Luego haz clic en 'Compartir' para generar tu enlace personalizado."
+          },
+          "multipleWishlists": {
+            "question": "¿Puedo crear varias listas de deseos?",
+            "answer": "Por ahora, tienes una lista de deseos única que puedes modificar en cualquier momento. Puedes elegir qué camisetas compartir cada vez."
+          },
+          "howToView": {
+            "question": "¿Cómo ven mi lista de deseos mis seres queridos?",
+            "answer": "Generas un enlace único que compartes por mensaje, email o redes sociales. Pueden consultar tu lista en móvil o PC, sin crear una cuenta."
+          },
+          "pricing": {
+            "question": "¿La lista de deseos es gratuita?",
+            "answer": "¡Sí! Crear, gestionar y compartir tu lista de deseos es 100% gratis, sin límites."
+          },
+          "received": {
+            "question": "¿Qué pasa cuando recibo una camiseta?",
+            "answer": "Una vez que añades la camiseta a tu colección, desaparece automáticamente de tu lista de deseos. ¡Se acabaron los duplicados!"
+          },
+          "customize": {
+            "question": "¿Puedo personalizar mi lista de deseos?",
+            "answer": "¡Sí! Puedes elegir un tema (Navidad, Cumpleaños...), añadir un título y un mensaje personal para tus seres queridos."
+          }
+        }
+      }
+    },
+    "page": {
+      "title": "Mis Deseos",
+      "jerseyCount": "{count, plural, one {# camiseta} other {# camisetas}}",
+      "empty": {
+        "title": "No tienes ninguna camiseta que te llame la atención",
+        "description": "¡Navega por nuestra colección y añade tus camisetas favoritas a tu lista de deseos!"
+      },
+      "error": {
+        "title": "Error al cargar tu lista de deseos",
+        "description": "Ha ocurrido un error. Por favor, inténtalo de nuevo más tarde."
+      },
+      "stats": {
+        "wanted": "Camisetas deseadas",
+        "wantedSingular": "Camiseta en tus deseos",
+        "wantedPlural": "Camisetas en tus deseos",
+        "favoriteLeagues": "Ligas favoritas",
+        "preferredTypes": "Tipos preferidos"
+      },
+      "jerseys": "Tus camisetas"
+    },
+    "sharedClient": {
+      "wishlist": "Lista de deseos",
+      "jerseyCount": "{count, plural, one {# camiseta} other {# camisetas}}",
+      "createdWith": "Esta lista fue creada con",
+      "brandName": "Le Vestiaire Foot",
+      "createOwn": "Crea tu propia colección de camisetas",
+      "shareWithLovedOnes": "y comparte tus deseos con tus seres queridos ⚽"
     }
   },
   "Login": {

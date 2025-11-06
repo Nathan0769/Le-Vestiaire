@@ -5,6 +5,7 @@ import { Heart, Shirt, Trophy } from "lucide-react";
 import { WishlistShareButton } from "@/components/wishlist/wishlist-share-button";
 import WishlistLanding from "@/components/wishlist/wishlist-landing";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 export const metadata: Metadata = {
   title:
@@ -32,6 +33,8 @@ export const metadata: Metadata = {
 };
 
 export default async function WishlistPage() {
+  const t = await getTranslations("Wishlist.page");
+  const tJerseyType = await getTranslations("JerseyType");
   const user = await getCurrentUser();
 
   if (!user) {
@@ -58,7 +61,7 @@ export default async function WishlistPage() {
       orderBy: {
         createdAt: "desc",
       },
-      take: 1000, // Limite raisonnable pour éviter les problèmes de performance
+      take: 1000,
     });
   } catch (error) {
     console.error("Erreur lors de la récupération de la wishlist:", error);
@@ -67,10 +70,10 @@ export default async function WishlistPage() {
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <Heart className="w-16 h-16 text-destructive/30 mb-6" />
           <h2 className="text-xl font-medium text-muted-foreground mb-2">
-            Erreur lors du chargement de votre wishlist
+            {t("error.title")}
           </h2>
           <p className="text-muted-foreground max-w-md">
-            Une erreur est survenue. Veuillez réessayer plus tard.
+            {t("error.description")}
           </p>
         </div>
       </div>
@@ -93,15 +96,6 @@ export default async function WishlistPage() {
     return acc;
   }, {} as Record<string, number>);
 
-  const typeLabels = {
-    HOME: "Domicile",
-    AWAY: "Extérieur",
-    THIRD: "Third",
-    FOURTH: "Fourth",
-    GOALKEEPER: "Gardien",
-    SPECIAL: "Spécial",
-  };
-
   const shareableWishlistItems = wishlistItems.map((item) => ({
     id: item.id,
     jersey: {
@@ -121,20 +115,19 @@ export default async function WishlistPage() {
       <div className="p-6">
         <div className="flex items-center gap-3 mb-8">
           <Heart className="w-6 h-6 text-primary" />
-          <h1 className="text-2xl font-semibold">Mes Envies</h1>
+          <h1 className="text-2xl font-semibold">{t("title")}</h1>
           <span className="px-3 py-1 bg-muted rounded-full text-sm font-medium">
-            0 maillot
+            {t("jerseyCount", { count: 0 })}
           </span>
         </div>
 
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <Heart className="w-16 h-16 text-muted-foreground/30 mb-6" />
           <h2 className="text-xl font-medium text-muted-foreground mb-2">
-            Vous n&apos;avez pas de maillot qui vous fait de l&apos;œil
+            {t("empty.title")}
           </h2>
           <p className="text-muted-foreground max-w-md">
-            Parcourez notre collection et ajoutez vos maillots préférés à votre
-            wishlist !
+            {t("empty.description")}
           </p>
         </div>
       </div>
@@ -146,7 +139,7 @@ export default async function WishlistPage() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Heart className="w-6 h-6 text-primary" />
-          <h1 className="text-2xl font-semibold">Mes Envies</h1>
+          <h1 className="text-2xl font-semibold">{t("title")}</h1>
         </div>
 
         <WishlistShareButton wishlistItems={shareableWishlistItems} />
@@ -159,14 +152,14 @@ export default async function WishlistPage() {
               <Heart className="w-4 h-4 text-primary" />
             </div>
             <h3 className="font-medium text-muted-foreground">
-              Maillots voulus
+              {t("stats.wanted")}
             </h3>
           </div>
           <p className="text-2xl font-bold ">{totalJerseys} </p>
           <p className="text-sm text-muted-foreground mt-1">
             {totalJerseys === 1
-              ? "Maillot dans vos envies"
-              : "Maillots dans vos envies"}
+              ? t("stats.wantedSingular")
+              : t("stats.wantedPlural")}
           </p>
         </div>
 
@@ -176,7 +169,7 @@ export default async function WishlistPage() {
               <Trophy className="w-4 h-4 text-primary" />
             </div>
             <h3 className="font-medium text-muted-foreground">
-              Ligues favorites
+              {t("stats.favoriteLeagues")}
             </h3>
           </div>
           <div className="space-y-2">
@@ -198,7 +191,7 @@ export default async function WishlistPage() {
               <Shirt className="w-4 h-4 text-primary" />
             </div>
             <h3 className="font-medium text-muted-foreground">
-              Types préférés
+              {t("stats.preferredTypes")}
             </h3>
           </div>
           <div className="space-y-2">
@@ -206,15 +199,21 @@ export default async function WishlistPage() {
               .sort(([, a], [, b]) => b - a)
               .slice(0, 3)
               .map(([type, count]) => {
-                const typeLabel = type in typeLabels
-                  ? typeLabels[type as keyof typeof typeLabels]
-                  : type;
+                const typeLabel = tJerseyType(
+                  type as
+                    | "HOME"
+                    | "AWAY"
+                    | "THIRD"
+                    | "FOURTH"
+                    | "GOALKEEPER"
+                    | "SPECIAL"
+                );
                 return (
                   <div key={type} className="flex justify-between items-center">
-                    <span className="text-sm font-medium">
-                      {typeLabel}
+                    <span className="text-sm font-medium">{typeLabel}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {count}
                     </span>
-                    <span className="text-sm text-muted-foreground">{count}</span>
                   </div>
                 );
               })}
@@ -223,7 +222,7 @@ export default async function WishlistPage() {
       </div>
 
       <div>
-        <h2 className="text-lg font-medium mb-4">Vos maillots</h2>
+        <h2 className="text-lg font-medium mb-4">{t("jerseys")}</h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
           {wishlistItems.map((item) => (
             <JerseyCard

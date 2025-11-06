@@ -12,6 +12,7 @@ import { Share2, Heart, List, ChevronDown } from "lucide-react";
 import { WishlistSelectionModal } from "./wishlist-selection-modal";
 import { WishlistThemeModal } from "./wishlist-theme-modal";
 import { ShareFormatModal } from "./share-format-modal";
+import { useTranslations } from "next-intl";
 
 import type { Theme } from "@/types/theme";
 import type {
@@ -26,6 +27,7 @@ interface WishlistShareButtonProps {
 export function WishlistShareButton({
   wishlistItems,
 }: WishlistShareButtonProps) {
+  const t = useTranslations("Wishlist.share");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [showSelectionModal, setShowSelectionModal] = useState(false);
   const [showThemeModal, setShowThemeModal] = useState(false);
@@ -89,7 +91,7 @@ export function WishlistShareButton({
             className="flex items-center gap-2 hover:bg-primary hover:text-primary-foreground transition-colors cursor-pointer"
           >
             <Share2 className="w-4 h-4" />
-            <span>Partager</span>
+            <span>{t("button")}</span>
             <ChevronDown className="w-4 h-4" />
           </Button>
         </DropdownMenuTrigger>
@@ -103,10 +105,9 @@ export function WishlistShareButton({
               <Heart className="w-4 h-4 text-primary" />
             </div>
             <div className="flex flex-col">
-              <span className="font-medium">Toute ma wishlist</span>
+              <span className="font-medium">{t("shareAll")}</span>
               <span className="text-sm text-muted-foreground">
-                {wishlistItems.length} maillot
-                {wishlistItems.length > 1 ? "s" : ""}
+                {t("shareAllCount", { count: wishlistItems.length })}
               </span>
             </div>
           </DropdownMenuItem>
@@ -119,9 +120,9 @@ export function WishlistShareButton({
               <List className="w-4 h-4 text-primary" />
             </div>
             <div className="flex flex-col">
-              <span className="font-medium">Une sélection</span>
+              <span className="font-medium">{t("shareSelection")}</span>
               <span className="text-sm text-muted-foreground">
-                Choisir les maillots à partager
+                {t("shareSelectionDesc")}
               </span>
             </div>
           </DropdownMenuItem>

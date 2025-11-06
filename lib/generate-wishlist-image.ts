@@ -12,12 +12,25 @@ interface GenerateImageOptions {
   message: string;
   items: WishlistItem[];
   theme?: "christmas" | "birthday" | "default" | "valentine";
+  locale?: string;
+}
+
+async function loadTranslations(locale: string) {
+  const messages = await import(`@/messages/${locale}.json`);
+  return messages.default;
+}
+
+function getJerseyTypeLabel(type: string, translations: any): string {
+  const jerseyTypes = translations.JerseyType;
+  return jerseyTypes[type] || type;
 }
 
 export async function generateWishlistImage(
   options: GenerateImageOptions
 ): Promise<Blob> {
-  const { title, message, items, theme = "christmas" } = options;
+  const { title, message, items, theme = "christmas", locale = "fr" } = options;
+  const translations = await loadTranslations(locale);
+  const t = translations.Wishlist.sharedClient;
 
   const width = 1080;
   const headerHeight = 300;
@@ -215,7 +228,7 @@ export async function generateWishlistImage(
 
       ctx.fillStyle = colors.textLight;
       ctx.font = "18px Arial";
-      const typeLabel = getJerseyTypeLabel(item.type);
+      const typeLabel = getJerseyTypeLabel(item.type, translations);
       ctx.fillText(
         `${typeLabel} • ${item.season}`,
         x + itemSize / 2,
@@ -235,7 +248,7 @@ export async function generateWishlistImage(
   ctx.fillStyle = colors.textLight;
   ctx.font = "20px Arial";
   ctx.textAlign = "center";
-  ctx.fillText("Créé avec Le Vestiaire Foot ⚽", width / 2, footerY + 60);
+  ctx.fillText(`${t.createdWith} ${t.brandName} ⚽`, width / 2, footerY + 60);
 
   ctx.font = "18px Arial";
   ctx.fillText("le-vestiaire-foot.fr", width / 2, footerY + 95);
@@ -249,18 +262,6 @@ export async function generateWishlistImage(
       }
     }, "image/png");
   });
-}
-
-function getJerseyTypeLabel(type: string): string {
-  const typeLabels: Record<string, string> = {
-    HOME: "Domicile",
-    AWAY: "Extérieur",
-    THIRD: "Third",
-    FOURTH: "Fourth",
-    GOALKEEPER: "Gardien",
-    SPECIAL: "Spécial",
-  };
-  return typeLabels[type] || type;
 }
 
 export function downloadImage(blob: Blob, filename: string) {

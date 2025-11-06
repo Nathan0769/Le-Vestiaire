@@ -231,7 +231,7 @@
         "photo": "Personal photo (optional)",
         "photoClickToAdd": "Click to add",
         "photoYourPhoto": "your photo",
-        "photoFormats": "PNG, JPG, WEBP (Max 5MB)",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
         "cancel": "Cancel",
         "uploadPhoto": "Uploading photo...",
         "adding": "Adding...",
@@ -286,7 +286,7 @@
         "notes": "Personal notes",
         "personalizationPlaceholder": "Ex: MESSI 10",
         "notesPlaceholder": "Add your comments about this jersey...",
-        "photoFormats": "PNG, JPG, WEBP (Max 5MB)",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
         "purchasePricePlaceholder": "Ex: 90.50",
         "toast": {
           "fileNotImage": "The file must be an image",
@@ -330,6 +330,255 @@
       "errorTitle": "Loading error",
       "errorDescription": "An error occurred while loading your collection. Please refresh the page or try again later.",
       "reload": "Reload page"
+    }
+  },
+  "Wishlist": {
+    "button": {
+      "loading": "Loading...",
+      "addToWishlist": "Add to my wishlist",
+      "removeFromWishlist": "Remove from wishlist",
+      "toast": {
+        "mustBeConnected": "You must be logged in to add to your wishlist",
+        "added": "Jersey added to your wishlist",
+        "removed": "Jersey removed from your wishlist",
+        "error": "An error occurred",
+        "connectionError": "Connection error. Please try again."
+      }
+    },
+    "share": {
+      "button": "Share",
+      "shareAll": "My entire wishlist",
+      "shareAllCount": "{count, plural, =0 {0 jerseys} one {# jersey} other {# jerseys}}",
+      "shareSelection": "A selection",
+      "shareSelectionDesc": "Choose jerseys to share"
+    },
+    "selectionModal": {
+      "title": "Share my wishlist",
+      "chooseTheme": "Choose a theme",
+      "listTitle": "List title",
+      "listTitlePlaceholder": "Ex: My Christmas list 🎄",
+      "personalMessage": "Personal message",
+      "personalMessagePlaceholder": "Add a message for your loved ones...",
+      "charactersCount": "{count}/500 characters",
+      "selectJerseys": "Select your jerseys ({selected}/{total})",
+      "selectAll": "Select all",
+      "deselectAll": "Deselect all",
+      "cancel": "Cancel",
+      "share": "Share ({count, plural, one {# jersey} other {# jerseys}})"
+    },
+    "themeModal": {
+      "title": "Customize my wishlist",
+      "selectedCount": "{count, plural, one {# jersey selected} other {# jerseys selected}}",
+      "chooseTheme": "Choose a theme",
+      "listTitle": "List title",
+      "listTitlePlaceholder": "Ex: My Christmas list 🎄",
+      "personalMessage": "Personal message",
+      "personalMessagePlaceholder": "Add a message for your loved ones...",
+      "charactersCount": "{count}/500 characters",
+      "cancel": "Cancel",
+      "continue": "Continue",
+      "themes": {
+        "christmas": {
+          "name": "Christmas",
+          "defaultTitle": "My Christmas List 🎄",
+          "defaultMessage": "Hi! Here are some jersey ideas I'd love to receive 😊"
+        },
+        "birthday": {
+          "name": "Birthday",
+          "defaultTitle": "My Birthday Wishlist 🎂",
+          "defaultMessage": "My birthday is coming soon! Here are my jersey wishes 🎉"
+        },
+        "valentine": {
+          "name": "Valentine's Day",
+          "defaultTitle": "My Valentine's Day List 💝",
+          "defaultMessage": "Some jersey ideas that would make me very happy ❤️"
+        },
+        "default": {
+          "name": "Classic",
+          "defaultTitle": "My Jersey Wishlist ⚽",
+          "defaultMessage": "Here are some jerseys I'd like to add to my collection!"
+        }
+      }
+    },
+    "shareFormatModal": {
+      "title": "How do you want to share your list?",
+      "selectedCount": "{count, plural, one {# jersey selected} other {# jerseys selected}}",
+      "formats": {
+        "link": {
+          "title": "Link to share",
+          "description": "Web page viewable on mobile and PC"
+        },
+        "image": {
+          "title": "Download image",
+          "description": "Perfect for Instagram stories or WhatsApp"
+        },
+        "pdf": {
+          "title": "Download PDF",
+          "description": "Clean document to print or send"
+        }
+      },
+      "generating": "Generating...",
+      "creatingLink": "Creating your link",
+      "creatingImage": "Creating your image",
+      "creatingPdf": "Creating your PDF",
+      "ready": "Ready!",
+      "yourShareLink": "Your share link:",
+      "copyLink": "Copy link",
+      "copied": "Copied!",
+      "share": "Share",
+      "close": "Close",
+      "toast": {
+        "linkGenerated": "Link generated!",
+        "linkError": "Error generating link",
+        "imageDownloaded": "Image downloaded successfully!",
+        "imageError": "Error generating image",
+        "pdfDownloaded": "PDF downloaded successfully!",
+        "pdfError": "Error generating PDF",
+        "linkCopied": "Link copied!"
+      }
+    },
+    "landing": {
+      "badge": "Wishlist",
+      "hero": {
+        "title": "Create your wishlist of",
+        "titleHighlight": "football jerseys",
+        "subtitle": "List your wishes and share them easily with your loved ones, with smooth animations and premium design.",
+        "signIn": "Sign in",
+        "signUp": "Create account"
+      },
+      "example": {
+        "badge": "Wishlist example",
+        "title": "My Christmas list 🎄",
+        "message": "A few jersey ideas that would make me happy 😊",
+        "jerseyCount": "{count, plural, one {# jersey} other {# jerseys}}",
+        "createdWith": "Created with Le Vestiaire Foot ⚽",
+        "createButton": "Create my wishlist"
+      },
+      "shareSection": {
+        "title": "Share as you like",
+        "subtitle": "3 formats to suit all your needs"
+      },
+      "featuresSection": {
+        "title": "Everything is included",
+        "subtitle": "Features designed to make your life easier",
+        "features": {
+          "create": {
+            "title": "Create your list",
+            "description": "Add all the jerseys you dream of with one click from our catalog"
+          },
+          "share": {
+            "title": "Share easily",
+            "description": "Generate a link, image or PDF to share with your loved ones for Christmas, birthdays..."
+          },
+          "customize": {
+            "title": "Customize the theme",
+            "description": "Choose from several themes (Christmas, Birthday, Standard) and add a personal message"
+          },
+          "manage": {
+            "title": "Manage your occasions",
+            "description": "Create multiple wishlists for different occasions: Christmas, birthday, personal goals..."
+          },
+          "noDuplicates": {
+            "title": "Avoid duplicates",
+            "description": "Once added to your collection, the jersey automatically disappears from your wishlist"
+          },
+          "free": {
+            "title": "100% free",
+            "description": "Create and share as many wishlists as you want at no cost"
+          }
+        }
+      },
+      "useCasesSection": {
+        "title": "For all occasions",
+        "subtitle": "A wishlist for every important moment",
+        "useCases": {
+          "christmas": {
+            "title": "Christmas is coming",
+            "description": "Create your Christmas list and share it with your family. No more unwanted gifts!"
+          },
+          "birthday": {
+            "title": "Birthday",
+            "description": "Share your jersey wishes for your birthday. Your friends will know what to give you."
+          },
+          "collection": {
+            "title": "Collection goals",
+            "description": "List the jerseys you're looking for to complete your collection. Keep your goals in sight."
+          },
+          "valentine": {
+            "title": "Valentine's Day",
+            "description": "Share your jersey wishes as a couple: club duos, special editions and gift ideas to celebrate your passion together."
+          }
+        }
+      },
+      "testimonialsSection": {
+        "title": "They shared their wishlist",
+        "subtitle": "Thousands of satisfied users"
+      },
+      "ctaSection": {
+        "title": "Ready to create your wishlist?",
+        "subtitle": "List your wishes and share them in a few clicks with your loved ones",
+        "signUpButton": "Create my free account",
+        "signInButton": "Sign in",
+        "secure": "100% secure",
+        "noCommitment": "No commitment"
+      },
+      "faqSection": {
+        "title": "Frequently asked questions",
+        "faqs": {
+          "howToCreate": {
+            "question": "How do I create my wishlist?",
+            "answer": "It's simple! Browse our catalog, click the heart to add a jersey to your wishlist. Then click 'Share' to generate your personalized link."
+          },
+          "multipleWishlists": {
+            "question": "Can I create multiple wishlists?",
+            "answer": "For now, you have a single wishlist that you can modify at any time. You can choose which jerseys to share each time."
+          },
+          "howToView": {
+            "question": "How do my loved ones see my wishlist?",
+            "answer": "You generate a unique link that you share by message, email or social media. They can view your list on mobile or PC, without creating an account."
+          },
+          "pricing": {
+            "question": "Is the wishlist free?",
+            "answer": "Yes! Creating, managing and sharing your wishlist is 100% free, with no limits."
+          },
+          "received": {
+            "question": "What happens when I receive a jersey?",
+            "answer": "Once you add the jersey to your collection, it automatically disappears from your wishlist. No more duplicates!"
+          },
+          "customize": {
+            "question": "Can I customize my wishlist?",
+            "answer": "Yes! You can choose a theme (Christmas, Birthday...), add a title and a personal message for your loved ones."
+          }
+        }
+      }
+    },
+    "page": {
+      "title": "My Wishlist",
+      "jerseyCount": "{count, plural, one {# jersey} other {# jerseys}}",
+      "empty": {
+        "title": "You don't have any jerseys that catch your eye",
+        "description": "Browse our collection and add your favorite jerseys to your wishlist!"
+      },
+      "error": {
+        "title": "Error loading your wishlist",
+        "description": "An error occurred. Please try again later."
+      },
+      "stats": {
+        "wanted": "Wanted jerseys",
+        "wantedSingular": "Jersey in your wishlist",
+        "wantedPlural": "Jerseys in your wishlist",
+        "favoriteLeagues": "Favorite leagues",
+        "preferredTypes": "Preferred types"
+      },
+      "jerseys": "Your jerseys"
+    },
+    "sharedClient": {
+      "wishlist": "Wishlist",
+      "jerseyCount": "{count, plural, one {# jersey} other {# jerseys}}",
+      "createdWith": "This list was created with",
+      "brandName": "Le Vestiaire Foot",
+      "createOwn": "Create your own jersey collection",
+      "shareWithLovedOnes": "and share your wishes with your loved ones ⚽"
     }
   },
   "Login": {

@@ -6,6 +6,7 @@ import Image from "next/image";
 import { JerseyType } from "@prisma/client";
 import { Club } from "@prisma/client";
 import { getJerseyUrl } from "@/lib/jersey-url";
+import { useTranslations } from "next-intl";
 
 type Props = {
   jersey: {
@@ -23,23 +24,12 @@ type Props = {
 
 export function JerseyCard({ jersey, leagueId, club, showFullInfo }: Props) {
   const router = useRouter();
+  const tJerseyType = useTranslations("JerseyType");
 
   const handleClick = () => {
     const identifier = jersey.slug || jersey.id;
     const url = getJerseyUrl(leagueId, club.id, identifier);
     router.push(url);
-  };
-
-  const getJerseyTypeLabel = (type: string) => {
-    const typeLabels = {
-      HOME: "Domicile",
-      AWAY: "Extérieur",
-      THIRD: "Third",
-      FOURTH: "Fourth",
-      GOALKEEPER: "Gardien",
-      SPECIAL: "Spécial",
-    };
-    return typeLabels[type as keyof typeof typeLabels] || type;
   };
 
   return (
@@ -62,12 +52,29 @@ export function JerseyCard({ jersey, leagueId, club, showFullInfo }: Props) {
               {club.name}
             </p>
             <p className="text-xs text-muted-foreground text-center">
-              {getJerseyTypeLabel(jersey.type)} • {jersey.season}
+              {tJerseyType(
+                jersey.type as
+                  | "HOME"
+                  | "AWAY"
+                  | "THIRD"
+                  | "FOURTH"
+                  | "GOALKEEPER"
+                  | "SPECIAL"
+              )}{" "}
+              • {jersey.season}
             </p>
           </div>
         ) : (
-          <p className="text-sm font-medium capitalize text-center">
-            {jersey.type.toLowerCase()}
+          <p className="text-sm font-medium text-center">
+            {tJerseyType(
+              jersey.type as
+                | "HOME"
+                | "AWAY"
+                | "THIRD"
+                | "FOURTH"
+                | "GOALKEEPER"
+                | "SPECIAL"
+            )}
           </p>
         )}
       </CardContent>

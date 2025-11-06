@@ -20,6 +20,7 @@ import {
   Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslations, useLocale } from "next-intl";
 import {
   generateWishlistImage,
   downloadImage,
@@ -46,6 +47,8 @@ export function ShareFormatModal({
   message,
   theme,
 }: ShareFormatModalProps) {
+  const t = useTranslations("Wishlist.shareFormatModal");
+  const locale = useLocale();
   type NavigatorWithShare = Navigator & {
     share?: (data: ShareData) => Promise<void>;
   };
@@ -71,7 +74,7 @@ export function ShareFormatModal({
       }
     } catch (error) {
       console.error("Erreur génération:", error);
-      toast.error("Erreur lors de la génération");
+      toast.error(t("toast.linkError"));
     } finally {
       setIsGenerating(false);
     }
@@ -100,10 +103,10 @@ export function ShareFormatModal({
 
       const { shortUrl } = await response.json();
       setGeneratedLink(shortUrl);
-      toast.success("Lien généré !");
+      toast.success(t("toast.linkGenerated"));
     } catch (error) {
       console.error("Erreur génération lien:", error);
-      toast.error("Erreur lors de la génération du lien");
+      toast.error(t("toast.linkError"));
       throw error;
     }
   };
@@ -128,6 +131,7 @@ export function ShareFormatModal({
         message: data.message,
         items: data.items,
         theme: theme,
+        locale: locale,
       });
 
       const now = new Date();
@@ -136,10 +140,10 @@ export function ShareFormatModal({
         .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}.png`;
 
       downloadImage(blob, filename);
-      toast.success("Image téléchargée avec succès !");
+      toast.success(t("toast.imageDownloaded"));
     } catch (error) {
       console.error("Erreur génération image:", error);
-      toast.error("Erreur lors de la génération de l'image");
+      toast.error(t("toast.imageError"));
       throw error;
     }
   };
@@ -158,6 +162,7 @@ export function ShareFormatModal({
           clubName: item.jersey.club.name,
         })),
         theme,
+        locale,
       };
 
       // Appeler la nouvelle API Puppeteer
@@ -171,7 +176,7 @@ export function ShareFormatModal({
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || "Erreur lors de la génération du PDF");
+        throw new Error(errorData.error || t("toast.pdfError"));
       }
 
       // Récupérer le blob du PDF
@@ -192,10 +197,10 @@ export function ShareFormatModal({
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      toast.success("PDF téléchargé avec succès !");
+      toast.success(t("toast.pdfDownloaded"));
     } catch (error) {
       console.error("Erreur génération PDF:", error);
-      toast.error("Erreur lors de la génération du PDF");
+      toast.error(t("toast.pdfError"));
       throw error;
     }
   };
@@ -204,7 +209,7 @@ export function ShareFormatModal({
     if (generatedLink) {
       await navigator.clipboard.writeText(generatedLink);
       setCopied(true);
-      toast.success("Lien copié !");
+      toast.success(t("toast.linkCopied"));
       setTimeout(() => setCopied(false), 2000);
     }
   };
@@ -227,22 +232,22 @@ export function ShareFormatModal({
     {
       id: "link",
       icon: Link,
-      title: "Lien à partager",
-      description: "Page web consultable sur mobile et PC",
+      title: t("formats.link.title"),
+      description: t("formats.link.description"),
       color: "bg-blue-500/20 text-blue-700 border-blue-200",
     },
     {
       id: "image",
       icon: ImageIcon,
-      title: "Image à télécharger",
-      description: "Parfait pour stories Instagram ou WhatsApp",
+      title: t("formats.image.title"),
+      description: t("formats.image.description"),
       color: "bg-green-500/20 text-green-700 border-green-200",
     },
     {
       id: "pdf",
       icon: FileText,
-      title: "PDF à télécharger",
-      description: "Document propre à imprimer ou envoyer",
+      title: t("formats.pdf.title"),
+      description: t("formats.pdf.description"),
       color: "bg-orange-500/20 text-orange-700 border-orange-200",
     },
   ];
@@ -260,7 +265,7 @@ export function ShareFormatModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Share className="w-5 h-5 text-primary" />
-            Comment veux-tu partager ta liste ?
+            {t("title")}
           </DialogTitle>
         </DialogHeader>
 
@@ -270,9 +275,7 @@ export function ShareFormatModal({
               <h3 className="font-medium text-lg">{title}</h3>
               <p className="text-muted-foreground text-sm">{message}</p>
               <Badge variant="secondary">
-                {selectedItems.length} maillot
-                {selectedItems.length > 1 ? "s" : ""} sélectionné
-                {selectedItems.length > 1 ? "s" : ""}
+                {t("selectedCount", { count: selectedItems.length })}
               </Badge>
             </div>
 
@@ -314,14 +317,13 @@ export function ShareFormatModal({
                   <Loader2 className="w-8 h-8 text-primary animate-spin" />
                 </div>
                 <div>
-                  <h3 className="font-medium mb-2">Génération en cours...</h3>
+                  <h3 className="font-medium mb-2">{t("generating")}</h3>
                   <p className="text-muted-foreground text-sm">
-                    Création de votre{" "}
                     {selectedFormat === "link"
-                      ? "lien"
+                      ? t("creatingLink")
                       : selectedFormat === "image"
-                      ? "image"
-                      : "PDF"}
+                      ? t("creatingImage")
+                      : t("creatingPdf")}
                   </p>
                 </div>
               </>
@@ -331,13 +333,13 @@ export function ShareFormatModal({
                   <Check className="w-8 h-8 text-green-600" />
                 </div>
                 <div>
-                  <h3 className="font-medium mb-2">C&apos;est prêt !</h3>
+                  <h3 className="font-medium mb-2">{t("ready")}</h3>
 
                   {selectedFormat === "link" && generatedLink && (
                     <div className="space-y-4">
                       <div className="p-4 bg-muted rounded-lg">
                         <p className="text-xs text-muted-foreground mb-2">
-                          Votre lien de partage :
+                          {t("yourShareLink")}
                         </p>
                         <p className="text-sm font-mono bg-background px-3 py-2 rounded border break-all">
                           {generatedLink}
@@ -355,7 +357,7 @@ export function ShareFormatModal({
                           ) : (
                             <Copy className="w-4 h-4" />
                           )}
-                          {copied ? "Copié !" : "Copier le lien"}
+                          {copied ? t("copied") : t("copyLink")}
                         </Button>
 
                         {hasWebShare && (
@@ -364,7 +366,7 @@ export function ShareFormatModal({
                             className="flex items-center gap-2 cursor-pointer flex-1 sm:flex-initial"
                           >
                             <Smartphone className="w-4 h-4" />
-                            Partager
+                            {t("share")}
                           </Button>
                         )}
                       </div>
@@ -379,7 +381,7 @@ export function ShareFormatModal({
               onClick={handleClose}
               className="mt-4 cursor-pointer"
             >
-              Fermer
+              {t("close")}
             </Button>
           </div>
         )}

@@ -16,12 +16,13 @@ interface RequestBody {
   message: string;
   items: WishlistItem[];
   theme?: Theme;
+  locale?: string;
 }
 
 export async function POST(request: NextRequest) {
   try {
     const body: RequestBody = await request.json();
-    const { title, message, items, theme = "christmas" } = body;
+    const { title, message, items, theme = "christmas", locale = "fr" } = body;
 
     if (!title || !items || items.length === 0) {
       return NextResponse.json(
@@ -31,11 +32,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Générer le HTML
-    const html = generatePDFHTML({
+    const html = await generatePDFHTML({
       title,
       message,
       items,
       theme,
+      locale,
     });
 
     let browser:

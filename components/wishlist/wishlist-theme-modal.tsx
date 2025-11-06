@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Share } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { Theme } from "@/types/theme";
 import type { ShareableWishlistItem } from "@/types/wishlist-share";
 import { THEME_LIST } from "@/lib/theme";
@@ -36,21 +37,18 @@ export function WishlistThemeModal({
   wishlistItems,
   onNext,
 }: WishlistThemeModalProps) {
+  const t = useTranslations("Wishlist.themeModal");
+  const tTheme = useTranslations("Wishlist.themeModal.themes");
   const [selectedTheme, setSelectedTheme] = useState<Theme>("christmas");
-  const [title, setTitle] = useState("Ma liste de Noël 🎄");
-  const [message, setMessage] = useState(
-    "Salut ! Voici quelques idées de maillots qui me feraient plaisir 😊"
-  );
+  const [title, setTitle] = useState(tTheme("christmas.defaultTitle"));
+  const [message, setMessage] = useState(tTheme("christmas.defaultMessage"));
 
   const themes = THEME_LIST;
 
   const handleThemeChange = (themeId: Theme) => {
     setSelectedTheme(themeId);
-    const theme = themes.find((t) => t.id === themeId);
-    if (theme) {
-      setTitle(theme.defaultTitle);
-      setMessage(theme.defaultMessage);
-    }
+    setTitle(tTheme(`${themeId}.defaultTitle`));
+    setMessage(tTheme(`${themeId}.defaultMessage`));
   };
 
   const handleNext = () => {
@@ -68,21 +66,19 @@ export function WishlistThemeModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Heart className="w-5 h-5 text-primary" />
-            Personnaliser ma wishlist
+            {t("title")}
           </DialogTitle>
         </DialogHeader>
 
         <div className="space-y-6">
           <div className="text-center space-y-2">
             <Badge variant="secondary">
-              {wishlistItems.length} maillot
-              {wishlistItems.length > 1 ? "s" : ""} sélectionné
-              {wishlistItems.length > 1 ? "s" : ""}
+              {t("selectedCount", { count: wishlistItems.length })}
             </Badge>
           </div>
 
           <div className="space-y-3">
-            <Label>Choisis un thème</Label>
+            <Label>{t("chooseTheme")}</Label>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
               {themes.map((theme) => (
                 <button
@@ -96,7 +92,9 @@ export function WishlistThemeModal({
                   }`}
                 >
                   <div className="text-2xl mb-1">{theme.icon}</div>
-                  <div className="text-xs font-medium">{theme.name}</div>
+                  <div className="text-xs font-medium">
+                    {tTheme(`${theme.id}.name`)}
+                  </div>
                 </button>
               ))}
             </div>
@@ -104,28 +102,28 @@ export function WishlistThemeModal({
 
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="title">Titre de votre liste</Label>
+              <Label htmlFor="title">{t("listTitle")}</Label>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Ex: Ma liste de Noël 🎄"
+                placeholder={t("listTitlePlaceholder")}
                 maxLength={100}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="message">Message personnel</Label>
+              <Label htmlFor="message">{t("personalMessage")}</Label>
               <Textarea
                 id="message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Ajoutez un message pour vos proches..."
+                placeholder={t("personalMessagePlaceholder")}
                 rows={3}
                 maxLength={500}
               />
               <p className="text-xs text-muted-foreground">
-                {message.length}/500 caractères
+                {t("charactersCount", { count: message.length })}
               </p>
             </div>
           </div>
@@ -138,7 +136,7 @@ export function WishlistThemeModal({
             type="button"
             className="cursor-pointer"
           >
-            Annuler
+            {t("cancel")}
           </Button>
           <Button
             onClick={handleNext}
@@ -146,7 +144,7 @@ export function WishlistThemeModal({
             type="button"
           >
             <Share className="w-4 h-4" />
-            Continuer
+            {t("continue")}
           </Button>
         </DialogFooter>
       </DialogContent>

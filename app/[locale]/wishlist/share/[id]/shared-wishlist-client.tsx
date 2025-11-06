@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart, Gift, Calendar, Shirt, ExternalLink } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 interface JerseyData {
   id: string;
@@ -33,17 +34,8 @@ export default function SharedWishlistClient({
   theme,
   jerseys,
 }: SharedWishlistClientProps) {
-  const getJerseyTypeLabel = (type: string) => {
-    const typeLabels: Record<string, string> = {
-      HOME: "Domicile",
-      AWAY: "Extérieur",
-      THIRD: "Third",
-      FOURTH: "Fourth",
-      GOALKEEPER: "Gardien",
-      SPECIAL: "Spécial",
-    };
-    return typeLabels[type] || type;
-  };
+  const t = useTranslations("Wishlist.sharedClient");
+  const tJerseyType = useTranslations("JerseyType");
 
   const getCurrentDate = () => {
     return new Date().toLocaleDateString("fr-FR", {
@@ -75,14 +67,13 @@ export default function SharedWishlistClient({
             </div>
             <div>
               <h1 className="font-bold text-gray-800">Le Vestiaire</h1>
-              <p className="text-xs text-gray-600">Liste de souhaits</p>
+              <p className="text-xs text-gray-600">{t("wishlist")}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <Badge variant="outline" className="bg-white/50">
-              {jerseys.length} maillot
-              {jerseys.length > 1 ? "s" : ""}
+              {t("jerseyCount", { count: jerseys.length })}
             </Badge>
             {isChristmasTime() && <span className="text-lg">🎄</span>}
           </div>
@@ -108,10 +99,7 @@ export default function SharedWishlistClient({
             </div>
             <div className="flex items-center gap-1">
               <Shirt className="w-4 h-4" />
-              <span>
-                {jerseys.length} maillot
-                {jerseys.length > 1 ? "s" : ""}
-              </span>
+              <span>{t("jerseyCount", { count: jerseys.length })}</span>
             </div>
           </div>
         </div>
@@ -142,7 +130,15 @@ export default function SharedWishlistClient({
 
                   <div className="flex items-center gap-2 flex-wrap">
                     <Badge variant="secondary" className={config.badge}>
-                      {getJerseyTypeLabel(jersey.type)}
+                      {tJerseyType(
+                        jersey.type as
+                          | "HOME"
+                          | "AWAY"
+                          | "THIRD"
+                          | "FOURTH"
+                          | "GOALKEEPER"
+                          | "SPECIAL"
+                      )}
                     </Badge>
                     <Badge
                       variant="outline"
@@ -159,7 +155,7 @@ export default function SharedWishlistClient({
 
         <div className={`text-center space-y-6 pt-8 border-t ${config.border}`}>
           <div className="space-y-3">
-            <p className="text-gray-600">Cette liste a été créée avec</p>
+            <p className="text-gray-600">{t("createdWith")}</p>
             <Button
               asChild
               className={`${config.button} text-white font-medium cursor-pointer`}
@@ -171,15 +167,15 @@ export default function SharedWishlistClient({
                 className="flex items-center gap-2"
               >
                 <Heart className="w-4 h-4" />
-                Le Vestiaire Foot
+                {t("brandName")}
                 <ExternalLink className="w-4 h-4" />
               </a>
             </Button>
           </div>
 
           <div className="text-xs text-gray-500 space-y-1">
-            <p>Créez votre propre collection de maillots</p>
-            <p>et partagez vos envies avec vos proches ⚽</p>
+            <p>{t("createOwn")}</p>
+            <p>{t("shareWithLovedOnes")}</p>
           </div>
         </div>
       </div>

@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import {
   Heart,
@@ -25,10 +26,19 @@ import {
 } from "../ui/accordion";
 import { Button } from "../ui/button";
 import { Spotlight } from "@/components/ui/spotlight-new";
-import { AnimatedTestimonials } from "@/components/ui/animated-testimonials";
 import { BentoGrid, BentoGridItem } from "../ui/bento-grid";
+import { useTranslations } from "next-intl";
+
+const AnimatedTestimonials = dynamic(
+  () =>
+    import("../ui/animated-testimonials").then((mod) => mod.AnimatedTestimonials),
+  { ssr: false }
+);
 
 export default function WishlistLanding() {
+  const t = useTranslations("Wishlist.landing");
+  const tJerseyType = useTranslations("JerseyType");
+
   const mockWishlist = [
     {
       id: 1,
@@ -36,7 +46,7 @@ export default function WishlistLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/premier-league/arsenal/2020-21/home.jpg",
       season: "2020/21",
-      type: "Domicile",
+      type: "HOME" as const,
     },
     {
       id: 2,
@@ -44,7 +54,7 @@ export default function WishlistLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/serie-a/ac-milan/2023-24/away.jpg",
       season: "2023/24",
-      type: "Extérieur",
+      type: "AWAY" as const,
     },
     {
       id: 3,
@@ -52,7 +62,7 @@ export default function WishlistLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/mls/inter-miami/2024/home.jpg",
       season: "2024",
-      type: "Domicile",
+      type: "HOME" as const,
     },
     {
       id: 4,
@@ -60,80 +70,74 @@ export default function WishlistLanding() {
       image:
         "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/serie-a/roma/2023-24/third.jpg",
       season: "2023/24",
-      type: "Third",
+      type: "THIRD" as const,
     },
   ];
 
   const faqs = [
     {
-      q: "Comment créer ma wishlist ?",
-      a: "C'est simple ! Parcourez notre catalogue, cliquez sur le cœur pour ajouter un maillot à votre wishlist. Ensuite, cliquez sur 'Partager' pour générer votre lien personnalisé.",
+      q: t("faqSection.faqs.howToCreate.question"),
+      a: t("faqSection.faqs.howToCreate.answer"),
     },
     {
-      q: "Puis-je créer plusieurs wishlists ?",
-      a: "Pour le moment, vous avez une wishlist unique que vous pouvez modifier à tout moment. Vous pouvez choisir les maillots à partager à chaque fois.",
+      q: t("faqSection.faqs.multipleWishlists.question"),
+      a: t("faqSection.faqs.multipleWishlists.answer"),
     },
     {
-      q: "Comment mes proches voient ma wishlist ?",
-      a: "Vous générez un lien unique que vous partagez par message, email ou réseaux sociaux. Ils peuvent consulter votre liste sur mobile ou PC, sans créer de compte.",
+      q: t("faqSection.faqs.howToView.question"),
+      a: t("faqSection.faqs.howToView.answer"),
     },
     {
-      q: "La wishlist est-elle gratuite ?",
-      a: "Oui ! Créer, gérer et partager votre wishlist est 100% gratuit, sans limite.",
+      q: t("faqSection.faqs.pricing.question"),
+      a: t("faqSection.faqs.pricing.answer"),
     },
     {
-      q: "Que se passe-t-il quand je reçois un maillot ?",
-      a: "Une fois que vous ajoutez le maillot à votre collection, il disparaît automatiquement de votre wishlist. Fini les doublons !",
+      q: t("faqSection.faqs.received.question"),
+      a: t("faqSection.faqs.received.answer"),
     },
     {
-      q: "Puis-je personnaliser ma wishlist ?",
-      a: "Oui ! Vous pouvez choisir un thème (Noël, Anniversaire...), ajouter un titre et un message personnel pour vos proches.",
+      q: t("faqSection.faqs.customize.question"),
+      a: t("faqSection.faqs.customize.answer"),
     },
   ];
 
   const features = [
     {
       icon: <Heart className="w-6 h-6" />,
-      title: "Créez votre liste",
-      description:
-        "Ajoutez tous les maillots qui vous font rêver en un clic depuis notre catalogue",
+      title: t("featuresSection.features.create.title"),
+      description: t("featuresSection.features.create.description"),
     },
     {
       icon: <Share2 className="w-6 h-6" />,
-      title: "Partagez facilement",
-      description:
-        "Générez un lien, une image ou un PDF à partager avec vos proches pour Noël, anniversaires...",
+      title: t("featuresSection.features.share.title"),
+      description: t("featuresSection.features.share.description"),
     },
     {
       icon: <Sparkles className="w-6 h-6" />,
-      title: "Personnalisez le thème",
-      description:
-        "Choisissez parmi plusieurs thèmes (Noël, Anniversaire, Standard) et ajoutez un message personnel",
+      title: t("featuresSection.features.customize.title"),
+      description: t("featuresSection.features.customize.description"),
     },
     {
       icon: <Calendar className="w-6 h-6" />,
-      title: "Gérez vos occasions",
-      description:
-        "Créez plusieurs wishlists pour différentes occasions : Noël, anniversaire, objectifs perso...",
+      title: t("featuresSection.features.manage.title"),
+      description: t("featuresSection.features.manage.description"),
     },
     {
       icon: <Gift className="w-6 h-6" />,
-      title: "Évitez les doublons",
-      description:
-        "Une fois ajouté à votre collection, le maillot disparaît de votre wishlist automatiquement",
+      title: t("featuresSection.features.noDuplicates.title"),
+      description: t("featuresSection.features.noDuplicates.description"),
     },
     {
       icon: <CheckCircle2 className="w-6 h-6" />,
-      title: "100% gratuit",
-      description:
-        "Créez et partagez autant de wishlists que vous voulez sans aucun frais",
+      title: t("featuresSection.features.free.title"),
+      description: t("featuresSection.features.free.description"),
     },
   ];
 
   const shareFormats = [
     {
-      title: "Lien à partager",
-      description: "Page web consultable sur mobile et PC",
+      title: t("shareSection.title"),
+      description: t("shareSection.subtitle"),
       header: (
         <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-blue-500 to-blue-700 items-center justify-center">
           <LinkIcon className="w-12 h-12 text-white" />
@@ -142,8 +146,8 @@ export default function WishlistLanding() {
       icon: <LinkIcon className="w-4 h-4 text-blue-500" />,
     },
     {
-      title: "Image",
-      description: "Pour stories Instagram ou WhatsApp",
+      title: t("shareSection.title"),
+      description: t("shareSection.subtitle"),
       header: (
         <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-green-500 to-emerald-700 items-center justify-center">
           <ImageIcon className="w-12 h-12 text-white" />
@@ -152,8 +156,8 @@ export default function WishlistLanding() {
       icon: <ImageIcon className="w-4 h-4 text-green-500" />,
     },
     {
-      title: "PDF",
-      description: "Document propre à imprimer",
+      title: t("shareSection.title"),
+      description: t("shareSection.subtitle"),
       header: (
         <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-orange-500 to-red-700 items-center justify-center">
           <FileText className="w-12 h-12 text-white" />
@@ -165,27 +169,23 @@ export default function WishlistLanding() {
 
   const useCases = [
     {
-      title: "Noël approche",
-      description:
-        "Créez votre liste de Noël et partagez-la avec votre famille. Fini les cadeaux dont vous ne voulez pas !",
+      title: t("useCasesSection.useCases.christmas.title"),
+      description: t("useCasesSection.useCases.christmas.description"),
       icon: "🎄",
     },
     {
-      title: "Anniversaire",
-      description:
-        "Partagez vos envies de maillots pour votre anniversaire. Vos amis sauront quoi vous offrir.",
+      title: t("useCasesSection.useCases.birthday.title"),
+      description: t("useCasesSection.useCases.birthday.description"),
       icon: "🎂",
     },
     {
-      title: "Objectifs collection",
-      description:
-        "Listez les maillots que vous cherchez pour compléter votre collection. Gardez vos objectifs en vue.",
+      title: t("useCasesSection.useCases.collection.title"),
+      description: t("useCasesSection.useCases.collection.description"),
       icon: "🎯",
     },
     {
-      title: "Saint-Valentin",
-      description:
-        "Partagez vos envies de maillots en couple : duos de clubs, éditions spéciales et idées cadeaux pour célébrer votre passion ensemble.",
+      title: t("useCasesSection.useCases.valentine.title"),
+      description: t("useCasesSection.useCases.valentine.description"),
       icon: "💘",
     },
   ];
@@ -206,18 +206,17 @@ export default function WishlistLanding() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-sm font-medium text-primary mb-4">
             <Heart className="w-4 h-4" />
-            Liste d&apos;envies
+            {t("badge")}
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold leading-tight">
-            Créez votre wishlist de
+            {t("hero.title")}
             <br />
-            <span className="text-primary">maillots de foot</span>
+            <span className="text-primary">{t("hero.titleHighlight")}</span>
           </h1>
 
           <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto px-4">
-            Listez vos envies et partagez‑les facilement avec vos proches, avec
-            des animations fluides et un design premium.
+            {t("hero.subtitle")}
           </p>
 
           <nav
@@ -234,7 +233,7 @@ export default function WishlistLanding() {
                 className="gap-2 justify-center"
                 aria-label="Se connecter à votre compte Le Vestiaire"
               >
-                Se connecter
+                {t("hero.signIn")}
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </Link>
             </Button>
@@ -249,7 +248,7 @@ export default function WishlistLanding() {
                 className="justify-center"
                 aria-label="Créer un compte pour commencer votre collection de maillots"
               >
-                Créer un compte
+                {t("hero.signUp")}
               </Link>
             </Button>
           </nav>
@@ -262,18 +261,16 @@ export default function WishlistLanding() {
             <div className="text-center mb-8">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-white dark:bg-gray-800 rounded-full text-sm font-medium mb-4">
                 <Gift className="w-4 h-4 text-red-600" />
-                Exemple de wishlist
+                {t("example.badge")}
               </div>
               <h2 className="text-2xl sm:text-3xl font-bold mb-2">
-                Ma liste de Noël 🎄
+                {t("example.title")}
               </h2>
-              <p className="text-muted-foreground">
-                Quelques idées de maillots qui me feraient plaisir 😊
-              </p>
+              <p className="text-muted-foreground">{t("example.message")}</p>
               <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 bg-primary/10 rounded-full text-sm">
                 <Heart className="w-4 h-4 text-primary" />
                 <span className="font-medium">
-                  {mockWishlist.length} maillots
+                  {t("example.jerseyCount", { count: mockWishlist.length })}
                 </span>
               </div>
             </div>
@@ -298,7 +295,7 @@ export default function WishlistLanding() {
                       {jersey.club}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      {jersey.type} {jersey.season}
+                      {tJerseyType(jersey.type)} {jersey.season}
                     </p>
                   </div>
                 </div>
@@ -307,11 +304,11 @@ export default function WishlistLanding() {
 
             <div className="text-center">
               <p className="text-sm text-muted-foreground mb-4">
-                Créé avec Le Vestiaire Foot ⚽
+                {t("example.createdWith")}
               </p>
               <Button asChild>
                 <Link href="/auth/signUp" className="gap-2">
-                  Créer ma wishlist
+                  {t("example.createButton")}
                   <ArrowRight className="w-4 h-4" />
                 </Link>
               </Button>
@@ -330,10 +327,10 @@ export default function WishlistLanding() {
               viewport={{ once: true }}
             >
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4">
-                Partagez comme vous voulez
+                {t("shareSection.title")}
               </h2>
               <p className="text-muted-foreground text-lg">
-                3 formats pour s&apos;adapter à tous vos besoins
+                {t("shareSection.subtitle")}
               </p>
             </motion.div>
           </div>
@@ -353,9 +350,11 @@ export default function WishlistLanding() {
       <section className="px-4 sm:px-6 py-16 bg-gradient-to-b from-background via-purple-500/5 to-primary/10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Tout est prévu</h2>
+            <h2 className="text-3xl font-bold mb-4">
+              {t("featuresSection.title")}
+            </h2>
             <p className="text-muted-foreground text-lg">
-              Des fonctionnalités pensées pour vous faciliter la vie
+              {t("featuresSection.subtitle")}
             </p>
           </div>
 
@@ -379,9 +378,11 @@ export default function WishlistLanding() {
       <section className="px-4 sm:px-6 py-16 sm:py-24 bg-gradient-to-b from-background via-purple-500/10 to-primary/10 relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/20 via-purple-500/10 to-transparent opacity-50"></div>
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold mb-4">Pour toutes les occasions</h2>
+          <h2 className="text-3xl font-bold mb-4">
+            {t("useCasesSection.title")}
+          </h2>
           <p className="text-muted-foreground text-lg">
-            Une wishlist pour chaque moment important
+            {t("useCasesSection.subtitle")}
           </p>
         </div>
 
@@ -403,33 +404,30 @@ export default function WishlistLanding() {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold mb-4">
-              Ils ont partagé leur wishlist
+              {t("testimonialsSection.title")}
             </h2>
             <p className="text-muted-foreground text-lg">
-              Des milliers d&apos;utilisateurs satisfaits
+              {t("testimonialsSection.subtitle")}
             </p>
           </div>
           <AnimatedTestimonials
             testimonials={[
               {
-                name: "Lucas B.",
+                name: t("testimonialsSection.testimonials.lucas.name"),
                 designation: "⭐️⭐️⭐️⭐️⭐️",
-                quote:
-                  "J'ai partagé ma wishlist de Noël avec ma famille, super pratique ! Plus de surprise ratée 😄",
+                quote: t("testimonialsSection.testimonials.lucas.quote"),
                 src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona1.avif",
               },
               {
-                name: "Sarah L.",
+                name: t("testimonialsSection.testimonials.sarah.name"),
                 designation: "⭐️⭐️⭐️⭐️⭐️",
-                quote:
-                  "Le partage via le lien est parfait pour envoyer à mes parents qui ne sont pas très tech. Génial !",
+                quote: t("testimonialsSection.testimonials.sarah.quote"),
                 src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona3.jpg",
               },
               {
-                name: "Tom M.",
+                name: t("testimonialsSection.testimonials.tom.name"),
                 designation: "⭐️⭐️⭐️⭐️⭐️",
-                quote:
-                  "J'ai reçu exactement le maillot que je voulais grâce à ma wishlist partagée. Merci !",
+                quote: t("testimonialsSection.testimonials.tom.quote"),
                 src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona2.jpg",
               },
             ]}
@@ -449,11 +447,10 @@ export default function WishlistLanding() {
             <div className="absolute inset-0 bg-gradient-to-r from-primary/60 via-purple-600 to-primary/60 animate-gradient-x" />
             <div className="relative bg-slate-900/90 backdrop-blur-xl m-[2px] rounded-3xl p-6 sm:p-12 text-center border border-primary/20">
               <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold mb-4 text-white">
-                Prêt à créer votre wishlist ?
+                {t("ctaSection.title")}
               </h2>
               <p className="text-base sm:text-lg mb-8 text-neutral-300 max-w-2xl mx-auto px-4">
-                Listez vos envies et partagez-les en quelques clics avec vos
-                proches
+                {t("ctaSection.subtitle")}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button
@@ -461,7 +458,7 @@ export default function WishlistLanding() {
                   className="w-full sm:w-auto px-6 sm:px-8 py-6 bg-white text-black hover:bg-white hover:scale-105 hover:shadow-2xl hover:shadow-primary/50 font-semibold text-base sm:text-lg transition-all duration-300"
                   asChild
                 >
-                  <Link href="/auth/signUp">Créer mon compte gratuitement</Link>
+                  <Link href="/auth/signUp">{t("ctaSection.createAccount")}</Link>
                 </Button>
                 <Button
                   size="lg"
@@ -469,17 +466,17 @@ export default function WishlistLanding() {
                   className="w-full sm:w-auto px-6 sm:px-8 py-6 border-2 border-white/40 text-white hover:bg-white hover:text-black hover:border-white hover:scale-105 hover:shadow-2xl hover:shadow-primary/50 text-base sm:text-lg bg-transparent transition-all duration-300"
                   asChild
                 >
-                  <Link href="/auth/login">Se connecter</Link>
+                  <Link href="/auth/login">{t("ctaSection.login")}</Link>
                 </Button>
               </div>
               <div className="flex items-center justify-center gap-6 mt-8 text-sm text-neutral-400">
                 <div className="flex items-center gap-2">
                   <Shield className="w-4 h-4" />
-                  <span>100% sécurisé</span>
+                  <span>{t("ctaSection.secure")}</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Sans engagement</span>
+                  <span>{t("ctaSection.noCommitment")}</span>
                 </div>
               </div>
             </div>
@@ -491,7 +488,7 @@ export default function WishlistLanding() {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-              Questions fréquentes
+              {t("faqSection.title")}
             </h2>
           </div>
           <Accordion type="single" collapsible className="w-full">

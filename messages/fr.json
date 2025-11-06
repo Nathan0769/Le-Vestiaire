@@ -231,7 +231,7 @@
         "photo": "Photo personnelle (optionnelle)",
         "photoClickToAdd": "Cliquez pour ajouter",
         "photoYourPhoto": "votre photo",
-        "photoFormats": "PNG, JPG, WEBP (Max 5MB)",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
         "cancel": "Annuler",
         "uploadPhoto": "Upload photo...",
         "adding": "Ajout...",
@@ -286,7 +286,7 @@
         "notes": "Notes personnelles",
         "personalizationPlaceholder": "Ex: MESSI 10",
         "notesPlaceholder": "Ajoutez vos commentaires sur ce maillot...",
-        "photoFormats": "PNG, JPG, WEBP (Max 5MB)",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
         "purchasePricePlaceholder": "Ex: 90.50",
         "toast": {
           "fileNotImage": "Le fichier doit être une image",
@@ -330,6 +330,255 @@
       "errorTitle": "Erreur de chargement",
       "errorDescription": "Une erreur est survenue lors du chargement de votre collection. Veuillez rafraîchir la page ou réessayer ultérieurement.",
       "reload": "Recharger la page"
+    }
+  },
+  "Wishlist": {
+    "button": {
+      "loading": "Chargement...",
+      "addToWishlist": "Ajouter à ma wishlist",
+      "removeFromWishlist": "Retirer de ma wishlist",
+      "toast": {
+        "mustBeConnected": "Vous devez être connecté pour ajouter à votre wishlist",
+        "added": "Maillot ajouté à votre wishlist",
+        "removed": "Maillot retiré de votre wishlist",
+        "error": "Une erreur est survenue",
+        "connectionError": "Erreur de connexion. Veuillez réessayer."
+      }
+    },
+    "share": {
+      "button": "Partager",
+      "shareAll": "Toute ma wishlist",
+      "shareAllCount": "{count, plural, =0 {0 maillot} one {# maillot} other {# maillots}}",
+      "shareSelection": "Une sélection",
+      "shareSelectionDesc": "Choisir les maillots à partager"
+    },
+    "selectionModal": {
+      "title": "Partager ma wishlist",
+      "chooseTheme": "Choisis un thème",
+      "listTitle": "Titre de votre liste",
+      "listTitlePlaceholder": "Ex: Ma liste de Noël 🎄",
+      "personalMessage": "Message personnel",
+      "personalMessagePlaceholder": "Ajoutez un message pour vos proches...",
+      "charactersCount": "{count}/500 caractères",
+      "selectJerseys": "Sélectionnez vos maillots ({selected}/{total})",
+      "selectAll": "Tout sélectionner",
+      "deselectAll": "Tout déselectionner",
+      "cancel": "Annuler",
+      "share": "Partager ({count, plural, one {# maillot} other {# maillots}})"
+    },
+    "themeModal": {
+      "title": "Personnaliser ma wishlist",
+      "selectedCount": "{count, plural, one {# maillot sélectionné} other {# maillots sélectionnés}}",
+      "chooseTheme": "Choisis un thème",
+      "listTitle": "Titre de votre liste",
+      "listTitlePlaceholder": "Ex: Ma liste de Noël 🎄",
+      "personalMessage": "Message personnel",
+      "personalMessagePlaceholder": "Ajoutez un message pour vos proches...",
+      "charactersCount": "{count}/500 caractères",
+      "cancel": "Annuler",
+      "continue": "Continuer",
+      "themes": {
+        "christmas": {
+          "name": "Noël",
+          "defaultTitle": "Ma liste de Noël 🎄",
+          "defaultMessage": "Salut ! Voici quelques idées de maillots qui me feraient plaisir 😊"
+        },
+        "birthday": {
+          "name": "Anniversaire",
+          "defaultTitle": "Ma wishlist d'anniversaire 🎂",
+          "defaultMessage": "C'est bientôt mon anniversaire ! Voici mes envies de maillots 🎉"
+        },
+        "valentine": {
+          "name": "Saint-Valentin",
+          "defaultTitle": "Ma liste pour la Saint-Valentin 💝",
+          "defaultMessage": "Quelques idées de maillots qui me feraient très plaisir ❤️"
+        },
+        "default": {
+          "name": "Classique",
+          "defaultTitle": "Ma wishlist maillots ⚽",
+          "defaultMessage": "Voici quelques maillots que j'aimerais ajouter à ma collection !"
+        }
+      }
+    },
+    "shareFormatModal": {
+      "title": "Comment veux-tu partager ta liste ?",
+      "selectedCount": "{count, plural, one {# maillot sélectionné} other {# maillots sélectionnés}}",
+      "formats": {
+        "link": {
+          "title": "Lien à partager",
+          "description": "Page web consultable sur mobile et PC"
+        },
+        "image": {
+          "title": "Image à télécharger",
+          "description": "Parfait pour stories Instagram ou WhatsApp"
+        },
+        "pdf": {
+          "title": "PDF à télécharger",
+          "description": "Document propre à imprimer ou envoyer"
+        }
+      },
+      "generating": "Génération en cours...",
+      "creatingLink": "Création de votre lien",
+      "creatingImage": "Création de votre image",
+      "creatingPdf": "Création de votre PDF",
+      "ready": "C'est prêt !",
+      "yourShareLink": "Votre lien de partage :",
+      "copyLink": "Copier le lien",
+      "copied": "Copié !",
+      "share": "Partager",
+      "close": "Fermer",
+      "toast": {
+        "linkGenerated": "Lien généré !",
+        "linkError": "Erreur lors de la génération du lien",
+        "imageDownloaded": "Image téléchargée avec succès !",
+        "imageError": "Erreur lors de la génération de l'image",
+        "pdfDownloaded": "PDF téléchargé avec succès !",
+        "pdfError": "Erreur lors de la génération du PDF",
+        "linkCopied": "Lien copié !"
+      }
+    },
+    "landing": {
+      "badge": "Liste d'envies",
+      "hero": {
+        "title": "Créez votre wishlist de",
+        "titleHighlight": "maillots de foot",
+        "subtitle": "Listez vos envies et partagez‑les facilement avec vos proches, avec des animations fluides et un design premium.",
+        "signIn": "Se connecter",
+        "signUp": "Créer un compte"
+      },
+      "example": {
+        "badge": "Exemple de wishlist",
+        "title": "Ma liste de Noël 🎄",
+        "message": "Quelques idées de maillots qui me feraient plaisir 😊",
+        "jerseyCount": "{count, plural, one {# maillot} other {# maillots}}",
+        "createdWith": "Créé avec Le Vestiaire Foot ⚽",
+        "createButton": "Créer ma wishlist"
+      },
+      "shareSection": {
+        "title": "Partagez comme vous voulez",
+        "subtitle": "3 formats pour s'adapter à tous vos besoins"
+      },
+      "featuresSection": {
+        "title": "Tout est prévu",
+        "subtitle": "Des fonctionnalités pensées pour vous faciliter la vie",
+        "features": {
+          "create": {
+            "title": "Créez votre liste",
+            "description": "Ajoutez tous les maillots qui vous font rêver en un clic depuis notre catalogue"
+          },
+          "share": {
+            "title": "Partagez facilement",
+            "description": "Générez un lien, une image ou un PDF à partager avec vos proches pour Noël, anniversaires..."
+          },
+          "customize": {
+            "title": "Personnalisez le thème",
+            "description": "Choisissez parmi plusieurs thèmes (Noël, Anniversaire, Standard) et ajoutez un message personnel"
+          },
+          "manage": {
+            "title": "Gérez vos occasions",
+            "description": "Créez plusieurs wishlists pour différentes occasions : Noël, anniversaire, objectifs perso..."
+          },
+          "noDuplicates": {
+            "title": "Évitez les doublons",
+            "description": "Une fois ajouté à votre collection, le maillot disparaît de votre wishlist automatiquement"
+          },
+          "free": {
+            "title": "100% gratuit",
+            "description": "Créez et partagez autant de wishlists que vous voulez sans aucun frais"
+          }
+        }
+      },
+      "useCasesSection": {
+        "title": "Pour toutes les occasions",
+        "subtitle": "Une wishlist pour chaque moment important",
+        "useCases": {
+          "christmas": {
+            "title": "Noël approche",
+            "description": "Créez votre liste de Noël et partagez-la avec votre famille. Fini les cadeaux dont vous ne voulez pas !"
+          },
+          "birthday": {
+            "title": "Anniversaire",
+            "description": "Partagez vos envies de maillots pour votre anniversaire. Vos amis sauront quoi vous offrir."
+          },
+          "collection": {
+            "title": "Objectifs collection",
+            "description": "Listez les maillots que vous cherchez pour compléter votre collection. Gardez vos objectifs en vue."
+          },
+          "valentine": {
+            "title": "Saint-Valentin",
+            "description": "Partagez vos envies de maillots en couple : duos de clubs, éditions spéciales et idées cadeaux pour célébrer votre passion ensemble."
+          }
+        }
+      },
+      "testimonialsSection": {
+        "title": "Ils ont partagé leur wishlist",
+        "subtitle": "Des milliers d'utilisateurs satisfaits"
+      },
+      "ctaSection": {
+        "title": "Prêt à créer votre wishlist ?",
+        "subtitle": "Listez vos envies et partagez-les en quelques clics avec vos proches",
+        "signUpButton": "Créer mon compte gratuitement",
+        "signInButton": "Se connecter",
+        "secure": "100% sécurisé",
+        "noCommitment": "Sans engagement"
+      },
+      "faqSection": {
+        "title": "Questions fréquentes",
+        "faqs": {
+          "howToCreate": {
+            "question": "Comment créer ma wishlist ?",
+            "answer": "C'est simple ! Parcourez notre catalogue, cliquez sur le cœur pour ajouter un maillot à votre wishlist. Ensuite, cliquez sur 'Partager' pour générer votre lien personnalisé."
+          },
+          "multipleWishlists": {
+            "question": "Puis-je créer plusieurs wishlists ?",
+            "answer": "Pour le moment, vous avez une wishlist unique que vous pouvez modifier à tout moment. Vous pouvez choisir les maillots à partager à chaque fois."
+          },
+          "howToView": {
+            "question": "Comment mes proches voient ma wishlist ?",
+            "answer": "Vous générez un lien unique que vous partagez par message, email ou réseaux sociaux. Ils peuvent consulter votre liste sur mobile ou PC, sans créer de compte."
+          },
+          "pricing": {
+            "question": "La wishlist est-elle gratuite ?",
+            "answer": "Oui ! Créer, gérer et partager votre wishlist est 100% gratuit, sans limite."
+          },
+          "received": {
+            "question": "Que se passe-t-il quand je reçois un maillot ?",
+            "answer": "Une fois que vous ajoutez le maillot à votre collection, il disparaît automatiquement de votre wishlist. Fini les doublons !"
+          },
+          "customize": {
+            "question": "Puis-je personnaliser ma wishlist ?",
+            "answer": "Oui ! Vous pouvez choisir un thème (Noël, Anniversaire...), ajouter un titre et un message personnel pour vos proches."
+          }
+        }
+      }
+    },
+    "page": {
+      "title": "Mes Envies",
+      "jerseyCount": "{count, plural, one {# maillot} other {# maillots}}",
+      "empty": {
+        "title": "Vous n'avez pas de maillot qui vous fait de l'œil",
+        "description": "Parcourez notre collection et ajoutez vos maillots préférés à votre wishlist !"
+      },
+      "error": {
+        "title": "Erreur lors du chargement de votre wishlist",
+        "description": "Une erreur est survenue. Veuillez réessayer plus tard."
+      },
+      "stats": {
+        "wanted": "Maillots voulus",
+        "wantedSingular": "Maillot dans vos envies",
+        "wantedPlural": "Maillots dans vos envies",
+        "favoriteLeagues": "Ligues favorites",
+        "preferredTypes": "Types préférés"
+      },
+      "jerseys": "Vos maillots"
+    },
+    "sharedClient": {
+      "wishlist": "Liste de souhaits",
+      "jerseyCount": "{count, plural, one {# maillot} other {# maillots}}",
+      "createdWith": "Cette liste a été créée avec",
+      "brandName": "Le Vestiaire Foot",
+      "createOwn": "Créez votre propre collection de maillots",
+      "shareWithLovedOnes": "et partagez vos envies avec vos proches ⚽"
     }
   },
   "Login": {

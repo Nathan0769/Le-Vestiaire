@@ -14,6 +14,7 @@ interface GeneratePDFHTMLOptions {
   message: string;
   items: WishlistItem[];
   theme?: Theme;
+  locale?: string;
 }
 
 const THEME_CONFIG = {
@@ -51,23 +52,40 @@ const THEME_CONFIG = {
   },
 };
 
-function getJerseyTypeLabel(type: string): string {
-  const typeLabels: Record<string, string> = {
-    HOME: "Domicile",
-    AWAY: "Extérieur",
-    THIRD: "Third",
-    FOURTH: "Fourth",
-    GOALKEEPER: "Gardien",
-    SPECIAL: "Spécial",
-  };
-  return typeLabels[type] || type;
+async function loadTranslations(locale: string) {
+  const messages = await import(`@/messages/${locale}.json`);
+  return messages.default;
 }
 
-export function generatePDFHTML(options: GeneratePDFHTMLOptions): string {
-  const { title, message, items, theme = "christmas" } = options;
-  const config = THEME_CONFIG[theme];
+function getJerseyTypeLabel(type: string, translations: any): string {
+  const jerseyTypes = translations.JerseyType;
+  return jerseyTypes[type] || type;
+}
 
-  const currentDate = new Date().toLocaleDateString("fr-FR", {
+function formatJerseyCount(count: number, translations: any, locale: string): string {
+  const jerseyWord: Record<string, { one: string; other: string }> = {
+    fr: { one: "maillot", other: "maillots" },
+    en: { one: "jersey", other: "jerseys" },
+    es: { one: "camiseta", other: "camisetas" },
+  };
+
+  const words = jerseyWord[locale] || jerseyWord.fr;
+  return count === 1 ? `1 ${words.one}` : `${count} ${words.other}`;
+}
+
+export async function generatePDFHTML(options: GeneratePDFHTMLOptions): Promise<string> {
+  const { title, message, items, theme = "christmas", locale = "fr" } = options;
+  const config = THEME_CONFIG[theme];
+  const translations = await loadTranslations(locale);
+  const t = translations.Wishlist.sharedClient;
+
+  const localeMap: Record<string, string> = {
+    fr: "fr-FR",
+    en: "en-US",
+    es: "es-ES",
+  };
+
+  const currentDate = new Date().toLocaleDateString(localeMap[locale] || "fr-FR", {
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -144,13 +162,13 @@ export function generatePDFHTML(options: GeneratePDFHTMLOptions): string {
               </div>
               <div>
                 <h1 class="font-bold text-gray-800">Le Vestiaire</h1>
-                <p class="text-xs text-gray-600">Liste de souhaits</p>
+                <p class="text-xs text-gray-600">${t.wishlist}</p>
               </div>
             </div>
 
             <div class="flex items-center gap-2">
               <span class="px-3 py-1 rounded-full border border-gray-300 bg-white/50 text-sm">
-                ${items.length} maillot${items.length > 1 ? "s" : ""}
+                ${formatJerseyCount(items.length, translations, locale)}
               </span>
               ${isChristmasTime() ? '<span class="text-lg">🎄</span>' : ""}
             </div>
@@ -182,9 +200,7 @@ export function generatePDFHTML(options: GeneratePDFHTMLOptions): string {
               </div>
               <div class="flex items-center gap-1">
                 <span>👕</span>
-                <span>${items.length} maillot${
-    items.length > 1 ? "s" : ""
-  }</span>
+                <span>${formatJerseyCount(items.length, translations, locale)}</span>
               </div>
             </div>
           </div>
@@ -222,7 +238,7 @@ export function generatePDFHTML(options: GeneratePDFHTMLOptions): string {
                       <span class="px-2 py-0.5 rounded text-xs font-medium ${
                         config.badge
                       } border">
-                        ${getJerseyTypeLabel(jersey.type)}
+                        ${getJerseyTypeLabel(jersey.type, translations)}
                       </span>
                       <span class="px-2 py-0.5 rounded text-xs font-medium bg-white/50 text-gray-800 border border-gray-300">
                         ${jersey.season}
@@ -241,18 +257,18 @@ export function generatePDFHTML(options: GeneratePDFHTMLOptions): string {
             config.border
           }">
             <div class="space-y-2">
-              <p class="text-sm text-gray-600">Cette liste a été créée avec</p>
+              <p class="text-sm text-gray-600">${t.createdWith}</p>
               <div class="inline-block px-4 py-2 rounded-lg ${
                 config.button
               } text-white font-medium text-sm">
                 <span class="flex items-center gap-2">
-                   Le Vestiaire Foot ⚽
+                   ${t.brandName} ⚽
                 </span>
               </div>
             </div>
 
             <div class="text-xs text-gray-500">
-              <p>Créez votre propre collection de maillots et partagez vos envies avec vos proches ⚽</p>
+              <p>${t.createOwn} ${t.shareWithLovedOnes}</p>
             </div>
           </div>
         </div>

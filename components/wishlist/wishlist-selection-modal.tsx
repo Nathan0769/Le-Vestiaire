@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Heart, Share } from "lucide-react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import type { Theme } from "@/types/theme";
 import type {
   ShareableWishlistItem,
@@ -34,24 +35,22 @@ export function WishlistSelectionModal({
   wishlistItems,
   onNext,
 }: WishlistSelectionModalProps) {
+  const t = useTranslations("Wishlist.selectionModal");
+  const tJerseyType = useTranslations("JerseyType");
+  const tTheme = useTranslations("Wishlist.themeModal.themes");
   const [selectedItems, setSelectedItems] = useState<Set<string>>(
     new Set(wishlistItems.map((item) => item.id))
   );
-  const [title, setTitle] = useState("Ma liste de Noël 🎄");
-  const [message, setMessage] = useState(
-    "Salut ! Voici quelques idées de maillots qui me feraient plaisir 😊"
-  );
+  const [title, setTitle] = useState(tTheme("christmas.defaultTitle"));
+  const [message, setMessage] = useState(tTheme("christmas.defaultMessage"));
   const [selectedTheme, setSelectedTheme] = useState<Theme>("christmas");
 
   const themes = THEME_LIST;
 
   const handleThemeChange = (themeId: Theme) => {
     setSelectedTheme(themeId);
-    const theme = themes.find((t) => t.id === themeId);
-    if (theme) {
-      setTitle(theme.defaultTitle);
-      setMessage(theme.defaultMessage);
-    }
+    setTitle(tTheme(`${themeId}.defaultTitle`));
+    setMessage(tTheme(`${themeId}.defaultMessage`));
   };
 
   const handleItemToggle = (itemId: string) => {
@@ -84,18 +83,6 @@ export function WishlistSelectionModal({
     });
   };
 
-  const getJerseyTypeLabel = (type: string) => {
-    const typeLabels = {
-      HOME: "Domicile",
-      AWAY: "Extérieur",
-      THIRD: "Third",
-      FOURTH: "Fourth",
-      GOALKEEPER: "Gardien",
-      SPECIAL: "Spécial",
-    };
-    return typeLabels[type as keyof typeof typeLabels] || type;
-  };
-
   const selectedCount = selectedItems.size;
 
   return (
@@ -104,28 +91,30 @@ export function WishlistSelectionModal({
         <DialogHeader className="px-6 py-4 border-b flex-shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <Heart className="w-5 h-5 text-primary" />
-            Partager ma wishlist
+            {t("title")}
           </DialogTitle>
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto px-6 py-4">
           <div className="space-y-6">
             <div className="space-y-3">
-              <Label>Choisis un thème</Label>
+              <Label>{t("chooseTheme")}</Label>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {themes.map((theme) => (
                   <button
                     key={theme.id}
                     type="button"
                     onClick={() => handleThemeChange(theme.id)}
-                    className={`p-3 rounded-lg border-2 transition-all ${
+                    className={`p-3 rounded-lg border-2 transition-all cursor-pointer ${
                       selectedTheme === theme.id
                         ? theme.activeColor + " shadow-md"
                         : theme.color + " hover:scale-105"
                     }`}
                   >
                     <div className="text-2xl mb-1">{theme.icon}</div>
-                    <div className="text-xs font-medium">{theme.name}</div>
+                    <div className="text-xs font-medium">
+                      {tTheme(`${theme.id}.name`)}
+                    </div>
                   </button>
                 ))}
               </div>
@@ -133,28 +122,28 @@ export function WishlistSelectionModal({
 
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="title">Titre de votre liste</Label>
+                <Label htmlFor="title">{t("listTitle")}</Label>
                 <Input
                   id="title"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="Ex: Ma liste de Noël 🎄"
+                  placeholder={t("listTitlePlaceholder")}
                   maxLength={100}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="message">Message personnel</Label>
+                <Label htmlFor="message">{t("personalMessage")}</Label>
                 <Textarea
                   id="message"
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Ajoutez un message pour vos proches..."
+                  placeholder={t("personalMessagePlaceholder")}
                   rows={2}
                   maxLength={500}
                 />
                 <p className="text-xs text-muted-foreground">
-                  {message.length}/500 caractères
+                  {t("charactersCount", { count: message.length })}
                 </p>
               </div>
             </div>
@@ -162,8 +151,10 @@ export function WishlistSelectionModal({
             <div className="space-y-4">
               <div className="flex items-center justify-between">
                 <h3 className="font-medium text-sm">
-                  Sélectionnez vos maillots ({selectedCount}/
-                  {wishlistItems.length})
+                  {t("selectJerseys", {
+                    selected: selectedCount,
+                    total: wishlistItems.length,
+                  })}
                 </h3>
 
                 <div className="hidden sm:flex gap-2">
@@ -173,8 +164,9 @@ export function WishlistSelectionModal({
                     onClick={handleSelectAll}
                     disabled={selectedCount === wishlistItems.length}
                     type="button"
+                    className="cursor-pointer"
                   >
-                    Tout sélectionner
+                    {t("selectAll")}
                   </Button>
                   <Button
                     variant="ghost"
@@ -182,8 +174,9 @@ export function WishlistSelectionModal({
                     onClick={handleSelectNone}
                     disabled={selectedCount === 0}
                     type="button"
+                    className="cursor-pointer"
                   >
-                    Tout déselectionner
+                    {t("deselectAll")}
                   </Button>
                 </div>
 
@@ -194,8 +187,9 @@ export function WishlistSelectionModal({
                       size="sm"
                       onClick={handleSelectNone}
                       type="button"
+                      className="cursor-pointer"
                     >
-                      Tout déselectionner
+                      {t("deselectAll")}
                     </Button>
                   ) : (
                     <Button
@@ -203,8 +197,9 @@ export function WishlistSelectionModal({
                       size="sm"
                       onClick={handleSelectAll}
                       type="button"
+                      className="cursor-pointer"
                     >
-                      Tout sélectionner
+                      {t("selectAll")}
                     </Button>
                   )}
                 </div>
@@ -239,7 +234,15 @@ export function WishlistSelectionModal({
                         </h4>
                         <div className="flex items-center gap-2 mt-1">
                           <span className="text-xs text-muted-foreground truncate">
-                            {getJerseyTypeLabel(item.jersey.type)}{" "}
+                            {tJerseyType(
+                              item.jersey.type as
+                                | "HOME"
+                                | "AWAY"
+                                | "THIRD"
+                                | "FOURTH"
+                                | "GOALKEEPER"
+                                | "SPECIAL"
+                            )}{" "}
                             {item.jersey.season}
                           </span>
                         </div>
@@ -259,7 +262,7 @@ export function WishlistSelectionModal({
             type="button"
             className="cursor-pointer"
           >
-            Annuler
+            {t("cancel")}
           </Button>
           <Button
             onClick={handleNext}
@@ -268,7 +271,7 @@ export function WishlistSelectionModal({
             type="button"
           >
             <Share className="w-4 h-4" />
-            Partager ({selectedCount})
+            {t("share", { count: selectedCount })}
           </Button>
         </DialogFooter>
       </DialogContent>
