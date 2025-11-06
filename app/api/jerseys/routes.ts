@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { JerseyTypeKey } from "@/types/jersey";
 
 interface JerseysQueryParams {
   page?: string;
@@ -9,7 +10,7 @@ interface JerseysQueryParams {
   leagueId?: string;
   clubId?: string;
   season?: string;
-  type?: "HOME" | "AWAY" | "THIRD" | "FOURTH" | "GOALKEEPER" | "SPECIAL";
+  type?: JerseyTypeKey;
   sortBy?: "createdAt" | "name" | "season";
   sortOrder?: "asc" | "desc";
 }

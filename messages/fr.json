@@ -37,7 +37,21 @@
     "THIRD": "Third",
     "FOURTH": "Fourth",
     "GOALKEEPER": "Gardien",
-    "SPECIAL": "Spécial"
+    "SPECIAL": "Spécial",
+    "HALLOWEEN": "Halloween",
+    "ANNIVERSARY": "Anniversaire",
+    "CENTENAIRE": "Centenaire",
+    "OKTOBERFEST": "Oktoberfest",
+    "HUMANRACE": "Humanrace",
+    "ONE_PLANET": "One Planet",
+    "OCTOBRE_ROSE": "Octobre Rose",
+    "ANTI_RACISME": "Anti-Racisme",
+    "HOMMAGE": "Hommage",
+    "RETRO": "Rétro",
+    "NOUVEL_AN_CHINOIS": "Nouvel An Chinois",
+    "OFF_WHITE": "Off-White",
+    "KOCHE": "Koché",
+    "CHAMPION": "Champion"
   },
   "Size": {
     "XS": "XS",

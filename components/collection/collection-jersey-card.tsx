@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { CollectionJerseyModal } from "./collection-jersey-modal";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { useTranslations } from "next-intl";
+import type { JerseyTypeKey } from "@/types/jersey";
 
 interface CollectionJerseyCardProps {
   collectionItem: CollectionItemWithJersey;
@@ -50,7 +51,7 @@ export function CollectionJerseyCard({
   };
 
   const getJerseyTypeLabel = (type: string) => {
-    return tJerseyType(type as "HOME" | "AWAY" | "THIRD" | "FOURTH" | "GOALKEEPER" | "SPECIAL");
+    return tJerseyType(type as JerseyTypeKey);
   };
 
   return (

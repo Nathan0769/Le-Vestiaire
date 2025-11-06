@@ -1,6 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 import { isSlug } from "@/lib/slug-generator";
 import type { JerseyWithWishlistAndCollection } from "@/types/jersey";
+import type { JerseyTypeKey } from "@/types/jersey";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { JerseyBreadcrumb } from "@/components/jerseys/jerseys/jerseys-bread-crumb";
@@ -9,6 +10,7 @@ import { WishlistButton } from "@/components/wishlist/wishlist-button";
 import { CollectionButton } from "@/components/collection/collection-button";
 import { JerseyStats } from "@/components/jerseys/stats/jersey-stats";
 import { JerseySchema } from "@/components/seo/jersey-schema";
+import { getTranslations } from "next-intl/server";
 
 interface JerseyPageProps {
   params: Promise<{
@@ -37,20 +39,9 @@ export async function generateMetadata({
     }
 
     const jersey: JerseyWithWishlistAndCollection = await res.json();
+    const tJerseyType = await getTranslations("JerseyType");
 
-    const getJerseyTypeLabel = (type: string): string => {
-      const labels: Record<string, string> = {
-        HOME: "Domicile",
-        AWAY: "Extérieur",
-        THIRD: "Third",
-        FOURTH: "Fourth",
-        GOALKEEPER: "Gardien",
-        SPECIAL: "Spécial",
-      };
-      return labels[type.toUpperCase()] || type;
-    };
-
-    const typeLabel = getJerseyTypeLabel(jersey.type);
+    const typeLabel = tJerseyType(jersey.type as JerseyTypeKey);
     const typeLower = typeLabel.toLowerCase();
 
     let ratingText = "";
@@ -169,23 +160,9 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   const ratingData = ratingRes && ratingRes.ok ? await ratingRes.json() : null;
   const statsData = statsRes && statsRes.ok ? await statsRes.json() : null;
 
+  const tJerseyType = await getTranslations("JerseyType");
   const getJerseyTypeLabel = (type: string) => {
-    switch (type.toLowerCase()) {
-      case "home":
-        return "Domicile";
-      case "away":
-        return "Extérieur";
-      case "third":
-        return "Third";
-      case "fourth":
-        return "Fourth";
-      case "special":
-        return "Spécial";
-      case "goalkeeper":
-        return "Gardien";
-      default:
-        return type;
-    }
+    return tJerseyType(type as JerseyTypeKey);
   };
 
   return (
