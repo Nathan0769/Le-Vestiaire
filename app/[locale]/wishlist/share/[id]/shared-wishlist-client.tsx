@@ -8,7 +8,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Heart, Gift, Calendar, Shirt, ExternalLink } from "lucide-react";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
+import type { JerseyType } from "@/types/jersey";
 
 interface JerseyData {
   id: string;
@@ -18,6 +20,7 @@ interface JerseyData {
   season: string;
   club: {
     name: string;
+    shortName: string;
   };
 }
 
@@ -34,8 +37,22 @@ export default function SharedWishlistClient({
   theme,
   jerseys,
 }: SharedWishlistClientProps) {
+  const locale = useLocale();
   const t = useTranslations("Wishlist.sharedClient");
   const tJerseyType = useTranslations("JerseyType");
+
+  const getTranslatedName = (jersey: JerseyData) => {
+    return translateJerseyName({
+      jersey: {
+        name: jersey.name,
+        type: jersey.type as JerseyType,
+        season: jersey.season,
+        clubShortName: jersey.club.shortName,
+      },
+      locale,
+      typeTranslation: tJerseyType(jersey.type as JerseyType),
+    });
+  };
 
   const getCurrentDate = () => {
     return new Date().toLocaleDateString("fr-FR", {
@@ -114,7 +131,7 @@ export default function SharedWishlistClient({
                 <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden">
                   <Image
                     src={jersey.imageUrl}
-                    alt={jersey.name}
+                    alt={getTranslatedName(jersey)}
                     fill
                     className="object-contain group-hover:scale-105 transition-transform duration-300"
                   />
@@ -125,7 +142,7 @@ export default function SharedWishlistClient({
                     <h3 className="font-bold text-lg text-gray-800 line-clamp-2 transition-colors">
                       {jersey.club.name}
                     </h3>
-                    <p className="text-sm text-gray-600">{jersey.name}</p>
+                    <p className="text-sm text-gray-600">{getTranslatedName(jersey)}</p>
                   </div>
 
                   <div className="flex items-center gap-2 flex-wrap">

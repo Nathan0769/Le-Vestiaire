@@ -2,6 +2,7 @@ import type { JerseyWithWishlistAndCollection } from "@/types/jersey";
 
 interface JerseySchemaProps {
   jersey: JerseyWithWishlistAndCollection;
+  translatedJerseyName?: string;
   averageRating?: number;
   totalRatings?: number;
   collectionCount?: number;
@@ -10,15 +11,18 @@ interface JerseySchemaProps {
 
 export function JerseySchema({
   jersey,
+  translatedJerseyName,
   averageRating = 0,
   totalRatings = 0,
   collectionCount = 0,
   wishlistCount = 0,
 }: JerseySchemaProps) {
+  const displayName = translatedJerseyName || jersey.name;
+
   const schema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    name: `${jersey.name} - ${jersey.club.name}`,
+    name: `${displayName} - ${jersey.club.name}`,
     description: `Maillot ${jersey.type.toLowerCase()} du ${
       jersey.club.name
     } pour la saison ${jersey.season}, conçu par ${jersey.brand}. ${

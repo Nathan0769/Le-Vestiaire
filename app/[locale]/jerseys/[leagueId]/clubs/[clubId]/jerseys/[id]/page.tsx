@@ -9,7 +9,8 @@ import { WishlistButton } from "@/components/wishlist/wishlist-button";
 import { CollectionButton } from "@/components/collection/collection-button";
 import { JerseyStats } from "@/components/jerseys/stats/jersey-stats";
 import { JerseySchema } from "@/components/seo/jersey-schema";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
 
 interface JerseyPageProps {
   params: Promise<{
@@ -38,10 +39,22 @@ export async function generateMetadata({
     }
 
     const jersey: JerseyWithWishlistAndCollection = await res.json();
+    const locale = await getLocale();
     const tJerseyType = await getTranslations("JerseyType");
 
     const typeLabel = tJerseyType(jersey.type as JerseyType);
     const typeLower = typeLabel.toLowerCase();
+
+    const translatedJerseyName = translateJerseyName({
+      jersey: {
+        name: jersey.name,
+        type: jersey.type as JerseyType,
+        season: jersey.season,
+        clubShortName: jersey.club.shortName,
+      },
+      locale,
+      typeTranslation: typeLabel,
+    });
 
     let ratingText = "";
     try {
@@ -57,7 +70,7 @@ export async function generateMetadata({
       }
     } catch {}
 
-    const title = `Maillot ${jersey.club.name} ${typeLabel} ${jersey.season} ${jersey.brand}${ratingText} | Le Vestiaire`;
+    const title = `${translatedJerseyName} ${jersey.brand}${ratingText} | Le Vestiaire`;
     const description = `Découvrez le maillot ${typeLower} du ${jersey.club.name} pour la saison ${jersey.season}. Conçu par ${jersey.brand}, ce maillot ${jersey.club.league.name} est une pièce de collection. Ajoutez-le à votre collection et évaluez-le !`;
 
     const keywords = [
@@ -81,14 +94,14 @@ export async function generateMetadata({
       keywords: keywords.join(", "),
 
       openGraph: {
-        title: `${jersey.club.name} ${typeLabel} ${jersey.season}`,
+        title: translatedJerseyName,
         description: `Maillot ${typeLower} ${jersey.club.name} par ${jersey.brand}. ${jersey.club.league.name} • Saison ${jersey.season}`,
         images: [
           {
             url: jersey.imageUrl,
             width: 800,
             height: 800,
-            alt: `Maillot ${jersey.club.name} ${jersey.season} ${jersey.brand}`,
+            alt: translatedJerseyName,
           },
         ],
         type: "website",
@@ -98,7 +111,7 @@ export async function generateMetadata({
 
       twitter: {
         card: "summary_large_image",
-        title: `${jersey.club.name} ${typeLabel} ${jersey.season}`,
+        title: translatedJerseyName,
         description: `Maillot ${jersey.brand} • ${jersey.club.league.name}`,
         images: [jersey.imageUrl],
       },
@@ -159,15 +172,28 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   const ratingData = ratingRes && ratingRes.ok ? await ratingRes.json() : null;
   const statsData = statsRes && statsRes.ok ? await statsRes.json() : null;
 
+  const locale = await getLocale();
   const tJerseyType = await getTranslations("JerseyType");
   const getJerseyTypeLabel = (type: string) => {
     return tJerseyType(type as JerseyType);
   };
 
+  const translatedJerseyName = translateJerseyName({
+    jersey: {
+      name: jersey.name,
+      type: jersey.type as JerseyType,
+      season: jersey.season,
+      clubShortName: jersey.club.shortName,
+    },
+    locale,
+    typeTranslation: getJerseyTypeLabel(jersey.type),
+  });
+
   return (
     <>
       <JerseySchema
         jersey={jersey}
+        translatedJerseyName={translatedJerseyName}
         averageRating={ratingData?.averageRating}
         totalRatings={ratingData?.totalRatings}
         collectionCount={statsData?.collectionCount}
@@ -180,16 +206,14 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
           leagueId={jersey.club.league.id}
           clubName={jersey.club.name}
           clubId={jersey.club.id}
-          jerseyName={jersey.name}
+          jerseyName={translatedJerseyName}
         />
 
         <main className="flex flex-col lg:flex-row gap-8 p-6 max-w-6xl mx-auto">
           <div className="w-full lg:w-1/2">
             <Image
               src={jersey.imageUrl}
-              alt={`Maillot ${jersey.club.name} ${jersey.season} ${
-                jersey.brand
-              } - ${getJerseyTypeLabel(jersey.type)}`}
+              alt={translatedJerseyName}
               width={800}
               height={800}
               className="rounded-xl object-contain w-full h-auto max-h-[600px] bg-white"
@@ -202,7 +226,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
               <div className="space-y-6">
                 <div>
                   <h1 className="text-3xl font-bold text-foreground mb-4">
-                    {jersey.name}
+                    {translatedJerseyName}
                   </h1>
 
                   <div className="space-y-3">

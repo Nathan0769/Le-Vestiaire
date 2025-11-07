@@ -28,7 +28,6 @@ export function JerseyCard({ jersey, leagueId, club, showFullInfo }: Props) {
   const locale = useLocale();
   const tJerseyType = useTranslations("JerseyType");
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const translatedJerseyName = translateJerseyName({
     jersey: {
       name: jersey.name,
@@ -55,7 +54,7 @@ export function JerseyCard({ jersey, leagueId, club, showFullInfo }: Props) {
         <div className="relative w-24 h-24 mb-2">
           <Image
             src={jersey.imageUrl}
-            alt={jersey.name}
+            alt={translatedJerseyName}
             fill
             className="object-contain"
           />

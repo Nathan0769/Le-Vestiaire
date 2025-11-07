@@ -6,6 +6,9 @@ import { Badge } from "@/components/ui/badge";
 import { FriendCollectionJerseyModal } from "./friend-collection-jersey-modal";
 import { CONDITION_LABELS } from "@/types/collection";
 import type { FriendCollectionItem } from "@/types/friend-collection";
+import { useTranslations, useLocale } from "next-intl";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
+import type { JerseyType } from "@/types/jersey";
 
 interface FriendCollectionJerseyCardProps {
   collectionItem: FriendCollectionItem;
@@ -14,7 +17,20 @@ interface FriendCollectionJerseyCardProps {
 export function FriendCollectionJerseyCard({
   collectionItem,
 }: FriendCollectionJerseyCardProps) {
+  const locale = useLocale();
+  const tJerseyType = useTranslations("JerseyType");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const translatedJerseyName = translateJerseyName({
+    jersey: {
+      name: collectionItem.jersey.name,
+      type: collectionItem.jersey.type as JerseyType,
+      season: collectionItem.jersey.season,
+      clubShortName: collectionItem.jersey.club.shortName,
+    },
+    locale,
+    typeTranslation: tJerseyType(collectionItem.jersey.type as JerseyType),
+  });
 
   const getConditionColor = (condition: string) => {
     switch (condition) {
@@ -33,18 +49,6 @@ export function FriendCollectionJerseyCard({
     }
   };
 
-  const getJerseyTypeLabel = (type: string) => {
-    const typeLabels = {
-      HOME: "Domicile",
-      AWAY: "Extérieur",
-      THIRD: "Third",
-      FOURTH: "Fourth",
-      GOALKEEPER: "Gardien",
-      SPECIAL: "Spécial",
-    };
-    return typeLabels[type as keyof typeof typeLabels] || type;
-  };
-
   return (
     <>
       <Card
@@ -55,7 +59,7 @@ export function FriendCollectionJerseyCard({
           <div className="relative aspect-square w-full overflow-hidden">
             <Image
               src={collectionItem.jersey.imageUrl}
-              alt={collectionItem.jersey.name}
+              alt={translatedJerseyName}
               fill
               className="object-contain group-hover:scale-105 transition-transform"
             />
@@ -65,7 +69,7 @@ export function FriendCollectionJerseyCard({
               {collectionItem.jersey.club.name}
             </p>
             <p className="text-xs text-muted-foreground text-center truncate">
-              {getJerseyTypeLabel(collectionItem.jersey.type)} •{" "}
+              {tJerseyType(collectionItem.jersey.type as JerseyType)} •{" "}
               {collectionItem.jersey.season}
             </p>
             <div className="flex justify-center items-center gap-2 flex-wrap">

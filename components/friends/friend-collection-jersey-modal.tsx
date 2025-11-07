@@ -16,6 +16,9 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import type { FriendCollectionItem } from "@/types/friend-collection";
 import { ImageCarousel } from "@/components/collection/image-carousel";
+import { useTranslations, useLocale } from "next-intl";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
+import type { JerseyType } from "@/types/jersey";
 
 interface FriendCollectionJerseyModalProps {
   isOpen: boolean;
@@ -28,6 +31,20 @@ export function FriendCollectionJerseyModal({
   onClose,
   collectionItem,
 }: FriendCollectionJerseyModalProps) {
+  const locale = useLocale();
+  const tJerseyType = useTranslations("JerseyType");
+
+  const translatedJerseyName = translateJerseyName({
+    jersey: {
+      name: collectionItem.jersey.name,
+      type: collectionItem.jersey.type as JerseyType,
+      season: collectionItem.jersey.season,
+      clubShortName: collectionItem.jersey.club.shortName,
+    },
+    locale,
+    typeTranslation: tJerseyType(collectionItem.jersey.type as JerseyType),
+  });
+
   const getConditionColor = (condition: string) => {
     switch (condition) {
       case "MINT":
@@ -45,18 +62,6 @@ export function FriendCollectionJerseyModal({
     }
   };
 
-  const getJerseyTypeLabel = (type: string) => {
-    const typeLabels = {
-      HOME: "Domicile",
-      AWAY: "Extérieur",
-      THIRD: "Third",
-      FOURTH: "Fourth",
-      GOALKEEPER: "Gardien",
-      SPECIAL: "Spécial",
-    };
-    return typeLabels[type as keyof typeof typeLabels] || type;
-  };
-
   const carouselImages = [];
 
   if (collectionItem.userPhotoUrl) {
@@ -69,7 +74,7 @@ export function FriendCollectionJerseyModal({
 
   carouselImages.push({
     src: collectionItem.jersey.imageUrl,
-    alt: collectionItem.jersey.name,
+    alt: translatedJerseyName,
     label: "Photo officielle",
   });
 
@@ -136,7 +141,7 @@ export function FriendCollectionJerseyModal({
             <div className="space-y-6">
               <div>
                 <h3 className="font-semibold text-lg mb-3">
-                  {collectionItem.jersey.name}
+                  {translatedJerseyName}
                 </h3>
 
                 <div className="space-y-2 text-sm">
@@ -157,7 +162,7 @@ export function FriendCollectionJerseyModal({
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">Type</span>
                     <span className="font-medium">
-                      {getJerseyTypeLabel(collectionItem.jersey.type)}
+                      {tJerseyType(collectionItem.jersey.type as JerseyType)}
                     </span>
                   </div>
 
