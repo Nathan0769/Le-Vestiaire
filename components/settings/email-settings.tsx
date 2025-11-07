@@ -8,18 +8,20 @@ import { Label } from "@/components/ui/label";
 import { authClient } from "@/lib/auth-client";
 import { Mail } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface EmailSettingsProps {
   isGoogleOnly: boolean;
 }
 
 export function EmailSettings({ isGoogleOnly }: EmailSettingsProps) {
+  const t = useTranslations("Settings.emailSettings");
   const [newEmail, setNewEmail] = useState("");
   const [isChangingEmail, setIsChangingEmail] = useState(false);
 
   const handleChangeEmail = async () => {
     if (!newEmail.includes("@")) {
-      toast.error("Adresse email invalide");
+      toast.error(t("invalidEmail"));
       return;
     }
 
@@ -33,15 +35,13 @@ export function EmailSettings({ isGoogleOnly }: EmailSettingsProps) {
         throw new Error(error.message);
       }
 
-      toast.success(
-        "Demande de changement d'email envoyée. Vérifiez votre boîte mail."
-      );
+      toast.success(t("changeSuccess"));
       setNewEmail("");
     } catch (error) {
       toast.error(
         error instanceof Error
           ? error.message
-          : "Erreur lors du changement d'email"
+          : t("changeError")
       );
     } finally {
       setIsChangingEmail(false);
@@ -53,28 +53,26 @@ export function EmailSettings({ isGoogleOnly }: EmailSettingsProps) {
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Mail className="w-5 h-5" />
-          Changer d&apos;adresse email
+          {t("title")}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         {isGoogleOnly ? (
           <div className="p-4 bg-muted rounded-lg">
             <p className="text-sm text-muted-foreground">
-              🔗 Votre compte est connecté via Google. Pour changer votre
-              adresse email, vous devez le faire directement dans votre compte
-              Google.
+              🔗 {t("googleOnlyMessage")}
             </p>
           </div>
         ) : (
           <>
             <div className="space-y-2">
-              <Label htmlFor="new-email">Nouvelle adresse email</Label>
+              <Label htmlFor="new-email">{t("newEmailLabel")}</Label>
               <Input
                 id="new-email"
                 type="email"
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
-                placeholder="nouvelle@email.com"
+                placeholder={t("emailPlaceholder")}
               />
             </div>
 
@@ -83,7 +81,7 @@ export function EmailSettings({ isGoogleOnly }: EmailSettingsProps) {
               disabled={isChangingEmail || !newEmail}
               className="cursor-pointer"
             >
-              {isChangingEmail ? "Changement..." : "Changer l'email"}
+              {isChangingEmail ? t("changing") : t("changeButton")}
             </Button>
           </>
         )}

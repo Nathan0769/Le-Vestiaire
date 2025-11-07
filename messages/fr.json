@@ -1435,6 +1435,73 @@
       "description": "Nous nous réservons le droit de modifier cette politique de cookies à tout moment. Les modifications prendront effet dès leur publication sur cette page. Nous vous encourageons à consulter régulièrement cette page."
     }
   },
+  "Settings": {
+    "loading": "Chargement...",
+    "title": "Paramètres du compte",
+    "footer": {
+      "text": "En utilisant votre compte, vous acceptez nos",
+      "terms": "Conditions d'utilisation",
+      "privacy": "Politique de confidentialité",
+      "and": "et",
+      "cookies": "Politique de cookies"
+    },
+    "accountInfo": {
+      "title": "Informations du compte",
+      "username": "Nom d'utilisateur",
+      "email": "Adresse email",
+      "memberSince": "Membre depuis"
+    },
+    "emailSettings": {
+      "title": "Changer d'adresse email",
+      "invalidEmail": "Adresse email invalide",
+      "changeSuccess": "Demande de changement d'email envoyée. Vérifiez votre boîte mail.",
+      "changeError": "Erreur lors du changement d'email",
+      "googleOnlyMessage": "Votre compte est connecté via Google. Pour changer votre adresse email, vous devez le faire directement dans votre compte Google.",
+      "newEmailLabel": "Nouvelle adresse email",
+      "emailPlaceholder": "nouvelle@email.com",
+      "changing": "Changement...",
+      "changeButton": "Changer l'email"
+    },
+    "passwordSettings": {
+      "title": "Sécurité",
+      "passwordMismatch": "Les nouveaux mots de passe ne correspondent pas",
+      "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "changeSuccess": "Mot de passe modifié avec succès",
+      "changeError": "Erreur lors du changement de mot de passe",
+      "googleOnlyMessage": "Votre compte est connecté via Google. La sécurité de votre compte est gérée par Google. Vous pouvez modifier votre mot de passe dans les paramètres de votre compte Google.",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "changing": "Changement...",
+      "changeButton": "Changer le mot de passe"
+    },
+    "sessionSettings": {
+      "title": "Session",
+      "signOutSuccess": "Déconnexion réussie",
+      "signOutError": "Erreur lors de la déconnexion",
+      "signOutLabel": "Se déconnecter",
+      "signOutDescription": "Vous serez déconnecté de votre session actuelle",
+      "signOutButton": "Se déconnecter"
+    },
+    "leaderboardPrivacy": {
+      "title": "Confidentialité du classement",
+      "description": "Gérez votre visibilité dans les classements publics",
+      "loading": "Chargement...",
+      "anonymousSuccess": "Vous apparaissez maintenant anonymement dans les classements",
+      "visibleSuccess": "Votre profil est maintenant visible dans les classements",
+      "updateError": "Impossible de mettre à jour vos paramètres",
+      "anonymousLabel": "Apparaître anonymement",
+      "anonymousDescription": "Votre nom, avatar et équipe favorite seront masqués. Vous apparaîtrez comme \"Collectionneur #XXXX\"",
+      "currentlyAnonymous": "Vous apparaissez actuellement comme anonyme dans tous les classements publics."
+    },
+    "cookieSettings": {
+      "title": "Gestion des cookies",
+      "description": "Gérez vos préférences concernant l'utilisation des cookies sur Le Vestiaire. Vous pouvez modifier vos choix à tout moment.",
+      "modifyButton": "Modifier mes préférences",
+      "modifyDescription": "Cliquez pour rouvrir la bannière de consentement et modifier vos choix.",
+      "viewPolicyLink": "Voir la politique de cookies complète"
+    }
+  },
   "CookieConsent": {
     "title": "Utilisation des cookies",
     "defaultDescription": "Nous utilisons des cookies pour améliorer votre expérience sur Le Vestiaire. Ces cookies nous permettent d'analyser l'utilisation du site et d'améliorer nos services.",
@@ -1442,5 +1509,8 @@
     "learnMore": "En savoir plus",
     "decline": "Refuser",
     "accept": "Accepter"
+  },
+  "LegalPages": {
+    "backToHome": "Retour à l'accueil"
   }
 }

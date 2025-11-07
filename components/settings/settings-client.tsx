@@ -10,15 +10,17 @@ import { SessionSettings } from "./session-settings";
 import { LeaderboardPrivacySettings } from "./leaderboard-privacy-settings";
 import { CookieSettings } from "./cookie-settings";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export function SettingsClient() {
+  const t = useTranslations("Settings");
   const currentUser = useCurrentUser();
 
   if (!currentUser) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="text-center">
-          <p className="text-muted-foreground">Chargement...</p>
+          <p className="text-muted-foreground">{t("loading")}</p>
         </div>
       </div>
     );
@@ -28,7 +30,7 @@ export function SettingsClient() {
     <div className="p-6 max-w-4xl mx-auto space-y-8">
       <div className="flex items-center gap-3">
         <Settings className="w-6 h-6 text-primary" />
-        <h1 className="text-2xl font-semibold">Paramètres du compte</h1>
+        <h1 className="text-2xl font-semibold">{t("title")}</h1>
       </div>
 
       <div className="grid gap-6">
@@ -47,17 +49,17 @@ export function SettingsClient() {
         <SessionSettings />
         <CookieSettings />
         <div className="text-muted-foreground text-center text-xs">
-          En utilisant votre compte, vous acceptez nos{" "}
+          {t("footer.text")}{" "}
           <Link href="/conditions-utilisation" className="underline">
-            Conditions d&apos;utilisation
+            {t("footer.terms")}
           </Link>
           ,{" "}
           <Link href="/politique-confidentialite" className="underline">
-            Politique de confidentialité
+            {t("footer.privacy")}
           </Link>{" "}
-          et{" "}
+          {t("footer.and")}{" "}
           <Link href="/politique-cookies" className="underline">
-            Politique de cookies
+            {t("footer.cookies")}
           </Link>
           .
         </div>

@@ -5,31 +5,48 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { User } from "lucide-react";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { fr, enUS, es } from "date-fns/locale";
 import type { CurrentUser } from "@/hooks/useCurrentUser";
+import { useTranslations, useLocale } from "next-intl";
 
 interface AccountInfoProps {
   user: CurrentUser;
 }
 
 export function AccountInfo({ user }: AccountInfoProps) {
+  const t = useTranslations("Settings.accountInfo");
+  const locale = useLocale();
+
+  const getDateLocale = () => {
+    switch (locale) {
+      case "fr":
+        return fr;
+      case "en":
+        return enUS;
+      case "es":
+        return es;
+      default:
+        return fr;
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <User className="w-5 h-5" />
-          Informations du compte
+          {t("title")}
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label>Nom d&apos;utilisateur</Label>
+            <Label>{t("username")}</Label>
             <Input value={user.name || ""} disabled />
           </div>
 
           <div className="space-y-2">
-            <Label>Adresse email</Label>
+            <Label>{t("email")}</Label>
             <div className="flex items-center gap-2">
               <Input value={user.email} disabled />
               {user.authProvider?.hasGoogle && (
@@ -42,9 +59,9 @@ export function AccountInfo({ user }: AccountInfoProps) {
         </div>
 
         <div className="space-y-2">
-          <Label>Membre depuis</Label>
+          <Label>{t("memberSince")}</Label>
           <p className="text-sm text-muted-foreground">
-            {format(new Date(user.createdAt), "MMMM yyyy", { locale: fr })}
+            {format(new Date(user.createdAt), "MMMM yyyy", { locale: getDateLocale() })}
           </p>
         </div>
       </CardContent>

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 import { Trophy } from "lucide-react";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface LeaderboardPrivacySettingsProps {
   userId: string;
@@ -20,6 +21,7 @@ interface LeaderboardPrivacySettingsProps {
 export function LeaderboardPrivacySettings({
   userId,
 }: LeaderboardPrivacySettingsProps) {
+  const t = useTranslations("Settings.leaderboardPrivacy");
   const [isAnonymous, setIsAnonymous] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -63,12 +65,12 @@ export function LeaderboardPrivacySettings({
       setIsAnonymous(checked);
       toast.success(
         checked
-          ? "Vous apparaissez maintenant anonymement dans les classements"
-          : "Votre profil est maintenant visible dans les classements"
+          ? t("anonymousSuccess")
+          : t("visibleSuccess")
       );
     } catch (error) {
       console.error("Erreur:", error);
-      toast.error("Impossible de mettre à jour vos paramètres");
+      toast.error(t("updateError"));
       setIsAnonymous(!checked);
     } finally {
       setIsLoading(false);
@@ -80,26 +82,25 @@ export function LeaderboardPrivacySettings({
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Trophy className="w-5 h-5 text-primary" />
-          Confidentialité du classement
+          {t("title")}
         </CardTitle>
         <CardDescription>
-          Gérez votre visibilité dans les classements publics
+          {t("description")}
         </CardDescription>
       </CardHeader>
       <CardContent>
         {isLoading ? (
           <div className="flex items-center justify-center py-4">
-            <p className="text-muted-foreground">Chargement...</p>
+            <p className="text-muted-foreground">{t("loading")}</p>
           </div>
         ) : (
           <div className="flex items-center justify-between space-x-4">
             <div className="flex-1 space-y-1">
               <Label htmlFor="anonymous-mode" className="text-base">
-                Apparaître anonymement
+                {t("anonymousLabel")}
               </Label>
               <p className="text-sm text-muted-foreground">
-                Votre nom, avatar et équipe favorite seront masqués. Vous
-                apparaîtrez comme &quot;Collectionneur #XXXX&quot;
+                {t("anonymousDescription")}
               </p>
             </div>
             <Switch
@@ -115,9 +116,7 @@ export function LeaderboardPrivacySettings({
         {isAnonymous && (
           <div className="mt-4 p-3 bg-muted rounded-lg">
             <p className="text-xs text-muted-foreground">
-              ℹ️ Vous apparaissez actuellement comme{" "}
-              <span className="font-semibold">anonyme</span> dans tous les
-              classements publics.
+              ℹ️ {t("currentlyAnonymous")}
             </p>
           </div>
         )}

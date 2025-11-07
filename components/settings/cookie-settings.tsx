@@ -5,20 +5,22 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { clearConsent } from "@/lib/cookie-consent";
 import { Link } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
 
 export function CookieSettings() {
+  const t = useTranslations("Settings.cookieSettings");
+
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center gap-2">
           <Cookie className="h-5 w-5 text-primary" />
-          <CardTitle>Gestion des cookies</CardTitle>
+          <CardTitle>{t("title")}</CardTitle>
         </div>
       </CardHeader>
       <CardContent className="space-y-4">
         <p className="text-sm text-muted-foreground">
-          Gérez vos préférences concernant l&apos;utilisation des cookies sur Le
-          Vestiaire. Vous pouvez modifier vos choix à tout moment.
+          {t("description")}
         </p>
         <div className="flex flex-col gap-2">
           <Button
@@ -26,11 +28,10 @@ export function CookieSettings() {
             variant="outline"
             className="w-full sm:w-auto cursor-pointer"
           >
-            Modifier mes préférences
+            {t("modifyButton")}
           </Button>
           <p className="text-xs text-muted-foreground">
-            Cliquez pour rouvrir la bannière de consentement et modifier vos
-            choix.
+            {t("modifyDescription")}
           </p>
         </div>
         <div className="pt-2 border-t">
@@ -38,7 +39,7 @@ export function CookieSettings() {
             href="/politique-cookies"
             className="text-sm text-primary hover:underline"
           >
-            Voir la politique de cookies complète
+            {t("viewPolicyLink")}
           </Link>
         </div>
       </CardContent>

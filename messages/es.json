@@ -1435,6 +1435,73 @@
       "description": "Nos reservamos el derecho de modificar esta política de cookies en cualquier momento. Los cambios entrarán en vigor al publicarse en esta página. Le recomendamos consultar esta página regularmente."
     }
   },
+  "Settings": {
+    "loading": "Cargando...",
+    "title": "Configuración de la cuenta",
+    "footer": {
+      "text": "Al usar su cuenta, acepta nuestros",
+      "terms": "Términos de uso",
+      "privacy": "Política de privacidad",
+      "and": "y",
+      "cookies": "Política de cookies"
+    },
+    "accountInfo": {
+      "title": "Información de la cuenta",
+      "username": "Nombre de usuario",
+      "email": "Dirección de correo electrónico",
+      "memberSince": "Miembro desde"
+    },
+    "emailSettings": {
+      "title": "Cambiar dirección de correo",
+      "invalidEmail": "Dirección de correo inválida",
+      "changeSuccess": "Solicitud de cambio de correo enviada. Revise su bandeja de entrada.",
+      "changeError": "Error al cambiar el correo",
+      "googleOnlyMessage": "Su cuenta está conectada a través de Google. Para cambiar su dirección de correo, debe hacerlo directamente en su cuenta de Google.",
+      "newEmailLabel": "Nueva dirección de correo",
+      "emailPlaceholder": "nuevo@email.com",
+      "changing": "Cambiando...",
+      "changeButton": "Cambiar correo"
+    },
+    "passwordSettings": {
+      "title": "Seguridad",
+      "passwordMismatch": "Las nuevas contraseñas no coinciden",
+      "passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+      "changeSuccess": "Contraseña cambiada con éxito",
+      "changeError": "Error al cambiar la contraseña",
+      "googleOnlyMessage": "Su cuenta está conectada a través de Google. La seguridad de su cuenta es administrada por Google. Puede cambiar su contraseña en la configuración de su cuenta de Google.",
+      "currentPassword": "Contraseña actual",
+      "newPassword": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "changing": "Cambiando...",
+      "changeButton": "Cambiar contraseña"
+    },
+    "sessionSettings": {
+      "title": "Sesión",
+      "signOutSuccess": "Sesión cerrada con éxito",
+      "signOutError": "Error al cerrar sesión",
+      "signOutLabel": "Cerrar sesión",
+      "signOutDescription": "Se cerrará su sesión actual",
+      "signOutButton": "Cerrar sesión"
+    },
+    "leaderboardPrivacy": {
+      "title": "Privacidad del ranking",
+      "description": "Gestione su visibilidad en los rankings públicos",
+      "loading": "Cargando...",
+      "anonymousSuccess": "Ahora aparece anónimamente en los rankings",
+      "visibleSuccess": "Su perfil ahora es visible en los rankings",
+      "updateError": "No se puede actualizar su configuración",
+      "anonymousLabel": "Aparecer anónimamente",
+      "anonymousDescription": "Su nombre, avatar y equipo favorito estarán ocultos. Aparecerá como \"Coleccionista #XXXX\"",
+      "currentlyAnonymous": "Actualmente aparece como anónimo en todos los rankings públicos."
+    },
+    "cookieSettings": {
+      "title": "Gestión de cookies",
+      "description": "Gestione sus preferencias sobre el uso de cookies en Le Vestiaire. Puede modificar sus elecciones en cualquier momento.",
+      "modifyButton": "Modificar mis preferencias",
+      "modifyDescription": "Haga clic para reabrir el banner de consentimiento y modificar sus elecciones.",
+      "viewPolicyLink": "Ver la política de cookies completa"
+    }
+  },
   "CookieConsent": {
     "title": "Uso de cookies",
     "defaultDescription": "Utilizamos cookies para mejorar su experiencia en Le Vestiaire. Estas cookies nos permiten analizar el uso del sitio y mejorar nuestros servicios.",
@@ -1442,5 +1509,8 @@
     "learnMore": "Más información",
     "decline": "Rechazar",
     "accept": "Aceptar"
+  },
+  "LegalPages": {
+    "backToHome": "Volver al inicio"
   }
 }

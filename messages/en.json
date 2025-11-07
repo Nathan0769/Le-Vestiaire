@@ -1435,6 +1435,73 @@
       "description": "We reserve the right to modify this cookie policy at any time. Changes will take effect upon publication on this page. We encourage you to review this page regularly."
     }
   },
+  "Settings": {
+    "loading": "Loading...",
+    "title": "Account Settings",
+    "footer": {
+      "text": "By using your account, you agree to our",
+      "terms": "Terms of Service",
+      "privacy": "Privacy Policy",
+      "and": "and",
+      "cookies": "Cookie Policy"
+    },
+    "accountInfo": {
+      "title": "Account Information",
+      "username": "Username",
+      "email": "Email address",
+      "memberSince": "Member since"
+    },
+    "emailSettings": {
+      "title": "Change Email Address",
+      "invalidEmail": "Invalid email address",
+      "changeSuccess": "Email change request sent. Check your inbox.",
+      "changeError": "Error changing email",
+      "googleOnlyMessage": "Your account is connected via Google. To change your email address, you must do so directly in your Google account.",
+      "newEmailLabel": "New email address",
+      "emailPlaceholder": "new@email.com",
+      "changing": "Changing...",
+      "changeButton": "Change Email"
+    },
+    "passwordSettings": {
+      "title": "Security",
+      "passwordMismatch": "New passwords do not match",
+      "passwordTooShort": "Password must be at least 8 characters",
+      "changeSuccess": "Password changed successfully",
+      "changeError": "Error changing password",
+      "googleOnlyMessage": "Your account is connected via Google. Your account security is managed by Google. You can change your password in your Google account settings.",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "changing": "Changing...",
+      "changeButton": "Change Password"
+    },
+    "sessionSettings": {
+      "title": "Session",
+      "signOutSuccess": "Successfully signed out",
+      "signOutError": "Error signing out",
+      "signOutLabel": "Sign out",
+      "signOutDescription": "You will be signed out of your current session",
+      "signOutButton": "Sign Out"
+    },
+    "leaderboardPrivacy": {
+      "title": "Leaderboard Privacy",
+      "description": "Manage your visibility in public leaderboards",
+      "loading": "Loading...",
+      "anonymousSuccess": "You now appear anonymously in leaderboards",
+      "visibleSuccess": "Your profile is now visible in leaderboards",
+      "updateError": "Unable to update your settings",
+      "anonymousLabel": "Appear anonymously",
+      "anonymousDescription": "Your name, avatar and favorite team will be hidden. You will appear as \"Collector #XXXX\"",
+      "currentlyAnonymous": "You currently appear as anonymous in all public leaderboards."
+    },
+    "cookieSettings": {
+      "title": "Cookie Management",
+      "description": "Manage your cookie preferences on Le Vestiaire. You can change your choices at any time.",
+      "modifyButton": "Modify my preferences",
+      "modifyDescription": "Click to reopen the consent banner and modify your choices.",
+      "viewPolicyLink": "View full cookie policy"
+    }
+  },
   "CookieConsent": {
     "title": "Cookie Usage",
     "defaultDescription": "We use cookies to improve your experience on Le Vestiaire. These cookies allow us to analyze site usage and improve our services.",
@@ -1442,5 +1509,8 @@
     "learnMore": "Learn more",
     "decline": "Decline",
     "accept": "Accept"
+  },
+  "LegalPages": {
+    "backToHome": "Back to home"
   }
 }
