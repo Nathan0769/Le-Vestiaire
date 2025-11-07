@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
 import { createClient } from "@supabase/supabase-js";
+import { getTranslations } from "next-intl/server";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -164,24 +165,23 @@ async function getFriendCollection(currentUserId: string, friendId: string) {
 
 export async function generateMetadata({ params }: FriendCollectionPageProps) {
   const currentUser = await getCurrentUser();
-  if (!currentUser) return { title: "Collection introuvable - Le Vestiaire" };
+  const t = await getTranslations("Friends");
+
+  if (!currentUser) return { title: `${t("collectionNotFound")} - Le Vestiaire` };
 
   const { id: userId } = await params;
   const data = await getFriendCollection(currentUser.id, userId);
 
   if (!data) {
     return {
-      title: "Collection introuvable - Le Vestiaire",
+      title: `${t("collectionNotFound")} - Le Vestiaire`,
     };
   }
 
+  const displayName = data.user.username ?? t("user");
   return {
-    title: `Collection de ${
-      data.user.username ?? "Utilisateur"
-    } - Le Vestiaire`,
-    description: `Découvrez la collection de ${
-      data.user.username ?? "Utilisateur"
-    } : ${data.stats.total} maillots de football`,
+    title: `${t("collectionOf", { name: displayName })} - Le Vestiaire`,
+    description: `${t("discoverCollections")} ${displayName} : ${data.stats.total} ${data.stats.total > 1 ? t("jerseys") : t("jersey")}`,
   };
 }
 
@@ -189,6 +189,7 @@ export default async function FriendCollectionPage({
   params,
 }: FriendCollectionPageProps) {
   const currentUser = await getCurrentUser();
+  const t = await getTranslations("Friends");
 
   if (!currentUser) {
     redirect("/auth/login");
@@ -202,6 +203,7 @@ export default async function FriendCollectionPage({
   }
 
   const { user, collection, stats } = data;
+  const displayName = user.username ?? t("user");
 
   return (
     <div className="p-6 space-y-8">
@@ -214,10 +216,10 @@ export default async function FriendCollectionPage({
         <div className="flex items-center gap-3">
           <Package className="w-6 h-6 text-primary" />
           <h1 className="text-2xl font-semibold">
-            Collection de {user.username ?? "Utilisateur"}
+            {t("collectionOf", { name: displayName })}
           </h1>
           <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium">
-            {stats.total} maillot{stats.total > 1 ? "s" : ""}
+            {stats.total} {stats.total > 1 ? t("jerseys") : t("jersey")}
           </span>
         </div>
       </div>
@@ -231,7 +233,7 @@ export default async function FriendCollectionPage({
           />
           <div className="flex-1">
             <h2 className="text-xl font-semibold">
-              {user.username ?? "Utilisateur"}
+              {displayName}
             </h2>
             {user.favoriteClub && (
               <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
@@ -252,11 +254,10 @@ export default async function FriendCollectionPage({
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <Package className="w-16 h-16 text-muted-foreground/30 mb-6" />
           <h3 className="text-xl font-medium text-muted-foreground mb-2">
-            Collection vide
+            {t("emptyCollection")}
           </h3>
           <p className="text-sm text-muted-foreground max-w-md">
-            {user.username ?? "Cet utilisateur"} n&apos;a pas encore ajouté de
-            maillots à sa collection.
+            {t("noJerseysYet", { name: displayName })}
           </p>
         </div>
       ) : (

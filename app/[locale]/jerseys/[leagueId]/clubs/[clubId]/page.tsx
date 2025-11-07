@@ -10,6 +10,7 @@ import prisma from "@/lib/prisma";
 import Image from "next/image";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
 type Props = {
   params: Promise<{
@@ -103,8 +104,10 @@ export default async function ClubDetailPage(props: Props) {
     },
   });
 
+  const t = await getTranslations("Jerseys");
+
   if (!club) {
-    return <div className="p-6">Club introuvable.</div>;
+    return <div className="p-6">{t("clubNotFoundText")}</div>;
   }
 
   return (
@@ -112,7 +115,7 @@ export default async function ClubDetailPage(props: Props) {
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
-            <Link href="/jerseys">Toutes les ligues</Link>
+            <Link href="/jerseys">{t("allLeagues")}</Link>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>

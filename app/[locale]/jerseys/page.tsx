@@ -4,8 +4,10 @@ import { useEffect, useState } from "react";
 import { League } from "@prisma/client";
 import { LeagueGrid } from "@/components/jerseys/leagues/leagues-grid";
 import { SearchInput } from "@/components/ui/search-input";
+import { useTranslations } from "next-intl";
 
 export default function MaillotsPage() {
+  const t = useTranslations("Jerseys");
   const [leagues, setLeagues] = useState<League[]>([]);
   const [search, setSearch] = useState("");
 
@@ -25,11 +27,11 @@ export default function MaillotsPage() {
 
   return (
     <div className="p-5 space-y-6">
-      <h1 className="text-2xl font-semibold">Choisis ta ligue</h1>
+      <h1 className="text-2xl font-semibold">{t("selectLeague")}</h1>
       <SearchInput
         value={search}
         onChange={setSearch}
-        placeholder="Rechercher une ligue..."
+        placeholder={t("searchLeague")}
       />
       <LeagueGrid leagues={filteredLeagues} />
     </div>

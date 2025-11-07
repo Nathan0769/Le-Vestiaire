@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Breadcrumb,
@@ -7,6 +9,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import { useTranslations } from "next-intl";
 
 type Props = {
   leagueName: string;
@@ -23,12 +26,14 @@ export function JerseyBreadcrumb({
   clubId,
   jerseyName,
 }: Props) {
+  const t = useTranslations("Jerseys");
+
   return (
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
           <BreadcrumbLink asChild>
-            <Link href="/jerseys">Toutes les ligues</Link>
+            <Link href="/jerseys">{t("allLeagues")}</Link>
           </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />

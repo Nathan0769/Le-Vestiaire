@@ -9,8 +9,10 @@ import { FriendCard } from "./friend-card";
 import { FriendRequestCard } from "./friend-request-card";
 import { SearchUsers } from "./search-users";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export function FriendsClient() {
+  const t = useTranslations("Friends");
   const {
     friends,
     loading: loadingFriends,
@@ -44,14 +46,14 @@ export function FriendsClient() {
   const handleRemoveFriend = async (friendshipId: string) => {
     const result = await removeFriend(friendshipId);
     if (!result.success) {
-      toast.error(result.error || "Erreur");
+      toast.error(result.error || t("error"));
     }
   };
 
   const handleBlockUser = async (userId: string) => {
     const result = await blockUser(userId);
     if (!result.success) {
-      toast.error(result.error || "Erreur");
+      toast.error(result.error || t("error"));
     }
   };
 
@@ -59,14 +61,14 @@ export function FriendsClient() {
     <div className="p-6 space-y-8">
       <div className="flex items-center gap-3">
         <Users className="w-6 h-6 text-primary" />
-        <h1 className="text-2xl font-semibold">Mes Amis</h1>
+        <h1 className="text-2xl font-semibold">{t("myFriends")}</h1>
       </div>
 
       <Tabs defaultValue="friends" className="w-full">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="friends" className="gap-2 cursor-pointer">
             <Users className="w-4 h-4" />
-            <span className="hidden sm:inline">Amis</span>
+            <span className="hidden sm:inline">{t("friends")}</span>
             {friends.length > 0 && (
               <span className="ml-1 px-2 py-0.5 bg-primary/20 text-primary rounded-full text-xs">
                 {friends.length}
@@ -75,7 +77,7 @@ export function FriendsClient() {
           </TabsTrigger>
           <TabsTrigger value="requests" className="gap-2 cursor-pointer">
             <Clock className="w-4 h-4" />
-            <span className="hidden sm:inline">En attente</span>
+            <span className="hidden sm:inline">{t("pending")}</span>
             {requests.length > 0 && (
               <span className="ml-1 px-2 py-0.5 bg-red-500/20 text-red-600 rounded-full text-xs">
                 {requests.length}
@@ -84,7 +86,7 @@ export function FriendsClient() {
           </TabsTrigger>
           <TabsTrigger value="search" className="gap-2 cursor-pointer">
             <UserPlus className="w-4 h-4" />
-            <span className="hidden sm:inline">Rechercher</span>
+            <span className="hidden sm:inline">{t("search")}</span>
           </TabsTrigger>
         </TabsList>
 
@@ -102,11 +104,10 @@ export function FriendsClient() {
             <div className="text-center py-16">
               <Users className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
               <h3 className="text-lg font-medium text-muted-foreground mb-2">
-                Aucun ami pour le moment
+                {t("noFriendsYet")}
               </h3>
               <p className="text-sm text-muted-foreground">
-                Recherchez des utilisateurs pour commencer à construire votre
-                réseau
+                {t("searchUsersToStart")}
               </p>
             </div>
           ) : (
@@ -137,10 +138,10 @@ export function FriendsClient() {
             <div className="text-center py-16">
               <Clock className="w-16 h-16 mx-auto text-muted-foreground/30 mb-4" />
               <h3 className="text-lg font-medium text-muted-foreground mb-2">
-                Aucune demande en attente
+                {t("noPendingRequests")}
               </h3>
               <p className="text-sm text-muted-foreground">
-                Vos demandes d&apos;ami apparaîtront ici
+                {t("requestsWillAppear")}
               </p>
             </div>
           ) : (

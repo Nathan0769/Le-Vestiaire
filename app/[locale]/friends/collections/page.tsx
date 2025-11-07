@@ -6,6 +6,7 @@ import { UserAvatar } from "@/components/profiles/user-avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import prisma from "@/lib/prisma";
 import { createClient } from "@supabase/supabase-js";
+import { getTranslations } from "next-intl/server";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -20,6 +21,7 @@ export const metadata = {
 
 export default async function FriendsCollectionsPage() {
   const user = await getCurrentUser();
+  const t = await getTranslations("Friends");
 
   if (!user) {
     redirect("/auth/login");
@@ -106,28 +108,27 @@ export default async function FriendsCollectionsPage() {
     <div className="p-6 space-y-8">
       <div className="flex items-center gap-3">
         <Users className="w-6 h-6 text-primary" />
-        <h1 className="text-2xl font-semibold">Collections des amis</h1>
+        <h1 className="text-2xl font-semibold">{t("friendsCollections")}</h1>
       </div>
 
       <p className="text-muted-foreground">
-        Découvrez les collections de maillots de vos amis et trouvez
-        l&apos;inspiration pour votre propre collection
+        {t("discoverCollections")}
       </p>
 
       {friends.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
           <Users className="w-16 h-16 text-muted-foreground/30 mb-6" />
           <h3 className="text-xl font-medium text-muted-foreground mb-2">
-            Aucun ami pour le moment
+            {t("noFriendsYet")}
           </h3>
           <p className="text-sm text-muted-foreground max-w-md">
-            Ajoutez des amis pour découvrir leurs collections de maillots !
+            {t("addFriendsToDiscover")}
           </p>
           <Link
             href="/friends"
             className="mt-4 text-primary hover:underline text-sm"
           >
-            Rechercher des amis →
+            {t("searchFriends")}
           </Link>
         </div>
       ) : (
@@ -148,7 +149,7 @@ export default async function FriendsCollectionsPage() {
                     />
                     <div className="flex-1 min-w-0">
                       <CardTitle className="text-base truncate group-hover:text-primary transition-colors">
-                        {friend.username ?? friend.name ?? "Utilisateur"}
+                        {friend.username ?? friend.name ?? t("user")}
                       </CardTitle>
                       {friend.favoriteClub && (
                         <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
@@ -167,7 +168,7 @@ export default async function FriendsCollectionsPage() {
                     </p>
                   ) : (
                     <p className="text-sm text-muted-foreground/50 italic">
-                      Aucune bio
+                      {t("noBio")}
                     </p>
                   )}
                 </CardContent>
@@ -175,7 +176,7 @@ export default async function FriendsCollectionsPage() {
                 <CardContent className="pt-3 border-t mt-auto">
                   <div className="flex items-center gap-2 text-sm text-primary font-medium">
                     <Package className="w-4 h-4" />
-                    <span>Voir sa collection →</span>
+                    <span>{t("viewCollection")}</span>
                   </div>
                 </CardContent>
               </Card>

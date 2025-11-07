@@ -13,7 +13,9 @@ import { Check, X, Heart } from "lucide-react";
 import type { FriendshipRequest } from "@/types/friendship";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
-import { fr } from "date-fns/locale";
+import { fr, enUS, es } from "date-fns/locale";
+import { useTranslations } from "next-intl";
+import { useLocale } from "next-intl";
 
 interface FriendRequestCardProps {
   request: FriendshipRequest;
@@ -26,28 +28,40 @@ export function FriendRequestCard({
   onAccept,
   onReject,
 }: FriendRequestCardProps) {
+  const t = useTranslations("Friends");
+  const locale = useLocale();
+
   const handleAccept = async () => {
     try {
       await onAccept(request.id);
-      const displayName = request.sender.username ?? "cet utilisateur";
-      toast.success(`Vous êtes maintenant ami avec ${displayName}`);
+      const displayName = request.sender.username ?? t("thisUser");
+      toast.success(t("nowFriendsWith", { name: displayName }));
     } catch {
-      toast.error("Erreur lors de l'acceptation");
+      toast.error(t("errorAccepting"));
     }
   };
 
   const handleReject = async () => {
     try {
       await onReject(request.id);
-      toast.success("Demande refusée");
+      toast.success(t("requestRejected"));
     } catch {
-      toast.error("Erreur lors du refus");
+      toast.error(t("errorRejecting"));
+    }
+  };
+
+  const getDateLocale = () => {
+    switch (locale) {
+      case "fr": return fr;
+      case "en": return enUS;
+      case "es": return es;
+      default: return fr;
     }
   };
 
   const timeAgo = formatDistanceToNow(new Date(request.createdAt), {
     addSuffix: true,
-    locale: fr,
+    locale: getDateLocale(),
   });
 
   return (
@@ -61,7 +75,7 @@ export function FriendRequestCard({
           />
           <div className="flex-1">
             <CardTitle className="text-base">
-              {request.sender.username ?? "Utilisateur"}
+              {request.sender.username ?? t("user")}
             </CardTitle>
 
             <CardDescription className="text-sm flex items-center gap-1 pt-0.5">
@@ -72,7 +86,7 @@ export function FriendRequestCard({
                 </>
               ) : (
                 <span className="text-muted-foreground">
-                  Pas d&apos;équipe favorite
+                  {t("noFavoriteTeam")}
                 </span>
               )}
             </CardDescription>
@@ -96,7 +110,7 @@ export function FriendRequestCard({
             size="sm"
           >
             <Check className="w-4 h-4 mr-1" />
-            Accepter
+            {t("accept")}
           </Button>
           <Button
             onClick={handleReject}
@@ -105,7 +119,7 @@ export function FriendRequestCard({
             size="sm"
           >
             <X className="w-4 h-4 mr-1" />
-            Refuser
+            {t("reject")}
           </Button>
         </div>
       </CardContent>

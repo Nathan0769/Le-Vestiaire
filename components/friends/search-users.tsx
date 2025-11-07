@@ -5,28 +5,30 @@ import { Search, Loader2 } from "lucide-react";
 import { useSearchUsers } from "@/hooks/useSearchUsers";
 import { UserSearchResult } from "./user-search-result";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 export function SearchUsers() {
+  const t = useTranslations("Friends");
   const { query, setQuery, results, loading, sendFriendRequest, blockUser } =
     useSearchUsers();
 
   const handleSendRequest = async (userId: string) => {
     const res = await sendFriendRequest(userId);
     if (res.success) {
-      toast.success("Demande envoyée");
+      toast.success(t("requestSent"));
     } else {
-      toast.error(res.error || "Erreur");
+      toast.error(res.error || t("error"));
     }
   };
 
   const handleBlock = async (userId: string) => {
-    if (!confirm("Bloquer cet utilisateur ?")) return;
+    if (!confirm(t("blockUserConfirm"))) return;
 
     const res = await blockUser(userId);
     if (res.success) {
-      toast.success("Utilisateur bloqué");
+      toast.success(t("userBlocked"));
     } else {
-      toast.error(res.error || "Erreur");
+      toast.error(res.error || t("error"));
     }
   };
 
@@ -37,7 +39,7 @@ export function SearchUsers() {
         <Input
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Rechercher par pseudo ou nom..."
+          placeholder={t("searchPlaceholder")}
           className="pl-9"
         />
         {loading && (
@@ -47,21 +49,21 @@ export function SearchUsers() {
 
       {query.length > 0 && query.length < 2 && (
         <p className="text-sm text-muted-foreground text-center py-4">
-          Tapez au moins 2 caractères pour rechercher
+          {t("minCharacters")}
         </p>
       )}
 
       {query.length >= 2 && !loading && results.length === 0 && (
         <div className="text-center py-8 text-muted-foreground">
           <Search className="w-12 h-12 mx-auto mb-3 opacity-30" />
-          <p>Aucun utilisateur trouvé</p>
+          <p>{t("noUsersFound")}</p>
         </div>
       )}
 
       {results.length > 0 && (
         <div className="space-y-2">
           <p className="text-sm text-muted-foreground">
-            {results.length} résultat{results.length > 1 ? "s" : ""}
+            {results.length} {results.length > 1 ? t("results") : t("result")}
           </p>
           {results.map((user) => (
             <UserSearchResult

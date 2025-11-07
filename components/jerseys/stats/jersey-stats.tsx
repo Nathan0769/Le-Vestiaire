@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { Package, Heart } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface JerseyStatsProps {
   jerseyId: string;
@@ -13,6 +14,7 @@ interface JerseyStatsData {
 }
 
 export function JerseyStats({ jerseyId }: JerseyStatsProps) {
+  const t = useTranslations("Jerseys");
   const [statsData, setStatsData] = useState<JerseyStatsData>({
     collectionCount: 0,
     wishlistCount: 0,
@@ -41,7 +43,7 @@ export function JerseyStats({ jerseyId }: JerseyStatsProps) {
     return (
       <div className="space-y-3">
         <h3 className="text-sm font-medium text-muted-foreground mb-3">
-          Statistiques des collectionneurs
+          {t("collectorStats")}
         </h3>
         <div className="space-y-2">
           <div className="flex items-center gap-2">
@@ -57,25 +59,27 @@ export function JerseyStats({ jerseyId }: JerseyStatsProps) {
     );
   }
 
+  const collectionText = statsData.collectionCount > 1
+    ? t("inCollections", { count: statsData.collectionCount.toLocaleString() })
+    : t("inCollection", { count: statsData.collectionCount.toLocaleString() });
+
+  const wishlistText = statsData.wishlistCount > 1
+    ? t("inWishlists", { count: statsData.wishlistCount.toLocaleString() })
+    : t("inWishlist", { count: statsData.wishlistCount.toLocaleString() });
+
   return (
     <div className="space-y-3">
       <h3 className="text-sm font-medium text-muted-foreground mb-3">
-        Statistiques des collectionneurs
+        {t("collectorStats")}
       </h3>
       <div className="space-y-2 text-sm">
         <div className="flex items-center gap-2">
           <Package className="w-4 h-4 text-primary" />
-          <span className="">
-            Dans {statsData.collectionCount.toLocaleString()} collection
-            {statsData.collectionCount > 1 ? "s" : ""}
-          </span>
+          <span className="">{collectionText}</span>
         </div>
         <div className="flex items-center gap-2">
           <Heart className="w-4 h-4 text-red-500" />
-          <span className="">
-            Dans {statsData.wishlistCount.toLocaleString()} wishlist
-            {statsData.wishlistCount > 1 ? "s" : ""}
-          </span>
+          <span className="">{wishlistText}</span>
         </div>
       </div>
     </div>

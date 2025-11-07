@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { UserPlus, Clock, Users, Ban, Heart } from "lucide-react";
 import type { SearchUserResult } from "@/types/friendship";
+import { useTranslations } from "next-intl";
 
 interface UserSearchResultProps {
   user: SearchUserResult;
@@ -17,6 +18,8 @@ export function UserSearchResult({
   onSendRequest,
   onBlock,
 }: UserSearchResultProps) {
+  const t = useTranslations("Friends");
+
   const getActionButton = () => {
     switch (user.friendshipStatus) {
       case null:
@@ -27,7 +30,7 @@ export function UserSearchResult({
             className="cursor-pointer"
           >
             <UserPlus className="w-4 h-4 mr-1" />
-            Ajouter
+            {t("add")}
           </Button>
         );
 
@@ -35,7 +38,7 @@ export function UserSearchResult({
         return (
           <Button disabled variant="outline" size="sm">
             <Clock className="w-4 h-4 mr-1" />
-            En attente
+            {t("pending")}
           </Button>
         );
 
@@ -43,7 +46,7 @@ export function UserSearchResult({
         return (
           <Button disabled variant="outline" size="sm">
             <Users className="w-4 h-4 mr-1" />
-            Amis
+            {t("friends")}
           </Button>
         );
 
@@ -55,7 +58,7 @@ export function UserSearchResult({
             className="cursor-pointer"
           >
             <UserPlus className="w-4 h-4 mr-1" />
-            Renvoyer
+            {t("resend")}
           </Button>
         );
 
@@ -79,7 +82,7 @@ export function UserSearchResult({
                     <span>{user.favoriteClub.name}</span>
                   </>
                 ) : (
-                  <span>Pas d&apos;équipe favorite</span>
+                  <span>{t("noFavoriteTeam")}</span>
                 )}
               </div>
               {user.bio && (

@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/select";
 import { FriendCollectionJerseyCard } from "./friend-collection-jersey-card";
 import type { FriendCollectionItem } from "@/types/friend-collection";
+import { useTranslations } from "next-intl";
 
 interface FriendCollectionGridProps {
   collectionItems: FriendCollectionItem[];
@@ -17,16 +18,17 @@ interface FriendCollectionGridProps {
 export function FriendCollectionGrid({
   collectionItems,
 }: FriendCollectionGridProps) {
+  const t = useTranslations("Friends");
   const [sortBy, setSortBy] = useState("date-desc");
 
   const sortOptions = [
-    { value: "date-desc", label: "Plus récents" },
-    { value: "date-asc", label: "Plus anciens" },
-    { value: "price-desc", label: "Prix décroissant" },
-    { value: "price-asc", label: "Prix croissant" },
-    { value: "condition", label: "État" },
-    { value: "club", label: "Club (A-Z)" },
-    { value: "season", label: "Saison" },
+    { value: "date-desc", label: t("mostRecent") },
+    { value: "date-asc", label: t("oldest") },
+    { value: "price-desc", label: t("priceDescending") },
+    { value: "price-asc", label: t("priceAscending") },
+    { value: "condition", label: t("condition") },
+    { value: "club", label: t("clubAZ") },
+    { value: "season", label: t("season") },
   ];
 
   const sortedItems = [...collectionItems].sort((a, b) => {
@@ -71,10 +73,10 @@ export function FriendCollectionGrid({
   return (
     <div className="space-y-6 w-full overflow-hidden">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <h2 className="text-lg font-medium">Ses maillots</h2>
+        <h2 className="text-lg font-medium">{t("hisHerJerseys")}</h2>
         <div className="flex items-center gap-2 w-full sm:w-auto">
           <span className="text-sm text-muted-foreground whitespace-nowrap">
-            Trier par :
+            {t("sortBy")}
           </span>
           <Select value={sortBy} onValueChange={setSortBy}>
             <SelectTrigger className="w-full sm:w-40">
@@ -94,7 +96,7 @@ export function FriendCollectionGrid({
       {sortedItems.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-muted-foreground">
-            Aucun maillot dans cette collection.
+            {t("noJerseysInCollection")}
           </p>
         </div>
       ) : (

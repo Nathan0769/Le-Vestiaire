@@ -174,6 +174,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
 
   const locale = await getLocale();
   const tJerseyType = await getTranslations("JerseyType");
+  const t = await getTranslations("Jerseys");
   const getJerseyTypeLabel = (type: string) => {
     return tJerseyType(type as JerseyType);
   };
@@ -232,7 +233,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                   <div className="space-y-3">
                     <div className="flex items-center justify-between py-2 border-b border-border/50">
                       <span className="text-sm font-medium text-muted-foreground">
-                        Club
+                        {t("club")}
                       </span>
                       <span className="text-sm font-semibold text-foreground">
                         {jersey.club.name}
@@ -241,7 +242,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
 
                     <div className="flex items-center justify-between py-2 border-b border-border/50">
                       <span className="text-sm font-medium text-muted-foreground">
-                        Saison
+                        {t("season")}
                       </span>
                       <span className="text-sm font-semibold text-foreground">
                         {jersey.season}
@@ -250,7 +251,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
 
                     <div className="flex items-center justify-between py-2 border-b border-border/50">
                       <span className="text-sm font-medium text-muted-foreground">
-                        Marque
+                        {t("brand")}
                       </span>
                       <span className="text-sm font-semibold text-foreground">
                         {jersey.brand}
@@ -259,7 +260,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
 
                     <div className="flex items-center justify-between py-2 border-b border-border/50">
                       <span className="text-sm font-medium text-muted-foreground">
-                        Type
+                        {t("type")}
                       </span>
                       <span className="text-sm font-semibold text-foreground">
                         {getJerseyTypeLabel(jersey.type)}
@@ -271,7 +272,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                 <div className="pt-4 grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <h3 className="text-sm font-medium text-muted-foreground mb-3">
-                      Note moyenne
+                      {t("averageRating")}
                     </h3>
                     <StarRating jerseyId={jersey.id} />
                   </div>

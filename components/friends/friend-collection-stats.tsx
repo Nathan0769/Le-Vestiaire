@@ -1,19 +1,17 @@
+"use client";
+
 import { Package, Trophy, Shirt, Gift, TrendingUp } from "lucide-react";
 import type { FriendCollectionStats } from "@/types/friend-collection";
+import { useTranslations } from "next-intl";
+import type { JerseyType } from "@/types/jersey";
 
 interface FriendCollectionStatsProps {
   stats: FriendCollectionStats;
 }
 
 export function FriendCollectionStats({ stats }: FriendCollectionStatsProps) {
-  const typeLabels = {
-    HOME: "Domicile",
-    AWAY: "Extérieur",
-    THIRD: "Third",
-    FOURTH: "Fourth",
-    GOALKEEPER: "Gardien",
-    SPECIAL: "Spécial",
-  };
+  const t = useTranslations("Friends");
+  const tJerseyType = useTranslations("JerseyType");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -23,12 +21,12 @@ export function FriendCollectionStats({ stats }: FriendCollectionStatsProps) {
             <Package className="w-4 h-4 text-primary" />
           </div>
           <h3 className="font-medium text-muted-foreground">
-            Maillots possédés
+            {t("jerseysOwned")}
           </h3>
         </div>
         <p className="text-2xl font-bold">{stats.total}</p>
         <p className="text-sm text-muted-foreground mt-1">
-          {stats.total === 1 ? "Maillot" : "Maillots"} dans sa collection
+          {stats.total === 1 ? t("jersey") : t("jerseys")} {t("inCollection")}
         </p>
 
         {stats.totalValue && stats.totalValue > 0 && (
@@ -45,7 +43,7 @@ export function FriendCollectionStats({ stats }: FriendCollectionStatsProps) {
             <Trophy className="w-4 h-4 text-primary" />
           </div>
           <h3 className="font-medium text-muted-foreground">
-            Ligues favorites
+            {t("favoriteLeagues")}
           </h3>
         </div>
         <div className="space-y-2">
@@ -59,7 +57,7 @@ export function FriendCollectionStats({ stats }: FriendCollectionStatsProps) {
               </div>
             ))}
           {Object.keys(stats.leagueStats).length === 0 && (
-            <p className="text-sm text-muted-foreground">Aucune donnée</p>
+            <p className="text-sm text-muted-foreground">{t("noData")}</p>
           )}
         </div>
       </div>
@@ -69,7 +67,7 @@ export function FriendCollectionStats({ stats }: FriendCollectionStatsProps) {
           <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
             <Shirt className="w-4 h-4 text-primary" />
           </div>
-          <h3 className="font-medium text-muted-foreground">Types préférés</h3>
+          <h3 className="font-medium text-muted-foreground">{t("preferredTypes")}</h3>
         </div>
         <div className="space-y-2">
           {Object.entries(stats.typeStats)
@@ -78,13 +76,13 @@ export function FriendCollectionStats({ stats }: FriendCollectionStatsProps) {
             .map(([type, count]) => (
               <div key={type} className="flex justify-between items-center">
                 <span className="text-sm font-medium">
-                  {typeLabels[type as keyof typeof typeLabels] || type}
+                  {tJerseyType(type as JerseyType)}
                 </span>
                 <span className="text-sm text-muted-foreground">{count}</span>
               </div>
             ))}
           {Object.keys(stats.typeStats).length === 0 && (
-            <p className="text-sm text-muted-foreground">Aucune donnée</p>
+            <p className="text-sm text-muted-foreground">{t("noData")}</p>
           )}
         </div>
       </div>
@@ -94,12 +92,12 @@ export function FriendCollectionStats({ stats }: FriendCollectionStatsProps) {
           <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
             <Gift className="w-4 h-4 text-primary" />
           </div>
-          <h3 className="font-medium text-muted-foreground">Provenance</h3>
+          <h3 className="font-medium text-muted-foreground">{t("origin")}</h3>
         </div>
         <div className="space-y-2">
           {stats.provenanceStats.regular > 0 && (
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium">Achetés</span>
+              <span className="text-sm font-medium">{t("purchased")}</span>
               <span className="text-sm text-muted-foreground">
                 {stats.provenanceStats.regular}
               </span>
@@ -107,7 +105,7 @@ export function FriendCollectionStats({ stats }: FriendCollectionStatsProps) {
           )}
           {stats.provenanceStats.gifts > 0 && (
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium">Cadeaux</span>
+              <span className="text-sm font-medium">{t("gifts")}</span>
               <span className="text-sm text-muted-foreground">
                 {stats.provenanceStats.gifts}
               </span>
@@ -115,7 +113,7 @@ export function FriendCollectionStats({ stats }: FriendCollectionStatsProps) {
           )}
           {stats.provenanceStats.mysteryBox > 0 && (
             <div className="flex justify-between items-center">
-              <span className="text-sm font-medium">Box mystère</span>
+              <span className="text-sm font-medium">{t("mysteryBox")}</span>
               <span className="text-sm text-muted-foreground">
                 {stats.provenanceStats.mysteryBox}
               </span>

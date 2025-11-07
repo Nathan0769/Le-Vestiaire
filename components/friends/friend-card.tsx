@@ -18,6 +18,7 @@ import {
 import { MoreVertical, UserMinus, Ban, Heart } from "lucide-react";
 import type { FriendWithUser } from "@/types/friendship";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 interface FriendCardProps {
   friend: FriendWithUser;
@@ -26,27 +27,29 @@ interface FriendCardProps {
 }
 
 export function FriendCard({ friend, onRemove, onBlock }: FriendCardProps) {
+  const t = useTranslations("Friends");
+
   const handleRemove = async () => {
-    const displayName = friend.user.username ?? "cet utilisateur";
-    if (!confirm(`Retirer ${displayName} de vos amis ?`)) return;
+    const displayName = friend.user.username ?? t("thisUser");
+    if (!confirm(t("removeFriendConfirm", { name: displayName }))) return;
 
     try {
       await onRemove(friend.id);
-      toast.success("Ami retiré");
+      toast.success(t("friendRemoved"));
     } catch {
-      toast.error("Erreur lors de la suppression");
+      toast.error(t("errorRemoving"));
     }
   };
 
   const handleBlock = async () => {
-    const displayName = friend.user.username ?? "cet utilisateur";
-    if (!confirm(`Bloquer ${displayName} ?`)) return;
+    const displayName = friend.user.username ?? t("thisUser");
+    if (!confirm(t("blockConfirm", { name: displayName }))) return;
 
     try {
       await onBlock(friend.user.id);
-      toast.success("Utilisateur bloqué");
+      toast.success(t("userBlocked"));
     } catch {
-      toast.error("Erreur lors du blocage");
+      toast.error(t("errorBlocking"));
     }
   };
 
@@ -62,7 +65,7 @@ export function FriendCard({ friend, onRemove, onBlock }: FriendCardProps) {
             />
             <div>
               <CardTitle className="text-base">
-                {friend.user.username ?? "Utilisateur"}
+                {friend.user.username ?? t("user")}
               </CardTitle>
               <CardDescription className="text-sm flex items-center gap-1 pt-0.5">
                 {friend.user.favoriteClub ? (
@@ -72,7 +75,7 @@ export function FriendCard({ friend, onRemove, onBlock }: FriendCardProps) {
                   </>
                 ) : (
                   <span className="text-muted-foreground">
-                    Pas d&apos;équipe favorite
+                    {t("noFavoriteTeam")}
                   </span>
                 )}
               </CardDescription>
@@ -95,14 +98,14 @@ export function FriendCard({ friend, onRemove, onBlock }: FriendCardProps) {
                 className="text-red-600 cursor-pointer"
               >
                 <UserMinus className="w-4 h-4 mr-2" />
-                Retirer des amis
+                {t("removeFriend")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 onClick={handleBlock}
                 className="text-red-600 cursor-pointer"
               >
                 <Ban className="w-4 h-4 mr-2" />
-                Bloquer
+                {t("block")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
