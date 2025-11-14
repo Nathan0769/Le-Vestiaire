@@ -4,7 +4,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { FriendCollectionJerseyModal } from "./friend-collection-jersey-modal";
-import { CONDITION_LABELS } from "@/types/collection";
 import type { FriendCollectionItem } from "@/types/friend-collection";
 import { useTranslations, useLocale } from "next-intl";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
@@ -19,6 +18,7 @@ export function FriendCollectionJerseyCard({
 }: FriendCollectionJerseyCardProps) {
   const locale = useLocale();
   const tJerseyType = useTranslations("JerseyType");
+  const tCondition = useTranslations("Condition");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const translatedJerseyName = translateJerseyName({
@@ -79,11 +79,7 @@ export function FriendCollectionJerseyCard({
                   collectionItem.condition
                 )}`}
               >
-                {
-                  CONDITION_LABELS[
-                    collectionItem.condition as keyof typeof CONDITION_LABELS
-                  ]
-                }
+                {tCondition(collectionItem.condition as "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR")}
               </Badge>
               {collectionItem.size && (
                 <Badge variant="outline" className="text-xs px-1.5 py-0.5">

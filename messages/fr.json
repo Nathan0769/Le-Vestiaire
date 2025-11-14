@@ -1613,6 +1613,29 @@
     "priceAscending": "Prix croissant",
     "condition": "État",
     "clubAZ": "Club (A-Z)",
-    "noJerseysInCollection": "Aucun maillot dans cette collection."
+    "season": "Saison",
+    "noJerseysInCollection": "Aucun maillot dans cette collection.",
+    "modal": {
+      "title": "Détails du maillot",
+      "yourPhoto": "Photo personnelle",
+      "officialPhoto": "Photo officielle",
+      "size": "Taille",
+      "withTags": "Avec étiquettes",
+      "gift": "Cadeau",
+      "mysteryBox": "Box mystère",
+      "club": "Club",
+      "league": "Ligue",
+      "type": "Type",
+      "season": "Saison",
+      "brand": "Marque",
+      "collectionInfo": "Informations de collection",
+      "purchasePrice": "Prix d'achat",
+      "purchasedOn": "Acheté le",
+      "player": "Joueur",
+      "number": "Numéro",
+      "personalization": "Personnalisation",
+      "addedOn": "Ajouté le",
+      "close": "Fermer"
+    }
   }
 }

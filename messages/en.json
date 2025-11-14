@@ -1613,6 +1613,29 @@
     "priceAscending": "Price ascending",
     "condition": "Condition",
     "clubAZ": "Club (A-Z)",
-    "noJerseysInCollection": "No jerseys in this collection."
+    "season": "Season",
+    "noJerseysInCollection": "No jerseys in this collection.",
+    "modal": {
+      "title": "Jersey Details",
+      "yourPhoto": "Personal photo",
+      "officialPhoto": "Official photo",
+      "size": "Size",
+      "withTags": "With tags",
+      "gift": "Gift",
+      "mysteryBox": "Mystery box",
+      "club": "Club",
+      "league": "League",
+      "type": "Type",
+      "season": "Season",
+      "brand": "Brand",
+      "collectionInfo": "Collection information",
+      "purchasePrice": "Purchase price",
+      "purchasedOn": "Purchased on",
+      "player": "Player",
+      "number": "Number",
+      "personalization": "Personalization",
+      "addedOn": "Added on",
+      "close": "Close"
+    }
   }
 }

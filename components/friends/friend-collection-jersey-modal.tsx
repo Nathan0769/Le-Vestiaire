@@ -11,7 +11,6 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Tag, Package, Star, Gift } from "lucide-react";
-import { CONDITION_LABELS } from "@/types/collection";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import type { FriendCollectionItem } from "@/types/friend-collection";
@@ -32,7 +31,9 @@ export function FriendCollectionJerseyModal({
   collectionItem,
 }: FriendCollectionJerseyModalProps) {
   const locale = useLocale();
+  const t = useTranslations("Friends.modal");
   const tJerseyType = useTranslations("JerseyType");
+  const tCondition = useTranslations("Condition");
 
   const translatedJerseyName = translateJerseyName({
     jersey: {
@@ -67,15 +68,15 @@ export function FriendCollectionJerseyModal({
   if (collectionItem.userPhotoUrl) {
     carouselImages.push({
       src: collectionItem.userPhotoUrl,
-      alt: "Photo personnelle",
-      label: "Photo personnelle",
+      alt: t("yourPhoto"),
+      label: t("yourPhoto"),
     });
   }
 
   carouselImages.push({
     src: collectionItem.jersey.imageUrl,
     alt: translatedJerseyName,
-    label: "Photo officielle",
+    label: t("officialPhoto"),
   });
 
   return (
@@ -84,7 +85,7 @@ export function FriendCollectionJerseyModal({
         <DialogHeader className="px-6 py-4 border-b">
           <DialogTitle className="flex items-center gap-2">
             <Package className="w-5 h-5 text-primary" />
-            Détails du maillot
+            {t("title")}
           </DialogTitle>
         </DialogHeader>
 
@@ -98,21 +99,17 @@ export function FriendCollectionJerseyModal({
                   variant="secondary"
                   className={`${getConditionColor(collectionItem.condition)}`}
                 >
-                  {
-                    CONDITION_LABELS[
-                      collectionItem.condition as keyof typeof CONDITION_LABELS
-                    ]
-                  }
+                  {tCondition(collectionItem.condition as "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR")}
                 </Badge>
 
                 {collectionItem.size && (
-                  <Badge variant="outline">Taille {collectionItem.size}</Badge>
+                  <Badge variant="outline">{t("size")} {collectionItem.size}</Badge>
                 )}
 
                 {collectionItem.hasTags && (
                   <Badge variant="outline" className="text-green-600">
                     <Tag className="w-3 h-3 mr-1" />
-                    Avec étiquettes
+                    {t("withTags")}
                   </Badge>
                 )}
 
@@ -122,7 +119,7 @@ export function FriendCollectionJerseyModal({
                     className="text-primary bg-primary/20"
                   >
                     <Gift className="w-3 h-3 mr-1" />
-                    Cadeau
+                    {t("gift")}
                   </Badge>
                 )}
 
@@ -132,7 +129,7 @@ export function FriendCollectionJerseyModal({
                     className="text-primary bg-primary/20"
                   >
                     <Package className="w-3 h-3 mr-1" />
-                    Box mystère
+                    {t("mysteryBox")}
                   </Badge>
                 )}
               </div>
@@ -146,35 +143,35 @@ export function FriendCollectionJerseyModal({
 
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Club</span>
+                    <span className="text-muted-foreground">{t("club")}</span>
                     <span className="font-medium">
                       {collectionItem.jersey.club.name}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Ligue</span>
+                    <span className="text-muted-foreground">{t("league")}</span>
                     <span className="font-medium">
                       {collectionItem.jersey.club.league.name}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Type</span>
+                    <span className="text-muted-foreground">{t("type")}</span>
                     <span className="font-medium">
                       {tJerseyType(collectionItem.jersey.type as JerseyType)}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Saison</span>
+                    <span className="text-muted-foreground">{t("season")}</span>
                     <span className="font-medium">
                       {collectionItem.jersey.season}
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Marque</span>
+                    <span className="text-muted-foreground">{t("brand")}</span>
                     <span className="font-medium">
                       {collectionItem.jersey.brand}
                     </span>
@@ -187,14 +184,14 @@ export function FriendCollectionJerseyModal({
               <div>
                 <h4 className="font-semibold mb-3 flex items-center gap-2">
                   <Star className="w-4 h-4" />
-                  Informations de collection
+                  {t("collectionInfo")}
                 </h4>
 
                 <div className="space-y-2 text-sm">
                   {collectionItem.purchasePrice && (
                     <div className="flex items-center justify-between">
                       <span className="text-muted-foreground">
-                        Prix d&apos;achat
+                        {t("purchasePrice")}
                       </span>
                       <span className="font-semibold text-primary">
                         {collectionItem.purchasePrice}€
@@ -204,7 +201,7 @@ export function FriendCollectionJerseyModal({
 
                   {collectionItem.purchaseDate && (
                     <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">Acheté le</span>
+                      <span className="text-muted-foreground">{t("purchasedOn")}</span>
                       <span className="font-medium">
                         {format(
                           new Date(collectionItem.purchaseDate),
@@ -229,7 +226,7 @@ export function FriendCollectionJerseyModal({
                               <>
                                 <div className="flex items-center justify-between">
                                   <span className="text-muted-foreground">
-                                    Joueur
+                                    {t("player")}
                                   </span>
                                   <span className="font-medium">
                                     {playerName}
@@ -237,7 +234,7 @@ export function FriendCollectionJerseyModal({
                                 </div>
                                 <div className="flex items-center justify-between">
                                   <span className="text-muted-foreground">
-                                    Numéro
+                                    {t("number")}
                                   </span>
                                   <span className="font-medium">{number}</span>
                                 </div>
@@ -249,7 +246,7 @@ export function FriendCollectionJerseyModal({
                         return (
                           <div className="flex items-center justify-between">
                             <span className="text-muted-foreground">
-                              Personnalisation
+                              {t("personalization")}
                             </span>
                             <span className="font-medium">
                               {collectionItem.personalization}
@@ -261,7 +258,7 @@ export function FriendCollectionJerseyModal({
                   )}
 
                   <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">Ajouté le</span>
+                    <span className="text-muted-foreground">{t("addedOn")}</span>
                     <span className="font-medium">
                       {format(
                         new Date(collectionItem.createdAt),
@@ -282,7 +279,7 @@ export function FriendCollectionJerseyModal({
             onClick={onClose}
             className="flex-1 cursor-pointer"
           >
-            Fermer
+            {t("close")}
           </Button>
         </DialogFooter>
       </DialogContent>
