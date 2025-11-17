@@ -22,6 +22,14 @@ export function LeaderboardTabs() {
   const [data, setData] = useState<LeaderboardResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Handler pour la catégorie : passe en "all_time" si on sélectionne une catégorie autre que "collection_size"
+  const handleCategoryChange = (newCategory: LeaderboardCategory) => {
+    setCategory(newCategory);
+    if (newCategory !== "collection_size" && period === "month") {
+      setPeriod("all_time");
+    }
+  };
+
   const fetchLeaderboard = useCallback(async () => {
     setLoading(true);
     try {
@@ -64,22 +72,30 @@ export function LeaderboardTabs() {
 
   return (
     <div className="space-y-6">
-      <CategorySelector value={category} onChange={setCategory} />
+      <CategorySelector value={category} onChange={handleCategoryChange} />
 
       <Tabs
         value={period}
         onValueChange={(val) => setPeriod(val as "month" | "all_time")}
         className="w-full"
       >
-        <TabsList className="grid w-full grid-cols-2 max-w-md">
+        <TabsList
+          className={`grid w-full ${
+            category === "collection_size"
+              ? "grid-cols-2 max-w-md"
+              : "grid-cols-1 max-w-xs"
+          }`}
+        >
           <TabsTrigger value="all_time" className="gap-2 cursor-pointer">
             <Crown className="w-4 h-4" />
             {t("allTime")}
           </TabsTrigger>
-          <TabsTrigger value="month" className="gap-2 cursor-pointer">
-            <Flame className="w-4 h-4" />
-            {getCurrentMonthYear()}
-          </TabsTrigger>
+          {category === "collection_size" && (
+            <TabsTrigger value="month" className="gap-2 cursor-pointer">
+              <Flame className="w-4 h-4" />
+              {getCurrentMonthYear()}
+            </TabsTrigger>
+          )}
         </TabsList>
 
         <TabsContent value="all_time" className="mt-6">
