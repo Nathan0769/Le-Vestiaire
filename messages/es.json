@@ -1756,6 +1756,7 @@
       "clubNotFound": "No se encontró ningún club.",
       "seasonLabel": "Temporada *",
       "seasonPlaceholder": "Ej: 2025-26",
+      "seasonPlaceholderNationalTeam": "Ej: 2025",
       "typeLabel": "Tipo *",
       "typePlaceholder": "Tipo de camiseta",
       "specialNameLabel": "Nombre de camiseta especial",
@@ -1781,7 +1782,9 @@
       "buttonUploading": "Subiendo foto...",
       "buttonSubmitting": "Enviando...",
       "buttonSubmit": "Enviar propuesta",
-      "generatedJerseyName": "Camiseta {type} {club} {season}"
+      "generatedJerseyName": "Camiseta {type} {club} {season}",
+      "seasonErrorClub": "Formato inválido. Use AAAA-AA (ej: 2025-26) para clubes",
+      "seasonErrorNationalTeam": "Formato inválido. Use AAAA (ej: 2025) para selecciones nacionales"
     },
     "Errors": {
       "notContributor": "Debes ser colaborador para proponer camisetas",

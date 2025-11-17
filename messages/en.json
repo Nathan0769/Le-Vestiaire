@@ -1756,6 +1756,7 @@
       "clubNotFound": "No club found.",
       "seasonLabel": "Season *",
       "seasonPlaceholder": "E.g., 2025-26",
+      "seasonPlaceholderNationalTeam": "E.g., 2025",
       "typeLabel": "Type *",
       "typePlaceholder": "Jersey type",
       "specialNameLabel": "Special jersey name",
@@ -1781,7 +1782,9 @@
       "buttonUploading": "Uploading photo...",
       "buttonSubmitting": "Submitting...",
       "buttonSubmit": "Submit proposal",
-      "generatedJerseyName": "{type} Jersey {club} {season}"
+      "generatedJerseyName": "{type} Jersey {club} {season}",
+      "seasonErrorClub": "Invalid format. Use YYYY-YY (e.g., 2025-26) for clubs",
+      "seasonErrorNationalTeam": "Invalid format. Use YYYY (e.g., 2025) for national teams"
     },
     "Errors": {
       "notContributor": "You must be a contributor to propose jerseys",

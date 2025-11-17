@@ -1756,6 +1756,7 @@
       "clubNotFound": "Aucun club trouvé.",
       "seasonLabel": "Saison *",
       "seasonPlaceholder": "Ex: 2025-26",
+      "seasonPlaceholderNationalTeam": "Ex: 2025",
       "typeLabel": "Type *",
       "typePlaceholder": "Type de maillot",
       "specialNameLabel": "Nom du maillot spécial",
@@ -1781,7 +1782,9 @@
       "buttonUploading": "Upload photo...",
       "buttonSubmitting": "Envoi...",
       "buttonSubmit": "Soumettre la proposition",
-      "generatedJerseyName": "Maillot {type} {club} {season}"
+      "generatedJerseyName": "Maillot {type} {club} {season}",
+      "seasonErrorClub": "Format invalide. Utilisez AAAA-AA (ex: 2025-26) pour les clubs",
+      "seasonErrorNationalTeam": "Format invalide. Utilisez AAAA (ex: 2025) pour les sélections nationales"
     },
     "Errors": {
       "notContributor": "Vous devez être contributeur pour proposer des maillots",

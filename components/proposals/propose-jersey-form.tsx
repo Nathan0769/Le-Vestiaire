@@ -37,6 +37,9 @@ interface Club {
   id: string;
   name: string;
   shortName: string;
+  league: {
+    id: string;
+  };
 }
 
 interface ProposeJerseyFormProps {
@@ -68,6 +71,9 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
 
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [seasonError, setSeasonError] = useState<string | null>(null);
+
+  const NATIONAL_TEAM_LEAGUES = ["conmebol", "caf", "concacaf", "uefa"];
 
   useEffect(() => {
     const loadClubs = async () => {
@@ -123,7 +129,54 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
     });
 
     setFormData((prev) => ({ ...prev, name: generatedName }));
-  }, [formData.clubId, formData.season, formData.type, specialName, clubs, t, tJerseyType]);
+  }, [
+    formData.clubId,
+    formData.season,
+    formData.type,
+    specialName,
+    clubs,
+    t,
+    tJerseyType,
+  ]);
+
+  const validateSeasonFormat = (
+    season: string,
+    clubId: string
+  ): string | null => {
+    if (!season || !clubId) return null;
+
+    const selectedClub = clubs.find((club) => club.id === clubId);
+    if (!selectedClub) return null;
+
+    const isNationalTeam = NATIONAL_TEAM_LEAGUES.includes(
+      selectedClub.league.id.toLowerCase()
+    );
+
+    if (isNationalTeam) {
+      // Format YYYY pour sélections nationales
+      const yearRegex = /^\d{4}$/;
+      if (!yearRegex.test(season)) {
+        return t("seasonErrorNationalTeam");
+      }
+    } else {
+      // Format YYYY-YY pour clubs
+      const clubSeasonRegex = /^\d{4}-\d{2}$/;
+      if (!clubSeasonRegex.test(season)) {
+        return t("seasonErrorClub");
+      }
+    }
+
+    return null;
+  };
+
+  const handleSeasonChange = (value: string) => {
+    setFormData({ ...formData, season: value });
+
+    if (formData.clubId) {
+      const error = validateSeasonFormat(value, formData.clubId);
+      setSeasonError(error);
+    }
+  };
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -168,6 +221,16 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
       return;
     }
 
+    const seasonValidationError = validateSeasonFormat(
+      formData.season,
+      formData.clubId
+    );
+    if (seasonValidationError) {
+      toast.error(seasonValidationError);
+      setSeasonError(seasonValidationError);
+      return;
+    }
+
     if (!photoFile) {
       toast.error(t("errorPhotoRequired"));
       return;
@@ -194,9 +257,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
     } catch (error) {
       console.error("Error uploading photo:", error);
       toast.error(
-        error instanceof Error
-          ? error.message
-          : t("errorUploadToast")
+        error instanceof Error ? error.message : t("errorUploadToast")
       );
       setIsUploadingPhoto(false);
       return;
@@ -248,9 +309,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
     } catch (error) {
       console.error("Error creating proposal:", error);
       toast.error(
-        error instanceof Error
-          ? error.message
-          : t("errorCreateToast")
+        error instanceof Error ? error.message : t("errorCreateToast")
       );
     } finally {
       setIsSubmitting(false);
@@ -312,15 +371,26 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
                         key={club.id}
                         value={club.id}
                         onSelect={(currentValue) => {
+                          const newClubId =
+                            currentValue === formData.clubId
+                              ? ""
+                              : currentValue;
                           setFormData({
                             ...formData,
-                            clubId:
-                              currentValue === formData.clubId
-                                ? ""
-                                : currentValue,
+                            clubId: newClubId,
                           });
                           setIsClubSelectOpen(false);
                           setClubSearchQuery("");
+
+                          if (formData.season && newClubId) {
+                            const error = validateSeasonFormat(
+                              formData.season,
+                              newClubId
+                            );
+                            setSeasonError(error);
+                          } else {
+                            setSeasonError(null);
+                          }
                         }}
                       >
                         <Check
@@ -346,13 +416,23 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
           </Label>
           <Input
             id="season"
-            placeholder={t("seasonPlaceholder")}
-            value={formData.season}
-            onChange={(e) =>
-              setFormData({ ...formData, season: e.target.value })
+            placeholder={
+              formData.clubId &&
+              clubs.find((club) => club.id === formData.clubId) &&
+              NATIONAL_TEAM_LEAGUES.includes(
+                clubs
+                  .find((club) => club.id === formData.clubId)!
+                  .league.id.toLowerCase()
+              )
+                ? t("seasonPlaceholderNationalTeam")
+                : t("seasonPlaceholder")
             }
+            value={formData.season}
+            onChange={(e) => handleSeasonChange(e.target.value)}
             required
+            className={seasonError ? "border-red-500" : ""}
           />
+          {seasonError && <p className="text-sm text-red-500">{seasonError}</p>}
         </div>
 
         <div className="space-y-2">
@@ -427,12 +507,10 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
       </div>
 
       <div className="space-y-2">
-        <Label className="flex items-center gap-1">
-          {t("photoLabel")}
-        </Label>
+        <Label className="flex items-center gap-1">{t("photoLabel")}</Label>
 
         {photoPreview ? (
-          <div className="relative w-full aspect-square max-w-md bg-muted rounded-lg overflow-hidden">
+          <div className="relative w-full h-64 bg-muted rounded-lg overflow-hidden">
             <Image
               src={photoPreview}
               alt="Aperçu"
@@ -450,7 +528,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
             </Button>
           </div>
         ) : (
-          <label className="flex flex-col items-center justify-center w-full max-w-md aspect-square border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+          <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
               <Camera className="w-12 h-12 mb-3 text-muted-foreground" />
               <p className="mb-2 text-sm text-muted-foreground">
