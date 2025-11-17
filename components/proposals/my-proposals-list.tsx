@@ -27,6 +27,7 @@ interface Proposal {
 
 export function MyProposalsList() {
   const tJerseyType = useTranslations("JerseyType");
+  const t = useTranslations("Proposals.User");
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -35,20 +36,20 @@ export function MyProposalsList() {
       try {
         const response = await fetch("/api/jersey-proposals");
         if (!response.ok) {
-          throw new Error("Erreur chargement propositions");
+          throw new Error(t("errorLoading"));
         }
         const data = await response.json();
         setProposals(data);
       } catch (error) {
-        console.error("Erreur chargement propositions:", error);
-        toast.error("Impossible de charger vos propositions");
+        console.error("Error loading proposals:", error);
+        toast.error(t("errorLoadingToast"));
       } finally {
         setIsLoading(false);
       }
     };
 
     loadProposals();
-  }, []);
+  }, [t]);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -72,10 +73,10 @@ export function MyProposalsList() {
       <div className="flex flex-col items-center justify-center py-16 text-center">
         <Clock className="w-16 h-16 text-muted-foreground/30 mb-6" />
         <h2 className="text-xl font-medium text-muted-foreground mb-2">
-          Aucune proposition
+          {t("emptyStateTitle")}
         </h2>
         <p className="text-muted-foreground max-w-md">
-          Vous n&apos;avez pas encore soumis de proposition de maillot.
+          {t("emptyStateDescription")}
         </p>
       </div>
     );
@@ -120,7 +121,7 @@ export function MyProposalsList() {
             </div>
 
             <div className="text-xs text-muted-foreground mb-3">
-              <span>Marque: {proposal.brand}</span>
+              <span>{t("brandLabel")} {proposal.brand}</span>
             </div>
 
             <div className="flex items-center justify-between pt-3 border-t">
@@ -128,7 +129,7 @@ export function MyProposalsList() {
                 variant="default"
                 className="bg-yellow-500 hover:bg-yellow-600 text-xs"
               >
-                En attente
+                {t("statusPending")}
               </Badge>
               <span className="text-xs text-muted-foreground">
                 {formatDate(proposal.createdAt)}

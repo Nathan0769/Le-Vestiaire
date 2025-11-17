@@ -52,6 +52,7 @@ type ActionType = "approve" | "reject" | null;
 
 export function ProposalsList() {
   const tJerseyType = useTranslations("JerseyType");
+  const t = useTranslations("Proposals.Admin");
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
@@ -65,13 +66,13 @@ export function ProposalsList() {
     try {
       const response = await fetch("/api/admin/proposals");
       if (!response.ok) {
-        throw new Error("Erreur chargement propositions");
+        throw new Error(t("errorLoading"));
       }
       const data = await response.json();
       setProposals(data.proposals);
     } catch (error) {
-      console.error("Erreur chargement propositions:", error);
-      toast.error("Impossible de charger les propositions");
+      console.error("Error loading proposals:", error);
+      toast.error(t("errorLoadingToast"));
     } finally {
       setIsLoading(false);
     }
@@ -79,7 +80,7 @@ export function ProposalsList() {
 
   useEffect(() => {
     loadProposals();
-  }, []);
+  }, [t]);
 
   const openDialog = (proposal: Proposal, type: "approve" | "reject") => {
     setSelectedProposal(proposal);
@@ -108,13 +109,13 @@ export function ProposalsList() {
 
       toast.success(
         actionType === "approve"
-          ? "Proposition approuvée avec succès !"
-          : "Proposition rejetée"
+          ? t("approveSuccess")
+          : t("rejectSuccess")
       );
 
       await loadProposals();
     } catch (error) {
-      console.error("Erreur action:", error);
+      console.error("Error performing action:", error);
       toast.error(
         error instanceof Error ? error.message : "Erreur lors de l'action"
       );
@@ -149,10 +150,10 @@ export function ProposalsList() {
       <div className="flex flex-col items-center justify-center py-16 text-center">
         <Clock className="w-16 h-16 text-muted-foreground/30 mb-6" />
         <h2 className="text-xl font-medium text-muted-foreground mb-2">
-          Aucune proposition en attente
+          {t("emptyStateTitle")}
         </h2>
         <p className="text-muted-foreground max-w-md">
-          Il n&apos;y a actuellement aucune proposition de maillot à examiner.
+          {t("emptyStateDescription")}
         </p>
       </div>
     );
@@ -206,7 +207,7 @@ export function ProposalsList() {
 
                   <div className="text-sm">
                     <p>
-                      <span className="font-medium">Marque:</span>{" "}
+                      <span className="font-medium">{t("brandLabel")}</span>{" "}
                       {proposal.brand}
                     </p>
                     {proposal.description && (
@@ -218,16 +219,16 @@ export function ProposalsList() {
 
                   <div className="flex items-center gap-4 text-xs text-muted-foreground pt-2 border-t">
                     <div>
-                      <span className="font-medium">Proposé par:</span>{" "}
+                      <span className="font-medium">{t("proposedByLabel")}</span>{" "}
                       {proposal.user.name} ({proposal.user.email})
                     </div>
                     <div>
-                      <span className="font-medium">Contributions:</span>{" "}
+                      <span className="font-medium">{t("contributionsLabel")}</span>{" "}
                       {proposal.user.approvedContributionsCount}/
                       {proposal.user.contributionsCount}
                     </div>
                     <div>
-                      <span className="font-medium">Le:</span>{" "}
+                      <span className="font-medium">{t("dateLabel")}</span>{" "}
                       {formatDate(proposal.createdAt)}
                     </div>
                   </div>
@@ -245,7 +246,7 @@ export function ProposalsList() {
                     ) : (
                       <>
                         <Check className="w-4 h-4 mr-2" />
-                        Approuver
+                        {t("approveButton")}
                       </>
                     )}
                   </Button>
@@ -261,7 +262,7 @@ export function ProposalsList() {
                     ) : (
                       <>
                         <X className="w-4 h-4 mr-2" />
-                        Rejeter
+                        {t("rejectButton")}
                       </>
                     )}
                   </Button>
@@ -277,25 +278,23 @@ export function ProposalsList() {
           <AlertDialogHeader>
             <AlertDialogTitle>
               {actionType === "approve"
-                ? "Approuver cette proposition ?"
-                : "Rejeter cette proposition ?"}
+                ? t("approveDialogTitle")
+                : t("rejectDialogTitle")}
             </AlertDialogTitle>
-            <AlertDialogDescription>
-              {actionType === "approve" ? (
-                <>
-                  Le maillot <strong>{selectedProposal?.name}</strong> sera
-                  ajouté à la base de données et le contributeur sera crédité.
-                </>
-              ) : (
-                <>
-                  La proposition <strong>{selectedProposal?.name}</strong> sera
-                  supprimée définitivement. Cette action est irréversible.
-                </>
-              )}
-            </AlertDialogDescription>
+            <AlertDialogDescription
+              dangerouslySetInnerHTML={{
+                __html: actionType === "approve"
+                  ? t("approveDialogDescription", {
+                      jerseyName: selectedProposal?.name || "",
+                    })
+                  : t("rejectDialogDescription", {
+                      jerseyName: selectedProposal?.name || "",
+                    }),
+              }}
+            />
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Annuler</AlertDialogCancel>
+            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={handleAction}
               className={
@@ -304,7 +303,7 @@ export function ProposalsList() {
                   : "bg-destructive hover:bg-destructive/90"
               }
             >
-              Confirmer
+              {t("confirm")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

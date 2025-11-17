@@ -4,15 +4,25 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { MyProposalsList } from "@/components/proposals/my-proposals-list";
 import { Button } from "@/components/ui/button";
 import { Plus, Clock } from "lucide-react";
-import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Mes propositions | Le Vestiaire",
-  description: "Consultez l'état de vos propositions de maillots",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Proposals.User" });
+
+  return {
+    title: t("myProposalsTitle"),
+    description: t("myProposalsDescription"),
+  };
+}
 
 export default async function MyProposalsPage() {
   const user = await getCurrentUser();
+  const t = await getTranslations("Proposals.User");
 
   if (!user) {
     redirect("/auth/login");
@@ -25,14 +35,14 @@ export default async function MyProposalsPage() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           <Clock className="w-6 h-6 text-primary" />
-          <h1 className="text-2xl font-semibold">Mes propositions</h1>
+          <h1 className="text-2xl font-semibold">{t("myProposalsHeading")}</h1>
         </div>
 
         {isContributor && (
           <Link href="/community/propose-jersey">
             <Button className="cursor-pointer">
               <Plus className="w-4 h-4 mr-2" />
-              Nouvelle proposition
+              {t("newProposal")}
             </Button>
           </Link>
         )}
