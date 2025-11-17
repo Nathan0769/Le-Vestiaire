@@ -36,7 +36,7 @@ export function LeaderboardPrivacySettings({
           setIsAnonymous(data.leaderboardAnonymous ?? true);
         }
       } catch (error) {
-        console.error("Erreur lors du chargement des paramètres:", error);
+        console.error("Error loading leaderboard settings:", error);
       } finally {
         setIsLoading(false);
       }
@@ -59,7 +59,7 @@ export function LeaderboardPrivacySettings({
       });
 
       if (!response.ok) {
-        throw new Error("Erreur lors de la mise à jour");
+        throw new Error("Failed to update leaderboard settings");
       }
 
       setIsAnonymous(checked);
@@ -69,7 +69,7 @@ export function LeaderboardPrivacySettings({
           : t("visibleSuccess")
       );
     } catch (error) {
-      console.error("Erreur:", error);
+      console.error("Error updating leaderboard settings:", error);
       toast.error(t("updateError"));
       setIsAnonymous(!checked);
     } finally {

@@ -5,6 +5,7 @@ import { UserAvatar } from "@/components/profiles/user-avatar";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Medal, Heart } from "lucide-react";
 import type { LeaderboardEntry } from "@/types/leaderboard";
+import { useTranslations } from "next-intl";
 
 interface LeaderboardCardProps {
   entry: LeaderboardEntry;
@@ -17,6 +18,7 @@ export function LeaderboardCard({
   category,
   isCurrentUser = false,
 }: LeaderboardCardProps) {
+  const t = useTranslations("Leaderboard.card");
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
@@ -72,13 +74,13 @@ export function LeaderboardCard({
   const getScoreLabel = () => {
     switch (category) {
       case "collection_size":
-        return `${entry.score} maillot${entry.score > 1 ? "s" : ""}`;
+        return `${entry.score} ${entry.score > 1 ? t("jerseys") : t("jersey")}`;
       case "collection_diversity":
-        return `${entry.score} club${entry.score > 1 ? "s" : ""}`;
+        return `${entry.score} ${entry.score > 1 ? t("clubs") : t("club")}`;
       case "league_diversity":
-        return `${entry.score} ligue${entry.score > 1 ? "s" : ""}`;
+        return `${entry.score} ${entry.score > 1 ? t("leagues") : t("league")}`;
       case "vintage_specialist":
-        return `${entry.score} vintage`;
+        return `${entry.score} ${t("vintage")}`;
       default:
         return entry.score;
     }
@@ -126,11 +128,11 @@ export function LeaderboardCard({
             >
               <div className="flex items-center gap-1.5 leading-tight">
                 <p className="font-semibold text-sm sm:text-base truncate">
-                  {entry.username ?? "Utilisateur"}
+                  {entry.username ?? t("defaultUsername")}
                 </p>
                 {isCurrentUser && (
                   <span className="text-[10px] sm:text-xs text-primary flex-shrink-0 font-medium">
-                    (Vous)
+                    {t("currentUser")}
                   </span>
                 )}
               </div>

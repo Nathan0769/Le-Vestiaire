@@ -37,19 +37,3 @@ export interface LeaderboardResponse {
   currentUserRank?: number;
   lastUpdated: string;
 }
-
-export const CATEGORY_LABELS: Record<LeaderboardCategory, string> = {
-  collection_size: "Plus grosse collection",
-  collection_diversity: "Collection la plus diverse",
-  league_diversity: "Globe-trotter",
-  vintage_specialist: "Spécialiste vintage",
-  goalkeeper_specialist: "Gardien de but",
-};
-
-export const CATEGORY_DESCRIPTIONS: Record<LeaderboardCategory, string> = {
-  collection_size: "Nombre total de maillots possédés",
-  collection_diversity: "Nombre de clubs différents",
-  league_diversity: "Nombre de ligues différentes",
-  vintage_specialist: "Maillots d'avant 2005",
-  goalkeeper_specialist: "Maillots de gardien de but",
-};

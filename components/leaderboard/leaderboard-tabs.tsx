@@ -10,9 +10,12 @@ import type {
   LeaderboardResponse,
 } from "@/types/leaderboard";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslations } from "next-intl";
 
 export function LeaderboardTabs() {
   const { user } = useAuth();
+  const t = useTranslations("Leaderboard.tabs");
+  const tMonths = useTranslations("Leaderboard.months");
   const [period, setPeriod] = useState<"all_time" | "month">("all_time");
   const [category, setCategory] =
     useState<LeaderboardCategory>("collection_size");
@@ -30,7 +33,7 @@ export function LeaderboardTabs() {
         setData(json);
       }
     } catch (error) {
-      console.error("Erreur leaderboard:", error);
+      console.error("Leaderboard error:", error);
     } finally {
       setLoading(false);
     }
@@ -42,21 +45,21 @@ export function LeaderboardTabs() {
 
   const getCurrentMonthYear = () => {
     const now = new Date();
-    const monthNames = [
-      "Janvier",
-      "Février",
-      "Mars",
-      "Avril",
-      "Mai",
-      "Juin",
-      "Juillet",
-      "Août",
-      "Septembre",
-      "Octobre",
-      "Novembre",
-      "Décembre",
+    const monthKeys = [
+      "january",
+      "february",
+      "march",
+      "april",
+      "may",
+      "june",
+      "july",
+      "august",
+      "september",
+      "october",
+      "november",
+      "december",
     ];
-    return `${monthNames[now.getMonth()]} ${now.getFullYear()}`;
+    return `${tMonths(monthKeys[now.getMonth()])} ${now.getFullYear()}`;
   };
 
   return (
@@ -71,7 +74,7 @@ export function LeaderboardTabs() {
         <TabsList className="grid w-full grid-cols-2 max-w-md">
           <TabsTrigger value="all_time" className="gap-2 cursor-pointer">
             <Crown className="w-4 h-4" />
-            All-time
+            {t("allTime")}
           </TabsTrigger>
           <TabsTrigger value="month" className="gap-2 cursor-pointer">
             <Flame className="w-4 h-4" />
@@ -97,7 +100,7 @@ export function LeaderboardTabs() {
             </div>
           ) : (
             <div className="text-center py-16 text-muted-foreground">
-              <p>Aucun classement disponible pour cette catégorie</p>
+              <p>{t("emptyState")}</p>
             </div>
           )}
         </TabsContent>
@@ -120,7 +123,7 @@ export function LeaderboardTabs() {
             </div>
           ) : (
             <div className="text-center py-16 text-muted-foreground">
-              <p>Aucun classement disponible pour cette catégorie</p>
+              <p>{t("emptyState")}</p>
             </div>
           )}
         </TabsContent>
@@ -129,7 +132,7 @@ export function LeaderboardTabs() {
       {data && data.currentUserRank && data.currentUserRank > 50 && (
         <div className="mt-6 p-4 bg-primary/10 border border-primary/20 rounded-lg">
           <p className="text-sm text-center">
-            Votre position :{" "}
+            {t("yourPosition")}{" "}
             <span className="font-bold">#{data.currentUserRank}</span>
           </p>
         </div>

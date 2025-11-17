@@ -1,8 +1,9 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import { CATEGORY_LABELS, LeaderboardCategory } from "@/types/leaderboard";
+import { LeaderboardCategory } from "@/types/leaderboard";
 import { Package, Users, Globe, Clock } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface CategorySelectorProps {
   value: LeaderboardCategory;
@@ -25,6 +26,7 @@ const getCategoryIcon = (category: LeaderboardCategory) => {
 };
 
 export function CategorySelector({ value, onChange }: CategorySelectorProps) {
+  const t = useTranslations("Leaderboard.categories");
   const availableCategories: LeaderboardCategory[] = [
     "collection_size",
     "collection_diversity",
@@ -34,7 +36,9 @@ export function CategorySelector({ value, onChange }: CategorySelectorProps) {
 
   return (
     <div className="space-y-3">
-      <h3 className="text-sm font-medium text-muted-foreground">Catégorie</h3>
+      <h3 className="text-sm font-medium text-muted-foreground">
+        {t("title")}
+      </h3>
       <div className="grid grid-cols-2 gap-3">
         {availableCategories.map((cat) => {
           const isActive = value === cat;
@@ -52,7 +56,7 @@ export function CategorySelector({ value, onChange }: CategorySelectorProps) {
               <span className="flex items-center gap-2 min-w-0">
                 {getCategoryIcon(cat)}
                 <span className="whitespace-normal break-words text-center leading-tight min-w-0">
-                  {CATEGORY_LABELS[cat]}
+                  {t(cat)}
                 </span>
               </span>
             </Badge>

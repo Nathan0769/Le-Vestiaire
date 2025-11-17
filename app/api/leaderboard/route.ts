@@ -28,7 +28,7 @@ export async function GET(request: NextRequest) {
     if (!rateLimitResult.success) {
       return NextResponse.json(
         {
-          error: "Trop de requêtes au leaderboard. Attendez un moment.",
+          error: "Too many leaderboard requests. Please wait.",
           remaining: rateLimitResult.remaining,
         },
         { status: 429 }
@@ -73,8 +73,8 @@ export async function GET(request: NextRequest) {
       lastUpdated: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("Erreur leaderboard:", error);
-    return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
+    console.error("Leaderboard error:", error);
+    return NextResponse.json({ error: "Server error" }, { status: 500 });
   }
 }
 
@@ -115,9 +115,9 @@ async function getCollectionSizeLeaderboard(
       return {
         userId: user.id,
         username: isAnonymous
-          ? `Collectionneur #${user.id.slice(-4).toUpperCase()}`
-          : user.username ?? `Utilisateur #${user.id.slice(-4).toUpperCase()}`,
-        name: isAnonymous ? "Anonyme" : user.name,
+          ? `Collector #${user.id.slice(-4).toUpperCase()}`
+          : user.username ?? `User #${user.id.slice(-4).toUpperCase()}`,
+        name: isAnonymous ? "Anonymous" : user.name,
         avatar: isAnonymous ? null : user.avatar,
         favoriteClub: isAnonymous ? null : user.favoriteClub,
         score: user.collection.length,
@@ -200,9 +200,9 @@ async function getCollectionDiversityLeaderboard(): Promise<
     return {
       userId: user.id,
       username: isAnonymous
-        ? `Collectionneur #${user.id.slice(-4).toUpperCase()}`
-        : user.username ?? `Utilisateur #${user.id.slice(-4).toUpperCase()}`,
-      name: isAnonymous ? "Anonyme" : user.name,
+        ? `Collector #${user.id.slice(-4).toUpperCase()}`
+        : user.username ?? `User #${user.id.slice(-4).toUpperCase()}`,
+      name: isAnonymous ? "Anonymous" : user.name,
       avatar: isAnonymous ? null : user.avatar,
       favoriteClub: isAnonymous ? null : user.favoriteClub,
       score: Number(r.unique_clubs),
@@ -277,9 +277,9 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
     return {
       userId: user.id,
       username: isAnonymous
-        ? `Collectionneur #${user.id.slice(-4).toUpperCase()}`
-        : user.username ?? `Utilisateur #${user.id.slice(-4).toUpperCase()}`,
-      name: isAnonymous ? "Anonyme" : user.name,
+        ? `Collector #${user.id.slice(-4).toUpperCase()}`
+        : user.username ?? `User #${user.id.slice(-4).toUpperCase()}`,
+      name: isAnonymous ? "Anonymous" : user.name,
       avatar: isAnonymous ? null : user.avatar,
       favoriteClub: isAnonymous ? null : user.favoriteClub,
       score: Number(r.unique_leagues),
@@ -354,9 +354,9 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
     return {
       userId: user.id,
       username: isAnonymous
-        ? `Collectionneur #${user.id.slice(-4).toUpperCase()}`
-        : user.username ?? `Utilisateur #${user.id.slice(-4).toUpperCase()}`,
-      name: isAnonymous ? "Anonyme" : user.name,
+        ? `Collector #${user.id.slice(-4).toUpperCase()}`
+        : user.username ?? `User #${user.id.slice(-4).toUpperCase()}`,
+      name: isAnonymous ? "Anonymous" : user.name,
       avatar: isAnonymous ? null : user.avatar,
       favoriteClub: isAnonymous ? null : user.favoriteClub,
       score: Number(r.vintage_count),
