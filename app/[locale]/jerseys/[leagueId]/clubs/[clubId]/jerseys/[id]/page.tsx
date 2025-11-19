@@ -284,8 +284,8 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-3 mt-8 pt-6 border-t border-border/50">
-                <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col gap-3 mt-8 pt-6 border-t border-border/50 min-w-0">
+                <div className="flex flex-col xl:flex-row gap-3 min-w-0">
                   <CollectionButton
                     jerseyId={jersey.id}
                     initialIsInCollection={jersey.isInCollection}
