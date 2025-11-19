@@ -29,7 +29,6 @@ export function JerseyTabs({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Vérifier si l'utilisateur est admin
   useEffect(() => {
     const checkAdmin = async () => {
       try {
@@ -47,9 +46,9 @@ export function JerseyTabs({
   }, []);
 
   return (
-    <div className="w-full">
+    <div className="w-full overflow-x-hidden">
       <Tabs defaultValue="description" className="w-full">
-        <TabsList className="inline-flex h-11 items-center justify-start rounded-lg bg-muted p-1 text-muted-foreground w-full lg:w-auto">
+        <TabsList className="inline-flex h-11 items-center justify-start rounded-lg bg-muted p-1 text-muted-foreground w-full lg:w-auto overflow-x-auto">
           <TabsTrigger
             value="description"
             className="gap-2 cursor-pointer data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
@@ -75,11 +74,11 @@ export function JerseyTabs({
         </TabsList>
 
         <TabsContent value="description" className="mt-6">
-          <Card className="border border-border shadow-lg">
-            <CardContent className="p-6">
+          <Card className="border border-border shadow-lg overflow-hidden">
+            <CardContent className="p-4 sm:p-6 min-w-0">
               {description ? (
                 <>
-                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-border">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 pb-4 border-b border-border">
                     <div className="flex items-center gap-2">
                       <BookOpen className="w-5 h-5 text-primary" />
                       <h3 className="text-xl font-semibold text-foreground">
@@ -93,11 +92,13 @@ export function JerseyTabs({
                       size="sm"
                     >
                       <Pencil className="w-4 h-4" />
-                      {t("suggestImprovement")}
+                      <span className="hidden sm:inline">
+                        {t("suggestImprovement")}
+                      </span>
                     </Button>
                   </div>
-                  <div className="prose prose-sm max-w-none dark:prose-invert">
-                    <p className="text-foreground/90 leading-relaxed whitespace-pre-wrap text-base">
+                  <div className="prose prose-sm max-w-none dark:prose-invert min-w-0">
+                    <p className="text-foreground/90 leading-relaxed whitespace-pre-wrap text-base break-words overflow-wrap-anywhere">
                       {description}
                     </p>
                   </div>
@@ -120,7 +121,9 @@ export function JerseyTabs({
                       variant="default"
                     >
                       <Plus className="w-4 h-4" />
-                      {t("proposeDescription")}
+                      <span className="hidden sm:inline">
+                        {t("proposeDescription")}
+                      </span>
                     </Button>
                   </div>
                 </>
@@ -130,8 +133,8 @@ export function JerseyTabs({
         </TabsContent>
 
         <TabsContent value="players" className="mt-6">
-          <Card className="border border-border shadow-lg">
-            <CardContent className="p-6">
+          <Card className="border border-border shadow-lg overflow-hidden">
+            <CardContent className="p-4 sm:p-6 min-w-0">
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-border">
                 <div className="flex items-center gap-2">
                   <Users className="w-5 h-5 text-primary" />
@@ -140,7 +143,9 @@ export function JerseyTabs({
                   </h3>
                 </div>
                 {isAdmin && (
-                  <Link href={`/admin/players?clubId=${clubId}&season=${season}`}>
+                  <Link
+                    href={`/admin/players?clubId=${clubId}&season=${season}`}
+                  >
                     <Button
                       variant="outline"
                       size="sm"
@@ -162,8 +167,8 @@ export function JerseyTabs({
         </TabsContent>
 
         <TabsContent value="achievements" className="mt-6">
-          <Card className="border border-border shadow-lg">
-            <CardContent className="p-6">
+          <Card className="border border-border shadow-lg overflow-hidden">
+            <CardContent className="p-4 sm:p-6 min-w-0">
               <div className="flex items-center gap-2 mb-6 pb-4 border-b border-border">
                 <Trophy className="w-5 h-5 text-primary" />
                 <h3 className="text-xl font-semibold text-foreground">

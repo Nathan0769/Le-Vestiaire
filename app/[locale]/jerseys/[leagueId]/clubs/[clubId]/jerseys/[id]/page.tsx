@@ -202,7 +202,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
         wishlistCount={statsData?.wishlistCount}
       />
 
-      <div className="p-6 space-y-8">
+      <div className="p-6 space-y-8 overflow-x-hidden">
         <JerseyBreadcrumb
           leagueName={jersey.club.league.name}
           leagueId={jersey.club.league.id}
@@ -211,8 +211,8 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
           jerseyName={translatedJerseyName}
         />
 
-        <main className="flex flex-col lg:flex-row gap-8 p-6 max-w-6xl mx-auto">
-          <div className="w-full lg:w-1/2">
+        <main className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 max-w-6xl mx-auto overflow-x-hidden">
+          <div className="w-full lg:w-1/2 min-w-0">
             <Image
               src={jersey.imageUrl}
               alt={translatedJerseyName}
@@ -223,47 +223,47 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
             />
           </div>
 
-          <div className="w-full lg:w-1/2">
-            <div className="bg-card border border-border rounded-xl shadow-lg p-6 h-full flex flex-col justify-between">
-              <div className="space-y-6">
-                <div>
-                  <h1 className="text-3xl font-bold text-foreground mb-4">
+          <div className="w-full lg:w-1/2 min-w-0">
+            <div className="bg-card border border-border rounded-xl shadow-lg p-4 sm:p-6 h-full flex flex-col justify-between min-w-0 overflow-hidden">
+              <div className="space-y-6 min-w-0">
+                <div className="min-w-0">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 break-words">
                     {translatedJerseyName}
                   </h1>
 
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between py-2 border-b border-border/50">
-                      <span className="text-sm font-medium text-muted-foreground">
+                  <div className="space-y-3 min-w-0">
+                    <div className="flex items-center justify-between gap-2 py-2 border-b border-border/50 min-w-0">
+                      <span className="text-sm font-medium text-muted-foreground shrink-0">
                         {t("club")}
                       </span>
-                      <span className="text-sm font-semibold text-foreground">
+                      <span className="text-sm font-semibold text-foreground text-right break-words">
                         {jersey.club.name}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between py-2 border-b border-border/50">
-                      <span className="text-sm font-medium text-muted-foreground">
+                    <div className="flex items-center justify-between gap-2 py-2 border-b border-border/50 min-w-0">
+                      <span className="text-sm font-medium text-muted-foreground shrink-0">
                         {t("season")}
                       </span>
-                      <span className="text-sm font-semibold text-foreground">
+                      <span className="text-sm font-semibold text-foreground text-right break-words">
                         {jersey.season}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between py-2 border-b border-border/50">
-                      <span className="text-sm font-medium text-muted-foreground">
+                    <div className="flex items-center justify-between gap-2 py-2 border-b border-border/50 min-w-0">
+                      <span className="text-sm font-medium text-muted-foreground shrink-0">
                         {t("brand")}
                       </span>
-                      <span className="text-sm font-semibold text-foreground">
+                      <span className="text-sm font-semibold text-foreground text-right break-words">
                         {jersey.brand}
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between py-2 border-b border-border/50">
-                      <span className="text-sm font-medium text-muted-foreground">
+                    <div className="flex items-center justify-between gap-2 py-2 border-b border-border/50 min-w-0">
+                      <span className="text-sm font-medium text-muted-foreground shrink-0">
                         {t("type")}
                       </span>
-                      <span className="text-sm font-semibold text-foreground">
+                      <span className="text-sm font-semibold text-foreground text-right break-words">
                         {getJerseyTypeLabel(jersey.type)}
                       </span>
                     </div>
@@ -300,7 +300,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
           </div>
         </main>
 
-        <div className="max-w-6xl mx-auto px-6 pb-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-8 overflow-x-hidden">
           <JerseyTabs
             jerseyId={jersey.id}
             jerseyName={translatedJerseyName}
