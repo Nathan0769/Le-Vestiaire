@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Users, ShieldCheck } from "lucide-react";
+import { Users, ShieldCheck, UserCheck } from "lucide-react";
 
 export default function AdminPage() {
   return (
@@ -19,7 +19,7 @@ export default function AdminPage() {
         </p>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -53,6 +53,25 @@ export default function AdminPage() {
             <Link href="/admin/proposals">
               <Button className="w-full cursor-pointer">
                 Gérer les propositions
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <UserCheck className="h-5 w-5" />
+              <CardTitle>Gestion des joueurs</CardTitle>
+            </div>
+            <CardDescription>
+              Ajouter et gérer les joueurs par club et saison
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/admin/players">
+              <Button className="w-full cursor-pointer">
+                Gérer les joueurs
               </Button>
             </Link>
           </CardContent>

@@ -9,6 +9,7 @@ import { WishlistButton } from "@/components/wishlist/wishlist-button";
 import { CollectionButton } from "@/components/collection/collection-button";
 import { JerseyStats } from "@/components/jerseys/stats/jersey-stats";
 import { JerseySchema } from "@/components/seo/jersey-schema";
+import { JerseyTabs } from "@/components/jerseys/jersey-tabs";
 import { getTranslations, getLocale } from "next-intl/server";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 
@@ -298,6 +299,16 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
             </div>
           </div>
         </main>
+
+        <div className="max-w-6xl mx-auto px-6 pb-8">
+          <JerseyTabs
+            jerseyId={jersey.id}
+            jerseyName={translatedJerseyName}
+            description={jersey.description}
+            clubId={jersey.club.id}
+            season={jersey.season}
+          />
+        </div>
       </div>
     </>
   );
