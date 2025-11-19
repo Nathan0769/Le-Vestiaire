@@ -281,17 +281,17 @@ export function ProposalsList() {
                 ? t("approveDialogTitle")
                 : t("rejectDialogTitle")}
             </AlertDialogTitle>
-            <AlertDialogDescription
-              dangerouslySetInnerHTML={{
-                __html: actionType === "approve"
-                  ? t("approveDialogDescription", {
-                      jerseyName: selectedProposal?.name || "",
-                    })
-                  : t("rejectDialogDescription", {
-                      jerseyName: selectedProposal?.name || "",
-                    }),
-              }}
-            />
+            <AlertDialogDescription>
+              {actionType === "approve"
+                ? t.rich("approveDialogDescription", {
+                    jerseyName: selectedProposal?.name || "",
+                    strong: (chunks) => <strong>{chunks}</strong>,
+                  })
+                : t.rich("rejectDialogDescription", {
+                    jerseyName: selectedProposal?.name || "",
+                    strong: (chunks) => <strong>{chunks}</strong>,
+                  })}
+            </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>

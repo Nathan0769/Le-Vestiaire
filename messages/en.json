@@ -53,6 +53,18 @@
     "KOCHE": "Koché",
     "CHAMPION": "Champion"
   },
+  "PlayerPosition": {
+    "GOALKEEPER": "Goalkeeper",
+    "DEFENDER": "Defender",
+    "MIDFIELDER": "Midfielder",
+    "FORWARD": "Forward"
+  },
+  "PlayerPositionPlural": {
+    "GOALKEEPER": "Goalkeepers",
+    "DEFENDER": "Defenders",
+    "MIDFIELDER": "Midfielders",
+    "FORWARD": "Forwards"
+  },
   "Size": {
     "XS": "XS",
     "S": "S",
@@ -1548,6 +1560,49 @@
     "since": "since",
     "ofTheClub": "of the club"
   },
+  "JerseyDetail": {
+    "tabs": {
+      "description": "Description",
+      "players": "Players",
+      "achievements": "Achievements",
+      "comingSoon": "Coming soon",
+      "noDescription": "No description is available for this jersey.",
+      "proposeDescription": "Propose a description",
+      "suggestImprovement": "Suggest an improvement"
+    },
+    "players": {
+      "errorLoading": "Error loading players",
+      "noPlayers": "No players registered for this season",
+      "matches": "matches",
+      "goals": "goals",
+      "assists": "assists",
+      "assistsFull": "Assists",
+      "cleanSheets": "clean S.",
+      "cleanSheetsFull": "Clean Sheets",
+      "goalsConceded": "goals C.",
+      "goalsConcededFull": "Goals Conceded"
+    },
+    "proposeDescription": {
+      "title": "Propose a description",
+      "titleImprove": "Suggest an improvement",
+      "description": "Help enrich the database by proposing a description for {name}.",
+      "descriptionImprove": "Help us improve the description of {name}.",
+      "currentDescription": "Current description",
+      "yourDescription": "Your proposal",
+      "yourImprovement": "Your improvement",
+      "placeholder": "Describe the history of this jersey, its context, its special features, associated memorable events, etc.",
+      "hint": "Minimum 50 characters. Be precise and factual.",
+      "cancel": "Cancel",
+      "submit": "Submit my proposal",
+      "submitting": "Submitting...",
+      "success": "Your proposal has been successfully submitted! It will be reviewed by our team.",
+      "errors": {
+        "tooShort": "The description must contain at least {min} characters",
+        "tooLong": "The description cannot exceed {max} characters",
+        "generic": "An error occurred during submission"
+      }
+    }
+  },
   "Friends": {
     "myFriends": "My Friends",
     "friends": "Friends",
@@ -1699,6 +1754,8 @@
       "pageTitle": "Proposal Management - The Locker Room",
       "pageDescription": "Manage jersey proposals submitted by contributors",
       "heading": "Proposal Management",
+      "tabJerseys": "Jerseys",
+      "tabDescriptions": "Descriptions",
       "about": "About proposals",
       "aboutDescription": "Users with the contributor role can propose new jerseys to add to our database. As an administrator, you can approve or reject these proposals.",
       "approveLabel": "Approve:",
@@ -1722,7 +1779,35 @@
       "approveDialogDescription": "The jersey <strong>{jerseyName}</strong> will be added to the database and the contributor will be credited.",
       "rejectDialogDescription": "The proposal <strong>{jerseyName}</strong> will be permanently deleted. This action is irreversible.",
       "cancel": "Cancel",
-      "confirm": "Confirm"
+      "confirm": "Confirm",
+      "DescriptionProposals": {
+        "aboutTitle": "About description proposals",
+        "aboutDescription": "Users can propose descriptions to enrich jersey pages. You can approve or reject these proposals. Contributors are credited for each approved description.",
+        "emptyStateTitle": "No description proposals",
+        "emptyStateDescription": "There are currently no pending description proposals.",
+        "currentDescription": "Current description",
+        "proposedDescription": "Proposed description",
+        "proposedImprovement": "Proposed improvement",
+        "proposedBy": "Proposed by:",
+        "date": "On:",
+        "viewJersey": "View jersey",
+        "approve": "Approve",
+        "reject": "Reject",
+        "approveDialogTitle": "Approve this description?",
+        "approveDialogDescription": "This description will replace the current jersey description. The contributor will be credited.",
+        "rejectDialogTitle": "Reject this proposal?",
+        "rejectDialogDescription": "The proposal will be marked as rejected. You can optionally provide a reason.",
+        "rejectionReason": "Rejection reason (optional)",
+        "rejectionReasonPlaceholder": "Explain why this proposal is rejected...",
+        "cancel": "Cancel",
+        "confirmApprove": "Approve",
+        "confirmReject": "Reject",
+        "approveSuccess": "Description approved successfully!",
+        "rejectSuccess": "Proposal rejected",
+        "errorLoading": "Error loading proposals",
+        "errorApprove": "Error during approval",
+        "errorReject": "Error during rejection"
+      }
     },
     "User": {
       "myProposalsTitle": "My Proposals - The Locker Room",

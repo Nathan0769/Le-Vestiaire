@@ -9,6 +9,7 @@ export interface Jersey {
   brand: string;
   imageUrl: string;
   retailPrice?: number;
+  description?: string | null;
   slug?: string | null;
   club: Club;
   createdAt: Date;

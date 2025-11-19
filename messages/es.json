@@ -53,6 +53,18 @@
     "KOCHE": "Koché",
     "CHAMPION": "Campeón"
   },
+  "PlayerPosition": {
+    "GOALKEEPER": "Portero",
+    "DEFENDER": "Defensor",
+    "MIDFIELDER": "Centrocampista",
+    "FORWARD": "Delantero"
+  },
+  "PlayerPositionPlural": {
+    "GOALKEEPER": "Porteros",
+    "DEFENDER": "Defensores",
+    "MIDFIELDER": "Centrocampistas",
+    "FORWARD": "Delanteros"
+  },
   "Size": {
     "XS": "XS",
     "S": "S",
@@ -1548,6 +1560,49 @@
     "since": "desde",
     "ofTheClub": "del club"
   },
+  "JerseyDetail": {
+    "tabs": {
+      "description": "Descripción",
+      "players": "Jugadores",
+      "achievements": "Logros",
+      "comingSoon": "Próximamente",
+      "noDescription": "No hay descripción disponible para esta camiseta.",
+      "proposeDescription": "Proponer una descripción",
+      "suggestImprovement": "Sugerir una mejora"
+    },
+    "players": {
+      "errorLoading": "Error al cargar los jugadores",
+      "noPlayers": "No hay jugadores registrados para esta temporada",
+      "matches": "partidos",
+      "goals": "goles",
+      "assists": "asistencias",
+      "assistsFull": "Asistencias",
+      "cleanSheets": "porterías C.",
+      "cleanSheetsFull": "Porterías a cero",
+      "goalsConceded": "goles E.",
+      "goalsConcededFull": "Goles encajados"
+    },
+    "proposeDescription": {
+      "title": "Proponer una descripción",
+      "titleImprove": "Sugerir una mejora",
+      "description": "Ayuda a enriquecer la base de datos proponiendo una descripción para {name}.",
+      "descriptionImprove": "Ayúdanos a mejorar la descripción de {name}.",
+      "currentDescription": "Descripción actual",
+      "yourDescription": "Tu propuesta",
+      "yourImprovement": "Tu mejora",
+      "placeholder": "Describe la historia de esta camiseta, su contexto, sus características especiales, eventos memorables asociados, etc.",
+      "hint": "Mínimo 50 caracteres. Sé preciso y objetivo.",
+      "cancel": "Cancelar",
+      "submit": "Enviar mi propuesta",
+      "submitting": "Enviando...",
+      "success": "¡Tu propuesta ha sido enviada con éxito! Será revisada por nuestro equipo.",
+      "errors": {
+        "tooShort": "La descripción debe contener al menos {min} caracteres",
+        "tooLong": "La descripción no puede exceder {max} caracteres",
+        "generic": "Ocurrió un error durante el envío"
+      }
+    }
+  },
   "Friends": {
     "myFriends": "Mis Amigos",
     "friends": "Amigos",
@@ -1699,6 +1754,8 @@
       "pageTitle": "Gestión de Propuestas - El Vestuario Foot",
       "pageDescription": "Gestiona las propuestas de camisetas enviadas por los colaboradores",
       "heading": "Gestión de propuestas",
+      "tabJerseys": "Camisetas",
+      "tabDescriptions": "Descripciones",
       "about": "Acerca de las propuestas",
       "aboutDescription": "Los usuarios con el rol de colaborador pueden proponer nuevas camisetas para agregar a nuestra base de datos. Como administrador, puedes aprobar o rechazar estas propuestas.",
       "approveLabel": "Aprobar:",
@@ -1722,7 +1779,35 @@
       "approveDialogDescription": "La camiseta <strong>{jerseyName}</strong> se agregará a la base de datos y el colaborador será acreditado.",
       "rejectDialogDescription": "La propuesta <strong>{jerseyName}</strong> será eliminada permanentemente. Esta acción es irreversible.",
       "cancel": "Cancelar",
-      "confirm": "Confirmar"
+      "confirm": "Confirmar",
+      "DescriptionProposals": {
+        "aboutTitle": "Acerca de las propuestas de descripciones",
+        "aboutDescription": "Los usuarios pueden proponer descripciones para enriquecer las páginas de camisetas. Puedes aprobar o rechazar estas propuestas. Los colaboradores son acreditados por cada descripción aprobada.",
+        "emptyStateTitle": "No hay propuestas de descripción",
+        "emptyStateDescription": "Actualmente no hay propuestas de descripción pendientes.",
+        "currentDescription": "Descripción actual",
+        "proposedDescription": "Descripción propuesta",
+        "proposedImprovement": "Mejora propuesta",
+        "proposedBy": "Propuesto por:",
+        "date": "El:",
+        "viewJersey": "Ver camiseta",
+        "approve": "Aprobar",
+        "reject": "Rechazar",
+        "approveDialogTitle": "¿Aprobar esta descripción?",
+        "approveDialogDescription": "Esta descripción reemplazará la descripción actual de la camiseta. El colaborador será acreditado.",
+        "rejectDialogTitle": "¿Rechazar esta propuesta?",
+        "rejectDialogDescription": "La propuesta será marcada como rechazada. Puedes proporcionar opcionalmente una razón.",
+        "rejectionReason": "Razón del rechazo (opcional)",
+        "rejectionReasonPlaceholder": "Explica por qué se rechaza esta propuesta...",
+        "cancel": "Cancelar",
+        "confirmApprove": "Aprobar",
+        "confirmReject": "Rechazar",
+        "approveSuccess": "¡Descripción aprobada con éxito!",
+        "rejectSuccess": "Propuesta rechazada",
+        "errorLoading": "Error al cargar propuestas",
+        "errorApprove": "Error durante la aprobación",
+        "errorReject": "Error durante el rechazo"
+      }
     },
     "User": {
       "myProposalsTitle": "Mis Propuestas - El Vestuario Foot",

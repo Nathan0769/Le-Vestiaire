@@ -41,6 +41,8 @@ model User {
   achievements    Achievement[]
   jerseyProposals JerseyProposal[]
   contributionHistory ContributionHistory[]
+  descriptionProposals DescriptionProposal[]
+  reviewedDescriptions DescriptionProposal[] @relation("ReviewedDescriptions")
   // ----------------------
 
   // Relations auth
@@ -117,7 +119,8 @@ model Jersey {
   club       Club         @relation(fields: [clubId], references: [id])
   collection UserJersey[]
   wishlist   Wishlist[]
-  ratings    Rating[]     
+  ratings    Rating[]
+  descriptionProposals DescriptionProposal[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -180,6 +183,7 @@ model Club {
   jerseys         Jersey[]
   favoriteBy      User[]
   jerseyProposals JerseyProposal[]
+  seasonPlayers   SeasonPlayer[]
 
   @@map("clubs")
 }
@@ -327,4 +331,63 @@ model ContributionHistory {
 
   @@index([userId])
   @@map("contribution_history")
+}
+
+model SeasonPlayer {
+  id             String          @id @default(cuid())
+  clubId         String
+  season         String
+  name           String
+  number         Int?
+  position       PlayerPosition?
+  photoUrl       String?
+  goals          Int?
+  assists        Int?
+  matches        Int?
+  cleanSheets    Int?
+  goalsConceded  Int?
+
+  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clubId, season])
+  @@map("season_players")
+}
+
+model DescriptionProposal {
+  id          String         @id @default(cuid())
+  userId      String
+  jerseyId    String
+  description String
+  status      ProposalStatus @default(PENDING)
+  rejectionReason String?
+  reviewedBy  String?
+  reviewedAt  DateTime?
+
+  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jersey   Jersey  @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  reviewer User?   @relation("ReviewedDescriptions", fields: [reviewedBy], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([jerseyId])
+  @@index([status])
+  @@map("description_proposals")
+}
+
+enum ProposalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum PlayerPosition {
+  GOALKEEPER
+  DEFENDER
+  MIDFIELDER
+  FORWARD
 }

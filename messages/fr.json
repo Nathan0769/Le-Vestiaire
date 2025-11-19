@@ -53,6 +53,18 @@
     "KOCHE": "Koché",
     "CHAMPION": "Champion"
   },
+  "PlayerPosition": {
+    "GOALKEEPER": "Gardien",
+    "DEFENDER": "Défenseur",
+    "MIDFIELDER": "Milieu",
+    "FORWARD": "Attaquant"
+  },
+  "PlayerPositionPlural": {
+    "GOALKEEPER": "Gardiens",
+    "DEFENDER": "Défenseurs",
+    "MIDFIELDER": "Milieux",
+    "FORWARD": "Attaquants"
+  },
   "Size": {
     "XS": "XS",
     "S": "S",
@@ -1548,6 +1560,49 @@
     "since": "depuis",
     "ofTheClub": "du club"
   },
+  "JerseyDetail": {
+    "tabs": {
+      "description": "Description",
+      "players": "Joueurs",
+      "achievements": "Palmarès",
+      "comingSoon": "Bientôt disponible",
+      "noDescription": "Aucune description n'est disponible pour ce maillot.",
+      "proposeDescription": "Proposer une description",
+      "suggestImprovement": "Suggérer une amélioration"
+    },
+    "players": {
+      "errorLoading": "Erreur lors du chargement des joueurs",
+      "noPlayers": "Aucun joueur enregistré pour cette saison",
+      "matches": "matchs",
+      "goals": "buts",
+      "assists": "passes D.",
+      "assistsFull": "Passes décisives",
+      "cleanSheets": "clean S.",
+      "cleanSheetsFull": "Clean Sheets",
+      "goalsConceded": "buts E.",
+      "goalsConcededFull": "Buts encaissés"
+    },
+    "proposeDescription": {
+      "title": "Proposer une description",
+      "titleImprove": "Suggérer une amélioration",
+      "description": "Contribuez à enrichir la base de données en proposant une description pour {name}.",
+      "descriptionImprove": "Aidez-nous à améliorer la description de {name}.",
+      "currentDescription": "Description actuelle",
+      "yourDescription": "Votre proposition",
+      "yourImprovement": "Votre amélioration",
+      "placeholder": "Décrivez l'histoire de ce maillot, son contexte, ses particularités, les événements marquants associés, etc.",
+      "hint": "Minimum 50 caractères. Soyez précis et factuel.",
+      "cancel": "Annuler",
+      "submit": "Soumettre ma proposition",
+      "submitting": "Envoi en cours...",
+      "success": "Votre proposition a été soumise avec succès ! Elle sera examinée par notre équipe.",
+      "errors": {
+        "tooShort": "La description doit contenir au moins {min} caractères",
+        "tooLong": "La description ne peut pas dépasser {max} caractères",
+        "generic": "Une erreur est survenue lors de la soumission"
+      }
+    }
+  },
   "Friends": {
     "myFriends": "Mes Amis",
     "friends": "Amis",
@@ -1699,6 +1754,8 @@
       "pageTitle": "Gestion des propositions - Le Vestiaire Foot",
       "pageDescription": "Gérez les propositions de maillots soumises par les contributeurs",
       "heading": "Gestion des propositions",
+      "tabJerseys": "Maillots",
+      "tabDescriptions": "Descriptions",
       "about": "À propos des propositions",
       "aboutDescription": "Les utilisateurs avec le rôle contributor peuvent proposer de nouveaux maillots à ajouter dans notre base de données. En tant qu'administrateur, vous pouvez approuver ou rejeter ces propositions.",
       "approveLabel": "Approuver :",
@@ -1722,7 +1779,35 @@
       "approveDialogDescription": "Le maillot <strong>{jerseyName}</strong> sera ajouté à la base de données et le contributeur sera crédité.",
       "rejectDialogDescription": "La proposition <strong>{jerseyName}</strong> sera supprimée définitivement. Cette action est irréversible.",
       "cancel": "Annuler",
-      "confirm": "Confirmer"
+      "confirm": "Confirmer",
+      "DescriptionProposals": {
+        "aboutTitle": "À propos des propositions de descriptions",
+        "aboutDescription": "Les utilisateurs peuvent proposer des descriptions pour enrichir les fiches maillots. Vous pouvez approuver ou rejeter ces propositions. Les contributeurs sont crédités pour chaque description approuvée.",
+        "emptyStateTitle": "Aucune proposition de description",
+        "emptyStateDescription": "Il n'y a actuellement aucune proposition de description en attente.",
+        "currentDescription": "Description actuelle",
+        "proposedDescription": "Description proposée",
+        "proposedImprovement": "Amélioration proposée",
+        "proposedBy": "Proposé par :",
+        "date": "Le :",
+        "viewJersey": "Voir le maillot",
+        "approve": "Approuver",
+        "reject": "Rejeter",
+        "approveDialogTitle": "Approuver cette description ?",
+        "approveDialogDescription": "Cette description remplacera la description actuelle du maillot. Le contributeur sera crédité.",
+        "rejectDialogTitle": "Rejeter cette proposition ?",
+        "rejectDialogDescription": "La proposition sera marquée comme rejetée. Vous pouvez optionnellement indiquer une raison.",
+        "rejectionReason": "Raison du rejet (optionnel)",
+        "rejectionReasonPlaceholder": "Expliquez pourquoi cette proposition est rejetée...",
+        "cancel": "Annuler",
+        "confirmApprove": "Approuver",
+        "confirmReject": "Rejeter",
+        "approveSuccess": "Description approuvée avec succès !",
+        "rejectSuccess": "Proposition rejetée",
+        "errorLoading": "Erreur lors du chargement des propositions",
+        "errorApprove": "Erreur lors de l'approbation",
+        "errorReject": "Erreur lors du rejet"
+      }
     },
     "User": {
       "myProposalsTitle": "Mes propositions - Le Vestiaire Foot",
