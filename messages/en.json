@@ -1528,7 +1528,13 @@
   "Jerseys": {
     "selectLeague": "Choose your league",
     "searchLeague": "Search for a league...",
+    "searchLeagueOrClub": "Search for a league or club...",
     "searchClub": "Search for a club...",
+    "clubs": "Clubs",
+    "leagues": "Leagues",
+    "searching": "Searching...",
+    "noClubsFound": "No clubs found",
+    "noLeaguesFound": "No leagues found",
     "allLeagues": "All leagues",
     "theLeagues": "Leagues",
     "club": "Club",
