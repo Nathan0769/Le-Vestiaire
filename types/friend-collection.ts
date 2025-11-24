@@ -84,3 +84,58 @@ export interface FriendCollectionResponse {
 export interface FriendsListResponse {
   friends: FriendBasicInfo[];
 }
+
+export interface FriendWishlistItem {
+  id: string;
+  jerseyId: string;
+  priority: number;
+  createdAt: Date;
+  jersey: {
+    id: string;
+    name: string;
+    imageUrl: string;
+    type: string;
+    season: string;
+    brand: string;
+    retailPrice: number | null;
+    club: {
+      id: string;
+      name: string;
+      shortName: string;
+      logoUrl: string;
+      primaryColor: string;
+      league: {
+        id: string;
+        name: string;
+        country: string;
+        logoUrl: string;
+        tier: number;
+      };
+    };
+  };
+}
+
+export interface FriendWishlistStats {
+  total: number;
+  totalValue: number | null;
+  leagueStats: Record<string, number>;
+  typeStats: Record<string, number>;
+  priorityStats: Record<number, number>;
+}
+
+export interface FriendWishlistResponse {
+  user: {
+    id: string;
+    username: string;
+    name: string;
+    avatar: string | null;
+    avatarUrl: string | null;
+    bio: string | null;
+    favoriteClub: {
+      id: string;
+      name: string;
+    } | null;
+  };
+  wishlist: FriendWishlistItem[];
+  stats: FriendWishlistStats;
+}

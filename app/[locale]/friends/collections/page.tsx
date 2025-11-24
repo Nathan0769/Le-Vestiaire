@@ -1,6 +1,6 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import { redirect } from "next/navigation";
-import { Users, Package, Heart } from "lucide-react";
+import { Users, Package, Heart, Gift } from "lucide-react";
 import Link from "next/link";
 import { UserAvatar } from "@/components/profiles/user-avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -134,12 +134,10 @@ export default async function FriendsCollectionsPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {friends.map((friend) => (
-            <Link
+            <Card
               key={friend.userId}
-              href={`/friends/collections/${friend.userId}`}
-              className="group"
+              className="h-full transition-all hover:shadow-lg hover:border-primary/50 flex flex-col group"
             >
-              <Card className="h-full transition-all hover:shadow-lg hover:border-primary/50 flex flex-col">
                 <CardHeader className="pb-3">
                   <div className="flex items-center gap-3">
                     <UserAvatar
@@ -173,14 +171,23 @@ export default async function FriendsCollectionsPage() {
                   )}
                 </CardContent>
 
-                <CardContent className="pt-3 border-t mt-auto">
-                  <div className="flex items-center gap-2 text-sm text-primary font-medium">
+                <CardContent className="pt-3 border-t mt-auto space-y-2">
+                  <Link
+                    href={`/friends/collections/${friend.userId}`}
+                    className="flex items-center gap-2 text-sm text-primary font-medium hover:underline"
+                  >
                     <Package className="w-4 h-4" />
                     <span>{t("viewCollection")}</span>
-                  </div>
+                  </Link>
+                  <Link
+                    href={`/friends/wishlists/${friend.userId}`}
+                    className="flex items-center gap-2 text-sm text-red-600 font-medium hover:underline"
+                  >
+                    <Gift className="w-4 h-4" />
+                    <span>{t("viewWishlist")}</span>
+                  </Link>
                 </CardContent>
               </Card>
-            </Link>
           ))}
         </div>
       )}
