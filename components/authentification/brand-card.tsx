@@ -28,7 +28,15 @@ export function BrandCard({ brand }: BrandCardProps) {
             alt={brand.name}
             fill
             sizes="80px"
-            className="object-contain"
+            className="object-contain dark:hidden"
+          />
+
+          <Image
+            src={brand.logoDark}
+            alt={brand.name}
+            fill
+            sizes="80px"
+            className="object-contain hidden dark:block"
           />
         </div>
         <h3 className="text-center text-lg font-semibold mb-2">{brand.name}</h3>

@@ -3,25 +3,33 @@ import type { BrandInfo, BrandGuide, Brand } from "@/types/authentication";
 
 const BRAND_STATIC_DATA: Record<
   Brand,
-  { logo: string; color: string; scanAvailable: boolean }
+  { logo: string; logoDark: string; color: string; scanAvailable: boolean }
 > = {
   adidas: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/logo.png",
+    logoDark:
+      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/logo-white.webp",
     color: "#000000",
     scanAvailable: false,
   },
   nike: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/logo.png",
+    logoDark:
+      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/logo-white.webp",
     color: "#FF3B00",
     scanAvailable: false,
   },
   puma: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/puma/logo.png",
+    logoDark:
+      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/puma/logo-white.png",
     color: "#000000",
     scanAvailable: false,
   },
   hummel: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/hummel/logo.png",
+    logoDark:
+      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/hummel/logo-white.png",
     color: "#003DA5",
     scanAvailable: false,
   },
@@ -37,6 +45,7 @@ export async function getBrands(): Promise<BrandInfo[]> {
     name: t(`${brandId}.name`),
     description: t(`${brandId}.description`),
     logo: BRAND_STATIC_DATA[brandId].logo,
+    logoDark: BRAND_STATIC_DATA[brandId].logoDark,
     color: BRAND_STATIC_DATA[brandId].color,
   }));
 }
@@ -53,6 +62,7 @@ export async function getBrandInfo(brand: string): Promise<BrandInfo | null> {
     name: t(`${brand}.name`),
     description: t(`${brand}.description`),
     logo: BRAND_STATIC_DATA[brand as Brand].logo,
+    logoDark: BRAND_STATIC_DATA[brand as Brand].logoDark,
     color: BRAND_STATIC_DATA[brand as Brand].color,
   };
 }
@@ -113,5 +123,6 @@ export const BRANDS = BRAND_IDS.map((brandId) => ({
   name: brandId.charAt(0).toUpperCase() + brandId.slice(1),
   description: "",
   logo: BRAND_STATIC_DATA[brandId].logo,
+  logoDark: BRAND_STATIC_DATA[brandId].logoDark,
   color: BRAND_STATIC_DATA[brandId].color,
 }));

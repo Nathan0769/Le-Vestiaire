@@ -4,6 +4,7 @@ export interface BrandInfo {
   id: Brand;
   name: string;
   logo: string;
+  logoDark: string;
   description: string;
   color: string;
 }

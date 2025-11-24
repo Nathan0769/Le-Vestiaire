@@ -189,11 +189,12 @@ model Club {
 }
 
 model League {
-  id      String @id @default(cuid())
-  name    String
-  country String
-  logoUrl String
-  tier    Int    @default(1)
+  id          String  @id @default(cuid())
+  name        String
+  country     String
+  logoUrl     String
+  logoDarkUrl String?
+  tier        Int     @default(1)
 
   clubs Club[]
 

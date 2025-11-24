@@ -23,13 +23,33 @@ export function LeagueCard({ league }: Props) {
     >
       <CardContent className="flex flex-col items-center justify-center p-6">
         <div className="relative w-16 h-16 mb-4">
-          <Image
-            src={league.logoUrl}
-            alt={league.name}
-            fill
-            sizes="64px"
-            className="object-contain"
-          />
+          {league.logoDarkUrl ? (
+            <>
+              <Image
+                src={league.logoUrl}
+                alt={league.name}
+                fill
+                sizes="64px"
+                className="object-contain dark:hidden"
+              />
+
+              <Image
+                src={league.logoDarkUrl}
+                alt={league.name}
+                fill
+                sizes="64px"
+                className="object-contain hidden dark:block"
+              />
+            </>
+          ) : (
+            <Image
+              src={league.logoUrl}
+              alt={league.name}
+              fill
+              sizes="64px"
+              className="object-contain"
+            />
+          )}
         </div>
         <p className="text-center text-sm font-medium">{league.name}</p>
       </CardContent>
