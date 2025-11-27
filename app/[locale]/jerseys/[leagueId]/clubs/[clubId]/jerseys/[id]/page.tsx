@@ -12,6 +12,8 @@ import { JerseySchema } from "@/components/seo/jersey-schema";
 import { JerseyTabs } from "@/components/jerseys/jersey-tabs";
 import { getTranslations, getLocale } from "next-intl/server";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
+import { EditableBrand } from "@/components/jerseys/editable-brand";
+import { getCurrentUser } from "@/lib/get-current-user";
 
 interface JerseyPageProps {
   params: Promise<{
@@ -146,6 +148,10 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
 
   const isSlugParam = isSlug(id);
 
+  // Check if current user is admin or superadmin
+  const currentUser = await getCurrentUser();
+  const isAdmin = currentUser?.role === "admin" || currentUser?.role === "superadmin";
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}`,
     { cache: "no-store" }
@@ -254,9 +260,11 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                       <span className="text-sm font-medium text-muted-foreground shrink-0">
                         {t("brand")}
                       </span>
-                      <span className="text-sm font-semibold text-foreground text-right break-words">
-                        {jersey.brand}
-                      </span>
+                      <EditableBrand
+                        jerseyId={jersey.id}
+                        currentBrand={jersey.brand}
+                        isAdmin={isAdmin}
+                      />
                     </div>
 
                     <div className="flex items-center justify-between gap-2 py-2 border-b border-border/50 min-w-0">
