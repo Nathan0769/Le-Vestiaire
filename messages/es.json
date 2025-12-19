@@ -358,6 +358,101 @@
       "reload": "Recargar página"
     }
   },
+  "CollectionStats": {
+    "title": "Estadísticas de Colección",
+    "errorTitle": "Error de carga",
+    "errorDescription": "No se pudieron cargar las estadísticas. Por favor, inténtalo de nuevo.",
+    "emptyTitle": "No hay estadísticas disponibles",
+    "emptyDescription": "Añade camisetas a tu colección para ver estadísticas detalladas.",
+    "tabs": {
+      "overview": "Vista general",
+      "distribution": "Distribución",
+      "financial": "Finanzas",
+      "records": "Récords"
+    },
+    "timeline": {
+      "title": "Evolución de tu colección",
+      "acquisitions": "Adquisiciones",
+      "jerseys": "Camisetas",
+      "jerseysAdded": "{count, plural, one {# camiseta añadida} other {# camisetas añadidas}}"
+    },
+    "brandDistribution": {
+      "title": "Distribución por marca",
+      "jerseys": "Camisetas",
+      "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}"
+    },
+    "typeDistribution": {
+      "title": "Distribución por tipo",
+      "jerseys": "Camisetas",
+      "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}"
+    },
+    "leagueDistribution": {
+      "title": "Distribución por liga",
+      "jerseys": "Camisetas",
+      "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}"
+    },
+    "clubDistribution": {
+      "title": "Top 10 clubes",
+      "jerseys": "Camisetas",
+      "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}"
+    },
+    "sizeDistribution": {
+      "title": "Distribución por talla",
+      "jerseys": "Camisetas",
+      "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}"
+    },
+    "conditionDistribution": {
+      "title": "Distribución por estado",
+      "jerseys": "Camisetas",
+      "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}"
+    },
+    "sourceDistribution": {
+      "title": "Origen de las camisetas",
+      "additionalTitle": "Detalles de la colección",
+      "jerseys": "Camisetas",
+      "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}",
+      "purchased": "Compradas",
+      "gift": "Regalos",
+      "mysteryBox": "Caja Misteriosa",
+      "withTags": "Con etiquetas",
+      "withPersonalization": "Personalizadas",
+      "withCustomPhoto": "Con foto personalizada"
+    },
+    "spendingTimeline": {
+      "title": "Evolución del gasto",
+      "spent": "gastado",
+      "noData": "No hay datos de gastos disponibles"
+    },
+    "financial": {
+      "totalCollectionValue": "Valor total",
+      "totalCollectionValueDescription": "Valor total de la colección",
+      "totalSpent": "Total gastado",
+      "totalSpentDescription": "Monto total invertido",
+      "averagePrice": "Precio promedio",
+      "averagePriceDescription": "Por camiseta comprada",
+      "totalRetailValue": "Valor retail total",
+      "totalRetailValueDescription": "Precio retail acumulado",
+      "mostExpensive": "Más cara",
+      "leastExpensive": "Más barata",
+      "noData": "No hay datos disponibles"
+    },
+    "diversity": {
+      "uniqueClubs": "Clubes diferentes",
+      "uniqueClubsDescription": "En tu colección",
+      "uniqueLeagues": "Ligas diferentes",
+      "uniqueLeaguesDescription": "Representadas",
+      "uniqueCountries": "Países diferentes",
+      "uniqueCountriesDescription": "Alrededor del mundo"
+    },
+    "records": {
+      "oldestAcquisition": "Primera adquisición",
+      "newestAcquisition": "Última adquisición",
+      "customizationStats": "Personalizaciones",
+      "withTags": "Con etiquetas",
+      "withPersonalization": "Personalizadas",
+      "withCustomPhoto": "Fotos personalizadas"
+    }
+  },
   "Wishlist": {
     "button": {
       "loading": "Cargando...",

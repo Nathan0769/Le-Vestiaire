@@ -3,12 +3,13 @@ import prisma from "@/lib/prisma";
 import { CollectionStats } from "@/components/collection/collection-stats";
 import { CollectionGrid } from "@/components/collection/collection-grid";
 import CollectionLanding from "@/components/collection/collection-landing";
-import { Package, AlertCircle, RefreshCw } from "lucide-react";
+import { Package, AlertCircle, RefreshCw, BarChart3 } from "lucide-react";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { supabaseAdmin } from "@/lib/supabase-admin";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title:
@@ -128,12 +129,24 @@ export default async function CollectionPage() {
 
     return (
       <div className="p-6 space-y-8">
-        <div className="flex items-center gap-3">
-          <Package className="w-6 h-6 text-primary" />
-          <h1 className="text-2xl font-semibold">{t("title")}</h1>
-          <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium">
-            {collectionItems.length} {collectionItems.length > 1 ? t("jerseys") : t("jersey")}
-          </span>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Package className="w-6 h-6 text-primary" />
+            <h1 className="text-2xl font-semibold">{t("title")}</h1>
+            <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium">
+              {collectionItems.length}{" "}
+              {collectionItems.length > 1 ? t("jerseys") : t("jersey")}
+            </span>
+          </div>
+          <Link href="/collection/stats">
+            <Button
+              variant="outline"
+              className="flex items-center gap-2 cursor-pointer"
+            >
+              <BarChart3 className="w-4 h-4" />
+              Statistiques détaillées
+            </Button>
+          </Link>
         </div>
 
         <CollectionStats collectionItems={collectionItems} />

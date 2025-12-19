@@ -358,6 +358,101 @@
       "reload": "Reload page"
     }
   },
+  "CollectionStats": {
+    "title": "Collection Statistics",
+    "errorTitle": "Loading error",
+    "errorDescription": "Unable to load statistics. Please try again.",
+    "emptyTitle": "No statistics available",
+    "emptyDescription": "Add jerseys to your collection to see detailed statistics.",
+    "tabs": {
+      "overview": "Overview",
+      "distribution": "Distribution",
+      "financial": "Financial",
+      "records": "Records"
+    },
+    "timeline": {
+      "title": "Collection Evolution",
+      "acquisitions": "Acquisitions",
+      "jerseys": "Jerseys",
+      "jerseysAdded": "{count, plural, one {# jersey added} other {# jerseys added}}"
+    },
+    "brandDistribution": {
+      "title": "Distribution by Brand",
+      "jerseys": "Jerseys",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}"
+    },
+    "typeDistribution": {
+      "title": "Distribution by Type",
+      "jerseys": "Jerseys",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}"
+    },
+    "leagueDistribution": {
+      "title": "Distribution by League",
+      "jerseys": "Jerseys",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}"
+    },
+    "clubDistribution": {
+      "title": "Top 10 Clubs",
+      "jerseys": "Jerseys",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}"
+    },
+    "sizeDistribution": {
+      "title": "Distribution by Size",
+      "jerseys": "Jerseys",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}"
+    },
+    "conditionDistribution": {
+      "title": "Distribution by Condition",
+      "jerseys": "Jerseys",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}"
+    },
+    "sourceDistribution": {
+      "title": "Jersey Sources",
+      "additionalTitle": "Collection Details",
+      "jerseys": "Jerseys",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}",
+      "purchased": "Purchased",
+      "gift": "Gifts",
+      "mysteryBox": "Mystery Box",
+      "withTags": "With tags",
+      "withPersonalization": "Personalized",
+      "withCustomPhoto": "Custom photo"
+    },
+    "spendingTimeline": {
+      "title": "Spending Evolution",
+      "spent": "spent",
+      "noData": "No spending data available"
+    },
+    "financial": {
+      "totalCollectionValue": "Total Value",
+      "totalCollectionValueDescription": "Total collection value",
+      "totalSpent": "Total Spent",
+      "totalSpentDescription": "Total amount invested",
+      "averagePrice": "Average Price",
+      "averagePriceDescription": "Per purchased jersey",
+      "totalRetailValue": "Total Retail Value",
+      "totalRetailValueDescription": "Cumulative retail price",
+      "mostExpensive": "Most Expensive",
+      "leastExpensive": "Least Expensive",
+      "noData": "No data available"
+    },
+    "diversity": {
+      "uniqueClubs": "Different Clubs",
+      "uniqueClubsDescription": "In your collection",
+      "uniqueLeagues": "Different Leagues",
+      "uniqueLeaguesDescription": "Represented",
+      "uniqueCountries": "Different Countries",
+      "uniqueCountriesDescription": "Around the world"
+    },
+    "records": {
+      "oldestAcquisition": "First Acquisition",
+      "newestAcquisition": "Latest Acquisition",
+      "customizationStats": "Customizations",
+      "withTags": "With tags",
+      "withPersonalization": "Personalized",
+      "withCustomPhoto": "Custom photos"
+    }
+  },
   "Wishlist": {
     "button": {
       "loading": "Loading...",

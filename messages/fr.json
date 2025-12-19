@@ -358,6 +358,101 @@
       "reload": "Recharger la page"
     }
   },
+  "CollectionStats": {
+    "title": "Statistiques de Collection",
+    "errorTitle": "Erreur de chargement",
+    "errorDescription": "Impossible de charger les statistiques. Veuillez réessayer.",
+    "emptyTitle": "Aucune statistique disponible",
+    "emptyDescription": "Ajoutez des maillots à votre collection pour voir des statistiques détaillées.",
+    "tabs": {
+      "overview": "Vue d'ensemble",
+      "distribution": "Répartition",
+      "financial": "Finances",
+      "records": "Records"
+    },
+    "timeline": {
+      "title": "Évolution de votre collection",
+      "acquisitions": "Acquisitions",
+      "jerseys": "Maillots",
+      "jerseysAdded": "{count, plural, one {# maillot ajouté} other {# maillots ajoutés}}"
+    },
+    "brandDistribution": {
+      "title": "Répartition par marque",
+      "jerseys": "Maillots",
+      "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}"
+    },
+    "typeDistribution": {
+      "title": "Répartition par type",
+      "jerseys": "Maillots",
+      "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}"
+    },
+    "leagueDistribution": {
+      "title": "Répartition par championnat",
+      "jerseys": "Maillots",
+      "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}"
+    },
+    "clubDistribution": {
+      "title": "Top 10 des clubs",
+      "jerseys": "Maillots",
+      "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}"
+    },
+    "sizeDistribution": {
+      "title": "Répartition par taille",
+      "jerseys": "Maillots",
+      "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}"
+    },
+    "conditionDistribution": {
+      "title": "Répartition par état",
+      "jerseys": "Maillots",
+      "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}"
+    },
+    "sourceDistribution": {
+      "title": "Provenance des maillots",
+      "additionalTitle": "Détails de la collection",
+      "jerseys": "Maillots",
+      "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}",
+      "purchased": "Achetés",
+      "gift": "Cadeaux",
+      "mysteryBox": "Box Mystère",
+      "withTags": "Avec étiquettes",
+      "withPersonalization": "Personnalisés",
+      "withCustomPhoto": "Avec photo perso"
+    },
+    "spendingTimeline": {
+      "title": "Évolution des dépenses",
+      "spent": "dépensé",
+      "noData": "Aucune donnée de dépenses disponible"
+    },
+    "financial": {
+      "totalCollectionValue": "Valeur globale",
+      "totalCollectionValueDescription": "Valeur totale de la collection",
+      "totalSpent": "Total dépensé",
+      "totalSpentDescription": "Montant total investi",
+      "averagePrice": "Prix moyen",
+      "averagePriceDescription": "Par maillot acheté",
+      "totalRetailValue": "Valeur retail totale",
+      "totalRetailValueDescription": "Prix retail cumulé",
+      "mostExpensive": "Plus cher",
+      "leastExpensive": "Moins cher",
+      "noData": "Aucune donnée disponible"
+    },
+    "diversity": {
+      "uniqueClubs": "Clubs différents",
+      "uniqueClubsDescription": "Dans votre collection",
+      "uniqueLeagues": "Championnats différents",
+      "uniqueLeaguesDescription": "Représentés",
+      "uniqueCountries": "Pays différents",
+      "uniqueCountriesDescription": "À travers le monde"
+    },
+    "records": {
+      "oldestAcquisition": "Première acquisition",
+      "newestAcquisition": "Dernière acquisition",
+      "customizationStats": "Personnalisations",
+      "withTags": "Avec étiquettes",
+      "withPersonalization": "Personnalisés",
+      "withCustomPhoto": "Photos perso"
+    }
+  },
   "Wishlist": {
     "button": {
       "loading": "Chargement...",
