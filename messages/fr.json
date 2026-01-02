@@ -633,13 +633,29 @@
       },
       "testimonialsSection": {
         "title": "Ils ont partagé leur wishlist",
-        "subtitle": "Des milliers d'utilisateurs satisfaits"
+        "subtitle": "Des milliers d'utilisateurs satisfaits",
+        "testimonials": {
+          "lucas": {
+            "name": "Lucas M.",
+            "quote": "J'ai partagé ma wishlist à Noël et ma famille a adoré ! Plus de doublons et j'ai eu exactement les maillots que je voulais."
+          },
+          "sarah": {
+            "name": "Sarah D.",
+            "quote": "Super pratique pour organiser ma collection. Je peux partager mes envies en un clic et suivre ce que j'ai déjà reçu."
+          },
+          "tom": {
+            "name": "Tom R.",
+            "quote": "Mes amis m'ont offert pile les maillots de ma wishlist pour mon anniversaire. C'est génial de pouvoir partager ses passions facilement !"
+          }
+        }
       },
       "ctaSection": {
         "title": "Prêt à créer votre wishlist ?",
         "subtitle": "Listez vos envies et partagez-les en quelques clics avec vos proches",
         "signUpButton": "Créer mon compte gratuitement",
         "signInButton": "Se connecter",
+        "createAccount": "Créer mon compte gratuitement",
+        "login": "Se connecter",
         "secure": "100% sécurisé",
         "noCommitment": "Sans engagement"
       },

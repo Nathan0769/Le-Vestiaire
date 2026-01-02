@@ -633,13 +633,29 @@
       },
       "testimonialsSection": {
         "title": "Ellos compartieron su lista de deseos",
-        "subtitle": "Miles de usuarios satisfechos"
+        "subtitle": "Miles de usuarios satisfechos",
+        "testimonials": {
+          "lucas": {
+            "name": "Lucas M.",
+            "quote": "¡Compartí mi lista de deseos en Navidad y mi familia la adoró! No más duplicados y obtuve exactamente las camisetas que quería."
+          },
+          "sarah": {
+            "name": "Sarah D.",
+            "quote": "Súper práctico para organizar mi colección. Puedo compartir mis deseos en un clic y rastrear lo que ya he recibido."
+          },
+          "tom": {
+            "name": "Tom R.",
+            "quote": "¡Mis amigos me regalaron exactamente las camisetas de mi lista de deseos para mi cumpleaños. Es genial poder compartir tus pasiones fácilmente!"
+          }
+        }
       },
       "ctaSection": {
         "title": "¿Listo para crear tu lista de deseos?",
         "subtitle": "Lista tus deseos y compártelos en unos pocos clics con tus seres queridos",
         "signUpButton": "Crear mi cuenta gratis",
         "signInButton": "Iniciar sesión",
+        "createAccount": "Crear mi cuenta gratis",
+        "login": "Iniciar sesión",
         "secure": "100% seguro",
         "noCommitment": "Sin compromiso"
       },

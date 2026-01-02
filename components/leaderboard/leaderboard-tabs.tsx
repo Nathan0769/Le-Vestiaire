@@ -82,8 +82,8 @@ export function LeaderboardTabs() {
         <TabsList
           className={`grid w-full ${
             category === "collection_size"
-              ? "grid-cols-2 max-w-md"
-              : "grid-cols-1 max-w-xs"
+              ? "grid-cols-2 md:max-w-md"
+              : "grid-cols-1 md:max-w-xs"
           }`}
         >
           <TabsTrigger value="all_time" className="gap-2 cursor-pointer">

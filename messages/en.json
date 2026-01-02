@@ -633,13 +633,29 @@
       },
       "testimonialsSection": {
         "title": "They shared their wishlist",
-        "subtitle": "Thousands of satisfied users"
+        "subtitle": "Thousands of satisfied users",
+        "testimonials": {
+          "lucas": {
+            "name": "Lucas M.",
+            "quote": "I shared my wishlist at Christmas and my family loved it! No more duplicates and I got exactly the jerseys I wanted."
+          },
+          "sarah": {
+            "name": "Sarah D.",
+            "quote": "Super practical for organizing my collection. I can share my wishes in one click and track what I've already received."
+          },
+          "tom": {
+            "name": "Tom R.",
+            "quote": "My friends gave me exactly the jerseys from my wishlist for my birthday. It's great to be able to share your passions easily!"
+          }
+        }
       },
       "ctaSection": {
         "title": "Ready to create your wishlist?",
         "subtitle": "List your wishes and share them in a few clicks with your loved ones",
         "signUpButton": "Create my free account",
         "signInButton": "Sign in",
+        "createAccount": "Create my free account",
+        "login": "Sign in",
         "secure": "100% secure",
         "noCommitment": "No commitment"
       },
