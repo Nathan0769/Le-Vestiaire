@@ -1,8 +1,9 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
+import { authClient } from "@/lib/auth-client";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import {
@@ -27,6 +28,12 @@ export function LoginForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [lastLoginMethod, setLastLoginMethod] = useState<string | null>(null);
+
+  useEffect(() => {
+    const method = authClient.getLastUsedLoginMethod();
+    setLastLoginMethod(method);
+  }, []);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -67,14 +74,21 @@ export function LoginForm({
                   <AppleIcon />
                   Se connecter avec Apple
                 </Button>*/}
-                <Button
-                  variant="outline"
-                  className="w-full cursor-pointer"
-                  onClick={handleGoogleSignIn}
-                >
-                  <GoogleIcon />
-                  {t("signInWithGoogle")}
-                </Button>
+                <div className="relative">
+                  {lastLoginMethod === "google" && (
+                    <div className="absolute -top-2 right-2 z-10 rounded-md bg-primary px-2 py-0.5 text-xs text-primary-foreground">
+                      {t("lastUsed")}
+                    </div>
+                  )}
+                  <Button
+                    variant="outline"
+                    className="w-full cursor-pointer"
+                    onClick={handleGoogleSignIn}
+                  >
+                    <GoogleIcon />
+                    {t("signInWithGoogle")}
+                  </Button>
+                </div>
               </div>
 
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
@@ -113,13 +127,20 @@ export function LoginForm({
                     required
                   />
                 </div>
-                <Button
-                  type="submit"
-                  className="w-full cursor-pointer"
-                  disabled={loading}
-                >
-                  {loading ? t("button.loading") : t("button.signIn")}
-                </Button>
+                <div className="relative">
+                  {lastLoginMethod === "credential" && (
+                    <div className="absolute -top-2 right-2 z-10 rounded-md bg-primary px-2 py-0.5 text-xs text-primary-foreground">
+                      {t("lastUsed")}
+                    </div>
+                  )}
+                  <Button
+                    type="submit"
+                    className="w-full cursor-pointer"
+                    disabled={loading}
+                  >
+                    {loading ? t("button.loading") : t("button.signIn")}
+                  </Button>
+                </div>
               </div>
 
               <div className="text-center text-sm">

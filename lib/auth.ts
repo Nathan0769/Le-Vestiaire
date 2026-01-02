@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
-import { admin as adminPlugin } from "better-auth/plugins";
+import { admin as adminPlugin, lastLoginMethod } from "better-auth/plugins";
 import prisma from "./prisma";
 
 export const auth = betterAuth({
@@ -22,6 +22,10 @@ export const auth = betterAuth({
     adminPlugin({
       defaultRole: "user", // Rôle par défaut pour les nouveaux utilisateurs
       impersonationSessionDuration: 60 * 60, // 1 heure (en secondes)
+    }),
+    lastLoginMethod({
+      storeInDatabase: true,
+      maxAge: 2592000, // 30 jours
     }),
   ],
   secret: process.env.BETTER_AUTH_SECRET!,

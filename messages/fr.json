@@ -750,6 +750,7 @@
     "subtitle": "Se connecter avec votre compte Google",
     "signInWithGoogle": "Se connecter avec Google",
     "orContinueWith": "Ou continuer avec",
+    "lastUsed": "Dernière connexion",
     "form": {
       "email": "Email",
       "emailPlaceholder": "m@example.com",

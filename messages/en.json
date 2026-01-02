@@ -744,6 +744,7 @@
     "subtitle": "Sign in with your Google account",
     "signInWithGoogle": "Sign in with Google",
     "orContinueWith": "Or continue with",
+    "lastUsed": "Last used",
     "form": {
       "email": "Email",
       "emailPlaceholder": "m@example.com",

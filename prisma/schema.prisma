@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -15,6 +14,9 @@ model User {
   email         String   @unique(map: "user_email_key")
   emailVerified Boolean  @default(false)
   image         String?
+  plan          UserPlan @default(FREE)
+  stripeCustomerId String?
+  lastLoginMethod String?
 
   // Better Auth Admin fields
   role          String   @default("user")
@@ -53,6 +55,11 @@ model User {
   updatedAt       DateTime @updatedAt
 
   @@map("user")
+}
+
+enum UserPlan {
+  FREE
+  PRO
 }
 
 model Session {

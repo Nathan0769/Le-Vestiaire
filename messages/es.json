@@ -744,6 +744,7 @@
     "subtitle": "Inicia sesión con tu cuenta de Google",
     "signInWithGoogle": "Iniciar sesión con Google",
     "orContinueWith": "O continuar con",
+    "lastUsed": "Último usado",
     "form": {
       "email": "Email",
       "emailPlaceholder": "m@example.com",
