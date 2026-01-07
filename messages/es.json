@@ -8,6 +8,7 @@
     "community": "Comunidad",
     "leaderboard": "Clasificación",
     "authentication": "Autenticación",
+    "pricing": "Suscripción",
     "settings": "Cuenta",
     "friends": "Amigos",
     "friendsCollections": "Colecciones de Amigos",
@@ -1645,6 +1646,35 @@
       "modifyButton": "Modificar mis preferencias",
       "modifyDescription": "Haga clic para reabrir el banner de consentimiento y modificar sus elecciones.",
       "viewPolicyLink": "Ver la política de cookies completa"
+    },
+    "subscription": {
+      "title": "Suscripción",
+      "description": "Gestione su suscripción y funciones premium",
+      "currentPlan": "Plan actual",
+      "upgradeToPremium": "Actualizar a Premium",
+      "manageSubscription": "Gestionar suscripción",
+      "loading": "Cargando...",
+      "features": "Funciones incluidas",
+      "price": "Precio",
+      "or": "o",
+      "free": {
+        "feature1": "Hasta 50 camisetas en la colección",
+        "feature2": "Hasta 20 camisetas en la lista de deseos",
+        "feature3": "Estadísticas básicas",
+        "feature4": "Sistema de amigos y compartir"
+      },
+      "premium": {
+        "feature1": "Colección ilimitada de camisetas",
+        "feature2": "Lista de deseos ilimitada",
+        "feature3": "Estadísticas avanzadas completas",
+        "feature4": "Hasta 5 fotos por camiseta",
+        "feature5": "Insignia Premium en su perfil"
+      },
+      "freeInfo": "Actualice a Premium para desbloquear todas las funciones y gestionar una colección ilimitada.",
+      "premiumInfo": {
+        "title": "¡Gracias por ser Premium!",
+        "description": "Disfruta de todas las funciones premium. Gestione su suscripción a través del portal de Stripe."
+      }
     }
   },
   "CookieConsent": {
@@ -1674,6 +1704,7 @@
     "season": "Temporada",
     "brand": "Marca",
     "type": "Tipo",
+    "findOnCFS": "Dónde comprar",
     "averageRating": "Nota media",
     "collectorStats": "Estadísticas de coleccionistas",
     "inCollection": "En {count} colección",
@@ -2026,6 +2057,48 @@
       "invalidImageUrl": "Formato de URL de imagen inválido",
       "cannotDownloadImage": "No se pudo descargar la imagen de la propuesta",
       "cannotMoveImage": "No se pudo mover la imagen al bucket de camisetas"
+    }
+  },
+  "Pricing": {
+    "title": "Elige tu plan",
+    "subtitle": "Gestiona tu colección de camisetas como un profesional",
+    "toggle": {
+      "monthly": "Mensual",
+      "yearly": "Anual"
+    },
+    "free": {
+      "name": "Gratis",
+      "description": "Para empezar tu colección",
+      "period": "gratis",
+      "features": {
+        "jerseys": "Hasta 50 camisetas",
+        "wishlist": "Hasta 20 camisetas en la lista de deseos",
+        "basicStats": "Estadísticas básicas",
+        "friends": "Sistema de amigos",
+        "ratings": "Valoraciones y comentarios"
+      },
+      "button": "Gratis"
+    },
+    "premium": {
+      "name": "Premium",
+      "monthly": {
+        "description": "Para coleccionistas apasionados",
+        "period": "mes",
+        "button": "Actualizar a Premium"
+      },
+      "yearly": {
+        "description": "Para coleccionistas apasionados",
+        "period": "año",
+        "button": "Actualizar a Premium Anual",
+        "savings": "2 meses gratis"
+      },
+      "features": {
+        "unlimitedJerseys": "Colección ilimitada",
+        "unlimitedWishlist": "Lista de deseos ilimitada",
+        "advancedStats": "Estadísticas avanzadas completas",
+        "multiplePhotos": "Hasta 5 fotos por camiseta",
+        "badge": "Insignia Premium en tu perfil"
+      }
     }
   }
 }

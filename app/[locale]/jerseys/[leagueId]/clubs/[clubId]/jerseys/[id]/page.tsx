@@ -1,6 +1,9 @@
 import { notFound, redirect } from "next/navigation";
 import { isSlug } from "@/lib/slug-generator";
-import type { JerseyWithWishlistAndCollection, JerseyType } from "@/types/jersey";
+import type {
+  JerseyWithWishlistAndCollection,
+  JerseyType,
+} from "@/types/jersey";
 import type { Metadata } from "next";
 import Image from "next/image";
 import { JerseyBreadcrumb } from "@/components/jerseys/jerseys/jerseys-bread-crumb";
@@ -150,7 +153,8 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
 
   // Check if current user is admin or superadmin
   const currentUser = await getCurrentUser();
-  const isAdmin = currentUser?.role === "admin" || currentUser?.role === "superadmin";
+  const isAdmin =
+    currentUser?.role === "admin" || currentUser?.role === "superadmin";
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}`,
@@ -275,6 +279,29 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                         {getJerseyTypeLabel(jersey.type)}
                       </span>
                     </div>
+
+                    {process.env.NEXT_PUBLIC_AFFILIATE_LINK_CFS && (
+                      <div className="flex items-center justify-between gap-2 py-2 border-b border-border/50 min-w-0">
+                        <span className="text-sm font-medium text-muted-foreground shrink-0">
+                          {t("findOnCFS")}
+                        </span>
+                        <a
+                          href={`https://www.classicfootballshirts.co.uk/catalogsearch/result/?ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate&q=${encodeURIComponent(jersey.club.name)}`}
+                          target="_blank"
+                          rel="noopener noreferrer nofollow"
+                          className="text-sm text-primary hover:text-primary/80 hover:underline transition-colors flex items-center gap-1.5"
+                        >
+                          <span>Classic Football Shirts</span>
+                          <Image
+                            src="https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/logo-app/logo-cfs.png"
+                            alt="Classic Football Shirts"
+                            width={16}
+                            height={16}
+                            className="object-contain"
+                          />
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
 

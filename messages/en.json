@@ -8,6 +8,7 @@
     "community": "Community",
     "leaderboard": "Leaderboard",
     "authentication": "Authentication",
+    "pricing": "Subscription",
     "settings": "Account",
     "friends": "Friends",
     "friendsCollections": "Friends' Collections",
@@ -1645,6 +1646,35 @@
       "modifyButton": "Modify my preferences",
       "modifyDescription": "Click to reopen the consent banner and modify your choices.",
       "viewPolicyLink": "View full cookie policy"
+    },
+    "subscription": {
+      "title": "Subscription",
+      "description": "Manage your subscription and premium features",
+      "currentPlan": "Current plan",
+      "upgradeToPremium": "Upgrade to Premium",
+      "manageSubscription": "Manage subscription",
+      "loading": "Loading...",
+      "features": "Included features",
+      "price": "Price",
+      "or": "or",
+      "free": {
+        "feature1": "Up to 50 jerseys in collection",
+        "feature2": "Up to 20 jerseys in wishlist",
+        "feature3": "Basic statistics",
+        "feature4": "Friend system and sharing"
+      },
+      "premium": {
+        "feature1": "Unlimited jersey collection",
+        "feature2": "Unlimited wishlist",
+        "feature3": "Complete advanced statistics",
+        "feature4": "Up to 5 photos per jersey",
+        "feature5": "Premium badge on your profile"
+      },
+      "freeInfo": "Upgrade to Premium to unlock all features and manage an unlimited collection.",
+      "premiumInfo": {
+        "title": "Thank you for being Premium!",
+        "description": "You enjoy all premium features. Manage your subscription via the Stripe portal."
+      }
     }
   },
   "CookieConsent": {
@@ -1674,6 +1704,7 @@
     "season": "Season",
     "brand": "Brand",
     "type": "Type",
+    "findOnCFS": "Where to buy",
     "averageRating": "Average rating",
     "collectorStats": "Collector statistics",
     "inCollection": "In {count} collection",
@@ -2026,6 +2057,48 @@
       "invalidImageUrl": "Invalid image URL format",
       "cannotDownloadImage": "Unable to download proposal image",
       "cannotMoveImage": "Unable to move image to jerseys bucket"
+    }
+  },
+  "Pricing": {
+    "title": "Choose your plan",
+    "subtitle": "Manage your jersey collection like a pro",
+    "toggle": {
+      "monthly": "Monthly",
+      "yearly": "Yearly"
+    },
+    "free": {
+      "name": "Free",
+      "description": "To start your collection",
+      "period": "free",
+      "features": {
+        "jerseys": "Up to 50 jerseys",
+        "wishlist": "Up to 20 jerseys in wishlist",
+        "basicStats": "Basic statistics",
+        "friends": "Friend system",
+        "ratings": "Ratings and comments"
+      },
+      "button": "Free"
+    },
+    "premium": {
+      "name": "Premium",
+      "monthly": {
+        "description": "For passionate collectors",
+        "period": "month",
+        "button": "Upgrade to Premium"
+      },
+      "yearly": {
+        "description": "For passionate collectors",
+        "period": "year",
+        "button": "Upgrade to Premium Yearly",
+        "savings": "2 months free"
+      },
+      "features": {
+        "unlimitedJerseys": "Unlimited collection",
+        "unlimitedWishlist": "Unlimited wishlist",
+        "advancedStats": "Complete advanced statistics",
+        "multiplePhotos": "Up to 5 photos per jersey",
+        "badge": "Premium badge on your profile"
+      }
     }
   }
 }

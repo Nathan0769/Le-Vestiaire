@@ -8,6 +8,7 @@
     "community": "La Communauté",
     "leaderboard": "Classement",
     "authentication": "Authentification",
+    "pricing": "Abonnement",
     "settings": "Compte",
     "friends": "Amis",
     "friendsCollections": "Collections des amis",
@@ -451,6 +452,32 @@
       "withTags": "Avec étiquettes",
       "withPersonalization": "Personnalisés",
       "withCustomPhoto": "Photos perso"
+    },
+    "upgrade": {
+      "distribution": {
+        "title": "Statistiques de répartition PRO",
+        "description": "Analysez en détail la distribution de votre collection",
+        "feature1": "Répartition par championnat et pays",
+        "feature2": "Top clubs de votre collection",
+        "feature3": "Distribution par taille et état",
+        "feature4": "Analyse des sources d'acquisition"
+      },
+      "financial": {
+        "title": "Statistiques financières PRO",
+        "description": "Suivez vos dépenses et la valeur de votre collection",
+        "feature1": "Dépenses totales et moyennes",
+        "feature2": "Valeur estimée de la collection",
+        "feature3": "Évolution temporelle des dépenses",
+        "feature4": "Maillots les plus et moins chers"
+      },
+      "records": {
+        "title": "Records et statistiques PRO",
+        "description": "Découvrez les records de votre collection",
+        "feature1": "Acquisitions les plus anciennes/récentes",
+        "feature2": "Statistiques de personnalisation",
+        "feature3": "Taux de maillots avec étiquettes",
+        "feature4": "Métriques de qualité de collection"
+      }
     }
   },
   "Wishlist": {
@@ -1651,6 +1678,35 @@
       "modifyButton": "Modifier mes préférences",
       "modifyDescription": "Cliquez pour rouvrir la bannière de consentement et modifier vos choix.",
       "viewPolicyLink": "Voir la politique de cookies complète"
+    },
+    "subscription": {
+      "title": "Abonnement",
+      "description": "Gérez votre abonnement et vos fonctionnalités premium",
+      "currentPlan": "Abonnement actuel",
+      "upgradeToPremium": "Passer à Premium",
+      "manageSubscription": "Gérer l'abonnement",
+      "loading": "Chargement...",
+      "features": "Fonctionnalités incluses",
+      "price": "Prix",
+      "or": "ou",
+      "free": {
+        "feature1": "Jusqu'à 50 maillots dans la collection",
+        "feature2": "Jusqu'à 20 maillots en wishlist",
+        "feature3": "Statistiques de base",
+        "feature4": "Système d'amis et partage"
+      },
+      "premium": {
+        "feature1": "Collection illimitée de maillots",
+        "feature2": "Wishlist illimitée",
+        "feature3": "Statistiques avancées complètes",
+        "feature4": "Jusqu'à 5 photos par maillot",
+        "feature5": "Badge Premium sur votre profil"
+      },
+      "freeInfo": "Passez à Premium pour débloquer toutes les fonctionnalités et gérer une collection illimitée.",
+      "premiumInfo": {
+        "title": "Merci d'être Premium !",
+        "description": "Vous profitez de toutes les fonctionnalités premium. Gérez votre abonnement via le portail Stripe."
+      }
     }
   },
   "CookieConsent": {
@@ -1680,6 +1736,7 @@
     "season": "Saison",
     "brand": "Marque",
     "type": "Type",
+    "findOnCFS": "Où acheter",
     "averageRating": "Note moyenne",
     "collectorStats": "Statistiques des collectionneurs",
     "inCollection": "Dans {count} collection",
@@ -2032,6 +2089,48 @@
       "invalidImageUrl": "Format d'URL d'image invalide",
       "cannotDownloadImage": "Impossible de télécharger l'image de la proposition",
       "cannotMoveImage": "Impossible de déplacer l'image vers le bucket jerseys"
+    }
+  },
+  "Pricing": {
+    "title": "Choisissez votre abonnement",
+    "subtitle": "Gérez votre collection de maillots comme un pro",
+    "toggle": {
+      "monthly": "Mensuel",
+      "yearly": "Annuel"
+    },
+    "free": {
+      "name": "Gratuit",
+      "description": "Pour commencer votre collection",
+      "period": "gratuit",
+      "features": {
+        "jerseys": "Jusqu'à 50 maillots",
+        "wishlist": "Jusqu'à 20 maillots en wishlist",
+        "basicStats": "Statistiques de base",
+        "friends": "Système d'amis",
+        "ratings": "Notes et commentaires"
+      },
+      "button": "Gratuit"
+    },
+    "premium": {
+      "name": "Premium",
+      "monthly": {
+        "description": "Pour les collectionneurs passionnés",
+        "period": "mois",
+        "button": "Passer à Premium"
+      },
+      "yearly": {
+        "description": "Pour les collectionneurs passionnés",
+        "period": "an",
+        "button": "Passer à Premium Annuel",
+        "savings": "2 mois offerts"
+      },
+      "features": {
+        "unlimitedJerseys": "Collection illimitée",
+        "unlimitedWishlist": "Wishlist illimitée",
+        "advancedStats": "Statistiques avancées complètes",
+        "multiplePhotos": "Jusqu'à 5 photos par maillot",
+        "badge": "Badge Premium sur votre profil"
+      }
     }
   }
 }
