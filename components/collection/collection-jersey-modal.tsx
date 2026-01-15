@@ -83,6 +83,7 @@ export function CollectionJerseyModal({
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+  const [photoDeleted, setPhotoDeleted] = useState(false);
 
   const [formData, setFormData] = useState<UpdateCollectionData>({
     size: (collectionItem.size || "M") as Size,
@@ -112,6 +113,7 @@ export function CollectionJerseyModal({
     });
     setPhotoFile(null);
     setPhotoPreview(null);
+    setPhotoDeleted(false);
   };
 
   const handleEdit = () => {
@@ -139,6 +141,7 @@ export function CollectionJerseyModal({
     }
 
     setPhotoFile(file);
+    setPhotoDeleted(false);
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -150,6 +153,7 @@ export function CollectionJerseyModal({
   const handleRemovePhoto = () => {
     setPhotoFile(null);
     setPhotoPreview(null);
+    setPhotoDeleted(true);
     setFormData({ ...formData, userPhotoUrl: undefined });
   };
 
@@ -330,7 +334,7 @@ export function CollectionJerseyModal({
       alt: t("yourPhoto"),
       label: t("yourPhoto"),
     });
-  } else if (collectionItem.userPhotoUrl) {
+  } else if (collectionItem.userPhotoUrl && !photoDeleted) {
     carouselImages.push({
       src: collectionItem.userPhotoUrl,
       alt: t("yourPhoto"),
@@ -366,7 +370,7 @@ export function CollectionJerseyModal({
                   <div className="space-y-2">
                     <Label className="flex items-center gap-2">
                       <Camera className="w-4 h-4" />
-                      {collectionItem.userPhotoUrl || photoPreview
+                      {(collectionItem.userPhotoUrl && !photoDeleted) || photoPreview
                         ? t("modifyPhoto")
                         : t("addPhoto")}
                     </Label>
@@ -390,11 +394,12 @@ export function CollectionJerseyModal({
                           onChange={handlePhotoChange}
                         />
                       </label>
-                      {(collectionItem.userPhotoUrl || photoPreview) && (
+                      {((collectionItem.userPhotoUrl && !photoDeleted) || photoPreview) && (
                         <Button
                           type="button"
                           variant="destructive"
                           onClick={handleRemovePhoto}
+                          className="cursor-pointer"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>
