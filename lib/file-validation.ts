@@ -8,9 +8,9 @@ const ALLOWED_IMAGE_TYPES = ["image/jpeg", "image/png", "image/webp", "image/avi
 const ALLOWED_IMAGE_EXTENSIONS = ["jpg", "jpeg", "png", "webp", "avif"] as const;
 
 /**
- * Taille maximale par défaut : 2MB
+ * Taille maximale par défaut : 10MB (pour supporter photos iPhone haute résolution)
  */
-export const MAX_FILE_SIZE = 2 * 1024 * 1024;
+export const MAX_FILE_SIZE = 10 * 1024 * 1024;
 
 /**
  * Résultat de la validation
@@ -37,9 +37,10 @@ export async function validateImageFile(
 ): Promise<FileValidationResult> {
   if (file.size > maxSize) {
     const maxSizeMB = maxSize / (1024 * 1024);
+    const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
     return {
       valid: false,
-      error: `Le fichier ne doit pas dépasser ${maxSizeMB}MB`,
+      error: `Votre photo est trop volumineuse (${fileSizeMB}MB). La taille maximale autorisée est de ${maxSizeMB}MB. Veuillez compresser votre image.`,
     };
   }
 
@@ -99,9 +100,10 @@ export function validateImageFileBasic(
 ): FileValidationResult {
   if (file.size > maxSize) {
     const maxSizeMB = maxSize / (1024 * 1024);
+    const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
     return {
       valid: false,
-      error: `Le fichier ne doit pas dépasser ${maxSizeMB}MB`,
+      error: `Votre photo est trop volumineuse (${fileSizeMB}MB). La taille maximale autorisée est de ${maxSizeMB}MB. Veuillez compresser votre image.`,
     };
   }
 
