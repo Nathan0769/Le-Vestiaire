@@ -74,6 +74,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
   const [seasonError, setSeasonError] = useState<string | null>(null);
 
   const NATIONAL_TEAM_LEAGUES = ["conmebol", "caf", "concacaf", "uefa"];
+  const CALENDAR_YEAR_LEAGUES = ["mls", "brasileiro-serie-a"]; // Ligues fonctionnant par année civile
 
   useEffect(() => {
     const loadClubs = async () => {
@@ -148,18 +149,18 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
     const selectedClub = clubs.find((club) => club.id === clubId);
     if (!selectedClub) return null;
 
-    const isNationalTeam = NATIONAL_TEAM_LEAGUES.includes(
-      selectedClub.league.id.toLowerCase()
-    );
+    const leagueId = selectedClub.league.id.toLowerCase();
+    const isYearFormat = NATIONAL_TEAM_LEAGUES.includes(leagueId) ||
+                        CALENDAR_YEAR_LEAGUES.includes(leagueId);
 
-    if (isNationalTeam) {
-      // Format YYYY pour sélections nationales
+    if (isYearFormat) {
+      // Format YYYY pour sélections nationales et ligues par année civile
       const yearRegex = /^\d{4}$/;
       if (!yearRegex.test(season)) {
         return t("seasonErrorNationalTeam");
       }
     } else {
-      // Format YYYY-YY pour clubs
+      // Format YYYY-YY pour clubs (saison)
       const clubSeasonRegex = /^\d{4}-\d{2}$/;
       if (!clubSeasonRegex.test(season)) {
         return t("seasonErrorClub");
@@ -419,11 +420,13 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
             placeholder={
               formData.clubId &&
               clubs.find((club) => club.id === formData.clubId) &&
-              NATIONAL_TEAM_LEAGUES.includes(
-                clubs
+              (() => {
+                const leagueId = clubs
                   .find((club) => club.id === formData.clubId)!
-                  .league.id.toLowerCase()
-              )
+                  .league.id.toLowerCase();
+                return NATIONAL_TEAM_LEAGUES.includes(leagueId) ||
+                       CALENDAR_YEAR_LEAGUES.includes(leagueId);
+              })()
                 ? t("seasonPlaceholderNationalTeam")
                 : t("seasonPlaceholder")
             }
