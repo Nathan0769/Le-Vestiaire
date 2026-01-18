@@ -221,10 +221,10 @@ export function AddToCollectionModal({
               <Input
                 id="purchasePrice"
                 type="number"
-                step="0.1"
+                step="0.01"
                 min="0"
                 placeholder={t("purchasePricePlaceholder")}
-                value={formData.purchasePrice || ""}
+                value={formData.purchasePrice ?? ""}
                 onChange={(e) =>
                   setFormData({
                     ...formData,

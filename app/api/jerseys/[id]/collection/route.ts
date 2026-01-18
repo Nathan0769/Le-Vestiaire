@@ -128,7 +128,7 @@ export async function POST(
       );
     }
 
-    if (purchasePrice) {
+    if (purchasePrice !== null && purchasePrice !== undefined) {
       const parsedPrice = parseFloat(purchasePrice.toString());
       if (isNaN(parsedPrice) || parsedPrice < 0) {
         return NextResponse.json(
@@ -174,7 +174,7 @@ export async function POST(
       );
     }
 
-    const parsedPurchasePrice = purchasePrice
+    const parsedPurchasePrice = purchasePrice !== null && purchasePrice !== undefined
       ? parseFloat(purchasePrice.toString())
       : null;
 
@@ -332,7 +332,7 @@ export async function PATCH(
       );
     }
 
-    if (purchasePrice) {
+    if (purchasePrice !== null && purchasePrice !== undefined) {
       const parsedPrice = parseFloat(purchasePrice.toString());
       if (isNaN(parsedPrice) || parsedPrice < 0) {
         return NextResponse.json(
@@ -368,7 +368,7 @@ export async function PATCH(
       }
     }
 
-    const parsedPurchasePrice = purchasePrice
+    const parsedPurchasePrice = purchasePrice !== null && purchasePrice !== undefined
       ? parseFloat(purchasePrice.toString())
       : null;
 
