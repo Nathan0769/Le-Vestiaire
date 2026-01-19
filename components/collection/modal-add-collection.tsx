@@ -241,7 +241,6 @@ export function AddToCollectionModal({
               <Input
                 id="purchaseDate"
                 type="date"
-                className="h-9 text-base [&::-webkit-date-and-time-value]:text-base [&::-webkit-datetime-edit]:text-base [&::-webkit-datetime-edit-fields-wrapper]:text-base [&::-webkit-calendar-picker-indicator]:opacity-100"
                 value={
                   formData.purchaseDate
                     ? formData.purchaseDate.toISOString().split("T")[0]
