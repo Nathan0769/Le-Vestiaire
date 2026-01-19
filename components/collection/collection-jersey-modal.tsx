@@ -861,10 +861,9 @@ export function CollectionJerseyModal({
                 <Button
                   variant="destructive"
                   onClick={() => setShowDeleteDialog(true)}
-                  className="flex-1 cursor-pointer"
+                  className="cursor-pointer"
                 >
-                  <Trash2 className="w-4 h-4 mr-2" />
-                  {t("delete")}
+                  <Trash2 className="w-4 h-4" />
                 </Button>
               </>
             )}
