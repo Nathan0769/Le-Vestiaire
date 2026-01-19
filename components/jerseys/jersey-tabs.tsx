@@ -48,28 +48,28 @@ export function JerseyTabs({
   return (
     <div className="w-full overflow-x-hidden">
       <Tabs defaultValue="description" className="w-full">
-        <TabsList className="inline-flex h-11 items-center justify-start rounded-lg bg-muted p-1 text-muted-foreground w-full lg:w-auto overflow-x-auto">
+        <TabsList className="inline-flex h-11 items-center justify-start rounded-lg bg-muted p-1 text-muted-foreground w-full lg:w-auto">
           <TabsTrigger
             value="description"
-            className="gap-2 cursor-pointer data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+            className="gap-1 lg:gap-2 cursor-pointer data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
-            <BookOpen className="w-4 h-4" />
-            {t("description")}
+            <BookOpen className="w-4 h-4 shrink-0" />
+            <span className="text-xs lg:text-sm">{t("description")}</span>
           </TabsTrigger>
           <TabsTrigger
             value="players"
-            className="gap-2 cursor-pointer data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+            className="gap-1 lg:gap-2 cursor-pointer data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
-            <Users className="w-4 h-4" />
-            {t("players")}
+            <Users className="w-4 h-4 shrink-0" />
+            <span className="text-xs lg:text-sm">{t("players")}</span>
           </TabsTrigger>
           <TabsTrigger
             value="achievements"
             disabled
-            className="gap-2 cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+            className="gap-1 lg:gap-2 cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
-            <Trophy className="w-4 h-4" />
-            {t("achievements")}
+            <Trophy className="w-4 h-4 shrink-0" />
+            <span className="text-xs lg:text-sm">{t("achievements")}</span>
           </TabsTrigger>
         </TabsList>
 
