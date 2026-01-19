@@ -129,7 +129,7 @@ export default async function CollectionPage() {
 
     return (
       <div className="p-6 space-y-8">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
           <div className="flex items-center gap-3">
             <Package className="w-6 h-6 text-primary" />
             <h1 className="text-2xl font-semibold">{t("title")}</h1>
@@ -141,7 +141,7 @@ export default async function CollectionPage() {
           <Link href="/collection/stats">
             <Button
               variant="outline"
-              className="flex items-center gap-2 cursor-pointer"
+              className="flex items-center gap-2 cursor-pointer w-full md:w-auto"
             >
               <BarChart3 className="w-4 h-4" />
               Statistiques détaillées
