@@ -16,8 +16,9 @@ import {
 } from "@/components/ui/alert-dialog";
 import { JerseyType } from "@prisma/client";
 import { toast } from "sonner";
-import { Check, X, Clock, Loader2 } from "lucide-react";
+import { Check, X, Clock, Loader2, CheckCheck } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
 interface ProposalUser {
   id: string;
@@ -53,6 +54,7 @@ type ActionType = "approve" | "reject" | null;
 export function ProposalsList() {
   const tJerseyType = useTranslations("JerseyType");
   const t = useTranslations("Proposals.Admin");
+  const user = useCurrentUser();
   const [proposals, setProposals] = useState<Proposal[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
@@ -61,6 +63,10 @@ export function ProposalsList() {
     null
   );
   const [actionType, setActionType] = useState<ActionType>(null);
+  const [approveAllDialogOpen, setApproveAllDialogOpen] = useState(false);
+  const [approveAllLoading, setApproveAllLoading] = useState(false);
+
+  const isSuperAdmin = user?.role === "superadmin";
 
   const loadProposals = async () => {
     try {
@@ -126,6 +132,41 @@ export function ProposalsList() {
     }
   };
 
+  const handleApproveAll = async () => {
+    setApproveAllDialogOpen(false);
+    setApproveAllLoading(true);
+
+    let approved = 0;
+    let failed = 0;
+
+    for (const proposal of proposals) {
+      try {
+        const response = await fetch(
+          `/api/admin/proposals/${proposal.id}/approve`,
+          { method: "POST" }
+        );
+
+        if (response.ok) {
+          approved++;
+        } else {
+          failed++;
+        }
+      } catch {
+        failed++;
+      }
+    }
+
+    setApproveAllLoading(false);
+
+    if (failed === 0) {
+      toast.success(t("approveAllSuccess", { count: approved }));
+    } else {
+      toast.warning(t("approveAllPartial", { approved, failed }));
+    }
+
+    await loadProposals();
+  };
+
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("fr-FR", {
@@ -161,6 +202,25 @@ export function ProposalsList() {
 
   return (
     <>
+      {isSuperAdmin && proposals.length > 1 && (
+        <div className="flex justify-end mb-4">
+          <Button
+            onClick={() => setApproveAllDialogOpen(true)}
+            disabled={approveAllLoading}
+            className="bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+          >
+            {approveAllLoading ? (
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <CheckCheck className="w-4 h-4 mr-2" />
+            )}
+            {approveAllLoading
+              ? t("approveAllLoading")
+              : t("approveAllButton", { count: proposals.length })}
+          </Button>
+        </div>
+      )}
+
       <div className="space-y-4">
         {proposals.map((proposal) => {
           const isProcessing = actionLoading === proposal.id;
@@ -302,6 +362,26 @@ export function ProposalsList() {
                   ? "bg-green-600 hover:bg-green-700"
                   : "bg-destructive hover:bg-destructive/90"
               }
+            >
+              {t("confirm")}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={approveAllDialogOpen} onOpenChange={setApproveAllDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{t("approveAllDialogTitle")}</AlertDialogTitle>
+            <AlertDialogDescription>
+              {t("approveAllDialogDescription", { count: proposals.length })}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>{t("cancel")}</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleApproveAll}
+              className="bg-green-600 hover:bg-green-700"
             >
               {t("confirm")}
             </AlertDialogAction>
