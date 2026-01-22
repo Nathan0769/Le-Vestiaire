@@ -1983,6 +1983,12 @@
       "rejectDialogDescription": "La proposition <strong>{jerseyName}</strong> sera supprimée définitivement. Cette action est irréversible.",
       "cancel": "Annuler",
       "confirm": "Confirmer",
+      "approveAllButton": "Tout approuver ({count})",
+      "approveAllLoading": "Approbation en cours...",
+      "approveAllDialogTitle": "Approuver toutes les propositions ?",
+      "approveAllDialogDescription": "Vous êtes sur le point d'approuver {count} proposition(s). Cette action est irréversible.",
+      "approveAllSuccess": "{count} proposition(s) approuvée(s) avec succès !",
+      "approveAllPartial": "{approved} approuvée(s), {failed} échec(s)",
       "DescriptionProposals": {
         "aboutTitle": "À propos des propositions de descriptions",
         "aboutDescription": "Les utilisateurs peuvent proposer des descriptions pour enrichir les fiches maillots. Vous pouvez approuver ou rejeter ces propositions. Les contributeurs sont crédités pour chaque description approuvée.",
