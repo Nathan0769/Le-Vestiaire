@@ -10,18 +10,20 @@ interface TypeDistributionChartProps {
   data: { type: string; count: number; percentage: number }[];
 }
 
-const COLORS = [
-  "oklch(0.70 0.25 330)",
-  "oklch(0.75 0.25 40)",
-  "oklch(0.80 0.25 90)",
-  "oklch(0.70 0.25 150)",
-  "oklch(0.70 0.25 200)",
-  "oklch(0.70 0.25 260)",
-];
+// Génère des couleurs flashy uniques en distribuant sur la roue chromatique
+function generateColors(count: number): string[] {
+  return Array.from({ length: count }, (_, i) => {
+    const hue = (i * 360) / count + 15;
+    const lightness = 0.65 + (i % 2) * 0.1;
+    return `oklch(${lightness} 0.28 ${hue})`;
+  });
+}
 
 export function TypeDistributionChart({ data }: TypeDistributionChartProps) {
   const t = useTranslations("CollectionStats.typeDistribution");
   const tJerseyType = useTranslations("JerseyType");
+
+  const colors = generateColors(data.length);
 
   const formattedData = data.map((item) => ({
     ...item,
@@ -50,7 +52,7 @@ export function TypeDistributionChart({ data }: TypeDistributionChartProps) {
             config={formattedData.reduce((acc, item, index) => {
               acc[item.type] = {
                 label: item.typeLabel,
-                color: COLORS[index % COLORS.length],
+                color: colors[index],
               };
               return acc;
             }, {} as Record<string, { label: string; color: string }>)}
@@ -66,7 +68,7 @@ export function TypeDistributionChart({ data }: TypeDistributionChartProps) {
                 {formattedData.map((_item, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
+                    fill={colors[index]}
                   />
                 ))}
               </Pie>
@@ -95,7 +97,7 @@ export function TypeDistributionChart({ data }: TypeDistributionChartProps) {
               >
                 <span
                   className="w-3 h-3 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                  style={{ backgroundColor: colors[index] }}
                 />
                 <span className="text-muted-foreground">
                   {item.typeLabel}

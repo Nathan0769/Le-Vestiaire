@@ -18,22 +18,26 @@ interface SourceDistributionChartProps {
   };
 }
 
-const SOURCE_COLORS: Record<string, string> = {
-  purchased: "oklch(0.70 0.25 260)",
-  gift: "oklch(0.70 0.25 330)",
-  mysteryBox: "oklch(0.75 0.25 40)",
-};
+// Génère des couleurs flashy uniques en distribuant sur la roue chromatique
+function generateColors(count: number): string[] {
+  return Array.from({ length: count }, (_, i) => {
+    const hue = (i * 360) / count + 15;
+    const lightness = 0.65 + (i % 2) * 0.1;
+    return `oklch(${lightness} 0.28 ${hue})`;
+  });
+}
 
 export function SourceDistributionChart({
   data,
   additional,
 }: SourceDistributionChartProps) {
   const t = useTranslations("CollectionStats.sourceDistribution");
+  const colors = generateColors(data.length);
 
-  const formattedData = data.map((item) => ({
+  const formattedData = data.map((item, index) => ({
     ...item,
     sourceLabel: t(item.source as "purchased" | "gift" | "mysteryBox"),
-    fill: SOURCE_COLORS[item.source] || "oklch(0.70 0.25 260)",
+    fill: colors[index],
   }));
 
   return (
