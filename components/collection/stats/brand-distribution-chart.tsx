@@ -10,19 +10,18 @@ interface BrandDistributionChartProps {
   data: { brand: string; count: number; percentage: number }[];
 }
 
-const COLORS = [
-  "oklch(0.70 0.25 330)",
-  "oklch(0.75 0.25 40)",
-  "oklch(0.80 0.25 90)",
-  "oklch(0.70 0.25 150)",
-  "oklch(0.70 0.25 200)",
-  "oklch(0.70 0.25 260)",
-  "oklch(0.70 0.25 290)",
-  "oklch(0.75 0.25 10)",
-];
+// Génère des couleurs flashy uniques en distribuant sur la roue chromatique
+function generateColors(count: number): string[] {
+  return Array.from({ length: count }, (_, i) => {
+    const hue = (i * 360) / count + 15; // Décalage pour éviter de commencer au rouge pur
+    const lightness = 0.65 + (i % 2) * 0.1; // Alterne entre 0.65 et 0.75 pour plus de contraste
+    return `oklch(${lightness} 0.28 ${hue})`;
+  });
+}
 
 export function BrandDistributionChart({ data }: BrandDistributionChartProps) {
   const t = useTranslations("CollectionStats.brandDistribution");
+  const colors = generateColors(data.length);
 
   return (
     <Card>
@@ -38,7 +37,7 @@ export function BrandDistributionChart({ data }: BrandDistributionChartProps) {
             config={data.reduce((acc, item, index) => {
               acc[item.brand] = {
                 label: item.brand,
-                color: COLORS[index % COLORS.length],
+                color: colors[index],
               };
               return acc;
             }, {} as Record<string, { label: string; color: string }>)}
@@ -54,7 +53,7 @@ export function BrandDistributionChart({ data }: BrandDistributionChartProps) {
                 {data.map((_item, index) => (
                   <Cell
                     key={`cell-${index}`}
-                    fill={COLORS[index % COLORS.length]}
+                    fill={colors[index]}
                   />
                 ))}
               </Pie>
@@ -83,7 +82,7 @@ export function BrandDistributionChart({ data }: BrandDistributionChartProps) {
               >
                 <span
                   className="w-3 h-3 rounded-full flex-shrink-0"
-                  style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                  style={{ backgroundColor: colors[index] }}
                 />
                 <span className="text-muted-foreground truncate max-w-[120px] md:max-w-[150px]">
                   {item.brand}
