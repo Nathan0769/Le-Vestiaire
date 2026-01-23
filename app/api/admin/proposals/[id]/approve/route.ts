@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requirePermission } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
 import { createClient } from "@supabase/supabase-js";
+import { generateJerseySlug } from "@/lib/slug-generator";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -119,7 +120,7 @@ export async function POST(
           imageUrl: newImageUrl,
           description: proposal.description,
           retailPrice: null,
-          slug: null,
+          slug: generateJerseySlug(proposal.club.shortName, proposal.type, proposal.season),
         },
       });
 
