@@ -18,7 +18,6 @@ interface SourceDistributionChartProps {
   };
 }
 
-// Génère des couleurs flashy uniques en distribuant sur la roue chromatique
 function generateColors(count: number): string[] {
   return Array.from({ length: count }, (_, i) => {
     const hue = (i * 360) / count + 15;
@@ -52,13 +51,16 @@ export function SourceDistributionChart({
         <CardContent>
           <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8">
             <ChartContainer
-              config={formattedData.reduce((acc, item) => {
-                acc[item.source] = {
-                  label: item.sourceLabel,
-                  color: item.fill,
-                };
-                return acc;
-              }, {} as Record<string, { label: string; color: string }>)}
+              config={formattedData.reduce(
+                (acc, item) => {
+                  acc[item.source] = {
+                    label: item.sourceLabel,
+                    color: item.fill,
+                  };
+                  return acc;
+                },
+                {} as Record<string, { label: string; color: string }>,
+              )}
               className="h-[200px] md:h-[200px] w-full md:w-[200px] flex-shrink-0"
             >
               <PieChart>
@@ -78,7 +80,9 @@ export function SourceDistributionChart({
                     const data = payload[0].payload;
                     return (
                       <div className="bg-background border border-border rounded-lg p-2 shadow-lg">
-                        <p className="text-sm font-medium">{data.sourceLabel}</p>
+                        <p className="text-sm font-medium">
+                          {data.sourceLabel}
+                        </p>
                         <p className="text-sm text-muted-foreground">
                           {t("jerseysCount", { count: data.count })}
                         </p>
@@ -91,8 +95,12 @@ export function SourceDistributionChart({
 
             <div className="flex flex-wrap md:flex-col gap-2 md:gap-2 justify-center md:justify-start w-full md:w-auto">
               {formattedData.map((item) => {
-                const total = formattedData.reduce((sum, d) => sum + d.count, 0);
-                const percentage = total > 0 ? Math.round((item.count / total) * 100) : 0;
+                const total = formattedData.reduce(
+                  (sum, d) => sum + d.count,
+                  0,
+                );
+                const percentage =
+                  total > 0 ? Math.round((item.count / total) * 100) : 0;
                 return (
                   <div
                     key={item.source}
