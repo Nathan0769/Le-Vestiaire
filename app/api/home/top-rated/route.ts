@@ -4,7 +4,10 @@ import prisma from "@/lib/prisma";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const limit = parseInt(searchParams.get("limit") || "6");
+    const limit = Math.min(
+      Math.max(1, parseInt(searchParams.get("limit") || "6") || 6),
+      50
+    );
 
     // Récupérer les maillots avec leur note moyenne et nombre de votes
     const topRatedJerseys = await prisma.jersey.findMany({
