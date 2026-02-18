@@ -25,7 +25,6 @@ export async function GET() {
       accounts: {
         select: {
           providerId: true,
-          password: true,
         },
       },
     },
@@ -46,7 +45,7 @@ export async function GET() {
     (account) => account.providerId === "google"
   );
   const hasPasswordAccount = user.accounts.some(
-    (account) => account.password !== null
+    (account) => account.providerId === "credential"
   );
 
   return NextResponse.json({

@@ -4,7 +4,10 @@ import prisma from "@/lib/prisma";
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    const limit = parseInt(searchParams.get("limit") || "6");
+    const limit = Math.min(
+      Math.max(1, parseInt(searchParams.get("limit") || "6") || 6),
+      50
+    );
 
     const recentJerseys = await prisma.jersey.findMany({
       include: {
