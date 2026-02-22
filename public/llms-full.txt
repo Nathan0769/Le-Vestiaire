@@ -1,0 +1,321 @@
+# Le Vestiaire Foot — Documentation complète
+
+> Le Vestiaire est une application web gratuite pour gérer et partager sa collection de maillots de football. Les utilisateurs peuvent cataloguer leurs maillots, créer des wishlists partageables, identifier les contrefaçons, noter les maillots, participer à un classement communautaire, et se connecter avec d'autres collectionneurs. Disponible en français, anglais et espagnol.
+
+Site : https://le-vestiaire-foot.fr
+
+---
+
+## Présentation générale
+
+Le Vestiaire Foot est la plateforme de référence pour les collectionneurs de maillots de football. L'application permet de :
+
+1. **Cataloguer sa collection** — Ajouter chaque maillot avec des détails complets : club, saison, type (domicile, extérieur, third, etc.), taille, état, prix d'achat, date d'achat, personnalisation (nom et numéro du joueur), photo personnalisée, tags et notes.
+
+2. **Parcourir un catalogue mondial** — Explorer plus de 100 ligues et leurs clubs, avec des fiches détaillées pour chaque maillot disponible incluant la marque, le prix public et les images officielles.
+
+3. **Créer et partager des wishlists** — Construire une liste de maillots souhaités avec des niveaux de priorité, la partager via un lien unique, et l'exporter en PDF.
+
+4. **Authentifier ses maillots** — Consulter des guides détaillés par marque (Adidas, Nike, Puma, Hummel) pour apprendre à distinguer les maillots authentiques des contrefaçons.
+
+5. **Rejoindre la communauté** — Ajouter des amis, consulter leurs collections et wishlists, comparer les collections, participer au classement et gagner des achievements.
+
+6. **Contribuer à la base de données** — Proposer de nouveaux maillots ou des descriptions pour enrichir le catalogue communautaire.
+
+---
+
+## Fonctionnalités détaillées
+
+### Gestion de collection
+
+Chaque maillot ajouté à la collection d'un utilisateur peut contenir les informations suivantes :
+
+- **Club et maillot** : Sélection depuis le catalogue mondial
+- **Taille** : XS, S, M, L, XL, XXL
+- **État** : Neuf (Mint), Excellent, Bon (Good), Correct (Fair), Mauvais (Poor)
+- **Prix d'achat** : Montant payé par le collectionneur
+- **Date d'achat** : Quand le maillot a été acquis
+- **Personnalisation** : Flocage joueur (nom + numéro)
+- **Photo personnalisée** : Upload d'une photo du maillot réel (JPEG, PNG, WebP, max 5MB)
+- **Tags** : Étiquettes personnalisées pour l'organisation
+- **Cadeau** : Marquer si le maillot a été reçu en cadeau
+- **Mystery box** : Marquer si le maillot provient d'une mystery box
+- **Notes** : Commentaires personnels
+
+L'utilisateur peut voir des statistiques détaillées de sa collection :
+- Répartition par ligue (graphique)
+- Valeur totale estimée
+- Nombre total de maillots
+- Répartition par type, taille et état
+
+### Catalogue de maillots
+
+Le catalogue est organisé hiérarchiquement :
+
+1. **Ligues** (ex: Ligue 1, Premier League, La Liga, Serie A, Bundesliga...)
+2. **Clubs** par ligue (ex: PSG, OM, OL pour la Ligue 1)
+3. **Maillots** par club et saison
+
+Chaque fiche maillot contient :
+- Nom du maillot
+- Saison (ex: 2024-2025)
+- Type : HOME (Domicile), AWAY (Extérieur), THIRD, FOURTH, GOALKEEPER (Gardien), SPECIAL
+- Sous-types spéciaux : Heritage, Halloween, Anti-Racism, Chinese New Year, Pre-match, Training, Anthem, Icon, Lifestyle, Warm-up, Special Kit, Anniversary, Charity, Classic, Limited Edition, Player Edition, Retro, All-Star
+- Marque (Adidas, Nike, Puma, New Balance, Hummel, etc.)
+- Prix public
+- Image officielle
+- Slug SEO-friendly pour les URL
+- Note moyenne de la communauté
+- Description communautaire
+
+### Wishlist
+
+La wishlist permet aux utilisateurs de :
+- Ajouter des maillots souhaités depuis le catalogue
+- Définir des niveaux de priorité
+- Partager la wishlist via un lien unique accessible sans compte
+- Exporter la wishlist en PDF (généré côté serveur avec Puppeteer)
+- Voir les wishlists de leurs amis
+
+### Guides d'authentification
+
+Quatre guides complets sont disponibles pour aider les collectionneurs à identifier les maillots authentiques :
+
+#### Guide Adidas
+- Vérification des étiquettes intérieures
+- Contrôle de la qualité des matériaux
+- Identification des logos et broderies
+- Points de contrôle spécifiques à Adidas
+
+#### Guide Nike
+- Vérification du label Nike
+- Contrôle des coutures et finitions
+- Identification des technologies (Dri-FIT, Vaporknit)
+- Points de contrôle spécifiques à Nike
+
+#### Guide Puma
+- Vérification des marquages Puma
+- Contrôle de la qualité de fabrication
+- Points de contrôle spécifiques à Puma
+
+#### Guide Hummel
+- Vérification des chevrons caractéristiques
+- Contrôle de l'authenticité
+- Points de contrôle spécifiques à Hummel
+
+### Système social
+
+#### Amis
+- Recherche d'utilisateurs par nom
+- Envoi de demandes d'amitié
+- Acceptation, refus ou blocage de demandes
+- Liste d'amis avec statuts (En attente, Accepté, Rejeté, Bloqué)
+
+#### Interactions
+- Consulter la collection d'un ami
+- Consulter la wishlist d'un ami
+- Comparer les collections
+
+### Classement & Achievements
+
+Le classement communautaire prend en compte :
+- Taille de la collection (nombre de maillots)
+- Contributions à la base de données (maillots proposés)
+- Notes données aux maillots
+- Achievements débloqués
+
+Les utilisateurs peuvent choisir de participer anonymement au classement via les paramètres.
+
+### Système de contributions
+
+Les utilisateurs peuvent enrichir la base de données en :
+- Proposant de nouveaux maillots avec photos
+- Proposant des descriptions pour les maillots existants
+- Suivant l'historique de leurs contributions
+- Recevant un statut (approuvé/rejeté) de l'administration
+
+### Notation des maillots
+
+- Système de notation de 1 à 5 étoiles
+- Une note par utilisateur par maillot
+- Note moyenne affichée sur la fiche maillot
+- Les maillots les mieux notés sont mis en avant sur la page d'accueil
+
+---
+
+## Structure du site
+
+### Pages publiques (accessibles sans compte)
+
+| Page | URL | Description |
+|------|-----|-------------|
+| Accueil | / | Présentation, maillots les mieux notés, ajouts récents, FAQ, fonctionnalités |
+| Catalogue ligues | /jerseys | Liste de toutes les ligues disponibles |
+| Clubs d'une ligue | /jerseys/{leagueId} | Liste des clubs d'une ligue |
+| Maillots d'un club | /jerseys/{leagueId}/clubs/{clubId} | Tous les maillots disponibles pour un club |
+| Fiche maillot | /jerseys/{leagueId}/clubs/{clubId}/jerseys/{slug} | Détails complets d'un maillot |
+| Classement | /leaderboard | Classement des collectionneurs |
+| Guides authentification | /authentification | Hub des guides par marque |
+| Guide Adidas | /authentification/adidas | Guide d'authentification Adidas |
+| Guide Nike | /authentification/nike | Guide d'authentification Nike |
+| Guide Puma | /authentification/puma | Guide d'authentification Puma |
+| Guide Hummel | /authentification/hummel | Guide d'authentification Hummel |
+| Wishlist partagée | /wishlist/share/{id} | Wishlist d'un utilisateur (lien de partage) |
+| Conditions d'utilisation | /conditions-utilisation | CGU |
+| Politique de confidentialité | /politique-confidentialite | RGPD et données personnelles |
+| Politique de cookies | /politique-cookies | Utilisation des cookies |
+
+### Pages authentifiées (compte requis)
+
+| Page | URL | Description |
+|------|-----|-------------|
+| Ma collection | /collection | Gestion de la collection personnelle |
+| Statistiques | /collection/stats | Statistiques et graphiques de la collection |
+| Ma wishlist | /wishlist | Gestion de la wishlist |
+| Mes amis | /friends | Liste d'amis et demandes |
+| Collections amis | /friends/collections | Parcourir les collections des amis |
+| Collection d'un ami | /friends/collections/{id} | Voir la collection d'un ami |
+| Wishlist d'un ami | /friends/wishlists/{id} | Voir la wishlist d'un ami |
+| Proposer un maillot | /community/propose-jersey | Formulaire de proposition |
+| Mes propositions | /community/my-proposals | Historique des propositions |
+| Paramètres | /settings | Paramètres du compte |
+
+### Pages d'authentification
+
+| Page | URL | Description |
+|------|-----|-------------|
+| Connexion | /auth/login | Connexion par email/mot de passe ou Google |
+| Inscription | /auth/signUp | Création de compte |
+
+---
+
+## API REST
+
+L'API REST est disponible sous /api/ et nécessite une authentification pour la plupart des endpoints.
+
+### Endpoints principaux
+
+#### Maillots (/api/jerseys/)
+- Récupération de maillots par club, ligue ou recherche
+- Détails d'un maillot spécifique
+- Statistiques et notes
+- Gestion des maillots de collection (ajout, modification, suppression)
+
+#### Utilisateur (/api/user/)
+- Upload d'avatar (validation magic bytes côté serveur)
+- Upload de photos de maillots
+- Gestion du profil (username, bio, club favori)
+- Statistiques de collection
+- Paramètres de classement
+
+#### Amis (/api/friends/)
+- Recherche d'utilisateurs
+- Gestion des demandes d'amitié
+- Consultation des collections et wishlists d'amis
+
+#### Wishlist (/api/wishlist/)
+- Gestion de la wishlist
+- Génération de PDF
+- Partage par lien
+
+#### Classement (/api/leaderboard/)
+- Données de classement
+- Achievements
+
+#### Accueil (/api/home/)
+- Maillots les mieux notés
+- Maillots récents
+- Statistiques globales
+
+#### Contributions (/api/jersey-proposals/)
+- Soumission de propositions de maillots
+- Upload de photos pour les propositions
+
+### Rate limiting
+
+Toutes les routes API sont protégées par du rate limiting :
+- **Strict** (5 req/min) : Opérations d'authentification
+- **Modéré** (10 req/heure) : Uploads de fichiers, opérations coûteuses
+- **Standard** (20 req/min) : Recherches, lectures
+- **Généreux** (60 req/min) : Endpoints publics
+
+### Sécurité
+
+- Authentification par session (Better Auth)
+- Connexion email/mot de passe et Google OAuth
+- Validation des uploads par magic bytes (pas uniquement l'extension)
+- Headers de sécurité (HSTS, X-Frame-Options, CSP)
+- Protection CSRF
+- Requêtes paramétrées (Prisma) contre les injections SQL
+
+---
+
+## Stack technique
+
+### Frontend
+- **Next.js 15** avec App Router et Server/Client Components
+- **React 19** pour l'interface utilisateur
+- **TypeScript** en mode strict
+- **TailwindCSS 4** pour le styling
+- **Radix UI** pour les composants accessibles
+- **React Hook Form + Zod** pour la validation des formulaires
+- **TanStack Query (React Query)** pour la gestion du state serveur
+- **Framer Motion** pour les animations
+- **Lucide React & Tabler Icons** pour l'iconographie
+
+### Backend
+- **PostgreSQL** via Prisma ORM avec Prisma Accelerate
+- **Better Auth** pour l'authentification (email/password + Google OAuth)
+- **Upstash Redis** pour le rate limiting et le cache
+- **Supabase Storage** pour le stockage des images
+- **Puppeteer + Sparticuz Chromium** pour la génération de PDF
+
+### Infrastructure
+- **Vercel** pour l'hébergement et les déploiements automatiques
+- **Vercel Analytics & Speed Insights** pour le monitoring
+- **Google Analytics** pour le suivi d'audience
+
+---
+
+## Internationalisation
+
+L'application est disponible en 3 langues :
+- **Français** (langue par défaut) — /fr/
+- **Anglais** — /en/
+- **Espagnol** — /es/
+
+Toutes les pages, labels, messages d'erreur et contenus sont traduits. La détection de langue est automatique avec possibilité de changement manuel.
+
+---
+
+## FAQ
+
+### Qu'est-ce que Le Vestiaire ?
+Le Vestiaire est une application gratuite pour gérer sa collection de maillots de football. Elle permet de cataloguer ses maillots, créer des wishlists, les partager et rejoindre une communauté de collectionneurs.
+
+### Comment ajouter un maillot à ma collection ?
+Créez un compte gratuit, parcourez le catalogue par ligue et club, puis ajoutez le maillot à votre collection en précisant la taille, l'état, le prix d'achat et d'autres détails.
+
+### Comment partager ma wishlist ?
+Depuis votre wishlist, utilisez la fonction de partage pour générer un lien unique. Ce lien est accessible sans compte. Vous pouvez aussi exporter votre wishlist en PDF.
+
+### Comment savoir si mon maillot est authentique ?
+Consultez nos guides d'authentification par marque (Adidas, Nike, Puma, Hummel) qui détaillent les points de contrôle pour identifier les contrefaçons.
+
+### L'application est-elle gratuite ?
+Oui, Le Vestiaire est entièrement gratuit. Aucun abonnement ni achat in-app.
+
+### Comment proposer un maillot manquant ?
+Utilisez la section "Proposer un maillot" dans le menu Communauté. Remplissez le formulaire avec les détails du maillot et une photo. L'équipe d'administration validera votre proposition.
+
+### Mes données sont-elles sécurisées ?
+Oui. L'application utilise le chiffrement HTTPS, des sessions sécurisées, du rate limiting, et respecte le RGPD. Consultez notre politique de confidentialité pour plus de détails.
+
+---
+
+## Contact et informations légales
+
+- Site web : https://le-vestiaire-foot.fr
+- Conditions d'utilisation : https://le-vestiaire-foot.fr/conditions-utilisation
+- Politique de confidentialité : https://le-vestiaire-foot.fr/politique-confidentialite
+- Politique de cookies : https://le-vestiaire-foot.fr/politique-cookies

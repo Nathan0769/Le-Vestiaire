@@ -1,0 +1,46 @@
+# Le Vestiaire Foot
+
+> Le Vestiaire est une application web gratuite pour gérer et partager sa collection de maillots de football. Les utilisateurs peuvent cataloguer leurs maillots, créer des wishlists partageables, identifier les contrefaçons grâce à des guides d'authentification par marque, noter les maillots, participer à un classement communautaire, et se connecter avec d'autres collectionneurs.
+
+- Site : [https://le-vestiaire-foot.fr](https://le-vestiaire-foot.fr)
+- Langues disponibles : Français, English, Español
+- Stack technique : Next.js 15, TypeScript, PostgreSQL, Prisma, Supabase, TailwindCSS 4
+
+## Fonctionnalités principales
+
+- [Catalogue de maillots](https://le-vestiaire-foot.fr/jerseys): Parcourir plus de 100 ligues et clubs avec fiches détaillées pour chaque maillot (saison, type, marque, prix)
+- [Gestion de collection](https://le-vestiaire-foot.fr/collection): Ajouter des maillots à sa collection avec taille, état, prix d'achat, photo personnalisée et personnalisation
+- [Statistiques de collection](https://le-vestiaire-foot.fr/collection/stats): Visualiser la répartition par ligue, valeur totale et statistiques détaillées de sa collection
+- [Wishlist partageable](https://le-vestiaire-foot.fr/wishlist): Créer une liste de maillots souhaités avec niveaux de priorité, partage par lien et export PDF
+- [Classement & achievements](https://le-vestiaire-foot.fr/leaderboard): Classement des collectionneurs par taille de collection, contributions et notes données
+- [Système d'amis](https://le-vestiaire-foot.fr/friends): Ajouter des amis, consulter leurs collections et wishlists, comparer les collections
+- [Proposer un maillot](https://le-vestiaire-foot.fr/community/propose-jersey): Contribuer à la base de données en proposant de nouveaux maillots à ajouter
+
+## Guides d'authentification
+
+- [Guide Adidas](https://le-vestiaire-foot.fr/authentification/adidas): Identifier les vrais maillots Adidas vs contrefaçons
+- [Guide Nike](https://le-vestiaire-foot.fr/authentification/nike): Identifier les vrais maillots Nike vs contrefaçons
+- [Guide Puma](https://le-vestiaire-foot.fr/authentification/puma): Identifier les vrais maillots Puma vs contrefaçons
+- [Guide Hummel](https://le-vestiaire-foot.fr/authentification/hummel): Identifier les vrais maillots Hummel vs contrefaçons
+
+## Types de maillots supportés
+
+- Domicile (Home), Extérieur (Away), Third, Fourth, Gardien (Goalkeeper)
+- Éditions spéciales : Heritage, Halloween, Anti-Racisme, Chinese New Year, Pré-match, Training, et plus
+
+## Données de collection
+
+- Tailles : XS, S, M, L, XL, XXL
+- États : Neuf (Mint), Excellent, Bon (Good), Correct (Fair), Mauvais (Poor)
+- Informations : prix d'achat, date d'achat, personnalisation, tags, cadeau, mystery box
+
+## Pages légales
+
+- [Conditions d'utilisation](https://le-vestiaire-foot.fr/conditions-utilisation): Conditions générales d'utilisation du service
+- [Politique de confidentialité](https://le-vestiaire-foot.fr/politique-confidentialite): Traitement des données personnelles
+- [Politique de cookies](https://le-vestiaire-foot.fr/politique-cookies): Utilisation des cookies
+
+## Optional
+
+- [Sitemap XML](https://le-vestiaire-foot.fr/sitemap.xml): Plan du site complet avec toutes les pages indexées
+- [API Documentation](https://le-vestiaire-foot.fr/api): Endpoints REST pour maillots, collections, wishlists, amis, classement (authentification requise)
