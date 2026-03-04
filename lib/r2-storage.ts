@@ -34,10 +34,14 @@ export async function uploadToR2(
   body: Buffer | Blob | ArrayBuffer,
   contentType: string
 ): Promise<void> {
-  const buffer =
-    body instanceof Buffer
-      ? body
-      : Buffer.from(body instanceof Blob ? await body.arrayBuffer() : body);
+  let buffer: Buffer;
+  if (body instanceof Buffer) {
+    buffer = body;
+  } else if (body instanceof Blob) {
+    buffer = Buffer.from(new Uint8Array(await body.arrayBuffer()));
+  } else {
+    buffer = Buffer.from(new Uint8Array(body));
+  }
 
   await r2Client.send(
     new PutObjectCommand({
