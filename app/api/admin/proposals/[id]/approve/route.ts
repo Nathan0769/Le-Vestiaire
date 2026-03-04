@@ -3,6 +3,7 @@ import { requirePermission } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
 import { createClient } from "@supabase/supabase-js";
 import { generateJerseySlug } from "@/lib/slug-generator";
+import { uploadToR2, getR2PublicUrl } from "@/lib/r2-storage";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -88,26 +89,17 @@ export async function POST(
       );
     }
 
-    const { error: uploadError } = await supabaseAdmin.storage
-      .from("jerseys")
-      .upload(newImagePath, downloadData, {
-        upsert: true,
-        contentType: `image/${extension}`,
-      });
-
-    if (uploadError) {
-      console.error("❌ Erreur upload vers jerseys:", uploadError);
+    try {
+      await uploadToR2("jerseys", newImagePath, downloadData, `image/${extension}`);
+    } catch (uploadError) {
+      console.error("❌ Erreur upload vers R2 jerseys:", uploadError);
       return NextResponse.json(
         { error: "Impossible de déplacer l'image vers le bucket jerseys" },
         { status: 500 }
       );
     }
 
-    const { data: publicUrlData } = supabaseAdmin.storage
-      .from("jerseys")
-      .getPublicUrl(newImagePath);
-
-    const newImageUrl = publicUrlData.publicUrl;
+    const newImageUrl = getR2PublicUrl(newImagePath);
 
     const result = await prisma.$transaction(async (tx) => {
       const jersey = await tx.jersey.create({

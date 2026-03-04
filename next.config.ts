@@ -38,6 +38,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "hioeyddfdoekpplonsxa.supabase.co",
       },
+      {
+        protocol: "https",
+        hostname: "*.r2.dev",
+      },
     ],
   },
   serverExternalPackages: ["puppeteer-core", "@sparticuz/chromium"],
