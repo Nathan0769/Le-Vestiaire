@@ -99,7 +99,7 @@ export async function POST(
       );
     }
 
-    const newImageUrl = getR2PublicUrl(newImagePath);
+    const newImageUrl = getR2PublicUrl("jerseys", newImagePath);
 
     const result = await prisma.$transaction(async (tx) => {
       const jersey = await tx.jersey.create({
