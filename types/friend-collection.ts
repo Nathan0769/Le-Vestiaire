@@ -19,6 +19,7 @@ export interface FriendCollectionItem {
   condition: string;
   hasTags: boolean;
   personalization: string | null;
+  notes?: string | null;
   purchasePrice: number | null;
   purchaseDate: Date | null;
   isGift: boolean;

@@ -1807,6 +1807,7 @@
     "accept": "Accept",
     "reject": "Reject",
     "add": "Add",
+    "addFriend": "Add as friend",
     "resend": "Resend",
     "friendsCollections": "Friends' Collections",
     "discoverCollections": "Discover your friends' jersey collections and find inspiration for your own collection",
@@ -1861,6 +1862,7 @@
       "number": "Number",
       "personalization": "Personalization",
       "addedOn": "Added on",
+      "notes": "Notes",
       "close": "Close"
     }
   },
@@ -2100,5 +2102,23 @@
         "badge": "Premium badge on your profile"
       }
     }
+  },
+  "PublicCollection": {
+    "title": "Collection of {name}",
+    "jerseys": "jerseys",
+    "jersey": "jersey",
+    "anonymous": "Anonymous Collector",
+    "anonymousMessage": "This collector prefers to remain anonymous",
+    "emptyTitle": "Empty collection",
+    "emptyMessage": "{name} hasn't added any jerseys to their collection yet.",
+    "tabs": {
+      "collection": "Collection",
+      "wishlist": "Wishlist"
+    },
+    "commonJerseysTitle": "In common with you",
+    "commonJerseys": "{count} jersey(s) in common",
+    "wishlistTitle": "Wishlist of {name}",
+    "wishlistEmpty": "Empty wishlist",
+    "wishlistEmptyMessage": "{name} hasn't added any jerseys to their wishlist yet."
   }
 }

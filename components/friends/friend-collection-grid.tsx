@@ -13,15 +13,17 @@ import { useTranslations } from "next-intl";
 
 interface FriendCollectionGridProps {
   collectionItems: FriendCollectionItem[];
+  showPriceSortOptions?: boolean;
 }
 
 export function FriendCollectionGrid({
   collectionItems,
+  showPriceSortOptions = true,
 }: FriendCollectionGridProps) {
   const t = useTranslations("Friends");
   const [sortBy, setSortBy] = useState("date-desc");
 
-  const sortOptions = [
+  const allSortOptions = [
     { value: "date-desc", label: t("mostRecent") },
     { value: "date-asc", label: t("oldest") },
     { value: "price-desc", label: t("priceDescending") },
@@ -30,6 +32,10 @@ export function FriendCollectionGrid({
     { value: "club", label: t("clubAZ") },
     { value: "season", label: t("season") },
   ];
+
+  const sortOptions = showPriceSortOptions
+    ? allSortOptions
+    : allSortOptions.filter((o) => !o.value.startsWith("price"));
 
   const sortedItems = [...collectionItems].sort((a, b) => {
     switch (sortBy) {

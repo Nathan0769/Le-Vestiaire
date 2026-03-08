@@ -267,6 +267,15 @@ export function FriendCollectionJerseyModal({
                       )}
                     </span>
                   </div>
+
+                  {collectionItem.notes && (
+                    <div className="pt-2">
+                      <span className="text-muted-foreground block mb-1">{t("notes")}</span>
+                      <p className="text-sm bg-muted/50 rounded-md p-2 italic">
+                        {collectionItem.notes}
+                      </p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
