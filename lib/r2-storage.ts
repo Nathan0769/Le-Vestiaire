@@ -17,6 +17,18 @@ if (!process.env.CLOUDFLARE_R2_SECRET_ACCESS_KEY) {
 if (!process.env.CLOUDFLARE_R2_PUBLIC_URL) {
   throw new Error("CLOUDFLARE_R2_PUBLIC_URL is not defined");
 }
+if (!process.env.CLOUDFLARE_R2_CLUBS_PUBLIC_URL) {
+  throw new Error("CLOUDFLARE_R2_CLUBS_PUBLIC_URL is not defined");
+}
+if (!process.env.CLOUDFLARE_R2_LEAGUES_PUBLIC_URL) {
+  throw new Error("CLOUDFLARE_R2_LEAGUES_PUBLIC_URL is not defined");
+}
+
+const R2_PUBLIC_URLS: Record<string, string> = {
+  jerseys: process.env.CLOUDFLARE_R2_PUBLIC_URL,
+  clubs: process.env.CLOUDFLARE_R2_CLUBS_PUBLIC_URL,
+  leagues: process.env.CLOUDFLARE_R2_LEAGUES_PUBLIC_URL,
+};
 
 const r2Client = new S3Client({
   region: "auto",
@@ -87,7 +99,8 @@ export async function downloadFromR2(
   return Buffer.concat(chunks);
 }
 
-export function getR2PublicUrl(path: string): string {
-  const baseUrl = process.env.CLOUDFLARE_R2_PUBLIC_URL!.replace(/\/$/, "");
+export function getR2PublicUrl(bucket: string, path: string): string {
+  const baseUrl = R2_PUBLIC_URLS[bucket]?.replace(/\/$/, "");
+  if (!baseUrl) throw new Error(`No public URL configured for R2 bucket: ${bucket}`);
   return `${baseUrl}/${path}`;
 }
