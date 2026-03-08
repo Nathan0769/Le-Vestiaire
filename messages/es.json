@@ -1807,6 +1807,7 @@
     "accept": "Aceptar",
     "reject": "Rechazar",
     "add": "Añadir",
+    "addFriend": "Añadir como amigo",
     "resend": "Reenviar",
     "friendsCollections": "Colecciones de amigos",
     "discoverCollections": "Descubre las colecciones de camisetas de tus amigos y encuentra inspiración para tu propia colección",
@@ -1861,6 +1862,7 @@
       "number": "Número",
       "personalization": "Personalización",
       "addedOn": "Añadido el",
+      "notes": "Notas",
       "close": "Cerrar"
     }
   },
@@ -2100,5 +2102,23 @@
         "badge": "Insignia Premium en tu perfil"
       }
     }
+  },
+  "PublicCollection": {
+    "title": "Colección de {name}",
+    "jerseys": "camisetas",
+    "jersey": "camiseta",
+    "anonymous": "Coleccionista Anónimo",
+    "anonymousMessage": "Este coleccionista prefiere permanecer anónimo",
+    "emptyTitle": "Colección vacía",
+    "emptyMessage": "{name} aún no ha añadido camisetas a su colección.",
+    "tabs": {
+      "collection": "Colección",
+      "wishlist": "Lista de deseos"
+    },
+    "commonJerseysTitle": "En común contigo",
+    "commonJerseys": "{count} camiseta(s) en común",
+    "wishlistTitle": "Lista de deseos de {name}",
+    "wishlistEmpty": "Lista de deseos vacía",
+    "wishlistEmptyMessage": "{name} aún no ha añadido camisetas a su lista de deseos."
   }
 }

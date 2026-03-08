@@ -6,6 +6,8 @@ import { Badge } from "@/components/ui/badge";
 import { Trophy, Medal, Heart } from "lucide-react";
 import type { LeaderboardEntry } from "@/types/leaderboard";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 interface LeaderboardCardProps {
   entry: LeaderboardEntry;
@@ -86,9 +88,16 @@ export function LeaderboardCard({
     }
   };
 
+  const href = isCurrentUser
+    ? "/collection"
+    : `/users/${entry.userId}/collection`;
+
   return (
+    <Tooltip>
+    <TooltipTrigger asChild>
+    <Link href={href} className="block">
     <Card
-      className={`hover:shadow-md transition-all overflow-hidden ${
+      className={`hover:shadow-md transition-all overflow-hidden cursor-pointer ${
         isCurrentUser ? "ring-2 ring-primary" : ""
       } ${getPodiumBorderClass(entry.rank)}`}
     >
@@ -160,5 +169,9 @@ export function LeaderboardCard({
         </div>
       </CardContent>
     </Card>
+    </Link>
+    </TooltipTrigger>
+    <TooltipContent>Voir la collection</TooltipContent>
+    </Tooltip>
   );
 }

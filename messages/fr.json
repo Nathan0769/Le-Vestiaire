@@ -1839,6 +1839,7 @@
     "accept": "Accepter",
     "reject": "Refuser",
     "add": "Ajouter",
+    "addFriend": "Ajouter en ami",
     "resend": "Renvoyer",
     "friendsCollections": "Collections des amis",
     "discoverCollections": "Découvrez les collections de maillots de vos amis et trouvez l'inspiration pour votre propre collection",
@@ -1893,6 +1894,7 @@
       "number": "Numéro",
       "personalization": "Personnalisation",
       "addedOn": "Ajouté le",
+      "notes": "Notes",
       "close": "Fermer"
     }
   },
@@ -2138,5 +2140,23 @@
         "badge": "Badge Premium sur votre profil"
       }
     }
+  },
+  "PublicCollection": {
+    "title": "Collection de {name}",
+    "jerseys": "maillots",
+    "jersey": "maillot",
+    "anonymous": "Collecteur Anonyme",
+    "anonymousMessage": "Ce collectionneur préfère rester anonyme",
+    "emptyTitle": "Collection vide",
+    "emptyMessage": "{name} n'a pas encore ajouté de maillots à sa collection.",
+    "tabs": {
+      "collection": "Collection",
+      "wishlist": "Wishlist"
+    },
+    "commonJerseysTitle": "En commun avec vous",
+    "commonJerseys": "{count} maillot(s) en commun",
+    "wishlistTitle": "Wishlist de {name}",
+    "wishlistEmpty": "Wishlist vide",
+    "wishlistEmptyMessage": "{name} n'a pas encore ajouté de maillots à sa wishlist."
   }
 }
