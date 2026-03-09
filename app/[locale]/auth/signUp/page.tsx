@@ -1,7 +1,12 @@
-"use client";
-
+import type { Metadata } from "next";
 import CreateAccount from "@/components/signUp/create-account";
 import { Logo } from "@/components/ui/Logo";
+
+export const metadata: Metadata = {
+  title: "Créer un compte - Le Vestiaire Foot",
+  description: "Créez votre compte gratuit sur Le Vestiaire Foot.",
+  robots: { index: false, follow: false },
+};
 
 export default function SignupPage() {
   return (

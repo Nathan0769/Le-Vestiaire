@@ -102,9 +102,46 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Le Vestiaire Foot",
+    url: "https://le-vestiaire-foot.fr",
+    logo: "https://le-vestiaire-foot.fr/icon.png",
+    sameAs: [],
+    description:
+      "Application gratuite pour gérer et partager votre collection de maillots de football.",
+  };
+
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Le Vestiaire Foot",
+    url: "https://le-vestiaire-foot.fr",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate:
+          "https://le-vestiaire-foot.fr/jerseys?q={search_term_string}",
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+
   return (
     <html lang={locale} suppressHydrationWarning>
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationSchema),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
         <NextIntlClientProvider messages={messages}>
           <ClientWrapper>{children}</ClientWrapper>
         </NextIntlClientProvider>

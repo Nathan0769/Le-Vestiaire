@@ -1,4 +1,5 @@
 import { JerseysBySeason } from "@/components/jerseys/jerseys/jerseys-by-season";
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -112,6 +113,19 @@ export default async function ClubDetailPage(props: Props) {
 
   return (
     <div className="p-6 space-y-8">
+      <BreadcrumbSchema
+        items={[
+          { name: "Maillots", url: "https://le-vestiaire-foot.fr/jerseys" },
+          {
+            name: club.league.name,
+            url: `https://le-vestiaire-foot.fr/jerseys/${club.league.id}`,
+          },
+          {
+            name: club.name,
+            url: `https://le-vestiaire-foot.fr/jerseys/${club.league.id}/clubs/${club.id}`,
+          },
+        ]}
+      />
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
