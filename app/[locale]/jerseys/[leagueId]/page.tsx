@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { ClubList } from "@/components/jerseys/clubs/clubs-list";
 import { notFound } from "next/navigation";
 import { LeagueBreadcrumb } from "@/components/jerseys/leagues/league-bread-crumb";
+import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import type { Metadata } from "next";
 
 type Props = {
@@ -78,6 +79,15 @@ export default async function LeagueDetailPage({ params }: Props) {
 
   return (
     <div className="p-5 space-y-6">
+      <BreadcrumbSchema
+        items={[
+          { name: "Maillots", url: "https://le-vestiaire-foot.fr/jerseys" },
+          {
+            name: league.name,
+            url: `https://le-vestiaire-foot.fr/jerseys/${leagueId}`,
+          },
+        ]}
+      />
       <LeagueBreadcrumb leagueName={league.name} />
       <ClubList clubs={league.clubs} leagueId={leagueId} />
     </div>

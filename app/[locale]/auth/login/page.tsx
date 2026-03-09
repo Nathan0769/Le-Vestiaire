@@ -1,7 +1,12 @@
-"use client";
+import type { Metadata } from "next";
 import { Logo } from "@/components/ui/Logo";
-
 import { LoginForm } from "@/components/Login/login-form";
+
+export const metadata: Metadata = {
+  title: "Connexion - Le Vestiaire Foot",
+  description: "Connectez-vous à votre compte Le Vestiaire Foot.",
+  robots: { index: false, follow: false },
+};
 
 export default function LoginPage() {
   return (
