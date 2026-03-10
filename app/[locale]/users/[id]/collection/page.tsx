@@ -179,7 +179,7 @@ export default async function PublicCollectionPage({
     : null;
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-6 space-y-6 overflow-x-hidden">
       <div className="flex items-center gap-4">
         <BackButton href="/leaderboard" />
         <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -209,8 +209,8 @@ export default async function PublicCollectionPage({
             />
           )}
           <div className="flex-1 min-w-0">
-            <div className="flex items-center justify-between gap-4">
-              <h2 className="text-xl font-semibold truncate">{displayName}</h2>
+            <div className="flex flex-wrap items-center gap-2">
+              <h2 className="text-xl font-semibold truncate flex-1 min-w-0">{displayName}</h2>
               <FriendshipButton
                 targetUserId={userId}
                 friendshipId={friendship?.id}

@@ -30,7 +30,7 @@ export default function ClientWrapper({
         <AuthProvider>
           <SidebarProvider defaultOpen={defaultOpen}>
             <AppSidebar />
-            <main className="flex-1">
+            <main className="flex-1 min-w-0 overflow-x-hidden">
               <SidebarTrigger />
               {children}
               <AnalyticsWrapper />
