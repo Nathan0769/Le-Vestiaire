@@ -1543,6 +1543,53 @@
         "tip4": "Examinez l'étiquette en détail",
         "tip5": "Un prix trop bas doit alerter"
       }
+    },
+    "supporterVsPro": {
+      "title": "Supporter vs Pro : quelles différences ?",
+      "description": "On se demande souvent la différence entre le maillot que portent les joueurs sur le terrain et ceux qu'on achète en boutique, les maillots \"Supporter\". Voici une présentation complète des différences.",
+      "context": "Comparaison réalisée sur les maillots domicile 25/26 du Stade Rennais (Puma). Maillot Pro en taille M, maillot Supporter en taille XL.",
+      "comparisons": {
+        "logo": {
+          "title": "L'écusson du club",
+          "description": "L'écusson des clubs sur les maillots Supporter est toujours brodé. Pour les maillots Pro, l'écusson est thermocollé. Depuis cette année, sur le maillot domicile Pro, l'écusson est rigide, avec du relief sur les hermines.",
+          "supporter": "Brodé",
+          "pro": "Thermocollé, rigide avec du relief sur les hermines"
+        },
+        "marque": {
+          "title": "Le sponsor Puma",
+          "description": "Tout comme les écussons, les sponsors Puma (à l'avant du maillot et sur les épaules) diffèrent entre les deux gammes.",
+          "supporter": "Généralement brodés",
+          "pro": "Thermocollés, avec un aspect gommé en relief très résistant"
+        },
+        "technology1": {
+          "title": "Deux technologies différentes — le tissu",
+          "supporter": "DRYCELL avec RE-FIBRE",
+          "pro": "ULTRAWEAVE (technologie qui a énormément évolué depuis ses débuts lors de la saison 2022/2023)"
+        },
+        "technology2": {
+          "title": "Deux technologies différentes — la maille",
+          "description": "La différence entre les mailles est visible directement à l'œil nu.",
+          "supporter": "Tissu standard",
+          "pro": "Tissu plus léger pour favoriser la performance des joueurs sur le terrain"
+        },
+        "detail1": {
+          "title": "Inscription spécifique du club",
+          "supporter": "À l'extérieur du maillot (ex : #TOUTDONNER)",
+          "pro": "À l'intérieur du maillot (ex : #TOUTDONNER)"
+        },
+        "detail2": {
+          "title": "Badge « Authentic Licensed Football »",
+          "description": "Le badge situé en bas du maillot présente une finition différente selon la gamme.",
+          "supporter": "Souple",
+          "pro": "Rigide"
+        },
+        "detail3": {
+          "title": "Coutures",
+          "description": "On remarque également des coutures différentes à l'intérieur du maillot entre les deux gammes.",
+          "supporter": "Coutures standard, sans particularité",
+          "pro": "Coutures rouges spécifiques sur les épaules, absentes du maillot Supporter"
+        }
+      }
     }
   },
   "CookiesPolicy": {

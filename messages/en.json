@@ -1511,6 +1511,53 @@
         "tip4": "Examine label in detail",
         "tip5": "Too low price should alert"
       }
+    },
+    "supporterVsPro": {
+      "title": "Supporter vs Pro: what are the differences?",
+      "description": "We often wonder about the difference between the jerseys worn by players on the pitch and those sold in stores, the \"Supporter\" jerseys. Here is a complete breakdown of the differences.",
+      "context": "Comparison made on the 25/26 Stade Rennais home jerseys (Puma). Pro jersey in size M, Supporter jersey in size XL.",
+      "comparisons": {
+        "logo": {
+          "title": "Club crest",
+          "description": "The club crest on Supporter jerseys is always embroidered. On Pro jerseys, it is heat-pressed. This year on the Pro home jersey, the crest is rigid with raised relief on the crests.",
+          "supporter": "Embroidered",
+          "pro": "Heat-pressed, rigid with raised relief on the crests"
+        },
+        "marque": {
+          "title": "Puma sponsor",
+          "description": "Just like the crests, the Puma branding (front and shoulders) differs between the two ranges.",
+          "supporter": "Generally embroidered",
+          "pro": "Heat-pressed, with a rubbery raised finish, very durable"
+        },
+        "technology1": {
+          "title": "Two different technologies — fabric",
+          "supporter": "DRYCELL with RE-FIBRE",
+          "pro": "ULTRAWEAVE (greatly evolved since its debut in the 2022/2023 season)"
+        },
+        "technology2": {
+          "title": "Two different technologies — weave",
+          "description": "The difference between the weaves is visible directly to the naked eye.",
+          "supporter": "Standard fabric",
+          "pro": "Lighter fabric to enhance player performance on the pitch"
+        },
+        "detail1": {
+          "title": "Club-specific wording",
+          "supporter": "On the outside of the jersey (e.g. #TOUTDONNER)",
+          "pro": "On the inside of the jersey (e.g. #TOUTDONNER)"
+        },
+        "detail2": {
+          "title": "\"Authentic Licensed Football\" badge",
+          "description": "The badge at the bottom of the jersey has a different finish depending on the range.",
+          "supporter": "Flexible",
+          "pro": "Rigid"
+        },
+        "detail3": {
+          "title": "Stitching",
+          "description": "Different inner stitching can also be noted between the two ranges.",
+          "supporter": "Standard stitching, no distinctive feature",
+          "pro": "Specific red stitching on the shoulders, absent from the Supporter jersey"
+        }
+      }
     }
   },
   "CookiesPolicy": {
