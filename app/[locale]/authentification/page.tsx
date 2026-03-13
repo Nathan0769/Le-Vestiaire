@@ -1,6 +1,8 @@
 import { Shield } from "lucide-react";
+import Link from "next/link";
 import { BrandGrid } from "@/components/authentification/brand-grid";
-import { getBrands } from "@/lib/authentication-content";
+import { getBrands, getSupporterVsProGuide } from "@/lib/authentication-content";
+import { Card, CardContent } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
 import type { Metadata } from "next";
 
@@ -39,7 +41,10 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function AuthentificationPage() {
   const t = await getTranslations("Authentication");
   const tPage = await getTranslations("Authentication.page");
-  const brands = await getBrands();
+  const [brands, supporterVsPro] = await Promise.all([
+    getBrands(),
+    getSupporterVsProGuide(),
+  ]);
 
   return (
     <div className="p-6 space-y-8">
@@ -66,6 +71,20 @@ export default async function AuthentificationPage() {
       </div>
 
       <BrandGrid brands={brands} />
+
+      <div className="space-y-3">
+        <h2 className="font-semibold text-lg">Guides comparatifs</h2>
+        <Link href="/authentification/supporter-vs-pro">
+          <Card className="cursor-pointer transition-all hover:shadow-lg hover:border-primary/50">
+            <CardContent className="p-4 flex flex-col gap-1">
+              <p className="font-semibold">{supporterVsPro.title}</p>
+              <p className="text-sm text-muted-foreground">
+                {supporterVsPro.description}
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
+      </div>
 
       <div className="bg-muted/50 rounded-lg p-6 space-y-3">
         <h2 className="font-semibold text-lg">

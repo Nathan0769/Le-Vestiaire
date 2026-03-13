@@ -8,14 +8,14 @@ const BRAND_STATIC_DATA: Record<
   adidas: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/logo.png",
     logoDark:
-      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/logo-white.webp",
+      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/logo-white.jpeg",
     color: "#000000",
     scanAvailable: false,
   },
   nike: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/logo.png",
     logoDark:
-      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/logo-white.webp",
+      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/logo-white.jpeg",
     color: "#FF3B00",
     scanAvailable: false,
   },
@@ -115,6 +115,64 @@ export async function getBrandGuide(brand: string): Promise<BrandGuide | null> {
     criteria,
     commonFakes,
     tips,
+  };
+}
+
+export async function getSupporterVsProGuide() {
+  const t = await getTranslations("Authentication.supporterVsPro");
+
+  const base = process.env.CLOUDFLARE_R2_GUIDES_PUBLIC_URL?.replace(/\/$/, "");
+  const img = (path: string) => (base ? `${base}/${path}` : undefined);
+
+  const images: Record<string, { supporter?: string; pro?: string }> = {
+    logo: {
+      supporter: img("supporter-vs-pro/logo/supporteur.jpeg"),
+      pro: img("supporter-vs-pro/logo/pro.jpeg"),
+    },
+    marque: {
+      supporter: img("supporter-vs-pro/marque/supporteur.jpeg"),
+      pro: img("supporter-vs-pro/marque/pro.jpeg"),
+    },
+    technology1: {
+      supporter: img("supporter-vs-pro/technology1/supporteur.jpeg"),
+      pro: img("supporter-vs-pro/technology1/pro.jpeg"),
+    },
+    technology2: {
+      supporter: img("supporter-vs-pro/technology2/supporteur.jpeg"),
+      pro: img("supporter-vs-pro/technology2/pro.jpeg"),
+    },
+    detail1: {
+      supporter: img("supporter-vs-pro/detail1/supporteur.jpeg"),
+      pro: img("supporter-vs-pro/detail1/pro.jpeg"),
+    },
+    detail2: {
+      supporter: img("supporter-vs-pro/detail2/supporteur.jpeg"),
+      pro: img("supporter-vs-pro/detail2/pro.jpeg"),
+    },
+    detail3: {
+      supporter: img("supporter-vs-pro/detail3/supporteur.jpeg"),
+      pro: img("supporter-vs-pro/detail3/pro.jpeg"),
+    },
+  };
+
+  const comparisonsRaw = t.raw("comparisons") as Record<
+    string,
+    { title: string; description?: string; supporter: string; pro: string }
+  >;
+
+  const comparisons = Object.entries(comparisonsRaw).map(([key, point]) => ({
+    ...point,
+    supporterImage: images[key]?.supporter,
+    proImage: images[key]?.pro,
+  }));
+
+  return {
+    title: t("title"),
+    description: t("description"),
+    context: t("context"),
+    supporterFullImage: img("supporter-vs-pro/full/supporteur.jpeg"),
+    proFullImage: img("supporter-vs-pro/full/pro.jpeg"),
+    comparisons,
   };
 }
 

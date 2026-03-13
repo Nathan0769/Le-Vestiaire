@@ -1511,6 +1511,53 @@
         "tip4": "Examina la etiqueta en detalle",
         "tip5": "Un precio demasiado bajo debe alertar"
       }
+    },
+    "supporterVsPro": {
+      "title": "Supporter vs Pro: ¿cuáles son las diferencias?",
+      "description": "A menudo nos preguntamos la diferencia entre las camisetas que llevan los jugadores en el campo y las que se venden en las tiendas, las camisetas \"Supporter\". Aquí tienes un desglose completo de las diferencias.",
+      "context": "Comparación realizada en las camisetas locales 25/26 del Stade Rennais (Puma). Camiseta Pro en talla M, camiseta Supporter en talla XL.",
+      "comparisons": {
+        "logo": {
+          "title": "El escudo del club",
+          "description": "El escudo del club en las camisetas Supporter siempre es bordado. En las camisetas Pro, está termoadhesivo. Este año en la camiseta Pro local, el escudo es rígido con relieve sobre los escudos.",
+          "supporter": "Bordado",
+          "pro": "Termoadhesivo, rígido con relieve sobre los escudos"
+        },
+        "marque": {
+          "title": "El patrocinador Puma",
+          "description": "Al igual que los escudos, la marca Puma (parte delantera y hombros) difiere entre las dos gamas.",
+          "supporter": "Generalmente bordado",
+          "pro": "Termoadhesivo, con acabado gomoso en relieve, muy resistente"
+        },
+        "technology1": {
+          "title": "Dos tecnologías diferentes — el tejido",
+          "supporter": "DRYCELL con RE-FIBRE",
+          "pro": "ULTRAWEAVE (muy evolucionada desde su debut en la temporada 2022/2023)"
+        },
+        "technology2": {
+          "title": "Dos tecnologías diferentes — el punto",
+          "description": "La diferencia entre los puntos es visible directamente a simple vista.",
+          "supporter": "Tejido estándar",
+          "pro": "Tejido más ligero para favorecer el rendimiento de los jugadores en el campo"
+        },
+        "detail1": {
+          "title": "Inscripción específica del club",
+          "supporter": "En el exterior de la camiseta (ej: #TOUTDONNER)",
+          "pro": "En el interior de la camiseta (ej: #TOUTDONNER)"
+        },
+        "detail2": {
+          "title": "Badge «Authentic Licensed Football»",
+          "description": "El badge en la parte inferior de la camiseta tiene un acabado diferente según la gama.",
+          "supporter": "Flexible",
+          "pro": "Rígido"
+        },
+        "detail3": {
+          "title": "Costuras",
+          "description": "También se observan costuras interiores diferentes entre las dos gamas.",
+          "supporter": "Costuras estándar, sin particularidad",
+          "pro": "Costuras rojas específicas en los hombros, ausentes en la camiseta Supporter"
+        }
+      }
     }
   },
   "CookiesPolicy": {

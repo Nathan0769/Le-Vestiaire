@@ -25,3 +25,21 @@ export interface BrandGuide {
   commonFakes: string[];
   tips: string[];
 }
+
+export interface ComparisonPoint {
+  title: string;
+  description?: string;
+  supporter: string;
+  pro: string;
+  supporterImage?: string;
+  proImage?: string;
+}
+
+export interface SupporterVsProGuide {
+  title: string;
+  description: string;
+  context: string;
+  supporterFullImage?: string;
+  proFullImage?: string;
+  comparisons: ComparisonPoint[];
+}

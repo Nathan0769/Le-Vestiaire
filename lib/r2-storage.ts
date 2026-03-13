@@ -28,6 +28,9 @@ const R2_PUBLIC_URLS: Record<string, string> = {
   jerseys: process.env.CLOUDFLARE_R2_PUBLIC_URL,
   clubs: process.env.CLOUDFLARE_R2_CLUBS_PUBLIC_URL,
   leagues: process.env.CLOUDFLARE_R2_LEAGUES_PUBLIC_URL,
+  ...(process.env.CLOUDFLARE_R2_GUIDES_PUBLIC_URL && {
+    guides: process.env.CLOUDFLARE_R2_GUIDES_PUBLIC_URL,
+  }),
 };
 
 const r2Client = new S3Client({
