@@ -73,7 +73,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [seasonError, setSeasonError] = useState<string | null>(null);
 
-  const NATIONAL_TEAM_LEAGUES = ["conmebol", "caf", "concacaf", "uefa"];
+  const NATIONAL_TEAM_LEAGUES = ["conmebol", "caf", "concacaf", "uefa", "afc"];
   const CALENDAR_YEAR_LEAGUES = ["mls", "brasileiro-serie-a"]; // Ligues fonctionnant par année civile
 
   useEffect(() => {
