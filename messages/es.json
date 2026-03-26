@@ -891,6 +891,11 @@
         "description": "Conéctate con otros coleccionistas, comparte tus hallazgos y descubre las colecciones de tus amigos."
       }
     },
+    "stats": {
+      "collectors": "Coleccionistas",
+      "jerseys": "Camisetas registradas",
+      "clubs": "Clubes"
+    },
     "faq": {
       "title": "Preguntas Frecuentes",
       "subtitle": "Todo lo que necesitas saber sobre El Vestuario",
