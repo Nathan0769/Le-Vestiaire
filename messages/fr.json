@@ -923,6 +923,11 @@
         "description": "Connectez-vous avec d'autres collectionneurs, partagez vos trouvailles et découvrez les collections de vos amis."
       }
     },
+    "stats": {
+      "collectors": "Collectionneurs",
+      "jerseys": "Maillots répertoriés",
+      "clubs": "Clubs"
+    },
     "faq": {
       "title": "Questions fréquentes",
       "subtitle": "Tout ce que vous devez savoir sur Le Vestiaire",

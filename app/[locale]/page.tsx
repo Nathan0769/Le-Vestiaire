@@ -13,6 +13,7 @@ import type {
 } from "@/types/home";
 import { FAQSection } from "@/components/home/faq-section";
 import { FeaturesSection } from "@/components/home/features-section";
+import { StatsSection } from "@/components/home/stats-section";
 
 export const revalidate = 3600;
 
@@ -292,22 +293,41 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
   };
 }
 
+async function getGlobalStats(): Promise<{
+  userCount: number;
+  jerseyCount: number;
+  clubCount: number;
+}> {
+  const [userCount, jerseyCount, clubCount] = await Promise.all([
+    prisma.user.count(),
+    prisma.jersey.count(),
+    prisma.club.count(),
+  ]);
+  return { userCount, jerseyCount, clubCount };
+}
+
 async function getHomeData(userId?: string): Promise<{
   topRatedJerseys: TopRatedJersey[];
   recentJerseys: RecentJersey[];
   userStats: UserHomeStats | null;
+  globalStats: { userCount: number; jerseyCount: number; clubCount: number };
 }> {
   try {
-    const [topRes, recentRes, userRes] = await Promise.allSettled([
+    const [topRes, recentRes, userRes, statsRes] = await Promise.allSettled([
       getTopRatedJerseys(),
       getRecentJerseys(),
       userId ? getUserStats(userId) : Promise.resolve(null),
+      getGlobalStats(),
     ]);
 
     const topRatedJerseys = topRes.status === "fulfilled" ? topRes.value : [];
     const recentJerseys =
       recentRes.status === "fulfilled" ? recentRes.value : [];
     const userStats = userRes.status === "fulfilled" ? userRes.value : null;
+    const globalStats =
+      statsRes.status === "fulfilled"
+        ? statsRes.value
+        : { userCount: 0, jerseyCount: 0, clubCount: 0 };
 
     if (topRes.status === "rejected") {
       console.error("❌ getTopRatedJerseys failed:", topRes.reason);
@@ -318,21 +338,28 @@ async function getHomeData(userId?: string): Promise<{
     if (userRes.status === "rejected") {
       console.error("❌ getUserStats failed:", userRes.reason);
     }
+    if (statsRes.status === "rejected") {
+      console.error("❌ getGlobalStats failed:", statsRes.reason);
+    }
 
-    return { topRatedJerseys, recentJerseys, userStats };
+    return { topRatedJerseys, recentJerseys, userStats, globalStats };
   } catch (error) {
     console.error("❌ Home data error:", error);
 
-    return { topRatedJerseys: [], recentJerseys: [], userStats: null };
+    return {
+      topRatedJerseys: [],
+      recentJerseys: [],
+      userStats: null,
+      globalStats: { userCount: 0, jerseyCount: 0, clubCount: 0 },
+    };
   }
 }
 
 export default async function HomePage() {
   const user = await getCurrentUser();
 
-  const { topRatedJerseys, recentJerseys, userStats } = await getHomeData(
-    user?.id
-  );
+  const { topRatedJerseys, recentJerseys, userStats, globalStats } =
+    await getHomeData(user?.id);
 
   return (
     <div className="min-h-screen">
@@ -352,6 +379,11 @@ export default async function HomePage() {
       <TopRatedSection jerseys={topRatedJerseys} />
       <RecentSection jerseys={recentJerseys} />
 
+      <StatsSection
+        userCount={globalStats.userCount}
+        jerseyCount={globalStats.jerseyCount}
+        clubCount={globalStats.clubCount}
+      />
       <FeaturesSection />
       <FAQSection />
     </div>
