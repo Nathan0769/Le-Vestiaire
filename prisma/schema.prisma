@@ -50,6 +50,7 @@ model User {
   // Relations auth
   sessions        Session[]
   accounts        Account[]
+  pushTokens      PushToken[]
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
@@ -398,4 +399,17 @@ enum PlayerPosition {
   DEFENDER
   MIDFIELDER
   FORWARD
+}
+
+model PushToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  platform  String   // "ios" | "android"
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("push_tokens")
 }
