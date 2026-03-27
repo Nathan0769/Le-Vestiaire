@@ -1,6 +1,6 @@
 import { betterAuth } from "better-auth";
 import { prismaAdapter } from "@better-auth/prisma-adapter";
-import { admin as adminPlugin, lastLoginMethod } from "better-auth/plugins";
+import { admin as adminPlugin, lastLoginMethod, bearer } from "better-auth/plugins";
 import prisma from "./prisma";
 
 export const auth = betterAuth({
@@ -27,6 +27,8 @@ export const auth = betterAuth({
       storeInDatabase: true,
       maxAge: 2592000, // 30 jours
     }),
+    // Permet aux clients mobiles d'utiliser Authorization: Bearer <token>
+    bearer(),
   ],
   secret: process.env.BETTER_AUTH_SECRET!,
   url: process.env.BETTER_AUTH_URL!,
