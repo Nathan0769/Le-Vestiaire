@@ -1,4 +1,5 @@
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 import { cookies, headers } from "next/headers";
 
 /**
@@ -17,13 +18,15 @@ export async function getCurrentUser() {
     const authorizationHeader = requestHeaders.get("Authorization");
 
     // Priorité au Bearer token (client mobile)
+    // Lookup direct Prisma — le bearer() plugin de Better Auth a un bug HMAC en prod
     if (authorizationHeader?.startsWith("Bearer ")) {
-      const session = await auth.api.getSession({
-        headers: new Headers({
-          Authorization: authorizationHeader,
-        }),
+      const rawToken = authorizationHeader.slice(7).trim();
+      const session = await prisma.session.findUnique({
+        where: { token: rawToken },
+        include: { user: true },
       });
-      return session?.user ?? null;
+      if (!session || session.expiresAt < new Date()) return null;
+      return session.user;
     }
 
     // Fallback : cookies (client web)
