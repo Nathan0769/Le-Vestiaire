@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
           totalRatings,
         };
       })
-      .filter((jersey) => jersey.totalRatings >= 1)
+      .filter((jersey) => jersey.totalRatings > 3)
       .sort((a, b) => b.averageRating - a.averageRating)
       .slice(0, limit);
 
