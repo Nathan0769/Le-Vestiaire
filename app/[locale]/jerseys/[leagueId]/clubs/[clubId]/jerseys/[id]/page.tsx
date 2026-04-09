@@ -18,6 +18,8 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 import { EditableBrand } from "@/components/jerseys/editable-brand";
 import { getCurrentUser } from "@/lib/get-current-user";
+import prisma from "@/lib/prisma";
+import { JerseyNavigator } from "@/components/jerseys/jersey-navigator";
 
 interface JerseyPageProps {
   params: Promise<{
@@ -184,6 +186,33 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   const ratingData = ratingRes && ratingRes.ok ? await ratingRes.json() : null;
   const statsData = statsRes && statsRes.ok ? await statsRes.json() : null;
 
+  const typeOrder: Record<string, number> = {
+    HOME: 1,
+    AWAY: 2,
+    THIRD: 3,
+    FOURTH: 4,
+    SPECIAL: 5,
+    GOALKEEPER: 20,
+  };
+
+  const clubJerseys = await prisma.jersey.findMany({
+    where: { clubId: jersey.clubId },
+    select: { id: true, slug: true, season: true, type: true, imageUrl: true },
+    orderBy: { season: "desc" },
+  });
+
+  const sortedJerseys = [...clubJerseys].sort((a, b) => {
+    if (b.season !== a.season) return b.season.localeCompare(a.season);
+    return (typeOrder[a.type] ?? 99) - (typeOrder[b.type] ?? 99);
+  });
+
+  const currentIndex = sortedJerseys.findIndex((j) => j.id === jersey.id);
+  const prevJersey = currentIndex > 0 ? sortedJerseys[currentIndex - 1] : null;
+  const nextJersey =
+    currentIndex < sortedJerseys.length - 1
+      ? sortedJerseys[currentIndex + 1]
+      : null;
+
   const locale = await getLocale();
   const tJerseyType = await getTranslations("JerseyType");
   const t = await getTranslations("Jerseys");
@@ -239,6 +268,13 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
           jerseyName={translatedJerseyName}
         />
 
+        <JerseyNavigator
+          prevJersey={prevJersey}
+          nextJersey={nextJersey}
+          currentName={translatedJerseyName}
+          leagueId={leagueId}
+          clubId={clubId}
+        >
         <main className="flex flex-col lg:flex-row gap-8 p-4 sm:p-6 max-w-6xl mx-auto overflow-x-hidden">
           <div className="w-full lg:w-1/2 min-w-0">
             <Image
@@ -362,6 +398,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
             season={jersey.season}
           />
         </div>
+        </JerseyNavigator>
       </div>
     </>
   );
