@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { HeroSection } from "@/components/home/hero-section";
 import { UserStatsSection } from "@/components/home/user-stats-section";
@@ -16,6 +17,75 @@ import { FeaturesSection } from "@/components/home/features-section";
 import { StatsSection } from "@/components/home/stats-section";
 
 export const revalidate = 3600;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+
+  const localeMap: Record<string, string> = {
+    fr: "fr_FR",
+    en: "en_US",
+    es: "es_ES",
+  };
+
+  const titles: Record<string, string> = {
+    fr: "Le Vestiaire Foot - Gérez votre Collection de Maillots de Football",
+    en: "The Locker Room - Manage Your Football Jersey Collection",
+    es: "El Vestuario - Gestiona tu Colección de Camisetas de Fútbol",
+  };
+
+  const descriptions: Record<string, string> = {
+    fr: "Rejoignez des milliers de collectionneurs : cataloguez vos maillots de football, créez une wishlist partageable, notez les maillots de votre club et découvrez les pièces les mieux notées par la communauté.",
+    en: "Join thousands of collectors: catalog your football jerseys, create a shareable wishlist, rate jerseys from your club, and discover the community's top-rated pieces.",
+    es: "Únete a miles de coleccionistas: cataloga tus camisetas de fútbol, crea una lista de deseos para compartir, puntúa camisetas de tu club y descubre las mejor valoradas por la comunidad.",
+  };
+
+  const keywords: Record<string, string> = {
+    fr: "collection maillots football, application maillots foot, cataloguer maillots foot, wishlist maillots football, noter maillots football, collectionneurs maillots, maillots vintage football, le vestiaire foot, gérer collection foot",
+    en: "football jersey collection, jersey collection app, football shirt wishlist, rate football jerseys, jersey collectors, vintage football shirts, manage jersey collection",
+    es: "colección camisetas fútbol, app camisetas fútbol, wishlist camisetas fútbol, valorar camisetas fútbol, coleccionistas camisetas fútbol",
+  };
+
+  return {
+    title: titles[locale] || titles.fr,
+    description: descriptions[locale] || descriptions.fr,
+    keywords: keywords[locale] || keywords.fr,
+    applicationName: "Le Vestiaire Foot",
+    openGraph: {
+      title: titles[locale] || titles.fr,
+      description: descriptions[locale] || descriptions.fr,
+      url: `https://le-vestiaire-foot.fr/${locale}`,
+      siteName: "Le Vestiaire Foot",
+      images: [
+        {
+          url: "https://le-vestiaire-foot.fr/icon.png",
+          width: 1200,
+          height: 630,
+          alt: "Le Vestiaire Foot - Collection de maillots de football",
+        },
+      ],
+      locale: localeMap[locale] || "fr_FR",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: titles[locale] || titles.fr,
+      description: descriptions[locale] || descriptions.fr,
+      images: ["https://le-vestiaire-foot.fr/icon.png"],
+    },
+    alternates: {
+      canonical: `https://le-vestiaire-foot.fr/${locale}`,
+      languages: {
+        fr: "https://le-vestiaire-foot.fr/fr",
+        en: "https://le-vestiaire-foot.fr/en",
+        es: "https://le-vestiaire-foot.fr/es",
+      },
+    },
+  };
+}
 
 async function getTopRatedJerseys(): Promise<TopRatedJersey[]> {
   const rows = await prisma.$queryRaw<TopRatedRow[]>`
@@ -361,8 +431,74 @@ export default async function HomePage() {
   const { topRatedJerseys, recentJerseys, userStats, globalStats } =
     await getHomeData(user?.id);
 
+  const webAppSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    name: "Le Vestiaire Foot",
+    url: "https://le-vestiaire-foot.fr",
+    description:
+      "Application gratuite pour gérer et partager votre collection de maillots de football.",
+    applicationCategory: "SportsApplication",
+    operatingSystem: "Web",
+    browserRequirements: "Requires JavaScript",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "EUR",
+    },
+    featureList: [
+      "Gestion de collection de maillots",
+      "Wishlist partageable",
+      "Notation communautaire des maillots",
+      "Authentification maillots (supporter vs pro)",
+      "Leaderboard des collectionneurs",
+    ],
+  };
+
+  const itemListSchema =
+    topRatedJerseys.length > 0
+      ? {
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: "Maillots de football les mieux notés",
+          description:
+            "Les maillots de football les mieux notés par la communauté Le Vestiaire",
+          numberOfItems: topRatedJerseys.length,
+          itemListElement: topRatedJerseys.map((jersey, index) => ({
+            "@type": "ListItem",
+            position: index + 1,
+            name: `${jersey.name} - ${jersey.club.name} ${jersey.season}`,
+            url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.id}`,
+            item: {
+              "@type": "CreativeWork",
+              name: `${jersey.name} - ${jersey.club.name}`,
+              description: `Maillot ${jersey.club.name} saison ${jersey.season} par ${jersey.brand}`,
+              ...(jersey.imageUrl && { image: jersey.imageUrl }),
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: jersey.averageRating.toFixed(1),
+                reviewCount: jersey.totalRatings,
+                bestRating: "5",
+                worstRating: "0.5",
+              },
+            },
+          })),
+        }
+      : null;
+
   return (
-    <div className="min-h-screen">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+      />
+      {itemListSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }}
+        />
+      )}
+      <div className="min-h-screen">
       <HeroSection
         user={user}
         userStats={
@@ -387,5 +523,6 @@ export default async function HomePage() {
       <FeaturesSection />
       <FAQSection />
     </div>
+    </>
   );
 }
