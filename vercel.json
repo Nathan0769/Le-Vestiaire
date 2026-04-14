@@ -3,6 +3,15 @@
     "app/api/wishlist/generate-pdf/route.ts": {
       "maxDuration": 30,
       "memory": 1024
+    },
+    "app/api/cron/remind-empty-users/route.ts": {
+      "maxDuration": 60
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/cron/remind-empty-users",
+      "schedule": "0 9 * * 1"
+    }
+  ]
 }
