@@ -36,6 +36,7 @@ model User {
   favoriteClub    Club?        @relation(fields: [favoriteClubId], references: [id])
   leaderboardAnonymous Boolean @default(true) @map("leaderboard_anonymous")
   emailMarketing       Boolean @default(true) @map("email_marketing")
+  reminderStep         Int     @default(0)    @map("reminder_step")
   collection      UserJersey[]
   wishlist        Wishlist[]
   ratings         Rating[]

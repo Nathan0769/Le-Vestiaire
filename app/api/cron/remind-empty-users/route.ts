@@ -13,39 +13,40 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
-  const sevenDaysAgo = new Date();
-  sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+  const now = new Date();
 
-  const fourteenDaysAgo = new Date();
-  fourteenDaysAgo.setDate(fourteenDaysAgo.getDate() - 14);
+  const daysAgo = (days: number) => {
+    const d = new Date(now);
+    d.setDate(d.getDate() - days);
+    return d;
+  };
 
-  // Users inscrits entre 7 et 14 jours, sans maillot, avec emailMarketing activé
-  const users = await prisma.user.findMany({
+  // Rappel 1 : inscrit depuis 7-14 jours, reminderStep = 0
+  const firstReminderUsers = await prisma.user.findMany({
     where: {
       emailMarketing: true,
-      createdAt: {
-        gte: fourteenDaysAgo,
-        lte: sevenDaysAgo,
-      },
-      collection: {
-        none: {},
-      },
+      reminderStep: 0,
+      createdAt: { gte: daysAgo(14), lte: daysAgo(7) },
+      collection: { none: {} },
     },
-    select: {
-      id: true,
-      email: true,
-      name: true,
-    },
+    select: { id: true, email: true, name: true },
   });
 
-  if (users.length === 0) {
-    return NextResponse.json({ sent: 0, message: "Aucun utilisateur à relancer" });
-  }
+  // Rappel 2 : inscrit depuis 30-37 jours, reminderStep = 1
+  const secondReminderUsers = await prisma.user.findMany({
+    where: {
+      emailMarketing: true,
+      reminderStep: 1,
+      createdAt: { gte: daysAgo(37), lte: daysAgo(30) },
+      collection: { none: {} },
+    },
+    select: { id: true, email: true, name: true },
+  });
 
   let sent = 0;
   let failed = 0;
 
-  for (const user of users) {
+  const sendReminder = async (user: { id: string; email: string; name: string }, step: number) => {
     try {
       const unsubscribeUrl = buildUnsubscribeUrl(user.id);
       const html = await render(
@@ -63,12 +64,33 @@ export async function GET(request: Request) {
         html,
       });
 
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { reminderStep: step },
+      });
+
       sent++;
     } catch (error) {
       console.error(`Erreur envoi email pour ${user.id}:`, error);
       failed++;
     }
+  };
+
+  for (const user of firstReminderUsers) {
+    await sendReminder(user, 1);
   }
 
-  return NextResponse.json({ sent, failed, total: users.length });
+  for (const user of secondReminderUsers) {
+    await sendReminder(user, 2);
+  }
+
+  return NextResponse.json({
+    sent,
+    failed,
+    total: firstReminderUsers.length + secondReminderUsers.length,
+    breakdown: {
+      firstReminder: firstReminderUsers.length,
+      secondReminder: secondReminderUsers.length,
+    },
+  });
 }
