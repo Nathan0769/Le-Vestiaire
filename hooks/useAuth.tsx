@@ -64,7 +64,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const { error } = await authClient.signIn.email({ email, password });
       if (error) throw new Error(error.message);
-      router.push("/");
+      router.push("/auth/onboarding");
     } catch (error) {
       setLoading(false);
       throw error;
@@ -76,7 +76,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const { error, data } = await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/",
+        callbackURL: "/auth/onboarding",
         errorCallbackURL: "/auth/login",
       });
 
@@ -127,7 +127,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      router.push("/");
+      router.push("/auth/onboarding");
     } catch (error) {
       setLoading(false);
       throw error;

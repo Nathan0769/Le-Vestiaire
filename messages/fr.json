@@ -359,6 +359,15 @@
       "reload": "Recharger la page"
     }
   },
+  "Onboarding": {
+    "title": "Bienvenue sur Le Vestiaire",
+    "subtitle": "Choisissez votre équipe de cœur pour personnaliser votre expérience",
+    "placeholder": "Rechercher une équipe...",
+    "cta": "Continuer",
+    "skip": "Passer cette étape",
+    "bannerText": "Choisissez votre équipe favorite pour apparaître dans le classement et chez vos amis",
+    "bannerCta": "Choisir mon équipe"
+  },
   "CollectionStats": {
     "title": "Statistiques de Collection",
     "errorTitle": "Erreur de chargement",

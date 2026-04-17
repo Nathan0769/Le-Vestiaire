@@ -359,6 +359,15 @@
       "reload": "Reload page"
     }
   },
+  "Onboarding": {
+    "title": "Welcome to Le Vestiaire",
+    "subtitle": "Choose your favourite team to personalise your experience",
+    "placeholder": "Search for a team...",
+    "cta": "Continue",
+    "skip": "Skip this step",
+    "bannerText": "Choose your favourite team to appear in the leaderboard and with your friends",
+    "bannerCta": "Choose my team"
+  },
   "CollectionStats": {
     "title": "Collection Statistics",
     "errorTitle": "Loading error",
