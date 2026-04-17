@@ -10,6 +10,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "sonner";
 import { CookieConsent } from "@/components/ui/cookie-consent";
 import { AnalyticsWrapper } from "@/components/analytics-wrapper";
+import { FavoriteClubBanner } from "@/components/home/favorite-club-banner";
 
 export default function ClientWrapper({
   children,
@@ -32,6 +33,7 @@ export default function ClientWrapper({
             <AppSidebar />
             <main className="flex-1 min-w-0 overflow-x-hidden">
               <SidebarTrigger />
+              <FavoriteClubBanner />
               {children}
               <AnalyticsWrapper />
             </main>

@@ -359,6 +359,15 @@
       "reload": "Recargar página"
     }
   },
+  "Onboarding": {
+    "title": "Bienvenido a Le Vestiaire",
+    "subtitle": "Elige tu equipo favorito para personalizar tu experiencia",
+    "placeholder": "Buscar un equipo...",
+    "cta": "Continuar",
+    "skip": "Omitir este paso",
+    "bannerText": "Elige tu equipo favorito para aparecer en el clasificador y con tus amigos",
+    "bannerCta": "Elegir mi equipo"
+  },
   "CollectionStats": {
     "title": "Estadísticas de Colección",
     "errorTitle": "Error de carga",
