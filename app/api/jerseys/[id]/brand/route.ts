@@ -29,10 +29,12 @@ export async function PATCH(
       );
     }
 
-    const identifier = await getRateLimitIdentifier(user.id);
-    const rateLimitResult = await checkRateLimit(moderateRateLimit, identifier);
-    if (!rateLimitResult.success) {
-      return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
+    if (user.role !== "superadmin") {
+      const identifier = await getRateLimitIdentifier(user.id);
+      const rateLimitResult = await checkRateLimit(moderateRateLimit, identifier);
+      if (!rateLimitResult.success) {
+        return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
+      }
     }
 
     // 4. Input Validation
