@@ -21,7 +21,7 @@ export function JerseySchema({
 
   const schema = {
     "@context": "https://schema.org",
-    "@type": "CreativeWork",
+    "@type": "Product",
     name: `${displayName} - ${jersey.club.name}`,
     description: `Maillot ${jersey.type.toLowerCase()} du ${
       jersey.club.name

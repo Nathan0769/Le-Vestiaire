@@ -470,7 +470,7 @@ export default async function HomePage() {
             name: `${jersey.name} - ${jersey.club.name} ${jersey.season}`,
             url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.id}`,
             item: {
-              "@type": "CreativeWork",
+              "@type": "Product",
               name: `${jersey.name} - ${jersey.club.name}`,
               description: `Maillot ${jersey.club.name} saison ${jersey.season} par ${jersey.brand}`,
               ...(jersey.imageUrl && { image: jersey.imageUrl }),
