@@ -5,6 +5,7 @@ type Props = {
   jerseys: (SimpleJersey & { slug?: string | null })[];
   primaryColor: string;
   club: ClubWithLeague;
+  isAdmin?: boolean;
 };
 
 const typeOrder: Record<string, number> = {
@@ -30,7 +31,7 @@ const typeOrder: Record<string, number> = {
   GOALKEEPER: 20,
 };
 
-export function JerseysBySeason({ jerseys, primaryColor, club }: Props) {
+export function JerseysBySeason({ jerseys, primaryColor, club, isAdmin }: Props) {
   const grouped = jerseys.reduce<Record<string, SimpleJersey[]>>(
     (acc, jersey) => {
       if (!acc[jersey.season]) acc[jersey.season] = [];
@@ -68,6 +69,7 @@ export function JerseysBySeason({ jerseys, primaryColor, club }: Props) {
                   jersey={jersey}
                   leagueId={club.league.id}
                   club={club}
+                  isAdmin={isAdmin}
                 />
               ))}
             </div>

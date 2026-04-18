@@ -1,4 +1,4 @@
-import { JerseysBySeason } from "@/components/jerseys/jerseys/jerseys-by-season";
+import { ClubDetailClient } from "@/components/jerseys/clubs/club-detail-client";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import {
   Breadcrumb,
@@ -8,7 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import prisma from "@/lib/prisma";
-import Image from "next/image";
+import { getCurrentUser } from "@/lib/get-current-user";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
@@ -82,28 +82,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ClubDetailPage(props: Props) {
   const { clubId } = await props.params;
 
-  const club = await prisma.club.findUnique({
-    where: { id: clubId },
-    include: {
-      league: true,
-      jerseys: {
-        orderBy: {
-          season: "desc",
-        },
-        select: {
-          id: true,
-          name: true,
-          imageUrl: true,
-          type: true,
-          season: true,
-          brand: true,
-          clubId: true,
-          description: true,
-          slug: true,
+  const [user, club] = await Promise.all([
+    getCurrentUser(),
+    prisma.club.findUnique({
+      where: { id: clubId },
+      include: {
+        league: true,
+        jerseys: {
+          orderBy: { season: "desc" },
+          select: {
+            id: true,
+            name: true,
+            imageUrl: true,
+            type: true,
+            season: true,
+            brand: true,
+            clubId: true,
+            description: true,
+            slug: true,
+          },
         },
       },
-    },
-  });
+    }),
+  ]);
 
   const t = await getTranslations("Jerseys");
 
@@ -142,22 +143,11 @@ export default async function ClubDetailPage(props: Props) {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="flex items-center gap-4">
-        <div className="relative w-12 h-12 sm:w-16 sm:h-16">
-          <Image
-            src={club.logoUrl}
-            alt={`Logo ${club.name}`}
-            fill
-            className="object-contain"
-          />
-        </div>
-        <h1 className="text-2xl font-semibold">{club.name}</h1>
-      </div>
-
-      <JerseysBySeason
+      <ClubDetailClient
         jerseys={club.jerseys}
         primaryColor={club.primaryColor}
         club={club}
+        isAdmin={user?.role === "superadmin"}
       />
     </div>
   );
