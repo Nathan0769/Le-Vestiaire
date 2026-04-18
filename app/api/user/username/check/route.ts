@@ -1,7 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { usernameExists, validateUsername } from "@/lib/username-generator";
+import {
+  standardRateLimit,
+  getRateLimitIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit";
 
 export async function GET(request: NextRequest) {
+  // Rate limiting par IP (endpoint public)
+  const identifier = await getRateLimitIdentifier();
+  const rateLimitResult = await checkRateLimit(standardRateLimit, identifier);
+  if (!rateLimitResult.success) {
+    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
+  }
+
   const { searchParams } = new URL(request.url);
   const username = searchParams.get("username");
 

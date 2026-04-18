@@ -360,8 +360,14 @@
     }
   },
   "Onboarding": {
-    "title": "Welcome to Le Vestiaire",
-    "subtitle": "Choose your favourite team to personalise your experience",
+    "step1Title": "Choose your username",
+    "step1Subtitle": "This is the name other collectors will see",
+    "step2Title": "Your favourite team",
+    "step2Subtitle": "It will appear on the leaderboard and your profile",
+    "usernamePlaceholder": "Your username...",
+    "usernameRules": "5 to 20 characters, letters, numbers, - and _",
+    "usernameAvailable": "Username available",
+    "usernameUnavailable": "Username already taken",
     "placeholder": "Search for a team...",
     "cta": "Continue",
     "skip": "Skip this step",

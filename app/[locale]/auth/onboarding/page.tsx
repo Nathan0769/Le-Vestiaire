@@ -18,7 +18,7 @@ export default async function OnboardingPage() {
 
   const userProfile = await prisma.user.findUnique({
     where: { id: user.id },
-    select: { favoriteClubId: true },
+    select: { favoriteClubId: true, username: true },
   });
 
   // Si l'équipe favorite est déjà définie, pas besoin de passer par l'onboarding
@@ -26,5 +26,5 @@ export default async function OnboardingPage() {
     redirect("/");
   }
 
-  return <OnboardingFavoriteClub />;
+  return <OnboardingFavoriteClub initialUsername={userProfile?.username ?? ""} />;
 }

@@ -360,8 +360,14 @@
     }
   },
   "Onboarding": {
-    "title": "Bienvenido a Le Vestiaire",
-    "subtitle": "Elige tu equipo favorito para personalizar tu experiencia",
+    "step1Title": "Elige tu nombre de usuario",
+    "step1Subtitle": "Es el nombre que verán los demás coleccionistas",
+    "step2Title": "Tu equipo favorito",
+    "step2Subtitle": "Aparecerá en el clasificador y en tu perfil",
+    "usernamePlaceholder": "Tu nombre de usuario...",
+    "usernameRules": "Entre 5 y 20 caracteres, letras, números, - y _",
+    "usernameAvailable": "Nombre disponible",
+    "usernameUnavailable": "Nombre ya en uso",
     "placeholder": "Buscar un equipo...",
     "cta": "Continuar",
     "skip": "Omitir este paso",

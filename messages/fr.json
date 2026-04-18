@@ -360,8 +360,14 @@
     }
   },
   "Onboarding": {
-    "title": "Bienvenue sur Le Vestiaire",
-    "subtitle": "Choisissez votre équipe de cœur pour personnaliser votre expérience",
+    "step1Title": "Choisis ton pseudo",
+    "step1Subtitle": "C'est le nom que verront les autres collectionneurs",
+    "step2Title": "Ton équipe de cœur",
+    "step2Subtitle": "Elle apparaîtra dans le classement et sur ton profil",
+    "usernamePlaceholder": "Ton pseudo...",
+    "usernameRules": "5 à 20 caractères, lettres, chiffres, - et _",
+    "usernameAvailable": "Pseudo disponible",
+    "usernameUnavailable": "Pseudo déjà pris",
     "placeholder": "Rechercher une équipe...",
     "cta": "Continuer",
     "skip": "Passer cette étape",
