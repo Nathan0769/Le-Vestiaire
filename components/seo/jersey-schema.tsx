@@ -33,8 +33,11 @@ export function JerseySchema({
     image: {
       "@type": "ImageObject",
       url: jersey.imageUrl,
+      contentUrl: jersey.imageUrl,
       width: 800,
       height: 800,
+      name: displayName,
+      description: `Maillot ${jersey.type.toLowerCase()} ${jersey.club.name} ${jersey.season} ${jersey.brand}`,
     },
     creator: {
       "@type": "Brand",
