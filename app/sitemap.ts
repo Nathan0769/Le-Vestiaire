@@ -105,6 +105,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const jerseys = await prisma.jersey.findMany({
       select: {
         slug: true,
+        imageUrl: true,
         updatedAt: true,
         club: {
           select: {
@@ -129,6 +130,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       lastModified: jersey.updatedAt,
       changeFrequency: "monthly",
       priority: 0.6,
+      images: [jersey.imageUrl],
     }));
 
     console.log(
