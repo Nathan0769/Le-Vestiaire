@@ -70,6 +70,7 @@ export function EmailSettings({ isGoogleOnly }: EmailSettingsProps) {
               <Input
                 id="new-email"
                 type="email"
+                required
                 value={newEmail}
                 onChange={(e) => setNewEmail(e.target.value)}
                 placeholder={t("emailPlaceholder")}

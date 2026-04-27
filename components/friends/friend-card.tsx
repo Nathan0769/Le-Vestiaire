@@ -87,6 +87,7 @@ export function FriendCard({ friend, onRemove, onBlock }: FriendCardProps) {
               <Button
                 variant="ghost"
                 size="icon"
+                aria-label="Options"
                 className="h-8 w-8 cursor-pointer"
               >
                 <MoreVertical className="h-4 w-4" />

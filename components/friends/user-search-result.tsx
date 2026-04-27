@@ -100,6 +100,7 @@ export function UserSearchResult({
                 onClick={() => onBlock(user.id)}
                 variant="ghost"
                 size="icon"
+                aria-label={`Bloquer ${user.username}`}
                 className="h-8 w-8 cursor-pointer"
               >
                 <Ban className="w-4 h-4" />

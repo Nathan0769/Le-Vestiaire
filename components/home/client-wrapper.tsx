@@ -30,8 +30,14 @@ export default function ClientWrapper({
       <QueryProvider>
         <AuthProvider>
           <SidebarProvider defaultOpen={defaultOpen}>
+            <a
+              href="#main-content"
+              className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-2 focus:left-2 focus:px-4 focus:py-2 focus:rounded focus:bg-background focus:text-foreground focus:shadow-md"
+            >
+              Aller au contenu principal
+            </a>
             <AppSidebar />
-            <main className="flex-1 min-w-0 overflow-x-hidden">
+            <main id="main-content" className="flex-1 min-w-0 overflow-x-hidden">
               <SidebarTrigger />
               <FavoriteClubBanner />
               {children}

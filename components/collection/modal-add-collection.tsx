@@ -337,6 +337,7 @@ export function AddToCollectionModal({
                     type="button"
                     variant="destructive"
                     size="icon"
+                    aria-label="Supprimer la photo"
                     className="absolute top-2 right-2 h-8 w-8"
                     onClick={handleRemovePhoto}
                   >

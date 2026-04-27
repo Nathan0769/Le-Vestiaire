@@ -85,6 +85,7 @@ export function PasswordSettings({ isGoogleOnly }: PasswordSettingsProps) {
               <Input
                 id="current-password"
                 type="password"
+                required
                 value={passwordData.currentPassword}
                 onChange={(e) =>
                   setPasswordData((prev) => ({
@@ -101,6 +102,7 @@ export function PasswordSettings({ isGoogleOnly }: PasswordSettingsProps) {
                 <Input
                   id="new-password"
                   type="password"
+                  required
                   value={passwordData.newPassword}
                   onChange={(e) =>
                     setPasswordData((prev) => ({
@@ -118,6 +120,7 @@ export function PasswordSettings({ isGoogleOnly }: PasswordSettingsProps) {
                 <Input
                   id="confirm-password"
                   type="password"
+                  required
                   value={passwordData.confirmPassword}
                   onChange={(e) =>
                     setPasswordData((prev) => ({
