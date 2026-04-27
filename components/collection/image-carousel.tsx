@@ -70,6 +70,7 @@ export function ImageCarousel({ images, className }: ImageCarouselProps) {
             <Button
               variant="secondary"
               size="icon"
+              aria-label="Image précédente"
               className="absolute left-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 cursor-pointer hidden md:flex"
               onClick={goToPrevious}
             >
@@ -79,6 +80,7 @@ export function ImageCarousel({ images, className }: ImageCarouselProps) {
             <Button
               variant="secondary"
               size="icon"
+              aria-label="Image suivante"
               className="absolute right-2 top-1/2 -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8 cursor-pointer hidden md:flex"
               onClick={goToNext}
             >

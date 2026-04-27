@@ -14,7 +14,7 @@ export function BackButton({ href }: BackButtonProps) {
 
   if (href) {
     return (
-      <Button variant="ghost" size="icon" asChild>
+      <Button variant="ghost" size="icon" aria-label="Retour" asChild>
         <Link href={href}>
           <ArrowLeft className="w-5 h-5" />
         </Link>
@@ -23,7 +23,7 @@ export function BackButton({ href }: BackButtonProps) {
   }
 
   return (
-    <Button variant="ghost" size="icon" onClick={() => router.back()}>
+    <Button variant="ghost" size="icon" aria-label="Retour" onClick={() => router.back()}>
       <ArrowLeft className="w-5 h-5" />
     </Button>
   );

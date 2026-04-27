@@ -65,7 +65,7 @@ export function LoginForm({
         </CardHeader>
         <CardContent>
           {errorMsg && (
-            <div className="mb-4 text-sm text-red-600">{errorMsg}</div>
+            <div role="alert" className="mb-4 text-sm text-red-600">{errorMsg}</div>
           )}
           <form onSubmit={handleSubmit}>
             <div className="grid gap-6">

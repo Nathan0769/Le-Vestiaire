@@ -172,6 +172,7 @@ export function UsernameInput({
             className="cursor-pointer"
             variant="outline"
             size="icon"
+            aria-label="Modifier le pseudo"
             onClick={handleEdit}
           >
             <Pencil className="w-4 h-4" />
@@ -183,6 +184,7 @@ export function UsernameInput({
               variant="outline"
               className="cursor-pointer"
               size="icon"
+              aria-label="Annuler"
               onClick={handleCancel}
             >
               <X className="w-4 h-4" />
@@ -192,6 +194,7 @@ export function UsernameInput({
               variant="default"
               className="cursor-pointer"
               size="icon"
+              aria-label="Confirmer"
               onClick={handleConfirm}
               disabled={
                 !availability?.available &&

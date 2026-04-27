@@ -141,9 +141,12 @@ export default function SignupPage({
                       id={f}
                       value={formData[f]}
                       onChange={(e) => handleChange(f, e.currentTarget.value)}
+                      required
+                      aria-invalid={!!fieldErrors[f]}
+                      aria-describedby={fieldErrors[f] ? `${f}-error` : undefined}
                     />
                     {fieldErrors[f] && (
-                      <p className="text-xs text-red-600">{fieldErrors[f]}</p>
+                      <p id={`${f}-error`} role="alert" className="text-xs text-red-600">{fieldErrors[f]}</p>
                     )}
                   </div>
                 ))}
@@ -159,9 +162,11 @@ export default function SignupPage({
                   value={formData.email}
                   onChange={(e) => handleChange("email", e.currentTarget.value)}
                   required
+                  aria-invalid={!!fieldErrors.email}
+                  aria-describedby={fieldErrors.email ? "email-error" : undefined}
                 />
                 {fieldErrors.email && (
-                  <p className="text-xs text-red-600">{fieldErrors.email}</p>
+                  <p id="email-error" role="alert" className="text-xs text-red-600">{fieldErrors.email}</p>
                 )}
               </div>
 
@@ -180,9 +185,11 @@ export default function SignupPage({
                     }
                     required
                     aria-invalid={!!fieldErrors.password}
+                    aria-describedby={fieldErrors.password ? "password-error" : undefined}
                   />
                   <button
                     type="button"
+                    aria-label={showPassword ? "Masquer le mot de passe" : "Afficher le mot de passe"}
                     className="absolute right-3 top-1/2 -translate-y-1/2"
                     onClick={() => setShowPassword((v) => !v)}
                   >
@@ -194,7 +201,7 @@ export default function SignupPage({
                   </button>
                 </div>
                 {fieldErrors.password && (
-                  <p className="text-xs text-red-600">{fieldErrors.password}</p>
+                  <p id="password-error" role="alert" className="text-xs text-red-600">{fieldErrors.password}</p>
                 )}
               </div>
 
@@ -213,9 +220,11 @@ export default function SignupPage({
                     }
                     required
                     aria-invalid={!!fieldErrors.confirmPassword}
+                    aria-describedby={fieldErrors.confirmPassword ? "confirmPassword-error" : undefined}
                   />
                   <button
                     type="button"
+                    aria-label={showConfirm ? "Masquer la confirmation du mot de passe" : "Afficher la confirmation du mot de passe"}
                     className="absolute right-3 top-1/2 -translate-y-1/2"
                     onClick={() => setShowConfirm((v) => !v)}
                   >
@@ -227,7 +236,7 @@ export default function SignupPage({
                   </button>
                 </div>
                 {fieldErrors.confirmPassword && (
-                  <p className="text-xs text-red-600">
+                  <p id="confirmPassword-error" role="alert" className="text-xs text-red-600">
                     {fieldErrors.confirmPassword}
                   </p>
                 )}

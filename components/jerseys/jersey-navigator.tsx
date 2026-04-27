@@ -81,7 +81,7 @@ export function JerseyNavigator({
             >
               <ChevronLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
               <div className="relative w-7 h-7 rounded bg-white overflow-hidden border border-border/50">
-                <Image src={prevJersey.imageUrl} alt="" fill className="object-contain" sizes="28px" />
+                <Image src={prevJersey.imageUrl} alt={`${tType(prevJersey.type as Parameters<typeof tType>[0])} ${prevJersey.season}`} fill className="object-contain" sizes="28px" />
               </div>
               <span className="text-xs hidden md:inline">
                 {tType(prevJersey.type as Parameters<typeof tType>[0])}{" "}
@@ -106,7 +106,7 @@ export function JerseyNavigator({
                 <span className="opacity-60">{nextJersey.season}</span>
               </span>
               <div className="relative w-7 h-7 rounded bg-white overflow-hidden border border-border/50">
-                <Image src={nextJersey.imageUrl} alt="" fill className="object-contain" sizes="28px" />
+                <Image src={nextJersey.imageUrl} alt={`${tType(nextJersey.type as Parameters<typeof tType>[0])} ${nextJersey.season}`} fill className="object-contain" sizes="28px" />
               </div>
               <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
