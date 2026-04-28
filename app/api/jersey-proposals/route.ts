@@ -90,6 +90,15 @@ export async function POST(req: Request) {
       );
     }
 
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const allowedImagePrefix = `${supabaseUrl}/storage/v1/object/public/jersey-proposals/`;
+    if (!supabaseUrl || !imageUrl.startsWith(allowedImagePrefix)) {
+      return NextResponse.json(
+        { error: "URL d'image invalide" },
+        { status: 400 }
+      );
+    }
+
     if (!Object.values(JerseyType).includes(type)) {
       return NextResponse.json(
         { error: "Type de maillot invalide" },

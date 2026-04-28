@@ -71,6 +71,16 @@ export async function POST(request: NextRequest) {
 
       const page = await browser.newPage();
 
+      await page.setRequestInterception(true);
+      page.on("request", (req) => {
+        const type = req.resourceType();
+        if (type === "fetch" || type === "xhr" || type === "websocket") {
+          req.abort();
+        } else {
+          req.continue();
+        }
+      });
+
       await page.setViewport({
         width: 1200,
         height: 1600,

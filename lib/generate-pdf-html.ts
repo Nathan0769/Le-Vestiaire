@@ -1,5 +1,14 @@
 import type { Theme } from "@/types/theme";
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 interface WishlistItem {
   id: string;
   name: string;
@@ -116,7 +125,7 @@ export async function generatePDFHTML(options: GeneratePDFHTMLOptions): Promise<
     <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>${title}</title>
+      <title>${escapeHtml(title)}</title>
       <script src="https://cdn.tailwindcss.com"></script>
       <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -193,14 +202,14 @@ export async function generatePDFHTML(options: GeneratePDFHTMLOptions): Promise<
           <!-- Title -->
           <div class="text-center space-y-2">
             <h1 class="text-2xl font-bold text-gray-800 leading-tight">
-              ${title}
+              ${escapeHtml(title)}
             </h1>
 
             ${
               message
                 ? `
               <div class="max-w-2xl mx-auto">
-                <p class="text-sm text-gray-600 leading-relaxed">${message}</p>
+                <p class="text-sm text-gray-600 leading-relaxed">${escapeHtml(message)}</p>
               </div>
             `
                 : ""
@@ -231,8 +240,8 @@ export async function generatePDFHTML(options: GeneratePDFHTMLOptions): Promise<
                   <div class="relative w-full" style="height: 180px;">
                     <div class="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl overflow-hidden w-full h-full flex items-center justify-center">
                       <img
-                        src="${jersey.imageUrl}"
-                        alt="${jersey.name}"
+                        src="${escapeHtml(jersey.imageUrl)}"
+                        alt="${escapeHtml(jersey.name)}"
                         class="max-w-full max-h-full object-contain"
                       />
                     </div>
@@ -242,9 +251,9 @@ export async function generatePDFHTML(options: GeneratePDFHTMLOptions): Promise<
                   <div class="space-y-2">
                     <div>
                       <h3 class="font-bold text-base text-gray-800 line-clamp-2">
-                        ${jersey.clubName}
+                        ${escapeHtml(jersey.clubName)}
                       </h3>
-                      <p class="text-xs text-gray-600">${jersey.name}</p>
+                      <p class="text-xs text-gray-600">${escapeHtml(jersey.name)}</p>
                     </div>
 
                     <div class="flex items-center gap-2 flex-wrap">
