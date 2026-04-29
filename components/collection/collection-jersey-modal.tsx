@@ -89,7 +89,8 @@ export function CollectionJerseyModal({
     size: (collectionItem.size || "M") as Size,
     condition: collectionItem.condition as Condition,
     hasTags: collectionItem.hasTags,
-    personalization: collectionItem.personalization || "",
+    playerName: collectionItem.playerName || "",
+    playerNumber: collectionItem.playerNumber ?? undefined,
     purchasePrice: collectionItem.purchasePrice || undefined,
     purchaseDate: collectionItem.purchaseDate || undefined,
     notes: collectionItem.notes || "",
@@ -103,7 +104,8 @@ export function CollectionJerseyModal({
       size: (collectionItem.size || "M") as Size,
       condition: collectionItem.condition as Condition,
       hasTags: collectionItem.hasTags,
-      personalization: collectionItem.personalization || "",
+      playerName: collectionItem.playerName || "",
+      playerNumber: collectionItem.playerNumber ?? undefined,
       purchasePrice: collectionItem.purchasePrice || undefined,
       purchaseDate: collectionItem.purchaseDate || undefined,
       notes: collectionItem.notes || "",
@@ -202,7 +204,8 @@ export function CollectionJerseyModal({
         size: Size;
         condition: Condition;
         hasTags: boolean;
-        personalization: string | null;
+        playerName: string | null;
+        playerNumber: number | null;
         purchasePrice: number | null;
         purchaseDate: Date | null;
         notes: string | null;
@@ -215,7 +218,8 @@ export function CollectionJerseyModal({
         size: dataToSave.size,
         condition: dataToSave.condition,
         hasTags: dataToSave.hasTags ?? false,
-        personalization: dataToSave.personalization || null,
+        playerName: dataToSave.playerName || null,
+        playerNumber: dataToSave.playerNumber ?? null,
         purchasePrice: dataToSave.purchasePrice || null,
         purchaseDate: dataToSave.purchaseDate || null,
         notes: dataToSave.notes || null,
@@ -621,21 +625,38 @@ export function CollectionJerseyModal({
                         />
                       </div>
 
-                      <div className="space-y-2">
-                        <Label htmlFor="personalization">
-                          {t("personalization")}
-                        </Label>
-                        <Input
-                          id="personalization"
-                          placeholder={t("personalizationPlaceholder")}
-                          value={formData.personalization || ""}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              personalization: e.target.value,
-                            })
-                          }
-                        />
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="space-y-2">
+                          <Label htmlFor="playerName">{t("playerName")}</Label>
+                          <Input
+                            id="playerName"
+                            placeholder={t("playerNamePlaceholder")}
+                            value={formData.playerName || ""}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                playerName: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
+                        <div className="space-y-2">
+                          <Label htmlFor="playerNumber">{t("playerNumber")}</Label>
+                          <Input
+                            id="playerNumber"
+                            type="number"
+                            min={1}
+                            max={999}
+                            placeholder={t("playerNumberPlaceholder")}
+                            value={formData.playerNumber ?? ""}
+                            onChange={(e) =>
+                              setFormData({
+                                ...formData,
+                                playerNumber: e.target.value ? parseInt(e.target.value, 10) : undefined,
+                              })
+                            }
+                          />
+                        </div>
                       </div>
 
                       <div className="flex items-center space-x-2">
@@ -727,51 +748,26 @@ export function CollectionJerseyModal({
                         </div>
                       )}
 
-                      {collectionItem.personalization && (
-                        <>
-                          {(() => {
-                            const parts =
-                              collectionItem.personalization!.split(" ");
-                            if (parts.length >= 2) {
-                              const number = parts[parts.length - 1];
-                              const playerName = parts.slice(0, -1).join(" ");
+                      {collectionItem.playerName && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">
+                            {t("player")}
+                          </span>
+                          <span className="font-medium">
+                            {collectionItem.playerName}
+                          </span>
+                        </div>
+                      )}
 
-                              if (/^\d+$/.test(number)) {
-                                return (
-                                  <>
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-muted-foreground">
-                                        {t("player")}
-                                      </span>
-                                      <span className="font-medium">
-                                        {playerName}
-                                      </span>
-                                    </div>
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-muted-foreground">
-                                        {t("number")}
-                                      </span>
-                                      <span className="font-medium">
-                                        {number}
-                                      </span>
-                                    </div>
-                                  </>
-                                );
-                              }
-                            }
-
-                            return (
-                              <div className="flex items-center justify-between">
-                                <span className="text-muted-foreground">
-                                  {t("personalization")}
-                                </span>
-                                <span className="font-medium">
-                                  {collectionItem.personalization}
-                                </span>
-                              </div>
-                            );
-                          })()}
-                        </>
+                      {collectionItem.playerNumber && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">
+                            {t("number")}
+                          </span>
+                          <span className="font-medium">
+                            {collectionItem.playerNumber}
+                          </span>
+                        </div>
                       )}
 
                       <div className="flex items-center justify-between">

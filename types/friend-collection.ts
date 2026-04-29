@@ -18,7 +18,8 @@ export interface FriendCollectionItem {
   size: string | null;
   condition: string;
   hasTags: boolean;
-  personalization: string | null;
+  playerName: string | null;
+  playerNumber: number | null;
   notes?: string | null;
   purchasePrice: number | null;
   purchaseDate: Date | null;

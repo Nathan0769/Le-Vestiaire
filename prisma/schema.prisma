@@ -162,7 +162,8 @@ model UserJersey {
   size            Size?
   condition       Condition
   hasTags         Boolean   @default(false)
-  personalization String?
+  playerName      String?
+  playerNumber    Int?
   purchasePrice   Decimal?
   purchaseDate    DateTime?
   notes           String?

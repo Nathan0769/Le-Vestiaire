@@ -212,49 +212,26 @@ export function FriendCollectionJerseyModal({
                     </div>
                   )}
 
-                  {collectionItem.personalization && (
-                    <>
-                      {(() => {
-                        const parts =
-                          collectionItem.personalization!.split(" ");
-                        if (parts.length >= 2) {
-                          const number = parts[parts.length - 1];
-                          const playerName = parts.slice(0, -1).join(" ");
+                  {collectionItem.playerName && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">
+                        {t("player")}
+                      </span>
+                      <span className="font-medium">
+                        {collectionItem.playerName}
+                      </span>
+                    </div>
+                  )}
 
-                          if (/^\d+$/.test(number)) {
-                            return (
-                              <>
-                                <div className="flex items-center justify-between">
-                                  <span className="text-muted-foreground">
-                                    {t("player")}
-                                  </span>
-                                  <span className="font-medium">
-                                    {playerName}
-                                  </span>
-                                </div>
-                                <div className="flex items-center justify-between">
-                                  <span className="text-muted-foreground">
-                                    {t("number")}
-                                  </span>
-                                  <span className="font-medium">{number}</span>
-                                </div>
-                              </>
-                            );
-                          }
-                        }
-
-                        return (
-                          <div className="flex items-center justify-between">
-                            <span className="text-muted-foreground">
-                              {t("personalization")}
-                            </span>
-                            <span className="font-medium">
-                              {collectionItem.personalization}
-                            </span>
-                          </div>
-                        );
-                      })()}
-                    </>
+                  {collectionItem.playerNumber && (
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">
+                        {t("number")}
+                      </span>
+                      <span className="font-medium">
+                        {collectionItem.playerNumber}
+                      </span>
+                    </div>
                   )}
 
                   <div className="flex items-center justify-between">

@@ -247,7 +247,7 @@ export async function GET() {
 
     const withTags = collection.filter((item) => item.hasTags).length;
     const withPersonalization = collection.filter(
-      (item) => item.personalization
+      (item) => item.playerName || item.playerNumber
     ).length;
     const withCustomPhoto = collection.filter(
       (item) => item.userPhotoUrl

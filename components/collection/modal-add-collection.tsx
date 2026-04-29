@@ -257,18 +257,35 @@ export function AddToCollectionModal({
               />
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="personalization">
-                {t("personalization")}
-              </Label>
-              <Input
-                id="personalization"
-                placeholder={t("personalizationPlaceholder")}
-                value={formData.personalization || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, personalization: e.target.value })
-                }
-              />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-2">
+                <Label htmlFor="playerName">{t("playerName")}</Label>
+                <Input
+                  id="playerName"
+                  placeholder={t("playerNamePlaceholder")}
+                  value={formData.playerName || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, playerName: e.target.value })
+                  }
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="playerNumber">{t("playerNumber")}</Label>
+                <Input
+                  id="playerNumber"
+                  type="number"
+                  min={1}
+                  max={999}
+                  placeholder={t("playerNumberPlaceholder")}
+                  value={formData.playerNumber ?? ""}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      playerNumber: e.target.value ? parseInt(e.target.value, 10) : undefined,
+                    })
+                  }
+                />
+              </div>
             </div>
 
             <div className="space-y-3">
