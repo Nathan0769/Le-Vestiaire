@@ -79,7 +79,8 @@ export async function POST(
       size,
       condition,
       hasTags = false,
-      personalization,
+      playerName,
+      playerNumber,
       purchasePrice,
       purchaseDate,
       notes,
@@ -108,14 +109,27 @@ export async function POST(
       );
     }
 
-    if (personalization && personalization.length > 200) {
+    if (playerName && playerName.length > 100) {
       return NextResponse.json(
         {
           success: false,
-          error: "La personnalisation ne peut pas dépasser 200 caractères",
+          error: "Le nom du joueur ne peut pas dépasser 100 caractères",
         },
         { status: 400 }
       );
+    }
+
+    if (playerNumber !== null && playerNumber !== undefined) {
+      const num = parseInt(playerNumber.toString(), 10);
+      if (isNaN(num) || num < 1 || num > 999) {
+        return NextResponse.json(
+          {
+            success: false,
+            error: "Le numéro de maillot doit être compris entre 1 et 999",
+          },
+          { status: 400 }
+        );
+      }
     }
 
     if (notes && notes.length > 1000) {
@@ -185,7 +199,8 @@ export async function POST(
         size,
         condition,
         hasTags,
-        personalization: personalization || null,
+        playerName: playerName || null,
+        playerNumber: playerNumber ? parseInt(playerNumber.toString(), 10) : null,
         purchasePrice: parsedPurchasePrice,
         purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
         notes: notes || null,
@@ -295,7 +310,8 @@ export async function PATCH(
       size,
       condition,
       hasTags = false,
-      personalization,
+      playerName,
+      playerNumber,
       purchasePrice,
       purchaseDate,
       notes,
@@ -318,11 +334,21 @@ export async function PATCH(
       );
     }
 
-    if (personalization && personalization.length > 200) {
+    if (playerName && playerName.length > 100) {
       return NextResponse.json(
-        { error: "La personnalisation ne peut pas dépasser 200 caractères" },
+        { error: "Le nom du joueur ne peut pas dépasser 100 caractères" },
         { status: 400 }
       );
+    }
+
+    if (playerNumber !== null && playerNumber !== undefined) {
+      const num = parseInt(playerNumber.toString(), 10);
+      if (isNaN(num) || num < 1 || num > 999) {
+        return NextResponse.json(
+          { error: "Le numéro de maillot doit être compris entre 1 et 999" },
+          { status: 400 }
+        );
+      }
     }
 
     if (notes && notes.length > 1000) {
@@ -376,7 +402,8 @@ export async function PATCH(
       size,
       condition,
       hasTags,
-      personalization: personalization || null,
+      playerName: playerName || null,
+      playerNumber: playerNumber ? parseInt(playerNumber.toString(), 10) : null,
       purchasePrice: parsedPurchasePrice,
       purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
       notes: notes || null,

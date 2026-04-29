@@ -30,7 +30,8 @@ export interface UserJersey {
   size?: Size;
   condition: Condition;
   hasTags: boolean;
-  personalization?: string;
+  playerName?: string;
+  playerNumber?: number;
   purchasePrice?: number;
   purchaseDate?: Date;
   notes?: string;
@@ -45,7 +46,8 @@ export interface AddToCollectionData {
   size: Size;
   condition: Condition;
   hasTags?: boolean;
-  personalization?: string;
+  playerName?: string;
+  playerNumber?: number;
   purchasePrice?: number;
   purchaseDate?: Date;
   notes?: string;
@@ -58,7 +60,8 @@ export interface UpdateCollectionData {
   size: Size;
   condition: Condition;
   hasTags?: boolean;
-  personalization?: string;
+  playerName?: string;
+  playerNumber?: number;
   purchasePrice?: number;
   purchaseDate?: Date;
   notes?: string;

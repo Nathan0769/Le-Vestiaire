@@ -5,7 +5,8 @@ export type CollectionItemWithJersey = {
   size?: string | null;
   condition: string;
   hasTags: boolean;
-  personalization?: string | null;
+  playerName?: string | null;
+  playerNumber?: number | null;
   purchasePrice?: number | null;
   purchaseDate?: Date | null;
   notes?: string | null;
