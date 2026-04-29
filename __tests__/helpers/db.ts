@@ -1,9 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 
+const devUrl = process.env.DATABASE_URL_DEV;
+
+if (!devUrl) {
+  throw new Error(
+    "DANGER: DATABASE_URL_DEV n'est pas défini. Vérifiez votre .env."
+  );
+}
+
 export const prismaTest = new PrismaClient({
   datasources: {
     db: {
-      url: process.env.DATABASE_URL,
+      url: devUrl,
     },
   },
 });
