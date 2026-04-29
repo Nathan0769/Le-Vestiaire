@@ -32,11 +32,14 @@ const securityHeaders = [
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
-      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
-      "font-src 'self' data: https://fonts.gstatic.com",
-      "img-src 'self' data: blob: https://hioeyddfdoekpplonsxa.supabase.co https://*.r2.dev",
-      "connect-src 'self' https://hioeyddfdoekpplonsxa.supabase.co https://*.r2.dev",
+      // Next.js nécessite unsafe-inline/unsafe-eval ; GTM charge ses propres scripts
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com",
+      "style-src 'self' 'unsafe-inline'",
+      "font-src 'self' data:",
+      // Images : Supabase storage, R2, pixels GA/GTM, blobs locaux
+      "img-src 'self' data: blob: https://hioeyddfdoekpplonsxa.supabase.co https://*.r2.dev https://www.google-analytics.com https://www.googletagmanager.com",
+      // Fetch/XHR/WS : Supabase HTTP + Realtime WS, R2, GA4 (deux endpoints selon région)
+      "connect-src 'self' https://hioeyddfdoekpplonsxa.supabase.co wss://hioeyddfdoekpplonsxa.supabase.co https://*.r2.dev https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",
       "media-src 'none'",
       "object-src 'none'",
       "frame-src 'none'",
