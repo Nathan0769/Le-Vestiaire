@@ -72,5 +72,8 @@ jobs:
       - name: Validate Prisma schema
         run: npx prisma validate
 
+      - name: Tests
+        run: npm run test:run
+
       - name: Build
         run: npm run build

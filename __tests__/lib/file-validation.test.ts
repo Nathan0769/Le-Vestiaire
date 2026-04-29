@@ -19,7 +19,7 @@ describe("file-validation", () => {
       const result = validateImageFileBasic(file);
 
       expect(result.valid).toBe(false);
-      expect(result.error).toContain("ne doit pas dépasser");
+      expect(result.error).toContain("trop volumineuse");
     });
 
     it("accepte un fichier de taille valide", () => {
