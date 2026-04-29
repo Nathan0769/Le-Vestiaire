@@ -11,6 +11,19 @@ jobs:
     name: Lint, Type Check & Build
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
+      BETTER_AUTH_URL: ${{ secrets.BETTER_AUTH_URL }}
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+      SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+      KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
+      KV_REST_API_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
+      CLOUDFLARE_R2_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_PUBLIC_URL }}
+      CLOUDFLARE_R2_CLUBS_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_CLUBS_PUBLIC_URL }}
+      CLOUDFLARE_R2_LEAGUES_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_LEAGUES_PUBLIC_URL }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,16 +48,3 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          # Variables minimales pour que le build Next.js passe sans erreur
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          BETTER_AUTH_SECRET: ${{ secrets.BETTER_AUTH_SECRET }}
-          BETTER_AUTH_URL: ${{ secrets.BETTER_AUTH_URL }}
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          KV_REST_API_URL: ${{ secrets.KV_REST_API_URL }}
-          KV_REST_API_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-          CLOUDFLARE_R2_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_PUBLIC_URL }}
-          CLOUDFLARE_R2_CLUBS_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_CLUBS_PUBLIC_URL }}
-          CLOUDFLARE_R2_LEAGUES_PUBLIC_URL: ${{ secrets.CLOUDFLARE_R2_LEAGUES_PUBLIC_URL }}
