@@ -1,18 +1,26 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import nextConfig from "eslint-config-next/core-web-vitals";
 import reactYouMightNotNeedAnEffect from "eslint-plugin-react-you-might-not-need-an-effect";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
 const eslintConfig = [
-  reactYouMightNotNeedAnEffect.configs.recommended,
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    ignores: [
+      "scripts/**",       // Scripts utilitaires (non-production)
+      "components/ui/**", // Composants Shadcn (code tiers)
+    ],
+  },
+  ...nextConfig,
+  {
+    plugins: {
+      "react-you-might-not-need-an-effect": reactYouMightNotNeedAnEffect,
+    },
+    rules: {
+      ...reactYouMightNotNeedAnEffect.configs.recommended.rules,
+      // Faux positif dans Next.js : les Server Components utilisent try/catch + JSX légitimement
+      "react-hooks/error-boundaries": "off",
+      // Pattern intentionnel pour lecture SSR-safe depuis localStorage/cookies au montage
+      "react-hooks/set-state-in-effect": "warn",
+    },
+  },
 ];
 
 export default eslintConfig;
