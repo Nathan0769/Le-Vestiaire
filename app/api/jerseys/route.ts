@@ -17,7 +17,7 @@ const querySchema = z.object({
     .optional(),
   season: z.string().optional(),
   page: z.coerce.number().int().positive().default(1),
-  limit: z.coerce.number().int().positive().max(50).default(30),
+  limit: z.coerce.number().int().positive().max(500).default(30),
 });
 
 export async function GET(request: NextRequest) {
