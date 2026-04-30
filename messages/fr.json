@@ -2230,5 +2230,46 @@
     "wishlistTitle": "Wishlist de {name}",
     "wishlistEmpty": "Wishlist vide",
     "wishlistEmptyMessage": "{name} n'a pas encore ajouté de maillots à sa wishlist."
+  },
+  "ForgotPassword": {
+    "title": "Mot de passe oublié",
+    "subtitle": "Entrez votre email pour recevoir un lien de réinitialisation.",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "votre@email.com"
+    },
+    "button": {
+      "submit": "Envoyer le lien",
+      "loading": "Envoi en cours…"
+    },
+    "success": {
+      "title": "Email envoyé",
+      "message": "Si un compte existe avec cet email, vous recevrez un lien de réinitialisation dans quelques minutes."
+    },
+    "backToLogin": "Retour à la connexion"
+  },
+  "ResetPassword": {
+    "title": "Nouveau mot de passe",
+    "subtitle": "Choisissez un nouveau mot de passe pour votre compte.",
+    "form": {
+      "password": "Nouveau mot de passe",
+      "passwordPlaceholder": "8 caractères minimum",
+      "passwordConfirm": "Confirmer le mot de passe",
+      "passwordConfirmPlaceholder": "Répétez votre mot de passe"
+    },
+    "button": {
+      "submit": "Réinitialiser le mot de passe",
+      "loading": "Réinitialisation…"
+    },
+    "success": {
+      "title": "Mot de passe modifié",
+      "message": "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter."
+    },
+    "errors": {
+      "invalidToken": "Ce lien est invalide ou a expiré. Veuillez refaire une demande.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "resetError": "Une erreur est survenue. Veuillez réessayer."
+    },
+    "backToLogin": "Se connecter"
   }
 }
