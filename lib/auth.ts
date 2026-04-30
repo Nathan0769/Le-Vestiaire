@@ -49,6 +49,10 @@ export const auth = betterAuth({
     // Permet aux clients mobiles d'utiliser Authorization: Bearer <token>
     bearer(),
   ],
+  trustedOrigins: [
+    "levestiaire://",
+    "exp+le-vestiaire-mobile://",
+  ],
   secret: process.env.BETTER_AUTH_SECRET!,
   url: process.env.BETTER_AUTH_URL!,
 });
