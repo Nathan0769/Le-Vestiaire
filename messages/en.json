@@ -887,23 +887,23 @@
       "recentAdditionsWishlist": "Recent additions to your wishlist"
     },
     "features": {
-      "title": "Why choose The Locker Room?",
-      "subtitle": "The free app designed by collectors, for collectors",
+      "title": "Why choose Le Vestiaire Foot?",
+      "subtitle": "Le Vestiaire Foot is a free web app designed by collectors, for collectors.",
       "catalogCollection": {
-        "title": "Catalog your collection",
-        "description": "Record all your jerseys with their details: size, condition, purchase price, customization. Track the value of your collection."
+        "title": "Catalog your jersey collection",
+        "description": "Log the size, condition and purchase price of every jersey. Le Vestiaire Foot automatically tracks the total value of your collection."
       },
       "shareableWishlist": {
-        "title": "Shareable wishlist",
-        "description": "Create your wishlist and easily share it with your loved ones for Christmas, birthdays or any special occasion."
+        "title": "Shareable jersey wishlist",
+        "description": "Build your wishlist and share it with friends and family via a direct link. Perfect for Christmas, birthdays or any special occasion."
       },
       "authentication": {
-        "title": "Jersey authentication",
-        "description": "Learn to recognize authentic jerseys from counterfeits with our detailed guides for each brand (Nike, Adidas, Puma...)."
+        "title": "Football jersey authentication",
+        "description": "Learn to tell authentic jerseys from fakes.<br></br>Le Vestiaire Foot offers <link>detailed authentication guides</link> for Nike, Adidas, Puma and more."
       },
       "community": {
-        "title": "Community of enthusiasts",
-        "description": "Connect with other collectors, share your finds and discover your friends' collections."
+        "title": "Football jersey collector community",
+        "description": "Le Vestiaire Foot brings collectors together. Add friends, explore their collections and discover the highest-rated jerseys."
       }
     },
     "stats": {

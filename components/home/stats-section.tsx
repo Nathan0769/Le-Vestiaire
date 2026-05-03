@@ -43,10 +43,15 @@ function StatCard({ value, label, icon: Icon, animate }: StatCardProps) {
       <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
         <Icon className="w-8 h-8 text-primary" />
       </div>
-      <span className="text-4xl sm:text-5xl md:text-6xl font-bold tabular-nums">
+      {/* sr-only span carries the real value in the initial HTML for crawlers */}
+      <span className="sr-only">{value.toLocaleString("fr-FR")} {label}</span>
+      <span
+        className="text-4xl sm:text-5xl md:text-6xl font-bold tabular-nums"
+        aria-hidden="true"
+      >
         {count.toLocaleString("fr-FR")}
       </span>
-      <span className="text-muted-foreground text-base font-medium">
+      <span className="text-muted-foreground text-base font-medium" aria-hidden="true">
         {label}
       </span>
     </div>
