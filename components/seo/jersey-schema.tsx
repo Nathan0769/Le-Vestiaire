@@ -39,6 +39,15 @@ export function JerseySchema({
       name: displayName,
       description: `Maillot ${jersey.type.toLowerCase()} ${jersey.club.name} ${jersey.season} ${jersey.brand}`,
     },
+    brand: {
+      "@type": "Brand",
+      name: jersey.brand,
+    },
+    manufacturer: {
+      "@type": "Organization",
+      name: jersey.brand,
+    },
+    category: "Maillot de football",
     creator: {
       "@type": "Brand",
       name: jersey.brand,

@@ -13,6 +13,8 @@ import { CollectionButton } from "@/components/collection/collection-button";
 import { JerseyStats } from "@/components/jerseys/stats/jersey-stats";
 import { JerseySchema } from "@/components/seo/jersey-schema";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
+import { WebPageSchema } from "@/components/seo/webpage-schema";
+import { FaqSchema } from "@/components/seo/faq-schema";
 import { JerseyTabs } from "@/components/jerseys/jersey-tabs";
 import { getTranslations, getLocale } from "next-intl/server";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
@@ -213,6 +215,10 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
       ? sortedJerseys[currentIndex + 1]
       : null;
 
+  const relatedJerseys = sortedJerseys
+    .filter((j) => j.id !== jersey.id)
+    .slice(0, 8);
+
   const locale = await getLocale();
   const tJerseyType = await getTranslations("JerseyType");
   const t = await getTranslations("Jerseys");
@@ -231,6 +237,25 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     typeTranslation: getJerseyTypeLabel(jersey.type),
   });
 
+  const breadcrumbItems = [
+    { name: "Maillots", url: "https://le-vestiaire-foot.fr/jerseys" },
+    {
+      name: jersey.club.league.name,
+      url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}`,
+    },
+    {
+      name: jersey.club.name,
+      url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}`,
+    },
+    {
+      name: translatedJerseyName,
+      url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.slug || jersey.id}`,
+    },
+  ];
+
+  const canonicalUrl = `https://le-vestiaire-foot.fr/jerseys/${leagueId}/clubs/${clubId}/jerseys/${jersey.slug || id}`;
+  const pageDescription = `Maillot ${getJerseyTypeLabel(jersey.type).toLowerCase()} du ${jersey.club.name} pour la saison ${jersey.season}, conçu par ${jersey.brand}. ${jersey.club.league.name}.`;
+
   return (
     <>
       <JerseySchema
@@ -241,22 +266,20 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
         collectionCount={statsData?.collectionCount}
         wishlistCount={statsData?.wishlistCount}
       />
-      <BreadcrumbSchema
-        items={[
-          { name: "Maillots", url: "https://le-vestiaire-foot.fr/jerseys" },
-          {
-            name: jersey.club.league.name,
-            url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}`,
-          },
-          {
-            name: jersey.club.name,
-            url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}`,
-          },
-          {
-            name: translatedJerseyName,
-            url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.slug || jersey.id}`,
-          },
-        ]}
+      <BreadcrumbSchema items={breadcrumbItems} />
+      <WebPageSchema
+        url={canonicalUrl}
+        name={`${translatedJerseyName} ${jersey.brand} | Le Vestiaire`}
+        description={pageDescription}
+        breadcrumbItems={breadcrumbItems}
+      />
+      <FaqSchema
+        jersey={jersey}
+        translatedJerseyName={translatedJerseyName}
+        translatedType={getJerseyTypeLabel(jersey.type)}
+        collectionCount={statsData?.collectionCount}
+        totalRatings={ratingData?.totalRatings}
+        averageRating={ratingData?.averageRating}
       />
 
       <div className="p-6 space-y-8 overflow-x-hidden">
@@ -399,6 +422,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
           />
         </div>
         </JerseyNavigator>
+
       </div>
     </>
   );
