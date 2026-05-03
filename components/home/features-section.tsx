@@ -2,9 +2,13 @@
 
 import { Package, Heart, Shield, Users } from "lucide-react";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 export function FeaturesSection() {
   const t = useTranslations("HomePage.features");
+  const params = useParams();
+  const locale = (params?.locale as string) || "fr";
 
   const features = [
     {
@@ -40,6 +44,7 @@ export function FeaturesSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature) => {
             const Icon = feature.icon;
+
             return (
               <div
                 key={feature.key}
@@ -52,7 +57,19 @@ export function FeaturesSection() {
                   {t(`${feature.key}.title`)}
                 </h3>
                 <p className="text-muted-foreground text-sm">
-                  {t(`${feature.key}.description`)}
+                  {feature.key === "authentication"
+                    ? t.rich("authentication.description", {
+                        br: () => <br />,
+                        link: (chunks) => (
+                          <Link
+                            href={`/${locale}/authentification`}
+                            className="text-primary font-medium hover:opacity-80 transition-opacity"
+                          >
+                            {chunks}
+                          </Link>
+                        ),
+                      })
+                    : t(`${feature.key}.description`)}
                 </p>
               </div>
             );

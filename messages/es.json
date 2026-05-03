@@ -887,23 +887,23 @@
       "recentAdditionsWishlist": "Últimas adiciones a tu lista de deseos"
     },
     "features": {
-      "title": "¿Por qué elegir El Vestuario?",
-      "subtitle": "La aplicación gratuita diseñada por coleccionistas, para coleccionistas",
+      "title": "¿Por qué elegir Le Vestiaire Foot?",
+      "subtitle": "Le Vestiaire Foot es una aplicación web gratuita diseñada por coleccionistas, para coleccionistas.",
       "catalogCollection": {
-        "title": "Cataloga tu colección",
-        "description": "Registra todas tus camisetas con sus detalles: talla, estado, precio de compra, personalización. Sigue el valor de tu colección."
+        "title": "Cataloga tu colección de camisetas",
+        "description": "Registra la talla, el estado y el precio de compra de cada camiseta. Le Vestiaire Foot calcula automáticamente el valor total de tu colección."
       },
       "shareableWishlist": {
-        "title": "Lista de deseos compartible",
-        "description": "Crea tu lista de deseos y compártela fácilmente con tus seres queridos para Navidad, cumpleaños o cualquier ocasión especial."
+        "title": "Lista de deseos de camisetas compartible",
+        "description": "Crea tu lista de deseos y compártela con tus seres queridos mediante un enlace directo. Ideal para Navidad, cumpleaños o cualquier ocasión especial."
       },
       "authentication": {
-        "title": "Autenticación de camisetas",
-        "description": "Aprende a reconocer las camisetas auténticas de las falsificaciones con nuestras guías detalladas para cada marca (Nike, Adidas, Puma...)."
+        "title": "Autenticación de camisetas de fútbol",
+        "description": "Aprende a distinguir las camisetas auténticas de las falsificaciones.<br></br>Le Vestiaire Foot ofrece <link>guías de autenticación detalladas</link> para Nike, Adidas, Puma y más."
       },
       "community": {
-        "title": "Comunidad de apasionados",
-        "description": "Conéctate con otros coleccionistas, comparte tus hallazgos y descubre las colecciones de tus amigos."
+        "title": "Comunidad de coleccionistas de camisetas",
+        "description": "Le Vestiaire Foot reúne a coleccionistas apasionados. Añade amigos, explora sus colecciones y descubre las camisetas mejor valoradas."
       }
     },
     "stats": {

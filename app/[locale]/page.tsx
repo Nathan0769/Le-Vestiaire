@@ -425,34 +425,170 @@ async function getHomeData(userId?: string): Promise<{
   }
 }
 
-export default async function HomePage() {
+const schemaContent: Record<
+  string,
+  {
+    appDescription: string;
+    featureList: string[];
+    orgDescription: string;
+    faq: Array<{ q: string; a: string }>;
+  }
+> = {
+  fr: {
+    appDescription:
+      "Le Vestiaire Foot est une application web gratuite permettant aux collectionneurs de maillots de football de cataloguer leur collection, créer une wishlist partageable, authentifier leurs maillots et rejoindre une communauté de passionnés.",
+    featureList: [
+      "Catalogage de maillots de football avec détails (taille, état, prix d'achat, personnalisation)",
+      "Wishlist partageable pour Noël et anniversaires",
+      "Guides d'authentification des maillots (Nike, Adidas, Puma)",
+      "Communauté de collectionneurs et partage de collections",
+      "Classement des maillots les mieux notés",
+    ],
+    orgDescription:
+      "Plateforme communautaire gratuite dédiée aux collectionneurs de maillots de football, permettant de cataloguer, noter, authentifier et partager des collections de maillots.",
+    faq: [
+      {
+        q: "Comment ajouter un maillot à ma collection ?",
+        a: "Pour ajouter un maillot à votre collection sur Le Vestiaire Foot, créez un compte gratuit, accédez à la section « Ma Collection » et sélectionnez le maillot dans le catalogue. Vous pouvez renseigner la taille, l'état, le prix d'achat et la personnalisation pour chaque maillot afin de suivre précisément la valeur de votre collection.",
+      },
+      {
+        q: "Puis-je partager ma wishlist pour Noël ou mon anniversaire ?",
+        a: "Oui. Le Vestiaire Foot permet de créer une wishlist de maillots de football et de la partager avec vos proches via un lien direct. C'est la solution idéale pour que vos amis sachent exactement quels maillots vous souhaitez recevoir pour Noël, un anniversaire ou toute occasion spéciale.",
+      },
+      {
+        q: "Comment reconnaître un faux maillot de football ?",
+        a: "Le Vestiaire Foot met à disposition des guides détaillés d'authentification pour chaque grande marque de maillots : Nike, Adidas, Puma et d'autres. Ces guides expliquent les points de contrôle essentiels — coutures, flocages, étiquettes, tissus — pour distinguer un maillot authentique d'une contrefaçon.",
+      },
+      {
+        q: "Quels clubs et ligues sont disponibles sur Le Vestiaire Foot ?",
+        a: "Le catalogue de Le Vestiaire Foot couvre de nombreuses compétitions internationales, dont la Ligue 1, la Bundesliga, les équipes nationales UEFA et AFC. De nouveaux clubs et sélections nationales sont régulièrement ajoutés au catalogue.",
+      },
+      {
+        q: "Est-ce que mes données sont sécurisées ?",
+        a: "Oui. Le Vestiaire Foot protège les données personnelles de ses utilisateurs. L'application utilise uniquement des cookies essentiels pour son fonctionnement, et des cookies d'analyse que vous pouvez refuser à tout moment. La politique complète est consultable sur la page dédiée.",
+      },
+    ],
+  },
+  en: {
+    appDescription:
+      "Le Vestiaire Foot is a free web app that lets football jersey collectors catalog their collection, create a shareable wishlist, authenticate jerseys and join a community of enthusiasts.",
+    featureList: [
+      "Football jersey cataloging with full details (size, condition, purchase price, customization)",
+      "Shareable wishlist for Christmas and birthdays",
+      "Jersey authentication guides (Nike, Adidas, Puma)",
+      "Collector community and collection sharing",
+      "Highest-rated jerseys ranking",
+    ],
+    orgDescription:
+      "Free community platform dedicated to football jersey collectors, enabling cataloging, rating, authenticating and sharing jersey collections.",
+    faq: [
+      {
+        q: "How do I add a jersey to my collection?",
+        a: "To add a jersey to your collection on Le Vestiaire Foot, create a free account, go to the 'My Collection' section and select the jersey from the catalog. You can enter the size, condition, purchase price and customization for each jersey to precisely track the value of your collection.",
+      },
+      {
+        q: "Can I share my wishlist for Christmas or my birthday?",
+        a: "Yes. Le Vestiaire Foot lets you create a football jersey wishlist and share it with friends and family via a direct link. It's the ideal solution so they know exactly which jerseys you'd like to receive for Christmas, a birthday or any special occasion.",
+      },
+      {
+        q: "How can I spot a fake football jersey?",
+        a: "Le Vestiaire Foot provides detailed authentication guides for every major jersey brand: Nike, Adidas, Puma and others. These guides explain the key checkpoints — stitching, badges, labels, fabric — to distinguish an authentic jersey from a counterfeit.",
+      },
+      {
+        q: "What clubs and leagues are available on Le Vestiaire Foot?",
+        a: "The Le Vestiaire Foot catalog covers many international competitions, including Ligue 1, the Bundesliga, UEFA and AFC national teams. New clubs and national squads are regularly added to the catalog.",
+      },
+      {
+        q: "Is my data secure?",
+        a: "Yes. Le Vestiaire Foot protects its users' personal data. The app uses only essential cookies for operation, plus optional analytics cookies you can decline at any time. The full policy is available on the dedicated page.",
+      },
+    ],
+  },
+  es: {
+    appDescription:
+      "Le Vestiaire Foot es una aplicación web gratuita que permite a los coleccionistas de camisetas de fútbol catalogar su colección, crear una lista de deseos compartible, autenticar camisetas y unirse a una comunidad de apasionados.",
+    featureList: [
+      "Catalogación de camisetas de fútbol con detalles completos (talla, estado, precio de compra, personalización)",
+      "Lista de deseos compartible para Navidad y cumpleaños",
+      "Guías de autenticación de camisetas (Nike, Adidas, Puma)",
+      "Comunidad de coleccionistas y compartición de colecciones",
+      "Ranking de camisetas mejor valoradas",
+    ],
+    orgDescription:
+      "Plataforma comunitaria gratuita dedicada a los coleccionistas de camisetas de fútbol, que permite catalogar, valorar, autenticar y compartir colecciones de camisetas.",
+    faq: [
+      {
+        q: "¿Cómo añado una camiseta a mi colección?",
+        a: "Para añadir una camiseta a tu colección en Le Vestiaire Foot, crea una cuenta gratuita, accede a la sección 'Mi Colección' y selecciona la camiseta del catálogo. Puedes introducir la talla, el estado, el precio de compra y la personalización de cada camiseta para seguir con precisión el valor de tu colección.",
+      },
+      {
+        q: "¿Puedo compartir mi lista de deseos para Navidad o mi cumpleaños?",
+        a: "Sí. Le Vestiaire Foot permite crear una lista de deseos de camisetas de fútbol y compartirla con familiares y amigos mediante un enlace directo. Es la solución ideal para que sepan exactamente qué camisetas te gustaría recibir en Navidad, un cumpleaños o cualquier ocasión especial.",
+      },
+      {
+        q: "¿Cómo reconocer una camiseta de fútbol falsa?",
+        a: "Le Vestiaire Foot pone a disposición guías detalladas de autenticación para cada gran marca de camisetas: Nike, Adidas, Puma y otras. Estas guías explican los puntos de control esenciales — costuras, escudos, etiquetas, tejidos — para distinguir una camiseta auténtica de una falsificación.",
+      },
+      {
+        q: "¿Qué clubes y ligas están disponibles en Le Vestiaire Foot?",
+        a: "El catálogo de Le Vestiaire Foot cubre numerosas competiciones internacionales, incluidas la Ligue 1, la Bundesliga y las selecciones nacionales de la UEFA y la AFC. Se añaden regularmente nuevos clubes y selecciones nacionales al catálogo.",
+      },
+      {
+        q: "¿Están seguros mis datos?",
+        a: "Sí. Le Vestiaire Foot protege los datos personales de sus usuarios. La aplicación utiliza únicamente cookies esenciales para su funcionamiento, además de cookies de análisis opcionales que puedes rechazar en cualquier momento. La política completa está disponible en la página dedicada.",
+      },
+    ],
+  },
+};
+
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
   const user = await getCurrentUser();
 
   const { topRatedJerseys, recentJerseys, userStats, globalStats } =
     await getHomeData(user?.id);
 
+  const content = schemaContent[locale] ?? schemaContent.fr;
+  const pageUrl = `https://le-vestiaire-foot.fr/${locale}`;
+
   const webAppSchema = {
     "@context": "https://schema.org",
-    "@type": "WebApplication",
+    "@type": "SoftwareApplication",
     name: "Le Vestiaire Foot",
-    url: "https://le-vestiaire-foot.fr",
-    description:
-      "Application gratuite pour gérer et partager votre collection de maillots de football.",
+    url: pageUrl,
     applicationCategory: "SportsApplication",
     operatingSystem: "Web",
-    browserRequirements: "Requires JavaScript",
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "EUR",
     },
-    featureList: [
-      "Gestion de collection de maillots",
-      "Wishlist partageable",
-      "Notation communautaire des maillots",
-      "Authentification maillots (supporter vs pro)",
-      "Leaderboard des collectionneurs",
-    ],
+    description: content.appDescription,
+    featureList: content.featureList,
+    inLanguage: locale,
+  };
+
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Le Vestiaire Foot",
+    url: pageUrl,
+    description: content.orgDescription,
+    inLanguage: locale,
+  };
+
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: content.faq.map(({ q, a }) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: a },
+    })),
   };
 
   const itemListSchema =
@@ -491,6 +627,14 @@ export default async function HomePage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       {itemListSchema && (
         <script

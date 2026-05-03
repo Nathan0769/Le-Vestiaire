@@ -925,22 +925,22 @@
     },
     "features": {
       "title": "Pourquoi choisir Le Vestiaire ?",
-      "subtitle": "L'application gratuite pensée par des collectionneurs, pour des collectionneurs",
+      "subtitle": "Le Vestiaire Foot est une application web gratuite pensée par des collectionneurs, pour des collectionneurs.",
       "catalogCollection": {
-        "title": "Cataloguez votre collection",
-        "description": "Enregistrez tous vos maillots avec leurs détails : taille, état, prix d'achat, personnalisation. Suivez la valeur de votre collection."
+        "title": "Cataloguez votre collection de maillots",
+        "description": "Renseignez la taille, l'état et le prix d'achat de chaque maillot. Le Vestiaire Foot calcule automatiquement la valeur totale de votre collection."
       },
       "shareableWishlist": {
-        "title": "Wishlist partageable",
-        "description": "Créez votre liste d'envies et partagez-la facilement avec vos proches pour Noël, anniversaires ou toute occasion spéciale."
+        "title": "Wishlist de maillots partageable",
+        "description": "Créez votre liste d'envies et partagez-la avec vos proches via un lien direct. Idéal pour Noël, les anniversaires ou toute occasion spéciale."
       },
       "authentication": {
-        "title": "Authentification des maillots",
-        "description": "Apprenez à reconnaître les vrais maillots des contrefaçons grâce à nos guides détaillés pour chaque marque (Nike, Adidas, Puma...)."
+        "title": "Authentification des maillots de football",
+        "description": "Apprenez à reconnaître les vrais maillots des contrefaçons.<br></br>Le Vestiaire Foot propose des <link>guides d'authentification détaillés</link> pour Nike, Adidas, Puma et d'autres marques."
       },
       "community": {
-        "title": "Communauté de passionnés",
-        "description": "Connectez-vous avec d'autres collectionneurs, partagez vos trouvailles et découvrez les collections de vos amis."
+        "title": "Communauté de collectionneurs de maillots",
+        "description": "Le Vestiaire Foot réunit une communauté de passionnés. Ajoutez des amis, explorez leurs collections et découvrez les maillots les mieux notés."
       }
     },
     "stats": {
