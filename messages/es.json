@@ -250,6 +250,10 @@
         "purchaseDate": "Fecha de compra",
         "personalization": "Personalización (nombre, número...)",
         "personalizationPlaceholder": "Ej: MESSI 10",
+        "playerName": "Nombre del jugador (flocking)",
+        "playerNamePlaceholder": "Ej: MESSI",
+        "playerNumber": "Número de camiseta",
+        "playerNumberPlaceholder": "Ej: 10",
         "hasTags": "Todavía tiene etiquetas",
         "isGift": "Recibido como regalo",
         "isFromMysteryBox": "De una caja misteriosa",
@@ -312,6 +316,10 @@
         "purchaseDate": "Fecha de compra",
         "notes": "Notas personales",
         "personalizationPlaceholder": "Ej: MESSI 10",
+        "playerName": "Nombre del jugador (flocking)",
+        "playerNamePlaceholder": "Ej: MESSI",
+        "playerNumber": "Número de camiseta",
+        "playerNumberPlaceholder": "Ej: 10",
         "notesPlaceholder": "Añade tus comentarios sobre esta camiseta...",
         "photoFormats": "PNG, JPG, WEBP, AVIF (Máx 5MB)",
         "purchasePricePlaceholder": "Ej: 90.50",
@@ -467,6 +475,32 @@
       "withTags": "Con etiquetas",
       "withPersonalization": "Personalizadas",
       "withCustomPhoto": "Fotos personalizadas"
+    },
+    "upgrade": {
+      "distribution": {
+        "title": "Estadísticas de distribución PRO",
+        "description": "Analiza en detalle la distribución de tu colección",
+        "feature1": "Distribución por liga y país",
+        "feature2": "Principales clubs de tu colección",
+        "feature3": "Distribución por talla y estado",
+        "feature4": "Análisis de fuentes de adquisición"
+      },
+      "financial": {
+        "title": "Estadísticas financieras PRO",
+        "description": "Sigue tus gastos y el valor de tu colección",
+        "feature1": "Gasto total y promedio",
+        "feature2": "Valor estimado de la colección",
+        "feature3": "Evolución temporal del gasto",
+        "feature4": "Camisetas más y menos caras"
+      },
+      "records": {
+        "title": "Récords y estadísticas PRO",
+        "description": "Descubre los récords de tu colección",
+        "feature1": "Adquisiciones más antiguas/recientes",
+        "feature2": "Estadísticas de personalización",
+        "feature3": "Tasa de camisetas con etiquetas",
+        "feature4": "Métricas de calidad de colección"
+      }
     }
   },
   "Wishlist": {
@@ -753,7 +787,13 @@
     "wishlistOf": "Lista de deseos de {name}",
     "discoverWishlist": "Descubre la lista de deseos de",
     "user": "Usuario",
-    "noJerseysInWishlistYet": "{name} aún no ha añadido camisetas a su lista de deseos."
+    "noJerseysInWishlistYet": "{name} aún no ha añadido camisetas a su lista de deseos.",
+    "highestPriority": "Prioridad más alta",
+    "lowestPriority": "Prioridad más baja",
+    "priorities": "Prioridades",
+    "priorityHigh": "Alta",
+    "priorityMedium": "Media",
+    "priorityLow": "Baja"
   },
   "Login": {
     "title": "Bienvenido de nuevo",
@@ -2020,6 +2060,12 @@
       "rejectDialogDescription": "La propuesta <strong>{jerseyName}</strong> será eliminada permanentemente. Esta acción es irreversible.",
       "cancel": "Cancelar",
       "confirm": "Confirmar",
+      "approveAllButton": "Aprobar todo ({count})",
+      "approveAllLoading": "Aprobando...",
+      "approveAllDialogTitle": "¿Aprobar todas las propuestas?",
+      "approveAllDialogDescription": "Estás a punto de aprobar {count} propuesta(s). Esta acción es irreversible.",
+      "approveAllSuccess": "¡{count} propuesta(s) aprobada(s) con éxito!",
+      "approveAllPartial": "{approved} aprobada(s), {failed} error(es)",
       "DescriptionProposals": {
         "aboutTitle": "Acerca de las propuestas de descripciones",
         "aboutDescription": "Los usuarios pueden proponer descripciones para enriquecer las páginas de camisetas. Puedes aprobar o rechazar estas propuestas. Los colaboradores son acreditados por cada descripción aprobada.",
@@ -2187,5 +2233,46 @@
     "wishlistTitle": "Lista de deseos de {name}",
     "wishlistEmpty": "Lista de deseos vacía",
     "wishlistEmptyMessage": "{name} aún no ha añadido camisetas a su lista de deseos."
+  },
+  "ForgotPassword": {
+    "title": "Contraseña olvidada",
+    "subtitle": "Ingresa tu email para recibir un enlace de restablecimiento.",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "tu@email.com"
+    },
+    "button": {
+      "submit": "Enviar enlace",
+      "loading": "Enviando…"
+    },
+    "success": {
+      "title": "Email enviado",
+      "message": "Si existe una cuenta con este email, recibirás un enlace de restablecimiento en unos minutos."
+    },
+    "backToLogin": "Volver al inicio de sesión"
+  },
+  "ResetPassword": {
+    "title": "Nueva contraseña",
+    "subtitle": "Elige una nueva contraseña para tu cuenta.",
+    "form": {
+      "password": "Nueva contraseña",
+      "passwordPlaceholder": "Mínimo 8 caracteres",
+      "passwordConfirm": "Confirmar contraseña",
+      "passwordConfirmPlaceholder": "Repite tu contraseña"
+    },
+    "button": {
+      "submit": "Restablecer contraseña",
+      "loading": "Restableciendo…"
+    },
+    "success": {
+      "title": "Contraseña cambiada",
+      "message": "Tu contraseña ha sido restablecida. Ya puedes iniciar sesión."
+    },
+    "errors": {
+      "invalidToken": "Este enlace es inválido o ha expirado. Por favor, haz una nueva solicitud.",
+      "passwordMismatch": "Las contraseñas no coinciden.",
+      "resetError": "Ha ocurrido un error. Por favor, inténtalo de nuevo."
+    },
+    "backToLogin": "Iniciar sesión"
   }
 }
