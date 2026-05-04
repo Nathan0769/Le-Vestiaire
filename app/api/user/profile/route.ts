@@ -15,7 +15,7 @@ export async function GET() {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    const [user, collectionClubs, friendsCount] = await Promise.all([
+    const [user, collectionClubs, friendsCount, accountProviders] = await Promise.all([
       prisma.user.findUnique({
         where: { id: sessionUser.id },
         select: {
@@ -27,6 +27,7 @@ export async function GET() {
           avatar: true,
           bio: true,
           plan: true,
+          notificationsEnabled: true,
           createdAt: true,
           favoriteClub: {
             select: {
@@ -67,6 +68,11 @@ export async function GET() {
           OR: [{ senderId: sessionUser.id }, { receiverId: sessionUser.id }],
         },
       }),
+      // Providers pour détecter compte Google vs email
+      prisma.account.findMany({
+        where: { userId: sessionUser.id },
+        select: { providerId: true },
+      }),
     ]);
 
     if (!user) {
@@ -83,6 +89,8 @@ export async function GET() {
       avatarUrl = data?.signedUrl ?? null;
     }
 
+    const hasPassword = accountProviders.some((a) => a.providerId === "credential");
+
     return NextResponse.json({
       id: user.id,
       email: user.email,
@@ -91,6 +99,8 @@ export async function GET() {
       image: avatarUrl ?? user.image ?? null,
       bio: user.bio,
       isPro: user.plan === "PRO",
+      notificationsEnabled: user.notificationsEnabled,
+      hasPassword,
       favoriteClub: user.favoriteClub ?? null,
       createdAt: user.createdAt.toISOString(),
       stats: {
