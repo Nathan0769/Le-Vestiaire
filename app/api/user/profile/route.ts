@@ -15,48 +15,65 @@ export async function GET() {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: sessionUser.id },
-      select: {
-        id: true,
-        email: true,
-        name: true,
-        username: true,
-        image: true,
-        avatar: true,
-        bio: true,
-        plan: true,
-        createdAt: true,
-        favoriteClub: {
-          select: {
-            id: true,
-            name: true,
-            shortName: true,
-            logoUrl: true,
-            primaryColor: true,
-            league: {
-              select: {
-                id: true,
-                name: true,
-                country: true,
-                logoUrl: true,
-                tier: true,
+    const [user, collectionClubs, friendsCount] = await Promise.all([
+      prisma.user.findUnique({
+        where: { id: sessionUser.id },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          username: true,
+          image: true,
+          avatar: true,
+          bio: true,
+          plan: true,
+          createdAt: true,
+          favoriteClub: {
+            select: {
+              id: true,
+              name: true,
+              shortName: true,
+              logoUrl: true,
+              primaryColor: true,
+              league: {
+                select: {
+                  id: true,
+                  name: true,
+                  country: true,
+                  logoUrl: true,
+                  tier: true,
+                },
               },
             },
           },
-        },
-        _count: {
-          select: {
-            collection: true,
-            wishlist: true,
+          _count: {
+            select: {
+              collection: true,
+              wishlist: true,
+              ratings: true,
+            },
           },
         },
-      },
-    });
+      }),
+      // Clubs distincts dans la collection
+      prisma.userJersey.findMany({
+        where: { userId: sessionUser.id },
+        select: { jersey: { select: { clubId: true } } },
+      }),
+      // Amis acceptés
+      prisma.friendship.count({
+        where: {
+          status: "ACCEPTED",
+          OR: [{ senderId: sessionUser.id }, { receiverId: sessionUser.id }],
+        },
+      }),
+    ]);
 
     if (!user) {
       return NextResponse.json({ error: "Utilisateur non trouvé" }, { status: 404 });
     }
+
+    const clubsCount = new Set(collectionClubs.map((uj) => uj.jersey.clubId)).size;
 
     let avatarUrl = null;
     if (user.avatar) {
@@ -79,6 +96,9 @@ export async function GET() {
       stats: {
         collectionCount: user._count.collection,
         wishlistCount: user._count.wishlist,
+        ratingsCount: user._count.ratings,
+        clubsCount,
+        friendsCount,
       },
     });
   } catch (error) {
