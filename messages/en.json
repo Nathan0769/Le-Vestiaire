@@ -250,6 +250,10 @@
         "purchaseDate": "Purchase date",
         "personalization": "Personalization (name, number...)",
         "personalizationPlaceholder": "Ex: MESSI 10",
+        "playerName": "Player name (flocking)",
+        "playerNamePlaceholder": "Ex: MESSI",
+        "playerNumber": "Jersey number",
+        "playerNumberPlaceholder": "Ex: 10",
         "hasTags": "Still has tags",
         "isGift": "Received as a gift",
         "isFromMysteryBox": "From a Mystery Box",
@@ -312,6 +316,10 @@
         "purchaseDate": "Purchase date",
         "notes": "Personal notes",
         "personalizationPlaceholder": "Ex: MESSI 10",
+        "playerName": "Player name (flocking)",
+        "playerNamePlaceholder": "Ex: MESSI",
+        "playerNumber": "Jersey number",
+        "playerNumberPlaceholder": "Ex: 10",
         "notesPlaceholder": "Add your comments about this jersey...",
         "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
         "purchasePricePlaceholder": "Ex: 90.50",
@@ -467,6 +475,32 @@
       "withTags": "With tags",
       "withPersonalization": "Personalized",
       "withCustomPhoto": "Custom photos"
+    },
+    "upgrade": {
+      "distribution": {
+        "title": "PRO distribution statistics",
+        "description": "Analyze the distribution of your collection in detail",
+        "feature1": "Distribution by league and country",
+        "feature2": "Top clubs in your collection",
+        "feature3": "Distribution by size and condition",
+        "feature4": "Acquisition source analysis"
+      },
+      "financial": {
+        "title": "PRO financial statistics",
+        "description": "Track your spending and the value of your collection",
+        "feature1": "Total and average spending",
+        "feature2": "Estimated collection value",
+        "feature3": "Spending timeline",
+        "feature4": "Most and least expensive jerseys"
+      },
+      "records": {
+        "title": "PRO records and statistics",
+        "description": "Discover your collection records",
+        "feature1": "Oldest/newest acquisitions",
+        "feature2": "Personalization statistics",
+        "feature3": "Jersey with tags rate",
+        "feature4": "Collection quality metrics"
+      }
     }
   },
   "Wishlist": {
@@ -753,7 +787,13 @@
     "wishlistOf": "{name}'s wishlist",
     "discoverWishlist": "Discover the wishlist of",
     "user": "User",
-    "noJerseysInWishlistYet": "{name} hasn't added any jerseys to their wishlist yet."
+    "noJerseysInWishlistYet": "{name} hasn't added any jerseys to their wishlist yet.",
+    "highestPriority": "Highest priority",
+    "lowestPriority": "Lowest priority",
+    "priorities": "Priorities",
+    "priorityHigh": "High",
+    "priorityMedium": "Medium",
+    "priorityLow": "Low"
   },
   "Login": {
     "title": "Welcome back",
@@ -2020,6 +2060,12 @@
       "rejectDialogDescription": "The proposal <strong>{jerseyName}</strong> will be permanently deleted. This action is irreversible.",
       "cancel": "Cancel",
       "confirm": "Confirm",
+      "approveAllButton": "Approve all ({count})",
+      "approveAllLoading": "Approving...",
+      "approveAllDialogTitle": "Approve all proposals?",
+      "approveAllDialogDescription": "You are about to approve {count} proposal(s). This action is irreversible.",
+      "approveAllSuccess": "{count} proposal(s) approved successfully!",
+      "approveAllPartial": "{approved} approved, {failed} failed",
       "DescriptionProposals": {
         "aboutTitle": "About description proposals",
         "aboutDescription": "Users can propose descriptions to enrich jersey pages. You can approve or reject these proposals. Contributors are credited for each approved description.",
@@ -2187,5 +2233,46 @@
     "wishlistTitle": "Wishlist of {name}",
     "wishlistEmpty": "Empty wishlist",
     "wishlistEmptyMessage": "{name} hasn't added any jerseys to their wishlist yet."
+  },
+  "ForgotPassword": {
+    "title": "Forgot password",
+    "subtitle": "Enter your email to receive a reset link.",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "your@email.com"
+    },
+    "button": {
+      "submit": "Send link",
+      "loading": "Sending…"
+    },
+    "success": {
+      "title": "Email sent",
+      "message": "If an account exists with this email, you will receive a reset link within a few minutes."
+    },
+    "backToLogin": "Back to login"
+  },
+  "ResetPassword": {
+    "title": "New password",
+    "subtitle": "Choose a new password for your account.",
+    "form": {
+      "password": "New password",
+      "passwordPlaceholder": "8 characters minimum",
+      "passwordConfirm": "Confirm password",
+      "passwordConfirmPlaceholder": "Repeat your password"
+    },
+    "button": {
+      "submit": "Reset password",
+      "loading": "Resetting…"
+    },
+    "success": {
+      "title": "Password changed",
+      "message": "Your password has been reset. You can now log in."
+    },
+    "errors": {
+      "invalidToken": "This link is invalid or has expired. Please make a new request.",
+      "passwordMismatch": "Passwords do not match.",
+      "resetError": "An error occurred. Please try again."
+    },
+    "backToLogin": "Log in"
   }
 }
