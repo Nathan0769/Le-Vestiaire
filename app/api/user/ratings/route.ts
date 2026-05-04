@@ -3,7 +3,9 @@ import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { standardRateLimit, getRateLimitIdentifier, checkRateLimit } from "@/lib/rate-limit";
 
-export async function GET() {
+const PAGE_SIZE = 100;
+
+export async function GET(request: Request) {
   try {
     const user = await getCurrentUser();
     if (!user) {
@@ -16,26 +18,34 @@ export async function GET() {
       return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
     }
 
-    const ratings = await prisma.rating.findMany({
-      where: { userId: user.id },
-      include: {
-        jersey: {
-          include: {
-            club: {
-              select: {
-                id: true,
-                name: true,
-                shortName: true,
-                logoUrl: true,
+    const { searchParams } = new URL(request.url);
+    const page = Math.max(1, parseInt(searchParams.get("page") ?? "1", 10));
+
+    const [ratings, total] = await Promise.all([
+      prisma.rating.findMany({
+        where: { userId: user.id },
+        include: {
+          jersey: {
+            include: {
+              club: {
+                select: {
+                  id: true,
+                  name: true,
+                  shortName: true,
+                  logoUrl: true,
+                },
               },
             },
           },
         },
-      },
-      orderBy: { updatedAt: "desc" },
-    });
+        orderBy: { updatedAt: "desc" },
+        skip: (page - 1) * PAGE_SIZE,
+        take: PAGE_SIZE,
+      }),
+      prisma.rating.count({ where: { userId: user.id } }),
+    ]);
 
-    const result = ratings.map((r) => ({
+    const items = ratings.map((r) => ({
       id: r.id,
       rating: Number(r.rating),
       createdAt: r.createdAt.toISOString(),
@@ -53,7 +63,13 @@ export async function GET() {
       },
     }));
 
-    return NextResponse.json(result);
+    return NextResponse.json({
+      items,
+      page,
+      pageSize: PAGE_SIZE,
+      total,
+      hasMore: page * PAGE_SIZE < total,
+    });
   } catch (error) {
     console.error("Erreur GET /api/user/ratings:", error);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
