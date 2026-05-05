@@ -23,6 +23,8 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 import { JerseyNavigator } from "@/components/jerseys/jersey-navigator";
 
+export const dynamic = "force-dynamic";
+
 interface JerseyPageProps {
   params: Promise<{
     leagueId: string;

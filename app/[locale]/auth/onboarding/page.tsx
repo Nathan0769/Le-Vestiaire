@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 import { OnboardingFavoriteClub } from "@/components/auth/onboarding-favorite-club";

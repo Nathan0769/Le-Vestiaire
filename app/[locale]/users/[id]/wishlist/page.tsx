@@ -12,6 +12,8 @@ import { supabaseAdmin } from "@/lib/supabase-admin";
 import { getTranslations } from "next-intl/server";
 import type { FriendshipStatus } from "@/types/friendship";
 
+export const dynamic = "force-dynamic";
+
 interface PublicWishlistPageProps {
   params: Promise<{ id: string }>;
 }

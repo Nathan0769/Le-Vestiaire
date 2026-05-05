@@ -10,13 +10,9 @@ import { hasAnalyticsConsent } from "@/lib/cookie-consent";
  * Conforme RGPD/CNIL
  */
 export function AnalyticsWrapper() {
-  const [hasConsent, setHasConsent] = useState(false);
+  const [hasConsent, setHasConsent] = useState(() => hasAnalyticsConsent());
 
   useEffect(() => {
-    // Vérifie le consentement au montage
-    setHasConsent(hasAnalyticsConsent());
-
-    // Écoute les changements de cookies (pour mise à jour en temps réel)
     const interval = setInterval(() => {
       setHasConsent(hasAnalyticsConsent());
     }, 1000);

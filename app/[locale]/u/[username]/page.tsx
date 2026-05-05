@@ -2,6 +2,8 @@ import { notFound, redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 
+export const dynamic = "force-dynamic";
+
 interface UsernameRedirectProps {
   params: Promise<{ username: string }>;
 }

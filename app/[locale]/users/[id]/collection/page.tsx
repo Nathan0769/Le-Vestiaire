@@ -13,6 +13,8 @@ import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { FriendshipStatus } from "@/types/friendship";
 
+export const dynamic = "force-dynamic";
+
 interface PublicCollectionPageProps {
   params: Promise<{ id: string }>;
 }

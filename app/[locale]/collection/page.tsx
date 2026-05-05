@@ -11,6 +11,8 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title:
     "Ma Collection de Maillots de Foot | Le Vestiaire - Gérez et Cataloguez vos Maillots",

@@ -1,4 +1,6 @@
 import { redirect } from "next/navigation";
+
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { MyProposalsList } from "@/components/proposals/my-proposals-list";

@@ -26,7 +26,10 @@ const themeOptions = [
 
 export function ThemeColorSelect() {
   const t = useTranslations("Profile.themeColor");
-  const [theme, setTheme] = useState("blue");
+  const [theme, setTheme] = useState(() => {
+    const stored = localStorage.getItem("theme-color");
+    return stored && themeOptions.includes(stored) ? stored : "blue";
+  });
 
   const applyTheme = (newTheme: string) => {
     document.documentElement.classList.forEach((cls) => {
@@ -38,11 +41,8 @@ export function ThemeColorSelect() {
   };
 
   useEffect(() => {
-    const stored = localStorage.getItem("theme-color");
-    const initialTheme =
-      stored && themeOptions.includes(stored) ? stored : "blue";
-    setTheme(initialTheme);
-    applyTheme(initialTheme);
+    applyTheme(theme);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChange = (value: string) => {

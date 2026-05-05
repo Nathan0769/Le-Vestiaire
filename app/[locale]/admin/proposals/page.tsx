@@ -4,6 +4,8 @@ import { ProposalsTabs } from "@/components/admin/proposals/proposals-tabs";
 import { Shield } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

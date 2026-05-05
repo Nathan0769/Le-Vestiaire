@@ -3,6 +3,8 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { redirect } from "next/navigation";
 import { SettingsClient } from "@/components/settings/settings-client";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Paramètres - Le Vestiaire Foot",
   description: "Gérez les paramètres de votre compte Le Vestiaire Foot.",
