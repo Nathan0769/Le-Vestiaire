@@ -8,14 +8,14 @@ const BRAND_STATIC_DATA: Record<
   adidas: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/logo.png",
     logoDark:
-      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/logo-white.jpeg",
+      "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/adidas/logo-white-2.webp",
     color: "#000000",
     scanAvailable: false,
   },
   nike: {
     logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/logo.png",
     logoDark:
-      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/logo-white.jpeg",
+      "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/nike/logo-white.webp",
     color: "#FF3B00",
     scanAvailable: false,
   },
