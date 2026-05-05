@@ -124,7 +124,10 @@
       "emailRequired": "Email requis",
       "emailInvalid": "Email invalide",
       "passwordRequired": "Mot de passe requis",
-      "passwordTooShort": "Au moins 8 caractères",
+      "passwordTooShort": "Au moins 8 caractères requis",
+      "passwordNoUppercase": "Au moins une majuscule requise",
+      "passwordNoNumber": "Au moins un chiffre requis",
+      "passwordNoSpecial": "Au moins un caractère spécial requis",
       "passwordMismatch": "Les mots de passe ne correspondent pas",
       "signupError": "Erreur lors de l'inscription"
     }
@@ -1716,6 +1719,9 @@
       "title": "Sécurité",
       "passwordMismatch": "Les nouveaux mots de passe ne correspondent pas",
       "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+      "passwordNoUppercase": "Le mot de passe doit contenir au moins une majuscule",
+      "passwordNoNumber": "Le mot de passe doit contenir au moins un chiffre",
+      "passwordNoSpecial": "Le mot de passe doit contenir au moins un caractère spécial",
       "changeSuccess": "Mot de passe modifié avec succès",
       "changeError": "Erreur lors du changement de mot de passe",
       "googleOnlyMessage": "Votre compte est connecté via Google. La sécurité de votre compte est gérée par Google. Vous pouvez modifier votre mot de passe dans les paramètres de votre compte Google.",
@@ -2268,6 +2274,10 @@
     "errors": {
       "invalidToken": "Ce lien est invalide ou a expiré. Veuillez refaire une demande.",
       "passwordMismatch": "Les mots de passe ne correspondent pas.",
+      "passwordTooShort": "Au moins 8 caractères requis",
+      "passwordNoUppercase": "Au moins une majuscule requise",
+      "passwordNoNumber": "Au moins un chiffre requis",
+      "passwordNoSpecial": "Au moins un caractère spécial requis",
       "resetError": "Une erreur est survenue. Veuillez réessayer."
     },
     "backToLogin": "Se connecter"
