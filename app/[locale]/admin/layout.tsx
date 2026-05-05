@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/get-current-user";
 
+export const dynamic = "force-dynamic";
+
 /**
  * Layout protégé pour les pages admin
  * Seuls les utilisateurs avec le rôle "admin" ou "superadmin" peuvent accéder
