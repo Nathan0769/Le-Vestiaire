@@ -124,7 +124,10 @@
       "emailRequired": "Email requerido",
       "emailInvalid": "Email inválido",
       "passwordRequired": "Contraseña requerida",
-      "passwordTooShort": "Al menos 8 caracteres",
+      "passwordTooShort": "Se requieren al menos 8 caracteres",
+      "passwordNoUppercase": "Se requiere al menos una mayúscula",
+      "passwordNoNumber": "Se requiere al menos un número",
+      "passwordNoSpecial": "Se requiere al menos un carácter especial",
       "passwordMismatch": "Las contraseñas no coinciden",
       "signupError": "Error durante el registro"
     }
@@ -1719,6 +1722,9 @@
       "title": "Seguridad",
       "passwordMismatch": "Las nuevas contraseñas no coinciden",
       "passwordTooShort": "La contraseña debe tener al menos 8 caracteres",
+      "passwordNoUppercase": "La contraseña debe contener al menos una mayúscula",
+      "passwordNoNumber": "La contraseña debe contener al menos un número",
+      "passwordNoSpecial": "La contraseña debe contener al menos un carácter especial",
       "changeSuccess": "Contraseña cambiada con éxito",
       "changeError": "Error al cambiar la contraseña",
       "googleOnlyMessage": "Su cuenta está conectada a través de Google. La seguridad de su cuenta es administrada por Google. Puede cambiar su contraseña en la configuración de su cuenta de Google.",
@@ -2271,6 +2277,10 @@
     "errors": {
       "invalidToken": "Este enlace es inválido o ha expirado. Por favor, haz una nueva solicitud.",
       "passwordMismatch": "Las contraseñas no coinciden.",
+      "passwordTooShort": "Se requieren al menos 8 caracteres",
+      "passwordNoUppercase": "Se requiere al menos una mayúscula",
+      "passwordNoNumber": "Se requiere al menos un número",
+      "passwordNoSpecial": "Se requiere al menos un carácter especial",
       "resetError": "Ha ocurrido un error. Por favor, inténtalo de nuevo."
     },
     "backToLogin": "Iniciar sesión"

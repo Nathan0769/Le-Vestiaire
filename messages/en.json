@@ -124,7 +124,10 @@
       "emailRequired": "Email required",
       "emailInvalid": "Invalid email",
       "passwordRequired": "Password required",
-      "passwordTooShort": "At least 8 characters",
+      "passwordTooShort": "At least 8 characters required",
+      "passwordNoUppercase": "At least one uppercase letter required",
+      "passwordNoNumber": "At least one number required",
+      "passwordNoSpecial": "At least one special character required",
       "passwordMismatch": "Passwords do not match",
       "signupError": "Error during sign up"
     }
@@ -1719,6 +1722,9 @@
       "title": "Security",
       "passwordMismatch": "New passwords do not match",
       "passwordTooShort": "Password must be at least 8 characters",
+      "passwordNoUppercase": "Password must contain at least one uppercase letter",
+      "passwordNoNumber": "Password must contain at least one number",
+      "passwordNoSpecial": "Password must contain at least one special character",
       "changeSuccess": "Password changed successfully",
       "changeError": "Error changing password",
       "googleOnlyMessage": "Your account is connected via Google. Your account security is managed by Google. You can change your password in your Google account settings.",
@@ -2271,6 +2277,10 @@
     "errors": {
       "invalidToken": "This link is invalid or has expired. Please make a new request.",
       "passwordMismatch": "Passwords do not match.",
+      "passwordTooShort": "At least 8 characters required",
+      "passwordNoUppercase": "At least one uppercase letter required",
+      "passwordNoNumber": "At least one number required",
+      "passwordNoSpecial": "At least one special character required",
       "resetError": "An error occurred. Please try again."
     },
     "backToLogin": "Log in"

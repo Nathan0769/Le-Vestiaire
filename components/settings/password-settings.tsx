@@ -9,6 +9,7 @@ import { Shield } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { validatePasswordStrength } from "@/lib/password-validation";
 
 interface PasswordSettingsProps {
   hasPassword: boolean;
@@ -30,8 +31,9 @@ export function PasswordSettings({ isGoogleOnly }: PasswordSettingsProps) {
       return;
     }
 
-    if (passwordData.newPassword.length < 8) {
-      toast.error(t("passwordTooShort"));
+    const pwdError = validatePasswordStrength(passwordData.newPassword);
+    if (pwdError) {
+      toast.error(t(pwdError));
       return;
     }
 

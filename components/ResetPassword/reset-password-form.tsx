@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useTranslations } from "next-intl";
+import { validatePasswordStrength } from "@/lib/password-validation";
 
 interface ResetPasswordFormProps extends React.ComponentProps<"div"> {
   token: string | null;
@@ -53,6 +54,12 @@ export function ResetPasswordForm({ token, className, ...props }: ResetPasswordF
 
     if (password !== passwordConfirm) {
       setErrorMsg(t("errors.passwordMismatch"));
+      return;
+    }
+
+    const pwdError = validatePasswordStrength(password);
+    if (pwdError) {
+      setErrorMsg(t(`errors.${pwdError}`));
       return;
     }
 

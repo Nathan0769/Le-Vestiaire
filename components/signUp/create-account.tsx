@@ -19,6 +19,7 @@ import { GoogleIcon } from "../icons/Google-icon";
 import { handleGoogleSignIn } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { validatePasswordStrength } from "@/lib/password-validation";
 
 const formDefaults = {
   firstName: "",
@@ -91,7 +92,10 @@ export default function SignupPage({
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))
       errors.email = t("errors.emailInvalid");
     if (!password) errors.password = t("errors.passwordRequired");
-    else if (password.length < 8) errors.password = t("errors.passwordTooShort");
+    else {
+      const pwdError = validatePasswordStrength(password);
+      if (pwdError) errors.password = t(`errors.${pwdError}`);
+    }
     if (confirmPassword !== password)
       errors.confirmPassword = t("errors.passwordMismatch");
 
