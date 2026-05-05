@@ -83,6 +83,9 @@ export async function generateMetadata({
         "max-snippet": -1,
       },
     },
+    other: {
+      "google-adsense-account": "ca-pub-1296292175464272",
+    },
   };
 }
 
