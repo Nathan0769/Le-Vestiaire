@@ -7,6 +7,8 @@ import WishlistLanding from "@/components/wishlist/wishlist-landing";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title:
     "Ma Wishlist de Maillots de Foot | Le Vestiaire - Liste d'Envies à Partager",

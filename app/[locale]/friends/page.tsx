@@ -4,6 +4,8 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { redirect } from "next/navigation";
 import { FriendsClient } from "@/components/friends/friends-client";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Mes amis - Le Vestiaire Foot",
   description: "Gérez vos amis et consultez leurs collections de maillots.",

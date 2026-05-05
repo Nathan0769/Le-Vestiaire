@@ -16,6 +16,8 @@ import { FAQSection } from "@/components/home/faq-section";
 import { FeaturesSection } from "@/components/home/features-section";
 import { StatsSection } from "@/components/home/stats-section";
 
+export const dynamic = "force-dynamic";
+
 export const revalidate = 3600;
 
 export async function generateMetadata({

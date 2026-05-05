@@ -5,6 +5,8 @@ import { getTranslations } from "next-intl/server";
 import { CollectionStatsView } from "@/components/collection/stats/collection-stats-view";
 import { BarChart3 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title:
     "Statistiques de Collection | Le Vestiaire - Analysez votre Collection de Maillots",

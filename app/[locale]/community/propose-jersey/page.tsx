@@ -4,6 +4,8 @@ import { ProposeJerseyForm } from "@/components/proposals/propose-jersey-form";
 import { Lightbulb } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
+export const dynamic = "force-dynamic";
+
 export async function generateMetadata({
   params,
 }: {

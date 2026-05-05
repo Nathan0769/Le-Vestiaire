@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useState, useEffect } from "react";
+import { FormEvent, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { authClient } from "@/lib/auth-client";
@@ -28,12 +28,7 @@ export function LoginForm({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
-  const [lastLoginMethod, setLastLoginMethod] = useState<string | null>(null);
-
-  useEffect(() => {
-    const method = authClient.getLastUsedLoginMethod();
-    setLastLoginMethod(method);
-  }, []);
+  const [lastLoginMethod] = useState<string | null>(() => authClient.getLastUsedLoginMethod());
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

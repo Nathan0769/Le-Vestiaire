@@ -13,6 +13,8 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 
+export const dynamic = "force-dynamic";
+
 type Props = {
   params: Promise<{
     leagueId: string;
