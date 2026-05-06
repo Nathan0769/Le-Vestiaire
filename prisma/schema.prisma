@@ -417,3 +417,21 @@ model PushToken {
   @@index([userId])
   @@map("push_tokens")
 }
+
+model CfsPromo {
+  id           String   @id @default(cuid())
+  name         String
+  imageUrl     String
+  price        Decimal
+  promoPrice   Decimal
+  affiliateUrl String
+  club         String?
+  brand        String?
+  isActive     Boolean  @default(true)
+  position     Int      @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cfs_promos")
+}

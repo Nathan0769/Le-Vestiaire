@@ -15,6 +15,7 @@ import type {
 import { FAQSection } from "@/components/home/faq-section";
 import { FeaturesSection } from "@/components/home/features-section";
 import { StatsSection } from "@/components/home/stats-section";
+import { CfsPromoSection } from "@/components/home/cfs-promo-section";
 
 export const dynamic = "force-dynamic";
 
@@ -378,6 +379,27 @@ async function getGlobalStats(): Promise<{
   return { userCount, jerseyCount, clubCount };
 }
 
+async function getCfsPromos() {
+  try {
+    return await prisma.cfsPromo.findMany({
+      where: { isActive: true },
+      orderBy: [{ position: "asc" }, { createdAt: "desc" }],
+      select: {
+        id: true,
+        name: true,
+        imageUrl: true,
+        price: true,
+        promoPrice: true,
+        affiliateUrl: true,
+        club: true,
+        brand: true,
+      },
+    });
+  } catch {
+    return [];
+  }
+}
+
 async function getHomeData(userId?: string): Promise<{
   topRatedJerseys: TopRatedJersey[];
   recentJerseys: RecentJersey[];
@@ -551,8 +573,8 @@ export default async function HomePage({
   const { locale } = await params;
   const user = await getCurrentUser();
 
-  const { topRatedJerseys, recentJerseys, userStats, globalStats } =
-    await getHomeData(user?.id);
+  const [{ topRatedJerseys, recentJerseys, userStats, globalStats }, cfsPromos] =
+    await Promise.all([getHomeData(user?.id), getCfsPromos()]);
 
   const content = schemaContent[locale] ?? schemaContent.fr;
   const pageUrl = `https://le-vestiaire-foot.fr/${locale}`;
@@ -660,6 +682,11 @@ export default async function HomePage({
       {user && userStats && <UserStatsSection userStats={userStats} />}
       <TopRatedSection jerseys={topRatedJerseys} />
       <RecentSection jerseys={recentJerseys} />
+      <CfsPromoSection promos={cfsPromos.map((p) => ({
+        ...p,
+        price: p.price.toString(),
+        promoPrice: p.promoPrice.toString(),
+      }))} />
 
       <StatsSection
         userCount={globalStats.userCount}
