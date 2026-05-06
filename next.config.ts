@@ -37,7 +37,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
       // Images : Supabase storage, R2, pixels GA/GTM, blobs locaux, médias clubs externes
-      "img-src 'self' data: blob: https://hioeyddfdoekpplonsxa.supabase.co https://*.r2.dev https://www.google-analytics.com https://www.googletagmanager.com https://media.ol.fr",
+      "img-src 'self' data: blob: https://hioeyddfdoekpplonsxa.supabase.co https://*.r2.dev https://www.google-analytics.com https://www.googletagmanager.com https://media.ol.fr https://classicfootballshirts.co.uk https://*.classicfootballshirts.co.uk",
       // Fetch/XHR/WS : Supabase HTTP + Realtime WS, R2, GA4 (deux endpoints selon région)
       "connect-src 'self' https://hioeyddfdoekpplonsxa.supabase.co wss://hioeyddfdoekpplonsxa.supabase.co https://*.r2.dev https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",
       "media-src 'none'",

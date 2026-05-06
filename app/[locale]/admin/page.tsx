@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { getCurrentUser } from "@/lib/get-current-user";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -7,9 +9,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Users, ShieldCheck, UserCheck } from "lucide-react";
+import { Users, ShieldCheck, UserCheck, Tag } from "lucide-react";
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const user = await getCurrentUser();
+
+  if (!user) {
+    redirect("/auth/login");
+  }
+
+  const isSuperAdmin = user.role === "superadmin";
+
   return (
     <div className="space-y-6">
       <div>
@@ -76,6 +86,27 @@ export default function AdminPage() {
             </Link>
           </CardContent>
         </Card>
+
+        {isSuperAdmin && (
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Tag className="h-5 w-5" />
+                <CardTitle>Promos CFS</CardTitle>
+              </div>
+              <CardDescription>
+                Gérer les maillots en promo affichés sur la homepage
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/admin/cfs-promos">
+                <Button className="w-full cursor-pointer">
+                  Gérer les promos
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );
