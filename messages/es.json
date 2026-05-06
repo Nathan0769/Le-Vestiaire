@@ -14,7 +14,9 @@
     "friendsCollections": "Colecciones de Amigos",
     "jerseySuggestions": "Sugerencias de Camisetas",
     "openMenu": "Abrir menú",
-    "closeMenu": "Cerrar menú"
+    "closeMenu": "Cerrar menú",
+    "bonsPlansSectionLabel": "Ofertas",
+    "cfsSalesLink": "Camisetas en oferta CFS"
   },
   "Common": {
     "loading": "Cargando...",
@@ -910,6 +912,12 @@
       "viewAll": "Ver todas las camisetas",
       "new": "Nuevo",
       "recently": "Recientemente"
+    },
+    "cfsPromos": {
+      "title": "Completa tu colección a buen precio",
+      "subtitle": "Selección de camisetas en liquidación de nuestro socio Classic Football Shirts",
+      "cta": "Ver todas las ofertas",
+      "partnerNotice": "Enlace de afiliado — recibimos una comisión por las compras realizadas a través de estos enlaces."
     },
     "userStats": {
       "title": "Tu Colección",

@@ -14,7 +14,9 @@
     "friendsCollections": "Collections des amis",
     "jerseySuggestions": "Suggestion de maillots",
     "openMenu": "Ouvrir le menu",
-    "closeMenu": "Fermer le menu"
+    "closeMenu": "Fermer le menu",
+    "bonsPlansSectionLabel": "Bons plans",
+    "cfsSalesLink": "Maillots soldés CFS"
   },
   "Common": {
     "loading": "Chargement...",
@@ -907,6 +909,12 @@
       "viewAll": "Voir tous les maillots",
       "new": "Nouveau",
       "recently": "Récemment"
+    },
+    "cfsPromos": {
+      "title": "Complétez votre collection à petit prix",
+      "subtitle": "Sélection de maillots en destockage chez notre partenaire Classic Football Shirts",
+      "cta": "Voir tous les bons plans",
+      "partnerNotice": "Lien partenaire — nous percevons une commission sur les achats effectués via ces liens."
     },
     "userStats": {
       "title": "Votre Collection",

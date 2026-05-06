@@ -14,7 +14,9 @@
     "friendsCollections": "Friends' Collections",
     "jerseySuggestions": "Jersey Suggestions",
     "openMenu": "Open menu",
-    "closeMenu": "Close menu"
+    "closeMenu": "Close menu",
+    "bonsPlansSectionLabel": "Deals",
+    "cfsSalesLink": "CFS Sale Jerseys"
   },
   "Common": {
     "loading": "Loading...",
@@ -910,6 +912,12 @@
       "viewAll": "View all jerseys",
       "new": "New",
       "recently": "Recently"
+    },
+    "cfsPromos": {
+      "title": "Complete your collection at a great price",
+      "subtitle": "Selection of clearance jerseys from our partner Classic Football Shirts",
+      "cta": "See all deals",
+      "partnerNotice": "Affiliate link — we earn a commission on purchases made through these links."
     },
     "userStats": {
       "title": "Your Collection",
