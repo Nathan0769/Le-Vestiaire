@@ -8,6 +8,7 @@ import { BookOpen, Users, Trophy, Pencil, Plus, Settings } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ProposeDescriptionModal } from "./propose-description-modal";
 import { PlayersDisplay } from "./players-display";
+import { PalmaresDisplay } from "./palmares-display";
 import Link from "next/link";
 
 interface JerseyTabsProps {
@@ -65,8 +66,7 @@ export function JerseyTabs({
           </TabsTrigger>
           <TabsTrigger
             value="achievements"
-            disabled
-            className="gap-1 lg:gap-2 cursor-not-allowed data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
+            className="gap-1 lg:gap-2 cursor-pointer data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm"
           >
             <Trophy className="w-4 h-4 shrink-0" />
             <span className="text-xs lg:text-sm">{t("achievements")}</span>
@@ -175,9 +175,7 @@ export function JerseyTabs({
                   {t("achievements")}
                 </h3>
               </div>
-              <p className="text-muted-foreground text-center py-8">
-                {t("comingSoon")}
-              </p>
+              <PalmaresDisplay clubId={clubId} season={season} />
             </CardContent>
           </Card>
         </TabsContent>

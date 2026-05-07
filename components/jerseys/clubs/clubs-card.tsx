@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Club } from "@prisma/client";
 
 type Props = {
-  club: Club;
+  club: Pick<Club, "id" | "name" | "shortName" | "logoUrl" | "primaryColor" | "leagueId">;
   leagueId: string;
 };
 
