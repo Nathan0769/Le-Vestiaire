@@ -1858,6 +1858,12 @@
       "proposeDescription": "Proposer une description",
       "suggestImprovement": "Suggérer une amélioration"
     },
+    "palmares": {
+      "errorLoading": "Erreur lors du chargement du palmarès",
+      "noTrophies": "Aucun trophée enregistré pour cette saison",
+      "winner": "Vainqueur",
+      "finalist": "Finaliste"
+    },
     "players": {
       "errorLoading": "Erreur lors du chargement des joueurs",
       "noPlayers": "Aucun joueur enregistré pour cette saison",

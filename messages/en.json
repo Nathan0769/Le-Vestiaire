@@ -1861,6 +1861,12 @@
       "proposeDescription": "Propose a description",
       "suggestImprovement": "Suggest an improvement"
     },
+    "palmares": {
+      "errorLoading": "Error loading trophies",
+      "noTrophies": "No trophies recorded for this season",
+      "winner": "Winner",
+      "finalist": "Finalist"
+    },
     "players": {
       "errorLoading": "Error loading players",
       "noPlayers": "No players registered for this season",

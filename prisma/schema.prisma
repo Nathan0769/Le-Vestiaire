@@ -184,20 +184,38 @@ model UserJersey {
 }
 
 model Club {
-  id           String @id @default(cuid())
-  name         String
-  shortName    String
-  leagueId     String
-  logoUrl      String
-  primaryColor String
+  id                String  @id @default(cuid())
+  name              String
+  shortName         String
+  leagueId          String
+  logoUrl           String
+  primaryColor      String
+  apiFootballTeamId Int?
 
   league          League           @relation(fields: [leagueId], references: [id])
   jerseys         Jersey[]
   favoriteBy      User[]
   jerseyProposals JerseyProposal[]
   seasonPlayers   SeasonPlayer[]
+  trophies        ClubTrophy[]
 
   @@map("clubs")
+}
+
+model ClubTrophy {
+  id          String @id @default(cuid())
+  clubId      String
+  competition String
+  country     String
+  season      String
+  place       String
+
+  club      Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  fetchedAt DateTime @default(now())
+
+  @@unique([clubId, competition, season, place])
+  @@index([clubId, season])
+  @@map("club_trophies")
 }
 
 model League {

@@ -32,7 +32,7 @@ type Props = {
     season?: string;
   };
   leagueId: string;
-  club: Club;
+  club: Pick<Club, "id" | "name" | "shortName" | "logoUrl" | "primaryColor" | "leagueId">;
   showFullInfo?: boolean;
   isAdmin?: boolean;
 };

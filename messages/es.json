@@ -1861,6 +1861,12 @@
       "proposeDescription": "Proponer una descripción",
       "suggestImprovement": "Sugerir una mejora"
     },
+    "palmares": {
+      "errorLoading": "Error al cargar los trofeos",
+      "noTrophies": "No hay trofeos registrados para esta temporada",
+      "winner": "Ganador",
+      "finalist": "Finalista"
+    },
     "players": {
       "errorLoading": "Error al cargar los jugadores",
       "noPlayers": "No hay jugadores registrados para esta temporada",
