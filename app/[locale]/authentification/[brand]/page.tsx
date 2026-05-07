@@ -4,6 +4,7 @@ import { BrandGuideComponent } from "@/components/authentification/brand-guide";
 import { ScanPlaceholder } from "@/components/authentification/scan-placeholder";
 import { SchemaMarkup } from "@/components/authentification/schema-markup";
 import { getBrandGuide, getBrandInfo } from "@/lib/authentication-content";
+import { AdBanner } from "@/components/authentification/ad-banner";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -99,6 +100,8 @@ export default async function BrandAuthPage({ params }: BrandPageProps) {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+
+        <AdBanner />
 
         <div className="max-w-full overflow-hidden">
           <BrandGuideComponent guide={guide} />

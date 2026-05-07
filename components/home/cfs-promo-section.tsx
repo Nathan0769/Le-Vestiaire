@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Button } from "@/components/ui/button";
 import { CFS_CLEARANCE_URL } from "@/lib/cfs-affiliate";
 
@@ -16,18 +17,20 @@ interface CfsPromoSectionProps {
   promos: CfsPromo[];
 }
 
-export function CfsPromoSection({ promos }: CfsPromoSectionProps) {
+export async function CfsPromoSection({ promos }: CfsPromoSectionProps) {
   if (promos.length === 0) return null;
+
+  const t = await getTranslations("HomePage.cfsPromos");
 
   return (
     <section className="py-16 px-6 bg-muted/30">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Complétez votre collection à petit prix
+            {t("title")}
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Sélection de maillots en destockage chez notre partenaire Classic Football Shirts
+            {t("subtitle")}
           </p>
         </div>
 
@@ -94,11 +97,11 @@ export function CfsPromoSection({ promos }: CfsPromoSectionProps) {
               target="_blank"
               rel="noopener noreferrer nofollow"
             >
-              Voir tous les bons plans
+              {t("cta")}
             </a>
           </Button>
           <p className="text-xs text-muted-foreground">
-            Lien partenaire — nous percevons une commission sur les achats effectués via ces liens.
+            {t("partnerNotice")}
           </p>
         </div>
       </div>

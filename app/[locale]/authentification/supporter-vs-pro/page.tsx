@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ComparisonGuide } from "@/components/authentification/comparison-guide";
 import { getSupporterVsProGuide } from "@/lib/authentication-content";
+import { AdBanner } from "@/components/authentification/ad-banner";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -55,6 +56,8 @@ export default async function SupporterVsProPage() {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
+
+      <AdBanner />
 
       <div className="max-w-full overflow-hidden">
         <ComparisonGuide guide={guide} />
