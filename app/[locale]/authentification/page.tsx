@@ -1,6 +1,7 @@
 import { Shield } from "lucide-react";
 import Link from "next/link";
 import { BrandGrid } from "@/components/authentification/brand-grid";
+import { AdBanner } from "@/components/authentification/ad-banner";
 import { getBrands, getSupporterVsProGuide } from "@/lib/authentication-content";
 import { Card, CardContent } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
@@ -71,6 +72,8 @@ export default async function AuthentificationPage() {
       </div>
 
       <BrandGrid brands={brands} />
+
+      <AdBanner />
 
       <div className="space-y-3">
         <h2 className="font-semibold text-lg">Guides comparatifs</h2>

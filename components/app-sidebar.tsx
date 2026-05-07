@@ -242,7 +242,7 @@ export function AppSidebar() {
 
         <div className="mt-auto">
           <SidebarGroup>
-            <SidebarGroupLabel>Bons plans</SidebarGroupLabel>
+            <SidebarGroupLabel>{t("bonsPlansSectionLabel")}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
                 <SidebarMenuItem>
@@ -254,7 +254,7 @@ export function AppSidebar() {
                       className="flex items-center w-full"
                     >
                       <Tag className="h-5 w-5" />
-                      <span>Maillots soldés CFS</span>
+                      <span>{t("cfsSalesLink")}</span>
                     </a>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
