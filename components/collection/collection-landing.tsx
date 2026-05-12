@@ -30,56 +30,51 @@ const AnimatedTestimonials = dynamic(
   { ssr: false }
 );
 
-export default function CollectionLanding() {
+export default function CollectionLanding({ r2JerseysUrl }: { r2JerseysUrl: string }) {
   const t = useTranslations("Collection.landing");
   const tCondition = useTranslations("Condition");
   const tJerseyType = useTranslations("JerseyType");
+  const r2 = (path: string) => `${r2JerseysUrl.replace(/\/$/, "")}/${path}`;
   const mockCollection = [
     {
       id: 1,
       club: "PSG",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/ligue-1/psg/2025-26/home.jpg",
+      image: r2("ligue-1/psg/2025-26/home.jpg"),
       season: "2025/26",
       type: "HOME" as const,
     },
     {
       id: 2,
       club: "Real Madrid",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/la-liga/real-madrid/2022-23/home.jpg",
+      image: r2("la-liga/real-madrid/2022-23/home.jpg"),
       season: "2022/23",
       type: "HOME" as const,
     },
     {
       id: 3,
       club: "Manchester United",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/premier-league/manchester-united/2022-23/home.jpg",
+      image: r2("premier-league/manchester-united/2022-23/home.jpg"),
       season: "2022/23",
       type: "HOME" as const,
     },
     {
       id: 4,
       club: "Barcelone",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/la-liga/barcelone/2022-23/third.jpg",
+      image: r2("la-liga/barcelone/2022-23/third.jpg"),
       season: "2022/23",
       type: "THIRD" as const,
     },
     {
       id: 5,
       club: "OL",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/ligue-1/lyon/2023-24/domicile.webp",
+      image: r2("ligue-1/lyon/2023-24/domicile.webp"),
       season: "2023/24",
       type: "HOME" as const,
     },
     {
       id: 6,
       club: "Liverpool",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/premier-league/liverpool/2024-25/home.jpg",
+      image: r2("premier-league/liverpool/2024-25/home.jpg"),
       season: "2024/25",
       type: "HOME" as const,
     },

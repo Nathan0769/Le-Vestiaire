@@ -40,7 +40,7 @@ export default async function WishlistPage() {
   const user = await getCurrentUser();
 
   if (!user) {
-    return <WishlistLanding />;
+    return <WishlistLanding r2JerseysUrl={process.env.CLOUDFLARE_R2_PUBLIC_URL!} />;
   }
 
   let wishlistItems;
