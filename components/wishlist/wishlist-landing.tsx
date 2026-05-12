@@ -35,40 +35,37 @@ const AnimatedTestimonials = dynamic(
   { ssr: false }
 );
 
-export default function WishlistLanding() {
+export default function WishlistLanding({ r2JerseysUrl }: { r2JerseysUrl: string }) {
   const t = useTranslations("Wishlist.landing");
   const tJerseyType = useTranslations("JerseyType");
+  const r2 = (path: string) => `${r2JerseysUrl.replace(/\/$/, "")}/${path}`;
 
   const mockWishlist = [
     {
       id: 1,
       club: "Arsenal",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/premier-league/arsenal/2020-21/home.jpg",
+      image: r2("premier-league/arsenal/2020-21/home.jpg"),
       season: "2020/21",
       type: "HOME" as const,
     },
     {
       id: 2,
       club: "AC Milan",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/serie-a/ac-milan/2023-24/away.jpg",
+      image: r2("serie-a/ac-milan/2023-24/away.jpg"),
       season: "2023/24",
       type: "AWAY" as const,
     },
     {
       id: 3,
       club: "Inter Miami",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/mls/inter-miami/2024/home.jpg",
+      image: r2("mls/inter-miami/2024/home.jpg"),
       season: "2024",
       type: "HOME" as const,
     },
     {
       id: 4,
       club: "As Roma",
-      image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/jerseys/serie-a/roma/2023-24/third.jpg",
+      image: r2("serie-a/roma/2023-24/third.jpg"),
       season: "2023/24",
       type: "THIRD" as const,
     },

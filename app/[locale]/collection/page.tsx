@@ -45,7 +45,7 @@ export default async function CollectionPage() {
   const user = await getCurrentUser();
 
   if (!user) {
-    return <CollectionLanding />;
+    return <CollectionLanding r2JerseysUrl={process.env.CLOUDFLARE_R2_PUBLIC_URL!} />;
   }
 
   try {
