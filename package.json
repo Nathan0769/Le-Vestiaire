@@ -2,6 +2,7 @@
   "name": "le-vestiare",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.1.1",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -104,9 +105,24 @@
     "typescript": "^5",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.4",
+    "caniuse-lite": "^1.0.30001751",
     "vitest-mock-extended": "^3.1.0"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "@tailwindcss/oxide",
+      "@vercel/speed-insights",
+      "core-js",
+      "esbuild",
+      "prisma",
+      "puppeteer",
+      "sharp",
+      "unrs-resolver"
+    ]
   }
 }
