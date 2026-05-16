@@ -1,0 +1,2302 @@
+{
+  "Sidebar": {
+    "appName": "The Locker Room",
+    "home": "Início",
+    "collection": "A Minha Coleção",
+    "wishlist": "A Minha Lista de Desejos",
+    "jerseys": "Camisolas",
+    "community": "Comunidade",
+    "leaderboard": "Classificação",
+    "authentication": "Autenticação",
+    "pricing": "Subscrição",
+    "settings": "Conta",
+    "friends": "Amigos",
+    "friendsCollections": "Coleções dos Amigos",
+    "jerseySuggestions": "Sugestões de Camisolas",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "bonsPlansSectionLabel": "Promoções",
+    "cfsSalesLink": "Camisolas em Saldo CFS"
+  },
+  "Common": {
+    "loading": "A carregar...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "add": "Adicionar",
+    "search": "Pesquisar",
+    "back": "Voltar",
+    "next": "Seguinte",
+    "previous": "Anterior",
+    "confirm": "Confirmar",
+    "close": "Fechar"
+  },
+  "JerseyType": {
+    "HOME": "Principal",
+    "AWAY": "Alternativo",
+    "THIRD": "Terceiro",
+    "FOURTH": "Quarto",
+    "GOALKEEPER": "Guarda-Redes",
+    "SPECIAL": "Especial",
+    "HALLOWEEN": "Halloween",
+    "ANNIVERSARY": "Aniversário",
+    "CENTENAIRE": "Centenário",
+    "OKTOBERFEST": "Oktoberfest",
+    "HUMANRACE": "Humanrace",
+    "ONE_PLANET": "One Planet",
+    "OCTOBRE_ROSE": "Outubro Rosa",
+    "ANTI_RACISME": "Antirracismo",
+    "HOMMAGE": "Homenagem",
+    "RETRO": "Retro",
+    "NOUVEL_AN_CHINOIS": "Ano Novo Chinês",
+    "OFF_WHITE": "Off-White",
+    "KOCHE": "Koché",
+    "CHAMPION": "Campeão"
+  },
+  "PlayerPosition": {
+    "GOALKEEPER": "Guarda-Redes",
+    "DEFENDER": "Defesa",
+    "MIDFIELDER": "Médio",
+    "FORWARD": "Avançado"
+  },
+  "PlayerPositionPlural": {
+    "GOALKEEPER": "Guarda-Redes",
+    "DEFENDER": "Defesas",
+    "MIDFIELDER": "Médios",
+    "FORWARD": "Avançados"
+  },
+  "Size": {
+    "XS": "XS",
+    "S": "S",
+    "M": "M",
+    "L": "L",
+    "XL": "XL",
+    "XXL": "XXL"
+  },
+  "Condition": {
+    "MINT": "Impecável",
+    "EXCELLENT": "Excelente",
+    "GOOD": "Boa",
+    "FAIR": "Razoável",
+    "POOR": "Má"
+  },
+  "Auth": {
+    "login": "Iniciar sessão",
+    "logout": "Terminar sessão",
+    "signup": "Criar conta",
+    "email": "E-mail",
+    "password": "Palavra-passe",
+    "forgotPassword": "Esqueceu a palavra-passe?",
+    "noAccount": "Não tem conta?",
+    "hasAccount": "Já tem conta?",
+    "continueWithGoogle": "Continuar com o Google"
+  },
+  "SignUp": {
+    "title": "Criar uma conta",
+    "subtitle": "Junte-se à comunidade de colecionadores de camisolas",
+    "continueWithGoogle": "Continuar com o Google",
+    "orContinueWith": "Ou continuar com",
+    "form": {
+      "firstName": "Primeiro nome",
+      "lastName": "Apelido",
+      "email": "E-mail",
+      "password": "Palavra-passe",
+      "confirmPassword": "Confirmar palavra-passe",
+      "required": "*",
+      "passwordPlaceholder": "••••••••"
+    },
+    "button": {
+      "creating": "A criar conta…",
+      "create": "Criar a minha conta"
+    },
+    "hasAccount": "Já tem conta?",
+    "signIn": "Iniciar sessão",
+    "terms": {
+      "text": "Ao clicar em criar a minha conta, aceita os nossos",
+      "termsOfService": "Termos de Serviço",
+      "and": "e",
+      "privacyPolicy": "Política de Privacidade"
+    },
+    "errors": {
+      "firstNameRequired": "Primeiro nome obrigatório",
+      "lastNameRequired": "Apelido obrigatório",
+      "emailRequired": "E-mail obrigatório",
+      "emailInvalid": "E-mail inválido",
+      "passwordRequired": "Palavra-passe obrigatória",
+      "passwordTooShort": "Mínimo de 8 caracteres",
+      "passwordNoUppercase": "Pelo menos uma letra maiúscula",
+      "passwordNoNumber": "Pelo menos um número",
+      "passwordNoSpecial": "Pelo menos um carácter especial",
+      "passwordMismatch": "As palavras-passe não coincidem",
+      "signupError": "Erro ao criar conta"
+    }
+  },
+  "Collection": {
+    "button": {
+      "loading": "A carregar...",
+      "inCollection": "Na minha coleção",
+      "addToCollection": "Adicionar à minha coleção",
+      "toast": {
+        "mustBeConnected": "Tem de estar autenticado para adicionar à sua coleção",
+        "added": "Camisola adicionada à sua coleção",
+        "removed": "Camisola removida da sua coleção",
+        "error": "Ocorreu um erro",
+        "connectionError": "Erro de ligação. Tente novamente.",
+        "manageError": "Tem de estar autenticado para gerir a sua coleção"
+      }
+    },
+    "stats": {
+      "owned": "Camisolas na coleção",
+      "jerseyInCollection": "Camisola na sua coleção",
+      "jerseysInCollection": "Camisolas na sua coleção",
+      "favoriteLeagues": "Ligas favoritas",
+      "conditions": "Condições",
+      "source": "Origem",
+      "purchased": "Compradas",
+      "gifts": "Ofertas",
+      "mysteryBox": "Caixa mistério"
+    },
+    "landing": {
+      "badge": "Gestão de Coleção",
+      "title": "Gira a sua coleção de",
+      "titleHighlight": "camisolas de futebol",
+      "subtitle": "Catalogue, organize e acompanhe a evolução da sua coleção. Junte-se a",
+      "subtitleHighlight": "mais de 100 colecionadores",
+      "subtitleEnd": "apaixonados por camisolas.",
+      "signIn": "Iniciar sessão",
+      "signUp": "Criar uma conta",
+      "exampleTitle": "Uma coleção, mil possibilidades",
+      "exampleSubtitle": "Exemplo de coleção com 24 camisolas",
+      "statsTotal": "Total",
+      "statsTotalDesc": "Camisolas na coleção",
+      "statsValue": "Valor",
+      "statsValueDesc": "Valor total",
+      "statsLeagues": "Ligas",
+      "statsConditions": "Condições",
+      "moreJerseys": "+ 18 outras camisolas nesta coleção",
+      "createCollection": "Criar a minha coleção",
+      "featuresTitle": "Tudo o que precisa",
+      "featuresSubtitle": "Funcionalidades pensadas para colecionadores",
+      "features": {
+        "catalog": {
+          "title": "Catalogue tudo",
+          "description": "Tamanho, condição, preço de compra, data, personalização... Gira cada detalhe das suas camisolas"
+        },
+        "photos": {
+          "title": "Adicione as suas fotos",
+          "description": "Imorialize a sua coleção com as suas próprias fotos, para além dos visuais oficiais"
+        },
+        "stats": {
+          "title": "Estatísticas detalhadas",
+          "description": "Valor total, distribuição por liga, condições, tipos... Analise a sua coleção"
+        },
+        "evolution": {
+          "title": "Acompanhe a sua evolução",
+          "description": "Veja a sua coleção crescer ao longo do tempo com gráficos"
+        },
+        "security": {
+          "title": "Seguro e privado",
+          "description": "Os seus dados estão protegidos. Escolhe o que partilha com a comunidade"
+        },
+        "friends": {
+          "title": "Compare com amigos",
+          "description": "Adicione amigos, descubra as coleções deles e partilhe a sua paixão"
+        }
+      },
+      "testimonialsTitle": "Eles partilharam a sua coleção",
+      "testimonialsSubtitle": "Milhares de utilizadores satisfeitos",
+      "testimonials": {
+        "thomas": "Finalmente uma app para gerir a minha coleção! As estatísticas por liga são incríveis 🔥",
+        "julie": "Consigo finalmente acompanhar o valor da minha coleção. Interface muito intuitiva!",
+        "alexandre": "A possibilidade de carregar fotos personalizadas é excelente. A minha coleção nunca esteve tão bem organizada."
+      },
+      "ctaTitle": "Pronto para gerir a sua coleção?",
+      "ctaSubtitle": "Catalogue as suas camisolas e acompanhe a evolução da sua coleção em poucos cliques",
+      "ctaButton": "Criar a minha conta gratuita",
+      "ctaSignIn": "Iniciar sessão",
+      "ctaSecure": "100% seguro",
+      "ctaNoCommitment": "Sem compromisso",
+      "faqTitle": "Perguntas frequentes",
+      "faqSubtitle": "Tudo o que precisa de saber sobre Le Vestiaire",
+      "faqs": {
+        "addJersey": {
+          "q": "Como adiciono uma camisola à minha coleção?",
+          "a": "Navegue pelo nosso catálogo de milhares de camisolas, clique numa camisola e depois em «Adicionar à minha coleção». Pode introduzir o tamanho, a condição, o preço de compra e muito mais."
+        },
+        "customPhotos": {
+          "q": "Posso adicionar as minhas próprias fotos?",
+          "a": "Sim! Para além das fotos oficiais, pode carregar as suas próprias fotos para cada camisola da sua coleção."
+        },
+        "privacy": {
+          "q": "A minha coleção é privada?",
+          "a": "Sim, por defeito a sua coleção é privada. Pode optar por partilhá-la com os seus amigos ou manter o anonimato nas classificações."
+        },
+        "pricing": {
+          "q": "A aplicação é gratuita?",
+          "a": "Sim, Le Vestiaire é 100% gratuito para gerir a sua coleção, lista de desejos e usufruir de todas as funcionalidades."
+        }
+      }
+    },
+    "modal": {
+      "add": {
+        "title": "Adicionar à minha coleção",
+        "description": "Introduza os detalhes da sua camisola.",
+        "size": "Tamanho",
+        "sizeRequired": "*",
+        "sizePlaceholder": "Tamanho",
+        "condition": "Condição",
+        "conditionRequired": "*",
+        "conditionPlaceholder": "Condição",
+        "purchasePrice": "Preço de compra (€)",
+        "purchasePricePlaceholder": "Ex: 90.99",
+        "purchaseDate": "Data de compra",
+        "personalization": "Personalização (nome, número...)",
+        "personalizationPlaceholder": "Ex: MESSI 10",
+        "playerName": "Nome do jogador (flocagem)",
+        "playerNamePlaceholder": "Ex: MESSI",
+        "playerNumber": "Número da camisola",
+        "playerNumberPlaceholder": "Ex: 10",
+        "hasTags": "Ainda tem etiquetas",
+        "isGift": "Recebida como oferta",
+        "isFromMysteryBox": "De uma Caixa Mistério",
+        "notes": "Notas pessoais",
+        "notesPlaceholder": "Adicione os seus comentários sobre esta camisola...",
+        "photo": "Foto pessoal (opcional)",
+        "photoClickToAdd": "Clique para adicionar",
+        "photoYourPhoto": "a sua foto",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (máx. 5MB)",
+        "cancel": "Cancelar",
+        "uploadPhoto": "A carregar foto...",
+        "adding": "A adicionar...",
+        "addToCollection": "Adicionar à minha coleção",
+        "toast": {
+          "fileNotImage": "O ficheiro deve ser uma imagem",
+          "fileTooLarge": "A foto não pode exceder 5MB",
+          "sizeRequired": "O tamanho é obrigatório",
+          "conditionRequired": "A condição é obrigatória",
+          "uploadError": "Erro ao carregar a foto"
+        }
+      },
+      "view": {
+        "titleEdit": "Editar a sua camisola",
+        "titleView": "Detalhes da sua camisola",
+        "yourPhoto": "A sua foto",
+        "officialPhoto": "Foto oficial",
+        "modifyPhoto": "Alterar a sua foto",
+        "addPhoto": "Adicionar a sua foto",
+        "choosePhoto": "Escolher uma foto",
+        "withTags": "Com etiquetas",
+        "gift": "Oferta",
+        "mysteryBox": "Caixa mistério",
+        "club": "Clube",
+        "league": "Liga",
+        "type": "Tipo",
+        "season": "Época",
+        "brand": "Marca",
+        "yourJersey": "A sua camisola",
+        "purchasePrice": "Preço de compra",
+        "purchasedOn": "Comprada em",
+        "player": "Jogador",
+        "number": "Número",
+        "personalization": "Personalização",
+        "addedOn": "Adicionada em",
+        "personalNotes": "Notas pessoais",
+        "close": "Fechar",
+        "edit": "Editar",
+        "delete": "Eliminar",
+        "cancel": "Cancelar",
+        "save": "Guardar",
+        "uploading": "A carregar...",
+        "saving": "A guardar...",
+        "size": "Tamanho",
+        "sizeRequired": "*",
+        "condition": "Condição",
+        "conditionRequired": "*",
+        "isGift": "Esta camisola é uma oferta",
+        "isFromMysteryBox": "Camisola recebida numa caixa mistério",
+        "hasTags": "Ainda tem etiquetas",
+        "purchaseDate": "Data de compra",
+        "notes": "Notas pessoais",
+        "personalizationPlaceholder": "Ex: MESSI 10",
+        "playerName": "Nome do jogador (flocagem)",
+        "playerNamePlaceholder": "Ex: MESSI",
+        "playerNumber": "Número da camisola",
+        "playerNumberPlaceholder": "Ex: 10",
+        "notesPlaceholder": "Adicione os seus comentários sobre esta camisola...",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (máx. 5MB)",
+        "purchasePricePlaceholder": "Ex: 90.50",
+        "toast": {
+          "fileNotImage": "O ficheiro deve ser uma imagem",
+          "fileTooLarge": "A foto não pode exceder 5MB",
+          "sizeConditionRequired": "O tamanho e a condição são obrigatórios",
+          "uploadError": "Erro ao carregar a foto",
+          "updated": "Camisola atualizada com sucesso",
+          "error": "Ocorreu um erro",
+          "connectionError": "Erro de ligação. Tente novamente.",
+          "deleted": "Camisola removida da sua coleção"
+        }
+      },
+      "delete": {
+        "title": "Eliminar camisola?",
+        "description": "Tem a certeza de que pretende remover esta camisola da sua coleção? Esta ação não pode ser desfeita.",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar",
+        "deleting": "A eliminar..."
+      }
+    },
+    "grid": {
+      "title": "As suas camisolas",
+      "sortBy": "Ordenar por:",
+      "sortOptions": {
+        "dateDesc": "Mais recentes",
+        "dateAsc": "Mais antigas",
+        "priceDesc": "Preço decrescente",
+        "priceAsc": "Preço crescente",
+        "condition": "Condição",
+        "club": "Clube (A-Z)",
+        "season": "Época"
+      },
+      "noJerseys": "Nenhuma camisola na sua coleção."
+    },
+    "page": {
+      "title": "A Minha Coleção",
+      "jersey": "camisola",
+      "jerseys": "camisolas",
+      "emptyTitle": "A sua coleção está vazia",
+      "emptyDescription": "Comece a construir a sua coleção adicionando as suas primeiras camisolas!",
+      "errorTitle": "Erro ao carregar",
+      "errorDescription": "Ocorreu um erro ao carregar a sua coleção. Atualize a página ou tente novamente mais tarde.",
+      "reload": "Recarregar página"
+    }
+  },
+  "Onboarding": {
+    "step1Title": "Escolha o seu nome de utilizador",
+    "step1Subtitle": "Este é o nome que os outros colecionadores irão ver",
+    "step2Title": "A sua equipa favorita",
+    "step2Subtitle": "Aparecerá na classificação e no seu perfil",
+    "usernamePlaceholder": "O seu nome de utilizador...",
+    "usernameRules": "5 a 20 caracteres, letras, números, - e _",
+    "usernameAvailable": "Nome de utilizador disponível",
+    "usernameUnavailable": "Nome de utilizador já utilizado",
+    "placeholder": "Pesquisar uma equipa...",
+    "cta": "Continuar",
+    "skip": "Ignorar este passo",
+    "bannerText": "Escolha a sua equipa favorita para aparecer na classificação e junto dos seus amigos",
+    "bannerCta": "Escolher a minha equipa"
+  },
+  "CollectionStats": {
+    "title": "Estatísticas da Coleção",
+    "errorTitle": "Erro ao carregar",
+    "errorDescription": "Não foi possível carregar as estatísticas. Tente novamente.",
+    "emptyTitle": "Sem estatísticas disponíveis",
+    "emptyDescription": "Adicione camisolas à sua coleção para ver estatísticas detalhadas.",
+    "tabs": {
+      "overview": "Visão geral",
+      "distribution": "Distribuição",
+      "financial": "Financeiro",
+      "records": "Recordes"
+    },
+    "timeline": {
+      "title": "Evolução da Coleção",
+      "acquisitions": "Aquisições",
+      "jerseys": "Camisolas",
+      "jerseysAdded": "{count, plural, one {# camisola adicionada} other {# camisolas adicionadas}}"
+    },
+    "brandDistribution": {
+      "title": "Distribuição por Marca",
+      "jerseys": "Camisolas",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}"
+    },
+    "typeDistribution": {
+      "title": "Distribuição por Tipo",
+      "jerseys": "Camisolas",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}"
+    },
+    "leagueDistribution": {
+      "title": "Distribuição por Liga",
+      "jerseys": "Camisolas",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}"
+    },
+    "clubDistribution": {
+      "title": "Top 10 Clubes",
+      "jerseys": "Camisolas",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}"
+    },
+    "sizeDistribution": {
+      "title": "Distribuição por Tamanho",
+      "jerseys": "Camisolas",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}"
+    },
+    "conditionDistribution": {
+      "title": "Distribuição por Condição",
+      "jerseys": "Camisolas",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}"
+    },
+    "sourceDistribution": {
+      "title": "Origens das Camisolas",
+      "additionalTitle": "Detalhes da Coleção",
+      "jerseys": "Camisolas",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}",
+      "purchased": "Compradas",
+      "gift": "Ofertas",
+      "mysteryBox": "Caixa Mistério",
+      "withTags": "Com etiquetas",
+      "withPersonalization": "Personalizadas",
+      "withCustomPhoto": "Com foto personalizada"
+    },
+    "spendingTimeline": {
+      "title": "Evolução dos Gastos",
+      "spent": "gasto",
+      "noData": "Sem dados de gastos disponíveis"
+    },
+    "financial": {
+      "totalCollectionValue": "Valor Total",
+      "totalCollectionValueDescription": "Valor total da coleção",
+      "totalSpent": "Total Gasto",
+      "totalSpentDescription": "Total investido",
+      "averagePrice": "Preço Médio",
+      "averagePriceDescription": "Por camisola comprada",
+      "totalRetailValue": "Valor de Retalho Total",
+      "totalRetailValueDescription": "Preço de retalho acumulado",
+      "mostExpensive": "Mais Cara",
+      "leastExpensive": "Menos Cara",
+      "noData": "Sem dados disponíveis"
+    },
+    "diversity": {
+      "uniqueClubs": "Clubes Diferentes",
+      "uniqueClubsDescription": "Na sua coleção",
+      "uniqueLeagues": "Ligas Diferentes",
+      "uniqueLeaguesDescription": "Representadas",
+      "uniqueCountries": "Países Diferentes",
+      "uniqueCountriesDescription": "Em todo o mundo"
+    },
+    "records": {
+      "oldestAcquisition": "Primeira Aquisição",
+      "newestAcquisition": "Aquisição Mais Recente",
+      "customizationStats": "Personalizações",
+      "withTags": "Com etiquetas",
+      "withPersonalization": "Personalizadas",
+      "withCustomPhoto": "Com foto personalizada"
+    },
+    "upgrade": {
+      "distribution": {
+        "title": "Estatísticas de distribuição PRO",
+        "description": "Analise em detalhe a distribuição da sua coleção",
+        "feature1": "Distribuição por liga e país",
+        "feature2": "Top clubes na sua coleção",
+        "feature3": "Distribuição por tamanho e condição",
+        "feature4": "Análise da origem das aquisições"
+      },
+      "financial": {
+        "title": "Estatísticas financeiras PRO",
+        "description": "Acompanhe os seus gastos e o valor da sua coleção",
+        "feature1": "Gastos totais e médios",
+        "feature2": "Valor estimado da coleção",
+        "feature3": "Evolução dos gastos ao longo do tempo",
+        "feature4": "Camisolas mais e menos caras"
+      },
+      "records": {
+        "title": "Recordes e estatísticas PRO",
+        "description": "Descubra os recordes da sua coleção",
+        "feature1": "Aquisições mais antigas e mais recentes",
+        "feature2": "Estatísticas de personalização",
+        "feature3": "Taxa de camisolas com etiquetas",
+        "feature4": "Métricas de qualidade da coleção"
+      }
+    }
+  },
+  "Wishlist": {
+    "button": {
+      "loading": "A carregar...",
+      "addToWishlist": "Adicionar à minha lista de desejos",
+      "removeFromWishlist": "Remover da lista de desejos",
+      "toast": {
+        "mustBeConnected": "Tem de ter sessão iniciada para adicionar à sua lista de desejos",
+        "added": "Camisola adicionada à sua lista de desejos",
+        "removed": "Camisola removida da sua lista de desejos",
+        "error": "Ocorreu um erro",
+        "connectionError": "Erro de ligação. Por favor, tente novamente."
+      }
+    },
+    "share": {
+      "button": "Partilhar",
+      "shareAll": "A minha lista de desejos completa",
+      "shareAllCount": "{count, plural, =0 {0 camisolas} one {# camisola} other {# camisolas}}",
+      "shareSelection": "Uma seleção",
+      "shareSelectionDesc": "Escolha as camisolas a partilhar"
+    },
+    "selectionModal": {
+      "title": "Partilhar a minha lista de desejos",
+      "chooseTheme": "Escolher um tema",
+      "listTitle": "Título da lista",
+      "listTitlePlaceholder": "Ex: A minha lista de Natal 🎄",
+      "personalMessage": "Mensagem pessoal",
+      "personalMessagePlaceholder": "Adicione uma mensagem para os seus entes queridos...",
+      "charactersCount": "{count}/500 caracteres",
+      "selectJerseys": "Selecionar as suas camisolas ({selected}/{total})",
+      "selectAll": "Selecionar tudo",
+      "deselectAll": "Desselecionar tudo",
+      "cancel": "Cancelar",
+      "share": "Partilhar ({count, plural, one {# camisola} other {# camisolas}})"
+    },
+    "themeModal": {
+      "title": "Personalizar a minha lista de desejos",
+      "selectedCount": "{count, plural, one {# camisola selecionada} other {# camisolas selecionadas}}",
+      "chooseTheme": "Escolher um tema",
+      "listTitle": "Título da lista",
+      "listTitlePlaceholder": "Ex: A minha lista de Natal 🎄",
+      "personalMessage": "Mensagem pessoal",
+      "personalMessagePlaceholder": "Adicione uma mensagem para os seus entes queridos...",
+      "charactersCount": "{count}/500 caracteres",
+      "cancel": "Cancelar",
+      "continue": "Continuar",
+      "themes": {
+        "christmas": {
+          "name": "Natal",
+          "defaultTitle": "A Minha Lista de Natal 🎄",
+          "defaultMessage": "Olá! Aqui ficam algumas ideias de camisolas que adoraria receber 😊"
+        },
+        "birthday": {
+          "name": "Aniversário",
+          "defaultTitle": "A Minha Lista de Aniversário 🎂",
+          "defaultMessage": "O meu aniversário está a chegar! Aqui ficam os meus desejos em camisolas 🎉"
+        },
+        "valentine": {
+          "name": "Dia de São Valentim",
+          "defaultTitle": "A Minha Lista de São Valentim 💝",
+          "defaultMessage": "Algumas ideias de camisolas que me deixariam muito feliz ❤️"
+        },
+        "default": {
+          "name": "Clássico",
+          "defaultTitle": "A Minha Lista de Desejos de Camisolas ⚽",
+          "defaultMessage": "Aqui ficam algumas camisolas que gostaria de adicionar à minha coleção!"
+        }
+      }
+    },
+    "shareFormatModal": {
+      "title": "Como quer partilhar a sua lista?",
+      "selectedCount": "{count, plural, one {# camisola selecionada} other {# camisolas selecionadas}}",
+      "formats": {
+        "link": {
+          "title": "Ligação para partilhar",
+          "description": "Página web acessível em telemóvel e computador"
+        },
+        "image": {
+          "title": "Descarregar imagem",
+          "description": "Perfeita para stories do Instagram ou WhatsApp"
+        },
+        "pdf": {
+          "title": "Descarregar PDF",
+          "description": "Documento limpo para imprimir ou enviar"
+        }
+      },
+      "generating": "A gerar...",
+      "creatingLink": "A criar a sua ligação",
+      "creatingImage": "A criar a sua imagem",
+      "creatingPdf": "A criar o seu PDF",
+      "ready": "Pronto!",
+      "yourShareLink": "A sua ligação de partilha:",
+      "copyLink": "Copiar ligação",
+      "copied": "Copiado!",
+      "share": "Partilhar",
+      "close": "Fechar",
+      "toast": {
+        "linkGenerated": "Ligação gerada!",
+        "linkError": "Erro ao gerar a ligação",
+        "imageDownloaded": "Imagem descarregada com sucesso!",
+        "imageError": "Erro ao gerar a imagem",
+        "pdfDownloaded": "PDF descarregado com sucesso!",
+        "pdfError": "Erro ao gerar o PDF",
+        "linkCopied": "Ligação copiada!"
+      }
+    },
+    "landing": {
+      "badge": "Lista de Desejos",
+      "hero": {
+        "title": "Crie a sua lista de desejos de",
+        "titleHighlight": "camisolas de futebol",
+        "subtitle": "Liste os seus desejos e partilhe-os facilmente com os seus entes queridos, com animações fluidas e design premium.",
+        "signIn": "Iniciar sessão",
+        "signUp": "Criar conta"
+      },
+      "example": {
+        "badge": "Exemplo de lista de desejos",
+        "title": "A minha lista de Natal 🎄",
+        "message": "Algumas ideias de camisolas que me deixariam feliz 😊",
+        "jerseyCount": "{count, plural, one {# camisola} other {# camisolas}}",
+        "createdWith": "Criado com Le Vestiaire Foot ⚽",
+        "createButton": "Criar a minha lista de desejos"
+      },
+      "shareSection": {
+        "title": "Partilhe como quiser",
+        "subtitle": "3 formatos para todas as suas necessidades"
+      },
+      "featuresSection": {
+        "title": "Tudo incluído",
+        "subtitle": "Funcionalidades pensadas para facilitar a sua vida",
+        "features": {
+          "create": {
+            "title": "Crie a sua lista",
+            "description": "Adicione todas as camisolas com que sonha com um clique a partir do nosso catálogo"
+          },
+          "share": {
+            "title": "Partilhe facilmente",
+            "description": "Gere uma ligação, imagem ou PDF para partilhar com os seus entes queridos no Natal, aniversários..."
+          },
+          "customize": {
+            "title": "Personalize o tema",
+            "description": "Escolha entre vários temas (Natal, Aniversário, Padrão) e adicione uma mensagem pessoal"
+          },
+          "manage": {
+            "title": "Gira as suas ocasiões",
+            "description": "Crie várias listas de desejos para diferentes ocasiões: Natal, aniversário, objetivos pessoais..."
+          },
+          "noDuplicates": {
+            "title": "Evite duplicados",
+            "description": "Assim que adicionada à sua coleção, a camisola desaparece automaticamente da sua lista de desejos"
+          },
+          "free": {
+            "title": "100% gratuito",
+            "description": "Crie e partilhe tantas listas de desejos quantas quiser sem qualquer custo"
+          }
+        }
+      },
+      "useCasesSection": {
+        "title": "Para todas as ocasiões",
+        "subtitle": "Uma lista de desejos para cada momento importante",
+        "useCases": {
+          "christmas": {
+            "title": "O Natal está a chegar",
+            "description": "Crie a sua lista de Natal e partilhe-a com a sua família. Chega de prendas indesejadas!"
+          },
+          "birthday": {
+            "title": "Aniversário",
+            "description": "Partilhe os seus desejos em camisolas para o seu aniversário. Os seus amigos saberão o que oferecer."
+          },
+          "collection": {
+            "title": "Objetivos de coleção",
+            "description": "Liste as camisolas que procura para completar a sua coleção. Mantenha os seus objetivos à vista."
+          },
+          "valentine": {
+            "title": "Dia de São Valentim",
+            "description": "Partilhe os seus desejos em camisolas a dois: duos de clubes, edições especiais e ideias de prenda para celebrar a sua paixão juntos."
+          }
+        }
+      },
+      "testimonialsSection": {
+        "title": "Eles partilharam a sua lista de desejos",
+        "subtitle": "Milhares de utilizadores satisfeitos",
+        "testimonials": {
+          "lucas": {
+            "name": "Lucas M.",
+            "quote": "Partilhei a minha lista no Natal e a minha família adorou! Chega de duplicados e recebi exatamente as camisolas que queria."
+          },
+          "sarah": {
+            "name": "Sarah D.",
+            "quote": "Muito prático para organizar a minha coleção. Posso partilhar os meus desejos com um clique e acompanhar o que já recebi."
+          },
+          "tom": {
+            "name": "Tom R.",
+            "quote": "Os meus amigos ofereceram-me exatamente as camisolas da minha lista no meu aniversário. É ótimo poder partilhar as suas paixões facilmente!"
+          }
+        }
+      },
+      "ctaSection": {
+        "title": "Pronto para criar a sua lista de desejos?",
+        "subtitle": "Liste os seus desejos e partilhe-os em poucos cliques com os seus entes queridos",
+        "signUpButton": "Criar a minha conta gratuita",
+        "signInButton": "Iniciar sessão",
+        "createAccount": "Criar a minha conta gratuita",
+        "login": "Iniciar sessão",
+        "secure": "100% seguro",
+        "noCommitment": "Sem compromisso"
+      },
+      "faqSection": {
+        "title": "Perguntas frequentes",
+        "faqs": {
+          "howToCreate": {
+            "question": "Como crio a minha lista de desejos?",
+            "answer": "É simples! Navegue pelo nosso catálogo, clique no coração para adicionar uma camisola à sua lista de desejos. Depois clique em 'Partilhar' para gerar a sua ligação personalizada."
+          },
+          "multipleWishlists": {
+            "question": "Posso criar várias listas de desejos?",
+            "answer": "Por agora, tem uma única lista de desejos que pode modificar a qualquer momento. Pode escolher quais as camisolas a partilhar em cada ocasião."
+          },
+          "howToView": {
+            "question": "Como é que os meus entes queridos veem a minha lista de desejos?",
+            "answer": "Gere uma ligação única que partilha por mensagem, e-mail ou redes sociais. Podem ver a sua lista em telemóvel ou computador, sem criar uma conta."
+          },
+          "pricing": {
+            "question": "A lista de desejos é gratuita?",
+            "answer": "Sim! Criar, gerir e partilhar a sua lista de desejos é 100% gratuito, sem limites."
+          },
+          "received": {
+            "question": "O que acontece quando recebo uma camisola?",
+            "answer": "Assim que adicionar a camisola à sua coleção, ela desaparece automaticamente da sua lista de desejos. Chega de duplicados!"
+          },
+          "customize": {
+            "question": "Posso personalizar a minha lista de desejos?",
+            "answer": "Sim! Pode escolher um tema (Natal, Aniversário...), adicionar um título e uma mensagem pessoal para os seus entes queridos."
+          }
+        }
+      }
+    },
+    "page": {
+      "title": "A Minha Lista de Desejos",
+      "jerseyCount": "{count, plural, one {# camisola} other {# camisolas}}",
+      "empty": {
+        "title": "Não tem nenhuma camisola que lhe tenha chamado a atenção",
+        "description": "Navegue pela nossa coleção e adicione as suas camisolas favoritas à sua lista de desejos!"
+      },
+      "error": {
+        "title": "Erro ao carregar a sua lista de desejos",
+        "description": "Ocorreu um erro. Por favor, tente novamente mais tarde."
+      },
+      "stats": {
+        "wanted": "Camisolas pretendidas",
+        "wantedSingular": "Camisola na sua lista de desejos",
+        "wantedPlural": "Camisolas na sua lista de desejos",
+        "favoriteLeagues": "Ligas favoritas",
+        "preferredTypes": "Tipos preferidos"
+      },
+      "jerseys": "As suas camisolas"
+    },
+    "sharedClient": {
+      "wishlist": "Lista de Desejos",
+      "jerseyCount": "{count, plural, one {# camisola} other {# camisolas}}",
+      "createdWith": "Esta lista foi criada com",
+      "brandName": "Le Vestiaire Foot",
+      "createOwn": "Crie a sua própria coleção de camisolas",
+      "shareWithLovedOnes": "e partilhe os seus desejos com os seus entes queridos ⚽"
+    },
+    "wishlist": "Lista de Desejos",
+    "sortBy": "Ordenar por",
+    "recentlyAdded": "Adicionados recentemente",
+    "oldestAdded": "Mais antigos",
+    "priceDescending": "Preço (do maior para o menor)",
+    "priceAscending": "Preço (do menor para o maior)",
+    "clubAZ": "Clube (A-Z)",
+    "emptyWishlist": "Lista de desejos vazia",
+    "jerseysWanted": "Camisolas pretendidas",
+    "jersey": "camisola",
+    "jerseys": "camisolas",
+    "inWishlist": "na lista de desejos",
+    "estimatedValue": "Valor estimado",
+    "wantedLeagues": "Ligas pretendidas",
+    "wantedTypes": "Tipos pretendidos",
+    "noData": "Sem dados",
+    "wishlistNotFound": "Lista de desejos não encontrada",
+    "wishlistOf": "Lista de desejos de {name}",
+    "discoverWishlist": "Descubra a lista de desejos de",
+    "user": "Utilizador",
+    "noJerseysInWishlistYet": "{name} ainda não adicionou nenhuma camisola à sua lista de desejos.",
+    "highestPriority": "Prioridade mais alta",
+    "lowestPriority": "Prioridade mais baixa",
+    "priorities": "Prioridades",
+    "priorityHigh": "Alta",
+    "priorityMedium": "Média",
+    "priorityLow": "Baixa"
+  },
+  "Login": {
+    "title": "Bem-vindo de volta",
+    "subtitle": "Inicie sessão com a sua conta Google",
+    "signInWithGoogle": "Iniciar sessão com Google",
+    "orContinueWith": "Ou continue com",
+    "lastUsed": "Utilizado pela última vez",
+    "form": {
+      "email": "E-mail",
+      "emailPlaceholder": "m@exemplo.com",
+      "password": "Palavra-passe",
+      "forgotPassword": "Esqueceu a palavra-passe?"
+    },
+    "button": {
+      "loading": "A carregar…",
+      "signIn": "Iniciar sessão"
+    },
+    "noAccount": "Não tem uma conta?",
+    "createAccount": "Criar uma conta",
+    "terms": {
+      "text": "Ao clicar em iniciar sessão, aceita os nossos",
+      "termsOfService": "Termos de Serviço",
+      "and": "e a",
+      "privacyPolicy": "Política de Privacidade"
+    },
+    "errors": {
+      "signInError": "Erro ao iniciar sessão",
+      "googleSignInError": "Erro ao iniciar sessão com Google"
+    }
+  },
+  "Errors": {
+    "required": "Este campo é obrigatório",
+    "invalidEmail": "E-mail inválido",
+    "passwordTooShort": "A palavra-passe deve ter pelo menos 8 caracteres",
+    "generic": "Ocorreu um erro",
+    "unauthorized": "Não autorizado",
+    "notFound": "Não encontrado",
+    "rateLimited": "Demasiados pedidos, por favor tente novamente mais tarde"
+  },
+  "Profile": {
+    "editButton": "Editar o seu perfil",
+    "title": "O meu perfil",
+    "description": "Edite o seu perfil aqui. Clique em Guardar quando terminar.",
+    "friends": "{count} amigo",
+    "friends_other": "{count} amigos",
+    "favoriteTeam": "Equipa favorita",
+    "choosePlaceholder": "Escolher uma equipa",
+    "saveChanges": "Guardar alterações",
+    "saving": "A guardar…",
+    "close": "Fechar",
+    "updateSuccess": "Perfil atualizado!",
+    "avatarUpdateSuccess": "Avatar atualizado!",
+    "avatarUploadError": "Erro ao carregar o avatar",
+    "userNotAuthenticated": "Utilizador não autenticado",
+    "serverUploadError": "Erro de carregamento no servidor",
+    "saveError": "Erro ao guardar.",
+    "bio": {
+      "label": "Biografia",
+      "placeholder": "Escreva algumas palavras sobre si…",
+      "charactersCount": "{current}/{max} caracteres"
+    },
+    "themeColor": {
+      "label": "Cor do tema",
+      "placeholder": "Escolher uma cor",
+      "colors": {
+        "bleu": "Azul",
+        "bleu-nuit": "Azul-noite",
+        "rouge": "Vermelho",
+        "violet": "Roxo",
+        "vert": "Verde",
+        "orange": "Laranja",
+        "jaune": "Amarelo",
+        "rose": "Rosa",
+        "violet-leger": "Roxo claro",
+        "marine": "Azul-marinho",
+        "gold": "Dourado"
+      }
+    },
+    "username": {
+      "label": "Nome de utilizador",
+      "placeholder": "meu_utilizador",
+      "rules": "5-20 caracteres - apenas letras, números, hífenes e underscores",
+      "notAvailable": "Este nome de utilizador não está disponível",
+      "available": "✓ Este nome de utilizador está disponível"
+    }
+  },
+  "HomePage": {
+    "hero": {
+      "title": "Bem-vindo ao",
+      "appName": "The Locker Room",
+      "subtitle": "Gira a sua coleção de camisolas de futebol, crie a sua lista de desejos e junte-se a uma comunidade de adeptos apaixonados.",
+      "myCollection": "A Minha Coleção",
+      "myWishlist": "A Minha Lista de Desejos",
+      "login": "Iniciar sessão",
+      "signup": "Criar conta",
+      "discoverJerseys": "Descobrir camisolas",
+      "ariaLabelBanner": "Secção principal - Coleção de camisolas de futebol",
+      "ariaLabelStats": "Estatísticas da sua coleção de camisolas",
+      "ariaLabelAuth": "Ações de autenticação",
+      "ariaLabelCollectionCount": "{count} camisolas na sua coleção",
+      "ariaLabelWishlistCount": "{count} camisolas na sua lista de desejos"
+    },
+    "topRated": {
+      "title": "Camisolas Mais Bem Avaliadas",
+      "subtitle": "Descubra as camisolas favoritas da comunidade",
+      "viewAll": "Ver todas as camisolas"
+    },
+    "recent": {
+      "title": "Camisolas Adicionadas Recentemente",
+      "subtitle": "Novidades no catálogo",
+      "viewAll": "Ver todas as camisolas",
+      "new": "Novo",
+      "recently": "Recentemente"
+    },
+    "cfsPromos": {
+      "title": "Complete a sua coleção a bom preço",
+      "subtitle": "Seleção de camisolas em saldo do nosso parceiro Classic Football Shirts",
+      "cta": "Ver todas as ofertas",
+      "partnerNotice": "Ligação de afiliado - recebemos uma comissão nas compras efetuadas através destas ligações."
+    },
+    "userStats": {
+      "title": "A Sua Coleção",
+      "subtitle": "Uma visão geral da sua paixão pelas camisolas de futebol",
+      "myCollection": "A Minha Coleção",
+      "jerseyCollected": "Camisola colecionada",
+      "jerseysCollected": "Camisolas colecionadas",
+      "invested": "investido",
+      "viewMyCollection": "Ver a minha coleção",
+      "myWishlist": "A Minha Lista de Desejos",
+      "jerseyDesired": "Camisola desejada",
+      "jerseysDesired": "Camisolas desejadas",
+      "viewMyWishlist": "Ver a minha lista de desejos",
+      "favoriteLeague": "Liga Favorita",
+      "jerseysFrom": "Camisolas de",
+      "startCollection": "Comece a sua coleção para ver as suas estatísticas!",
+      "recentAdditionsCollection": "Adições recentes à sua coleção",
+      "recentAdditionsWishlist": "Adições recentes à sua lista de desejos"
+    },
+    "features": {
+      "title": "Porquê escolher Le Vestiaire Foot?",
+      "subtitle": "Le Vestiaire Foot é uma aplicação web gratuita criada por colecionadores, para colecionadores.",
+      "catalogCollection": {
+        "title": "Catalogue a sua coleção de camisolas",
+        "description": "Registe o tamanho, o estado e o preço de compra de cada camisola. Le Vestiaire Foot acompanha automaticamente o valor total da sua coleção."
+      },
+      "shareableWishlist": {
+        "title": "Lista de desejos de camisolas para partilhar",
+        "description": "Construa a sua lista de desejos e partilhe-a com amigos e família através de uma ligação direta. Perfeita para o Natal, aniversários ou qualquer ocasião especial."
+      },
+      "authentication": {
+        "title": "Autenticação de camisolas de futebol",
+        "description": "Aprenda a distinguir camisolas autênticas de falsas.<br></br>Le Vestiaire Foot oferece <link>guias de autenticação detalhados</link> para Nike, Adidas, Puma e mais."
+      },
+      "community": {
+        "title": "Comunidade de colecionadores de camisolas de futebol",
+        "description": "Le Vestiaire Foot une colecionadores. Adicione amigos, explore as suas coleções e descubra as camisolas mais bem avaliadas."
+      }
+    },
+    "stats": {
+      "collectors": "Colecionadores",
+      "jerseys": "Camisolas listadas",
+      "clubs": "Clubes"
+    },
+    "faq": {
+      "title": "Perguntas Frequentes",
+      "subtitle": "Tudo o que precisa de saber sobre The Locker Room",
+      "questions": {
+        "addToCollection": {
+          "question": "Como adiciono uma camisola à minha coleção?",
+          "answer": "É muito simples! Pesquise a camisola que possui na nossa base de dados e clique em 'Adicionar à minha coleção'. Pode depois preencher todos os detalhes: tamanho, estado, preço de compra, etc."
+        },
+        "shareWishlist": {
+          "question": "Posso partilhar a minha lista de desejos no Natal ou no meu aniversário?",
+          "answer": "Claro que sim! Crie a sua lista de desejos, personalize-a com uma mensagem e gere uma ligação única para partilhar com os seus entes queridos. Eles poderão ver os seus desejos sem precisar de criar uma conta."
+        },
+        "authenticateJersey": {
+          "question": "Como posso identificar uma camisola falsa?",
+          "answer": "Consulte a nossa secção 'Autenticação', onde encontrará guias detalhados para cada marca. Explicamos como verificar etiquetas, costuras, logótipos e outros detalhes que distinguem uma camisola autêntica de uma falsificação."
+        },
+        "availableClubs": {
+          "question": "Que clubes e ligas estão disponíveis?",
+          "answer": "A nossa base de dados inclui camisolas de todas as principais ligas europeias (Ligue 1, Premier League, La Liga, Serie A, Bundesliga), bem como de muitos clubes internacionais e ligas menores. Adicionamos regularmente novas camisolas!"
+        },
+        "dataSecurity": {
+          "question": "Os meus dados estão seguros?",
+          "answer": "Sim, levamos a segurança muito a sério. Os seus dados estão alojados na Europa (França) e protegidos de acordo com as normas do RGPD. Continua a ser o proprietário da sua coleção e pode exportá-la a qualquer momento."
+        }
+      }
+    }
+  },
+  "Authentication": {
+    "title": "Autenticação de Camisolas",
+    "subtitle": "Aprenda a identificar camisolas de futebol autênticas e distingui-las de falsificações",
+    "page": {
+      "protectInvestment": {
+        "title": "Proteja o seu investimento",
+        "description": "O mercado de camisolas de futebol está infelizmente inundado de falsificações. Os nossos guias ajudam-no a identificar camisolas autênticas e a evitar burlas."
+      },
+      "whyImportant": {
+        "title": "Por que razão é importante autenticar?",
+        "reason1": "As falsificações representam até 30% do mercado de camisolas online",
+        "reason2": "Uma camisola falsa deteriora-se rapidamente e não tem valor de revenda",
+        "reason3": "Comprar uma falsificação financia redes de contrabando",
+        "reason4": "As camisolas autênticas garantem qualidade, conforto e durabilidade"
+      }
+    },
+    "brands": {
+      "adidas": {
+        "name": "Adidas",
+        "description": "Verifique a autenticidade das suas camisolas Adidas"
+      },
+      "nike": {
+        "name": "Nike",
+        "description": "Verifique a autenticidade das suas camisolas Nike"
+      },
+      "puma": {
+        "name": "Puma",
+        "description": "Verifique a autenticidade das suas camisolas Puma"
+      },
+      "hummel": {
+        "name": "Hummel",
+        "description": "Verifique a autenticidade das suas camisolas Hummel"
+      }
+    },
+    "common": {
+      "authenticationSteps": "Passos de Autenticação",
+      "commonFakes": "Sinais Comuns de Falsificação",
+      "commonFakesDescription": "Fique atento a estes elementos que indicam uma camisola falsa",
+      "buyingTips": "Dicas de Compra",
+      "buyingTipsDescription": "Recomendações para uma compra segura",
+      "authentic": "AUTÊNTICA",
+      "counterfeit": "FALSIFICAÇÃO",
+      "scanFeature": {
+        "title": "Em Breve: Scanner Automático",
+        "description": "Estamos a trabalhar numa funcionalidade de digitalização para autenticar as suas camisolas {brand} de forma instantânea.",
+        "howItWorks": "Como vai funcionar:",
+        "step1": "Tire uma fotografia às etiquetas",
+        "step2": "A nossa IA analisa os códigos e os detalhes",
+        "step3": "Receba um resultado de autenticação",
+        "notify": "Notifique-me no lançamento"
+      },
+      "scanPlaceholder": {
+        "title": "Digitalize a Etiqueta",
+        "description": "Verificação automática com recurso à inteligência artificial",
+        "comingSoon": "Funcionalidade em breve!",
+        "kitlegitInfo": "Estamos a trabalhar na integração do {kitlegit}, uma solução de autenticação por IA especializada em camisolas de futebol.",
+        "kitlegit": "KitLegit",
+        "manualGuide": "Entretanto, utilize o guia acima para verificar manualmente a autenticidade da sua camisola {brand}.",
+        "scanButton": "Digitalizar a minha etiqueta (Em breve)",
+        "photosRequired": "A digitalização automática irá exigir entre 3 e 8 fotografias da sua camisola para uma análise completa."
+      }
+    },
+    "metadata": {
+      "notFound": "Marca não encontrada - Le Vestiaire",
+      "titleTemplate": "Autenticar uma Camisola {brand} - Guia Completo",
+      "ogTitleTemplate": "Guia de Autenticação de Camisolas {brand}",
+      "twitterTitleTemplate": "Como Autenticar uma Camisola {brand}",
+      "adidas": {
+        "description": "Guia completo para autenticar uma camisola Adidas. Verifique o código de produto, a etiqueta pendente, o código de barras e identifique sinais de falsificação. Método detalhado com exemplos visuais.",
+        "ogDescription": "Aprenda a reconhecer uma camisola Adidas autêntica e a distingui-la de uma falsificação"
+      },
+      "nike": {
+        "description": "Aprenda a reconhecer uma camisola Nike autêntica: código de produto, código de produção, etiqueta pendente e etiqueta de segurança. Guia antifalsificação completo com fotografias comparativas.",
+        "ogDescription": "Aprenda a reconhecer uma camisola Nike autêntica e a distingui-la de uma falsificação"
+      },
+      "puma": {
+        "description": "Autenticação de camisolas Puma: código de produto, data de produção, código QR, etiqueta de segurança. Reconheça o \"Fat Cat\" e outros sinais de falsificação em camisolas Puma.",
+        "ogDescription": "Aprenda a reconhecer uma camisola Puma autêntica e a distingui-la de uma falsificação"
+      },
+      "hummel": {
+        "description": "Guia de autenticação para camisolas Hummel: chevrons característicos, etiquetas, qualidade têxtil e acabamentos. Evite as falsificações.",
+        "ogDescription": "Aprenda a reconhecer uma camisola Hummel autêntica e a distingui-la de uma falsificação"
+      }
+    },
+    "adidas": {
+      "title": "Guia de Autenticação Adidas",
+      "description": "Método completo para verificar a autenticidade de uma camisola Adidas através de códigos de produto e etiquetas",
+      "criteria": {
+        "step1": {
+          "title": "Passo 1: Localize a etiqueta com o código de produto",
+          "description": "A etiqueta encontra-se geralmente na gola, do lado direito, ou por vezes na parte inferior da camisola junto às instruções de lavagem",
+          "points": {
+            "point1": "Procure a etiqueta cosida na gola (lado direito)",
+            "point2": "Se não estiver na gola, verifique na parte inferior da camisola perto das instruções de lavagem",
+            "point3": "Esta etiqueta contém 3 códigos essenciais: tamanho, código de produto (ao centro) e código de fabrico",
+            "point4": "Se a etiqueta tiver sido cortada pelo vendedor, é impossível verificar a autenticidade"
+          }
+        },
+        "step2": {
+          "title": "Passo 2: O código de produto (O CÓDIGO MAIS IMPORTANTE)",
+          "description": "O código de produto ao centro é a chave para verificar a autenticidade. Exemplo: IB0907",
+          "points": {
+            "point1": "Identifique o código no CENTRO da etiqueta (ex.: IB0907, HS5184, P95985)",
+            "point2": "Este código é único por modelo de camisola (casa, fora, terceira)",
+            "point3": "Escreva este código no Google Imagens: os resultados devem corresponder EXATAMENTE à sua camisola",
+            "point4": "Exemplo: \"IB0907\" = apenas Camisola Alternativa do Lyon 2023/2024",
+            "point5": "Se o código corresponder a outro clube/época = É UMA FALSIFICAÇÃO",
+            "point6": "Exceção: Alguns clubes pequenos partilham o mesmo código (modelos comuns), mas é raro"
+          }
+        },
+        "step3": {
+          "title": "Passo 3: A etiqueta pendente (se presente)",
+          "description": "A etiqueta de cartão presa à camisola nova contém informações valiosas",
+          "points": {
+            "point1": "Numa camisola REAL: o nome do clube está claramente indicado (ex.: \"OL\", \"Manchester United\")",
+            "point2": "A menção do tipo está presente: \"H\" (Casa), \"A\" (Fora), \"T\" (Terceira)",
+            "point3": "O código de produto está escrito acima do nome do modelo",
+            "point4": "FALSA se indicar apenas \"adidas JSY\" sem nome do clube = FALSIFICAÇÃO",
+            "point5": "Atenção: estas etiquetas podem ser removidas e recolocadas numa camisola falsa!"
+          }
+        },
+        "step4": {
+          "title": "Passo 4: O número do código de barras (verificação adicional)",
+          "description": "O código de barras da etiqueta pendente permite uma verificação precisa",
+          "points": {
+            "point1": "Encontre o código numérico sob o código de barras (ex.: 4066761557500)",
+            "point2": "Aceda a ean-search.org e introduza este código",
+            "point3": "O resultado deve corresponder EXATAMENTE à sua camisola",
+            "point4": "Exemplo: 4066761557500 = \"adidas Lyon Away Shirt 2023/24\"",
+            "point5": "Se o código corresponder a outra camisola = FALSA",
+            "point6": "Nota: A Adidas NÃO imprime este código na etiqueta cosida, apenas na etiqueta pendente"
+          }
+        },
+        "step5": {
+          "title": "Passo 5: Verificações visuais adicionais",
+          "description": "Após verificar os códigos, examine a qualidade geral",
+          "points": {
+            "point1": "Logótipo Adidas: as 3 riscas devem estar perfeitamente alinhadas e bordadas com precisão",
+            "point2": "Costuras: direitas, regulares, sem fios soltos",
+            "point3": "Tecido: material técnico (Climalite, Climacool, Aeroready) indicado na etiqueta",
+            "point4": "Sem cheiro químico forte nem cola visível"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Etiqueta pendente com \"adidas JSY\" sem nome do clube",
+        "fake2": "Código de produto que corresponde a outra camisola (ex.: HS5184 para o Man Utd = camisola do Flamengo)",
+        "fake3": "Número do código de barras incorreto (ex.: corresponde à Alemanha 2017 em vez do Man Utd 2024)",
+        "fake4": "Etiqueta da gola cortada ou ausente (vendedor suspeito)",
+        "fake5": "Nenhum resultado no Google Imagens para o código de produto",
+        "fake6": "Logótipo Adidas deformado, mal bordado ou impresso (em vez de bordado)",
+        "fake7": "Preço anormalmente baixo (50-70% mais barato que o preço oficial)",
+        "fake8": "Vendedor que se recusa a mostrar a etiqueta da gola nas fotografias"
+      },
+      "tips": {
+        "tip1": "PEÇA SEMPRE uma fotografia da etiqueta da gola antes de comprar",
+        "tip2": "Verifique o código de produto no Google Imagens (método mais fiável)",
+        "tip3": "Prefira vendedores com reputação estabelecida e avaliações positivas",
+        "tip4": "Compare com as fotografias oficiais do site da Adidas ou do clube",
+        "tip5": "Desconfie de preços demasiado atrativos (desconto acima de 50% = suspeito)",
+        "tip6": "Este método funciona mesmo para camisolas antigas (anos 2000 em diante)",
+        "tip7": "Utilize ean-search.org para o código de barras se a etiqueta pendente estiver presente",
+        "tip8": "Em caso de dúvida: não compre. Uma camisola real mantém o seu valor, uma falsa não"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Exemplo 1: Etiqueta com código de produto",
+          "description": "Como identificar o código de produto na etiqueta da gola",
+          "authentic": {
+            "points": {
+              "point1": "Código de produto visível: JL9623",
+              "point2": "Data de impressão correspondente ao ano da camisola",
+              "point3": "3 códigos corretamente alinhados",
+              "point4": "Logótipo Adidas bem definido"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "O código H13881 corresponde ao Man United em vez do México no nosso exemplo",
+              "point2": "Impressão desfocada ou desalinhada",
+              "point3": "Caracteres irregulares"
+            }
+          }
+        },
+        "example2": {
+          "title": "Exemplo 2: Etiqueta pendente",
+          "description": "A etiqueta de cartão presa às camisolas novas",
+          "authentic": {
+            "points": {
+              "point1": "Nome do clube indicado: \"OL\"",
+              "point2": "Menção do tipo: \"75\" (Camisola do 75.º aniversário do OL)",
+              "point3": "Código de produto visível",
+              "point4": "Código QR a redirecionar para a camisola correta"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Indica apenas \"adidas JSY\"",
+              "point2": "Sem nome do clube",
+              "point3": "Código de barras incorreto"
+            }
+          }
+        }
+      }
+    },
+    "nike": {
+      "title": "Guia de Autenticação Nike",
+      "description": "Método completo para verificar a autenticidade de uma camisola Nike através de códigos de produto, etiquetas e detalhes de fabrico",
+      "criteria": {
+        "step1": {
+          "title": "Passo 1: O código de produto",
+          "description": "Localizado na pequena etiqueta sob a etiqueta de lavagem, o código de produto é o primeiro indicador",
+          "points": {
+            "point1": "Formato: 6 dígitos para o estilo + 3 dígitos para a cor (ex.: 894430-010)",
+            "point2": "O código de estilo identifica o design/modelo da camisola",
+            "point3": "O código de cor (após o traço) identifica a variante de cor específica",
+            "point4": "Escreva o código completo no Google Imagens para verificar se corresponde EXATAMENTE à sua camisola",
+            "point5": "ATENÇÃO: as falsificações reutilizam frequentemente códigos reais! Se o código for da França 2020 Alternativa (CD0069-100) mas numa camisola de outra equipa = FALSA",
+            "point6": "Camisolas antigas (anteriores a 2010) podem não ter o código de cor, o que é normal"
+          }
+        },
+        "step2": {
+          "title": "Passo 2: O código de produção",
+          "description": "Na mesma pequena etiqueta, este código revela quando a camisola foi fabricada",
+          "points": {
+            "point1": "Formato: HO150407SYG (exemplo = Holiday 2015, fabricada de abril a julho)",
+            "point2": "Primeiros 2-3 caracteres = época: SP (Primavera), SU (Verão), FA (Outono), HO (Holiday/Inverno)",
+            "point3": "Os 2 dígitos seguintes = ano (15 = 2015, 23 = 2023)",
+            "point4": "Os 4 dígitos seguintes = meses de início e fim de produção (0407 = abril a julho)",
+            "point5": "Este código deve ser consistente com a época da camisola! Uma camisola 2023/24 não pode ter um código HO15",
+            "point6": "As falsificações reutilizam frequentemente etiquetas em camisolas diferentes, criando inconsistências"
+          }
+        },
+        "step3": {
+          "title": "Passo 3: A etiqueta pendente",
+          "description": "A etiqueta de cartão presa às camisolas novas contém informações cruciais",
+          "points": {
+            "point1": "Posicionamento moderno (desde 2021/22): etiqueta única apenas na manga ESQUERDA",
+            "point2": "2016-2020: duas etiquetas, uma sob cada manga (axilas)",
+            "point3": "Antes de 2016: etiqueta presa à gola",
+            "point4": "O autocolante deve ser um autocolante físico REAL, nunca impresso diretamente",
+            "point5": "O plástico de fixação é SEMPRE preto nas Nike reais",
+            "point6": "O código de produto na etiqueta pendente DEVE corresponder à etiqueta interior",
+            "point7": "Barra de cor do tamanho: Cinzento=XS, Amarelo=S, Azul=M, Vermelho=L, Verde=XL, Branco=XXL+"
+          }
+        },
+        "step4": {
+          "title": "Passo 4: A etiqueta de tamanho da gola",
+          "description": "A etiqueta da gola contém informações regionais importantes",
+          "points": {
+            "point1": "O país de fabrico (\"Made in...\") DEVE ser o mesmo na etiqueta da gola e na etiqueta de lavagem",
+            "point2": "Exemplo: se a gola indicar \"Made in Indonesia\", a etiqueta interior deve indicar o mesmo",
+            "point3": "Verifique as correspondências de tamanhos regionais, especialmente o tamanho japonês (J)",
+            "point4": "Erro comum nas falsificações: tamanho japonês incorreto (ex.: \"J: S\" para US L em vez de \"J: 2XO\")",
+            "point5": "Tabela correta: US S=J M, US M=J L, US L=J 2XO, US XL=J 3XO, US XXL=J 4XO"
+          }
+        },
+        "step5": {
+          "title": "Passo 5: A etiqueta de segurança",
+          "description": "Localizada na parte inferior direita da camisola, a etiqueta de segurança contém um código único",
+          "points": {
+            "point1": "O código alfanumérico DEVE ser único para a sua camisola",
+            "point2": "Se encontrar o mesmo código em múltiplos anúncios online = FALSA",
+            "point3": "Nas camisolas recentes: faixa metálica/holográfica de qualidade que muda sob a luz",
+            "point4": "As falsificações utilizam frequentemente impressão plana simples em vez de faixa metálica",
+            "point5": "Versão jogador: apontamentos dourados/metálicos | Versão adepto: apontamentos prateados",
+            "point6": "Alguns detalhes ocultos: mini logótipos Nike ou fragmentos da palavra \"SECURITY\" na faixa",
+            "point7": "Algumas versões mais antigas: letras \"HEN\" ou ambos os \"T\" de \"AUTHENTIC\" em material brilhante"
+          }
+        },
+        "step6": {
+          "title": "Passo 6: O Swoosh e os emblemas",
+          "description": "A qualidade de aplicação do logótipo Nike e do emblema do clube é reveladora",
+          "points": {
+            "point1": "O Swoosh deve ser PERFEITO: forma precisa, bordos limpos, sem fios visíveis",
+            "point2": "Numa camisola NOVA, o tecido à volta do Swoosh deve estar LISO (sem vincos)",
+            "point3": "Vire a camisola ao contrário: o interior por trás do Swoosh/emblema deve estar limpo, sem excesso de tecido",
+            "point4": "Emblema bordado = versão adepto | Emblema termocolado/silicone = versão jogador",
+            "point5": "Verifique se o tipo de emblema corresponde à versão (adepto ou jogador)",
+            "point6": "Fique atento a emblemas mal posicionados, demasiado grandes/pequenos ou com costura grosseira"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Código de produto correto mas para outra camisola/equipa (ex.: código da França 2020 numa camisola da Alemanha)",
+        "fake2": "Código de produção inconsistente com a época (camisola de 2024 com código HO15)",
+        "fake3": "Etiqueta pendente com autocolante impresso em vez de autocolante físico real",
+        "fake4": "Plástico de fixação da etiqueta que não é preto",
+        "fake5": "\"Made in...\" diferente entre a etiqueta da gola e a etiqueta de lavagem",
+        "fake6": "Tamanho japonês incorreto na etiqueta da gola",
+        "fake7": "Código de segurança idêntico encontrado em múltiplos anúncios online",
+        "fake8": "Faixa de segurança sem efeito holográfico/metálico (impressão plana)",
+        "fake9": "Swoosh com tecido vincado à sua volta numa camisola nova",
+        "fake10": "Interior por trás do Swoosh/emblema sujo (excesso de tecido, costura grosseira)",
+        "fake11": "Código de cor inconsistente (ex.: camisola vermelha com código 100-199)",
+        "fake12": "Etiqueta pendente mal posicionada (ex.: na gola para camisola pós-2021)",
+        "fake13": "Barra de cor do tamanho ausente ou incorreta na etiqueta pendente"
+      },
+      "tips": {
+        "tip1": "VERIFIQUE SEMPRE o código de produto completo (estilo + cor) no Google Imagens",
+        "tip2": "Compare o código de produção com a época da camisola para detetar inconsistências",
+        "tip3": "Peça fotografias de TODAS as etiquetas: gola, lavagem, pequena etiqueta de produto, etiqueta pendente",
+        "tip4": "Verifique a consistência do \"Made in...\" em todas as etiquetas",
+        "tip5": "Para camisolas novas: exija fotografia da etiqueta pendente com fixação preta",
+        "tip6": "Pesquise o código de segurança online para verificar a sua unicidade",
+        "tip7": "Examine a qualidade do Swoosh e do emblema (vire a camisola se possível)",
+        "tip8": "Utilize a tabela de tamanhos regionais para verificar a consistência da etiqueta da gola",
+        "tip9": "Camisolas de versão jogador sem etiqueta pendente são normais (distribuição direta pela equipa)",
+        "tip10": "Desconfie de preços demasiado baixos: as camisolas Nike reais mantêm o seu valor",
+        "tip11": "Em caso de dúvida sobre qualquer etiqueta ou código: não compre"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Exemplo 1: Código de produto e código de produção",
+          "description": "A pequena etiqueta sob a etiqueta de lavagem contém os códigos essenciais",
+          "authentic": {
+            "points": {
+              "point1": "Código de produto visível: 658789-426 (estilo + cor)",
+              "point2": "Código de produção consistente: HO150710 (Holiday 2015, julho-outubro)",
+              "point3": "Impressão clara e legível",
+              "point4": "Formato correto e alinhamento perfeito"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Código de produto de outra camisola (aqui camisola do PSG com FN8721-456 = Barcelona Casa 24/25)",
+              "point2": "Código de produção inconsistente com a época",
+              "point3": "Impressão desfocada ou caracteres irregulares",
+              "point4": "Alinhamento incorreto ou formato errado"
+            }
+          }
+        },
+        "example2": {
+          "title": "Exemplo 2: Etiqueta pendente",
+          "description": "A etiqueta de cartão presa às camisolas novas",
+          "authentic": {
+            "points": {
+              "point1": "Autocolante físico (não impresso)",
+              "point2": "Fixação de plástico preta",
+              "point3": "Barra de cor do tamanho correta",
+              "point4": "Código de produto corresponde à etiqueta interior",
+              "point5": "Posicionamento correto para o ano (manga esquerda pós-2021)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Autocolante impresso (não é um autocolante real)",
+              "point2": "Fixação de plástico branca ou cor incorreta",
+              "point3": "Barra de cor ausente ou incorreta",
+              "point4": "Código de produto não corresponde (CD0699-100 = França 2020/22)"
+            }
+          }
+        },
+        "example3": {
+          "title": "Exemplo 3: Etiqueta de segurança",
+          "description": "A etiqueta na parte inferior direita da camisola com código único e faixa metálica",
+          "authentic": {
+            "points": {
+              "point1": "Faixa metálica/holográfica de qualidade",
+              "point2": "Efeito de mudança de cor sob a luz",
+              "point3": "Código alfanumérico único",
+              "point4": "Costura limpa e regular",
+              "point5": "Apontamentos dourados (versão jogador) ou prateados (versão adepto)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Faixa com impressão plana (sem efeito holográfico)",
+              "point2": "Código repetido em múltiplas camisolas",
+              "point3": "Costura grosseira",
+              "point4": "Sem efeito metálico"
+            }
+          }
+        }
+      }
+    },
+    "puma": {
+      "title": "Guia de Autenticação Puma",
+      "description": "Método completo para verificar a autenticidade de uma camisola Puma através de códigos de produto, etiquetas e detalhes de fabrico",
+      "criteria": {
+        "step1": {
+          "title": "Passo 1: O código de produto (Style No / Article No)",
+          "description": "Encontrado numa grande etiqueta cosida no lado esquerdo da camisola",
+          "points": {
+            "point1": "Formato: 6 dígitos + 2 dígitos de variação (ex.: 736251-01)",
+            "point2": "Os primeiros 6 dígitos = modelo base da camisola",
+            "point3": "Os últimos 2 dígitos = variação de cor (mais recente, ausente nas camisolas antigas)",
+            "point4": "Escreva o código em kitcod.es ou no Google Imagens para verificar se corresponde EXATAMENTE à sua camisola",
+            "point5": "ATENÇÃO: as falsificações reutilizam frequentemente códigos reais! Se o código for do Marselha mas numa camisola do Milan = FALSA",
+            "point6": "Camisolas anteriores a 2000 podem não ter etiqueta com código de produto, o que é normal"
+          }
+        },
+        "step2": {
+          "title": "Passo 2: A data de produção",
+          "description": "Nas versões de etiqueta mais recentes, a Puma indica a data exata de produção",
+          "points": {
+            "point1": "Formato recente: data completa visível (ex.: 15/03/2023)",
+            "point2": "Esta data deve ser consistente com a época da camisola",
+            "point3": "Uma camisola da época 2023/24 não pode ter data de produção em 2020",
+            "point4": "As falsificações reutilizam frequentemente a mesma etiqueta em camisolas diferentes, criando inconsistências",
+            "point5": "Se a data não corresponder à época = SINAL DE ALERTA grave"
+          }
+        },
+        "step3": {
+          "title": "Passo 3: O código da região de produção",
+          "description": "Código alfanumérico sob a data de produção que indica a fábrica",
+          "points": {
+            "point1": "Formato: TVNAO (exemplo para o Vietname, fábrica Alliance One)",
+            "point2": "Primeiro caractere = Provavelmente \"T\" de Têxtil",
+            "point3": "Próximos 2 caracteres = código de país ISO (VN=Vietname, TH=Tailândia, TR=Turquia)",
+            "point4": "Últimos 2 caracteres = identificador específico da fábrica",
+            "point5": "O código de país DEVE corresponder ao \"Made in...\" da etiqueta",
+            "point6": "Pode verificar as fábricas oficiais da Puma nas suas listas públicas (2018, 2023, 2025)"
+          }
+        },
+        "step4": {
+          "title": "Passo 4: O código de mercado regional",
+          "description": "Código no lado esquerdo da etiqueta que indica o mercado de destino",
+          "points": {
+            "point1": "AM = Américas",
+            "point2": "AP = Ásia-Pacífico",
+            "point3": "EU = Europa",
+            "point4": "Este código indica ONDE o produto se destinava a ser vendido, não onde foi fabricado",
+            "point5": "Útil para colecionadores que procuram edições regionais específicas",
+            "point6": "Pode apresentar ligeiras variações na embalagem ou informações de conformidade"
+          }
+        },
+        "step5": {
+          "title": "Passo 5: O Código QR",
+          "description": "As etiquetas Puma recentes incluem um código QR com número AD único",
+          "points": {
+            "point1": "O código QR encontra-se geralmente sob o código de produto",
+            "point2": "A leitura do código redireciona para puma.com com o parâmetro \"AD\"",
+            "point3": "Formato da ligação: https://www.puma.com?TSL1D33P02450",
+            "point4": "O número AD está impresso acima do código QR",
+            "point5": "Este código serve para rastreamento interno e autenticação da Puma",
+            "point6": "A ausência de código QR em camisolas antigas é normal"
+          }
+        },
+        "step6": {
+          "title": "Passo 6: A etiqueta pendente",
+          "description": "Etiqueta de cartão presa à gola das camisolas novas",
+          "points": {
+            "point1": "O autocolante deve ser um autocolante físico REAL, nunca impresso diretamente",
+            "point2": "O código de produto na etiqueta pendente DEVE corresponder à etiqueta interior",
+            "point3": "As falsificações utilizam frequentemente uma etiqueta genérica como \"Puma Shirt\" sem detalhes",
+            "point4": "A etiqueta real menciona: nome do clube + tipo de camisola (Casa/Fora) + cor",
+            "point5": "Verifique as convenções de tamanhos regionais: Brasil/Canadá = \"G\" (Grande) em vez de \"L\"",
+            "point6": "O Japão pode usar \"2XO\" em vez de \"XL\" - verifique a consistência com a região"
+          }
+        },
+        "step7": {
+          "title": "Passo 7: A etiqueta da gola e o \"Made in\"",
+          "description": "A etiqueta da gola contém informações regionais importantes",
+          "points": {
+            "point1": "O país de fabrico (\"Made in...\") DEVE ser o mesmo na gola e em todas as etiquetas interiores",
+            "point2": "Exemplo: se a gola indicar \"Made in Vietnam\", a etiqueta de lavagem deve indicar o mesmo",
+            "point3": "Verifique as correspondências de tamanhos regionais, especialmente o tamanho japonês (J)",
+            "point4": "Tabela correta: US S=J M, US M=J O (ou L recente), US L=J 2XO, US XL=J 3XO, US XXL=J 4XO",
+            "point5": "Nota: a Puma recente usa por vezes \"L\" em vez de \"O\" para o Japão (alinhamento ocidental)",
+            "point6": "Erro comum nas falsificações: tamanho japonês incorreto (ex.: \"J: S\" para US L)"
+          }
+        },
+        "step8": {
+          "title": "Passo 8: A etiqueta de segurança",
+          "description": "Pequena etiqueta preta na parte inferior esquerda da camisola (vista de frente)",
+          "points": {
+            "point1": "Nos modelos recentes: simplesmente com a inscrição \"Authentic Licensed Football\"",
+            "point2": "Nos modelos mais antigos: código alfanumérico único",
+            "point3": "Este código NÃO deve aparecer em pesquisas (a não ser que seja falso)",
+            "point4": "A etiqueta deve estar bem cosida com fio de qualidade",
+            "point5": "Ausência completa de etiqueta numa camisola recente = suspeito"
+          }
+        },
+        "step9": {
+          "title": "Passo 9: O logótipo Puma (cuidado com o \"Fat Cat\")",
+          "description": "O logótipo do felino em salto deve ser perfeito - cuidado com o \"Fat Cat\"",
+          "points": {
+            "point1": "O Puma deve ser ELEGANTE e atlético, não rechonchudo nem inchado",
+            "point2": "\"Fat Cat\" = defeito típico das falsificações: gato demasiado espesso, deformado, com aspeto \"musculado\"",
+            "point3": "Forma característica bem definida com proporções exatas",
+            "point4": "Bordado ou flocagem de qualidade com bordos limpos",
+            "point5": "Posição exata de acordo com o modelo (normalmente no peito direito)",
+            "point6": "Compare sempre com fotografias oficiais - mesmo uma pequena diferença = suspeito"
+          }
+        },
+        "step10": {
+          "title": "Passo 10: O emblema do clube",
+          "description": "O emblema deve ser aplicado com precisão",
+          "points": {
+            "point1": "Bordado preciso OU transferência termocolada de qualidade consoante o modelo",
+            "point2": "Bordos limpos sem bavos",
+            "point3": "Todos os elementos (estrelas, texto, borduras) perfeitamente alinhados",
+            "point4": "Espaçamento correto e proporções respeitadas",
+            "point5": "Sem texto desfocado, descentrado ou mal espaçado",
+            "point6": "Compare com o emblema oficial do clube - mesmo os pequenos detalhes são importantes"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Código de produto correto mas para outra camisola/equipa (ex.: código do Marselha numa camisola do Milan)",
+        "fake2": "Data de produção inconsistente com a época da camisola",
+        "fake3": "Código de região de produção (ex.: TVNAO) não corresponde ao \"Made in...\"",
+        "fake4": "Etiqueta pendente genérica com \"Puma Shirt\" sem menção do clube",
+        "fake5": "Autocolante impresso na etiqueta pendente em vez de autocolante real",
+        "fake6": "\"Made in...\" diferente entre a etiqueta da gola e a etiqueta de lavagem/produto",
+        "fake7": "Tamanho japonês incorreto na etiqueta da gola (ex.: J:S para US L em vez de J:2XO)",
+        "fake8": "Código de segurança que aparece em múltiplas camisolas online (deve ser único)",
+        "fake9": "O famoso \"Fat Cat\" - logótipo Puma deformado, rechonchudo ou demasiado espesso",
+        "fake10": "Emblema do clube com texto desfocado, elementos descentrados ou proporções incorretas",
+        "fake11": "Costura grosseira ou fios visíveis no logótipo/emblema",
+        "fake12": "Ausência de etiqueta de segurança numa camisola recente",
+        "fake13": "Erros ortográficos ou gramática incorreta nas etiquetas de lavagem",
+        "fake14": "Código QR ausente numa camisola muito recente (posterior a 2020)"
+      },
+      "tips": {
+        "tip1": "VERIFIQUE SEMPRE o código de produto completo em kitcod.es ou no Google Imagens",
+        "tip2": "Verifique se a data de produção corresponde à época da camisola",
+        "tip3": "Compare o código de região (TVNAO) com o \"Made in...\" para verificar a consistência",
+        "tip4": "Peça fotografias de TODAS as etiquetas: gola, lavagem, grande etiqueta de produto, etiqueta pendente",
+        "tip5": "Leia o código QR se presente e verifique se redireciona para puma.com com o parâmetro AD",
+        "tip6": "Examine o logótipo Puma ATENTAMENTE - o \"Fat Cat\" é um defeito de falsificação muito comum",
+        "tip7": "Compare o emblema do clube pixel a pixel com as fotografias oficiais",
+        "tip8": "Verifique a consistência dos tamanhos regionais na etiqueta da gola (especialmente o tamanho japonês)",
+        "tip9": "Consulte as listas de fábricas oficiais da Puma se quiser verificar o código de fábrica",
+        "tip10": "Para camisolas novas: exija fotografia da etiqueta pendente com nome do clube visível",
+        "tip11": "Desconfie de preços demasiado baixos: as camisolas Puma reais mantêm o seu valor",
+        "tip12": "Em caso de dúvida sobre qualquer etiqueta, logótipo ou código: não compre"
+      }
+    },
+    "hummel": {
+      "title": "Guia de Autenticação Hummel",
+      "description": "Aprenda a identificar camisolas Hummel genuínas com estes critérios essenciais",
+      "criteria": {
+        "step1": {
+          "title": "A etiqueta principal",
+          "description": "A etiqueta Hummel tem características específicas",
+          "points": {
+            "point1": "Logótipo Hummel com chevrons característicos",
+            "point2": "Código de produto único",
+            "point3": "Informações de tamanho e composição",
+            "point4": "País de fabrico indicado",
+            "point5": "Impressão clara e duradoura"
+          }
+        },
+        "step2": {
+          "title": "Os chevrons Hummel",
+          "description": "Os chevrons são a assinatura da marca",
+          "points": {
+            "point1": "Forma em V característica",
+            "point2": "Ângulos de 45 graus precisos",
+            "point3": "Bordado de qualidade superior",
+            "point4": "Alinhamento perfeito dos chevrons",
+            "point5": "Cores vivas e contrastadas"
+          }
+        },
+        "step3": {
+          "title": "Qualidade têxtil",
+          "description": "A Hummel utiliza materiais de qualidade",
+          "points": {
+            "point1": "Tecido técnico respirável",
+            "point2": "Material agradável ao toque",
+            "point3": "Resistência ao desgaste",
+            "point4": "Cores que não desbotam",
+            "point5": "Propriedades antiperspirantes"
+          }
+        },
+        "step4": {
+          "title": "Acabamentos",
+          "description": "Os detalhes de acabamento são importantes",
+          "points": {
+            "point1": "Costura direita e sólida",
+            "point2": "Gola bem estruturada e confortável",
+            "point3": "Emblema do clube de qualidade premium",
+            "point4": "Impressão de número durável",
+            "point5": "Montagem cuidada"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Chevrons desalinhados ou deformados",
+        "fake2": "Etiqueta desfocada ou com erros",
+        "fake3": "Tecido de qualidade inferior",
+        "fake4": "Logótipo Hummel aproximado",
+        "fake5": "Costura que se desfaz rapidamente"
+      },
+      "tips": {
+        "tip1": "Compre em revendedores Hummel autorizados",
+        "tip2": "Compare os chevrons com modelos autênticos",
+        "tip3": "Verifique a qualidade geral de fabrico",
+        "tip4": "Examine a etiqueta em detalhe",
+        "tip5": "Um preço demasiado baixo deve alertá-lo"
+      }
+    },
+    "supporterVsPro": {
+      "title": "Adepto vs Pro: quais são as diferenças?",
+      "description": "Interrogamo-nos frequentemente sobre a diferença entre as camisolas usadas pelos jogadores em campo e as vendidas nas lojas, as camisolas \"Adepto\". Aqui está uma análise completa das diferenças.",
+      "context": "Comparação feita nas camisolas principais 25/26 do Stade Rennais (Puma). Camisola Pro em tamanho M, camisola Adepto em tamanho XL.",
+      "comparisons": {
+        "logo": {
+          "title": "Emblema do clube",
+          "description": "O emblema do clube nas camisolas Adepto é sempre bordado. Nas camisolas Pro, é termocolado. Este ano na camisola Pro principal, o emblema é rígido com relevo saliente nos escudos.",
+          "supporter": "Bordado",
+          "pro": "Termocolado, rígido com relevo saliente nos escudos"
+        },
+        "marque": {
+          "title": "Patrocinador Puma",
+          "description": "Tal como os emblemas, a identidade visual Puma (frente e ombros) difere entre as duas gamas.",
+          "supporter": "Geralmente bordado",
+          "pro": "Termocolado, com acabamento borrachoso saliente, muito durável"
+        },
+        "technology1": {
+          "title": "Duas tecnologias diferentes - tecido",
+          "supporter": "DRYCELL com RE-FIBRE",
+          "pro": "ULTRAWEAVE (muito evoluída desde a sua estreia na época 2022/2023)"
+        },
+        "technology2": {
+          "title": "Duas tecnologias diferentes - textura",
+          "description": "A diferença entre as texturas é visível a olho nu.",
+          "supporter": "Tecido standard",
+          "pro": "Tecido mais leve para melhorar o desempenho dos jogadores em campo"
+        },
+        "detail1": {
+          "title": "Texto específico do clube",
+          "supporter": "No exterior da camisola (ex.: #TOUTDONNER)",
+          "pro": "No interior da camisola (ex.: #TOUTDONNER)"
+        },
+        "detail2": {
+          "title": "Emblema \"Authentic Licensed Football\"",
+          "description": "O emblema na parte inferior da camisola tem um acabamento diferente consoante a gama.",
+          "supporter": "Flexível",
+          "pro": "Rígido"
+        },
+        "detail3": {
+          "title": "Costura",
+          "description": "Pode também notar-se uma costura interior diferente entre as duas gamas.",
+          "supporter": "Costura standard, sem característica distintiva",
+          "pro": "Costura vermelha específica nos ombros, ausente na camisola Adepto"
+        }
+      }
+    }
+  },
+  "CookiesPolicy": {
+    "title": "Política de Cookies",
+    "lastUpdate": "Última atualização",
+    "whatIsCookie": {
+      "title": "O que é um cookie?",
+      "description": "Um cookie é um pequeno ficheiro de texto guardado no seu dispositivo quando visita um site. Os cookies ajudam-nos a proporcionar uma melhor experiência de utilizador e a melhorar os nossos serviços."
+    },
+    "cookiesUsed": {
+      "title": "Cookies utilizados no Le Vestiaire",
+      "necessary": {
+        "title": "1. Cookies estritamente necessários",
+        "description": "Estes cookies são essenciais para o funcionamento do site e não podem ser desativados.",
+        "auth": {
+          "label": "Cookies de autenticação",
+          "description": "Permitem-lhe iniciar sessão e manter a sua sessão ativa"
+        },
+        "consent": {
+          "label": "cookieConsent",
+          "description": "Guarda a sua escolha relativamente aos cookies"
+        }
+      },
+      "analytics": {
+        "title": "2. Cookies de análise e desempenho",
+        "description": "Estes cookies ajudam-nos a compreender como utiliza o site para melhorar os nossos serviços.",
+        "vercel": {
+          "label": "Vercel Analytics",
+          "description": "Análise de tráfego e comportamento dos utilizadores"
+        },
+        "insights": {
+          "label": "Vercel Speed Insights",
+          "description": "Medição do desempenho do site"
+        },
+        "optOut": "Pode recusar estes cookies através do banner de consentimento sem que isso afete a sua experiência de navegação."
+      }
+    },
+    "preferences": {
+      "title": "Gestão das suas preferências",
+      "description": "Pode modificar as suas preferências de cookies a qualquer momento:",
+      "options": {
+        "browser": "Eliminando os cookies nas definições do seu browser",
+        "banner": "Eliminando o cookie \"cookieConsent\" para que o banner reapareça",
+        "contact": "Contactando a nossa equipa em"
+      }
+    },
+    "retention": {
+      "title": "Período de conservação",
+      "session": {
+        "label": "Cookies de sessão",
+        "description": "Eliminados quando o browser é fechado"
+      },
+      "consent": {
+        "label": "Cookie de consentimento",
+        "description": "Conservado até 2099 ou até eliminação manual"
+      },
+      "analytics": {
+        "label": "Cookies de análise",
+        "description": "Máximo de 13 meses"
+      }
+    },
+    "rights": {
+      "title": "Os seus direitos (RGPD)",
+      "description": "Em conformidade com o Regulamento Geral sobre a Proteção de Dados (RGPD), tem o direito de aceder, retificar e eliminar os seus dados pessoais. Para exercer estes direitos, contacte-nos em"
+    },
+    "modifications": {
+      "title": "Alterações a esta política",
+      "description": "Reservamo-nos o direito de modificar esta política de cookies a qualquer momento. As alterações entrarão em vigor após publicação nesta página. Encorajamo-lo a consultar esta página regularmente."
+    }
+  },
+  "Settings": {
+    "loading": "A carregar...",
+    "title": "Definições da Conta",
+    "footer": {
+      "text": "Ao utilizar a sua conta, aceita os nossos",
+      "terms": "Termos de Serviço",
+      "privacy": "Política de Privacidade",
+      "and": "e a",
+      "cookies": "Política de Cookies"
+    },
+    "accountInfo": {
+      "title": "Informações da Conta",
+      "username": "Nome de utilizador",
+      "email": "Endereço de e-mail",
+      "memberSince": "Membro desde"
+    },
+    "emailSettings": {
+      "title": "Alterar Endereço de E-mail",
+      "invalidEmail": "Endereço de e-mail inválido",
+      "changeSuccess": "Pedido de alteração de e-mail enviado. Verifique a sua caixa de entrada.",
+      "changeError": "Erro ao alterar o e-mail",
+      "googleOnlyMessage": "A sua conta está ligada via Google. Para alterar o seu endereço de e-mail, deverá fazê-lo diretamente na sua conta Google.",
+      "newEmailLabel": "Novo endereço de e-mail",
+      "emailPlaceholder": "novo@email.com",
+      "changing": "A alterar...",
+      "changeButton": "Alterar E-mail"
+    },
+    "passwordSettings": {
+      "title": "Segurança",
+      "passwordMismatch": "As novas palavras-passe não coincidem",
+      "passwordTooShort": "A palavra-passe deve ter pelo menos 8 caracteres",
+      "passwordNoUppercase": "A palavra-passe deve conter pelo menos uma letra maiúscula",
+      "passwordNoNumber": "A palavra-passe deve conter pelo menos um número",
+      "passwordNoSpecial": "A palavra-passe deve conter pelo menos um caractere especial",
+      "changeSuccess": "Palavra-passe alterada com sucesso",
+      "changeError": "Erro ao alterar a palavra-passe",
+      "googleOnlyMessage": "A sua conta está ligada via Google. A segurança da sua conta é gerida pela Google. Pode alterar a sua palavra-passe nas definições da sua conta Google.",
+      "currentPassword": "Palavra-passe atual",
+      "newPassword": "Nova palavra-passe",
+      "confirmPassword": "Confirmar palavra-passe",
+      "changing": "A alterar...",
+      "changeButton": "Alterar Palavra-passe"
+    },
+    "sessionSettings": {
+      "title": "Sessão",
+      "signOutSuccess": "Sessão terminada com sucesso",
+      "signOutError": "Erro ao terminar sessão",
+      "signOutLabel": "Terminar sessão",
+      "signOutDescription": "Irá terminar a sua sessão atual",
+      "signOutButton": "Terminar Sessão"
+    },
+    "leaderboardPrivacy": {
+      "title": "Privacidade no Leaderboard",
+      "description": "Gira a sua visibilidade nos leaderboards públicos",
+      "loading": "A carregar...",
+      "anonymousSuccess": "Agora aparece anonimamente nos leaderboards",
+      "visibleSuccess": "O seu perfil está agora visível nos leaderboards",
+      "updateError": "Não foi possível atualizar as suas definições",
+      "anonymousLabel": "Aparecer anonimamente",
+      "anonymousDescription": "O seu nome, avatar e equipa favorita ficarão ocultos. Aparecerá como \"Colecionador #XXXX\"",
+      "currentlyAnonymous": "Atualmente aparece como anónimo em todos os leaderboards públicos."
+    },
+    "cookieSettings": {
+      "title": "Gestão de Cookies",
+      "description": "Gira as suas preferências de cookies no Le Vestiaire. Pode alterar as suas escolhas a qualquer momento.",
+      "modifyButton": "Modificar as minhas preferências",
+      "modifyDescription": "Clique para reabrir o banner de consentimento e modificar as suas escolhas.",
+      "viewPolicyLink": "Ver a política de cookies completa"
+    },
+    "subscription": {
+      "title": "Subscrição",
+      "description": "Gira a sua subscrição e funcionalidades premium",
+      "currentPlan": "Plano atual",
+      "upgradeToPremium": "Atualizar para Premium",
+      "manageSubscription": "Gerir subscrição",
+      "loading": "A carregar...",
+      "features": "Funcionalidades incluídas",
+      "price": "Preço",
+      "or": "ou",
+      "free": {
+        "feature1": "Até 50 camisolas na coleção",
+        "feature2": "Até 20 camisolas na lista de desejos",
+        "feature3": "Estatísticas básicas",
+        "feature4": "Sistema de amigos e partilha"
+      },
+      "premium": {
+        "feature1": "Coleção de camisolas ilimitada",
+        "feature2": "Lista de desejos ilimitada",
+        "feature3": "Estatísticas avançadas completas",
+        "feature4": "Até 5 fotografias por camisola",
+        "feature5": "Distintivo Premium no seu perfil"
+      },
+      "freeInfo": "Atualize para Premium para desbloquear todas as funcionalidades e gerir uma coleção ilimitada.",
+      "premiumInfo": {
+        "title": "Obrigado por ser Premium!",
+        "description": "Usufrui de todas as funcionalidades premium. Gira a sua subscrição através do portal Stripe."
+      }
+    }
+  },
+  "CookieConsent": {
+    "title": "Utilização de Cookies",
+    "defaultDescription": "Utilizamos cookies para melhorar a sua experiência no Le Vestiaire. Estes cookies permitem-nos analisar a utilização do site e melhorar os nossos serviços.",
+    "acceptInfo": "Ao clicar em \"Aceitar\", aceita a utilização de cookies de análise. Os cookies essenciais permanecem ativos.",
+    "learnMore": "Saber mais",
+    "decline": "Recusar",
+    "accept": "Aceitar"
+  },
+  "LegalPages": {
+    "backToHome": "Voltar ao início"
+  },
+  "Jerseys": {
+    "selectLeague": "Escolha a sua liga",
+    "searchLeague": "Pesquisar uma liga...",
+    "searchLeagueOrClub": "Pesquisar uma liga ou clube...",
+    "searchClub": "Pesquisar um clube...",
+    "clubs": "Clubes",
+    "leagues": "Ligas",
+    "searching": "A pesquisar...",
+    "noClubsFound": "Nenhum clube encontrado",
+    "noLeaguesFound": "Nenhuma liga encontrada",
+    "allLeagues": "Todas as ligas",
+    "theLeagues": "Ligas",
+    "club": "Clube",
+    "season": "Época",
+    "brand": "Marca",
+    "type": "Tipo",
+    "findOnCFS": "Onde comprar",
+    "averageRating": "Avaliação média",
+    "collectorStats": "Estatísticas de colecionadores",
+    "inCollection": "Em {count} coleção",
+    "inCollections": "Em {count} coleções",
+    "inWishlist": "Em {count} lista de desejos",
+    "inWishlists": "Em {count} listas de desejos",
+    "clubNotFound": "Clube não encontrado",
+    "clubNotFoundText": "Clube não encontrado.",
+    "leagueNotFound": "Liga não encontrada",
+    "jerseyNotFound": "Camisola não encontrada",
+    "jerseyNotFoundText": "Esta camisola não existe ou já não está disponível.",
+    "allSeasons": "Todas as épocas",
+    "completeCollection": "Coleção completa",
+    "discover": "Descobrir",
+    "designedBy": "Desenhada por",
+    "collectiblePiece": "é uma peça de colecionador",
+    "addToCollection": "Adicionar à sua coleção",
+    "rateIt": "avaliar",
+    "clubsAndJerseys": "clubes e as suas camisolas históricas",
+    "largestDatabase": "A maior base de dados de camisolas",
+    "jerseyCollection": "Coleção de camisolas de futebol vintage e recentes",
+    "allClubs": "Todos os clubes",
+    "since": "desde",
+    "ofTheClub": "do clube"
+  },
+  "JerseyDetail": {
+    "tabs": {
+      "description": "Descrição",
+      "players": "Jogadores",
+      "achievements": "Palmarés",
+      "comingSoon": "Em breve",
+      "noDescription": "Não há descrição disponível para esta camisola.",
+      "proposeDescription": "Propor uma descrição",
+      "suggestImprovement": "Sugerir uma melhoria"
+    },
+    "palmares": {
+      "errorLoading": "Erro ao carregar troféus",
+      "noTrophies": "Nenhum troféu registado para esta época",
+      "winner": "Vencedor",
+      "finalist": "Finalista"
+    },
+    "players": {
+      "errorLoading": "Erro ao carregar jogadores",
+      "noPlayers": "Nenhum jogador registado para esta época",
+      "matches": "jogos",
+      "goals": "golos",
+      "assists": "assistências",
+      "assistsFull": "Assistências",
+      "cleanSheets": "baliza z.",
+      "cleanSheetsFull": "Balizas a zero",
+      "goalsConceded": "golos s.",
+      "goalsConcededFull": "Golos sofridos"
+    },
+    "proposeDescription": {
+      "title": "Propor uma descrição",
+      "titleImprove": "Sugerir uma melhoria",
+      "description": "Ajude a enriquecer a base de dados propondo uma descrição para {name}.",
+      "descriptionImprove": "Ajude-nos a melhorar a descrição de {name}.",
+      "currentDescription": "Descrição atual",
+      "yourDescription": "A sua proposta",
+      "yourImprovement": "A sua melhoria",
+      "placeholder": "Descreva a história desta camisola, o seu contexto, as suas características especiais, eventos memoráveis associados, etc.",
+      "hint": "Mínimo de 50 caracteres. Seja preciso e objetivo.",
+      "cancel": "Cancelar",
+      "submit": "Submeter a minha proposta",
+      "submitting": "A submeter...",
+      "success": "A sua proposta foi submetida com sucesso! Será analisada pela nossa equipa.",
+      "errors": {
+        "tooShort": "A descrição deve conter pelo menos {min} caracteres",
+        "tooLong": "A descrição não pode exceder {max} caracteres",
+        "generic": "Ocorreu um erro durante a submissão"
+      }
+    }
+  },
+  "Friends": {
+    "myFriends": "Os Meus Amigos",
+    "friends": "Amigos",
+    "pending": "Pendentes",
+    "search": "Pesquisar",
+    "noFriendsYet": "Ainda sem amigos",
+    "searchUsersToStart": "Pesquise utilizadores para começar a construir a sua rede",
+    "noPendingRequests": "Nenhum pedido pendente",
+    "requestsWillAppear": "Os seus pedidos de amizade aparecerão aqui",
+    "error": "Erro",
+    "searchPlaceholder": "Pesquisar por nome de utilizador ou nome...",
+    "minCharacters": "Escreva pelo menos 2 caracteres para pesquisar",
+    "noUsersFound": "Nenhum utilizador encontrado",
+    "result": "resultado",
+    "results": "resultados",
+    "requestSent": "Pedido enviado",
+    "userBlocked": "Utilizador bloqueado",
+    "blockUserConfirm": "Bloquear este utilizador?",
+    "user": "Utilizador",
+    "noFavoriteTeam": "Sem equipa favorita",
+    "removeFriendConfirm": "Remover {name} dos seus amigos?",
+    "friendRemoved": "Amigo removido",
+    "errorRemoving": "Erro ao remover amigo",
+    "blockConfirm": "Bloquear {name}?",
+    "errorBlocking": "Erro ao bloquear utilizador",
+    "removeFriend": "Remover amigo",
+    "block": "Bloquear",
+    "nowFriendsWith": "Agora é amigo de {name}",
+    "requestRejected": "Pedido recusado",
+    "errorAccepting": "Erro ao aceitar pedido",
+    "errorRejecting": "Erro ao recusar pedido",
+    "accept": "Aceitar",
+    "reject": "Recusar",
+    "add": "Adicionar",
+    "addFriend": "Adicionar como amigo",
+    "resend": "Reenviar",
+    "friendsCollections": "Coleções dos Amigos",
+    "discoverCollections": "Descubra as coleções de camisolas dos seus amigos e inspire-se para a sua própria coleção",
+    "addFriendsToDiscover": "Adicione amigos para descobrir as suas coleções de camisolas!",
+    "searchFriends": "Pesquisar amigos →",
+    "noBio": "Sem biografia",
+    "viewCollection": "Ver coleção →",
+    "viewWishlist": "Ver lista de desejos →",
+    "collectionNotFound": "Coleção não encontrada",
+    "collectionOf": "Coleção de {name}",
+    "jersey": "camisola",
+    "jerseys": "camisolas",
+    "emptyCollection": "Coleção vazia",
+    "noJerseysYet": "{name} ainda não adicionou nenhuma camisola à sua coleção.",
+    "thisUser": "Este utilizador",
+    "jerseysOwned": "Camisolas na coleção",
+    "inCollection": "na coleção",
+    "favoriteLeagues": "Ligas favoritas",
+    "noData": "Sem dados",
+    "preferredTypes": "Tipos preferidos",
+    "origin": "Origem",
+    "purchased": "Comprada",
+    "gifts": "Ofertas",
+    "mysteryBox": "Caixa mistério",
+    "hisHerJerseys": "As suas camisolas",
+    "sortBy": "Ordenar por:",
+    "mostRecent": "Mais recente",
+    "oldest": "Mais antigo",
+    "priceDescending": "Preço decrescente",
+    "priceAscending": "Preço crescente",
+    "condition": "Estado",
+    "clubAZ": "Clube (A-Z)",
+    "season": "Época",
+    "noJerseysInCollection": "Nenhuma camisola nesta coleção.",
+    "modal": {
+      "title": "Detalhes da Camisola",
+      "yourPhoto": "Fotografia pessoal",
+      "officialPhoto": "Fotografia oficial",
+      "size": "Tamanho",
+      "withTags": "Com etiquetas",
+      "gift": "Oferta",
+      "mysteryBox": "Caixa mistério",
+      "club": "Clube",
+      "league": "Liga",
+      "type": "Tipo",
+      "season": "Época",
+      "brand": "Marca",
+      "collectionInfo": "Informações da coleção",
+      "purchasePrice": "Preço de compra",
+      "purchasedOn": "Comprada em",
+      "player": "Jogador",
+      "number": "Número",
+      "personalization": "Personalização",
+      "addedOn": "Adicionada em",
+      "notes": "Notas",
+      "close": "Fechar"
+    }
+  },
+  "Leaderboard": {
+    "page": {
+      "title": "Classificação - The Locker Room",
+      "description": "Descubra os melhores colecionadores de camisolas de futebol",
+      "heading": "Classificação",
+      "howItWorks": "Como funciona?",
+      "howItWorksDescription": "As classificações são atualizadas em tempo real. O top 3 de sempre e o n.º 1 do mês recebem um badge permanente!"
+    },
+    "tabs": {
+      "allTime": "De sempre",
+      "emptyState": "Nenhuma classificação disponível para esta categoria",
+      "yourPosition": "A sua posição:"
+    },
+    "categories": {
+      "title": "Categoria",
+      "collection_size": "Maior coleção",
+      "collection_diversity": "Coleção mais diversificada",
+      "league_diversity": "Globe-trotter",
+      "vintage_specialist": "Especialista vintage",
+      "descriptions": {
+        "collection_size": "Número total de camisolas na coleção",
+        "collection_diversity": "Número de clubes diferentes",
+        "league_diversity": "Número de ligas diferentes",
+        "vintage_specialist": "Camisolas anteriores a 2005"
+      }
+    },
+    "card": {
+      "jersey": "camisola",
+      "jerseys": "camisolas",
+      "club": "clube",
+      "clubs": "clubes",
+      "league": "liga",
+      "leagues": "ligas",
+      "vintage": "vintage",
+      "currentUser": "(Você)",
+      "defaultUsername": "Utilizador"
+    },
+    "errors": {
+      "rateLimitError": "Demasiados pedidos à classificação. Aguarde um momento.",
+      "serverError": "Erro de servidor"
+    },
+    "months": {
+      "january": "Janeiro",
+      "february": "Fevereiro",
+      "march": "Março",
+      "april": "Abril",
+      "may": "Maio",
+      "june": "Junho",
+      "july": "Julho",
+      "august": "Agosto",
+      "september": "Setembro",
+      "october": "Outubro",
+      "november": "Novembro",
+      "december": "Dezembro"
+    }
+  },
+  "Proposals": {
+    "Admin": {
+      "pageTitle": "Gestão de Propostas - The Locker Room",
+      "pageDescription": "Gira as propostas de camisolas submetidas pelos contribuidores",
+      "heading": "Gestão de Propostas",
+      "tabJerseys": "Camisolas",
+      "tabDescriptions": "Descrições",
+      "about": "Sobre as propostas",
+      "aboutDescription": "Os utilizadores com o papel de contribuidor podem propor novas camisolas para adicionar à nossa base de dados. Como administrador, pode aprovar ou rejeitar estas propostas.",
+      "approveLabel": "Aprovar:",
+      "approveDescription": "A camisola será criada na base de dados e o contribuidor será creditado.",
+      "rejectLabel": "Rejeitar:",
+      "rejectDescription": "A proposta será eliminada permanentemente",
+      "errorLoading": "Erro ao carregar propostas",
+      "errorLoadingToast": "Não foi possível carregar as propostas",
+      "approveSuccess": "Proposta aprovada com sucesso!",
+      "rejectSuccess": "Proposta rejeitada",
+      "emptyStateTitle": "Nenhuma proposta pendente",
+      "emptyStateDescription": "Não há atualmente nenhuma proposta de camisola pendente.",
+      "brandLabel": "Marca:",
+      "proposedByLabel": "Proposta por:",
+      "contributionsLabel": "Contribuições:",
+      "dateLabel": "Em:",
+      "approveButton": "Aprovar",
+      "rejectButton": "Rejeitar",
+      "approveDialogTitle": "Aprovar esta proposta?",
+      "rejectDialogTitle": "Rejeitar esta proposta?",
+      "approveDialogDescription": "A camisola <strong>{jerseyName}</strong> será adicionada à base de dados e o contribuidor será creditado.",
+      "rejectDialogDescription": "A proposta <strong>{jerseyName}</strong> será eliminada permanentemente. Esta ação é irreversível.",
+      "cancel": "Cancelar",
+      "confirm": "Confirmar",
+      "approveAllButton": "Aprovar todas ({count})",
+      "approveAllLoading": "A aprovar...",
+      "approveAllDialogTitle": "Aprovar todas as propostas?",
+      "approveAllDialogDescription": "Está prestes a aprovar {count} proposta(s). Esta ação é irreversível.",
+      "approveAllSuccess": "{count} proposta(s) aprovada(s) com sucesso!",
+      "approveAllPartial": "{approved} aprovadas, {failed} falhadas",
+      "DescriptionProposals": {
+        "aboutTitle": "Sobre as propostas de descrição",
+        "aboutDescription": "Os utilizadores podem propor descrições para enriquecer as páginas de camisolas. Pode aprovar ou rejeitar estas propostas. Os contribuidores são creditados por cada descrição aprovada.",
+        "emptyStateTitle": "Nenhuma proposta de descrição",
+        "emptyStateDescription": "Não há atualmente nenhuma proposta de descrição pendente.",
+        "currentDescription": "Descrição atual",
+        "proposedDescription": "Descrição proposta",
+        "proposedImprovement": "Melhoria proposta",
+        "proposedBy": "Proposta por:",
+        "date": "Em:",
+        "viewJersey": "Ver camisola",
+        "approve": "Aprovar",
+        "reject": "Rejeitar",
+        "approveDialogTitle": "Aprovar esta descrição?",
+        "approveDialogDescription": "Esta descrição substituirá a descrição atual da camisola. O contribuidor será creditado.",
+        "rejectDialogTitle": "Rejeitar esta proposta?",
+        "rejectDialogDescription": "A proposta será marcada como rejeitada. Pode opcionalmente indicar um motivo.",
+        "rejectionReason": "Motivo de rejeição (opcional)",
+        "rejectionReasonPlaceholder": "Explique por que esta proposta é rejeitada...",
+        "cancel": "Cancelar",
+        "confirmApprove": "Aprovar",
+        "confirmReject": "Rejeitar",
+        "approveSuccess": "Descrição aprovada com sucesso!",
+        "rejectSuccess": "Proposta rejeitada",
+        "errorLoading": "Erro ao carregar propostas",
+        "errorApprove": "Erro durante a aprovação",
+        "errorReject": "Erro durante a rejeição"
+      }
+    },
+    "User": {
+      "myProposalsTitle": "As Minhas Propostas - The Locker Room",
+      "myProposalsDescription": "Consulte o estado das suas propostas de camisolas",
+      "myProposalsHeading": "As Minhas Propostas",
+      "newProposal": "Nova proposta",
+      "proposeJerseyTitle": "Propor uma Camisola - The Locker Room",
+      "proposeJerseyDescription": "Proponha uma nova camisola para adicionar à base de dados",
+      "proposeJerseyHeading": "Propor uma Camisola",
+      "proposeJerseyInfo": "Pode propor uma nova camisola para adicionar à nossa base de dados. Os administradores analisarão a sua proposta antes de a aprovar.",
+      "tipsHeading": "Dicas para uma boa proposta",
+      "tip1": "Verifique se a camisola já não existe na base de dados",
+      "tip2": "Utilize uma fotografia clara e de boa qualidade",
+      "tip3": "Introduza a época no formato AAAA-AA (ex.: 2025-26, 2024-25) para clubes e no formato AAAA (2025, 2022, etc.) para seleções nacionais",
+      "tip4": "Seja preciso no nome e na descrição",
+      "errorLoading": "Erro ao carregar propostas",
+      "errorLoadingToast": "Não foi possível carregar as suas propostas",
+      "emptyStateTitle": "Nenhuma proposta",
+      "emptyStateDescription": "Ainda não submeteu nenhuma proposta de camisola.",
+      "brandLabel": "Marca:",
+      "statusPending": "Pendente"
+    },
+    "Form": {
+      "jerseyNameLabel": "Nome da camisola",
+      "autoGenerated": "(Gerado automaticamente)",
+      "jerseyNamePlaceholder": "Será gerado automaticamente com base nas suas seleções...",
+      "clubLabel": "Clube *",
+      "clubLoading": "A carregar...",
+      "clubSearchPlaceholder": "Pesquisar um clube...",
+      "clubCommandPlaceholder": "Pesquisar um clube...",
+      "clubNotFound": "Nenhum clube encontrado.",
+      "seasonLabel": "Época *",
+      "seasonPlaceholder": "Ex.: 2025-26",
+      "seasonPlaceholderNationalTeam": "Ex.: 2025",
+      "typeLabel": "Tipo *",
+      "typePlaceholder": "Tipo de camisola",
+      "specialNameLabel": "Nome da camisola especial",
+      "specialNameOptional": "(opcional)",
+      "specialNamePlaceholder": "Ex.: Aniversário, Edição Limitada, Natal...",
+      "specialNameHelper": "Se vazio, o nome será \"Camisola Especial [Clube] [Época]\"",
+      "brandLabel": "Marca *",
+      "brandPlaceholder": "Ex.: Nike, Adidas, Puma...",
+      "descriptionLabel": "Descrição (opcional)",
+      "descriptionPlaceholder": "Adicione uma descrição ou detalhes sobre esta camisola...",
+      "photoLabel": "Fotografia da camisola *",
+      "photoClickToAdd": "Clique para adicionar uma fotografia",
+      "photoFormats": "PNG, JPG, WEBP, AVIF (máx. 2MB)",
+      "errorFileNotImage": "O ficheiro deve ser uma imagem",
+      "errorFileTooLarge": "A fotografia não pode exceder 2MB",
+      "errorAllFieldsRequired": "Todos os campos são obrigatórios exceto a descrição",
+      "errorPhotoRequired": "É necessária uma fotografia",
+      "errorUpload": "Erro durante o carregamento",
+      "errorUploadToast": "Erro ao carregar a fotografia",
+      "errorCreate": "Erro durante a criação",
+      "successToast": "Proposta submetida com sucesso!",
+      "errorCreateToast": "Erro ao criar proposta",
+      "buttonUploading": "A carregar fotografia...",
+      "buttonSubmitting": "A submeter...",
+      "buttonSubmit": "Submeter proposta",
+      "generatedJerseyName": "Camisola {type} {club} {season}",
+      "seasonErrorClub": "Formato inválido. Use AAAA-AA (ex.: 2025-26) para clubes",
+      "seasonErrorNationalTeam": "Formato inválido. Use AAAA (ex.: 2025) para seleções nacionais"
+    },
+    "Errors": {
+      "notContributor": "Tem de ser contribuidor para propor camisolas",
+      "rateLimitProposals": "Demasiadas propostas. Tente novamente mais tarde.",
+      "rateLimitUploads": "Demasiados carregamentos. Tente novamente mais tarde.",
+      "allFieldsRequired": "Todos os campos são obrigatórios exceto a descrição",
+      "invalidType": "Tipo de camisola inválido",
+      "clubNotFound": "Clube não encontrado",
+      "jerseyExists": "Esta camisola já existe na base de dados",
+      "proposalExists": "Já existe uma proposta pendente para esta camisola",
+      "noFile": "Nenhum ficheiro recebido",
+      "proposalNotFound": "Proposta não encontrada",
+      "jerseyAlreadyExists": "Já existe uma camisola com estas características",
+      "invalidImageUrl": "Formato de URL de imagem inválido",
+      "cannotDownloadImage": "Não foi possível descarregar a imagem da proposta",
+      "cannotMoveImage": "Não foi possível mover a imagem para o bucket de camisolas"
+    }
+  },
+  "Pricing": {
+    "title": "Escolha o seu plano",
+    "subtitle": "Gira a sua coleção de camisolas como um profissional",
+    "toggle": {
+      "monthly": "Mensal",
+      "yearly": "Anual"
+    },
+    "free": {
+      "name": "Grátis",
+      "description": "Para começar a sua coleção",
+      "period": "grátis",
+      "features": {
+        "jerseys": "Até 50 camisolas",
+        "wishlist": "Até 20 camisolas na lista de desejos",
+        "basicStats": "Estatísticas básicas",
+        "friends": "Sistema de amigos",
+        "ratings": "Avaliações e comentários"
+      },
+      "button": "Grátis"
+    },
+    "premium": {
+      "name": "Premium",
+      "monthly": {
+        "description": "Para colecionadores apaixonados",
+        "period": "mês",
+        "button": "Passar para Premium"
+      },
+      "yearly": {
+        "description": "Para colecionadores apaixonados",
+        "period": "ano",
+        "button": "Passar para Premium Anual",
+        "savings": "2 meses grátis"
+      },
+      "features": {
+        "unlimitedJerseys": "Coleção ilimitada",
+        "unlimitedWishlist": "Lista de desejos ilimitada",
+        "advancedStats": "Estatísticas avançadas completas",
+        "multiplePhotos": "Até 5 fotografias por camisola",
+        "badge": "Badge Premium no seu perfil"
+      }
+    }
+  },
+  "PublicCollection": {
+    "title": "Coleção de {name}",
+    "jerseys": "camisolas",
+    "jersey": "camisola",
+    "anonymous": "Colecionador Anónimo",
+    "anonymousMessage": "Este colecionador prefere permanecer anónimo",
+    "emptyTitle": "Coleção vazia",
+    "emptyMessage": "{name} ainda não adicionou nenhuma camisola à sua coleção.",
+    "tabs": {
+      "collection": "Coleção",
+      "wishlist": "Lista de desejos"
+    },
+    "commonJerseysTitle": "Em comum consigo",
+    "commonJerseys": "{count} camisola(s) em comum",
+    "wishlistTitle": "Lista de desejos de {name}",
+    "wishlistEmpty": "Lista de desejos vazia",
+    "wishlistEmptyMessage": "{name} ainda não adicionou nenhuma camisola à sua lista de desejos."
+  },
+  "ForgotPassword": {
+    "title": "Esqueceu a palavra-passe",
+    "subtitle": "Introduza o seu e-mail para receber uma ligação de reposição.",
+    "form": {
+      "email": "E-mail",
+      "emailPlaceholder": "o.seu@email.com"
+    },
+    "button": {
+      "submit": "Enviar ligação",
+      "loading": "A enviar…"
+    },
+    "success": {
+      "title": "E-mail enviado",
+      "message": "Se existir uma conta com este e-mail, receberá uma ligação de reposição dentro de alguns minutos."
+    },
+    "backToLogin": "Voltar ao início de sessão"
+  },
+  "ResetPassword": {
+    "title": "Nova palavra-passe",
+    "subtitle": "Escolha uma nova palavra-passe para a sua conta.",
+    "form": {
+      "password": "Nova palavra-passe",
+      "passwordPlaceholder": "Mínimo de 8 caracteres",
+      "passwordConfirm": "Confirmar palavra-passe",
+      "passwordConfirmPlaceholder": "Repita a sua palavra-passe"
+    },
+    "button": {
+      "submit": "Repor palavra-passe",
+      "loading": "A repor…"
+    },
+    "success": {
+      "title": "Palavra-passe alterada",
+      "message": "A sua palavra-passe foi reposta. Pode agora iniciar sessão."
+    },
+    "errors": {
+      "invalidToken": "Esta ligação é inválida ou expirou. Por favor, faça um novo pedido.",
+      "passwordMismatch": "As palavras-passe não coincidem.",
+      "passwordTooShort": "São necessários pelo menos 8 caracteres",
+      "passwordNoUppercase": "É necessária pelo menos uma letra maiúscula",
+      "passwordNoNumber": "É necessário pelo menos um número",
+      "passwordNoSpecial": "É necessário pelo menos um caractere especial",
+      "resetError": "Ocorreu um erro. Por favor, tente novamente."
+    },
+    "backToLogin": "Iniciar sessão"
+  }
+}

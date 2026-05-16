@@ -3,6 +3,7 @@ export type DescriptionTranslations = {
   en?: string;
   es?: string;
   de?: string;
+  pt?: string;
 };
 
 const DEEPL_API_URL = "https://api-free.deepl.com/v2/translate";
@@ -31,12 +32,13 @@ async function translateTo(text: string, targetLang: string): Promise<string> {
 export async function translateDescription(
   text: string
 ): Promise<DescriptionTranslations> {
-  const [fr, en, es, de] = await Promise.all([
+  const [fr, en, es, de, pt] = await Promise.all([
     translateTo(text, "FR"),
     translateTo(text, "EN"),
     translateTo(text, "ES"),
     translateTo(text, "DE"),
+    translateTo(text, "PT"),
   ]);
 
-  return { fr, en, es, de };
+  return { fr, en, es, de, pt };
 }

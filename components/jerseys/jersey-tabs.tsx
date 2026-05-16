@@ -30,7 +30,8 @@ export function JerseyTabs({
 }: JerseyTabsProps) {
   const t = useTranslations("JerseyDetail.tabs");
   const locale = useLocale();
-  const localizedDescription = descriptionTranslations?.[locale] ?? description;
+  const translations = descriptionTranslations as Record<string, string> | null | undefined;
+  const localizedDescription = translations?.[locale] ?? translations?.["en"] ?? description;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
