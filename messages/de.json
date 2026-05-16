@@ -1,0 +1,2302 @@
+{
+  "Sidebar": {
+    "appName": "Die Kabine",
+    "home": "Startseite",
+    "collection": "Meine Sammlung",
+    "wishlist": "Meine Wunschliste",
+    "jerseys": "Trikots",
+    "community": "Community",
+    "leaderboard": "Rangliste",
+    "authentication": "Authentifizierung",
+    "pricing": "Abonnement",
+    "settings": "Konto",
+    "friends": "Freunde",
+    "friendsCollections": "Sammlungen der Freunde",
+    "jerseySuggestions": "Trikot-Vorschläge",
+    "openMenu": "Menü öffnen",
+    "closeMenu": "Menü schließen",
+    "bonsPlansSectionLabel": "Angebote",
+    "cfsSalesLink": "CFS Sale-Trikots"
+  },
+  "Common": {
+    "loading": "Laden...",
+    "error": "Fehler",
+    "success": "Erfolg",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "edit": "Bearbeiten",
+    "add": "Hinzufügen",
+    "search": "Suchen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "previous": "Zurück",
+    "confirm": "Bestätigen",
+    "close": "Schließen"
+  },
+  "JerseyType": {
+    "HOME": "Heim",
+    "AWAY": "Auswärts",
+    "THIRD": "Drittes",
+    "FOURTH": "Viertes",
+    "GOALKEEPER": "Torwart",
+    "SPECIAL": "Special",
+    "HALLOWEEN": "Halloween",
+    "ANNIVERSARY": "Jubiläum",
+    "CENTENAIRE": "Hundertjahrfeier",
+    "OKTOBERFEST": "Oktoberfest",
+    "HUMANRACE": "Humanrace",
+    "ONE_PLANET": "One Planet",
+    "OCTOBRE_ROSE": "Pink Oktober",
+    "ANTI_RACISME": "Anti-Rassismus",
+    "HOMMAGE": "Hommage",
+    "RETRO": "Retro",
+    "NOUVEL_AN_CHINOIS": "Chinesisches Neujahr",
+    "OFF_WHITE": "Off-White",
+    "KOCHE": "Koché",
+    "CHAMPION": "Champion"
+  },
+  "PlayerPosition": {
+    "GOALKEEPER": "Torwart",
+    "DEFENDER": "Verteidiger",
+    "MIDFIELDER": "Mittelfeldspieler",
+    "FORWARD": "Stürmer"
+  },
+  "PlayerPositionPlural": {
+    "GOALKEEPER": "Torhüter",
+    "DEFENDER": "Verteidiger",
+    "MIDFIELDER": "Mittelfeldspieler",
+    "FORWARD": "Stürmer"
+  },
+  "Size": {
+    "XS": "XS",
+    "S": "S",
+    "M": "M",
+    "L": "L",
+    "XL": "XL",
+    "XXL": "XXL"
+  },
+  "Condition": {
+    "MINT": "Neuwertig",
+    "EXCELLENT": "Ausgezeichnet",
+    "GOOD": "Gut",
+    "FAIR": "Akzeptabel",
+    "POOR": "Schlecht"
+  },
+  "Auth": {
+    "login": "Anmelden",
+    "logout": "Abmelden",
+    "signup": "Registrieren",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "forgotPassword": "Passwort vergessen?",
+    "noAccount": "Noch kein Konto?",
+    "hasAccount": "Bereits ein Konto?",
+    "continueWithGoogle": "Mit Google fortfahren"
+  },
+  "SignUp": {
+    "title": "Konto erstellen",
+    "subtitle": "Tritt der Community der Trikot-Sammler bei",
+    "continueWithGoogle": "Mit Google fortfahren",
+    "orContinueWith": "Oder fortfahren mit",
+    "form": {
+      "firstName": "Vorname",
+      "lastName": "Nachname",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "required": "*",
+      "passwordPlaceholder": "••••••••"
+    },
+    "button": {
+      "creating": "Konto wird erstellt...",
+      "create": "Mein Konto erstellen"
+    },
+    "hasAccount": "Bereits ein Konto?",
+    "signIn": "Anmelden",
+    "terms": {
+      "text": "Durch Klicken auf „Mein Konto erstellen“ stimmst du unseren",
+      "termsOfService": "Nutzungsbedingungen",
+      "and": "und",
+      "privacyPolicy": "Datenschutzrichtlinien"
+    },
+    "errors": {
+      "firstNameRequired": "Vorname erforderlich",
+      "lastNameRequired": "Nachname erforderlich",
+      "emailRequired": "E-Mail erforderlich",
+      "emailInvalid": "Ungültige E-Mail",
+      "passwordRequired": "Passwort erforderlich",
+      "passwordTooShort": "Mindestens 8 Zeichen erforderlich",
+      "passwordNoUppercase": "Mindestens ein Großbuchstabe erforderlich",
+      "passwordNoNumber": "Mindestens eine Zahl erforderlich",
+      "passwordNoSpecial": "Mindestens ein Sonderzeichen erforderlich",
+      "passwordMismatch": "Passwörter stimmen nicht überein",
+      "signupError": "Fehler bei der Registrierung"
+    }
+  },
+  "Collection": {
+    "button": {
+      "loading": "Laden...",
+      "inCollection": "In meiner Sammlung",
+      "addToCollection": "Zu meiner Sammlung hinzufügen",
+      "toast": {
+        "mustBeConnected": "Du musst angemeldet sein, um zur Sammlung hinzuzufügen",
+        "added": "Trikot zur Sammlung hinzugefügt",
+        "removed": "Trikot aus der Sammlung entfernt",
+        "error": "Ein Fehler ist aufgetreten",
+        "connectionError": "Verbindungsfehler. Bitte versuche es erneut.",
+        "manageError": "Du musst angemeldet sein, um deine Sammlung zu verwalten"
+      }
+    },
+    "stats": {
+      "owned": "Besessene Trikots",
+      "jerseyInCollection": "Trikot in deiner Sammlung",
+      "jerseysInCollection": "Trikots in deiner Sammlung",
+      "favoriteLeagues": "Lieblingsligen",
+      "conditions": "Zustände",
+      "source": "Herkunft",
+      "purchased": "Gekauft",
+      "gifts": "Geschenke",
+      "mysteryBox": "Mystery Box"
+    },
+    "landing": {
+      "badge": "Sammlungsverwaltung",
+      "title": "Verwalte deine Sammlung von",
+      "titleHighlight": "Fußballtrikots",
+      "subtitle": "Katalogisiere, organisiere und verfolge die Entwicklung deiner Sammlung. Schließ dich",
+      "subtitleHighlight": "über 100 Sammlern",
+      "subtitleEnd": "an, die für Trikots begeistert sind.",
+      "signIn": "Anmelden",
+      "signUp": "Konto erstellen",
+      "exampleTitle": "Eine Sammlung, tausend Möglichkeiten",
+      "exampleSubtitle": "Beispielsammlung mit 24 Trikots",
+      "statsTotal": "Gesamt",
+      "statsTotalDesc": "Besessene Trikots",
+      "statsValue": "Wert",
+      "statsValueDesc": "Gesamtwert",
+      "statsLeagues": "Ligen",
+      "statsConditions": "Zustände",
+      "moreJerseys": "+ 18 weitere Trikots in dieser Sammlung",
+      "createCollection": "Meine Sammlung erstellen",
+      "featuresTitle": "Alles was du brauchst",
+      "featuresSubtitle": "Funktionen für Sammler",
+      "features": {
+        "catalog": {
+          "title": "Alles katalogisieren",
+          "description": "Größe, Zustand, Kaufpreis, Datum, Personalisierung... Verwalte jedes Detail deiner Trikots"
+        },
+        "photos": {
+          "title": "Eigene Fotos hinzufügen",
+          "description": "Verewige deine Sammlung mit deinen eigenen Fotos zusätzlich zu offiziellen Bildern"
+        },
+        "stats": {
+          "title": "Detaillierte Statistiken",
+          "description": "Gesamtwert, Verteilung nach Liga, Zustand, Typen... Analysiere deine Sammlung"
+        },
+        "evolution": {
+          "title": "Entwicklung verfolgen",
+          "description": "Beobachte, wie deine Sammlung mit Grafiken über die Zeit wächst"
+        },
+        "security": {
+          "title": "Sicher & Privat",
+          "description": "Deine Daten sind geschützt. Du entscheidest, was du mit der Community teilst"
+        },
+        "friends": {
+          "title": "Mit Freunden vergleichen",
+          "description": "Füge Freunde hinzu, entdecke ihre Sammlungen und teile deine Leidenschaft"
+        }
+      },
+      "testimonialsTitle": "Sie haben ihre Sammlung geteilt",
+      "testimonialsSubtitle": "Tausende zufriedene Nutzer",
+      "testimonials": {
+        "thomas": "Endlich eine App zur Verwaltung meiner Sammlung! Liga-Statistiken sind super 🔥",
+        "julie": "Ich kann endlich den Wert meiner Sammlung verfolgen. Super intuitive Oberfläche!",
+        "alexandre": "Das Hochladen eigener Fotos ist toll. Meine Sammlung war noch nie so gut organisiert."
+      },
+      "ctaTitle": "Bereit, deine Sammlung zu verwalten?",
+      "ctaSubtitle": "Katalogisiere deine Trikots und verfolge die Entwicklung deiner Sammlung in wenigen Klicks",
+      "ctaButton": "Mein kostenloses Konto erstellen",
+      "ctaSignIn": "Anmelden",
+      "ctaSecure": "100% sicher",
+      "ctaNoCommitment": "Keine Verpflichtung",
+      "faqTitle": "Häufig gestellte Fragen",
+      "faqSubtitle": "Alles was du über Le Vestiaire wissen musst",
+      "faqs": {
+        "addJersey": {
+          "q": "Wie füge ich ein Trikot zu meiner Sammlung hinzu?",
+          "a": "Durchsuche unseren Katalog mit Tausenden von Trikots, klicke auf ein Trikot und dann auf \"Zu meiner Sammlung hinzufügen\". Du kannst Größe, Zustand, Kaufpreis und vieles mehr eingeben."
+        },
+        "customPhotos": {
+          "q": "Kann ich eigene Fotos hinzufügen?",
+          "a": "Ja! Zusätzlich zu offiziellen Fotos kannst du eigene Fotos für jedes Trikot in deiner Sammlung hochladen."
+        },
+        "privacy": {
+          "q": "Ist meine Sammlung privat?",
+          "a": "Ja, standardmäßig ist deine Sammlung privat. Du kannst sie mit deinen Freunden teilen oder anonym in den Rankings bleiben."
+        },
+        "pricing": {
+          "q": "Ist die App kostenlos?",
+          "a": "Ja, Le Vestiaire ist 100% kostenlos für die Verwaltung deiner Sammlung, Wunschliste und alle Funktionen."
+        }
+      }
+    },
+    "modal": {
+      "add": {
+        "title": "Zu meiner Sammlung hinzufügen",
+        "description": "Gib die Details deines Trikots ein.",
+        "size": "Größe",
+        "sizeRequired": "*",
+        "sizePlaceholder": "Größe",
+        "condition": "Zustand",
+        "conditionRequired": "*",
+        "conditionPlaceholder": "Zustand",
+        "purchasePrice": "Kaufpreis (€)",
+        "purchasePricePlaceholder": "z.B.: 90.99",
+        "purchaseDate": "Kaufdatum",
+        "personalization": "Personalisierung (Name, Nummer...)",
+        "personalizationPlaceholder": "z.B.: MESSI 10",
+        "playerName": "Spielername (Beflockung)",
+        "playerNamePlaceholder": "z.B.: MESSI",
+        "playerNumber": "Trikotnummer",
+        "playerNumberPlaceholder": "z.B.: 10",
+        "hasTags": "Hat noch Etiketten",
+        "isGift": "Als Geschenk erhalten",
+        "isFromMysteryBox": "Aus einer Mystery Box",
+        "notes": "Persönliche Notizen",
+        "notesPlaceholder": "Füge deine Kommentare zu diesem Trikot hinzu...",
+        "photo": "Persönliches Foto (optional)",
+        "photoClickToAdd": "Klicken zum Hinzufügen",
+        "photoYourPhoto": "deines Fotos",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5 MB)",
+        "cancel": "Abbrechen",
+        "uploadPhoto": "Foto wird hochgeladen...",
+        "adding": "Wird hinzugefügt...",
+        "addToCollection": "Zu meiner Sammlung hinzufügen",
+        "toast": {
+          "fileNotImage": "Die Datei muss ein Bild sein",
+          "fileTooLarge": "Das Foto darf 5 MB nicht überschreiten",
+          "sizeRequired": "Größe ist erforderlich",
+          "conditionRequired": "Zustand ist erforderlich",
+          "uploadError": "Fehler beim Hochladen des Fotos"
+        }
+      },
+      "view": {
+        "titleEdit": "Dein Trikot bearbeiten",
+        "titleView": "Details deines Trikots",
+        "yourPhoto": "Dein Foto",
+        "officialPhoto": "Offizielles Foto",
+        "modifyPhoto": "Dein Foto ändern",
+        "addPhoto": "Dein Foto hinzufügen",
+        "choosePhoto": "Foto auswählen",
+        "withTags": "Mit Etiketten",
+        "gift": "Geschenk",
+        "mysteryBox": "Mystery Box",
+        "club": "Verein",
+        "league": "Liga",
+        "type": "Typ",
+        "season": "Saison",
+        "brand": "Marke",
+        "yourJersey": "Dein Trikot",
+        "purchasePrice": "Kaufpreis",
+        "purchasedOn": "Gekauft am",
+        "player": "Spieler",
+        "number": "Nummer",
+        "personalization": "Personalisierung",
+        "addedOn": "Hinzugefügt am",
+        "personalNotes": "Persönliche Notizen",
+        "close": "Schließen",
+        "edit": "Bearbeiten",
+        "delete": "Löschen",
+        "cancel": "Abbrechen",
+        "save": "Speichern",
+        "uploading": "Wird hochgeladen...",
+        "saving": "Wird gespeichert...",
+        "size": "Größe",
+        "sizeRequired": "*",
+        "condition": "Zustand",
+        "conditionRequired": "*",
+        "isGift": "Dieses Trikot ist ein Geschenk",
+        "isFromMysteryBox": "Trikot aus einer Mystery Box erhalten",
+        "hasTags": "Hat noch Etiketten",
+        "purchaseDate": "Kaufdatum",
+        "notes": "Persönliche Notizen",
+        "personalizationPlaceholder": "z.B.: MESSI 10",
+        "playerName": "Spielername (Beflockung)",
+        "playerNamePlaceholder": "z.B.: MESSI",
+        "playerNumber": "Trikotnummer",
+        "playerNumberPlaceholder": "z.B.: 10",
+        "notesPlaceholder": "Füge deine Kommentare zu diesem Trikot hinzu...",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5 MB)",
+        "purchasePricePlaceholder": "z.B.: 90.50",
+        "toast": {
+          "fileNotImage": "Die Datei muss ein Bild sein",
+          "fileTooLarge": "Das Foto darf 5 MB nicht überschreiten",
+          "sizeConditionRequired": "Größe und Zustand sind erforderlich",
+          "uploadError": "Fehler beim Hochladen des Fotos",
+          "updated": "Trikot erfolgreich aktualisiert",
+          "error": "Ein Fehler ist aufgetreten",
+          "connectionError": "Verbindungsfehler. Bitte versuche es erneut.",
+          "deleted": "Trikot aus deiner Sammlung entfernt"
+        }
+      },
+      "delete": {
+        "title": "Trikot löschen?",
+        "description": "Bist du sicher, dass du dieses Trikot aus deiner Sammlung entfernen möchtest? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "cancel": "Abbrechen",
+        "confirm": "Löschen",
+        "deleting": "Wird gelöscht..."
+      }
+    },
+    "grid": {
+      "title": "Deine Trikots",
+      "sortBy": "Sortieren nach:",
+      "sortOptions": {
+        "dateDesc": "Neueste",
+        "dateAsc": "Älteste",
+        "priceDesc": "Preis absteigend",
+        "priceAsc": "Preis aufsteigend",
+        "condition": "Zustand",
+        "club": "Verein (A-Z)",
+        "season": "Saison"
+      },
+      "noJerseys": "Keine Trikots in deiner Sammlung."
+    },
+    "page": {
+      "title": "Meine Sammlung",
+      "jersey": "Trikot",
+      "jerseys": "Trikots",
+      "emptyTitle": "Deine Sammlung ist leer",
+      "emptyDescription": "Beginne deine Sammlung aufzubauen, indem du deine ersten Trikots hinzufügst!",
+      "errorTitle": "Ladefehler",
+      "errorDescription": "Beim Laden deiner Sammlung ist ein Fehler aufgetreten. Bitte lade die Seite neu oder versuche es später.",
+      "reload": "Seite neu laden"
+    }
+  },
+  "Onboarding": {
+    "step1Title": "Wähle deinen Benutzernamen",
+    "step1Subtitle": "So werden dich andere Sammler sehen",
+    "step2Title": "Dein Lieblingsverein",
+    "step2Subtitle": "Er erscheint in der Rangliste und auf deinem Profil",
+    "usernamePlaceholder": "Dein Benutzername...",
+    "usernameRules": "5 bis 20 Zeichen, Buchstaben, Zahlen, - und _",
+    "usernameAvailable": "Benutzername verfügbar",
+    "usernameUnavailable": "Benutzername bereits vergeben",
+    "placeholder": "Verein suchen...",
+    "cta": "Weiter",
+    "skip": "Diesen Schritt überspringen",
+    "bannerText": "Wähle deinen Lieblingsverein, um in der Rangliste und bei Freunden zu erscheinen",
+    "bannerCta": "Meinen Verein wählen"
+  },
+  "CollectionStats": {
+    "title": "Sammlungsstatistiken",
+    "errorTitle": "Ladefehler",
+    "errorDescription": "Statistiken konnten nicht geladen werden. Bitte versuche es erneut.",
+    "emptyTitle": "Keine Statistiken verfügbar",
+    "emptyDescription": "Füge Trikots zu deiner Sammlung hinzu, um detaillierte Statistiken zu sehen.",
+    "tabs": {
+      "overview": "Übersicht",
+      "distribution": "Verteilung",
+      "financial": "Finanzen",
+      "records": "Rekorde"
+    },
+    "timeline": {
+      "title": "Sammlungsentwicklung",
+      "acquisitions": "Erwerbungen",
+      "jerseys": "Trikots",
+      "jerseysAdded": "{count, plural, one {# Trikot hinzugefügt} other {# Trikots hinzugefügt}}"
+    },
+    "brandDistribution": {
+      "title": "Verteilung nach Marke",
+      "jerseys": "Trikots",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}"
+    },
+    "typeDistribution": {
+      "title": "Verteilung nach Typ",
+      "jerseys": "Trikots",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}"
+    },
+    "leagueDistribution": {
+      "title": "Verteilung nach Liga",
+      "jerseys": "Trikots",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}"
+    },
+    "clubDistribution": {
+      "title": "Top 10 Vereine",
+      "jerseys": "Trikots",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}"
+    },
+    "sizeDistribution": {
+      "title": "Verteilung nach Größe",
+      "jerseys": "Trikots",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}"
+    },
+    "conditionDistribution": {
+      "title": "Verteilung nach Zustand",
+      "jerseys": "Trikots",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}"
+    },
+    "sourceDistribution": {
+      "title": "Trikot-Herkunft",
+      "additionalTitle": "Sammlungsdetails",
+      "jerseys": "Trikots",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}",
+      "purchased": "Gekauft",
+      "gift": "Geschenke",
+      "mysteryBox": "Mystery Box",
+      "withTags": "Mit Etiketten",
+      "withPersonalization": "Personalisiert",
+      "withCustomPhoto": "Eigenes Foto"
+    },
+    "spendingTimeline": {
+      "title": "Ausgabenentwicklung",
+      "spent": "ausgegeben",
+      "noData": "Keine Ausgabendaten verfügbar"
+    },
+    "financial": {
+      "totalCollectionValue": "Gesamtwert",
+      "totalCollectionValueDescription": "Gesamtwert der Sammlung",
+      "totalSpent": "Gesamtausgaben",
+      "totalSpentDescription": "Gesamtinvestierter Betrag",
+      "averagePrice": "Durchschnittspreis",
+      "averagePriceDescription": "Pro gekauftem Trikot",
+      "totalRetailValue": "Gesamter Handelswert",
+      "totalRetailValueDescription": "Kumulierter Ladenpreis",
+      "mostExpensive": "Teuerstes",
+      "leastExpensive": "Günstigstes",
+      "noData": "Keine Daten verfügbar"
+    },
+    "diversity": {
+      "uniqueClubs": "Verschiedene Vereine",
+      "uniqueClubsDescription": "In deiner Sammlung",
+      "uniqueLeagues": "Verschiedene Ligen",
+      "uniqueLeaguesDescription": "Vertreten",
+      "uniqueCountries": "Verschiedene Länder",
+      "uniqueCountriesDescription": "Rund um die Welt"
+    },
+    "records": {
+      "oldestAcquisition": "Erste Erwerbung",
+      "newestAcquisition": "Neueste Erwerbung",
+      "customizationStats": "Personalisierungen",
+      "withTags": "Mit Etiketten",
+      "withPersonalization": "Personalisiert",
+      "withCustomPhoto": "Eigene Fotos"
+    },
+    "upgrade": {
+      "distribution": {
+        "title": "PRO-Verteilungsstatistiken",
+        "description": "Analysiere die Verteilung deiner Sammlung im Detail",
+        "feature1": "Verteilung nach Liga und Land",
+        "feature2": "Top-Vereine in deiner Sammlung",
+        "feature3": "Verteilung nach Größe und Zustand",
+        "feature4": "Analyse der Erwerbungsquellen"
+      },
+      "financial": {
+        "title": "PRO-Finanzstatistiken",
+        "description": "Verfolge deine Ausgaben und den Wert deiner Sammlung",
+        "feature1": "Gesamt- und Durchschnittsausgaben",
+        "feature2": "Geschätzter Sammlungswert",
+        "feature3": "Ausgabenentwicklung",
+        "feature4": "Teuerstes und günstigstes Trikot"
+      },
+      "records": {
+        "title": "PRO-Rekorde und Statistiken",
+        "description": "Entdecke die Rekorde deiner Sammlung",
+        "feature1": "Älteste/neueste Erwerbungen",
+        "feature2": "Personalisierungsstatistiken",
+        "feature3": "Trikots mit Etiketten Quote",
+        "feature4": "Qualitätskennzahlen der Sammlung"
+      }
+    }
+  },
+  "Wishlist": {
+    "button": {
+      "loading": "Wird geladen...",
+      "addToWishlist": "Zu meiner Wunschliste hinzufügen",
+      "removeFromWishlist": "Von der Wunschliste entfernen",
+      "toast": {
+        "mustBeConnected": "Du musst angemeldet sein, um etwas zu deiner Wunschliste hinzuzufügen",
+        "added": "Trikot zu deiner Wunschliste hinzugefügt",
+        "removed": "Trikot von deiner Wunschliste entfernt",
+        "error": "Ein Fehler ist aufgetreten",
+        "connectionError": "Verbindungsfehler. Bitte versuche es erneut."
+      }
+    },
+    "share": {
+      "button": "Teilen",
+      "shareAll": "Meine gesamte Wunschliste",
+      "shareAllCount": "{count, plural, =0 {0 Trikots} one {# Trikot} other {# Trikots}}",
+      "shareSelection": "Eine Auswahl",
+      "shareSelectionDesc": "Trikots zum Teilen auswählen"
+    },
+    "selectionModal": {
+      "title": "Meine Wunschliste teilen",
+      "chooseTheme": "Thema auswählen",
+      "listTitle": "Listentitel",
+      "listTitlePlaceholder": "z.B.: Meine Weihnachtsliste 🎄",
+      "personalMessage": "Persönliche Nachricht",
+      "personalMessagePlaceholder": "Füge eine Nachricht für deine Lieben hinzu...",
+      "charactersCount": "{count}/500 Zeichen",
+      "selectJerseys": "Deine Trikots auswählen ({selected}/{total})",
+      "selectAll": "Alle auswählen",
+      "deselectAll": "Alle abwählen",
+      "cancel": "Abbrechen",
+      "share": "Teilen ({count, plural, one {# Trikot} other {# Trikots}})"
+    },
+    "themeModal": {
+      "title": "Meine Wunschliste anpassen",
+      "selectedCount": "{count, plural, one {# Trikot ausgewählt} other {# Trikots ausgewählt}}",
+      "chooseTheme": "Thema auswählen",
+      "listTitle": "Listentitel",
+      "listTitlePlaceholder": "z.B.: Meine Weihnachtsliste 🎄",
+      "personalMessage": "Persönliche Nachricht",
+      "personalMessagePlaceholder": "Füge eine Nachricht für deine Lieben hinzu...",
+      "charactersCount": "{count}/500 Zeichen",
+      "cancel": "Abbrechen",
+      "continue": "Weiter",
+      "themes": {
+        "christmas": {
+          "name": "Weihnachten",
+          "defaultTitle": "Meine Weihnachtsliste 🎄",
+          "defaultMessage": "Hallo! Hier sind einige Trikot-Ideen, die ich gerne hätte 😊"
+        },
+        "birthday": {
+          "name": "Geburtstag",
+          "defaultTitle": "Meine Geburtstags-Wunschliste 🎂",
+          "defaultMessage": "Mein Geburtstag steht vor der Tür! Hier sind meine Trikot-Wünsche 🎉"
+        },
+        "valentine": {
+          "name": "Valentinstag",
+          "defaultTitle": "Meine Valentinstags-Liste 💝",
+          "defaultMessage": "Einige Trikot-Ideen, die mich sehr glücklich machen würden ❤️"
+        },
+        "default": {
+          "name": "Klassisch",
+          "defaultTitle": "Meine Trikot-Wunschliste ⚽",
+          "defaultMessage": "Hier sind einige Trikots, die ich gerne meiner Sammlung hinzufügen würde!"
+        }
+      }
+    },
+    "shareFormatModal": {
+      "title": "Wie möchtest du deine Liste teilen?",
+      "selectedCount": "{count, plural, one {# Trikot ausgewählt} other {# Trikots ausgewählt}}",
+      "formats": {
+        "link": {
+          "title": "Link zum Teilen",
+          "description": "Webseite, die auf Mobilgeräten und PC aufrufbar ist"
+        },
+        "image": {
+          "title": "Bild herunterladen",
+          "description": "Perfekt für Instagram-Stories oder WhatsApp"
+        },
+        "pdf": {
+          "title": "PDF herunterladen",
+          "description": "Übersichtliches Dokument zum Drucken oder Versenden"
+        }
+      },
+      "generating": "Wird erstellt...",
+      "creatingLink": "Dein Link wird erstellt",
+      "creatingImage": "Dein Bild wird erstellt",
+      "creatingPdf": "Dein PDF wird erstellt",
+      "ready": "Fertig!",
+      "yourShareLink": "Dein Teilungslink:",
+      "copyLink": "Link kopieren",
+      "copied": "Kopiert!",
+      "share": "Teilen",
+      "close": "Schließen",
+      "toast": {
+        "linkGenerated": "Link erstellt!",
+        "linkError": "Fehler beim Erstellen des Links",
+        "imageDownloaded": "Bild erfolgreich heruntergeladen!",
+        "imageError": "Fehler beim Erstellen des Bildes",
+        "pdfDownloaded": "PDF erfolgreich heruntergeladen!",
+        "pdfError": "Fehler beim Erstellen des PDFs",
+        "linkCopied": "Link kopiert!"
+      }
+    },
+    "landing": {
+      "badge": "Wunschliste",
+      "hero": {
+        "title": "Erstelle deine Wunschliste mit",
+        "titleHighlight": "Fußballtrikots",
+        "subtitle": "Liste deine Wünsche auf und teile sie ganz einfach mit deinen Lieben - mit flüssigen Animationen und hochwertigem Design.",
+        "signIn": "Anmelden",
+        "signUp": "Konto erstellen"
+      },
+      "example": {
+        "badge": "Beispiel-Wunschliste",
+        "title": "Meine Weihnachtsliste 🎄",
+        "message": "Ein paar Trikot-Ideen, die mich glücklich machen würden 😊",
+        "jerseyCount": "{count, plural, one {# Trikot} other {# Trikots}}",
+        "createdWith": "Erstellt mit Le Vestiaire Foot ⚽",
+        "createButton": "Meine Wunschliste erstellen"
+      },
+      "shareSection": {
+        "title": "Teile wie du möchtest",
+        "subtitle": "3 Formate für alle deine Bedürfnisse"
+      },
+      "featuresSection": {
+        "title": "Alles inklusive",
+        "subtitle": "Funktionen, die dir das Leben leichter machen",
+        "features": {
+          "create": {
+            "title": "Deine Liste erstellen",
+            "description": "Füge alle Trikots, von denen du träumst, mit einem Klick aus unserem Katalog hinzu"
+          },
+          "share": {
+            "title": "Einfach teilen",
+            "description": "Erstelle einen Link, ein Bild oder ein PDF zum Teilen mit deinen Lieben - zu Weihnachten, zum Geburtstag..."
+          },
+          "customize": {
+            "title": "Thema anpassen",
+            "description": "Wähle aus verschiedenen Themen (Weihnachten, Geburtstag, Standard) und füge eine persönliche Nachricht hinzu"
+          },
+          "manage": {
+            "title": "Deine Anlässe verwalten",
+            "description": "Erstelle mehrere Wunschlisten für verschiedene Anlässe: Weihnachten, Geburtstag, persönliche Ziele..."
+          },
+          "noDuplicates": {
+            "title": "Doppelgänger vermeiden",
+            "description": "Sobald das Trikot deiner Sammlung hinzugefügt wird, verschwindet es automatisch von deiner Wunschliste"
+          },
+          "free": {
+            "title": "100% kostenlos",
+            "description": "Erstelle und teile so viele Wunschlisten wie du möchtest - ohne Kosten"
+          }
+        }
+      },
+      "useCasesSection": {
+        "title": "Für alle Anlässe",
+        "subtitle": "Eine Wunschliste für jeden wichtigen Moment",
+        "useCases": {
+          "christmas": {
+            "title": "Weihnachten naht",
+            "description": "Erstelle deine Weihnachtsliste und teile sie mit deiner Familie. Schluss mit unerwünschten Geschenken!"
+          },
+          "birthday": {
+            "title": "Geburtstag",
+            "description": "Teile deine Trikot-Wünsche zu deinem Geburtstag. Deine Freunde wissen dann, was sie schenken sollen."
+          },
+          "collection": {
+            "title": "Sammlungsziele",
+            "description": "Liste die Trikots auf, die du suchst, um deine Sammlung zu vervollständigen. Behalte deine Ziele im Blick."
+          },
+          "valentine": {
+            "title": "Valentinstag",
+            "description": "Teile deine Trikot-Wünsche als Paar: Club-Duos, Sonderedition und Geschenkideen, um deine Leidenschaft gemeinsam zu feiern."
+          }
+        }
+      },
+      "testimonialsSection": {
+        "title": "Sie haben ihre Wunschliste geteilt",
+        "subtitle": "Tausende zufriedene Nutzer",
+        "testimonials": {
+          "lucas": {
+            "name": "Lucas M.",
+            "quote": "Ich habe meine Wunschliste zu Weihnachten geteilt und meine Familie war begeistert! Keine Doppelgänger mehr und ich habe genau die Trikots bekommen, die ich wollte."
+          },
+          "sarah": {
+            "name": "Sarah D.",
+            "quote": "Super praktisch, um meine Sammlung zu organisieren. Ich kann meine Wünsche mit einem Klick teilen und verfolgen, was ich schon bekommen habe."
+          },
+          "tom": {
+            "name": "Tom R.",
+            "quote": "Meine Freunde haben mir genau die Trikots von meiner Wunschliste zum Geburtstag geschenkt. Klasse, seine Leidenschaften so einfach teilen zu können!"
+          }
+        }
+      },
+      "ctaSection": {
+        "title": "Bereit, deine Wunschliste zu erstellen?",
+        "subtitle": "Liste deine Wünsche auf und teile sie in wenigen Klicks mit deinen Lieben",
+        "signUpButton": "Mein kostenloses Konto erstellen",
+        "signInButton": "Anmelden",
+        "createAccount": "Mein kostenloses Konto erstellen",
+        "login": "Anmelden",
+        "secure": "100% sicher",
+        "noCommitment": "Keine Verpflichtung"
+      },
+      "faqSection": {
+        "title": "Häufig gestellte Fragen",
+        "faqs": {
+          "howToCreate": {
+            "question": "Wie erstelle ich meine Wunschliste?",
+            "answer": "Ganz einfach! Durchsuche unseren Katalog, klicke auf das Herz, um ein Trikot zu deiner Wunschliste hinzuzufügen. Klicke dann auf 'Teilen', um deinen personalisierten Link zu erstellen."
+          },
+          "multipleWishlists": {
+            "question": "Kann ich mehrere Wunschlisten erstellen?",
+            "answer": "Derzeit hast du eine einzige Wunschliste, die du jederzeit ändern kannst. Du kannst bei jedem Teilen auswählen, welche Trikots du anzeigen möchtest."
+          },
+          "howToView": {
+            "question": "Wie sehen meine Lieben meine Wunschliste?",
+            "answer": "Du erstellst einen einzigartigen Link, den du per Nachricht, E-Mail oder soziale Medien teilst. Sie können deine Liste auf Mobilgeräten oder PC ansehen, ohne ein Konto erstellen zu müssen."
+          },
+          "pricing": {
+            "question": "Ist die Wunschliste kostenlos?",
+            "answer": "Ja! Das Erstellen, Verwalten und Teilen deiner Wunschliste ist 100% kostenlos, ohne jegliche Einschränkungen."
+          },
+          "received": {
+            "question": "Was passiert, wenn ich ein Trikot bekomme?",
+            "answer": "Sobald du das Trikot deiner Sammlung hinzufügst, verschwindet es automatisch von deiner Wunschliste. Keine Doppelgänger mehr!"
+          },
+          "customize": {
+            "question": "Kann ich meine Wunschliste anpassen?",
+            "answer": "Ja! Du kannst ein Thema wählen (Weihnachten, Geburtstag...), einen Titel und eine persönliche Nachricht für deine Lieben hinzufügen."
+          }
+        }
+      }
+    },
+    "page": {
+      "title": "Meine Wunschliste",
+      "jerseyCount": "{count, plural, one {# Trikot} other {# Trikots}}",
+      "empty": {
+        "title": "Du hast noch keine Trikots, die dich begeistern",
+        "description": "Stöbere in unserer Sammlung und füge deine Lieblingstrikots zu deiner Wunschliste hinzu!"
+      },
+      "error": {
+        "title": "Fehler beim Laden deiner Wunschliste",
+        "description": "Ein Fehler ist aufgetreten. Bitte versuche es später erneut."
+      },
+      "stats": {
+        "wanted": "Gewünschte Trikots",
+        "wantedSingular": "Trikot auf deiner Wunschliste",
+        "wantedPlural": "Trikots auf deiner Wunschliste",
+        "favoriteLeagues": "Lieblingsligen",
+        "preferredTypes": "Bevorzugte Typen"
+      },
+      "jerseys": "Deine Trikots"
+    },
+    "sharedClient": {
+      "wishlist": "Wunschliste",
+      "jerseyCount": "{count, plural, one {# Trikot} other {# Trikots}}",
+      "createdWith": "Diese Liste wurde erstellt mit",
+      "brandName": "Le Vestiaire Foot",
+      "createOwn": "Erstelle deine eigene Trikot-Sammlung",
+      "shareWithLovedOnes": "und teile deine Wünsche mit deinen Lieben ⚽"
+    },
+    "wishlist": "Wunschliste",
+    "sortBy": "Sortieren nach",
+    "recentlyAdded": "Zuletzt hinzugefügt",
+    "oldestAdded": "Älteste",
+    "priceDescending": "Preis (hoch bis niedrig)",
+    "priceAscending": "Preis (niedrig bis hoch)",
+    "clubAZ": "Club (A-Z)",
+    "emptyWishlist": "Leere Wunschliste",
+    "jerseysWanted": "Gewünschte Trikots",
+    "jersey": "Trikot",
+    "jerseys": "Trikots",
+    "inWishlist": "auf der Wunschliste",
+    "estimatedValue": "Geschätzter Wert",
+    "wantedLeagues": "Gewünschte Ligen",
+    "wantedTypes": "Gewünschte Typen",
+    "noData": "Keine Daten",
+    "wishlistNotFound": "Wunschliste nicht gefunden",
+    "wishlistOf": "Wunschliste von {name}",
+    "discoverWishlist": "Entdecke die Wunschliste von",
+    "user": "Benutzer",
+    "noJerseysInWishlistYet": "{name} hat noch keine Trikots zu seiner Wunschliste hinzugefügt.",
+    "highestPriority": "Höchste Priorität",
+    "lowestPriority": "Niedrigste Priorität",
+    "priorities": "Prioritäten",
+    "priorityHigh": "Hoch",
+    "priorityMedium": "Mittel",
+    "priorityLow": "Niedrig"
+  },
+  "Login": {
+    "title": "Willkommen zurück",
+    "subtitle": "Mit deinem Google-Konto anmelden",
+    "signInWithGoogle": "Mit Google anmelden",
+    "orContinueWith": "Oder weiter mit",
+    "lastUsed": "Zuletzt verwendet",
+    "form": {
+      "email": "E-Mail",
+      "emailPlaceholder": "m@example.com",
+      "password": "Passwort",
+      "forgotPassword": "Passwort vergessen?"
+    },
+    "button": {
+      "loading": "Wird geladen…",
+      "signIn": "Anmelden"
+    },
+    "noAccount": "Noch kein Konto?",
+    "createAccount": "Konto erstellen",
+    "terms": {
+      "text": "Durch das Anmelden stimmst du unseren",
+      "termsOfService": "Nutzungsbedingungen",
+      "and": "und",
+      "privacyPolicy": "Datenschutzrichtlinien"
+    },
+    "errors": {
+      "signInError": "Anmeldefehler",
+      "googleSignInError": "Fehler bei der Anmeldung mit Google"
+    }
+  },
+  "Errors": {
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Ungültige E-Mail-Adresse",
+    "passwordTooShort": "Das Passwort muss mindestens 8 Zeichen lang sein",
+    "generic": "Ein Fehler ist aufgetreten",
+    "unauthorized": "Nicht autorisiert",
+    "notFound": "Nicht gefunden",
+    "rateLimited": "Zu viele Anfragen, bitte versuche es später erneut"
+  },
+  "Profile": {
+    "editButton": "Profil bearbeiten",
+    "title": "Mein Profil",
+    "description": "Bearbeite dein Profil hier. Klicke auf Speichern, wenn du fertig bist.",
+    "friends": "{count} Freund",
+    "friends_other": "{count} Freunde",
+    "favoriteTeam": "Lieblingsmannschaft",
+    "choosePlaceholder": "Mannschaft auswählen",
+    "saveChanges": "Änderungen speichern",
+    "saving": "Wird gespeichert…",
+    "close": "Schließen",
+    "updateSuccess": "Profil aktualisiert!",
+    "avatarUpdateSuccess": "Avatar aktualisiert!",
+    "avatarUploadError": "Fehler beim Hochladen des Avatars",
+    "userNotAuthenticated": "Benutzer nicht authentifiziert",
+    "serverUploadError": "Server-Upload-Fehler",
+    "saveError": "Fehler beim Speichern.",
+    "bio": {
+      "label": "Biografie",
+      "placeholder": "Schreibe ein paar Worte über dich…",
+      "charactersCount": "{current}/{max} Zeichen"
+    },
+    "themeColor": {
+      "label": "Themenfarbe",
+      "placeholder": "Farbe auswählen",
+      "colors": {
+        "bleu": "Blau",
+        "bleu-nuit": "Nachtblau",
+        "rouge": "Rot",
+        "violet": "Lila",
+        "vert": "Grün",
+        "orange": "Orange",
+        "jaune": "Gelb",
+        "rose": "Rosa",
+        "violet-leger": "Hellviolett",
+        "marine": "Marineblau",
+        "gold": "Gold"
+      }
+    },
+    "username": {
+      "label": "Benutzername",
+      "placeholder": "mein_benutzername",
+      "rules": "5-20 Zeichen - Nur Buchstaben, Zahlen, Bindestriche und Unterstriche",
+      "notAvailable": "Dieser Benutzername ist nicht verfügbar",
+      "available": "✓ Dieser Benutzername ist verfügbar"
+    }
+  },
+  "HomePage": {
+    "hero": {
+      "title": "Willkommen bei",
+      "appName": "The Locker Room",
+      "subtitle": "Verwalte deine Fußballtrikot-Sammlung, erstelle deine Wunschliste und werde Teil einer Gemeinschaft leidenschaftlicher Fans.",
+      "myCollection": "Meine Sammlung",
+      "myWishlist": "Meine Wunschliste",
+      "login": "Anmelden",
+      "signup": "Konto erstellen",
+      "discoverJerseys": "Trikots entdecken",
+      "ariaLabelBanner": "Startseite - Fußballtrikot-Sammlung",
+      "ariaLabelStats": "Statistiken deiner Trikot-Sammlung",
+      "ariaLabelAuth": "Anmeldeaktionen",
+      "ariaLabelCollectionCount": "{count} Trikots in deiner Sammlung",
+      "ariaLabelWishlistCount": "{count} Trikots auf deiner Wunschliste"
+    },
+    "topRated": {
+      "title": "Am besten bewertete Trikots",
+      "subtitle": "Entdecke die Lieblingstrikots der Community",
+      "viewAll": "Alle Trikots ansehen"
+    },
+    "recent": {
+      "title": "Zuletzt hinzugefügte Trikots",
+      "subtitle": "Neue Ergänzungen im Katalog",
+      "viewAll": "Alle Trikots ansehen",
+      "new": "Neu",
+      "recently": "Kürzlich"
+    },
+    "cfsPromos": {
+      "title": "Vervollständige deine Sammlung zum günstigen Preis",
+      "subtitle": "Auswahl an Sonderangebots-Trikots von unserem Partner Classic Football Shirts",
+      "cta": "Alle Angebote anzeigen",
+      "partnerNotice": "Affiliate-Link - wir erhalten eine Provision für Käufe über diese Links."
+    },
+    "userStats": {
+      "title": "Deine Sammlung",
+      "subtitle": "Ein Überblick über deine Leidenschaft für Fußballtrikots",
+      "myCollection": "Meine Sammlung",
+      "jerseyCollected": "Trikot gesammelt",
+      "jerseysCollected": "Trikots gesammelt",
+      "invested": "investiert",
+      "viewMyCollection": "Meine Sammlung ansehen",
+      "myWishlist": "Meine Wunschliste",
+      "jerseyDesired": "Gewünschtes Trikot",
+      "jerseysDesired": "Gewünschte Trikots",
+      "viewMyWishlist": "Meine Wunschliste ansehen",
+      "favoriteLeague": "Lieblingsliga",
+      "jerseysFrom": "Trikots von",
+      "startCollection": "Starte deine Sammlung, um deine Statistiken zu sehen!",
+      "recentAdditionsCollection": "Letzte Ergänzungen in deiner Sammlung",
+      "recentAdditionsWishlist": "Letzte Ergänzungen auf deiner Wunschliste"
+    },
+    "features": {
+      "title": "Warum Le Vestiaire Foot wählen?",
+      "subtitle": "Le Vestiaire Foot ist eine kostenlose Web-App, von Sammlern für Sammler entwickelt.",
+      "catalogCollection": {
+        "title": "Deine Trikot-Sammlung katalogisieren",
+        "description": "Erfasse Größe, Zustand und Kaufpreis jedes Trikots. Le Vestiaire Foot berechnet automatisch den Gesamtwert deiner Sammlung."
+      },
+      "shareableWishlist": {
+        "title": "Teilbare Trikot-Wunschliste",
+        "description": "Erstelle deine Wunschliste und teile sie mit Freunden und Familie über einen direkten Link. Perfekt für Weihnachten, Geburtstage oder besondere Anlässe."
+      },
+      "authentication": {
+        "title": "Fußballtrikot-Authentifizierung",
+        "description": "Lerne, echte Trikots von Fälschungen zu unterscheiden.<br></br>Le Vestiaire Foot bietet <link>detaillierte Authentifizierungsanleitungen</link> für Nike, Adidas, Puma und mehr."
+      },
+      "community": {
+        "title": "Fußballtrikot-Sammler-Community",
+        "description": "Le Vestiaire Foot bringt Sammler zusammen. Füge Freunde hinzu, erkunde ihre Sammlungen und entdecke die am besten bewerteten Trikots."
+      }
+    },
+    "stats": {
+      "collectors": "Sammler",
+      "jerseys": "Gelistete Trikots",
+      "clubs": "Clubs"
+    },
+    "faq": {
+      "title": "Häufig gestellte Fragen",
+      "subtitle": "Alles, was du über The Locker Room wissen musst",
+      "questions": {
+        "addToCollection": {
+          "question": "Wie füge ich ein Trikot zu meiner Sammlung hinzu?",
+          "answer": "Ganz einfach! Suche das Trikot, das du besitzt, in unserer Datenbank und klicke auf 'Zu meiner Sammlung hinzufügen'. Anschließend kannst du alle Details angeben: Größe, Zustand, Kaufpreis usw."
+        },
+        "shareWishlist": {
+          "question": "Kann ich meine Wunschliste zu Weihnachten oder meinem Geburtstag teilen?",
+          "answer": "Auf jeden Fall! Erstelle deine Wunschliste, passe sie mit einer Nachricht an und generiere einen einzigartigen Link zum Teilen mit deinen Lieben. Sie können deine Wünsche ansehen, ohne ein Konto erstellen zu müssen."
+        },
+        "authenticateJersey": {
+          "question": "Wie erkenne ich ein gefälschtes Trikot?",
+          "answer": "Schau in unsere Rubrik 'Authentifizierung', wo du detaillierte Anleitungen für jede Marke findest. Wir erklären, wie du Etiketten, Nähte, Logos und andere Details überprüfst, die ein echtes Trikot von einer Fälschung unterscheiden."
+        },
+        "availableClubs": {
+          "question": "Welche Clubs und Ligen sind verfügbar?",
+          "answer": "Unsere Datenbank enthält Trikots aller großen europäischen Ligen (Ligue 1, Premier League, La Liga, Serie A, Bundesliga) sowie vieler internationaler Clubs und kleinerer Ligen. Wir fügen regelmäßig neue Trikots hinzu!"
+        },
+        "dataSecurity": {
+          "question": "Sind meine Daten sicher?",
+          "answer": "Ja, wir nehmen Sicherheit sehr ernst. Deine Daten werden in Europa (Frankreich) gehostet und gemäß DSGVO-Standards geschützt. Du bleibst der Eigentümer deiner Sammlung und kannst sie jederzeit exportieren."
+        }
+      }
+    }
+  },
+  "Authentication": {
+    "title": "Trikot-Echtheitsprüfung",
+    "subtitle": "Lerne, echte Fussballtrikots von Fälschungen zu unterscheiden",
+    "page": {
+      "protectInvestment": {
+        "title": "Schütze deine Investition",
+        "description": "Der Markt für Fussballtrikots ist leider mit Fälschungen überschwemmt. Unsere Leitfäden helfen dir, echte Trikots zu erkennen und Betrug zu vermeiden."
+      },
+      "whyImportant": {
+        "title": "Warum ist die Echtheitsprüfung wichtig?",
+        "reason1": "Fälschungen machen bis zu 30 % des Online-Trikotmarkts aus",
+        "reason2": "Ein gefälschtes Trikot verschlechtert sich schnell und hat keinen Wiederverkaufswert",
+        "reason3": "Der Kauf einer Fälschung finanziert Schmuggelnetzwerke",
+        "reason4": "Echte Trikots garantieren Qualität, Tragekomfort und Langlebigkeit"
+      }
+    },
+    "brands": {
+      "adidas": {
+        "name": "Adidas",
+        "description": "Überprüfe die Echtheit deiner Adidas-Trikots"
+      },
+      "nike": {
+        "name": "Nike",
+        "description": "Überprüfe die Echtheit deiner Nike-Trikots"
+      },
+      "puma": {
+        "name": "Puma",
+        "description": "Überprüfe die Echtheit deiner Puma-Trikots"
+      },
+      "hummel": {
+        "name": "Hummel",
+        "description": "Überprüfe die Echtheit deiner Hummel-Trikots"
+      }
+    },
+    "common": {
+      "authenticationSteps": "Prüfungsschritte",
+      "commonFakes": "Typische Fälschungsmerkmale",
+      "commonFakesDescription": "Achte auf diese Hinweise, die auf ein gefälschtes Trikot hindeuten",
+      "buyingTips": "Kauftipps",
+      "buyingTipsDescription": "Empfehlungen für einen sicheren Kauf",
+      "authentic": "ECHT",
+      "counterfeit": "FÄLSCHUNG",
+      "scanFeature": {
+        "title": "Demnächst: Automatischer Scanner",
+        "description": "Wir arbeiten an einer Scan-Funktion, mit der du deine {brand}-Trikots sofort authentifizieren kannst.",
+        "howItWorks": "So wird es funktionieren:",
+        "step1": "Mache ein Foto der Etiketten",
+        "step2": "Unsere KI analysiert Codes und Details",
+        "step3": "Erhalte ein Echtheitsergebnis",
+        "notify": "Beim Start benachrichtigen"
+      },
+      "scanPlaceholder": {
+        "title": "Etikett scannen",
+        "description": "Automatische Überprüfung mithilfe künstlicher Intelligenz",
+        "comingSoon": "Funktion demnächst verfügbar!",
+        "kitlegitInfo": "Wir arbeiten an der Integration von {kitlegit}, einer auf Fussballtrikots spezialisierten KI-Authentifizierungslösung.",
+        "kitlegit": "KitLegit",
+        "manualGuide": "Nutze in der Zwischenzeit den obigen Leitfaden, um die Echtheit deines {brand}-Trikots manuell zu überprüfen.",
+        "scanButton": "Mein Etikett scannen (Demnächst)",
+        "photosRequired": "Für den automatischen Scan werden 3 bis 8 Fotos deines Trikots für eine vollständige Analyse benötigt."
+      }
+    },
+    "metadata": {
+      "notFound": "Marke nicht gefunden - Le Vestiaire",
+      "titleTemplate": "Ein {brand}-Trikot authentifizieren - Vollständiger Leitfaden",
+      "ogTitleTemplate": "Leitfaden zur Authentifizierung von {brand}-Trikots",
+      "twitterTitleTemplate": "Wie man ein {brand}-Trikot authentifiziert",
+      "adidas": {
+        "description": "Vollständiger Leitfaden zur Authentifizierung eines Adidas-Trikots. Überprüfe Produktcode, Anhänger, Barcode und erkenne Fälschungsmerkmale. Detaillierte Methode mit visuellen Beispielen.",
+        "ogDescription": "Lerne, ein echtes Adidas-Trikot von einer Fälschung zu unterscheiden"
+      },
+      "nike": {
+        "description": "Lerne, ein echtes Nike-Trikot zu erkennen: Produktcode, Produktionscode, Anhänger und Sicherheitsetikett. Vollständiger Anti-Fälschungs-Leitfaden mit Vergleichsfotos.",
+        "ogDescription": "Lerne, ein echtes Nike-Trikot von einer Fälschung zu unterscheiden"
+      },
+      "puma": {
+        "description": "Puma-Trikot-Authentifizierung: Produktcode, Produktionsdatum, QR-Code, Sicherheitsetikett. Erkenne den 'Fat Cat' und andere typische Merkmale gefälschter Puma-Trikots.",
+        "ogDescription": "Lerne, ein echtes Puma-Trikot von einer Fälschung zu unterscheiden"
+      },
+      "hummel": {
+        "description": "Authentifizierungsleitfaden für Hummel-Trikots: charakteristische Chevrons, Etiketten, Textilqualität und Verarbeitung. Fälschungen vermeiden.",
+        "ogDescription": "Lerne, ein echtes Hummel-Trikot von einer Fälschung zu unterscheiden"
+      }
+    },
+    "adidas": {
+      "title": "Adidas-Authentifizierungsleitfaden",
+      "description": "Vollständige Methode zur Überprüfung der Echtheit eines Adidas-Trikots anhand von Produktcodes und Etiketten",
+      "criteria": {
+        "step1": {
+          "title": "Schritt 1: Das Etikett mit dem Produktcode finden",
+          "description": "Das Etikett befindet sich in der Regel rechts im Kragen oder manchmal am Saum des Trikots zusammen mit den Pflegehinweisen",
+          "points": {
+            "point1": "Suche nach dem eingenähten Etikett im Kragen (rechte Seite)",
+            "point2": "Falls nicht im Kragen, prüfe den Saum des Trikots in der Nähe der Pflegehinweise",
+            "point3": "Dieses Etikett enthält 3 wesentliche Codes: Grösse, Produktcode (Mitte) und Herstellungscode",
+            "point4": "Wurde das Etikett vom Verkäufer entfernt, ist eine Echtheitsprüfung nicht möglich"
+          }
+        },
+        "step2": {
+          "title": "Schritt 2: Der Produktcode (WICHTIGSTER CODE)",
+          "description": "Der mittlere Produktcode ist der Schlüssel zur Echtheitsprüfung. Beispiel: IB0907",
+          "points": {
+            "point1": "Identifiziere den Code in der MITTE des Etiketts (z. B. IB0907, HS5184, P95985)",
+            "point2": "Dieser Code ist einzigartig für jedes Trikotmodell (Heim, Auswärts, Ausweich)",
+            "point3": "Gib diesen Code bei Google Bilder ein: Die Ergebnisse müssen GENAU mit deinem Trikot übereinstimmen",
+            "point4": "Beispiel: 'IB0907' = Lyon Auswärtstrikot 2023/2024 und nichts anderes",
+            "point5": "Stimmt der Code mit einem anderen Klub/einer anderen Saison überein = FÄLSCHUNG",
+            "point6": "Ausnahme: Einige kleinere Klubs teilen denselben Code (gemeinsame Vorlagen), aber das ist selten"
+          }
+        },
+        "step3": {
+          "title": "Schritt 3: Der Anhänger (falls vorhanden)",
+          "description": "Das an einem neuen Trikot befestigte Kartonschild enthält wertvolle Informationen",
+          "points": {
+            "point1": "Bei einem ECHTEN Trikot: Der Klubname ist klar angegeben (z. B. 'OL', 'Manchester United')",
+            "point2": "Die Typenangabe ist vorhanden: 'H' (Heim), 'A' (Auswärts), 'T' (Ausweich)",
+            "point3": "Der Produktcode steht über dem Modellnamen",
+            "point4": "FÄLSCHUNG wenn nur 'adidas JSY' ohne Klubnamen vermerkt ist = FÄLSCHUNG",
+            "point5": "Achtung: Diese Anhänger können entfernt und an einem gefälschten Trikot wieder befestigt werden!"
+          }
+        },
+        "step4": {
+          "title": "Schritt 4: Die Barcode-Nummer (zusätzliche Überprüfung)",
+          "description": "Der Barcode auf dem Anhänger ermöglicht eine genaue Überprüfung",
+          "points": {
+            "point1": "Suche den numerischen Code unter dem Barcode (z. B. 4066761557500)",
+            "point2": "Gehe auf ean-search.org und gib diesen Code ein",
+            "point3": "Das Ergebnis muss GENAU mit deinem Trikot übereinstimmen",
+            "point4": "Beispiel: 4066761557500 = 'adidas Lyon Away Shirt 2023/24'",
+            "point5": "Stimmt der Code mit einem anderen Trikot überein = FÄLSCHUNG",
+            "point6": "Hinweis: Adidas druckt diesen Code NICHT auf das eingenähte Etikett, sondern nur auf den Anhänger"
+          }
+        },
+        "step5": {
+          "title": "Schritt 5: Zusätzliche visuelle Prüfungen",
+          "description": "Nach der Code-Überprüfung die Gesamtqualität begutachten",
+          "points": {
+            "point1": "Adidas-Logo: Die 3 Streifen müssen perfekt ausgerichtet und sauber bestickt sein",
+            "point2": "Nähte: Gerade, gleichmässig, keine losen Fäden",
+            "point3": "Stoff: Technisches Material (Climalite, Climacool, Aeroready) auf dem Etikett angegeben",
+            "point4": "Kein starker chemischer Geruch oder sichtbarer Kleber"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Anhänger mit Aufschrift 'adidas JSY' ohne Klubnamen",
+        "fake2": "Produktcode, der zu einem anderen Trikot passt (z. B. HS5184 für Man Utd = Flamengo-Trikot)",
+        "fake3": "Falsche Barcode-Nummer (z. B. passt zu Deutschland 2017 statt Man Utd 2024)",
+        "fake4": "Kragenetikett entfernt oder fehlend (verdächtiger Verkäufer)",
+        "fake5": "Keine Ergebnisse bei Google Bilder für den Produktcode",
+        "fake6": "Verformtes Adidas-Logo, schlecht bestickt oder gedruckt (statt bestickt)",
+        "fake7": "Ungewöhnlich niedriger Preis (50-70 % günstiger als der offizielle Preis)",
+        "fake8": "Verkäufer, der sich weigert, Fotos des Kragenabzeichens zu zeigen"
+      },
+      "tips": {
+        "tip1": "IMMER vor dem Kauf ein Foto des Kragenabzeichens anfordern",
+        "tip2": "Produktcode bei Google Bilder überprüfen (zuverlässigste Methode)",
+        "tip3": "Bevorzuge Verkäufer mit etabliertem Ruf und positiven Bewertungen",
+        "tip4": "Mit offiziellen Fotos von der Adidas-Website oder dem Klub vergleichen",
+        "tip5": "Vorsicht bei zu verlockenden Preisen (Rabatt > 50 % = verdächtig)",
+        "tip6": "Diese Methode funktioniert auch bei älteren Trikots (ab 2000er Jahren)",
+        "tip7": "ean-search.org für den Barcode nutzen, wenn ein Anhänger vorhanden ist",
+        "tip8": "Im Zweifel: Nicht kaufen. Ein echtes Trikot behält seinen Wert, eine Fälschung nicht"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Beispiel 1: Etikett mit Produktcode",
+          "description": "So erkennst du den Produktcode auf dem Kragenetikett",
+          "authentic": {
+            "points": {
+              "point1": "Sichtbarer Produktcode: JL9623",
+              "point2": "Druckdatum passend zum Trikotjahr",
+              "point3": "3 korrekt ausgerichtete Codes",
+              "point4": "Klar definiertes Adidas-Logo"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Code H13881 passt in unserem Beispiel zu Man United statt zu Mexiko",
+              "point2": "Verschwommener oder falsch ausgerichteter Druck",
+              "point3": "Unregelmässige Zeichen"
+            }
+          }
+        },
+        "example2": {
+          "title": "Beispiel 2: Anhänger",
+          "description": "Das Kartonschild, das an neuen Trikots befestigt ist",
+          "authentic": {
+            "points": {
+              "point1": "Klubname angegeben: 'OL'",
+              "point2": "Typenangabe: '75' (OL 75. Jubiläumstrikot)",
+              "point3": "Sichtbarer Produktcode",
+              "point4": "QR-Code führt zum richtigen Trikot"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Nur 'adidas JSY' aufgedruckt",
+              "point2": "Kein Klubname",
+              "point3": "Falscher Barcode"
+            }
+          }
+        }
+      }
+    },
+    "nike": {
+      "title": "Nike-Authentifizierungsleitfaden",
+      "description": "Vollständige Methode zur Überprüfung der Echtheit eines Nike-Trikots anhand von Produktcodes, Etiketten und Herstellungsdetails",
+      "criteria": {
+        "step1": {
+          "title": "Schritt 1: Der Produktcode",
+          "description": "Das kleine Etikett unter dem Pflegeetikett enthält den Produktcode - dein erster Anhaltspunkt",
+          "points": {
+            "point1": "Format: 6 Ziffern für den Stil + 3 Ziffern für die Farbe (z. B. 894430-010)",
+            "point2": "Der Stilcode identifiziert das Design/die Vorlage des Trikots",
+            "point3": "Der Farbcode (nach dem Bindestrich) identifiziert die spezifische Farbvariante",
+            "point4": "Gib den vollständigen Code bei Google Bilder ein, um zu prüfen, ob er GENAU zu deinem Trikot passt",
+            "point5": "ACHTUNG: Fälschungen verwenden oft echte Codes! Wenn der Code für Frankreich Auswärts 2020 (CD0069-100) auf dem Trikot einer anderen Mannschaft ist = FÄLSCHUNG",
+            "point6": "Ältere Trikots (vor 2010) haben möglicherweise keinen Farbcode - das ist normal"
+          }
+        },
+        "step2": {
+          "title": "Schritt 2: Der Produktionscode",
+          "description": "Auf demselben kleinen Etikett zeigt dieser Code, wann das Trikot hergestellt wurde",
+          "points": {
+            "point1": "Format: HO150407SYG (Beispiel = Holiday 2015, Produktion April bis Juli)",
+            "point2": "Erste 2-3 Zeichen = Saison: SP (Spring), SU (Summer), FA (Fall), HO (Holiday/Winter)",
+            "point3": "Nächste 2 Ziffern = Jahr (15 = 2015, 23 = 2023)",
+            "point4": "Nächste 4 Ziffern = Beginn und Ende des Produktionszeitraums (0407 = April bis Juli)",
+            "point5": "Dieser Code muss zur Trikotsaison passen! Ein Trikot der Saison 2023/24 kann keinen HO15-Code haben",
+            "point6": "Fälschungen verwenden oft Etiketten verschiedener Trikots, was zu Widersprüchen führt"
+          }
+        },
+        "step3": {
+          "title": "Schritt 3: Der Anhänger",
+          "description": "Das an neuen Trikots befestigte Kartonschild enthält entscheidende Informationen",
+          "points": {
+            "point1": "Modernes Anbringen (seit 2021/22): Einzelner Anhänger NUR am LINKEN Ärmel",
+            "point2": "2016-2020: Zwei Anhänger, jeweils unter beiden Ärmeln (Achselhöhle)",
+            "point3": "Vor 2016: Anhänger am Kragen befestigt",
+            "point4": "Der Aufkleber muss ein ECHTER physischer Aufkleber sein, niemals direkt aufgedruckt",
+            "point5": "Der Befestigungsstift (Plastikhalterung) ist bei echten Nike-Produkten IMMER schwarz",
+            "point6": "Der Produktcode auf dem Anhänger MUSS mit dem inneren Etikett übereinstimmen",
+            "point7": "Grössenfarbleiste: Grau=XS, Gelb=S, Blau=M, Rot=L, Grün=XL, Weiss=XXL+"
+          }
+        },
+        "step4": {
+          "title": "Schritt 4: Das Kragen-Grössenetikett",
+          "description": "Das Kragenetikett enthält wichtige regionale Informationen",
+          "points": {
+            "point1": "Das Herstellungsland ('Made in...') MUSS auf dem Kragenetikett und dem Waschetikett übereinstimmen",
+            "point2": "Beispiel: Steht auf dem Kragen 'Made in Indonesia', muss das Innenetikett dasselbe angeben",
+            "point3": "Regionale Grössenentsprechungen prüfen, insbesondere die japanische Grösse (J)",
+            "point4": "Typischer Fehler bei Fälschungen: falsche japanische Grösse (z. B. 'J: S' für US L statt 'J: 2XO')",
+            "point5": "Richtige Tabelle: US S=J M, US M=J L, US L=J 2XO, US XL=J 3XO, US XXL=J 4XO"
+          }
+        },
+        "step5": {
+          "title": "Schritt 5: Das Sicherheitsetikett",
+          "description": "Das Sicherheitsetikett befindet sich unten rechts am Trikot und enthält einen einzigartigen Code",
+          "points": {
+            "point1": "Der alphanumerische Code MUSS einzigartig für dein Trikot sein",
+            "point2": "Findest du denselben Code auf mehreren Online-Angeboten = FÄLSCHUNG",
+            "point3": "Bei neueren Trikots: Hochwertiger metallischer/holografischer Streifen, der sich im Licht verändert",
+            "point4": "Fälschungen verwenden oft einfachen flachen Druck statt einem metallischen Streifen",
+            "point5": "Spielerversion: Gold-/Metallakzente | Fanversion: Silberakzente",
+            "point6": "Einige versteckte Details: Mini-Nike-Logos oder Fragmente des Wortes 'SECURITY' im Streifen",
+            "point7": "Einige ältere Versionen: Buchstaben 'HEN' oder beide 'T's von 'AUTHENTIC' in Glanzoptik"
+          }
+        },
+        "step6": {
+          "title": "Schritt 6: Der Swoosh und die Abzeichen",
+          "description": "Die Qualität der Anbringung des Nike-Logos und des Klubabzeichens ist aussagekräftig",
+          "points": {
+            "point1": "Der Swoosh muss PERFEKT sein: präzise Form, saubere Kanten, keine sichtbaren Fäden",
+            "point2": "Bei einem NEUEN Trikot muss der Stoff um den Swoosh GLATT sein (keine Falten)",
+            "point3": "Trikot umdrehen: Die Innenseite hinter dem Swoosh/Abzeichen muss sauber sein, ohne überschüssigen Stoff",
+            "point4": "Besticktes Abzeichen = Fanversion | Aufgepresstes/Silikon-Abzeichen = Spielerversion",
+            "point5": "Prüfe, ob der Abzeichentyp zur Version passt (Fan oder Spieler)",
+            "point6": "Achte auf falsch positionierte Abzeichen, die zu gross/klein sind oder grobe Nähte aufweisen"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Richtiger Produktcode, aber für ein anderes Trikot/Team (z. B. Frankreich-2020-Code auf einem Deutschland-Trikot)",
+        "fake2": "Produktionscode passt nicht zur Saison (Trikot 2024 mit HO15-Code)",
+        "fake3": "Anhänger mit aufgedrucktem Aufkleber statt echtem physischen Aufkleber",
+        "fake4": "Befestigungsstift des Anhängers nicht schwarz",
+        "fake5": "'Made in...' unterschiedlich auf Kragenetikett und Waschetikett",
+        "fake6": "Falsche japanische Grösse auf dem Kragenetikett",
+        "fake7": "Identischer Sicherheitscode bei mehreren Online-Angeboten gefunden",
+        "fake8": "Sicherheitsstreifen ohne holografischen/metallischen Effekt (flacher Druck)",
+        "fake9": "Swoosh mit Falten im umliegenden Stoff bei neuem Trikot",
+        "fake10": "Schmutzige Innenseite hinter Swoosh/Abzeichen (überschüssiger Stoff, grobe Nähte)",
+        "fake11": "Falscher Farbcode (z. B. rotes Trikot mit Code 100-199)",
+        "fake12": "Anhänger falsch platziert (z. B. am Kragen bei einem Trikot nach 2021)",
+        "fake13": "Fehlende oder falsche Grössenfarbleiste auf dem Anhänger"
+      },
+      "tips": {
+        "tip1": "IMMER den vollständigen Produktcode (Stil + Farbe) bei Google Bilder überprüfen",
+        "tip2": "Produktionscode mit der Trikotsaison vergleichen, um Widersprüche zu erkennen",
+        "tip3": "Fotos ALLER Etiketten anfordern: Kragen, Wasche, kleines Produktetikett, Anhänger",
+        "tip4": "Übereinstimmung von 'Made in...' auf allen Etiketten prüfen",
+        "tip5": "Bei neuen Trikots: Foto des Anhängers mit schwarzer Befestigung verlangen",
+        "tip6": "Sicherheitscode online suchen, um die Einzigartigkeit zu prüfen",
+        "tip7": "Qualität von Swoosh und Abzeichen begutachten (Trikot wenn möglich umdrehen)",
+        "tip8": "Regionale Grössentabelle zur Überprüfung der Kragenetikett-Konsistenz nutzen",
+        "tip9": "Spielerversion-Trikots ohne Anhänger sind normal (direkte Teamlieferung)",
+        "tip10": "Vorsicht bei zu niedrigen Preisen: Echte Nike-Trikots behalten ihren Wert",
+        "tip11": "Im Zweifel bei einem Etikett oder Code: Nicht kaufen"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Beispiel 1: Produkt- und Produktionscode",
+          "description": "Das kleine Etikett unter dem Waschetikett enthält die wesentlichen Codes",
+          "authentic": {
+            "points": {
+              "point1": "Sichtbarer Produktcode: 658789-426 (Stil + Farbe)",
+              "point2": "Passender Produktionscode: HO150710 (Holiday 2015, Juli-Oktober)",
+              "point3": "Klarer und lesbarer Druck",
+              "point4": "Korrektes Format und perfekte Ausrichtung"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Produktcode für ein anderes Trikot (hier PSG-Trikot mit FN8721-456 = Barcelona Heim 24/25)",
+              "point2": "Produktionscode passt nicht zur Saison",
+              "point3": "Verschwommener Druck oder unregelmässige Zeichen",
+              "point4": "Schlechte Ausrichtung oder falsches Format"
+            }
+          }
+        },
+        "example2": {
+          "title": "Beispiel 2: Anhänger",
+          "description": "Das Kartonschild, das an neuen Trikots befestigt ist",
+          "authentic": {
+            "points": {
+              "point1": "Physischer Aufkleber (nicht aufgedruckt)",
+              "point2": "Schwarzer Befestigungsstift",
+              "point3": "Korrekte Grössenfarbleiste",
+              "point4": "Produktcode stimmt mit dem inneren Etikett überein",
+              "point5": "Korrekte Platzierung für das Jahr (linker Ärmel nach 2021)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Aufgedruckter Aufkleber (kein echter Aufkleber)",
+              "point2": "Weisser Befestigungsstift oder falsche Farbe",
+              "point3": "Fehlende oder falsche Farbleiste",
+              "point4": "Produktcode stimmt nicht überein (CD0699-100 = Frankreich 2020/22)"
+            }
+          }
+        },
+        "example3": {
+          "title": "Beispiel 3: Sicherheitsetikett",
+          "description": "Das Etikett unten rechts am Trikot mit einzigartigem Code und metallischem Streifen",
+          "authentic": {
+            "points": {
+              "point1": "Hochwertiger metallischer/holografischer Streifen",
+              "point2": "Farbwechselnder Effekt im Licht",
+              "point3": "Einzigartiger alphanumerischer Code",
+              "point4": "Saubere und gleichmässige Nähte",
+              "point5": "Goldakzente (Spielerversion) oder Silber (Fanversion)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Flach gedruckter Streifen (kein holografischer Effekt)",
+              "point2": "Code auf mehreren Trikots wiederholt",
+              "point3": "Grobe Nähte",
+              "point4": "Kein metallischer Effekt"
+            }
+          }
+        }
+      }
+    },
+    "puma": {
+      "title": "Puma-Authentifizierungsleitfaden",
+      "description": "Vollständige Methode zur Überprüfung der Echtheit eines Puma-Trikots anhand von Produktcodes, Etiketten und Herstellungsdetails",
+      "criteria": {
+        "step1": {
+          "title": "Schritt 1: Der Produktcode (Style No / Article No)",
+          "description": "Auf einem grossen Etikett, das links am Trikot eingenäht ist",
+          "points": {
+            "point1": "Format: 6 Ziffern + 2 Variantenziffern (z. B. 736251-01)",
+            "point2": "Die ersten 6 Ziffern = Basis-Trikotmodell",
+            "point3": "Die letzten 2 Ziffern = Farbvariante (neueres Merkmal, bei älteren Trikots nicht vorhanden)",
+            "point4": "Code auf kitcod.es oder Google Bilder eingeben, um zu prüfen, ob er GENAU zu deinem Trikot passt",
+            "point5": "ACHTUNG: Fälschungen verwenden oft echte Codes! Wenn der Code für Marseille auf einem Milan-Trikot ist = FÄLSCHUNG",
+            "point6": "Trikots vor 2000 haben möglicherweise kein Etikett mit Produktcode - das ist normal"
+          }
+        },
+        "step2": {
+          "title": "Schritt 2: Das Produktionsdatum",
+          "description": "Bei neueren Etikettenversionen gibt Puma das genaue Produktionsdatum an",
+          "points": {
+            "point1": "Neueres Format: Vollständiges sichtbares Datum (z. B. 15/03/2023)",
+            "point2": "Dieses Datum muss zur Trikotsaison passen",
+            "point3": "Ein Trikot der Saison 2023/24 kann kein Produktionsdatum aus dem Jahr 2020 haben",
+            "point4": "Fälschungen verwenden oft dasselbe Etikett für verschiedene Trikots, was zu Widersprüchen führt",
+            "point5": "Wenn das Datum nicht zur Saison passt = grosses WARNSIGNAL"
+          }
+        },
+        "step3": {
+          "title": "Schritt 3: Der Produktionsregionscode",
+          "description": "Alphanumerischer Code unter dem Produktionsdatum, der die Fabrik angibt",
+          "points": {
+            "point1": "Format: TVNAO (Beispiel für Vietnam, Alliance One Fabrik)",
+            "point2": "Erstes Zeichen = wahrscheinlich 'T' für Textil",
+            "point3": "Nächste 2 Zeichen = ISO-Ländercode (VN=Vietnam, TH=Thailand, TR=Türkei)",
+            "point4": "Letzte 2 Zeichen = Spezifische Fabrikkennung",
+            "point5": "Ländercode MUSS mit 'Made in...' auf dem Etikett übereinstimmen",
+            "point6": "Offizielle Puma-Fabriken können mit deren öffentlichen Listen (2018, 2023, 2025) überprüft werden"
+          }
+        },
+        "step4": {
+          "title": "Schritt 4: Der regionale Marktcode",
+          "description": "Code auf der linken Seite des Etiketts, der den Zielmarkt angibt",
+          "points": {
+            "point1": "AM = Amerika",
+            "point2": "AP = Asien-Pazifik",
+            "point3": "EU = Europa",
+            "point4": "Dieser Code gibt an, WO das Produkt verkauft werden sollte, nicht wo es hergestellt wurde",
+            "point5": "Nützlich für Sammler, die bestimmte regionale Ausgaben suchen",
+            "point6": "Kann leichte Unterschiede bei Verpackung oder Konformitätsinformationen aufweisen"
+          }
+        },
+        "step5": {
+          "title": "Schritt 5: Der QR-Code",
+          "description": "Neuere Puma-Etiketten enthalten einen QR-Code mit einzigartiger AD-Nummer",
+          "points": {
+            "point1": "QR-Code befindet sich in der Regel unter dem Produktcode",
+            "point2": "Das Scannen des Codes leitet auf puma.com mit dem 'AD'-Nummernparameter weiter",
+            "point3": "Link-Format: https://www.puma.com?TSL1D33P02450",
+            "point4": "Die AD-Nummer ist über dem QR-Code aufgedruckt",
+            "point5": "Dieser Code dient der internen Nachverfolgung und Puma-Authentifizierung",
+            "point6": "Das Fehlen eines QR-Codes bei älteren Trikots ist normal"
+          }
+        },
+        "step6": {
+          "title": "Schritt 6: Der Anhänger",
+          "description": "Kartonschild, das am Kragen neuer Trikots befestigt ist",
+          "points": {
+            "point1": "Der Aufkleber muss ein ECHTER physischer Aufkleber sein, niemals direkt aufgedruckt",
+            "point2": "Der Produktcode auf dem Anhänger MUSS mit dem inneren Etikett übereinstimmen",
+            "point3": "Fälschungen verwenden oft ein generisches Etikett wie 'Puma Shirt' ohne Details",
+            "point4": "Echtes Etikett enthält: Klubname + Trikottyp (Heim/Auswärts) + Farbe",
+            "point5": "Regionale Grössenkonventionen prüfen: Brasilien/Kanada = 'G' (Grande) statt 'L'",
+            "point6": "Japan verwendet möglicherweise '2XO' statt 'XL' - Übereinstimmung mit Region prüfen"
+          }
+        },
+        "step7": {
+          "title": "Schritt 7: Das Kragenetikett und 'Made in'",
+          "description": "Das Kragenetikett enthält wichtige regionale Informationen",
+          "points": {
+            "point1": "Das Herstellungsland ('Made in...') MUSS auf dem Kragen und allen inneren Etiketten übereinstimmen",
+            "point2": "Beispiel: Steht auf dem Kragen 'Made in Vietnam', muss das Waschetikett dasselbe angeben",
+            "point3": "Regionale Grössenentsprechungen prüfen, insbesondere die japanische Grösse (J)",
+            "point4": "Richtige Tabelle: US S=J M, US M=J O (oder neueres L), US L=J 2XO, US XL=J 3XO, US XXL=J 4XO",
+            "point5": "Hinweis: Neuere Puma-Produkte verwenden manchmal 'L' statt 'O' für Japan (Angleichung an westliche Normen)",
+            "point6": "Typischer Fehler bei Fälschungen: falsche japanische Grösse (z. B. 'J: S' für US L)"
+          }
+        },
+        "step8": {
+          "title": "Schritt 8: Das Sicherheitsetikett",
+          "description": "Kleines schwarzes Etikett unten links am Trikot (Vorderansicht)",
+          "points": {
+            "point1": "Bei neueren Modellen: einfach mit 'Authentic Licensed Football' beschriftet",
+            "point2": "Bei älteren Modellen: einzigartiger alphanumerischer Code",
+            "point3": "Dieser Code sollte bei Suchanfragen NICHT auftauchen (ausser es ist eine Fälschung)",
+            "point4": "Das Etikett muss sauber mit Qualitätsfaden eingenäht sein",
+            "point5": "Vollständiges Fehlen des Etiketts bei einem neueren Trikot = verdächtig"
+          }
+        },
+        "step9": {
+          "title": "Schritt 9: Das Puma-Logo (Vorsicht vor dem 'Fat Cat')",
+          "description": "Das Logo des springenden Pumas muss perfekt sein - Vorsicht vor dem 'Fat Cat'",
+          "points": {
+            "point1": "Der Puma muss ELEGANT und athletisch wirken, nicht stämmig oder aufgebläht",
+            "point2": "'Fat Cat' = typischer Fälschungsfehler: zu dicker, verformter Puma, der 'muskulös' wirkt",
+            "point3": "Klar definierte charakteristische Form mit exakten Proportionen",
+            "point4": "Hochwertige Stickerei oder Aufdruck mit sauberen Kanten",
+            "point5": "Korrekte Position entsprechend dem Modell (üblicherweise rechte Brust)",
+            "point6": "Immer mit offiziellen Fotos vergleichen - selbst geringe Abweichungen sind verdächtig"
+          }
+        },
+        "step10": {
+          "title": "Schritt 10: Das Klubabzeichen",
+          "description": "Das Abzeichen muss präzise angebracht sein",
+          "points": {
+            "point1": "Präzise Stickerei ODER hochwertiger Wärmetransfer je nach Modell",
+            "point2": "Saubere Kanten ohne Verschmierungen",
+            "point3": "Alle Elemente (Sterne, Text, Ränder) perfekt ausgerichtet",
+            "point4": "Korrekter Abstand und eingehaltene Proportionen",
+            "point5": "Kein verschwommener, versetzter oder schlecht ausgerichteter Text",
+            "point6": "Mit dem offiziellen Klubabzeichen vergleichen - auch kleine Details zählen"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Richtiger Produktcode, aber für ein anderes Trikot/Team (z. B. Marseille-Code auf einem Milan-Trikot)",
+        "fake2": "Produktionsdatum passt nicht zur Trikotsaison",
+        "fake3": "Produktionsregionscode (z. B. TVNAO) stimmt nicht mit 'Made in...' überein",
+        "fake4": "Generischer Anhänger mit Aufschrift 'Puma Shirt' ohne Klubangabe",
+        "fake5": "Aufgedruckter Aufkleber auf dem Anhänger statt echtem Aufkleber",
+        "fake6": "'Made in...' unterschiedlich auf Kragenetikett und Wasch-/Produktetikett",
+        "fake7": "Falsche japanische Grösse auf dem Kragenetikett (z. B. J:S für US L statt J:2XO)",
+        "fake8": "Sicherheitscode auf mehreren Online-Trikots gefunden (sollte einzigartig sein)",
+        "fake9": "Der berühmte 'Fat Cat' - verformtes, stämmiges oder zu dickes Puma-Logo",
+        "fake10": "Klubabzeichen mit verschwommenem Text, versetzten Elementen oder falschen Proportionen",
+        "fake11": "Grobe Nähte oder sichtbare Fäden am Logo/Abzeichen",
+        "fake12": "Fehlendes Sicherheitsetikett bei einem neueren Trikot",
+        "fake13": "Tippfehler oder falsche Grammatik auf den Waschetiketten",
+        "fake14": "Fehlender QR-Code bei sehr neuen Trikots (nach 2020)"
+      },
+      "tips": {
+        "tip1": "IMMER den vollständigen Produktcode auf kitcod.es oder Google Bilder überprüfen",
+        "tip2": "Prüfen, ob das Produktionsdatum zur Trikotsaison passt",
+        "tip3": "Regionscode (TVNAO) mit 'Made in...' auf Konsistenz prüfen",
+        "tip4": "Fotos ALLER Etiketten anfordern: Kragen, Wasche, grosses Produktetikett, Anhänger",
+        "tip5": "QR-Code scannen (falls vorhanden) und prüfen, ob er zu puma.com mit AD-Parameter führt",
+        "tip6": "Puma-Logo GENAU begutachten - 'Fat Cat' ist ein sehr häufiger Fälschungsfehler",
+        "tip7": "Klubabzeichen Pixel für Pixel mit offiziellen Fotos vergleichen",
+        "tip8": "Regionale Grössenkonsistenz auf dem Kragenetikett prüfen (besonders japanische Grösse)",
+        "tip9": "Offizielle Puma-Fabriklisten konsultieren, wenn der Fabrikcode geprüft werden soll",
+        "tip10": "Bei neuen Trikots: Foto des Anhängers mit sichtbarem Klubnamen verlangen",
+        "tip11": "Vorsicht bei zu niedrigen Preisen: Echte Puma-Trikots behalten ihren Wert",
+        "tip12": "Im Zweifel bei einem Etikett, Logo oder Code: Nicht kaufen"
+      }
+    },
+    "hummel": {
+      "title": "Hummel-Authentifizierungsleitfaden",
+      "description": "Lerne, echte Hummel-Trikots anhand dieser wesentlichen Kriterien zu erkennen",
+      "criteria": {
+        "step1": {
+          "title": "Das Hauptetikett",
+          "description": "Das Hummel-Etikett hat spezifische Merkmale",
+          "points": {
+            "point1": "Hummel-Logo mit charakteristischen Chevrons",
+            "point2": "Einzigartiger Produktcode",
+            "point3": "Grössen- und Zusammensetzungsangaben",
+            "point4": "Angegebenes Herstellungsland",
+            "point5": "Klarer und dauerhafter Druck"
+          }
+        },
+        "step2": {
+          "title": "Die Hummel-Chevrons",
+          "description": "Die Chevrons sind das Markenzeichen der Marke",
+          "points": {
+            "point1": "Charakteristische V-Form",
+            "point2": "Präzise 45-Grad-Winkel",
+            "point3": "Hochwertige Stickerei",
+            "point4": "Perfekte Chevron-Ausrichtung",
+            "point5": "Leuchtende und kontrastreiche Farben"
+          }
+        },
+        "step3": {
+          "title": "Textilqualität",
+          "description": "Hummel verwendet hochwertige Materialien",
+          "points": {
+            "point1": "Atmungsaktives technisches Gewebe",
+            "point2": "Angenehmes Material zum Anfassen",
+            "point3": "Widerstandsfähigkeit gegen Verschleiss",
+            "point4": "Farben, die nicht verblassen",
+            "point5": "Schweissableitende Eigenschaften"
+          }
+        },
+        "step4": {
+          "title": "Verarbeitung",
+          "description": "Die Verarbeitungsdetails sind wichtig",
+          "points": {
+            "point1": "Gerade und feste Nähte",
+            "point2": "Gut strukturierter und bequemer Kragen",
+            "point3": "Hochwertiges Klubabzeichen",
+            "point4": "Langlebiger Nummernaufdruck",
+            "point5": "Sorgfältige Verarbeitung"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Falsch ausgerichtete oder verformte Chevrons",
+        "fake2": "Verschwommenes Etikett oder mit Fehlern",
+        "fake3": "Stoff minderer Qualität",
+        "fake4": "Ungenaues Hummel-Logo",
+        "fake5": "Nähte, die sich schnell auflösen"
+      },
+      "tips": {
+        "tip1": "Bei autorisierten Hummel-Händlern kaufen",
+        "tip2": "Chevrons mit echten Modellen vergleichen",
+        "tip3": "Gesamtfertigungsqualität überprüfen",
+        "tip4": "Etikett im Detail begutachten",
+        "tip5": "Ein zu niedriger Preis sollte misstrauisch machen"
+      }
+    },
+    "supporterVsPro": {
+      "title": "Supporter vs. Pro: Was sind die Unterschiede?",
+      "description": "Oft fragt man sich, worin der Unterschied zwischen den Trikots, die Spieler auf dem Platz tragen, und den im Handel erhältlichen \"Supporter\"-Trikots besteht. Hier ist ein vollständiger Überblick über die Unterschiede.",
+      "context": "Vergleich anhand der Heimtrikots 25/26 von Stade Rennais (Puma). Pro-Trikot in Grösse M, Supporter-Trikot in Grösse XL.",
+      "comparisons": {
+        "logo": {
+          "title": "Klubwappen",
+          "description": "Das Klubwappen auf Supporter-Trikots ist immer bestickt. Auf Pro-Trikots ist es aufgepresst. In diesem Jahr ist das Wappen auf dem Pro-Heimtrikot starr mit erhabenem Relief auf den Wappen.",
+          "supporter": "Bestickt",
+          "pro": "Aufgepresst, starr mit erhabenem Relief auf den Wappen"
+        },
+        "marque": {
+          "title": "Puma-Sponsoring",
+          "description": "Wie bei den Wappen unterscheidet sich das Puma-Branding (vorne und Schultern) zwischen den beiden Produktlinien.",
+          "supporter": "In der Regel bestickt",
+          "pro": "Aufgepresst, mit gummiartigem erhabenem Finish, sehr langlebig"
+        },
+        "technology1": {
+          "title": "Zwei verschiedene Technologien - Stoff",
+          "supporter": "DRYCELL mit RE-FIBRE",
+          "pro": "ULTRAWEAVE (seit seinem Debüt in der Saison 2022/2023 stark weiterentwickelt)"
+        },
+        "technology2": {
+          "title": "Zwei verschiedene Technologien - Webart",
+          "description": "Der Unterschied zwischen den Webarten ist mit blossem Auge sichtbar.",
+          "supporter": "Standardgewebe",
+          "pro": "Leichteres Gewebe zur Leistungssteigerung der Spieler auf dem Platz"
+        },
+        "detail1": {
+          "title": "Klubspezifischer Schriftzug",
+          "supporter": "Auf der Aussenseite des Trikots (z. B. #TOUTDONNER)",
+          "pro": "Auf der Innenseite des Trikots (z. B. #TOUTDONNER)"
+        },
+        "detail2": {
+          "title": "Badge \"Authentic Licensed Football\"",
+          "description": "Das Badge am Saum des Trikots hat je nach Produktlinie eine andere Verarbeitung.",
+          "supporter": "Flexibel",
+          "pro": "Starr"
+        },
+        "detail3": {
+          "title": "Nähte",
+          "description": "Auch bei den inneren Nähten sind Unterschiede zwischen den beiden Produktlinien zu bemerken.",
+          "supporter": "Standardnähte, kein besonderes Merkmal",
+          "pro": "Spezifische rote Nähte an den Schultern, die beim Supporter-Trikot fehlen"
+        }
+      }
+    }
+  },
+  "CookiesPolicy": {
+    "title": "Cookie-Richtlinie",
+    "lastUpdate": "Zuletzt aktualisiert",
+    "whatIsCookie": {
+      "title": "Was ist ein Cookie?",
+      "description": "Ein Cookie ist eine kleine Textdatei, die auf deinem Gerät gespeichert wird, wenn du eine Website besuchst. Cookies helfen uns, eine bessere Benutzererfahrung zu bieten und unsere Dienste zu verbessern."
+    },
+    "cookiesUsed": {
+      "title": "Auf Le Vestiaire verwendete Cookies",
+      "necessary": {
+        "title": "1. Unbedingt notwendige Cookies",
+        "description": "Diese Cookies sind für das Funktionieren der Website unerlässlich und können nicht deaktiviert werden.",
+        "auth": {
+          "label": "Authentifizierungs-Cookies",
+          "description": "Ermöglichen dir die Anmeldung und das Aufrechterhalten deiner aktiven Sitzung"
+        },
+        "consent": {
+          "label": "cookieConsent",
+          "description": "Speichert deine Entscheidung bezüglich Cookies"
+        }
+      },
+      "analytics": {
+        "title": "2. Analyse- und Performance-Cookies",
+        "description": "Diese Cookies helfen uns zu verstehen, wie du die Website nutzt, um unsere Dienste zu verbessern.",
+        "vercel": {
+          "label": "Vercel Analytics",
+          "description": "Analyse des Datenverkehrs und des Nutzerverhaltens"
+        },
+        "insights": {
+          "label": "Vercel Speed Insights",
+          "description": "Messung der Website-Performance"
+        },
+        "optOut": "Du kannst diese Cookies über das Einwilligungsbanner ablehnen, ohne dein Surferlebnis zu beeinträchtigen."
+      }
+    },
+    "preferences": {
+      "title": "Deine Einstellungen verwalten",
+      "description": "Du kannst deine Cookie-Einstellungen jederzeit ändern:",
+      "options": {
+        "browser": "Durch das Löschen von Cookies in deinen Browser-Einstellungen",
+        "banner": "Durch das Löschen des Cookies \"cookieConsent\", um das Banner erneut anzeigen zu lassen",
+        "contact": "Durch Kontaktaufnahme mit unserem Team unter"
+      }
+    },
+    "retention": {
+      "title": "Aufbewahrungsdauer",
+      "session": {
+        "label": "Sitzungs-Cookies",
+        "description": "Werden beim Schließen des Browsers gelöscht"
+      },
+      "consent": {
+        "label": "Einwilligungs-Cookie",
+        "description": "Bis 2099 gespeichert oder bis zur manuellen Löschung"
+      },
+      "analytics": {
+        "label": "Analyse-Cookies",
+        "description": "Maximal 13 Monate"
+      }
+    },
+    "rights": {
+      "title": "Deine Rechte (DSGVO)",
+      "description": "Gemäß der Datenschutz-Grundverordnung (DSGVO) hast du das Recht auf Auskunft, Berichtigung und Löschung deiner personenbezogenen Daten. Um diese Rechte auszuüben, kontaktiere uns unter"
+    },
+    "modifications": {
+      "title": "Änderungen dieser Richtlinie",
+      "description": "Wir behalten uns das Recht vor, diese Cookie-Richtlinie jederzeit zu ändern. Änderungen treten mit ihrer Veröffentlichung auf dieser Seite in Kraft. Wir empfehlen dir, diese Seite regelmäßig zu überprüfen."
+    }
+  },
+  "Settings": {
+    "loading": "Wird geladen...",
+    "title": "Kontoeinstellungen",
+    "footer": {
+      "text": "Durch die Nutzung deines Kontos stimmst du unseren",
+      "terms": "Nutzungsbedingungen",
+      "privacy": "Datenschutzrichtlinien",
+      "and": "und",
+      "cookies": "Cookie-Richtlinie"
+    },
+    "accountInfo": {
+      "title": "Kontoinformationen",
+      "username": "Benutzername",
+      "email": "E-Mail-Adresse",
+      "memberSince": "Mitglied seit"
+    },
+    "emailSettings": {
+      "title": "E-Mail-Adresse ändern",
+      "invalidEmail": "Ungültige E-Mail-Adresse",
+      "changeSuccess": "Anfrage zur E-Mail-Änderung gesendet. Überprüfe deinen Posteingang.",
+      "changeError": "Fehler beim Ändern der E-Mail",
+      "googleOnlyMessage": "Dein Konto ist über Google verbunden. Um deine E-Mail-Adresse zu ändern, musst du dies direkt in deinem Google-Konto tun.",
+      "newEmailLabel": "Neue E-Mail-Adresse",
+      "emailPlaceholder": "neu@email.com",
+      "changing": "Wird geändert...",
+      "changeButton": "E-Mail ändern"
+    },
+    "passwordSettings": {
+      "title": "Sicherheit",
+      "passwordMismatch": "Die neuen Passwörter stimmen nicht überein",
+      "passwordTooShort": "Das Passwort muss mindestens 8 Zeichen lang sein",
+      "passwordNoUppercase": "Das Passwort muss mindestens einen Großbuchstaben enthalten",
+      "passwordNoNumber": "Das Passwort muss mindestens eine Zahl enthalten",
+      "passwordNoSpecial": "Das Passwort muss mindestens ein Sonderzeichen enthalten",
+      "changeSuccess": "Passwort erfolgreich geändert",
+      "changeError": "Fehler beim Ändern des Passworts",
+      "googleOnlyMessage": "Dein Konto ist über Google verbunden. Die Sicherheit deines Kontos wird von Google verwaltet. Du kannst dein Passwort in den Google-Kontoeinstellungen ändern.",
+      "currentPassword": "Aktuelles Passwort",
+      "newPassword": "Neues Passwort",
+      "confirmPassword": "Passwort bestätigen",
+      "changing": "Wird geändert...",
+      "changeButton": "Passwort ändern"
+    },
+    "sessionSettings": {
+      "title": "Sitzung",
+      "signOutSuccess": "Erfolgreich abgemeldet",
+      "signOutError": "Fehler beim Abmelden",
+      "signOutLabel": "Abmelden",
+      "signOutDescription": "Du wirst von deiner aktuellen Sitzung abgemeldet",
+      "signOutButton": "Abmelden"
+    },
+    "leaderboardPrivacy": {
+      "title": "Ranglisten-Datenschutz",
+      "description": "Verwalte deine Sichtbarkeit in öffentlichen Ranglisten",
+      "loading": "Wird geladen...",
+      "anonymousSuccess": "Du erscheinst jetzt anonym in den Ranglisten",
+      "visibleSuccess": "Dein Profil ist jetzt in den Ranglisten sichtbar",
+      "updateError": "Deine Einstellungen konnten nicht aktualisiert werden",
+      "anonymousLabel": "Anonym erscheinen",
+      "anonymousDescription": "Dein Name, dein Avatar und deine Lieblingsmannschaft werden ausgeblendet. Du erscheinst als \"Sammler #XXXX\"",
+      "currentlyAnonymous": "Du erscheinst derzeit anonym in allen öffentlichen Ranglisten."
+    },
+    "cookieSettings": {
+      "title": "Cookie-Verwaltung",
+      "description": "Verwalte deine Cookie-Einstellungen auf Le Vestiaire. Du kannst deine Auswahl jederzeit ändern.",
+      "modifyButton": "Meine Einstellungen ändern",
+      "modifyDescription": "Klicke, um das Einwilligungsbanner erneut zu öffnen und deine Auswahl zu ändern.",
+      "viewPolicyLink": "Vollständige Cookie-Richtlinie ansehen"
+    },
+    "subscription": {
+      "title": "Abonnement",
+      "description": "Verwalte dein Abonnement und Premium-Funktionen",
+      "currentPlan": "Aktueller Plan",
+      "upgradeToPremium": "Auf Premium upgraden",
+      "manageSubscription": "Abonnement verwalten",
+      "loading": "Wird geladen...",
+      "features": "Enthaltene Funktionen",
+      "price": "Preis",
+      "or": "oder",
+      "free": {
+        "feature1": "Bis zu 50 Trikots in der Sammlung",
+        "feature2": "Bis zu 20 Trikots auf der Wunschliste",
+        "feature3": "Grundlegende Statistiken",
+        "feature4": "Freundessystem und Teilen"
+      },
+      "premium": {
+        "feature1": "Unbegrenzte Trikot-Sammlung",
+        "feature2": "Unbegrenzte Wunschliste",
+        "feature3": "Vollständige erweiterte Statistiken",
+        "feature4": "Bis zu 5 Fotos pro Trikot",
+        "feature5": "Premium-Abzeichen auf deinem Profil"
+      },
+      "freeInfo": "Upgrade auf Premium, um alle Funktionen freizuschalten und eine unbegrenzte Sammlung zu verwalten.",
+      "premiumInfo": {
+        "title": "Danke, dass du Premium-Mitglied bist!",
+        "description": "Du geniesst alle Premium-Funktionen. Verwalte dein Abonnement über das Stripe-Portal."
+      }
+    }
+  },
+  "CookieConsent": {
+    "title": "Cookie-Nutzung",
+    "defaultDescription": "Wir verwenden Cookies, um deine Erfahrung auf Le Vestiaire zu verbessern. Diese Cookies ermöglichen es uns, die Nutzung der Website zu analysieren und unsere Dienste zu verbessern.",
+    "acceptInfo": "Indem du auf \"Akzeptieren\" klickst, stimmst du der Verwendung von Analyse-Cookies zu. Essentielle Cookies bleiben aktiv.",
+    "learnMore": "Mehr erfahren",
+    "decline": "Ablehnen",
+    "accept": "Akzeptieren"
+  },
+  "LegalPages": {
+    "backToHome": "Zurück zur Startseite"
+  },
+  "Jerseys": {
+    "selectLeague": "Liga auswählen",
+    "searchLeague": "Liga suchen...",
+    "searchLeagueOrClub": "Liga oder Verein suchen...",
+    "searchClub": "Verein suchen...",
+    "clubs": "Vereine",
+    "leagues": "Ligen",
+    "searching": "Suche läuft...",
+    "noClubsFound": "Keine Vereine gefunden",
+    "noLeaguesFound": "Keine Ligen gefunden",
+    "allLeagues": "Alle Ligen",
+    "theLeagues": "Ligen",
+    "club": "Verein",
+    "season": "Saison",
+    "brand": "Marke",
+    "type": "Typ",
+    "findOnCFS": "Wo kaufen",
+    "averageRating": "Durchschnittsbewertung",
+    "collectorStats": "Sammlerstatistiken",
+    "inCollection": "In {count} Sammlung",
+    "inCollections": "In {count} Sammlungen",
+    "inWishlist": "In {count} Wunschliste",
+    "inWishlists": "In {count} Wunschlisten",
+    "clubNotFound": "Verein nicht gefunden",
+    "clubNotFoundText": "Verein nicht gefunden.",
+    "leagueNotFound": "Liga nicht gefunden",
+    "jerseyNotFound": "Trikot nicht gefunden",
+    "jerseyNotFoundText": "Dieses Trikot existiert nicht oder ist nicht mehr verfügbar.",
+    "allSeasons": "Alle Saisons",
+    "completeCollection": "Vollständige Sammlung",
+    "discover": "Entdecken",
+    "designedBy": "Designed von",
+    "collectiblePiece": "ist ein Sammlerstück",
+    "addToCollection": "Zur Sammlung hinzufügen",
+    "rateIt": "bewerten",
+    "clubsAndJerseys": "Vereine und ihre historischen Trikots",
+    "largestDatabase": "Die größte Trikot-Datenbank",
+    "jerseyCollection": "Sammlung von Vintage- und aktuellen Fußballtrikots",
+    "allClubs": "Alle Vereine",
+    "since": "seit",
+    "ofTheClub": "des Vereins"
+  },
+  "JerseyDetail": {
+    "tabs": {
+      "description": "Beschreibung",
+      "players": "Spieler",
+      "achievements": "Erfolge",
+      "comingSoon": "Demnächst verfügbar",
+      "noDescription": "Für dieses Trikot ist keine Beschreibung verfügbar.",
+      "proposeDescription": "Beschreibung vorschlagen",
+      "suggestImprovement": "Verbesserung vorschlagen"
+    },
+    "palmares": {
+      "errorLoading": "Fehler beim Laden der Trophäen",
+      "noTrophies": "Keine Trophäen für diese Saison erfasst",
+      "winner": "Sieger",
+      "finalist": "Finalist"
+    },
+    "players": {
+      "errorLoading": "Fehler beim Laden der Spieler",
+      "noPlayers": "Keine Spieler für diese Saison registriert",
+      "matches": "Spiele",
+      "goals": "Tore",
+      "assists": "Vorlagen",
+      "assistsFull": "Vorlagen",
+      "cleanSheets": "Zu-null",
+      "cleanSheetsFull": "Zu-null-Spiele",
+      "goalsConceded": "Geg. Tore",
+      "goalsConcededFull": "Gegentore"
+    },
+    "proposeDescription": {
+      "title": "Beschreibung vorschlagen",
+      "titleImprove": "Verbesserung vorschlagen",
+      "description": "Bereichere die Datenbank mit einer Beschreibung für {name}.",
+      "descriptionImprove": "Hilf uns, die Beschreibung von {name} zu verbessern.",
+      "currentDescription": "Aktuelle Beschreibung",
+      "yourDescription": "Dein Vorschlag",
+      "yourImprovement": "Deine Verbesserung",
+      "placeholder": "Beschreibe die Geschichte dieses Trikots, seinen Kontext, seine Besonderheiten, damit verbundene denkwürdige Ereignisse usw.",
+      "hint": "Mindestens 50 Zeichen. Sei präzise und sachlich.",
+      "cancel": "Abbrechen",
+      "submit": "Vorschlag einreichen",
+      "submitting": "Wird eingereicht...",
+      "success": "Dein Vorschlag wurde erfolgreich eingereicht! Er wird von unserem Team geprüft.",
+      "errors": {
+        "tooShort": "Die Beschreibung muss mindestens {min} Zeichen enthalten",
+        "tooLong": "Die Beschreibung darf {max} Zeichen nicht überschreiten",
+        "generic": "Beim Einreichen ist ein Fehler aufgetreten"
+      }
+    }
+  },
+  "Friends": {
+    "myFriends": "Meine Freunde",
+    "friends": "Freunde",
+    "pending": "Ausstehend",
+    "search": "Suche",
+    "noFriendsYet": "Noch keine Freunde",
+    "searchUsersToStart": "Suche nach Nutzern, um dein Netzwerk aufzubauen",
+    "noPendingRequests": "Keine ausstehenden Anfragen",
+    "requestsWillAppear": "Deine Freundschaftsanfragen werden hier angezeigt",
+    "error": "Fehler",
+    "searchPlaceholder": "Nach Benutzername oder Name suchen...",
+    "minCharacters": "Gib mindestens 2 Zeichen ein, um zu suchen",
+    "noUsersFound": "Keine Nutzer gefunden",
+    "result": "Ergebnis",
+    "results": "Ergebnisse",
+    "requestSent": "Anfrage gesendet",
+    "userBlocked": "Nutzer blockiert",
+    "blockUserConfirm": "Diesen Nutzer blockieren?",
+    "user": "Nutzer",
+    "noFavoriteTeam": "Kein Lieblingsverein",
+    "removeFriendConfirm": "{name} aus deinen Freunden entfernen?",
+    "friendRemoved": "Freund entfernt",
+    "errorRemoving": "Fehler beim Entfernen des Freundes",
+    "blockConfirm": "{name} blockieren?",
+    "errorBlocking": "Fehler beim Blockieren des Nutzers",
+    "removeFriend": "Freund entfernen",
+    "block": "Blockieren",
+    "nowFriendsWith": "Du bist jetzt mit {name} befreundet",
+    "requestRejected": "Anfrage abgelehnt",
+    "errorAccepting": "Fehler beim Annehmen der Anfrage",
+    "errorRejecting": "Fehler beim Ablehnen der Anfrage",
+    "accept": "Annehmen",
+    "reject": "Ablehnen",
+    "add": "Hinzufügen",
+    "addFriend": "Als Freund hinzufügen",
+    "resend": "Erneut senden",
+    "friendsCollections": "Sammlungen der Freunde",
+    "discoverCollections": "Entdecke die Trikotsammlungen deiner Freunde und lass dich für deine eigene Sammlung inspirieren",
+    "addFriendsToDiscover": "Füge Freunde hinzu, um ihre Trikotsammlungen zu entdecken!",
+    "searchFriends": "Freunde suchen →",
+    "noBio": "Keine Biografie",
+    "viewCollection": "Sammlung ansehen →",
+    "viewWishlist": "Wunschliste ansehen →",
+    "collectionNotFound": "Sammlung nicht gefunden",
+    "collectionOf": "Sammlung von {name}",
+    "jersey": "Trikot",
+    "jerseys": "Trikots",
+    "emptyCollection": "Leere Sammlung",
+    "noJerseysYet": "{name} hat noch keine Trikots zu seiner Sammlung hinzugefügt.",
+    "thisUser": "Dieser Nutzer",
+    "jerseysOwned": "Besessene Trikots",
+    "inCollection": "in der Sammlung",
+    "favoriteLeagues": "Lieblingsligen",
+    "noData": "Keine Daten",
+    "preferredTypes": "Bevorzugte Typen",
+    "origin": "Herkunft",
+    "purchased": "Gekauft",
+    "gifts": "Geschenke",
+    "mysteryBox": "Mystery Box",
+    "hisHerJerseys": "Seine/Ihre Trikots",
+    "sortBy": "Sortieren nach:",
+    "mostRecent": "Neueste zuerst",
+    "oldest": "Älteste zuerst",
+    "priceDescending": "Preis absteigend",
+    "priceAscending": "Preis aufsteigend",
+    "condition": "Zustand",
+    "clubAZ": "Verein (A-Z)",
+    "season": "Saison",
+    "noJerseysInCollection": "Keine Trikots in dieser Sammlung.",
+    "modal": {
+      "title": "Trikotdetails",
+      "yourPhoto": "Persönliches Foto",
+      "officialPhoto": "Offizielles Foto",
+      "size": "Größe",
+      "withTags": "Mit Etiketten",
+      "gift": "Geschenk",
+      "mysteryBox": "Mystery Box",
+      "club": "Verein",
+      "league": "Liga",
+      "type": "Typ",
+      "season": "Saison",
+      "brand": "Marke",
+      "collectionInfo": "Sammlungsinformationen",
+      "purchasePrice": "Kaufpreis",
+      "purchasedOn": "Gekauft am",
+      "player": "Spieler",
+      "number": "Nummer",
+      "personalization": "Personalisierung",
+      "addedOn": "Hinzugefügt am",
+      "notes": "Notizen",
+      "close": "Schließen"
+    }
+  },
+  "Leaderboard": {
+    "page": {
+      "title": "Rangliste - The Locker Room",
+      "description": "Entdecke die besten Fußballtrikot-Sammler",
+      "heading": "Rangliste",
+      "howItWorks": "Wie funktioniert das?",
+      "howItWorksDescription": "Die Ranglisten werden in Echtzeit aktualisiert. Die Top 3 aller Zeiten und der Nummer 1 des Monats erhalten ein dauerhaftes Abzeichen!"
+    },
+    "tabs": {
+      "allTime": "Aller Zeiten",
+      "emptyState": "Keine Rangliste für diese Kategorie verfügbar",
+      "yourPosition": "Deine Position:"
+    },
+    "categories": {
+      "title": "Kategorie",
+      "collection_size": "Größte Sammlung",
+      "collection_diversity": "Vielfältigste Sammlung",
+      "league_diversity": "Weltenbummler",
+      "vintage_specialist": "Vintage-Spezialist",
+      "descriptions": {
+        "collection_size": "Gesamtanzahl der besessenen Trikots",
+        "collection_diversity": "Anzahl verschiedener Vereine",
+        "league_diversity": "Anzahl verschiedener Ligen",
+        "vintage_specialist": "Trikots vor 2005"
+      }
+    },
+    "card": {
+      "jersey": "Trikot",
+      "jerseys": "Trikots",
+      "club": "Verein",
+      "clubs": "Vereine",
+      "league": "Liga",
+      "leagues": "Ligen",
+      "vintage": "Vintage",
+      "currentUser": "(Du)",
+      "defaultUsername": "Nutzer"
+    },
+    "errors": {
+      "rateLimitError": "Zu viele Ranglisten-Anfragen. Bitte warte einen Moment.",
+      "serverError": "Serverfehler"
+    },
+    "months": {
+      "january": "Januar",
+      "february": "Februar",
+      "march": "März",
+      "april": "April",
+      "may": "Mai",
+      "june": "Juni",
+      "july": "Juli",
+      "august": "August",
+      "september": "September",
+      "october": "Oktober",
+      "november": "November",
+      "december": "Dezember"
+    }
+  },
+  "Proposals": {
+    "Admin": {
+      "pageTitle": "Vorschlagsverwaltung - The Locker Room",
+      "pageDescription": "Trikotvorschläge von Mitwirkenden verwalten",
+      "heading": "Vorschlagsverwaltung",
+      "tabJerseys": "Trikots",
+      "tabDescriptions": "Beschreibungen",
+      "about": "Über Vorschläge",
+      "aboutDescription": "Nutzer mit der Mitwirkenden-Rolle können neue Trikots für unsere Datenbank vorschlagen. Als Administrator kannst du diese Vorschläge genehmigen oder ablehnen.",
+      "approveLabel": "Genehmigen:",
+      "approveDescription": "Das Trikot wird in der Datenbank erstellt und der Mitwirkende wird als Beitragender vermerkt.",
+      "rejectLabel": "Ablehnen:",
+      "rejectDescription": "Der Vorschlag wird dauerhaft gelöscht",
+      "errorLoading": "Fehler beim Laden der Vorschläge",
+      "errorLoadingToast": "Vorschläge konnten nicht geladen werden",
+      "approveSuccess": "Vorschlag erfolgreich genehmigt!",
+      "rejectSuccess": "Vorschlag abgelehnt",
+      "emptyStateTitle": "Keine ausstehenden Vorschläge",
+      "emptyStateDescription": "Derzeit gibt es keine ausstehenden Trikotvorschläge.",
+      "brandLabel": "Marke:",
+      "proposedByLabel": "Vorgeschlagen von:",
+      "contributionsLabel": "Beiträge:",
+      "dateLabel": "Am:",
+      "approveButton": "Genehmigen",
+      "rejectButton": "Ablehnen",
+      "approveDialogTitle": "Diesen Vorschlag genehmigen?",
+      "rejectDialogTitle": "Diesen Vorschlag ablehnen?",
+      "approveDialogDescription": "Das Trikot <strong>{jerseyName}</strong> wird der Datenbank hinzugefügt und der Mitwirkende wird vermerkt.",
+      "rejectDialogDescription": "Der Vorschlag <strong>{jerseyName}</strong> wird dauerhaft gelöscht. Diese Aktion ist unwiderruflich.",
+      "cancel": "Abbrechen",
+      "confirm": "Bestätigen",
+      "approveAllButton": "Alle genehmigen ({count})",
+      "approveAllLoading": "Wird genehmigt...",
+      "approveAllDialogTitle": "Alle Vorschläge genehmigen?",
+      "approveAllDialogDescription": "Du bist dabei, {count} Vorschlag/Vorschläge zu genehmigen. Diese Aktion ist unwiderruflich.",
+      "approveAllSuccess": "{count} Vorschlag/Vorschläge erfolgreich genehmigt!",
+      "approveAllPartial": "{approved} genehmigt, {failed} fehlgeschlagen",
+      "DescriptionProposals": {
+        "aboutTitle": "Über Beschreibungsvorschläge",
+        "aboutDescription": "Nutzer können Beschreibungen vorschlagen, um Trikotseiten zu bereichern. Du kannst diese Vorschläge genehmigen oder ablehnen. Mitwirkende werden für jede genehmigte Beschreibung gutgeschrieben.",
+        "emptyStateTitle": "Keine Beschreibungsvorschläge",
+        "emptyStateDescription": "Derzeit gibt es keine ausstehenden Beschreibungsvorschläge.",
+        "currentDescription": "Aktuelle Beschreibung",
+        "proposedDescription": "Vorgeschlagene Beschreibung",
+        "proposedImprovement": "Vorgeschlagene Verbesserung",
+        "proposedBy": "Vorgeschlagen von:",
+        "date": "Am:",
+        "viewJersey": "Trikot ansehen",
+        "approve": "Genehmigen",
+        "reject": "Ablehnen",
+        "approveDialogTitle": "Diese Beschreibung genehmigen?",
+        "approveDialogDescription": "Diese Beschreibung ersetzt die aktuelle Trikotbeschreibung. Der Mitwirkende wird vermerkt.",
+        "rejectDialogTitle": "Diesen Vorschlag ablehnen?",
+        "rejectDialogDescription": "Der Vorschlag wird als abgelehnt markiert. Du kannst optional einen Grund angeben.",
+        "rejectionReason": "Ablehnungsgrund (optional)",
+        "rejectionReasonPlaceholder": "Erkläre, warum dieser Vorschlag abgelehnt wird...",
+        "cancel": "Abbrechen",
+        "confirmApprove": "Genehmigen",
+        "confirmReject": "Ablehnen",
+        "approveSuccess": "Beschreibung erfolgreich genehmigt!",
+        "rejectSuccess": "Vorschlag abgelehnt",
+        "errorLoading": "Fehler beim Laden der Vorschläge",
+        "errorApprove": "Fehler bei der Genehmigung",
+        "errorReject": "Fehler bei der Ablehnung"
+      }
+    },
+    "User": {
+      "myProposalsTitle": "Meine Vorschläge - The Locker Room",
+      "myProposalsDescription": "Status deiner Trikotvorschläge einsehen",
+      "myProposalsHeading": "Meine Vorschläge",
+      "newProposal": "Neuer Vorschlag",
+      "proposeJerseyTitle": "Trikot vorschlagen - The Locker Room",
+      "proposeJerseyDescription": "Ein neues Trikot für die Datenbank vorschlagen",
+      "proposeJerseyHeading": "Trikot vorschlagen",
+      "proposeJerseyInfo": "Du kannst ein neues Trikot für unsere Datenbank vorschlagen. Administratoren prüfen deinen Vorschlag, bevor er genehmigt wird.",
+      "tipsHeading": "Tipps für einen guten Vorschlag",
+      "tip1": "Prüfe, ob das Trikot nicht bereits in der Datenbank vorhanden ist",
+      "tip2": "Verwende ein klares und qualitativ hochwertiges Foto",
+      "tip3": "Gib die Saison im Format JJJJ-JJ (z. B. 2025-26, 2024-25) für Vereine und im Format JJJJ (2025, 2022 usw.) für Nationalmannschaften ein",
+      "tip4": "Sei präzise bei Name und Beschreibung",
+      "errorLoading": "Fehler beim Laden der Vorschläge",
+      "errorLoadingToast": "Deine Vorschläge konnten nicht geladen werden",
+      "emptyStateTitle": "Keine Vorschläge",
+      "emptyStateDescription": "Du hast noch keine Trikotvorschläge eingereicht.",
+      "brandLabel": "Marke:",
+      "statusPending": "Ausstehend"
+    },
+    "Form": {
+      "jerseyNameLabel": "Trikotname",
+      "autoGenerated": "(Automatisch generiert)",
+      "jerseyNamePlaceholder": "Wird automatisch basierend auf deinen Auswahlen generiert...",
+      "clubLabel": "Verein *",
+      "clubLoading": "Wird geladen...",
+      "clubSearchPlaceholder": "Verein suchen...",
+      "clubCommandPlaceholder": "Verein suchen...",
+      "clubNotFound": "Kein Verein gefunden.",
+      "seasonLabel": "Saison *",
+      "seasonPlaceholder": "Z. B. 2025-26",
+      "seasonPlaceholderNationalTeam": "Z. B. 2025",
+      "typeLabel": "Typ *",
+      "typePlaceholder": "Trikottyp",
+      "specialNameLabel": "Name des Sondertrikots",
+      "specialNameOptional": "(optional)",
+      "specialNamePlaceholder": "Z. B. Jubiläum, Limited Edition, Weihnachten...",
+      "specialNameHelper": "Wenn leer, lautet der Name \"Sondertrikot [Verein] [Saison]\"",
+      "brandLabel": "Marke *",
+      "brandPlaceholder": "Z. B. Nike, Adidas, Puma...",
+      "descriptionLabel": "Beschreibung (optional)",
+      "descriptionPlaceholder": "Beschreibung oder Details zu diesem Trikot hinzufügen...",
+      "photoLabel": "Trikotfoto *",
+      "photoClickToAdd": "Klicken, um ein Foto hinzuzufügen",
+      "photoFormats": "PNG, JPG, WEBP, AVIF (Max. 2 MB)",
+      "errorFileNotImage": "Die Datei muss ein Bild sein",
+      "errorFileTooLarge": "Das Foto darf 2 MB nicht überschreiten",
+      "errorAllFieldsRequired": "Alle Felder sind erforderlich, außer der Beschreibung",
+      "errorPhotoRequired": "Ein Foto ist erforderlich",
+      "errorUpload": "Fehler beim Hochladen",
+      "errorUploadToast": "Fehler beim Hochladen des Fotos",
+      "errorCreate": "Fehler bei der Erstellung",
+      "successToast": "Vorschlag erfolgreich eingereicht!",
+      "errorCreateToast": "Fehler beim Erstellen des Vorschlags",
+      "buttonUploading": "Foto wird hochgeladen...",
+      "buttonSubmitting": "Wird eingereicht...",
+      "buttonSubmit": "Vorschlag einreichen",
+      "generatedJerseyName": "{type} Trikot {club} {season}",
+      "seasonErrorClub": "Ungültiges Format. Verwende JJJJ-JJ (z. B. 2025-26) für Vereine",
+      "seasonErrorNationalTeam": "Ungültiges Format. Verwende JJJJ (z. B. 2025) für Nationalmannschaften"
+    },
+    "Errors": {
+      "notContributor": "Du musst Mitwirkender sein, um Trikots vorzuschlagen",
+      "rateLimitProposals": "Zu viele Vorschläge. Versuche es später erneut.",
+      "rateLimitUploads": "Zu viele Uploads. Versuche es später erneut.",
+      "allFieldsRequired": "Alle Felder sind erforderlich, außer der Beschreibung",
+      "invalidType": "Ungültiger Trikottyp",
+      "clubNotFound": "Verein nicht gefunden",
+      "jerseyExists": "Dieses Trikot existiert bereits in der Datenbank",
+      "proposalExists": "Ein Vorschlag für dieses Trikot ist bereits ausstehend",
+      "noFile": "Keine Datei empfangen",
+      "proposalNotFound": "Vorschlag nicht gefunden",
+      "jerseyAlreadyExists": "Ein Trikot mit diesen Merkmalen existiert bereits",
+      "invalidImageUrl": "Ungültiges Bild-URL-Format",
+      "cannotDownloadImage": "Vorschlagsbild konnte nicht heruntergeladen werden",
+      "cannotMoveImage": "Bild konnte nicht in den Trikot-Bucket verschoben werden"
+    }
+  },
+  "Pricing": {
+    "title": "Wähle deinen Plan",
+    "subtitle": "Verwalte deine Trikotsammlung wie ein Profi",
+    "toggle": {
+      "monthly": "Monatlich",
+      "yearly": "Jährlich"
+    },
+    "free": {
+      "name": "Kostenlos",
+      "description": "Um deine Sammlung zu starten",
+      "period": "kostenlos",
+      "features": {
+        "jerseys": "Bis zu 50 Trikots",
+        "wishlist": "Bis zu 20 Trikots auf der Wunschliste",
+        "basicStats": "Grundlegende Statistiken",
+        "friends": "Freundessystem",
+        "ratings": "Bewertungen und Kommentare"
+      },
+      "button": "Kostenlos"
+    },
+    "premium": {
+      "name": "Premium",
+      "monthly": {
+        "description": "Für leidenschaftliche Sammler",
+        "period": "Monat",
+        "button": "Auf Premium upgraden"
+      },
+      "yearly": {
+        "description": "Für leidenschaftliche Sammler",
+        "period": "Jahr",
+        "button": "Auf Premium Jahresabo upgraden",
+        "savings": "2 Monate gratis"
+      },
+      "features": {
+        "unlimitedJerseys": "Unbegrenzte Sammlung",
+        "unlimitedWishlist": "Unbegrenzte Wunschliste",
+        "advancedStats": "Vollständige erweiterte Statistiken",
+        "multiplePhotos": "Bis zu 5 Fotos pro Trikot",
+        "badge": "Premium-Abzeichen auf deinem Profil"
+      }
+    }
+  },
+  "PublicCollection": {
+    "title": "Sammlung von {name}",
+    "jerseys": "Trikots",
+    "jersey": "Trikot",
+    "anonymous": "Anonymer Sammler",
+    "anonymousMessage": "Dieser Sammler möchte anonym bleiben",
+    "emptyTitle": "Leere Sammlung",
+    "emptyMessage": "{name} hat noch keine Trikots zu seiner Sammlung hinzugefügt.",
+    "tabs": {
+      "collection": "Sammlung",
+      "wishlist": "Wunschliste"
+    },
+    "commonJerseysTitle": "Gemeinsam mit dir",
+    "commonJerseys": "{count} gemeinsame(s) Trikot(s)",
+    "wishlistTitle": "Wunschliste von {name}",
+    "wishlistEmpty": "Leere Wunschliste",
+    "wishlistEmptyMessage": "{name} hat noch keine Trikots zu seiner Wunschliste hinzugefügt."
+  },
+  "ForgotPassword": {
+    "title": "Passwort vergessen",
+    "subtitle": "Gib deine E-Mail-Adresse ein, um einen Zurücksetz-Link zu erhalten.",
+    "form": {
+      "email": "E-Mail",
+      "emailPlaceholder": "deine@email.com"
+    },
+    "button": {
+      "submit": "Link senden",
+      "loading": "Wird gesendet..."
+    },
+    "success": {
+      "title": "E-Mail gesendet",
+      "message": "Wenn ein Konto mit dieser E-Mail-Adresse existiert, erhältst du innerhalb weniger Minuten einen Zurücksetz-Link."
+    },
+    "backToLogin": "Zurück zur Anmeldung"
+  },
+  "ResetPassword": {
+    "title": "Neues Passwort",
+    "subtitle": "Wähle ein neues Passwort für dein Konto.",
+    "form": {
+      "password": "Neues Passwort",
+      "passwordPlaceholder": "Mindestens 8 Zeichen",
+      "passwordConfirm": "Passwort bestätigen",
+      "passwordConfirmPlaceholder": "Passwort wiederholen"
+    },
+    "button": {
+      "submit": "Passwort zurücksetzen",
+      "loading": "Wird zurückgesetzt..."
+    },
+    "success": {
+      "title": "Passwort geändert",
+      "message": "Dein Passwort wurde zurückgesetzt. Du kannst dich jetzt anmelden."
+    },
+    "errors": {
+      "invalidToken": "Dieser Link ist ungültig oder abgelaufen. Bitte stelle eine neue Anfrage.",
+      "passwordMismatch": "Die Passwörter stimmen nicht überein.",
+      "passwordTooShort": "Mindestens 8 Zeichen erforderlich",
+      "passwordNoUppercase": "Mindestens ein Großbuchstabe erforderlich",
+      "passwordNoNumber": "Mindestens eine Zahl erforderlich",
+      "passwordNoSpecial": "Mindestens ein Sonderzeichen erforderlich",
+      "resetError": "Ein Fehler ist aufgetreten. Bitte versuche es erneut."
+    },
+    "backToLogin": "Anmelden"
+  }
+}
