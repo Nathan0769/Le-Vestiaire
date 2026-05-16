@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requirePermission } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { translateDescription } from "@/lib/deepl";
 
 export async function POST(
   request: Request,
@@ -76,6 +77,16 @@ export async function POST(
 
       return { updatedJersey };
     });
+
+    try {
+      const translations = await translateDescription(proposal.description);
+      await prisma.jersey.update({
+        where: { id: proposal.jerseyId },
+        data: { descriptionTranslations: translations },
+      });
+    } catch (err) {
+      console.error("Traduction automatique échouée pour le maillot", proposal.jerseyId, err);
+    }
 
     return NextResponse.json({
       success: true,

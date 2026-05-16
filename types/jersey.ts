@@ -10,6 +10,7 @@ export interface Jersey {
   imageUrl: string;
   retailPrice?: number;
   description?: string | null;
+  descriptionTranslations?: Record<string, string> | null;
   slug?: string | null;
   club: Club;
   createdAt: Date;

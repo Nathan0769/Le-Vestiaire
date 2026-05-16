@@ -5,7 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Users, Trophy, Pencil, Plus, Settings } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { ProposeDescriptionModal } from "./propose-description-modal";
 import { PlayersDisplay } from "./players-display";
 import { PalmaresDisplay } from "./palmares-display";
@@ -15,6 +15,7 @@ interface JerseyTabsProps {
   jerseyId: string;
   jerseyName: string;
   description?: string | null;
+  descriptionTranslations?: Record<string, string> | null;
   clubId: string;
   season: string;
 }
@@ -23,10 +24,13 @@ export function JerseyTabs({
   jerseyId,
   jerseyName,
   description,
+  descriptionTranslations,
   clubId,
   season,
 }: JerseyTabsProps) {
   const t = useTranslations("JerseyDetail.tabs");
+  const locale = useLocale();
+  const localizedDescription = descriptionTranslations?.[locale] ?? description;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -76,7 +80,7 @@ export function JerseyTabs({
         <TabsContent value="description" className="mt-6">
           <Card className="border border-border shadow-lg overflow-hidden">
             <CardContent className="p-4 sm:p-6 min-w-0">
-              {description ? (
+              {localizedDescription ? (
                 <>
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 pb-4 border-b border-border">
                     <div className="flex items-center gap-2">
@@ -99,7 +103,7 @@ export function JerseyTabs({
                   </div>
                   <div className="prose prose-sm max-w-none dark:prose-invert min-w-0">
                     <p className="text-foreground/90 leading-relaxed whitespace-pre-wrap text-base break-words overflow-wrap-anywhere">
-                      {description}
+                      {localizedDescription}
                     </p>
                   </div>
                 </>
@@ -186,7 +190,7 @@ export function JerseyTabs({
         onOpenChange={setIsModalOpen}
         jerseyId={jerseyId}
         jerseyName={jerseyName}
-        existingDescription={description || undefined}
+        existingDescription={localizedDescription || undefined}
       />
     </div>
   );
