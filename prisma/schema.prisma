@@ -124,8 +124,9 @@ model Jersey {
   brand       String
   imageUrl    String
   retailPrice Decimal?
-  description String?
-  slug        String?    @unique
+  description             String?
+  descriptionTranslations Json?
+  slug                    String?    @unique
 
   club       Club         @relation(fields: [clubId], references: [id])
   collection UserJersey[]

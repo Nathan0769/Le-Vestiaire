@@ -419,6 +419,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
             jerseyId={jersey.id}
             jerseyName={translatedJerseyName}
             description={jersey.description}
+            descriptionTranslations={jersey.descriptionTranslations}
             clubId={jersey.club.id}
             season={jersey.season}
           />
