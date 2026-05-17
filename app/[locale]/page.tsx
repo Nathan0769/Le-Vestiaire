@@ -32,24 +32,32 @@ export async function generateMetadata({
     fr: "fr_FR",
     en: "en_US",
     es: "es_ES",
+    de: "de_DE",
+    pt: "pt_PT",
   };
 
   const titles: Record<string, string> = {
     fr: "Le Vestiaire Foot - Gérez votre Collection de Maillots de Football",
     en: "The Locker Room - Manage Your Football Jersey Collection",
     es: "El Vestuario - Gestiona tu Colección de Camisetas de Fútbol",
+    de: "Le Vestiaire Foot - Verwalte deine Fußballtrikot-Sammlung",
+    pt: "Le Vestiaire Foot - Gere a tua Coleção de Camisolas de Futebol",
   };
 
   const descriptions: Record<string, string> = {
     fr: "Rejoignez des milliers de collectionneurs : cataloguez vos maillots de football, créez une wishlist partageable, notez les maillots de votre club et découvrez les pièces les mieux notées par la communauté.",
     en: "Join thousands of collectors: catalog your football jerseys, create a shareable wishlist, rate jerseys from your club, and discover the community's top-rated pieces.",
     es: "Únete a miles de coleccionistas: cataloga tus camisetas de fútbol, crea una lista de deseos para compartir, puntúa camisetas de tu club y descubre las mejor valoradas por la comunidad.",
+    de: "Schließ dich tausenden Sammlern an: katalogisiere deine Fußballtrikots, erstelle eine teilbare Wunschliste, bewerte Trikots deines Clubs und entdecke die bestbewerteten Stücke der Community.",
+    pt: "Junta-te a milhares de colecionadores: cataloga as tuas camisolas de futebol, cria uma lista de desejos partilhável, avalia camisolas do teu clube e descobre as peças mais bem avaliadas da comunidade.",
   };
 
   const keywords: Record<string, string> = {
     fr: "collection maillots football, application maillots foot, cataloguer maillots foot, wishlist maillots football, noter maillots football, collectionneurs maillots, maillots vintage football, le vestiaire foot, gérer collection foot",
     en: "football jersey collection, jersey collection app, football shirt wishlist, rate football jerseys, jersey collectors, vintage football shirts, manage jersey collection",
     es: "colección camisetas fútbol, app camisetas fútbol, wishlist camisetas fútbol, valorar camisetas fútbol, coleccionistas camisetas fútbol",
+    de: "Fußballtrikot Sammlung, Trikot Sammlung App, Fußballtrikot Wunschliste, Trikots bewerten, Trikot Sammler, vintage Fußballtrikots, Trikot Sammlung verwalten",
+    pt: "coleção camisolas futebol, app camisolas futebol, lista de desejos camisolas futebol, avaliar camisolas futebol, colecionadores camisolas futebol",
   };
 
   return {
@@ -85,6 +93,8 @@ export async function generateMetadata({
         fr: "https://le-vestiaire-foot.fr/fr",
         en: "https://le-vestiaire-foot.fr/en",
         es: "https://le-vestiaire-foot.fr/es",
+        de: "https://le-vestiaire-foot.fr/de",
+        pt: "https://le-vestiaire-foot.fr/pt",
       },
     },
   };
@@ -560,6 +570,76 @@ const schemaContent: Record<
       {
         q: "¿Están seguros mis datos?",
         a: "Sí. Le Vestiaire Foot protege los datos personales de sus usuarios. La aplicación utiliza únicamente cookies esenciales para su funcionamiento, además de cookies de análisis opcionales que puedes rechazar en cualquier momento. La política completa está disponible en la página dedicada.",
+      },
+    ],
+  },
+  de: {
+    appDescription:
+      "Le Vestiaire Foot ist eine kostenlose Web-App, mit der Fußballtrikot-Sammler ihre Sammlung katalogisieren, eine teilbare Wunschliste erstellen, Trikots authentifizieren und einer Gemeinschaft von Enthusiasten beitreten können.",
+    featureList: [
+      "Fußballtrikot-Katalogisierung mit vollständigen Details (Größe, Zustand, Kaufpreis, Personalisierung)",
+      "Teilbare Wunschliste für Weihnachten und Geburtstage",
+      "Trikot-Authentifizierungsführer (Nike, Adidas, Puma)",
+      "Sammler-Community und Sammlungsaustausch",
+      "Ranking der bestbewerteten Trikots",
+    ],
+    orgDescription:
+      "Kostenlose Community-Plattform für Fußballtrikot-Sammler, die das Katalogisieren, Bewerten, Authentifizieren und Teilen von Trikotsammlungen ermöglicht.",
+    faq: [
+      {
+        q: "Wie füge ich ein Trikot zu meiner Sammlung hinzu?",
+        a: "Um ein Trikot zu deiner Sammlung bei Le Vestiaire Foot hinzuzufügen, erstelle ein kostenloses Konto, gehe zum Bereich 'Meine Sammlung' und wähle das Trikot aus dem Katalog. Du kannst Größe, Zustand, Kaufpreis und Personalisierung für jedes Trikot eingeben, um den Wert deiner Sammlung genau zu verfolgen.",
+      },
+      {
+        q: "Kann ich meine Wunschliste für Weihnachten oder meinen Geburtstag teilen?",
+        a: "Ja. Le Vestiaire Foot ermöglicht es dir, eine Fußballtrikot-Wunschliste zu erstellen und sie über einen direkten Link mit Freunden und Familie zu teilen. Das ist die ideale Lösung, damit sie genau wissen, welche Trikots du zu Weihnachten, einem Geburtstag oder einem besonderen Anlass erhalten möchtest.",
+      },
+      {
+        q: "Wie erkenne ich ein gefälschtes Fußballtrikot?",
+        a: "Le Vestiaire Foot bietet detaillierte Authentifizierungsführer für jede große Trikotmarke: Nike, Adidas, Puma und andere. Diese Führer erklären die wichtigsten Prüfpunkte — Nähte, Abzeichen, Etiketten, Stoffe — um ein authentisches Trikot von einer Fälschung zu unterscheiden.",
+      },
+      {
+        q: "Welche Clubs und Ligen sind bei Le Vestiaire Foot verfügbar?",
+        a: "Der Katalog von Le Vestiaire Foot umfasst viele internationale Wettbewerbe, darunter die Ligue 1, die Bundesliga sowie UEFA- und AFC-Nationalmannschaften. Neue Clubs und Nationalmannschaften werden regelmäßig zum Katalog hinzugefügt.",
+      },
+      {
+        q: "Sind meine Daten sicher?",
+        a: "Ja. Le Vestiaire Foot schützt die persönlichen Daten seiner Nutzer. Die App verwendet nur wesentliche Cookies für den Betrieb sowie optionale Analyse-Cookies, die du jederzeit ablehnen kannst. Die vollständige Richtlinie ist auf der entsprechenden Seite verfügbar.",
+      },
+    ],
+  },
+  pt: {
+    appDescription:
+      "Le Vestiaire Foot é uma aplicação web gratuita que permite aos colecionadores de camisolas de futebol catalogar a sua coleção, criar uma lista de desejos partilhável, autenticar camisolas e juntar-se a uma comunidade de entusiastas.",
+    featureList: [
+      "Catalogação de camisolas de futebol com detalhes completos (tamanho, estado, preço de compra, personalização)",
+      "Lista de desejos partilhável para o Natal e aniversários",
+      "Guias de autenticação de camisolas (Nike, Adidas, Puma)",
+      "Comunidade de colecionadores e partilha de coleções",
+      "Ranking das camisolas mais bem avaliadas",
+    ],
+    orgDescription:
+      "Plataforma comunitária gratuita dedicada aos colecionadores de camisolas de futebol, que permite catalogar, avaliar, autenticar e partilhar coleções de camisolas.",
+    faq: [
+      {
+        q: "Como adiciono uma camisola à minha coleção?",
+        a: "Para adicionar uma camisola à tua coleção no Le Vestiaire Foot, cria uma conta gratuita, acede à secção 'A Minha Coleção' e seleciona a camisola no catálogo. Podes introduzir o tamanho, o estado, o preço de compra e a personalização de cada camisola para acompanhar com precisão o valor da tua coleção.",
+      },
+      {
+        q: "Posso partilhar a minha lista de desejos para o Natal ou o meu aniversário?",
+        a: "Sim. Le Vestiaire Foot permite criar uma lista de desejos de camisolas de futebol e partilhá-la com amigos e familiares através de um link direto. É a solução ideal para que saibam exatamente que camisolas gostavas de receber no Natal, num aniversário ou em qualquer ocasião especial.",
+      },
+      {
+        q: "Como reconhecer uma camisola de futebol falsa?",
+        a: "Le Vestiaire Foot disponibiliza guias detalhados de autenticação para cada grande marca de camisolas: Nike, Adidas, Puma e outras. Estes guias explicam os pontos de controlo essenciais — costuras, emblemas, etiquetas, tecidos — para distinguir uma camisola autêntica de uma falsificação.",
+      },
+      {
+        q: "Que clubes e ligas estão disponíveis no Le Vestiaire Foot?",
+        a: "O catálogo do Le Vestiaire Foot abrange muitas competições internacionais, incluindo a Ligue 1, a Bundesliga e as seleções nacionais da UEFA e da AFC. Novos clubes e seleções nacionais são regularmente adicionados ao catálogo.",
+      },
+      {
+        q: "Os meus dados estão seguros?",
+        a: "Sim. Le Vestiaire Foot protege os dados pessoais dos seus utilizadores. A aplicação utiliza apenas cookies essenciais para o seu funcionamento, bem como cookies de análise opcionais que podes recusar a qualquer momento. A política completa está disponível na página dedicada.",
       },
     ],
   },

@@ -78,12 +78,14 @@ export async function POST(
       return { updatedJersey };
     });
 
+    let translationSuccess = false;
     try {
       const translations = await translateDescription(proposal.description);
       await prisma.jersey.update({
         where: { id: proposal.jerseyId },
         data: { descriptionTranslations: translations },
       });
+      translationSuccess = true;
     } catch (err) {
       console.error("Traduction automatique échouée pour le maillot", proposal.jerseyId, err);
     }
@@ -91,6 +93,7 @@ export async function POST(
     return NextResponse.json({
       success: true,
       message: "Proposition approuvée avec succès",
+      translationSuccess,
       jersey: result.updatedJersey,
     });
   } catch (err) {

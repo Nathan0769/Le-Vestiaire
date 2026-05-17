@@ -124,7 +124,13 @@ export function DescriptionProposalsList() {
         throw new Error(error.error || t("errorApprove"));
       }
 
-      toast.success(t("approveSuccess"));
+      const data = await response.json();
+      if (data.translationSuccess) {
+        toast.success(t("approveSuccess") + " — Traductions générées.");
+      } else {
+        toast.success(t("approveSuccess"));
+        toast.warning("Traduction automatique échouée — vérifiez les logs serveur (DEEPL_API_KEY ?)");
+      }
       await loadProposals();
     } catch (error) {
       console.error("Error approving proposal:", error);
