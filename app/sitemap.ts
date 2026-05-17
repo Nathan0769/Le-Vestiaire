@@ -4,52 +4,47 @@ import prisma from "@/lib/prisma";
 const BASE_URL = "https://le-vestiaire-foot.fr";
 const LOCALES = ["fr", "en", "es", "de", "pt"] as const;
 
-function localizedEntries(
+function staticLocalizedEntries(
   path: string,
   opts: {
     changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
     priority: number;
-    lastModified?: Date;
   }
 ): MetadataRoute.Sitemap {
   return LOCALES.map((locale) => ({
     url: `${BASE_URL}/${locale}${path}`,
-    lastModified: opts.lastModified ?? new Date(),
+    lastModified: new Date(),
     changeFrequency: opts.changeFrequency,
     priority: opts.priority,
-    alternates: {
-      languages: Object.fromEntries(
-        LOCALES.map((l) => [l, `${BASE_URL}/${l}${path}`])
-      ),
-    },
   }));
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
+    // Static pages: list all 5 locales so Google crawls de/pt
     const staticRoutes: MetadataRoute.Sitemap = [
-      ...localizedEntries("", { changeFrequency: "weekly", priority: 1 }),
-      ...localizedEntries("/jerseys", {
+      ...staticLocalizedEntries("", { changeFrequency: "weekly", priority: 1 }),
+      ...staticLocalizedEntries("/jerseys", {
         changeFrequency: "daily",
         priority: 0.9,
       }),
-      ...localizedEntries("/authentification", {
+      ...staticLocalizedEntries("/authentification", {
         changeFrequency: "monthly",
         priority: 0.75,
       }),
-      ...localizedEntries("/authentification/adidas", {
+      ...staticLocalizedEntries("/authentification/adidas", {
         changeFrequency: "monthly",
         priority: 0.75,
       }),
-      ...localizedEntries("/authentification/nike", {
+      ...staticLocalizedEntries("/authentification/nike", {
         changeFrequency: "monthly",
         priority: 0.75,
       }),
-      ...localizedEntries("/authentification/puma", {
+      ...staticLocalizedEntries("/authentification/puma", {
         changeFrequency: "monthly",
         priority: 0.65,
       }),
-      ...localizedEntries("/authentification/hummel", {
+      ...staticLocalizedEntries("/authentification/hummel", {
         changeFrequency: "monthly",
         priority: 0.55,
       }),
@@ -63,23 +58,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       },
     });
 
+    // Dynamic pages: French only — hreflang in HTML handles other locales
     const leagueAndClubRoutes: MetadataRoute.Sitemap = [];
 
     leagues.forEach((league) => {
-      leagueAndClubRoutes.push(
-        ...localizedEntries(`/jerseys/${league.id}`, {
-          changeFrequency: "weekly",
-          priority: 0.8,
-        })
-      );
+      leagueAndClubRoutes.push({
+        url: `${BASE_URL}/fr/jerseys/${league.id}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.8,
+      });
 
       league.clubs.forEach((club) => {
-        leagueAndClubRoutes.push(
-          ...localizedEntries(`/jerseys/${league.id}/clubs/${club.id}`, {
-            changeFrequency: "monthly",
-            priority: 0.7,
-          })
-        );
+        leagueAndClubRoutes.push({
+          url: `${BASE_URL}/fr/jerseys/${league.id}/clubs/${club.id}`,
+          lastModified: new Date(),
+          changeFrequency: "monthly",
+          priority: 0.7,
+        });
       });
     });
 
@@ -100,24 +96,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       where: { slug: { not: null } },
     });
 
-    const jerseyRoutes: MetadataRoute.Sitemap = jerseys.flatMap((jersey) => {
-      const path = `/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.slug}`;
-      return LOCALES.map((locale) => ({
-        url: `${BASE_URL}/${locale}${path}`,
-        lastModified: jersey.updatedAt,
-        changeFrequency: "monthly" as const,
-        priority: 0.6,
-        images: jersey.imageUrl ? [jersey.imageUrl] : undefined,
-        alternates: {
-          languages: Object.fromEntries(
-            LOCALES.map((l) => [l, `${BASE_URL}/${l}${path}`])
-          ),
-        },
-      }));
-    });
+    const jerseyRoutes: MetadataRoute.Sitemap = jerseys.map((jersey) => ({
+      url: `${BASE_URL}/fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.slug}`,
+      lastModified: jersey.updatedAt,
+      changeFrequency: "monthly",
+      priority: 0.6,
+      images: jersey.imageUrl ? [jersey.imageUrl] : undefined,
+    }));
 
     console.log(
-      `Sitemap généré : ${jerseyRoutes.length / LOCALES.length} maillots × ${LOCALES.length} locales`
+      `Sitemap généré : ${jerseyRoutes.length} maillots + ${leagueAndClubRoutes.length} leagues/clubs + ${staticRoutes.length} pages statiques`
     );
 
     return [...staticRoutes, ...leagueAndClubRoutes, ...jerseyRoutes];
