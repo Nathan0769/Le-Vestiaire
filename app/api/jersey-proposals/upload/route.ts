@@ -1,17 +1,12 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { createClient } from "@supabase/supabase-js";
 import { validateImageFile, MAX_FILE_SIZE } from "@/lib/file-validation";
 import {
   proposalsRateLimit,
   getRateLimitIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { uploadToR2, getR2PublicUrl, JERSEY_PROPOSALS_BUCKET } from "@/lib/r2-storage";
 
 export async function POST(req: Request) {
   try {
@@ -68,29 +63,13 @@ export async function POST(req: Request) {
     }
 
     const extension = validation.detectedType?.split("/")[1] || "jpg";
-    const timestamp = Date.now();
-    const filePath = `${user.id}/${timestamp}.${extension}`;
+    const filePath = `${user.id}/${Date.now()}.${extension}`;
 
-    const { error: uploadError } = await supabaseAdmin.storage
-      .from("jersey-proposals")
-      .upload(filePath, file, {
-        upsert: true,
-        contentType: validation.detectedType,
-      });
+    await uploadToR2(JERSEY_PROPOSALS_BUCKET, filePath, await file.arrayBuffer(), validation.detectedType!);
 
-    if (uploadError) {
-      console.error("Erreur upload Supabase:", uploadError.message);
-      return NextResponse.json({ error: uploadError.message }, { status: 500 });
-    }
+    const url = getR2PublicUrl(JERSEY_PROPOSALS_BUCKET, filePath);
 
-    const { data } = supabaseAdmin.storage
-      .from("jersey-proposals")
-      .getPublicUrl(filePath);
-
-    return NextResponse.json({
-      url: data.publicUrl,
-      path: filePath,
-    });
+    return NextResponse.json({ url, path: filePath });
   } catch (err) {
     console.error("Erreur API jersey proposal upload:", err);
     return NextResponse.json(

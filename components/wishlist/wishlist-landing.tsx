@@ -413,19 +413,19 @@ export default function WishlistLanding({ r2JerseysUrl }: { r2JerseysUrl: string
                 name: t("testimonialsSection.testimonials.lucas.name"),
                 designation: "⭐️⭐️⭐️⭐️⭐️",
                 quote: t("testimonialsSection.testimonials.lucas.quote"),
-                src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona1.avif",
+                src: "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/persona/persona1.avif",
               },
               {
                 name: t("testimonialsSection.testimonials.sarah.name"),
                 designation: "⭐️⭐️⭐️⭐️⭐️",
                 quote: t("testimonialsSection.testimonials.sarah.quote"),
-                src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona3.jpg",
+                src: "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/persona/persona3.jpg",
               },
               {
                 name: t("testimonialsSection.testimonials.tom.name"),
                 designation: "⭐️⭐️⭐️⭐️⭐️",
                 quote: t("testimonialsSection.testimonials.tom.quote"),
-                src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona2.jpg",
+                src: "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/persona/persona2.jpg",
               },
             ]}
           />

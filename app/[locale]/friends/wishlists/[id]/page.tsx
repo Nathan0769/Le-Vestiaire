@@ -7,15 +7,10 @@ import { Heart, ArrowLeft, Gift } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
-import { createClient } from "@supabase/supabase-js";
 import { getTranslations } from "next-intl/server";
+import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
 export const dynamic = "force-dynamic";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 interface FriendWishlistPageProps {
   params: Promise<{
@@ -53,10 +48,7 @@ async function getFriendWishlist(currentUserId: string, friendId: string) {
 
   let avatarUrl = null;
   if (friendUser.avatar) {
-    const { data } = await supabaseAdmin.storage
-      .from("avatar")
-      .createSignedUrl(friendUser.avatar, 60 * 60);
-    avatarUrl = data?.signedUrl || null;
+    avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, friendUser.avatar, 60 * 60);
   }
 
   const wishlistItems = await prisma.wishlist.findMany({

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { createClient } from "@supabase/supabase-js";
+import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 import type {
   LeaderboardCategory,
   LeaderboardPeriod,
@@ -13,14 +13,8 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
 export async function GET(request: NextRequest) {
   try {
-    // Rate limiting : 60 requêtes par minute (généreux car endpoint public)
     const currentUser = await getCurrentUser();
     const identifier = await getRateLimitIdentifier(currentUser?.id);
     const rateLimitResult = await checkRateLimit(generousRateLimit, identifier);
@@ -43,7 +37,6 @@ export async function GET(request: NextRequest) {
 
     let entries: LeaderboardEntry[] = [];
 
-    // Calculer selon la catégorie
     switch (category) {
       case "collection_size":
         entries = await getCollectionSizeLeaderboard(period);
@@ -139,10 +132,7 @@ async function getCollectionSizeLeaderboard(
     leaderboard.map(async (entry, index) => {
       let avatarUrl = null;
       if (entry.avatar && !entry.isAnonymous) {
-        const { data } = await supabaseAdmin.storage
-          .from("avatar")
-          .createSignedUrl(entry.avatar, 60 * 60);
-        avatarUrl = data?.signedUrl || null;
+        avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, entry.avatar, 60 * 60);
       }
 
       return {
@@ -166,7 +156,7 @@ async function getCollectionDiversityLeaderboard(): Promise<
       unique_clubs: bigint;
     }>
   >`
-    SELECT 
+    SELECT
       uj."userId" as user_id,
       COUNT(DISTINCT j."clubId") as unique_clubs
     FROM user_jerseys uj
@@ -217,10 +207,7 @@ async function getCollectionDiversityLeaderboard(): Promise<
     leaderboard.map(async (entry, index) => {
       let avatarUrl = null;
       if (entry.avatar && !entry.isAnonymous) {
-        const { data } = await supabaseAdmin.storage
-          .from("avatar")
-          .createSignedUrl(entry.avatar, 60 * 60);
-        avatarUrl = data?.signedUrl || null;
+        avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, entry.avatar, 60 * 60);
       }
 
       return {
@@ -242,7 +229,7 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
       unique_leagues: bigint;
     }>
   >`
-    SELECT 
+    SELECT
       uj."userId" as user_id,
       COUNT(DISTINCT c."leagueId") as unique_leagues
     FROM user_jerseys uj
@@ -294,10 +281,7 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
     leaderboard.map(async (entry, index) => {
       let avatarUrl = null;
       if (entry.avatar && !entry.isAnonymous) {
-        const { data } = await supabaseAdmin.storage
-          .from("avatar")
-          .createSignedUrl(entry.avatar, 60 * 60);
-        avatarUrl = data?.signedUrl || null;
+        avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, entry.avatar, 60 * 60);
       }
 
       return {
@@ -319,7 +303,7 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
       vintage_count: bigint;
     }>
   >`
-    SELECT 
+    SELECT
       uj."userId" as user_id,
       COUNT(*) as vintage_count
     FROM user_jerseys uj
@@ -371,10 +355,7 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
     leaderboard.map(async (entry, index) => {
       let avatarUrl = null;
       if (entry.avatar && !entry.isAnonymous) {
-        const { data } = await supabaseAdmin.storage
-          .from("avatar")
-          .createSignedUrl(entry.avatar, 60 * 60);
-        avatarUrl = data?.signedUrl || null;
+        avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, entry.avatar, 60 * 60);
       }
 
       return {

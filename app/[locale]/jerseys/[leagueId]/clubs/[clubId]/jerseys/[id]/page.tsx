@@ -372,7 +372,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                         >
                           <span>Classic Football Shirts</span>
                           <Image
-                            src="https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/logo-app/logo-cfs.png"
+                            src="https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/logo-app/logo-cfs.png"
                             alt="Classic Football Shirts"
                             width={16}
                             height={16}

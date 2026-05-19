@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
 export async function GET() {
   try {
@@ -56,19 +51,16 @@ export async function GET() {
           },
         },
       }),
-      // Clubs distincts dans la collection
       prisma.userJersey.findMany({
         where: { userId: sessionUser.id },
         select: { jersey: { select: { clubId: true } } },
       }),
-      // Amis acceptés
       prisma.friendship.count({
         where: {
           status: "ACCEPTED",
           OR: [{ senderId: sessionUser.id }, { receiverId: sessionUser.id }],
         },
       }),
-      // Providers pour détecter compte Google vs email
       prisma.account.findMany({
         where: { userId: sessionUser.id },
         select: { providerId: true },
@@ -83,10 +75,7 @@ export async function GET() {
 
     let avatarUrl = null;
     if (user.avatar) {
-      const { data } = await supabaseAdmin.storage
-        .from("avatar")
-        .createSignedUrl(user.avatar, 60 * 60);
-      avatarUrl = data?.signedUrl ?? null;
+      avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, user.avatar, 60 * 60);
     }
 
     const hasPassword = accountProviders.some((a) => a.providerId === "credential");

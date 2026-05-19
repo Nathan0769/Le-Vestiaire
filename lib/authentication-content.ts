@@ -6,30 +6,30 @@ const BRAND_STATIC_DATA: Record<
   { logo: string; logoDark: string; color: string; scanAvailable: boolean }
 > = {
   adidas: {
-    logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/logo.png",
+    logo: "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/adidas/logo.png",
     logoDark:
       "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/adidas/logo-white-2.webp",
     color: "#000000",
     scanAvailable: false,
   },
   nike: {
-    logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/logo.png",
+    logo: "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/nike/logo.png",
     logoDark:
       "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/nike/logo-white.webp",
     color: "#FF3B00",
     scanAvailable: false,
   },
   puma: {
-    logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/puma/logo.png",
+    logo: "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/puma/logo.png",
     logoDark:
-      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/puma/logo-white.png",
+      "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/puma/logo-white.png",
     color: "#000000",
     scanAvailable: false,
   },
   hummel: {
-    logo: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/hummel/logo.png",
+    logo: "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/hummel/logo.png",
     logoDark:
-      "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/hummel/logo-white.png",
+      "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/hummel/logo-white.png",
     color: "#003DA5",
     scanAvailable: false,
   },

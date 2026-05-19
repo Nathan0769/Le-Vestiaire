@@ -1,13 +1,8 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { createClient } from "@supabase/supabase-js";
 import { Prisma } from "@prisma/client";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { getR2PresignedUrl, deleteFromR2, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
 
 export async function GET(
   request: Request,
@@ -32,10 +27,7 @@ export async function GET(
 
     let userPhotoUrl = null;
     if (userJersey?.userPhotoUrl) {
-      const { data } = await supabaseAdmin.storage
-        .from("user-jersey-photos")
-        .createSignedUrl(userJersey.userPhotoUrl, 60 * 60);
-      userPhotoUrl = data?.signedUrl || null;
+      userPhotoUrl = await getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, userJersey.userPhotoUrl, 60 * 60);
     }
 
     return NextResponse.json({
@@ -255,9 +247,7 @@ export async function DELETE(
 
     if (userJersey?.userPhotoUrl) {
       try {
-        await supabaseAdmin.storage
-          .from("user-jersey-photos")
-          .remove([userJersey.userPhotoUrl]);
+        await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, userJersey.userPhotoUrl);
       } catch (err) {
         console.error("Erreur suppression photo:", err);
       }
@@ -386,9 +376,7 @@ export async function PATCH(
 
     if (userPhotoUrl === null && existingUserJersey.userPhotoUrl) {
       try {
-        await supabaseAdmin.storage
-          .from("user-jersey-photos")
-          .remove([existingUserJersey.userPhotoUrl]);
+        await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, existingUserJersey.userPhotoUrl);
       } catch (err) {
         console.error("Erreur suppression ancienne photo:", err);
       }
@@ -436,10 +424,7 @@ export async function PATCH(
 
     let signedUserPhotoUrl = null;
     if (updatedUserJersey.userPhotoUrl) {
-      const { data } = await supabaseAdmin.storage
-        .from("user-jersey-photos")
-        .createSignedUrl(updatedUserJersey.userPhotoUrl, 60 * 60);
-      signedUserPhotoUrl = data?.signedUrl || null;
+      signedUserPhotoUrl = await getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, updatedUserJersey.userPhotoUrl, 60 * 60);
     }
 
     const formattedResponse = {

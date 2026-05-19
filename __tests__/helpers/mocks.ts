@@ -18,25 +18,19 @@ export function mockUpstashRedis() {
 }
 
 /**
- * Mock Supabase Storage pour éviter les uploads pendant les tests
+ * Mock R2 Storage pour éviter les vraies requêtes pendant les tests
  */
-export function mockSupabaseStorage() {
-  vi.mock('@/lib/supabase-admin', () => ({
-    supabaseAdmin: {
-      storage: {
-        from: vi.fn(() => ({
-          upload: vi.fn().mockResolvedValue({
-            data: { path: 'test-path.jpg' },
-            error: null,
-          }),
-          remove: vi.fn().mockResolvedValue({ error: null }),
-          getPublicUrl: vi.fn(() => ({
-            data: { publicUrl: 'https://test.supabase.co/test.jpg' },
-          })),
-        })),
-      },
-    },
-  }))
+export function mockR2Storage() {
+  vi.mock('@/lib/r2-storage', async (importOriginal) => {
+    const actual = await importOriginal<typeof import('@/lib/r2-storage')>()
+    return {
+      ...actual,
+      uploadToR2: vi.fn().mockResolvedValue(undefined),
+      deleteFromR2: vi.fn().mockResolvedValue(undefined),
+      downloadFromR2: vi.fn().mockResolvedValue(Buffer.from('fake-image')),
+      getR2PresignedUrl: vi.fn().mockResolvedValue('https://test.r2.dev/test.jpg'),
+    }
+  })
 }
 
 /**
@@ -56,5 +50,5 @@ export function mockNextHeaders(headers: Record<string, string> = {}) {
  */
 export function setupDefaultMocks() {
   mockUpstashRedis()
-  mockSupabaseStorage()
+  mockR2Storage()
 }

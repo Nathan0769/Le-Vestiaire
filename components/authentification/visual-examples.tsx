@@ -35,7 +35,7 @@ const ADIDAS_EXAMPLES: VisualExample[] = [
       "Voici comment identifier le code produit sur l'étiquette dans le col",
     authentic: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/label-real.jpg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/adidas/label-real.jpg",
       label: "AUTHENTIQUE",
       points: [
         "Code produit visible : JL9623",
@@ -46,7 +46,7 @@ const ADIDAS_EXAMPLES: VisualExample[] = [
     },
     fake: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/label-fake.jpeg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/adidas/label-fake.jpeg",
       label: "CONTREFAÇON",
       points: [
         "Code H13881 correspond à Man United au lieu du Mexique dans notre exemple",
@@ -61,7 +61,7 @@ const ADIDAS_EXAMPLES: VisualExample[] = [
     description: "L'étiquette cartonnée accrochée sur les maillots neufs",
     authentic: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/tag-real.jpg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/adidas/tag-real.jpg",
       label: "AUTHENTIQUE",
       points: [
         "Nom du club indiqué : 'OL'",
@@ -72,7 +72,7 @@ const ADIDAS_EXAMPLES: VisualExample[] = [
     },
     fake: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/adidas/tag-fake.jpg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/adidas/tag-fake.jpg",
       label: "CONTREFAÇON",
       points: [
         "Marqué uniquement 'adidas JSY'",
@@ -91,7 +91,7 @@ const NIKE_EXAMPLES: VisualExample[] = [
       "La petite étiquette sous l'étiquette de lavage contient les codes essentiels",
     authentic: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/%20product-code-real.jpg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/nike/%20product-code-real.jpg",
       label: "AUTHENTIQUE",
       points: [
         "Code produit visible : 658789-426 (style + couleur)",
@@ -102,7 +102,7 @@ const NIKE_EXAMPLES: VisualExample[] = [
     },
     fake: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/product-code-fake.jpg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/nike/product-code-fake.jpg",
       label: "CONTREFAÇON",
       points: [
         "Code produit pour un autre maillot (Ici maillot PSG avec FN8721-456 = Barcelone Home 24/25)",
@@ -118,7 +118,7 @@ const NIKE_EXAMPLES: VisualExample[] = [
     description: "L'étiquette cartonnée accrochée aux maillots neufs",
     authentic: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/tag-real.jpg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/nike/tag-real.jpg",
       label: "AUTHENTIQUE",
       points: [
         "Autocollant physique (pas imprimé)",
@@ -130,7 +130,7 @@ const NIKE_EXAMPLES: VisualExample[] = [
     },
     fake: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/tag-fake.jpg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/nike/tag-fake.jpg",
       label: "CONTREFAÇON",
       points: [
         "Autocollant imprimé (pas un vrai sticker)",
@@ -147,7 +147,7 @@ const NIKE_EXAMPLES: VisualExample[] = [
       "L'étiquette en bas à droite du maillot avec code unique et bande métallique",
     authentic: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/security-tag-real.jpg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/nike/security-tag-real.jpg",
       label: "AUTHENTIQUE",
       points: [
         "Bande métallique/holographique de qualité",
@@ -159,7 +159,7 @@ const NIKE_EXAMPLES: VisualExample[] = [
     },
     fake: {
       image:
-        "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/brand/nike/security-tag-fake.jpg",
+        "https://pub-353e86db8bfc403e8d260aa85ded29c8.r2.dev/nike/security-tag-fake.jpg",
       label: "CONTREFAÇON",
       points: [
         "Bande plate imprimée (pas d'effet holographique)",

@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
 export async function GET(
   _request: Request,
@@ -62,10 +57,7 @@ export async function GET(
 
     let avatarUrl = null;
     if (friendUser.avatar) {
-      const { data } = await supabaseAdmin.storage
-        .from("avatar")
-        .createSignedUrl(friendUser.avatar, 60 * 60);
-      avatarUrl = data?.signedUrl || null;
+      avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, friendUser.avatar, 60 * 60);
     }
 
     const wishlistItems = await prisma.wishlist.findMany({

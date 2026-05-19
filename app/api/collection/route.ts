@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
 
 export async function GET() {
   try {
@@ -50,10 +45,7 @@ export async function GET() {
       collectionItems.map(async (item) => {
         let userPhotoSignedUrl = null;
         if (item.userPhotoUrl) {
-          const { data } = await supabaseAdmin.storage
-            .from("jersey-photos")
-            .createSignedUrl(item.userPhotoUrl, 60 * 60);
-          userPhotoSignedUrl = data?.signedUrl ?? null;
+          userPhotoSignedUrl = await getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, item.userPhotoUrl, 60 * 60);
         }
 
         return {
