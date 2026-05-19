@@ -41,7 +41,8 @@ yarn-error.log*
 next-env.d.ts
 
 /app/generated/prisma
-scripts/
+scripts/*
+!scripts/check-package-freshness.mjs
 
 # commands directory
 /commands

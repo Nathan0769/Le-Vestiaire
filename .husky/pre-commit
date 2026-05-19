@@ -1,0 +1,3 @@
+if git diff --cached --name-only | grep -q "package.json"; then
+  node scripts/check-package-freshness.mjs
+fi
