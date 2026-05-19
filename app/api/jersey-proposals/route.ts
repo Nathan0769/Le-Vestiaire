@@ -90,9 +90,8 @@ export async function POST(req: Request) {
       );
     }
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const allowedImagePrefix = `${supabaseUrl}/storage/v1/object/public/jersey-proposals/`;
-    if (!supabaseUrl || !imageUrl.startsWith(allowedImagePrefix)) {
+    const allowedImagePrefix = process.env.CLOUDFLARE_R2_JERSEY_PROPOSALS_PUBLIC_URL?.replace(/\/$/, "");
+    if (!allowedImagePrefix || !imageUrl.startsWith(allowedImagePrefix)) {
       return NextResponse.json(
         { error: "URL d'image invalide" },
         { status: 400 }

@@ -1,13 +1,8 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { createClient } from "@supabase/supabase-js";
 import { createHash } from "crypto";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
 export async function GET(req: Request) {
   try {
@@ -21,7 +16,6 @@ export async function GET(req: Request) {
     const cursor = url.searchParams.get("cursor");
     const limit = Math.min(Math.max(Number(limitParam || 20), 1), 50);
 
-    // Compteur total pour badge/ETag
     const pendingCount = await prisma.friendship.count({
       where: {
         receiverId: user.id,
@@ -29,7 +23,6 @@ export async function GET(req: Request) {
       },
     });
 
-    // Récupère l'élément le plus récent pour stabiliser l'ETag
     const latest = await prisma.friendship.findFirst({
       where: {
         receiverId: user.id,
@@ -92,10 +85,7 @@ export async function GET(req: Request) {
       pageItems.map(async (request) => {
         let avatarUrl = null as string | null;
         if (request.sender.avatar) {
-          const { data } = await supabaseAdmin.storage
-            .from("avatar")
-            .createSignedUrl(request.sender.avatar, 60 * 60);
-          avatarUrl = data?.signedUrl || null;
+          avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, request.sender.avatar, 60 * 60);
         }
 
         return {

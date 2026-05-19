@@ -5,7 +5,7 @@ import { CollectionGrid } from "@/components/collection/collection-grid";
 import CollectionLanding from "@/components/collection/collection-landing";
 import { Package, AlertCircle, RefreshCw, BarChart3 } from "lucide-react";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
-import { supabaseAdmin } from "@/lib/supabase-admin";
+import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -75,17 +75,9 @@ export default async function CollectionPage() {
 
         if (item.userPhotoUrl) {
           try {
-            const { data, error } = await supabaseAdmin.storage
-              .from("user-jersey-photos")
-              .createSignedUrl(item.userPhotoUrl, 60 * 60);
-
-            if (error) {
-              console.error("Error creating signed URL:", error);
-            } else {
-              userPhotoUrl = data?.signedUrl || null;
-            }
+            userPhotoUrl = await getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, item.userPhotoUrl, 60 * 60);
           } catch (error) {
-            console.error("Exception creating signed URL:", error);
+            console.error("Erreur génération URL presignée:", error);
           }
         }
 

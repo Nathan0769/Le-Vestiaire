@@ -11,19 +11,14 @@ vi.mock("@/lib/get-current-user", () => ({
   getCurrentUser: vi.fn(),
 }));
 
-vi.mock("@supabase/supabase-js", () => ({
-  createClient: vi.fn(() => ({
-    storage: {
-      from: vi.fn(() => ({
-        createSignedUrl: vi.fn().mockResolvedValue({
-          data: { signedUrl: "https://test.supabase.co/photo.jpg" },
-          error: null,
-        }),
-        remove: vi.fn().mockResolvedValue({ error: null }),
-      })),
-    },
-  })),
-}));
+vi.mock("@/lib/r2-storage", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/r2-storage")>();
+  return {
+    ...actual,
+    getR2PresignedUrl: vi.fn().mockResolvedValue("https://test.r2.dev/photo.jpg"),
+    deleteFromR2: vi.fn().mockResolvedValue(undefined),
+  };
+});
 
 function makeParams(id: string) {
   return { params: Promise.resolve({ id }) };

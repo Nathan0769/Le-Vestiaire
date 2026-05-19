@@ -1,14 +1,14 @@
 import { NextResponse } from "next/server";
 import { requirePermission } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
-import { createClient } from "@supabase/supabase-js";
 import { generateJerseySlug } from "@/lib/slug-generator";
-import { uploadToR2, getR2PublicUrl } from "@/lib/r2-storage";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import {
+  uploadToR2,
+  getR2PublicUrl,
+  downloadFromR2,
+  deleteFromR2,
+  JERSEY_PROPOSALS_BUCKET,
+} from "@/lib/r2-storage";
 
 export async function POST(
   request: Request,
@@ -57,9 +57,10 @@ export async function POST(
     }
 
     const oldImageUrl = proposal.imageUrl;
-    const oldImagePath = oldImageUrl.split("/jersey-proposals/")[1];
+    const proposalsBaseUrl = process.env.CLOUDFLARE_R2_JERSEY_PROPOSALS_PUBLIC_URL!.replace(/\/$/, "");
+    const oldImagePath = oldImageUrl.replace(`${proposalsBaseUrl}/`, "");
 
-    if (!oldImagePath) {
+    if (!oldImagePath || oldImagePath === oldImageUrl) {
       return NextResponse.json(
         { error: "Format d'URL d'image invalide" },
         { status: 400 }
@@ -70,19 +71,17 @@ export async function POST(
       .toLowerCase()
       .replace(/\s+/g, "-")
       .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "");
+      .replace(/[̀-ͯ]/g, "");
     const clubId = proposal.clubId;
     const jerseyType = proposal.type.toLowerCase();
     const extension = oldImagePath.split(".").pop() || "jpg";
     const newImagePath = `${leagueName}/${clubId}/${proposal.season}/${jerseyType}.${extension}`;
 
-    const { data: downloadData, error: downloadError } =
-      await supabaseAdmin.storage
-        .from("jersey-proposals")
-        .download(oldImagePath);
-
-    if (downloadError || !downloadData) {
-      console.error("❌ Erreur téléchargement image:", downloadError);
+    let imageBuffer: Buffer;
+    try {
+      imageBuffer = await downloadFromR2(JERSEY_PROPOSALS_BUCKET, oldImagePath);
+    } catch (downloadError) {
+      console.error("Erreur téléchargement image:", downloadError);
       return NextResponse.json(
         { error: "Impossible de télécharger l'image de la proposition" },
         { status: 500 }
@@ -90,9 +89,9 @@ export async function POST(
     }
 
     try {
-      await uploadToR2("jerseys", newImagePath, downloadData, `image/${extension}`);
+      await uploadToR2("jerseys", newImagePath, imageBuffer, `image/${extension}`);
     } catch (uploadError) {
-      console.error("❌ Erreur upload vers R2 jerseys:", uploadError);
+      console.error("Erreur upload vers R2 jerseys:", uploadError);
       return NextResponse.json(
         { error: "Impossible de déplacer l'image vers le bucket jerseys" },
         { status: 500 }
@@ -140,15 +139,10 @@ export async function POST(
       return { jersey };
     });
 
-    const { error: deleteError } = await supabaseAdmin.storage
-      .from("jersey-proposals")
-      .remove([oldImagePath]);
-
-    if (deleteError) {
-      console.error(
-        "⚠️ Erreur suppression image du bucket jersey-proposals:",
-        deleteError
-      );
+    try {
+      await deleteFromR2(JERSEY_PROPOSALS_BUCKET, oldImagePath);
+    } catch (deleteError) {
+      console.error("Erreur suppression image du bucket jersey-proposals:", deleteError);
     }
 
     return NextResponse.json({
@@ -157,7 +151,7 @@ export async function POST(
       jersey: result.jersey,
     });
   } catch (err) {
-    console.error("❌ Erreur lors de l'approbation de la proposition:", err);
+    console.error("Erreur lors de l'approbation de la proposition:", err);
     return NextResponse.json(
       { error: "Erreur lors de l'approbation de la proposition" },
       { status: 500 }

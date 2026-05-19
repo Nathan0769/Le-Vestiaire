@@ -8,7 +8,7 @@ import { FriendshipButton } from "@/components/users/friendship-button";
 import { BackButton } from "@/components/ui/back-button";
 import { Package, Heart, EyeOff } from "lucide-react";
 import prisma from "@/lib/prisma";
-import { supabaseAdmin } from "@/lib/supabase-admin";
+import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { FriendshipStatus } from "@/types/friendship";
@@ -91,10 +91,7 @@ export default async function PublicCollectionPage({
 
   let avatarUrl: string | null = null;
   if (!isAnonymous && targetUser.avatar) {
-    const { data } = await supabaseAdmin.storage
-      .from("avatar")
-      .createSignedUrl(targetUser.avatar, 60 * 60);
-    avatarUrl = data?.signedUrl || null;
+    avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, targetUser.avatar, 60 * 60);
   }
 
   const collectionItems = await prisma.userJersey.findMany({

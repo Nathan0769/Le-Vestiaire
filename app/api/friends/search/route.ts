@@ -1,17 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { createClient } from "@supabase/supabase-js";
 import {
   standardRateLimit,
   getRateLimitIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
 export async function GET(request: NextRequest) {
   try {
@@ -20,7 +15,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    // Rate limiting : 20 recherches par minute
     const identifier = await getRateLimitIdentifier(user.id);
     const rateLimitResult = await checkRateLimit(standardRateLimit, identifier);
 
@@ -103,10 +97,7 @@ export async function GET(request: NextRequest) {
 
         let avatarUrl = null;
         if (foundUser.avatar) {
-          const { data } = await supabaseAdmin.storage
-            .from("avatar")
-            .createSignedUrl(foundUser.avatar, 60 * 60);
-          avatarUrl = data?.signedUrl || null;
+          avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, foundUser.avatar, 60 * 60);
         }
 
         return {

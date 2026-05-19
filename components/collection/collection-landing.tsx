@@ -158,7 +158,7 @@ export default function CollectionLanding({ r2JerseysUrl }: { r2JerseysUrl: stri
       <section className="relative px-6 py-16 md:py-24 overflow-hidden">
         <div className="absolute inset-0 z-0">
           <Image
-            src="https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/logo-app/back-collection.png"
+            src="https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/logo-app/back-collection.png"
             alt="Collection de maillots"
             fill
             className="object-cover opacity-60"
@@ -439,19 +439,19 @@ export default function CollectionLanding({ r2JerseysUrl }: { r2JerseysUrl: stri
                 name: "Thomas M.",
                 designation: "⭐️⭐️⭐️⭐️⭐️",
                 quote: t("testimonials.thomas"),
-                src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona4.jpg",
+                src: "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/persona/persona4.jpg",
               },
               {
                 name: "Julie D.",
                 designation: "⭐️⭐️⭐️⭐️⭐️",
                 quote: t("testimonials.julie"),
-                src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona5.jpeg",
+                src: "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/persona/persona5.jpeg",
               },
               {
                 name: "Alexandre R.",
                 designation: "⭐️⭐️⭐️⭐️⭐️",
                 quote: t("testimonials.alexandre"),
-                src: "https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/persona/persona6.jpeg",
+                src: "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/persona/persona6.jpeg",
               },
             ]}
           />

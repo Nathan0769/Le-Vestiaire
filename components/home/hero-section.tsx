@@ -49,7 +49,7 @@ export function HeroSection({ user, userStats }: HeroSectionProps) {
       >
         <div className="absolute inset-0">
           <Image
-            src="https://hioeyddfdoekpplonsxa.supabase.co/storage/v1/object/public/logo-app/vestiaire.jpg"
+            src="https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/logo-app/vestiaire.jpg"
             alt="Collection de maillots de football - Le Vestiaire"
             fill
             className="object-cover object-center"

@@ -23,22 +23,14 @@ vi.mock("@/lib/get-current-user", () => ({
   getCurrentUser: vi.fn(),
 }));
 
-vi.mock("@supabase/supabase-js", () => ({
-  createClient: vi.fn(() => ({
-    storage: {
-      from: vi.fn(() => ({
-        upload: vi.fn().mockResolvedValue({
-          data: { path: "user-id/123456.jpg" },
-          error: null,
-        }),
-        createSignedUrl: vi.fn().mockResolvedValue({
-          data: { signedUrl: "https://test.supabase.co/avatar/signed-url.jpg" },
-          error: null,
-        }),
-      })),
-    },
-  })),
-}));
+vi.mock("@/lib/r2-storage", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/r2-storage")>();
+  return {
+    ...actual,
+    uploadToR2: vi.fn().mockResolvedValue(undefined),
+    getR2PresignedUrl: vi.fn().mockResolvedValue("https://test.r2.dev/avatar/signed-url.jpg"),
+  };
+});
 
 vi.mock("@/lib/rate-limit", () => ({
   moderateRateLimit: {},

@@ -5,15 +5,10 @@ import Link from "next/link";
 import { UserAvatar } from "@/components/profiles/user-avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import prisma from "@/lib/prisma";
-import { createClient } from "@supabase/supabase-js";
 import { getTranslations } from "next-intl/server";
+import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
 export const dynamic = "force-dynamic";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
 
 export const metadata = {
   title: "Collections des amis - Le Vestiaire",
@@ -82,10 +77,7 @@ export default async function FriendsCollectionsPage() {
 
       let avatarUrl = null;
       if (friend.avatar) {
-        const { data } = await supabaseAdmin.storage
-          .from("avatar")
-          .createSignedUrl(friend.avatar, 60 * 60);
-        avatarUrl = data?.signedUrl || null;
+        avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, friend.avatar, 60 * 60);
       }
 
       return {

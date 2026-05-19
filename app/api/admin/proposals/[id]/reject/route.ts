@@ -1,12 +1,7 @@
 import { NextResponse } from "next/server";
 import { requirePermission } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
-import { createClient } from "@supabase/supabase-js";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
+import { deleteFromR2, JERSEY_PROPOSALS_BUCKET } from "@/lib/r2-storage";
 
 export async function POST(
   request: Request,
@@ -30,7 +25,8 @@ export async function POST(
     }
 
     const imageUrl = proposal.imageUrl;
-    const imagePath = imageUrl.split("/jersey-proposals/")[1];
+    const proposalsBaseUrl = process.env.CLOUDFLARE_R2_JERSEY_PROPOSALS_PUBLIC_URL!.replace(/\/$/, "");
+    const imagePath = imageUrl.replace(`${proposalsBaseUrl}/`, "");
 
     await prisma.$transaction(async (tx) => {
       await tx.contributionHistory.create({
@@ -46,16 +42,11 @@ export async function POST(
       });
     });
 
-    if (imagePath) {
-      const { error: deleteError } = await supabaseAdmin.storage
-        .from("jersey-proposals")
-        .remove([imagePath]);
-
-      if (deleteError) {
-        console.error(
-          "Erreur suppression image du bucket jersey-proposals:",
-          deleteError
-        );
+    if (imagePath && imagePath !== imageUrl) {
+      try {
+        await deleteFromR2(JERSEY_PROPOSALS_BUCKET, imagePath);
+      } catch (deleteError) {
+        console.error("Erreur suppression image du bucket jersey-proposals:", deleteError);
       }
     }
 
@@ -64,7 +55,7 @@ export async function POST(
       message: "Proposition rejetée",
     });
   } catch (err) {
-    console.error("❌ Erreur lors du rejet de la proposition:", err);
+    console.error("Erreur lors du rejet de la proposition:", err);
     return NextResponse.json(
       { error: "Erreur lors du rejet de la proposition" },
       { status: 500 }
