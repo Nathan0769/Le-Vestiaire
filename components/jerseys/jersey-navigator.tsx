@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type TouchEvent, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -34,30 +34,17 @@ export function JerseyNavigator({
 }: JerseyNavigatorProps) {
   const router = useRouter();
   const tType = useTranslations("JerseyType");
-  const touchStartX = useRef<number>(0);
-  const touchEndX = useRef<number>(0);
 
   const navigateTo = (jersey: AdjacentJersey) => {
     router.push(getJerseyUrl(leagueId, clubId, jersey.slug ?? jersey.id));
   };
 
-  const handleTouchStart = (e: TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX;
-    touchEndX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchMove = (e: TouchEvent) => {
-    touchEndX.current = e.touches[0].clientX;
-  };
-
-  const handleTouchEnd = () => {
-    const delta = touchStartX.current - touchEndX.current;
-    if (delta > 50 && nextJersey) navigateTo(nextJersey);
-    else if (delta < -50 && prevJersey) navigateTo(prevJersey);
-  };
-
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement;
+      if (["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName)) return;
+      if (target.isContentEditable) return;
+      if (document.querySelector('[role="dialog"]')) return;
       if (e.key === "ArrowLeft" && prevJersey) navigateTo(prevJersey);
       else if (e.key === "ArrowRight" && nextJersey) navigateTo(nextJersey);
     };
@@ -67,21 +54,23 @@ export function JerseyNavigator({
   }, [prevJersey, nextJersey]);
 
   return (
-    <div
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
+    <div>
       {(prevJersey || nextJersey) && (
-        <div className="hidden md:flex items-center justify-between gap-4 px-6 py-1.5 mb-4 border-b border-border/50">
+        <div className="flex items-center justify-between gap-2 md:gap-4 px-4 md:px-6 py-2 md:py-1.5 mb-4 border-b border-border/50">
           {prevJersey ? (
             <button
               onClick={() => navigateTo(prevJersey)}
-              className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer group shrink-0"
+              className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground active:text-foreground transition-colors cursor-pointer group shrink-0"
             >
-              <ChevronLeft className="w-3.5 h-3.5 group-hover:-translate-x-0.5 transition-transform" />
-              <div className="relative w-7 h-7 rounded bg-white overflow-hidden border border-border/50">
-                <Image src={prevJersey.imageUrl} alt={`${tType(prevJersey.type as Parameters<typeof tType>[0])} ${prevJersey.season}`} fill className="object-contain" sizes="28px" />
+              <ChevronLeft className="w-4 h-4 md:w-3.5 md:h-3.5 group-hover:-translate-x-0.5 transition-transform" />
+              <div className="relative w-8 h-8 md:w-7 md:h-7 rounded bg-white overflow-hidden border border-border/50">
+                <Image
+                  src={prevJersey.imageUrl}
+                  alt={`${tType(prevJersey.type as Parameters<typeof tType>[0])} ${prevJersey.season}`}
+                  fill
+                  className="object-contain"
+                  sizes="32px"
+                />
               </div>
               <span className="text-xs hidden md:inline">
                 {tType(prevJersey.type as Parameters<typeof tType>[0])}{" "}
@@ -92,23 +81,29 @@ export function JerseyNavigator({
             <div className="shrink-0" />
           )}
 
-          <span className="text-xs text-muted-foreground text-center truncate hidden md:block">
+          <span className="text-xs text-muted-foreground text-center truncate">
             {currentName}
           </span>
 
           {nextJersey ? (
             <button
               onClick={() => navigateTo(nextJersey)}
-              className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors cursor-pointer group shrink-0"
+              className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground active:text-foreground transition-colors cursor-pointer group shrink-0"
             >
               <span className="text-xs hidden md:inline">
                 {tType(nextJersey.type as Parameters<typeof tType>[0])}{" "}
                 <span className="opacity-60">{nextJersey.season}</span>
               </span>
-              <div className="relative w-7 h-7 rounded bg-white overflow-hidden border border-border/50">
-                <Image src={nextJersey.imageUrl} alt={`${tType(nextJersey.type as Parameters<typeof tType>[0])} ${nextJersey.season}`} fill className="object-contain" sizes="28px" />
+              <div className="relative w-8 h-8 md:w-7 md:h-7 rounded bg-white overflow-hidden border border-border/50">
+                <Image
+                  src={nextJersey.imageUrl}
+                  alt={`${tType(nextJersey.type as Parameters<typeof tType>[0])} ${nextJersey.season}`}
+                  fill
+                  className="object-contain"
+                  sizes="32px"
+                />
               </div>
-              <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+              <ChevronRight className="w-4 h-4 md:w-3.5 md:h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </button>
           ) : (
             <div className="shrink-0" />
