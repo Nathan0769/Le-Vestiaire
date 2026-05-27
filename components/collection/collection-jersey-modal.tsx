@@ -45,9 +45,15 @@ import {
   Gift,
   Camera,
   Upload,
+  ExternalLink,
 } from "lucide-react";
 import { SIZE_LABELS } from "@/types/collection";
-import type { Size, Condition, UpdateCollectionData } from "@/types/collection";
+import type {
+  Size,
+  Condition,
+  JerseyVersion,
+  UpdateCollectionData,
+} from "@/types/collection";
 import type { JerseyType } from "@/types/jersey";
 import { format } from "date-fns";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
@@ -76,6 +82,17 @@ export function CollectionJerseyModal({
   const tDelete = useTranslations("Collection.modal.delete");
   const tJerseyType = useTranslations("JerseyType");
   const tCondition = useTranslations("Condition");
+  const tVersion = useTranslations("JerseyVersion");
+
+  const VERSION_ORDER: JerseyVersion[] = [
+    "REPLICA",
+    "AUTHENTIC",
+    "STOCK_PRO",
+    "PLAYER_ISSUE",
+    "MATCH_WORN",
+  ];
+
+  const VERSIONS_WITH_MATCH_INFO: JerseyVersion[] = ["PLAYER_ISSUE", "MATCH_WORN"];
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -86,6 +103,7 @@ export function CollectionJerseyModal({
   const [photoDeleted, setPhotoDeleted] = useState(false);
 
   const [formData, setFormData] = useState<UpdateCollectionData>({
+    version: (collectionItem.version || "REPLICA") as JerseyVersion,
     size: (collectionItem.size || "M") as Size,
     condition: collectionItem.condition as Condition,
     hasTags: collectionItem.hasTags,
@@ -97,10 +115,17 @@ export function CollectionJerseyModal({
     isGift: collectionItem.isGift || false,
     isFromMysteryBox: collectionItem.isFromMysteryBox || false,
     userPhotoUrl: collectionItem.userPhotoUrl || undefined,
+    isSigned: collectionItem.isSigned || false,
+    signedBy: collectionItem.signedBy || "",
+    hasAuthCertificate: collectionItem.hasAuthCertificate || false,
+    certificateUrl: collectionItem.certificateUrl || "",
+    matchDescription: collectionItem.matchDescription || "",
+    matchDate: collectionItem.matchDate || undefined,
   });
 
   const resetForm = () => {
     setFormData({
+      version: (collectionItem.version || "REPLICA") as JerseyVersion,
       size: (collectionItem.size || "M") as Size,
       condition: collectionItem.condition as Condition,
       hasTags: collectionItem.hasTags,
@@ -112,6 +137,12 @@ export function CollectionJerseyModal({
       isGift: collectionItem.isGift || false,
       isFromMysteryBox: collectionItem.isFromMysteryBox || false,
       userPhotoUrl: collectionItem.userPhotoUrl || undefined,
+      isSigned: collectionItem.isSigned || false,
+      signedBy: collectionItem.signedBy || "",
+      hasAuthCertificate: collectionItem.hasAuthCertificate || false,
+      certificateUrl: collectionItem.certificateUrl || "",
+      matchDescription: collectionItem.matchDescription || "",
+      matchDate: collectionItem.matchDate || undefined,
     });
     setPhotoFile(null);
     setPhotoPreview(null);
@@ -200,21 +231,8 @@ export function CollectionJerseyModal({
     }
 
     try {
-      type PayloadType = {
-        size: Size;
-        condition: Condition;
-        hasTags: boolean;
-        playerName: string | null;
-        playerNumber: number | null;
-        purchasePrice: number | null;
-        purchaseDate: Date | null;
-        notes: string | null;
-        isGift: boolean;
-        isFromMysteryBox: boolean;
-        userPhotoUrl?: string | null;
-      };
-
-      const payload: PayloadType = {
+      const payload: Record<string, unknown> = {
+        version: dataToSave.version,
         size: dataToSave.size,
         condition: dataToSave.condition,
         hasTags: dataToSave.hasTags ?? false,
@@ -225,6 +243,11 @@ export function CollectionJerseyModal({
         notes: dataToSave.notes || null,
         isGift: dataToSave.isGift ?? false,
         isFromMysteryBox: dataToSave.isFromMysteryBox ?? false,
+        isSigned: dataToSave.isSigned ?? false,
+        signedBy: dataToSave.isSigned ? dataToSave.signedBy || null : null,
+        hasAuthCertificate: dataToSave.hasAuthCertificate ?? false,
+        matchDescription: dataToSave.matchDescription || null,
+        matchDate: dataToSave.matchDate || null,
       };
 
       if (photoFile) {
@@ -237,7 +260,7 @@ export function CollectionJerseyModal({
       }
 
       const response = await fetch(
-        `/api/jerseys/${collectionItem.jerseyId}/collection`,
+        `/api/user-jerseys/${collectionItem.id}`,
         {
           method: "PATCH",
           headers: {
@@ -271,7 +294,7 @@ export function CollectionJerseyModal({
     setIsLoading(true);
     try {
       const response = await fetch(
-        `/api/jerseys/${collectionItem.jerseyId}/collection`,
+        `/api/user-jerseys/${collectionItem.id}`,
         {
           method: "DELETE",
         }
@@ -432,6 +455,37 @@ export function CollectionJerseyModal({
                       </Badge>
                     )}
 
+                    {collectionItem.version && collectionItem.version !== "REPLICA" && (
+                      <Badge variant="outline" className="text-purple-700 bg-purple-500/10 border-purple-200">
+                        {tVersion(collectionItem.version as JerseyVersion)}
+                      </Badge>
+                    )}
+
+                    {collectionItem.isSigned && (
+                      <Badge variant="outline" className="text-amber-700 bg-amber-500/10 border-amber-200">
+                        {t("signed")}
+                      </Badge>
+                    )}
+
+                    {collectionItem.hasAuthCertificate && (
+                      collectionItem.certificateUrl ? (
+                        <a
+                          href={collectionItem.certificateUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Badge variant="outline" className="text-emerald-700 bg-emerald-500/10 border-emerald-200 cursor-pointer hover:bg-emerald-500/20 gap-1">
+                            {t("authCertificate")}
+                            <ExternalLink className="w-3 h-3" />
+                          </Badge>
+                        </a>
+                      ) : (
+                        <Badge variant="outline" className="text-emerald-700 bg-emerald-500/10 border-emerald-200">
+                          {t("authCertificate")}
+                        </Badge>
+                      )
+                    )}
+
                     {collectionItem.hasTags && (
                       <Badge variant="outline" className="text-green-600">
                         <Tag className="w-3 h-3 mr-1" />
@@ -516,6 +570,29 @@ export function CollectionJerseyModal({
 
                   {isEditing ? (
                     <div className="space-y-4">
+
+                      {/* Version */}
+                      <div className="space-y-2">
+                        <Label htmlFor="version">{t("version")}</Label>
+                        <Select
+                          value={formData.version}
+                          onValueChange={(value: JerseyVersion) =>
+                            setFormData({ ...formData, version: value })
+                          }
+                        >
+                          <SelectTrigger>
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {VERSION_ORDER.map((v) => (
+                              <SelectItem key={v} value={v}>
+                                {tVersion(v)}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label
@@ -707,6 +784,92 @@ export function CollectionJerseyModal({
                         </Label>
                       </div>
 
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
+                          id="isSigned"
+                          checked={formData.isSigned}
+                          onCheckedChange={(checked) =>
+                            setFormData({ ...formData, isSigned: !!checked, signedBy: checked ? formData.signedBy : "" })
+                          }
+                        />
+                        <Label htmlFor="isSigned">{t("isSigned")}</Label>
+                      </div>
+
+                      {formData.isSigned && (
+                        <div className="space-y-2 pl-6">
+                          <Input
+                            placeholder={t("signedByPlaceholder")}
+                            value={formData.signedBy || ""}
+                            onChange={(e) =>
+                              setFormData({ ...formData, signedBy: e.target.value })
+                            }
+                          />
+                        </div>
+                      )}
+
+                      {(formData.isSigned || formData.version === "MATCH_WORN") && (
+                        <div className="flex items-center space-x-2">
+                          <Checkbox
+                            id="hasAuthCertificate"
+                            checked={formData.hasAuthCertificate}
+                            onCheckedChange={(checked) =>
+                              setFormData({ ...formData, hasAuthCertificate: !!checked, certificateUrl: checked ? formData.certificateUrl : "" })
+                            }
+                          />
+                          <Label htmlFor="hasAuthCertificate">{t("hasAuthCertificate")}</Label>
+                        </div>
+                      )}
+
+                      {formData.hasAuthCertificate && (
+                        <div className="space-y-1 pl-6">
+                          <Input
+                            id="certificateUrl"
+                            type="url"
+                            placeholder={t("certificateUrlPlaceholder")}
+                            value={formData.certificateUrl || ""}
+                            onChange={(e) =>
+                              setFormData({ ...formData, certificateUrl: e.target.value })
+                            }
+                          />
+                        </div>
+                      )}
+
+                      {VERSIONS_WITH_MATCH_INFO.includes(formData.version as JerseyVersion) && (
+                        <div className="space-y-3 rounded-lg border p-3">
+                          <div className="space-y-2">
+                            <Label htmlFor="matchDescription">{t("matchDescription")}</Label>
+                            <Input
+                              id="matchDescription"
+                              placeholder={t("matchDescriptionPlaceholder")}
+                              value={formData.matchDescription || ""}
+                              onChange={(e) =>
+                                setFormData({ ...formData, matchDescription: e.target.value })
+                              }
+                            />
+                          </div>
+                          <div className="space-y-2">
+                            <Label htmlFor="matchDate">{t("matchDate")}</Label>
+                            <Input
+                              id="matchDate"
+                              type="date"
+                              value={
+                                formData.matchDate
+                                  ? formData.matchDate instanceof Date
+                                    ? formData.matchDate.toISOString().split("T")[0]
+                                    : new Date(formData.matchDate).toISOString().split("T")[0]
+                                  : ""
+                              }
+                              onChange={(e) =>
+                                setFormData({
+                                  ...formData,
+                                  matchDate: e.target.value ? new Date(e.target.value) : undefined,
+                                })
+                              }
+                            />
+                          </div>
+                        </div>
+                      )}
+
                       <div className="space-y-2">
                         <Label htmlFor="notes">{t("notes")}</Label>
                         <Textarea
@@ -766,6 +929,31 @@ export function CollectionJerseyModal({
                           </span>
                           <span className="font-medium">
                             {collectionItem.playerNumber}
+                          </span>
+                        </div>
+                      )}
+
+                      {collectionItem.isSigned && collectionItem.signedBy && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">{t("signedBy")}</span>
+                          <span className="font-medium">{collectionItem.signedBy}</span>
+                        </div>
+                      )}
+
+                      {collectionItem.matchDescription && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">{t("matchDescription")}</span>
+                          <span className="font-medium text-right max-w-[60%]">
+                            {collectionItem.matchDescription}
+                          </span>
+                        </div>
+                      )}
+
+                      {collectionItem.matchDate && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-muted-foreground">{t("matchDate")}</span>
+                          <span className="font-medium">
+                            {format(new Date(collectionItem.matchDate), "dd MMMM yyyy", { locale: fr })}
                           </span>
                         </div>
                       )}

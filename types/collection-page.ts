@@ -2,6 +2,7 @@ export type CollectionItemWithJersey = {
   id: string;
   userId: string;
   jerseyId: string;
+  version: string;
   size?: string | null;
   condition: string;
   hasTags: boolean;
@@ -13,6 +14,12 @@ export type CollectionItemWithJersey = {
   isGift: boolean;
   isFromMysteryBox: boolean;
   userPhotoUrl?: string | null;
+  isSigned: boolean;
+  signedBy?: string | null;
+  hasAuthCertificate: boolean;
+  certificateUrl?: string | null;
+  matchDescription?: string | null;
+  matchDate?: Date | null;
   createdAt: Date;
   updatedAt: Date;
   jersey: {

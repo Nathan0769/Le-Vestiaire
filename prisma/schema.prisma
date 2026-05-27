@@ -158,12 +158,13 @@ model Rating {
 }
 
 model UserJersey {
-  id              String    @id @default(cuid())
+  id              String         @id @default(cuid())
   userId          String
   jerseyId        String
+  version         JerseyVersion  @default(REPLICA)
   size            Size?
   condition       Condition
-  hasTags         Boolean   @default(false)
+  hasTags         Boolean        @default(false)
   playerName      String?
   playerNumber    Int?
   purchasePrice   Decimal?
@@ -171,8 +172,15 @@ model UserJersey {
   notes           String?
   userPhotoUrl    String?
 
-  isGift          Boolean   @default(false)  
-  isFromMysteryBox Boolean  @default(false)
+  isGift           Boolean   @default(false)
+  isFromMysteryBox Boolean   @default(false)
+
+  isSigned            Boolean   @default(false)
+  signedBy            String?
+  hasAuthCertificate  Boolean   @default(false)
+  certificateUrl      String?
+  matchDescription    String?
+  matchDate           DateTime?
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   jersey Jersey @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
@@ -180,7 +188,8 @@ model UserJersey {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([userId, jerseyId])
+  @@index([userId])
+  @@index([jerseyId])
   @@map("user_jerseys")
 }
 
@@ -281,6 +290,14 @@ model Achievement {
   
   @@unique([userId, badgeType, badgeMonth, category], name: "unique_monthly_badge")
   @@map("achievements")
+}
+
+enum JerseyVersion {
+  REPLICA
+  AUTHENTIC
+  STOCK_PRO
+  PLAYER_ISSUE
+  MATCH_WORN
 }
 
 enum FriendshipStatus {
