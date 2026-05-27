@@ -24,6 +24,9 @@ export default defineConfig(({}) => ({
     // Désactiver le parallélisme des fichiers pour les tests d'intégration
     fileParallelism: false,
 
+    // Timeout élevé pour les tests d'intégration (requêtes DB + rate limit Upstash indisponible)
+    testTimeout: 30000,
+
     // Pattern des fichiers de test
     include: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
 
