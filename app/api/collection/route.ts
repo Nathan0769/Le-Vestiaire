@@ -15,6 +15,7 @@ export async function GET() {
       select: {
         id: true,
         jerseyId: true,
+        version: true,
         size: true,
         condition: true,
         hasTags: true,
@@ -26,6 +27,12 @@ export async function GET() {
         isGift: true,
         isFromMysteryBox: true,
         userPhotoUrl: true,
+        isSigned: true,
+        signedBy: true,
+        hasAuthCertificate: true,
+        certificateUrl: true,
+        matchDescription: true,
+        matchDate: true,
         createdAt: true,
         updatedAt: true,
         jersey: {

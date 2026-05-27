@@ -25,7 +25,12 @@ import {
 import { toast } from "sonner";
 import { Camera, X } from "lucide-react";
 import Image from "next/image";
-import type { Size, Condition, AddToCollectionData } from "@/types/collection";
+import type {
+  Size,
+  Condition,
+  JerseyVersion,
+  AddToCollectionData,
+} from "@/types/collection";
 import { SIZE_LABELS } from "@/types/collection";
 
 interface AddToCollectionModalProps {
@@ -35,6 +40,16 @@ interface AddToCollectionModalProps {
   isLoading: boolean;
 }
 
+const VERSION_ORDER: JerseyVersion[] = [
+  "REPLICA",
+  "AUTHENTIC",
+  "STOCK_PRO",
+  "PLAYER_ISSUE",
+  "MATCH_WORN",
+];
+
+const VERSIONS_WITH_MATCH_INFO: JerseyVersion[] = ["PLAYER_ISSUE", "MATCH_WORN"];
+
 export function AddToCollectionModal({
   open,
   onOpenChange,
@@ -43,17 +58,27 @@ export function AddToCollectionModal({
 }: AddToCollectionModalProps) {
   const t = useTranslations("Collection.modal.add");
   const tCondition = useTranslations("Condition");
+  const tVersion = useTranslations("JerseyVersion");
+
   const [formData, setFormData] = useState<AddToCollectionData>({
+    version: "REPLICA" as JerseyVersion,
     size: "M" as Size,
     condition: "MINT" as Condition,
     hasTags: false,
     isGift: false,
     isFromMysteryBox: false,
+    isSigned: false,
+    hasAuthCertificate: false,
+    certificateUrl: undefined,
   });
 
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
+
+  const showMatchFields = VERSIONS_WITH_MATCH_INFO.includes(
+    formData.version as JerseyVersion
+  );
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -70,11 +95,8 @@ export function AddToCollectionModal({
     }
 
     setPhotoFile(file);
-
     const reader = new FileReader();
-    reader.onloadend = () => {
-      setPhotoPreview(reader.result as string);
-    };
+    reader.onloadend = () => setPhotoPreview(reader.result as string);
     reader.readAsDataURL(file);
   };
 
@@ -86,11 +108,6 @@ export function AddToCollectionModal({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!formData.size) {
-      toast.error(t("toast.sizeRequired"));
-      return;
-    }
 
     if (!formData.condition) {
       toast.error(t("toast.conditionRequired"));
@@ -133,20 +150,22 @@ export function AddToCollectionModal({
 
   const handleReset = () => {
     setFormData({
+      version: "REPLICA" as JerseyVersion,
       size: "M" as Size,
       condition: "MINT" as Condition,
       hasTags: false,
       isGift: false,
       isFromMysteryBox: false,
+      isSigned: false,
+      hasAuthCertificate: false,
+      certificateUrl: undefined,
     });
     setPhotoFile(null);
     setPhotoPreview(null);
   };
 
   const handleOpenChange = (newOpen: boolean) => {
-    if (!newOpen) {
-      handleReset();
-    }
+    if (!newOpen) handleReset();
     onOpenChange(newOpen);
   };
 
@@ -155,18 +174,14 @@ export function AddToCollectionModal({
       <DialogContent className="w-[95vw] max-w-lg max-h-[90dvh] flex flex-col p-0">
         <DialogHeader className="px-6 py-4 border-b">
           <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>
-            {t("description")}
-          </DialogDescription>
+          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
 
         <div className="flex-1 overflow-y-auto px-6 py-4">
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-4"
-            id="collection-form"
-          >
-            <div className="grid grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="space-y-4" id="collection-form">
+
+            {/* Taille + État */}
+            <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="size" className="flex items-center gap-1">
                   {t("size")} <span className="text-destructive">{t("sizeRequired")}</span>
@@ -176,7 +191,6 @@ export function AddToCollectionModal({
                   onValueChange={(value: Size) =>
                     setFormData({ ...formData, size: value })
                   }
-                  required
                 >
                   <SelectTrigger>
                     <SelectValue placeholder={t("sizePlaceholder")} />
@@ -216,47 +230,104 @@ export function AddToCollectionModal({
               </div>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="purchasePrice">{t("purchasePrice")}</Label>
-              <Input
-                id="purchasePrice"
-                type="number"
-                step="0.01"
-                min="0"
-                placeholder={t("purchasePricePlaceholder")}
-                value={formData.purchasePrice ?? ""}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    purchasePrice: e.target.value
-                      ? parseFloat(e.target.value)
-                      : undefined,
-                  })
+            {/* Version */}
+            <div className="w-1/2 space-y-2">
+              <Label htmlFor="version">{t("version")}</Label>
+              <Select
+                value={formData.version}
+                onValueChange={(value: JerseyVersion) =>
+                  setFormData({ ...formData, version: value })
                 }
-              />
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder={t("versionPlaceholder")} />
+                </SelectTrigger>
+                <SelectContent>
+                  {VERSION_ORDER.map((v) => (
+                    <SelectItem key={v} value={v}>
+                      {tVersion(v)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="purchaseDate">{t("purchaseDate")}</Label>
-              <Input
-                id="purchaseDate"
-                type="date"
-                value={
-                  formData.purchaseDate
-                    ? formData.purchaseDate.toISOString().split("T")[0]
-                    : ""
-                }
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    purchaseDate: e.target.value
-                      ? new Date(e.target.value)
-                      : undefined,
-                  })
-                }
-              />
+            {/* Infos match (Player Issue / Match Worn) */}
+            {showMatchFields && (
+              <div className="space-y-3 rounded-lg border p-3">
+                <div className="space-y-2">
+                  <Label htmlFor="matchDescription">{t("matchDescription")}</Label>
+                  <Input
+                    id="matchDescription"
+                    placeholder={t("matchDescriptionPlaceholder")}
+                    value={formData.matchDescription || ""}
+                    onChange={(e) =>
+                      setFormData({ ...formData, matchDescription: e.target.value })
+                    }
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="matchDate">{t("matchDate")}</Label>
+                  <Input
+                    id="matchDate"
+                    type="date"
+                    value={
+                      formData.matchDate
+                        ? formData.matchDate.toISOString().split("T")[0]
+                        : ""
+                    }
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        matchDate: e.target.value ? new Date(e.target.value) : undefined,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Prix + Date achat */}
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="purchasePrice">{t("purchasePrice")}</Label>
+                <Input
+                  id="purchasePrice"
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  placeholder={t("purchasePricePlaceholder")}
+                  value={formData.purchasePrice ?? ""}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      purchasePrice: e.target.value ? parseFloat(e.target.value) : undefined,
+                    })
+                  }
+                />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="purchaseDate">{t("purchaseDate")}</Label>
+                <Input
+                  id="purchaseDate"
+                  type="date"
+                  value={
+                    formData.purchaseDate
+                      ? formData.purchaseDate.toISOString().split("T")[0]
+                      : ""
+                  }
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      purchaseDate: e.target.value ? new Date(e.target.value) : undefined,
+                    })
+                  }
+                />
+              </div>
             </div>
 
+            {/* Flocage */}
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
                 <Label htmlFor="playerName">{t("playerName")}</Label>
@@ -288,6 +359,7 @@ export function AddToCollectionModal({
               </div>
             </div>
 
+            {/* Checkboxes */}
             <div className="space-y-3">
               <div className="flex items-center space-x-2">
                 <Checkbox
@@ -299,6 +371,57 @@ export function AddToCollectionModal({
                 />
                 <Label htmlFor="hasTags">{t("hasTags")}</Label>
               </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="isSigned"
+                  checked={formData.isSigned}
+                  onCheckedChange={(checked) =>
+                    setFormData({ ...formData, isSigned: !!checked, signedBy: checked ? formData.signedBy : undefined })
+                  }
+                />
+                <Label htmlFor="isSigned">{t("isSigned")}</Label>
+              </div>
+
+              {formData.isSigned && (
+                <div className="space-y-2 pl-6">
+                  <Input
+                    id="signedBy"
+                    placeholder={t("signedByPlaceholder")}
+                    value={formData.signedBy || ""}
+                    onChange={(e) =>
+                      setFormData({ ...formData, signedBy: e.target.value })
+                    }
+                  />
+                </div>
+              )}
+
+              {(formData.isSigned || formData.version === "MATCH_WORN") && (
+                <div className="flex items-center space-x-2">
+                  <Checkbox
+                    id="hasAuthCertificate"
+                    checked={formData.hasAuthCertificate}
+                    onCheckedChange={(checked) =>
+                      setFormData({ ...formData, hasAuthCertificate: !!checked, certificateUrl: checked ? formData.certificateUrl : undefined })
+                    }
+                  />
+                  <Label htmlFor="hasAuthCertificate">{t("hasAuthCertificate")}</Label>
+                </div>
+              )}
+
+              {formData.hasAuthCertificate && (
+                <div className="space-y-1 pl-6">
+                  <Input
+                    id="certificateUrl"
+                    type="url"
+                    placeholder={t("certificateUrlPlaceholder")}
+                    value={formData.certificateUrl || ""}
+                    onChange={(e) =>
+                      setFormData({ ...formData, certificateUrl: e.target.value || undefined })
+                    }
+                  />
+                </div>
+              )}
 
               <div className="flex items-center space-x-2">
                 <Checkbox
@@ -319,37 +442,28 @@ export function AddToCollectionModal({
                     setFormData({ ...formData, isFromMysteryBox: !!checked })
                   }
                 />
-                <Label htmlFor="isFromMysteryBox">
-                  {t("isFromMysteryBox")}
-                </Label>
+                <Label htmlFor="isFromMysteryBox">{t("isFromMysteryBox")}</Label>
               </div>
             </div>
 
+            {/* Notes */}
             <div className="space-y-2">
               <Label htmlFor="notes">{t("notes")}</Label>
               <Textarea
                 id="notes"
                 placeholder={t("notesPlaceholder")}
                 value={formData.notes || ""}
-                onChange={(e) =>
-                  setFormData({ ...formData, notes: e.target.value })
-                }
+                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                 rows={3}
               />
             </div>
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">
-                {t("photo")}
-              </Label>
 
+            {/* Photo */}
+            <div className="space-y-2">
+              <Label className="flex items-center gap-2">{t("photo")}</Label>
               {photoPreview ? (
                 <div className="relative w-full aspect-square bg-muted rounded-lg overflow-hidden">
-                  <Image
-                    src={photoPreview}
-                    alt="Aperçu"
-                    fill
-                    className="object-contain"
-                  />
+                  <Image src={photoPreview} alt="Aperçu" fill className="object-contain" />
                   <Button
                     type="button"
                     variant="destructive"
@@ -366,21 +480,12 @@ export function AddToCollectionModal({
                   <div className="flex flex-col items-center justify-center pt-5 pb-6">
                     <Camera className="w-12 h-12 mb-3 text-muted-foreground" />
                     <p className="mb-2 text-sm text-muted-foreground">
-                      <span className="font-semibold">
-                        {t("photoClickToAdd")}
-                      </span>{" "}
+                      <span className="font-semibold">{t("photoClickToAdd")}</span>{" "}
                       {t("photoYourPhoto")}
                     </p>
-                    <p className="text-xs text-muted-foreground">
-                      {t("photoFormats")}
-                    </p>
+                    <p className="text-xs text-muted-foreground">{t("photoFormats")}</p>
                   </div>
-                  <input
-                    type="file"
-                    className="hidden"
-                    accept="image/*"
-                    onChange={handlePhotoChange}
-                  />
+                  <input type="file" className="hidden" accept="image/*" onChange={handlePhotoChange} />
                 </label>
               )}
             </div>

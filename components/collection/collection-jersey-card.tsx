@@ -24,6 +24,7 @@ export function CollectionJerseyCard({
   const locale = useLocale();
   const tJerseyType = useTranslations("JerseyType");
   const tCondition = useTranslations("Condition");
+  const tVersion = useTranslations("JerseyVersion");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const [localItem, setLocalItem] = useState(collectionItem);
@@ -92,7 +93,7 @@ export function CollectionJerseyCard({
               {localItem.jersey.season}
             </p>
 
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex justify-center items-center gap-2 flex-wrap">
               <Badge
                 variant="secondary"
                 className={`text-xs px-1.5 py-0.5 ${getConditionColor(
@@ -105,6 +106,15 @@ export function CollectionJerseyCard({
               {localItem.size && (
                 <Badge variant="outline" className="text-xs px-1.5 py-0.5">
                   {localItem.size}
+                </Badge>
+              )}
+
+              {localItem.version && localItem.version !== "REPLICA" && (
+                <Badge
+                  variant="outline"
+                  className="text-xs px-1.5 py-0.5 text-purple-700 bg-purple-500/10 border-purple-200"
+                >
+                  {tVersion(localItem.version as "REPLICA" | "AUTHENTIC" | "STOCK_PRO" | "PLAYER_ISSUE" | "MATCH_WORN")}
                 </Badge>
               )}
             </div>

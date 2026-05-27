@@ -5,10 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { AddToCollectionModal } from "./modal-add-collection";
-import type {
-  AddToCollectionData,
-  CollectionResponse,
-} from "@/types/collection";
+import type { AddToCollectionData, CollectionResponse } from "@/types/collection";
 import { useTranslations } from "next-intl";
 
 interface CollectionButtonProps {
@@ -21,7 +18,7 @@ export function CollectionButton({
   initialIsInCollection = false,
 }: CollectionButtonProps) {
   const t = useTranslations("Collection.button");
-  const [isInCollection, setIsInCollection] = useState(initialIsInCollection);
+  const [count, setCount] = useState(initialIsInCollection ? 1 : 0);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const { user } = useAuth();
@@ -37,7 +34,7 @@ export function CollectionButton({
         });
         if (res.ok) {
           const data: CollectionResponse = await res.json();
-          setIsInCollection(data.isInCollection);
+          setCount(data.count ?? (data.isInCollection ? 1 : 0));
         }
       } catch (err) {
         console.error("Erreur de synchro collection:", err);
@@ -57,16 +54,14 @@ export function CollectionButton({
     try {
       const response = await fetch(`/api/jerseys/${jerseyId}/collection`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
       const result = await response.json();
 
       if (response.ok && result.success) {
-        setIsInCollection(true);
+        setCount((prev) => prev + 1);
         setShowModal(false);
         toast.success(t("toast.added"));
       } else {
@@ -80,42 +75,12 @@ export function CollectionButton({
     }
   };
 
-  const handleRemoveFromCollection = async () => {
-    if (!user) return;
-
-    setIsLoading(true);
-    try {
-      const response = await fetch(`/api/jerseys/${jerseyId}/collection`, {
-        method: "DELETE",
-      });
-
-      const result = await response.json();
-
-      if (response.ok && result.success) {
-        setIsInCollection(false);
-        toast.success(t("toast.removed"));
-      } else {
-        toast.error(result.error || t("toast.error"));
-      }
-    } catch (error) {
-      console.error("Erreur lors de la suppression de la collection:", error);
-      toast.error(t("toast.connectionError"));
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   const handleButtonClick = () => {
     if (!user) {
       toast.error(t("toast.manageError"));
       return;
     }
-
-    if (isInCollection) {
-      handleRemoveFromCollection();
-    } else {
-      setShowModal(true);
-    }
+    setShowModal(true);
   };
 
   return (
@@ -124,6 +89,7 @@ export function CollectionButton({
         className="flex-1 h-11 font-medium shadow-sm hover:shadow-md transition-shadow cursor-pointer"
         onClick={handleButtonClick}
         disabled={isLoading}
+        variant={count > 0 ? "secondary" : "default"}
       >
         {isLoading ? (
           <div className="flex items-center gap-2">
@@ -132,14 +98,11 @@ export function CollectionButton({
           </div>
         ) : (
           <div className="flex items-center gap-2">
-            {isInCollection ? (
-              <>
-                <span>{t("inCollection")}</span>
-              </>
-            ) : (
-              <>
-                <span>{t("addToCollection")}</span>
-              </>
+            <span>{t("addToCollection")}</span>
+            {count > 0 && (
+              <span className="inline-flex items-center justify-center w-5 h-5 text-xs font-bold rounded-full bg-primary text-primary-foreground">
+                {count}
+              </span>
             )}
           </div>
         )}
