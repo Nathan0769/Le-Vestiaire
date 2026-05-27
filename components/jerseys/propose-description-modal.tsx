@@ -106,7 +106,7 @@ export function ProposeDescriptionModal({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="w-[95vw] max-w-2xl">
+      <DialogContent className="w-[95vw] max-w-2xl max-h-[90vh] flex flex-col">
         <DialogHeader>
           <DialogTitle>
             {existingDescription ? t("titleImprove") : t("title")}
@@ -116,51 +116,53 @@ export function ProposeDescriptionModal({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          {existingDescription && (
-            <div className="p-4 bg-muted rounded-lg border">
-              <Label className="text-sm font-medium mb-2 block">
-                {t("currentDescription")}
+        <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0 overflow-hidden">
+          <div className="flex-1 min-h-0 overflow-y-auto space-y-4 pr-1">
+            {existingDescription && (
+              <div className="p-4 bg-muted rounded-lg border">
+                <Label className="text-sm font-medium mb-2 block">
+                  {t("currentDescription")}
+                </Label>
+                <p className="text-sm text-muted-foreground whitespace-pre-wrap">
+                  {existingDescription}
+                </p>
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <Label htmlFor="description" className="flex items-center justify-between">
+                <span>
+                  {existingDescription ? t("yourImprovement") : t("yourDescription")}{" "}
+                  <span className="text-destructive">*</span>
+                </span>
+                <span
+                  className={`text-sm ${
+                    charCount < minChars
+                      ? "text-destructive"
+                      : charCount > maxChars
+                      ? "text-destructive"
+                      : "text-muted-foreground"
+                  }`}
+                >
+                  {charCount} / {maxChars}
+                </span>
               </Label>
-              <p className="text-sm text-muted-foreground whitespace-pre-wrap">
-                {existingDescription}
+              <Textarea
+                id="description"
+                placeholder={t("placeholder")}
+                value={description}
+                onChange={handleDescriptionChange}
+                rows={8}
+                className="resize-none"
+                maxLength={maxChars}
+              />
+              <p className="text-xs text-muted-foreground">
+                {t("hint")}
               </p>
             </div>
-          )}
-
-          <div className="space-y-2">
-            <Label htmlFor="description" className="flex items-center justify-between">
-              <span>
-                {existingDescription ? t("yourImprovement") : t("yourDescription")}{" "}
-                <span className="text-destructive">*</span>
-              </span>
-              <span
-                className={`text-sm ${
-                  charCount < minChars
-                    ? "text-destructive"
-                    : charCount > maxChars
-                    ? "text-destructive"
-                    : "text-muted-foreground"
-                }`}
-              >
-                {charCount} / {maxChars}
-              </span>
-            </Label>
-            <Textarea
-              id="description"
-              placeholder={t("placeholder")}
-              value={description}
-              onChange={handleDescriptionChange}
-              rows={8}
-              className="resize-none"
-              maxLength={maxChars}
-            />
-            <p className="text-xs text-muted-foreground">
-              {t("hint")}
-            </p>
           </div>
 
-          <DialogFooter>
+          <DialogFooter className="pt-4">
             <Button
               type="button"
               variant="outline"
