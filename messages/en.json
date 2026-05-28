@@ -507,7 +507,7 @@
       "jerseys": "Jerseys",
       "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}",
       "labels": {
-        "REPLICA": "Replica",
+        "REPLICA": "Standard",
         "AUTHENTIC": "Authentic",
         "STOCK_PRO": "Stock Pro",
         "PLAYER_ISSUE": "Player Issue",
