@@ -245,6 +245,21 @@ export async function GET() {
       { source: "mysteryBox", count: mysteryBoxCount },
     ].filter((item) => item.count > 0);
 
+    const versionStats = collection.reduce((acc, item) => {
+      const version = item.version;
+      acc[version] = (acc[version] || 0) + 1;
+      return acc;
+    }, {} as Record<string, number>);
+
+    const versionOrder = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"];
+    const versionDistribution = Object.entries(versionStats)
+      .map(([version, count]) => ({
+        version,
+        count,
+        percentage: Math.round((count / collection.length) * 100),
+      }))
+      .sort((a, b) => versionOrder.indexOf(a.version) - versionOrder.indexOf(b.version));
+
     const withTags = collection.filter((item) => item.hasTags).length;
     const withPersonalization = collection.filter(
       (item) => item.playerName || item.playerNumber
@@ -252,6 +267,8 @@ export async function GET() {
     const withCustomPhoto = collection.filter(
       (item) => item.userPhotoUrl
     ).length;
+    const withSigned = collection.filter((item) => item.isSigned).length;
+    const withAuthCertificate = collection.filter((item) => item.hasAuthCertificate).length;
 
     const uniqueClubs = new Set(collection.map((item) => item.jersey.club.id))
       .size;
@@ -297,11 +314,14 @@ export async function GET() {
         },
         sizeDistribution,
         conditionDistribution,
+        versionDistribution,
         sourceDistribution,
         additional: {
           withTags,
           withPersonalization,
           withCustomPhoto,
+          withSigned,
+          withAuthCertificate,
           tagsPercentage: Math.round((withTags / collection.length) * 100),
           personalizationPercentage: Math.round(
             (withPersonalization / collection.length) * 100
@@ -309,6 +329,8 @@ export async function GET() {
           customPhotoPercentage: Math.round(
             (withCustomPhoto / collection.length) * 100
           ),
+          signedPercentage: Math.round((withSigned / collection.length) * 100),
+          authCertificatePercentage: Math.round((withAuthCertificate / collection.length) * 100),
         },
         diversity: {
           uniqueClubs,

@@ -499,13 +499,27 @@
       "uniqueCountries": "Pays différents",
       "uniqueCountriesDescription": "À travers le monde"
     },
+    "versionDistribution": {
+      "title": "Répartition par version",
+      "jerseys": "Maillots",
+      "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}",
+      "labels": {
+        "REPLICA": "Replica",
+        "AUTHENTIC": "Authentique",
+        "STOCK_PRO": "Stock Pro",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      }
+    },
     "records": {
       "oldestAcquisition": "Première acquisition",
       "newestAcquisition": "Dernière acquisition",
       "customizationStats": "Personnalisations",
       "withTags": "Avec étiquettes",
       "withPersonalization": "Personnalisés",
-      "withCustomPhoto": "Photos perso"
+      "withCustomPhoto": "Photos perso",
+      "withSigned": "Signés",
+      "withAuthCertificate": "Avec certificat"
     },
     "upgrade": {
       "distribution": {
