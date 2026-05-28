@@ -792,7 +792,8 @@
       "jerseyCount": "{count, plural, one {# jersey} other {# jerseys}}",
       "empty": {
         "title": "You don't have any jerseys that catch your eye",
-        "description": "Browse our collection and add your favorite jerseys to your wishlist!"
+        "description": "Browse our collection and add your favorite jerseys to your wishlist!",
+        "cta": "Explore the catalogue"
       },
       "error": {
         "title": "Error loading your wishlist",

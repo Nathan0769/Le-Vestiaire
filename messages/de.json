@@ -792,7 +792,8 @@
       "jerseyCount": "{count, plural, one {# Trikot} other {# Trikots}}",
       "empty": {
         "title": "Du hast noch keine Trikots, die dich begeistern",
-        "description": "Stöbere in unserer Sammlung und füge deine Lieblingstrikots zu deiner Wunschliste hinzu!"
+        "description": "Stöbere in unserer Sammlung und füge deine Lieblingstrikots zu deiner Wunschliste hinzu!",
+        "cta": "Katalog erkunden"
       },
       "error": {
         "title": "Fehler beim Laden deiner Wunschliste",

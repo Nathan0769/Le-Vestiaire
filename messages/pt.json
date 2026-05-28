@@ -792,7 +792,8 @@
       "jerseyCount": "{count, plural, one {# camisola} other {# camisolas}}",
       "empty": {
         "title": "Não tem nenhuma camisola que lhe tenha chamado a atenção",
-        "description": "Navegue pela nossa coleção e adicione as suas camisolas favoritas à sua lista de desejos!"
+        "description": "Navegue pela nossa coleção e adicione as suas camisolas favoritas à sua lista de desejos!",
+        "cta": "Explorar o catálogo"
       },
       "error": {
         "title": "Erro ao carregar a sua lista de desejos",
