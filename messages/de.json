@@ -502,13 +502,27 @@
       "uniqueCountries": "Verschiedene Länder",
       "uniqueCountriesDescription": "Rund um die Welt"
     },
+    "versionDistribution": {
+      "title": "Verteilung nach Version",
+      "jerseys": "Trikots",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}",
+      "labels": {
+        "REPLICA": "Replika",
+        "AUTHENTIC": "Authentisch",
+        "STOCK_PRO": "Stock Pro",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      }
+    },
     "records": {
       "oldestAcquisition": "Erste Erwerbung",
       "newestAcquisition": "Neueste Erwerbung",
       "customizationStats": "Personalisierungen",
       "withTags": "Mit Etiketten",
       "withPersonalization": "Personalisiert",
-      "withCustomPhoto": "Eigene Fotos"
+      "withCustomPhoto": "Eigene Fotos",
+      "withSigned": "Signiert",
+      "withAuthCertificate": "Mit Zertifikat"
     },
     "upgrade": {
       "distribution": {

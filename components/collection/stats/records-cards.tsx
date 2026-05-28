@@ -23,9 +23,13 @@ interface RecordsCardsProps {
     withTags: number;
     withPersonalization: number;
     withCustomPhoto: number;
+    withSigned: number;
+    withAuthCertificate: number;
     tagsPercentage: number;
     personalizationPercentage: number;
     customPhotoPercentage: number;
+    signedPercentage: number;
+    authCertificatePercentage: number;
   };
 }
 
@@ -120,6 +124,24 @@ export function RecordsCards({ records, additional }: RecordsCardsProps) {
               </span>
               <span className="text-xs text-muted-foreground">
                 ({additional.customPhotoPercentage}%)
+              </span>
+            </div>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm">{t("withSigned")}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">{additional.withSigned}</span>
+              <span className="text-xs text-muted-foreground">
+                ({additional.signedPercentage}%)
+              </span>
+            </div>
+          </div>
+          <div className="flex justify-between items-center">
+            <span className="text-sm">{t("withAuthCertificate")}</span>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium">{additional.withAuthCertificate}</span>
+              <span className="text-xs text-muted-foreground">
+                ({additional.authCertificatePercentage}%)
               </span>
             </div>
           </div>

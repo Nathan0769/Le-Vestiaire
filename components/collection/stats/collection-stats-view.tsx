@@ -10,6 +10,7 @@ import { ClubDistributionChart } from "./club-distribution-chart";
 import { SizeDistributionChart } from "./size-distribution-chart";
 import { ConditionDistributionChart } from "./condition-distribution-chart";
 import { SourceDistributionChart } from "./source-distribution-chart";
+import { VersionDistributionChart } from "./version-distribution-chart";
 import { SpendingTimelineChart } from "./spending-timeline-chart";
 import { FinancialStatsCards } from "./financial-stats-cards";
 import { DiversityStatsCards } from "./diversity-stats-cards";
@@ -54,10 +55,15 @@ interface CollectionStats {
       withTags: number;
       withPersonalization: number;
       withCustomPhoto: number;
+      withSigned: number;
+      withAuthCertificate: number;
       tagsPercentage: number;
       personalizationPercentage: number;
       customPhotoPercentage: number;
+      signedPercentage: number;
+      authCertificatePercentage: number;
     };
+    versionDistribution: { version: string; count: number; percentage: number }[];
     diversity: {
       uniqueClubs: number;
       uniqueLeagues: number;
@@ -165,6 +171,7 @@ export function CollectionStatsView() {
           <SizeDistributionChart data={data.stats.sizeDistribution} />
           <ConditionDistributionChart data={data.stats.conditionDistribution} />
         </div>
+        <VersionDistributionChart data={data.stats.versionDistribution} />
         <SourceDistributionChart
           data={data.stats.sourceDistribution}
           additional={data.stats.additional}

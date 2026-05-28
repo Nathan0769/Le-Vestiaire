@@ -502,13 +502,27 @@
       "uniqueCountries": "Países diferentes",
       "uniqueCountriesDescription": "Alrededor del mundo"
     },
+    "versionDistribution": {
+      "title": "Distribución por versión",
+      "jerseys": "Camisetas",
+      "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}",
+      "labels": {
+        "REPLICA": "Réplica",
+        "AUTHENTIC": "Auténtica",
+        "STOCK_PRO": "Stock Pro",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      }
+    },
     "records": {
       "oldestAcquisition": "Primera adquisición",
       "newestAcquisition": "Última adquisición",
       "customizationStats": "Personalizaciones",
       "withTags": "Con etiquetas",
       "withPersonalization": "Personalizadas",
-      "withCustomPhoto": "Fotos personalizadas"
+      "withCustomPhoto": "Fotos personalizadas",
+      "withSigned": "Firmadas",
+      "withAuthCertificate": "Con certificado"
     },
     "upgrade": {
       "distribution": {

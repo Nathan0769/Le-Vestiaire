@@ -502,13 +502,27 @@
       "uniqueCountries": "Different Countries",
       "uniqueCountriesDescription": "Around the world"
     },
+    "versionDistribution": {
+      "title": "Distribution by Version",
+      "jerseys": "Jerseys",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}",
+      "labels": {
+        "REPLICA": "Replica",
+        "AUTHENTIC": "Authentic",
+        "STOCK_PRO": "Stock Pro",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      }
+    },
     "records": {
       "oldestAcquisition": "First Acquisition",
       "newestAcquisition": "Latest Acquisition",
       "customizationStats": "Customizations",
       "withTags": "With tags",
       "withPersonalization": "Personalized",
-      "withCustomPhoto": "Custom photos"
+      "withCustomPhoto": "Custom photos",
+      "withSigned": "Signed",
+      "withAuthCertificate": "With certificate"
     },
     "upgrade": {
       "distribution": {
