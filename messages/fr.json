@@ -789,7 +789,8 @@
       "jerseyCount": "{count, plural, one {# maillot} other {# maillots}}",
       "empty": {
         "title": "Vous n'avez pas de maillot qui vous fait de l'œil",
-        "description": "Parcourez notre collection et ajoutez vos maillots préférés à votre wishlist !"
+        "description": "Parcourez notre collection et ajoutez vos maillots préférés à votre wishlist !",
+        "cta": "Explorer le catalogue"
       },
       "error": {
         "title": "Erreur lors du chargement de votre wishlist",

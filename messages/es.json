@@ -792,7 +792,8 @@
       "jerseyCount": "{count, plural, one {# camiseta} other {# camisetas}}",
       "empty": {
         "title": "No tienes ninguna camiseta que te llame la atención",
-        "description": "¡Navega por nuestra colección y añade tus camisetas favoritas a tu lista de deseos!"
+        "description": "¡Navega por nuestra colección y añade tus camisetas favoritas a tu lista de deseos!",
+        "cta": "Explorar el catálogo"
       },
       "error": {
         "title": "Error al cargar tu lista de deseos",
