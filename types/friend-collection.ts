@@ -33,6 +33,7 @@ export interface FriendCollectionItem {
     name: string;
     imageUrl: string;
     type: string;
+    variant: number;
     season: string;
     brand: string;
     retailPrice: number | null;
@@ -97,6 +98,7 @@ export interface FriendWishlistItem {
     name: string;
     imageUrl: string;
     type: string;
+    variant: number;
     season: string;
     brand: string;
     retailPrice: number | null;

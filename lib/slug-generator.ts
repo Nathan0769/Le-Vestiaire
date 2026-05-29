@@ -1,7 +1,8 @@
 export function generateJerseySlug(
   clubShortName: string,
   type: string,
-  season: string
+  season: string,
+  variant: number = 1
 ): string {
   const typeLabels: Record<string, string> = {
     HOME: "domicile",
@@ -16,6 +17,7 @@ export function generateJerseySlug(
   const seasonSlug = season.replace(/\//g, "-");
 
   const parts = ["maillot", clubShortName, typeSlug, seasonSlug];
+  if (variant > 1) parts.push(String(variant));
 
   return parts
     .join(" ")

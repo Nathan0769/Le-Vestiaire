@@ -7,6 +7,7 @@ interface WishlistItem {
   name: string;
   imageUrl: string;
   type: string;
+  variant: number;
   season: string;
   clubName: string;
 }

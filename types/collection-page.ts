@@ -27,6 +27,7 @@ export type CollectionItemWithJersey = {
     name: string;
     imageUrl: string;
     type: string;
+    variant: number;
     season: string;
     brand: string;
     retailPrice?: number | null;

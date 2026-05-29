@@ -8,6 +8,7 @@ import type { FriendCollectionItem } from "@/types/friend-collection";
 import { useTranslations, useLocale } from "next-intl";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 import type { JerseyType } from "@/types/jersey";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
 
 interface FriendCollectionJerseyCardProps {
   collectionItem: FriendCollectionItem;
@@ -29,7 +30,7 @@ export function FriendCollectionJerseyCard({
       clubShortName: collectionItem.jersey.club.shortName,
     },
     locale,
-    typeTranslation: tJerseyType(collectionItem.jersey.type as JerseyType),
+    typeTranslation: jerseyTypeLabel(tJerseyType(collectionItem.jersey.type as JerseyType), collectionItem.jersey.type, collectionItem.jersey.variant ?? 1),
   });
 
   const getConditionColor = (condition: string) => {
@@ -69,7 +70,7 @@ export function FriendCollectionJerseyCard({
               {collectionItem.jersey.club.name}
             </p>
             <p className="text-xs text-muted-foreground text-center truncate">
-              {tJerseyType(collectionItem.jersey.type as JerseyType)} •{" "}
+              {jerseyTypeLabel(tJerseyType(collectionItem.jersey.type as JerseyType), collectionItem.jersey.type, collectionItem.jersey.variant ?? 1)} •{" "}
               {collectionItem.jersey.season}
             </p>
             <div className="flex justify-center items-center gap-2 flex-wrap">

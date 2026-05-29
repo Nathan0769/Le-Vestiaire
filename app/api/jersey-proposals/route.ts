@@ -113,15 +113,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Club non trouvé" }, { status: 404 });
     }
 
-    const existingJersey = await prisma.jersey.findUnique({
-      where: {
-        clubId_season_type: {
-          clubId,
-          season,
-          type,
-        },
-      },
-    });
+    // Pour les gardiens, plusieurs maillots par saison sont autorisés
+    const existingJersey = type !== "GOALKEEPER"
+      ? await prisma.jersey.findUnique({
+          where: {
+            clubId_season_type_variant: {
+              clubId,
+              season,
+              type,
+              variant: 1,
+            },
+          },
+        })
+      : null;
 
     if (existingJersey) {
       return NextResponse.json(
@@ -130,13 +134,12 @@ export async function POST(req: Request) {
       );
     }
 
-    const existingProposal = await prisma.jerseyProposal.findFirst({
-      where: {
-        clubId,
-        season,
-        type,
-      },
-    });
+    // Pour les gardiens, plusieurs propositions peuvent coexister (plusieurs maillots possibles)
+    const existingProposal = type !== "GOALKEEPER"
+      ? await prisma.jerseyProposal.findFirst({
+          where: { clubId, season, type },
+        })
+      : null;
 
     if (existingProposal) {
       return NextResponse.json(

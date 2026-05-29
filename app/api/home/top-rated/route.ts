@@ -45,6 +45,7 @@ export async function GET(request: NextRequest) {
           name: jersey.name,
           imageUrl: jersey.imageUrl,
           type: jersey.type,
+          variant: jersey.variant,
           season: jersey.season,
           brand: jersey.brand,
           club: {

@@ -3,6 +3,7 @@ interface WishlistItem {
   name: string;
   imageUrl: string;
   type: string;
+  variant: number;
   season: string;
   clubName: string;
 }
@@ -30,9 +31,10 @@ async function loadTranslations(locale: string): Promise<Translations> {
   return messages.default as Translations;
 }
 
-function getJerseyTypeLabel(type: string, translations: Translations): string {
+function getJerseyTypeLabel(type: string, variant: number, translations: Translations): string {
   const jerseyTypes = translations.JerseyType;
-  return jerseyTypes[type] || type;
+  const base = jerseyTypes[type] || type;
+  return type === "GOALKEEPER" && variant > 1 ? `${base} ${variant}` : base;
 }
 
 export async function generateWishlistImage(
@@ -238,7 +240,7 @@ export async function generateWishlistImage(
 
       ctx.fillStyle = colors.textLight;
       ctx.font = "18px Arial";
-      const typeLabel = getJerseyTypeLabel(item.type, translations);
+      const typeLabel = getJerseyTypeLabel(item.type, item.variant, translations);
       ctx.fillText(
         `${typeLabel} • ${item.season}`,
         x + itemSize / 2,

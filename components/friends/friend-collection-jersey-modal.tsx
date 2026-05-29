@@ -18,6 +18,7 @@ import { ImageCarousel } from "@/components/collection/image-carousel";
 import { useTranslations, useLocale } from "next-intl";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 import type { JerseyType } from "@/types/jersey";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
 
 interface FriendCollectionJerseyModalProps {
   isOpen: boolean;
@@ -43,7 +44,7 @@ export function FriendCollectionJerseyModal({
       clubShortName: collectionItem.jersey.club.shortName,
     },
     locale,
-    typeTranslation: tJerseyType(collectionItem.jersey.type as JerseyType),
+    typeTranslation: jerseyTypeLabel(tJerseyType(collectionItem.jersey.type as JerseyType), collectionItem.jersey.type, collectionItem.jersey.variant ?? 1),
   });
 
   const getConditionColor = (condition: string) => {
@@ -159,7 +160,7 @@ export function FriendCollectionJerseyModal({
                   <div className="flex items-center justify-between">
                     <span className="text-muted-foreground">{t("type")}</span>
                     <span className="font-medium">
-                      {tJerseyType(collectionItem.jersey.type as JerseyType)}
+                      {jerseyTypeLabel(tJerseyType(collectionItem.jersey.type as JerseyType), collectionItem.jersey.type, collectionItem.jersey.variant ?? 1)}
                     </span>
                   </div>
 

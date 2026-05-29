@@ -48,9 +48,11 @@ export function JerseysBySeason({ jerseys, primaryColor, club, isAdmin }: Props)
       {sortedSeasons.map((season) => {
         const seasonJerseys = grouped[season];
 
-        const sortedJerseys = seasonJerseys.sort(
-          (a, b) => typeOrder[a.type] - typeOrder[b.type]
-        );
+        const sortedJerseys = seasonJerseys.sort((a, b) => {
+          const typeDiff = typeOrder[a.type] - typeOrder[b.type];
+          if (typeDiff !== 0) return typeDiff;
+          return (a.variant ?? 1) - (b.variant ?? 1);
+        });
 
         return (
           <div key={season}>

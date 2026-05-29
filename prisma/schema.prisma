@@ -127,6 +127,7 @@ model Jersey {
   description             String?
   descriptionTranslations Json?
   slug                    String?    @unique
+  variant                 Int        @default(1)
 
   club       Club         @relation(fields: [clubId], references: [id])
   collection UserJersey[]
@@ -137,7 +138,7 @@ model Jersey {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([clubId, season, type])
+  @@unique([clubId, season, type, variant])
   @@map("jerseys")
 }
 

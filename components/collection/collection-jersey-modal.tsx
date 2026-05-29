@@ -61,6 +61,7 @@ import { fr } from "date-fns/locale";
 import { toast } from "sonner";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { ImageCarousel } from "./image-carousel";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
 
 interface CollectionJerseyModalProps {
   isOpen: boolean;
@@ -338,8 +339,8 @@ export function CollectionJerseyModal({
     }
   };
 
-  const getJerseyTypeLabel = (type: string) => {
-    return tJerseyType(type as JerseyType);
+  const getJerseyTypeLabel = (type: string, variant: number) => {
+    return jerseyTypeLabel(tJerseyType(type as JerseyType), type, variant);
   };
 
   const translatedJerseyName = translateJerseyName({
@@ -350,7 +351,7 @@ export function CollectionJerseyModal({
       clubShortName: collectionItem.jersey.club.shortName,
     },
     locale,
-    typeTranslation: tJerseyType(collectionItem.jersey.type as JerseyType),
+    typeTranslation: jerseyTypeLabel(tJerseyType(collectionItem.jersey.type as JerseyType), collectionItem.jersey.type, collectionItem.jersey.variant ?? 1),
   });
 
   const carouselImages = [];
@@ -540,7 +541,7 @@ export function CollectionJerseyModal({
                     <div className="flex items-center justify-between">
                       <span className="text-muted-foreground">{t("type")}</span>
                       <span className="font-medium">
-                        {getJerseyTypeLabel(collectionItem.jersey.type)}
+                        {getJerseyTypeLabel(collectionItem.jersey.type, collectionItem.jersey.variant ?? 1)}
                       </span>
                     </div>
 

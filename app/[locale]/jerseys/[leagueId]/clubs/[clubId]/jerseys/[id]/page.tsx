@@ -18,6 +18,7 @@ import { FaqSchema } from "@/components/seo/faq-schema";
 import { JerseyTabs } from "@/components/jerseys/jersey-tabs";
 import { getTranslations, getLocale } from "next-intl/server";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
 import { EditableBrand } from "@/components/jerseys/editable-brand";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
@@ -55,7 +56,7 @@ export async function generateMetadata({
     const locale = await getLocale();
     const tJerseyType = await getTranslations("JerseyType");
 
-    const typeLabel = tJerseyType(jersey.type as JerseyType);
+    const typeLabel = jerseyTypeLabel(tJerseyType(jersey.type as JerseyType), jersey.type, jersey.variant ?? 1);
     const typeLower = typeLabel.toLowerCase();
 
     const translatedJerseyName = translateJerseyName({
@@ -224,9 +225,8 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   const locale = await getLocale();
   const tJerseyType = await getTranslations("JerseyType");
   const t = await getTranslations("Jerseys");
-  const getJerseyTypeLabel = (type: string) => {
-    return tJerseyType(type as JerseyType);
-  };
+  const getJerseyTypeLabel = (type: string) =>
+    jerseyTypeLabel(tJerseyType(type as JerseyType), type, jersey.variant ?? 1);
 
   const translatedJerseyName = translateJerseyName({
     jersey: {
