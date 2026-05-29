@@ -1,13 +1,16 @@
 import { Locale, useTranslations } from "next-intl";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
 
 /**
  * Hook to translate jersey types
  * Usage: const jerseyType = useJerseyTypeTranslation();
- *        jerseyType('HOME') // returns "Domicile" in FR, "Home" in EN, etc.
+ *        jerseyType('HOME') // returns "Domicile"
+ *        jerseyType('GOALKEEPER', 2) // returns "Gardien 2"
  */
 export function useJerseyTypeTranslation() {
   const t = useTranslations("JerseyType");
-  return (type: string) => t(type as Locale);
+  return (type: string, variant: number = 1) =>
+    jerseyTypeLabel(t(type as Locale), type, variant);
 }
 
 /**

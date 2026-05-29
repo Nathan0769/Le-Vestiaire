@@ -73,7 +73,7 @@ export async function createTestJersey(
       retailPrice: overrides?.retailPrice ?? 90,
       clubId,
       description: overrides?.description ?? null,
-      ...overrides,
+      variant: overrides?.variant ?? 1,
     },
   })
 }

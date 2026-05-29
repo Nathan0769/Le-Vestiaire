@@ -39,21 +39,36 @@ export async function POST(
       );
     }
 
-    const existingJersey = await prisma.jersey.findUnique({
-      where: {
-        clubId_season_type: {
+    const isGoalkeeper = proposal.type === "GOALKEEPER";
+
+    let variant = 1;
+    if (isGoalkeeper) {
+      const existingCount = await prisma.jersey.count({
+        where: {
           clubId: proposal.clubId,
           season: proposal.season,
-          type: proposal.type,
+          type: "GOALKEEPER",
         },
-      },
-    });
+      });
+      variant = existingCount + 1;
+    } else {
+      const existingJersey = await prisma.jersey.findUnique({
+        where: {
+          clubId_season_type_variant: {
+            clubId: proposal.clubId,
+            season: proposal.season,
+            type: proposal.type,
+            variant: 1,
+          },
+        },
+      });
 
-    if (existingJersey) {
-      return NextResponse.json(
-        { error: "Un maillot avec ces caractéristiques existe déjà" },
-        { status: 409 }
-      );
+      if (existingJersey) {
+        return NextResponse.json(
+          { error: "Un maillot avec ces caractéristiques existe déjà" },
+          { status: 409 }
+        );
+      }
     }
 
     const oldImageUrl = proposal.imageUrl;
@@ -75,7 +90,8 @@ export async function POST(
     const clubId = proposal.clubId;
     const jerseyType = proposal.type.toLowerCase();
     const extension = oldImagePath.split(".").pop() || "jpg";
-    const newImagePath = `${leagueName}/${clubId}/${proposal.season}/${jerseyType}.${extension}`;
+    const variantSuffix = variant > 1 ? `-${variant}` : "";
+    const newImagePath = `${leagueName}/${clubId}/${proposal.season}/${jerseyType}${variantSuffix}.${extension}`;
 
     let imageBuffer: Buffer;
     try {
@@ -111,7 +127,8 @@ export async function POST(
           imageUrl: newImageUrl,
           description: proposal.description,
           retailPrice: null,
-          slug: generateJerseySlug(proposal.club.shortName, proposal.type, proposal.season),
+          variant,
+          slug: generateJerseySlug(proposal.club.shortName, proposal.type, proposal.season, variant),
         },
       });
 
@@ -151,6 +168,17 @@ export async function POST(
       jersey: result.jersey,
     });
   } catch (err) {
+    // Deux approbations simultanées pour le même gardien club/saison
+    if (
+      err instanceof Error &&
+      "code" in err &&
+      (err as { code: string }).code === "P2002"
+    ) {
+      return NextResponse.json(
+        { error: "Un maillot gardien avec ce variant existe déjà, rechargez la page et réessayez" },
+        { status: 409 }
+      );
+    }
     console.error("Erreur lors de l'approbation de la proposition:", err);
     return NextResponse.json(
       { error: "Erreur lors de l'approbation de la proposition" },

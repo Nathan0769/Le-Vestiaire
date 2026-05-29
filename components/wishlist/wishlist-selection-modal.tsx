@@ -21,6 +21,7 @@ import type {
   ShareSelection,
 } from "@/types/wishlist-share";
 import { THEME_LIST } from "@/lib/theme";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
 
 interface WishlistSelectionModalProps {
   isOpen: boolean;
@@ -234,15 +235,7 @@ export function WishlistSelectionModal({
                         </h4>
                         <div className="flex items-center gap-2 mt-1">
                           <span className="text-xs text-muted-foreground truncate">
-                            {tJerseyType(
-                              item.jersey.type as
-                                | "HOME"
-                                | "AWAY"
-                                | "THIRD"
-                                | "FOURTH"
-                                | "GOALKEEPER"
-                                | "SPECIAL"
-                            )}{" "}
+                            {jerseyTypeLabel(tJerseyType(item.jersey.type as "HOME" | "AWAY" | "THIRD" | "FOURTH" | "GOALKEEPER" | "SPECIAL"), item.jersey.type, item.jersey.variant ?? 1)}{" "}
                             {item.jersey.season}
                           </span>
                         </div>

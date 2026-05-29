@@ -19,6 +19,7 @@ import { Club } from "@prisma/client";
 import { getJerseyUrl } from "@/lib/jersey-url";
 import { useTranslations, useLocale } from "next-intl";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
 import { Trash2 } from "lucide-react";
 import { useState } from "react";
 
@@ -30,6 +31,7 @@ type Props = {
     type: JerseyType;
     slug?: string | null;
     season?: string;
+    variant?: number;
   };
   leagueId: string;
   club: Pick<Club, "id" | "name" | "shortName" | "logoUrl" | "primaryColor" | "leagueId">;
@@ -57,7 +59,7 @@ export function JerseyCard({
       clubShortName: club.shortName,
     },
     locale,
-    typeTranslation: tJerseyType(jersey.type),
+    typeTranslation: jerseyTypeLabel(tJerseyType(jersey.type), jersey.type, jersey.variant ?? 1),
   });
 
   const handleClick = () => {
@@ -133,29 +135,13 @@ export function JerseyCard({
                 {club.name}
               </p>
               <p className="text-xs text-muted-foreground text-center">
-                {tJerseyType(
-                  jersey.type as
-                    | "HOME"
-                    | "AWAY"
-                    | "THIRD"
-                    | "FOURTH"
-                    | "GOALKEEPER"
-                    | "SPECIAL"
-                )}{" "}
+                {jerseyTypeLabel(tJerseyType(jersey.type as JerseyType), jersey.type, jersey.variant ?? 1)}{" "}
                 • {jersey.season}
               </p>
             </div>
           ) : (
             <p className="text-sm font-medium text-center">
-              {tJerseyType(
-                jersey.type as
-                  | "HOME"
-                  | "AWAY"
-                  | "THIRD"
-                  | "FOURTH"
-                  | "GOALKEEPER"
-                  | "SPECIAL"
-              )}
+              {jerseyTypeLabel(tJerseyType(jersey.type as JerseyType), jersey.type, jersey.variant ?? 1)}
             </p>
           )}
         </CardContent>

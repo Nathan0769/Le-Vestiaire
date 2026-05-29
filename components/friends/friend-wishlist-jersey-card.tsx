@@ -5,6 +5,7 @@ import type { FriendWishlistItem } from "@/types/friend-collection";
 import { useTranslations, useLocale } from "next-intl";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 import type { JerseyType } from "@/types/jersey";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
 
 interface FriendWishlistJerseyCardProps {
   wishlistItem: FriendWishlistItem;
@@ -24,7 +25,7 @@ export function FriendWishlistJerseyCard({
       clubShortName: wishlistItem.jersey.club.shortName,
     },
     locale,
-    typeTranslation: tJerseyType(wishlistItem.jersey.type as JerseyType),
+    typeTranslation: jerseyTypeLabel(tJerseyType(wishlistItem.jersey.type as JerseyType), wishlistItem.jersey.type, wishlistItem.jersey.variant ?? 1),
   });
 
   return (
@@ -43,7 +44,7 @@ export function FriendWishlistJerseyCard({
             {wishlistItem.jersey.club.name}
           </p>
           <p className="text-xs text-muted-foreground text-center truncate">
-            {tJerseyType(wishlistItem.jersey.type as JerseyType)} •{" "}
+            {jerseyTypeLabel(tJerseyType(wishlistItem.jersey.type as JerseyType), wishlistItem.jersey.type, wishlistItem.jersey.variant ?? 1)} •{" "}
             {wishlistItem.jersey.season}
           </p>
           {wishlistItem.jersey.retailPrice && (

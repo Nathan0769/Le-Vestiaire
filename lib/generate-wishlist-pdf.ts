@@ -3,6 +3,7 @@ interface WishlistItem {
   name: string;
   imageUrl: string;
   type: string;
+  variant: number;
   season: string;
   clubName: string;
 }
@@ -177,7 +178,7 @@ export async function generateWishlistPDF(
       doc.setTextColor(...colors.textLight);
       doc.setFontSize(10);
       doc.setFont("helvetica", "normal");
-      const typeLabel = getJerseyTypeLabel(item.type);
+      const typeLabel = getJerseyTypeLabel(item.type, item.variant);
       doc.text(`${typeLabel} • ${item.season}`, textX, y + 25);
 
       if (item.name !== item.clubName) {
@@ -225,7 +226,7 @@ export async function generateWishlistPDF(
   return doc.output("blob");
 }
 
-function getJerseyTypeLabel(type: string): string {
+function getJerseyTypeLabel(type: string, variant: number = 1): string {
   const typeLabels: Record<string, string> = {
     HOME: "Domicile",
     AWAY: "Extérieur",
@@ -234,7 +235,8 @@ function getJerseyTypeLabel(type: string): string {
     GOALKEEPER: "Gardien",
     SPECIAL: "Spécial",
   };
-  return typeLabels[type] || type;
+  const base = typeLabels[type] || type;
+  return type === "GOALKEEPER" && variant > 1 ? `${base} ${variant}` : base;
 }
 
 export function downloadPDF(blob: Blob, filename: string) {

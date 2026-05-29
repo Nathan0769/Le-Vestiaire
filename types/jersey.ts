@@ -12,6 +12,7 @@ export interface Jersey {
   description?: string | null;
   descriptionTranslations?: Record<string, string> | null;
   slug?: string | null;
+  variant: number;
   club: Club;
   createdAt: Date;
   updatedAt: Date;

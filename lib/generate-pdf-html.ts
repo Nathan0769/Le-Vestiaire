@@ -14,6 +14,7 @@ interface WishlistItem {
   name: string;
   imageUrl: string;
   type: string;
+  variant: number;
   season: string;
   clubName: string;
 }
@@ -79,9 +80,10 @@ async function loadTranslations(locale: string): Promise<Translations> {
   return messages.default as Translations;
 }
 
-function getJerseyTypeLabel(type: string, translations: Translations): string {
+function getJerseyTypeLabel(type: string, variant: number, translations: Translations): string {
   const jerseyTypes = translations.JerseyType;
-  return jerseyTypes[type] || type;
+  const base = jerseyTypes[type] || type;
+  return type === "GOALKEEPER" && variant > 1 ? `${base} ${variant}` : base;
 }
 
 function formatJerseyCount(count: number, translations: Translations, locale: string): string {
@@ -260,7 +262,7 @@ export async function generatePDFHTML(options: GeneratePDFHTMLOptions): Promise<
                       <span class="px-2 py-0.5 rounded text-xs font-medium ${
                         config.badge
                       } border">
-                        ${getJerseyTypeLabel(jersey.type, translations)}
+                        ${getJerseyTypeLabel(jersey.type, jersey.variant, translations)}
                       </span>
                       <span class="px-2 py-0.5 rounded text-xs font-medium bg-white/50 text-gray-800 border border-gray-300">
                         ${jersey.season}

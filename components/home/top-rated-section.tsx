@@ -34,7 +34,7 @@ export function TopRatedSection({
         clubShortName: jersey.club.shortName,
       },
       locale,
-      typeTranslation: tJerseyType(jersey.type as JerseyType),
+      typeTranslation: jerseyType(jersey.type, jersey.variant ?? 1),
     });
   };
 
@@ -175,7 +175,7 @@ export function TopRatedSection({
                   </h3>
 
                   <p className="text-xs text-muted-foreground">
-                    {jerseyType(jersey.type)} • {jersey.season}
+                    {jerseyType(jersey.type, jersey.variant ?? 1)} • {jersey.season}
                   </p>
 
                   <div className="flex items-center justify-between">

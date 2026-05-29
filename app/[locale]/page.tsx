@@ -125,6 +125,7 @@ SELECT
   j.name,
   j."imageUrl",
   j.type,
+  j.variant,
   j.season,
   j.brand,
   c.id as club_id,
@@ -152,6 +153,7 @@ LIMIT 6`;
       name: r.name,
       imageUrl: r.imageUrl,
       type: r.type,
+      variant: Number(r.variant) || 1,
       season: r.season,
       brand: r.brand,
       club: {
@@ -186,7 +188,7 @@ async function getRecentJerseys(): Promise<RecentJersey[]> {
   LIMIT 6
 )
 SELECT
-    j.id, j.name, j."imageUrl", j.type, j.season, j.brand, j."createdAt",
+    j.id, j.name, j."imageUrl", j.type, j.variant, j.season, j.brand, j."createdAt",
     c.id AS club_id, c.name AS club_name, c."shortName" AS club_short_name,
     l.id AS league_id, l.name AS league_name
 FROM latest_jerseys j
@@ -202,6 +204,7 @@ ORDER BY j."createdAt" DESC;
       name: j.name,
       imageUrl: j.imageUrl,
       type: j.type,
+      variant: Number(j.variant) || 1,
       season: j.season,
       brand: j.brand,
       createdAt: j.createdAt.toISOString(),

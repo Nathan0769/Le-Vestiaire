@@ -3,6 +3,7 @@ export type TopRatedJersey = {
   name: string;
   imageUrl: string;
   type: string;
+  variant: number;
   season: string;
   brand: string;
   club: {
@@ -29,6 +30,7 @@ export interface RecentJersey {
   name: string;
   imageUrl: string;
   type: string;
+  variant: number;
   season: string;
   brand: string;
   createdAt: string;
@@ -112,6 +114,7 @@ export type TopRatedRow = {
   name: string;
   imageUrl: string;
   type: string;
+  variant: number;
   season: string;
   brand: string;
   club_id: string;
@@ -163,6 +166,7 @@ export interface RawResult {
   name: string;
   imageUrl: string;
   type: string;
+  variant: number;
   season: string;
   brand: string;
   createdAt: Date;

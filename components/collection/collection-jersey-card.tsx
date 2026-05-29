@@ -8,6 +8,7 @@ import { CollectionJerseyModal } from "./collection-jersey-modal";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { useTranslations, useLocale } from "next-intl";
 import type { JerseyType } from "@/types/jersey";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 
 interface CollectionJerseyCardProps {
@@ -37,7 +38,7 @@ export function CollectionJerseyCard({
       clubShortName: localItem.jersey.club.shortName,
     },
     locale,
-    typeTranslation: tJerseyType(localItem.jersey.type as JerseyType),
+    typeTranslation: jerseyTypeLabel(tJerseyType(localItem.jersey.type as JerseyType), localItem.jersey.type, localItem.jersey.variant ?? 1),
   });
 
   const handleUpdate = (updatedItem: CollectionItemWithJersey) => {
@@ -64,8 +65,8 @@ export function CollectionJerseyCard({
     }
   };
 
-  const getJerseyTypeLabel = (type: string) => {
-    return tJerseyType(type as JerseyType);
+  const getJerseyTypeLabel = (type: string, variant: number) => {
+    return jerseyTypeLabel(tJerseyType(type as JerseyType), type, variant);
   };
 
   return (
@@ -89,7 +90,7 @@ export function CollectionJerseyCard({
               {localItem.jersey.club.name}
             </p>
             <p className="text-xs text-muted-foreground text-center">
-              {getJerseyTypeLabel(localItem.jersey.type)} •{" "}
+              {getJerseyTypeLabel(localItem.jersey.type, localItem.jersey.variant ?? 1)} •{" "}
               {localItem.jersey.season}
             </p>
 

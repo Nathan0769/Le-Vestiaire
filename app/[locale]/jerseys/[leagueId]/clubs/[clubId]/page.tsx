@@ -97,6 +97,7 @@ export default async function ClubDetailPage(props: Props) {
             name: true,
             imageUrl: true,
             type: true,
+            variant: true,
             season: true,
             brand: true,
             clubId: true,
