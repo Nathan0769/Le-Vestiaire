@@ -89,6 +89,7 @@ export default async function CollectionPage() {
           userPhotoUrl,
           jersey: {
             ...item.jersey,
+            variant: item.jersey.variant,
             retailPrice: item.jersey.retailPrice
               ? Number(item.jersey.retailPrice)
               : null,
