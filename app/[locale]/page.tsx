@@ -182,7 +182,7 @@ LIMIT 6`;
 async function getRecentJerseys(): Promise<RecentJersey[]> {
   const jerseys = (await prisma.$queryRaw`
    WITH latest_jerseys AS (
-  SELECT id, name, "imageUrl", type, season, brand, "createdAt", "clubId"
+  SELECT id, name, "imageUrl", type, variant, season, brand, "createdAt", "clubId"
   FROM jerseys
   ORDER BY "createdAt" DESC
   LIMIT 6
