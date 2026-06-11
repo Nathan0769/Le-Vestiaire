@@ -1,6 +1,6 @@
 # Politique de Confidentialité
 
-**Dernière mise à jour** : 23 septembre 2025
+**Dernière mise à jour** : 11 juin 2026
 
 ## 1. Informations générales
 
@@ -26,7 +26,7 @@ Le Vestiaire (accessible via le-vestiaire-foot.fr) est une application web de co
 
 Nous traitons vos données sur la base de :
 
-- **Votre consentement** : Pour l'inscription et l'utilisation du service
+- **Votre consentement** : Pour l'inscription, l'utilisation du service et l'affichage de publicités personnalisées
 - **Intérêt légitime** : Pour l'amélioration du service et les analytics
 
 ## 4. Utilisation des données
@@ -50,10 +50,14 @@ Vos données sont utilisées pour :
 
 Nous partageons certaines données avec nos prestataires :
 
-- **Google** : Authentification OAuth (email, nom, photo)
+- **Google** : Authentification OAuth (email, nom, photo) et diffusion de publicités via Google AdSense (données de navigation, adresse IP)
 - **Vercel** : Hébergement et analytics (données de navigation)
 - **Neon** : Base de données PostgreSQL (toutes données utilisateur)
-- **Supabase** : Stockage des images de profil
+- **Cloudflare R2** : Stockage des images (photos de profil, photos de maillots)
+
+### Publicité - Google AdSense
+
+Le Vestiaire utilise Google AdSense pour afficher des publicités. Google AdSense est un service de Google LLC (États-Unis). Dans ce cadre, Google peut collecter des données relatives à votre navigation (pages visitées, adresse IP, identifiants publicitaires) afin de personnaliser les annonces affichées. Ces données sont traitées selon la [politique de confidentialité de Google](https://policies.google.com/privacy). Vous pouvez gérer vos préférences publicitaires sur [adssettings.google.com](https://adssettings.google.com/).
 
 ## 6. Transferts internationaux
 

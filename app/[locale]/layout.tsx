@@ -4,7 +4,6 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
-import { GoogleAnalytics } from "@next/third-parties/google";
 
 type Props = {
   children: React.ReactNode;
@@ -157,9 +156,6 @@ export default async function LocaleLayout({
           <ClientWrapper>{children}</ClientWrapper>
         </NextIntlClientProvider>
       </body>
-      <GoogleAnalytics
-        gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? ""}
-      />
     </html>
   );
 }

@@ -45,10 +45,10 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
 
     const handleAccept = React.useCallback(() => {
       setIsOpen(false);
-
       const expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
       document.cookie = `cookieConsent=true; ${expires}; path=/; SameSite=Lax`;
       document.cookie = `cookieConsentAnalytics=true; ${expires}; path=/; SameSite=Lax`;
+      document.cookie = `cookieConsentAdvertising=true; ${expires}; path=/; SameSite=Lax`;
       setTimeout(() => {
         setHide(true);
       }, 700);
@@ -57,10 +57,10 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
 
     const handleDecline = React.useCallback(() => {
       setIsOpen(false);
-
       const expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
       document.cookie = `cookieConsent=true; ${expires}; path=/; SameSite=Lax`;
       document.cookie = `cookieConsentAnalytics=false; ${expires}; path=/; SameSite=Lax`;
+      document.cookie = `cookieConsentAdvertising=false; ${expires}; path=/; SameSite=Lax`;
       setTimeout(() => {
         setHide(true);
       }, 700);
@@ -70,7 +70,11 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
     React.useEffect(() => {
       try {
         setIsOpen(true);
-        if (document.cookie.includes("cookieConsent=true") && !demo) {
+        const hasBase = document.cookie.includes("cookieConsent=true");
+        const hasAdvertising =
+          document.cookie.includes("cookieConsentAdvertising=true") ||
+          document.cookie.includes("cookieConsentAdvertising=false");
+        if (hasBase && hasAdvertising && !demo) {
           setIsOpen(false);
           setTimeout(() => {
             setHide(true);

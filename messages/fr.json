@@ -1841,8 +1841,8 @@
   },
   "CookieConsent": {
     "title": "Utilisation des cookies",
-    "defaultDescription": "Nous utilisons des cookies pour améliorer votre expérience sur Le Vestiaire. Ces cookies nous permettent d'analyser l'utilisation du site et d'améliorer nos services.",
-    "acceptInfo": "En cliquant sur \"Accepter\", vous acceptez l'utilisation de cookies d'analyse. Les cookies essentiels restent actifs.",
+    "defaultDescription": "Nous utilisons des cookies pour améliorer votre expérience, analyser le trafic et afficher des publicités personnalisées via Google AdSense.",
+    "acceptInfo": "En cliquant sur \"Accepter\", vous acceptez les cookies d'analyse et les cookies publicitaires (Google AdSense). Les cookies essentiels restent toujours actifs.",
     "learnMore": "En savoir plus",
     "decline": "Refuser",
     "accept": "Accepter"
