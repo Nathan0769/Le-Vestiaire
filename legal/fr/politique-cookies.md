@@ -24,6 +24,17 @@ Ces cookies nous aident à comprendre comment vous utilisez le site pour amélio
 
 Vous pouvez refuser ces cookies via la bannière de consentement sans affecter votre expérience de navigation.
 
+### 3. Cookies publicitaires (Google AdSense)
+
+Pour financer le service et maintenir Le Vestiaire accessible gratuitement, nous utilisons Google AdSense, un service de publicité fourni par Google LLC. Google AdSense dépose des cookies tiers sur votre appareil afin de personnaliser les annonces affichées en fonction de vos centres d'intérêt et de votre navigation.
+
+- **Google AdSense** : Affichage d'annonces publicitaires ciblées
+- **DoubleClick (Google)** : Mesure de la performance des annonces et prévention de la fraude publicitaire
+
+Ces cookies collectent des données telles que votre adresse IP, les pages visitées et les interactions avec les annonces. Les données sont traitées par Google LLC (États-Unis) dans le cadre du programme AdSense. Pour en savoir plus sur la manière dont Google utilise ces données, consultez la [politique de confidentialité de Google](https://policies.google.com/privacy).
+
+Vous pouvez refuser les cookies publicitaires via la bannière de consentement ou en vous rendant sur [Mes paramètres de publicité Google](https://adssettings.google.com/).
+
 ## Gestion de vos préférences
 
 Vous pouvez à tout moment modifier vos préférences concernant les cookies :
@@ -37,6 +48,7 @@ Vous pouvez à tout moment modifier vos préférences concernant les cookies :
 - **Cookies de session** : Supprimés à la fermeture du navigateur
 - **Cookie de consentement** : Conservé jusqu'en 2099 ou jusqu'à suppression manuelle
 - **Cookies d'analytics** : 13 mois maximum
+- **Cookies publicitaires (Google AdSense)** : jusqu'à 13 mois selon le cookie
 
 ## Vos droits (RGPD)
 

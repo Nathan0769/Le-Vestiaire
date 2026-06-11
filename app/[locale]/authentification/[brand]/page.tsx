@@ -101,17 +101,21 @@ export default async function BrandAuthPage({ params }: BrandPageProps) {
           </BreadcrumbList>
         </Breadcrumb>
 
-        <AdBanner />
+        <AdBanner slot="8589608513" />
 
         <div className="max-w-full overflow-hidden">
           <BrandGuideComponent guide={guide} />
         </div>
+
+        <AdBanner slot="8589608513" />
 
         {guide.scanAvailable && (
           <div className="pt-8 max-w-full overflow-hidden">
             <ScanPlaceholder brand={brandInfo.name} />
           </div>
         )}
+
+        <AdBanner slot="8589608513" />
       </div>
     </>
   );

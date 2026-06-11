@@ -73,7 +73,7 @@ export default async function AuthentificationPage() {
 
       <BrandGrid brands={brands} />
 
-      <AdBanner />
+      <AdBanner slot="8589608513" />
 
       <div className="space-y-3">
         <h2 className="font-semibold text-lg">Guides comparatifs</h2>

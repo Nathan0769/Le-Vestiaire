@@ -50,12 +50,6 @@ export default function ClientWrapper({
       <CookieConsent
         variant="default"
         learnMoreHref="/politique-cookies"
-        onAcceptCallback={() => {
-          console.log("Cookies acceptés");
-        }}
-        onDeclineCallback={() => {
-          console.log("Cookies refusés");
-        }}
       />
     </ThemeProvider>
   );

@@ -57,7 +57,7 @@ export default async function SupporterVsProPage() {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <AdBanner />
+      <AdBanner slot="8589608513" />
 
       <div className="max-w-full overflow-hidden">
         <ComparisonGuide guide={guide} />

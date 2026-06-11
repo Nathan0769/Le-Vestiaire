@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Politique de Cookies - Le Vestiaire Foot",
   description:
     "Découvrez comment Le Vestiaire utilise les cookies pour améliorer votre expérience.",
-  robots: "noindex, follow",
+  robots: "index, follow",
 };
 
 interface PolitiqueCookiesPageProps {

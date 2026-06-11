@@ -6,7 +6,7 @@ import { MarkdownRenderer } from "@/components/legal/markdown-renderer";
 export const metadata = {
   title: "Politique de Confidentialité - Le Vestiaire",
   description: "Politique de protection des données personnelles",
-  robots: "noindex, follow",
+  robots: "index, follow",
 };
 
 interface PolitiqueConfidentialitePageProps {
