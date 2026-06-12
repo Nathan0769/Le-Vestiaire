@@ -42,6 +42,7 @@ export function PasswordSettings({ isGoogleOnly }: PasswordSettingsProps) {
       const { error } = await authClient.changePassword({
         newPassword: passwordData.newPassword,
         currentPassword: passwordData.currentPassword,
+        revokeOtherSessions: true,
       });
 
       if (error) {

@@ -23,7 +23,11 @@ export function LeagueCard({ league }: Props) {
     >
       <CardContent className="flex flex-col items-center justify-center p-6">
         <div className="relative w-16 h-16 mb-4">
-          {league.logoDarkUrl ? (
+          {!league.logoUrl ? (
+            <div className="w-full h-full rounded-lg bg-muted flex items-center justify-center">
+              <span className="text-muted-foreground text-xl">?</span>
+            </div>
+          ) : league.logoDarkUrl ? (
             <>
               <Image
                 src={league.logoUrl}
@@ -32,7 +36,6 @@ export function LeagueCard({ league }: Props) {
                 sizes="64px"
                 className="object-contain dark:hidden"
               />
-
               <Image
                 src={league.logoDarkUrl}
                 alt={league.name}
