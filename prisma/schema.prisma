@@ -7,97 +7,81 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+/// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model User {
-  id            String   @id @default(cuid())
-  name          String
-  username      String?  @unique
-  email         String   @unique(map: "user_email_key")
-  emailVerified Boolean  @default(false)
-  image         String?
-  plan          UserPlan @default(FREE)
-  stripeCustomerId String?
-  lastLoginMethod String?
-
-  // Better Auth Admin fields
-  role          String   @default("user")
-  banned        Boolean  @default(false)
-  banReason     String?
-  banExpiresIn  BigInt?
-
-  // Contribution stats
-  contributionsCount         Int @default(0)
-  approvedContributionsCount Int @default(0)
-
-  firstName       String?
-  lastName        String?
-  avatar          String?
-  bio             String?
-  favoriteClubId  String?
-  favoriteClub    Club?        @relation(fields: [favoriteClubId], references: [id])
-  leaderboardAnonymous Boolean @default(true) @map("leaderboard_anonymous")
-  emailMarketing       Boolean @default(true) @map("email_marketing")
-  notificationsEnabled Boolean @default(true) @map("notifications_enabled")
-  reminderStep         Int     @default(0)    @map("reminder_step")
-  collection      UserJersey[]
-  wishlist        Wishlist[]
-  ratings         Rating[]
-  sentFriendships     Friendship[] @relation("SentFriendships")
-  receivedFriendships Friendship[] @relation("ReceivedFriendships")
-  achievements    Achievement[]
-  jerseyProposals JerseyProposal[]
-  contributionHistory ContributionHistory[]
-  descriptionProposals DescriptionProposal[]
-  reviewedDescriptions DescriptionProposal[] @relation("ReviewedDescriptions")
-  // ----------------------
-
-  // Relations auth
-  sessions        Session[]
-  accounts        Account[]
-  pushTokens      PushToken[]
-
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                         String                @id @default(cuid())
+  name                       String
+  email                      String                @unique
+  emailVerified              Boolean               @default(false)
+  image                      String?
+  firstName                  String?
+  lastName                   String?
+  avatar                     String?
+  bio                        String?
+  favoriteClubId             String?
+  createdAt                  DateTime              @default(now())
+  updatedAt                  DateTime              @updatedAt
+  username                   String?
+  leaderboardAnonymous       Boolean?              @default(true) @map("leaderboard_anonymous")
+  role                       String                @default("user")
+  banned                     Boolean               @default(false)
+  banReason                  String?
+  banExpiresIn               BigInt?
+  contributionsCount         Int                   @default(0)
+  approvedContributionsCount Int                   @default(0)
+  plan                       UserPlan              @default(FREE)
+  stripeCustomerId           String?
+  lastLoginMethod            String?
+  emailMarketing             Boolean               @default(true) @map("email_marketing")
+  reminderStep               Int                   @default(0) @map("reminder_step")
+  notificationsEnabled       Boolean               @default(true) @map("notifications_enabled")
+  accounts                   Account[]
+  achievements               Achievement[]
+  contributionHistory        ContributionHistory[]
+  reviewedDescriptions       DescriptionProposal[] @relation("ReviewedDescriptions")
+  descriptionProposals       DescriptionProposal[]
+  receivedFriendships        Friendship[]          @relation("ReceivedFriendships")
+  sentFriendships            Friendship[]          @relation("SentFriendships")
+  jerseyProposals            JerseyProposal[]
+  pushTokens                 PushToken[]
+  ratings                    Rating[]
+  sessions                   Session[]
+  favoriteClub               Club?                 @relation(fields: [favoriteClubId], references: [id])
+  collection                 UserJersey[]
+  wishlist                   Wishlist[]
 
   @@map("user")
 }
 
-enum UserPlan {
-  FREE
-  PRO
-}
-
 model Session {
   id        String   @id @default(cuid())
-  token     String   @unique
   userId    String
-  expiresAt DateTime
   createdAt DateTime @default(now())
+  expiresAt DateTime
+  token     String   @unique
   updatedAt DateTime @updatedAt
-
   ipAddress String?
   userAgent String?
-
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("sessions")
 }
 
 model Account {
-  id                    String   @id @default(cuid())
+  id                    String    @id @default(cuid())
   userId                String
-  accountId             String
+  scope                 String?
   providerId            String
   accessToken           String?
-  refreshToken          String?
-  idToken               String?
   accessTokenExpiresAt  DateTime?
-  refreshTokenExpiresAt DateTime?
-  scope                 String?
+  createdAt             DateTime  @default(now())
+  idToken               String?
   password              String?
-  createdAt             DateTime @default(now())
-  updatedAt             DateTime @updatedAt
-
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  refreshToken          String?
+  refreshTokenExpiresAt DateTime?
+  updatedAt             DateTime  @updatedAt
+  accountId             String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([providerId, accountId])
   @@map("accounts")
@@ -116,113 +100,109 @@ model Verification {
 }
 
 model Jersey {
-  id          String     @id @default(cuid())
-  name        String
-  clubId      String
-  season      String
-  type        JerseyType
-  brand       String
-  imageUrl    String
-  retailPrice Decimal?
+  id                      String                @id @default(cuid())
+  name                    String
+  clubId                  String
+  season                  String
+  type                    JerseyType
+  brand                   String
+  imageUrl                String
+  retailPrice             Decimal?
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime              @updatedAt
   description             String?
+  slug                    String?               @unique
   descriptionTranslations Json?
-  slug                    String?    @unique
-  variant                 Int        @default(1)
-
-  club       Club         @relation(fields: [clubId], references: [id])
-  collection UserJersey[]
-  wishlist   Wishlist[]
-  ratings    Rating[]
-  descriptionProposals DescriptionProposal[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  variant                 Int                   @default(1)
+  descriptionProposals    DescriptionProposal[]
+  club                    Club                  @relation(fields: [clubId], references: [id])
+  ratings                 Rating[]
+  collection              UserJersey[]
+  wishlist                Wishlist[]
 
   @@unique([clubId, season, type, variant])
+  @@index([clubId], map: "idx_jerseys_club_id")
+  @@index([createdAt(sort: Desc)], map: "idx_jerseys_createdat")
   @@map("jerseys")
 }
 
 model Rating {
-  id       String @id @default(cuid())
-  userId   String
-  jerseyId String
-  rating   Decimal    // 1 à 5 étoiles
-  
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  jersey   Jersey @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-  
+  id        String   @id @default(cuid())
+  userId    String
+  jerseyId  String
+  rating    Decimal
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  jersey    Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, jerseyId]) 
+  @@unique([userId, jerseyId])
+  @@index([jerseyId, rating, id], map: "idx_ratings_jersey_agg")
+  @@index([jerseyId], map: "idx_ratings_jersey_id")
   @@map("ratings")
 }
 
 model UserJersey {
-  id              String         @id @default(cuid())
-  userId          String
-  jerseyId        String
-  version         JerseyVersion  @default(REPLICA)
-  size            Size?
-  condition       Condition
-  hasTags         Boolean        @default(false)
-  playerName      String?
-  playerNumber    Int?
-  purchasePrice   Decimal?
-  purchaseDate    DateTime?
-  notes           String?
-  userPhotoUrl    String?
+  id                 String        @id @default(cuid())
+  userId             String
+  jerseyId           String
+  size               Size?
+  condition          Condition
+  hasTags            Boolean       @default(false)
+  purchasePrice      Decimal?
+  purchaseDate       DateTime?
+  notes              String?
+  userPhotoUrl       String?
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+  isFromMysteryBox   Boolean       @default(false)
+  isGift             Boolean       @default(false)
+  playerName         String?
+  playerNumber       Int?
+  version            JerseyVersion @default(REPLICA)
+  isSigned           Boolean       @default(false)
+  signedBy           String?
+  hasAuthCertificate Boolean       @default(false)
+  matchDescription   String?
+  matchDate          DateTime?
+  certificateUrl     String?
+  jersey             Jersey        @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  isGift           Boolean   @default(false)
-  isFromMysteryBox Boolean   @default(false)
-
-  isSigned            Boolean   @default(false)
-  signedBy            String?
-  hasAuthCertificate  Boolean   @default(false)
-  certificateUrl      String?
-  matchDescription    String?
-  matchDate           DateTime?
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  jersey Jersey @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
+  @@unique([userId, jerseyId])
   @@index([userId])
   @@index([jerseyId])
   @@map("user_jerseys")
 }
 
 model Club {
-  id                String  @id @default(cuid())
+  id                String           @id @default(cuid())
   name              String
   shortName         String
   leagueId          String
   logoUrl           String
   primaryColor      String
   apiFootballTeamId Int?
+  trophies          ClubTrophy[]
+  league            League           @relation(fields: [leagueId], references: [id])
+  jerseyProposals   JerseyProposal[]
+  jerseys           Jersey[]
+  seasonPlayers     SeasonPlayer[]
+  favoriteBy        User[]
 
-  league          League           @relation(fields: [leagueId], references: [id])
-  jerseys         Jersey[]
-  favoriteBy      User[]
-  jerseyProposals JerseyProposal[]
-  seasonPlayers   SeasonPlayer[]
-  trophies        ClubTrophy[]
-
+  @@index([leagueId], map: "idx_clubs_league_id")
   @@map("clubs")
 }
 
 model ClubTrophy {
-  id          String @id @default(cuid())
+  id          String   @id @default(cuid())
   clubId      String
   competition String
   country     String
   season      String
   place       String
-
-  club      Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
-  fetchedAt DateTime @default(now())
+  fetchedAt   DateTime @default(now())
+  club        Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
 
   @@unique([clubId, competition, season, place])
   @@index([clubId, season])
@@ -234,63 +214,170 @@ model League {
   name        String
   country     String
   logoUrl     String
-  logoDarkUrl String?
   tier        Int     @default(1)
-
-  clubs Club[]
+  logoDarkUrl String?
+  clubs       Club[]
 
   @@map("leagues")
 }
 
 model Wishlist {
-  id       String @id @default(cuid())
-  userId   String
-  jerseyId String
-  priority Int    @default(1)
-
-  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  jersey Jersey @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-
+  id        String   @id @default(cuid())
+  userId    String
+  jerseyId  String
+  priority  Int      @default(1)
   createdAt DateTime @default(now())
+  jersey    Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, jerseyId])
   @@map("wishlist")
 }
 
 model Friendship {
-  id         String   @id @default(cuid())
+  id         String           @id @default(cuid())
   senderId   String
   receiverId String
   status     FriendshipStatus @default(PENDING)
-  
-  sender     User     @relation("SentFriendships", fields: [senderId], references: [id], onDelete: Cascade)
-  receiver   User     @relation("ReceivedFriendships", fields: [receiverId], references: [id], onDelete: Cascade)
-  
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  receiver   User             @relation("ReceivedFriendships", fields: [receiverId], references: [id], onDelete: Cascade)
+  sender     User             @relation("SentFriendships", fields: [senderId], references: [id], onDelete: Cascade)
+
   @@unique([senderId, receiverId])
-  @@index([senderId])
-  @@index([receiverId])
-  @@index([status])
   @@map("friendships")
 }
 
 model Achievement {
   id         String   @id @default(cuid())
   userId     String   @map("user_id")
-  badgeType  String   @map("badge_type")  
-  badgeMonth String?  @map("badge_month") 
-  rank       Int                          
-  category   String                       
-  metadata   Json?                        
-  earnedAt   DateTime @default(now()) @map("earned_at")
-  createdAt  DateTime @default(now()) @map("created_at")
-  
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  @@unique([userId, badgeType, badgeMonth, category], name: "unique_monthly_badge")
+  badgeType  String   @map("badge_type")
+  badgeMonth String?  @map("badge_month")
+  rank       Int
+  category   String
+  metadata   Json?
+  earnedAt   DateTime @default(now()) @map("earned_at") @db.Timestamp(6)
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(6)
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
+
+  @@unique([userId, badgeType, badgeMonth, category], name: "unique_monthly_badge", map: "unique_monthly_badge")
   @@map("achievements")
+}
+
+model JerseyProposal {
+  id          String     @id @default(cuid())
+  userId      String
+  name        String
+  clubId      String
+  season      String
+  type        JerseyType
+  brand       String
+  imageUrl    String
+  description String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  club        Club       @relation(fields: [clubId], references: [id])
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([clubId])
+  @@map("jersey_proposals")
+}
+
+model ContributionHistory {
+  id        String   @id @default(cuid())
+  userId    String
+  jerseyId  String?
+  action    String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("contribution_history")
+}
+
+model SeasonPlayer {
+  id            String          @id @default(cuid())
+  clubId        String
+  season        String
+  name          String
+  number        Int?
+  position      PlayerPosition?
+  photoUrl      String?
+  goals         Int?
+  assists       Int?
+  matches       Int?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  cleanSheets   Int?
+  goalsConceded Int?
+  club          Club            @relation(fields: [clubId], references: [id], onDelete: Cascade)
+
+  @@index([clubId, season])
+  @@map("season_players")
+}
+
+model DescriptionProposal {
+  id              String         @id @default(cuid())
+  userId          String
+  jerseyId        String
+  description     String
+  status          ProposalStatus @default(PENDING)
+  rejectionReason String?
+  reviewedBy      String?
+  reviewedAt      DateTime?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  jersey          Jersey         @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  reviewer        User?          @relation("ReviewedDescriptions", fields: [reviewedBy], references: [id])
+  user            User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([jerseyId])
+  @@index([status])
+  @@map("description_proposals")
+}
+
+model PushToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  platform  String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("push_tokens")
+}
+
+model CfsPromo {
+  id           String   @id @default(cuid())
+  name         String
+  imageUrl     String
+  price        Decimal
+  promoPrice   Decimal
+  affiliateUrl String
+  club         String?
+  brand        String?
+  isActive     Boolean  @default(true)
+  position     Int      @default(0)
+  source       String   @default("clearance")
+  sizes        String[] @default([])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
+
+  @@map("cfs_promos")
+}
+
+model stripe_events {
+  id        String   @id
+  type      String
+  processed Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+enum UserPlan {
+  FREE
+  PRO
 }
 
 enum JerseyVersion {
@@ -312,9 +399,9 @@ enum JerseyType {
   HOME
   AWAY
   THIRD
-  FOURTH
   GOALKEEPER
   SPECIAL
+  FOURTH
   HALLOWEEN
   ANNIVERSARY
   CENTENAIRE
@@ -348,87 +435,6 @@ enum Condition {
   POOR
 }
 
-model JerseyProposal {
-  id          String     @id @default(cuid())
-  userId      String
-  name        String
-  clubId      String
-  season      String
-  type        JerseyType
-  brand       String
-  imageUrl    String
-  description String?
-
-  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
-  club   Club @relation(fields: [clubId], references: [id], onDelete: Restrict)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([clubId])
-  @@map("jersey_proposals")
-}
-
-model ContributionHistory {
-  id        String   @id @default(cuid())
-  userId    String
-  jerseyId  String?
-  action    String
-  createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@map("contribution_history")
-}
-
-model SeasonPlayer {
-  id             String          @id @default(cuid())
-  clubId         String
-  season         String
-  name           String
-  number         Int?
-  position       PlayerPosition?
-  photoUrl       String?
-  goals          Int?
-  assists        Int?
-  matches        Int?
-  cleanSheets    Int?
-  goalsConceded  Int?
-
-  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([clubId, season])
-  @@map("season_players")
-}
-
-model DescriptionProposal {
-  id          String         @id @default(cuid())
-  userId      String
-  jerseyId    String
-  description String
-  status      ProposalStatus @default(PENDING)
-  rejectionReason String?
-  reviewedBy  String?
-  reviewedAt  DateTime?
-
-  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  jersey   Jersey  @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-  reviewer User?   @relation("ReviewedDescriptions", fields: [reviewedBy], references: [id], onDelete: SetNull)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@index([userId])
-  @@index([jerseyId])
-  @@index([status])
-  @@map("description_proposals")
-}
-
 enum ProposalStatus {
   PENDING
   APPROVED
@@ -440,35 +446,4 @@ enum PlayerPosition {
   DEFENDER
   MIDFIELDER
   FORWARD
-}
-
-model PushToken {
-  id        String   @id @default(cuid())
-  userId    String
-  token     String   @unique
-  platform  String   // "ios" | "android"
-  createdAt DateTime @default(now())
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@map("push_tokens")
-}
-
-model CfsPromo {
-  id           String   @id @default(cuid())
-  name         String
-  imageUrl     String
-  price        Decimal
-  promoPrice   Decimal
-  affiliateUrl String
-  club         String?
-  brand        String?
-  isActive     Boolean  @default(true)
-  position     Int      @default(0)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("cfs_promos")
 }
