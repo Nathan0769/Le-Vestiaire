@@ -79,7 +79,7 @@ export default async function PublicWishlistPage({
     notFound();
   }
 
-  const isAnonymous = targetUser.leaderboardAnonymous;
+  const isAnonymous = targetUser.leaderboardAnonymous ?? false;
   const displayName = isAnonymous
     ? t("anonymous")
     : (targetUser.username ?? targetUser.name);
