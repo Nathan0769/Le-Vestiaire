@@ -176,4 +176,11 @@
   body {
     @apply bg-background text-foreground;
   }
+  button,
+  [role="button"],
+  select,
+  label[for],
+  summary {
+    cursor: pointer;
+  }
 }

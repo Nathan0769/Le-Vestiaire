@@ -31,7 +31,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { Loader2, Pencil, Trash2, Plus } from "lucide-react";
+import { Loader2, Pencil, Trash2, Plus, RefreshCw } from "lucide-react";
 
 interface CfsPromo {
   id: string;
@@ -65,6 +65,7 @@ export function CfsPromosManager() {
   const [promos, setPromos] = useState<CfsPromo[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [scraping, setScraping] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
@@ -88,6 +89,25 @@ export function CfsPromosManager() {
       toast.error("Erreur lors du chargement");
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleScrape() {
+    if (!confirm("Lancer le scraper CFS ? Toutes les promos actuelles seront remplacées. Cela peut prendre 2-3 minutes.")) return;
+    try {
+      setScraping(true);
+      const res = await fetch("/api/admin/cfs-promos/scrape", { method: "POST" });
+      const data = await res.json();
+      if (res.ok) {
+        toast.success(`${data.count} promos importées depuis CFS`);
+        await fetchPromos();
+      } else {
+        toast.error(data.error || "Erreur lors du scraping");
+      }
+    } catch {
+      toast.error("Erreur lors du scraping");
+    } finally {
+      setScraping(false);
     }
   }
 
@@ -221,10 +241,23 @@ export function CfsPromosManager() {
           </p>
         </div>
         <div className="flex gap-2">
-          <Button onClick={fetchPromos} variant="outline">
+          <Button onClick={fetchPromos} variant="outline" disabled={scraping}>
             Actualiser
           </Button>
-          <Button onClick={openCreate} className="gap-2">
+          <Button onClick={handleScrape} variant="outline" disabled={scraping} className="gap-2">
+            {scraping ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Scraping en cours...
+              </>
+            ) : (
+              <>
+                <RefreshCw className="h-4 w-4" />
+                Scraper CFS
+              </>
+            )}
+          </Button>
+          <Button onClick={openCreate} className="gap-2" disabled={scraping}>
             <Plus className="h-4 w-4" />
             Ajouter
           </Button>

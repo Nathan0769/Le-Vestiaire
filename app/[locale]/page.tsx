@@ -406,6 +406,8 @@ async function getCfsPromos() {
         affiliateUrl: true,
         club: true,
         brand: true,
+        source: true,
+        sizes: true,
       },
     });
   } catch {
@@ -769,6 +771,8 @@ export default async function HomePage({
         ...p,
         price: p.price.toString(),
         promoPrice: p.promoPrice.toString(),
+        source: p.source,
+        sizes: p.sizes,
       }))} />
 
       <StatsSection
