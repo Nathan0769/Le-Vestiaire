@@ -18,7 +18,7 @@ export default async function UsernameRedirectPage({
 
   const { username } = await params;
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user.findFirst({
     where: { username },
     select: { id: true },
   });
