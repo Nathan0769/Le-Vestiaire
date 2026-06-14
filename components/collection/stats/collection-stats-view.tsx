@@ -15,6 +15,8 @@ import { SpendingTimelineChart } from "./spending-timeline-chart";
 import { FinancialStatsCards } from "./financial-stats-cards";
 import { DiversityStatsCards } from "./diversity-stats-cards";
 import { RecordsCards } from "./records-cards";
+import { ActivityHeatmap } from "./activity-heatmap";
+import { DecadeDistributionChart } from "./decade-distribution-chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslations } from "next-intl";
 
@@ -70,17 +72,16 @@ interface CollectionStats {
       uniqueCountries: number;
     };
     records: {
-      oldestAcquisition: {
-        jerseyName: string;
-        clubName: string;
-        date: string;
-      };
-      newestAcquisition: {
-        jerseyName: string;
-        clubName: string;
-        date: string;
-      };
+      oldestAcquisition: { jerseyName: string; clubName: string; date: string };
+      newestAcquisition: { jerseyName: string; clubName: string; date: string };
+      topClub: { club: string; count: number } | null;
+      topLeague: { league: string; country: string; count: number } | null;
+      topBrand: { brand: string; count: number } | null;
+      topSeason: { season: string; count: number } | null;
+      mostActiveMonth: { month: string; count: number } | null;
+      longestStreak: number;
     };
+    activityHeatmap: { date: string; count: number }[];
   } | null;
 }
 
@@ -161,6 +162,9 @@ export function CollectionStatsView() {
             <BrandDistributionChart data={data.stats.brandDistribution} />
             <TypeDistributionChart data={data.stats.typeDistribution} />
           </div>
+          <div className="w-full">
+            <ActivityHeatmap data={data.stats.activityHeatmap} />
+          </div>
         </div>
       </TabsContent>
 
@@ -172,6 +176,7 @@ export function CollectionStatsView() {
           <ConditionDistributionChart data={data.stats.conditionDistribution} />
         </div>
         <VersionDistributionChart data={data.stats.versionDistribution} />
+        <DecadeDistributionChart data={data.stats.seasonDistribution} />
         <SourceDistributionChart
           data={data.stats.sourceDistribution}
           additional={data.stats.additional}
@@ -189,6 +194,10 @@ export function CollectionStatsView() {
         <RecordsCards
           records={data.stats.records}
           additional={data.stats.additional}
+          financial={{
+            mostExpensive: data.stats.financial.mostExpensive,
+            leastExpensive: data.stats.financial.leastExpensive,
+          }}
         />
       </TabsContent>
     </Tabs>

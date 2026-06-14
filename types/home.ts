@@ -71,6 +71,9 @@ export interface UserHomeStats {
       createdAt: string;
     }>;
     leagueStats: Record<string, number>;
+    uniqueClubs: number;
+    uniqueCountries: number;
+    uniqueLeagues: number;
   };
   wishlist: {
     total: number;

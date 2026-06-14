@@ -15,6 +15,7 @@
     "jerseySuggestions": "Suggestion de maillots",
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
+    "stats": "Mes Statistiques",
     "bonsPlansSectionLabel": "Bons plans",
     "cfsSalesLink": "Maillots soldés CFS"
   },
@@ -474,8 +475,10 @@
       "withCustomPhoto": "Avec photo perso"
     },
     "spendingTimeline": {
-      "title": "Évolution des dépenses",
+      "title": "Investissement cumulé",
       "spent": "dépensé",
+      "monthlySpent": "Ce mois",
+      "totalInvested": "Total investi",
       "noData": "Aucune donnée de dépenses disponible"
     },
     "financial": {
@@ -489,6 +492,9 @@
       "totalRetailValueDescription": "Prix retail cumulé",
       "mostExpensive": "Plus cher",
       "leastExpensive": "Moins cher",
+      "marketValue": "Valeur marché",
+      "marketValueDescription": "Estimation via prix de revente",
+      "comingSoon": "Bientôt",
       "noData": "Aucune donnée disponible"
     },
     "diversity": {
@@ -498,6 +504,17 @@
       "uniqueLeaguesDescription": "Représentés",
       "uniqueCountries": "Pays différents",
       "uniqueCountriesDescription": "À travers le monde"
+    },
+    "activityHeatmap": {
+      "title": "Activité d'acquisition (12 derniers mois)",
+      "noJersey": "Aucun maillot ce jour",
+      "jerseyCount": "{count, plural, one {# maillot ajouté} other {# maillots ajoutés}}",
+      "less": "Moins",
+      "more": "Plus"
+    },
+    "decadeDistribution": {
+      "title": "Répartition par décennie",
+      "jerseyCount": "{count, plural, one {# maillot} other {# maillots}}"
     },
     "versionDistribution": {
       "title": "Répartition par version",
@@ -514,6 +531,16 @@
     "records": {
       "oldestAcquisition": "Première acquisition",
       "newestAcquisition": "Dernière acquisition",
+      "topClub": "Club de coeur",
+      "topLeague": "Ligue de coeur",
+      "topBrand": "Marque fidèle",
+      "topSeason": "Saison phare",
+      "mostActiveMonth": "Mois le plus actif",
+      "longestStreak": "Plus longue série",
+      "streakMonths": "{count, plural, one {# mois consécutif} other {# mois consécutifs}}",
+      "mostExpensive": "Maillot le plus cher",
+      "leastExpensive": "Maillot le moins cher",
+      "jerseyCount": "{count, plural, one {# maillot} other {# maillots}}",
       "customizationStats": "Personnalisations",
       "withTags": "Avec étiquettes",
       "withPersonalization": "Personnalisés",
@@ -1002,7 +1029,15 @@
       "jerseysFrom": "Maillots de",
       "startCollection": "Commencez votre collection pour voir vos stats !",
       "recentAdditionsCollection": "Derniers ajouts à votre collection",
-      "recentAdditionsWishlist": "Derniers ajouts à vos envies"
+      "recentAdditionsWishlist": "Derniers ajouts à vos envies",
+      "statsTeaser": {
+        "title": "Vos Stats en Détail",
+        "subtitle": "Analysez votre collection sous tous les angles",
+        "cta": "Voir les statistiques",
+        "uniqueClubs": "Clubs uniques",
+        "uniqueCountries": "Pays représentés",
+        "uniqueLeagues": "Ligues différentes"
+      }
     },
     "features": {
       "title": "Pourquoi choisir Le Vestiaire ?",

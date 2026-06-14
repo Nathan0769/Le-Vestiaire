@@ -15,6 +15,7 @@
     "jerseySuggestions": "Trikot-Vorschläge",
     "openMenu": "Menü öffnen",
     "closeMenu": "Menü schließen",
+    "stats": "Meine Statistiken",
     "bonsPlansSectionLabel": "Angebote",
     "cfsSalesLink": "CFS Sale-Trikots"
   },
@@ -477,9 +478,22 @@
       "withCustomPhoto": "Eigenes Foto"
     },
     "spendingTimeline": {
-      "title": "Ausgabenentwicklung",
+      "title": "Kumulierte Investition",
       "spent": "ausgegeben",
+      "monthlySpent": "Diesen Monat",
+      "totalInvested": "Gesamt investiert",
       "noData": "Keine Ausgabendaten verfügbar"
+    },
+    "activityHeatmap": {
+      "title": "Erwerbsaktivität (letzte 12 Monate)",
+      "noJersey": "Kein Trikot an diesem Tag",
+      "jerseyCount": "{count, plural, one {# Trikot hinzugefügt} other {# Trikots hinzugefügt}}",
+      "less": "Weniger",
+      "more": "Mehr"
+    },
+    "decadeDistribution": {
+      "title": "Verteilung nach Jahrzehnt",
+      "jerseyCount": "{count, plural, one {# Trikot} other {# Trikots}}"
     },
     "financial": {
       "totalCollectionValue": "Gesamtwert",
@@ -492,6 +506,9 @@
       "totalRetailValueDescription": "Kumulierter Ladenpreis",
       "mostExpensive": "Teuerstes",
       "leastExpensive": "Günstigstes",
+      "marketValue": "Marktwert",
+      "marketValueDescription": "Schätzung via Wiederverkaufspreise",
+      "comingSoon": "Demnächst",
       "noData": "Keine Daten verfügbar"
     },
     "diversity": {
@@ -517,6 +534,16 @@
     "records": {
       "oldestAcquisition": "Erste Erwerbung",
       "newestAcquisition": "Neueste Erwerbung",
+      "topClub": "Lieblingsverein",
+      "topLeague": "Lieblingsliga",
+      "topBrand": "Treue Marke",
+      "topSeason": "Beste Saison",
+      "mostActiveMonth": "Aktivster Monat",
+      "longestStreak": "Längste Serie",
+      "streakMonths": "{count, plural, one {# aufeinanderfolgender Monat} other {# aufeinanderfolgende Monate}}",
+      "mostExpensive": "Teuerstes Trikot",
+      "leastExpensive": "Günstigstes Trikot",
+      "jerseyCount": "{count, plural, one {# Trikot} other {# Trikots}}",
       "customizationStats": "Personalisierungen",
       "withTags": "Mit Etiketten",
       "withPersonalization": "Personalisiert",
@@ -1005,7 +1032,15 @@
       "jerseysFrom": "Trikots von",
       "startCollection": "Starte deine Sammlung, um deine Statistiken zu sehen!",
       "recentAdditionsCollection": "Letzte Ergänzungen in deiner Sammlung",
-      "recentAdditionsWishlist": "Letzte Ergänzungen auf deiner Wunschliste"
+      "recentAdditionsWishlist": "Letzte Ergänzungen auf deiner Wunschliste",
+      "statsTeaser": {
+        "title": "Deine Statistiken im Detail",
+        "subtitle": "Analysiere deine Sammlung aus allen Blickwinkeln",
+        "cta": "Statistiken ansehen",
+        "uniqueClubs": "Einzigartige Vereine",
+        "uniqueCountries": "Vertretene Länder",
+        "uniqueLeagues": "Verschiedene Ligen"
+      }
     },
     "features": {
       "title": "Warum Le Vestiaire Foot wählen?",

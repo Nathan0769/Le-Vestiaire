@@ -15,6 +15,7 @@
     "jerseySuggestions": "Sugestões de Camisolas",
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
+    "stats": "As Minhas Estatísticas",
     "bonsPlansSectionLabel": "Promoções",
     "cfsSalesLink": "Camisolas em Saldo CFS"
   },
@@ -477,9 +478,22 @@
       "withCustomPhoto": "Com foto personalizada"
     },
     "spendingTimeline": {
-      "title": "Evolução dos Gastos",
+      "title": "Investimento acumulado",
       "spent": "gasto",
+      "monthlySpent": "Este mês",
+      "totalInvested": "Total investido",
       "noData": "Sem dados de gastos disponíveis"
+    },
+    "activityHeatmap": {
+      "title": "Atividade de aquisição (últimos 12 meses)",
+      "noJersey": "Nenhuma camisola nesse dia",
+      "jerseyCount": "{count, plural, one {# camisola adicionada} other {# camisolas adicionadas}}",
+      "less": "Menos",
+      "more": "Mais"
+    },
+    "decadeDistribution": {
+      "title": "Distribuição por década",
+      "jerseyCount": "{count, plural, one {# camisola} other {# camisolas}}"
     },
     "financial": {
       "totalCollectionValue": "Valor Total",
@@ -492,6 +506,9 @@
       "totalRetailValueDescription": "Preço de retalho acumulado",
       "mostExpensive": "Mais Cara",
       "leastExpensive": "Menos Cara",
+      "marketValue": "Valor de mercado",
+      "marketValueDescription": "Estimativa via preços de revenda",
+      "comingSoon": "Em breve",
       "noData": "Sem dados disponíveis"
     },
     "diversity": {
@@ -517,6 +534,16 @@
     "records": {
       "oldestAcquisition": "Primeira Aquisição",
       "newestAcquisition": "Aquisição Mais Recente",
+      "topClub": "Clube favorito",
+      "topLeague": "Liga favorita",
+      "topBrand": "Marca fiel",
+      "topSeason": "Época de destaque",
+      "mostActiveMonth": "Mês mais ativo",
+      "longestStreak": "Maior série",
+      "streakMonths": "{count, plural, one {# mês consecutivo} other {# meses consecutivos}}",
+      "mostExpensive": "Camisola mais cara",
+      "leastExpensive": "Camisola menos cara",
+      "jerseyCount": "{count, plural, one {# camisola} other {# camisolas}}",
       "customizationStats": "Personalizações",
       "withTags": "Com etiquetas",
       "withPersonalization": "Personalizadas",
@@ -1005,7 +1032,15 @@
       "jerseysFrom": "Camisolas de",
       "startCollection": "Comece a sua coleção para ver as suas estatísticas!",
       "recentAdditionsCollection": "Adições recentes à sua coleção",
-      "recentAdditionsWishlist": "Adições recentes à sua lista de desejos"
+      "recentAdditionsWishlist": "Adições recentes à sua lista de desejos",
+      "statsTeaser": {
+        "title": "As suas estatísticas em detalhe",
+        "subtitle": "Analise a sua coleção sob todos os ângulos",
+        "cta": "Ver estatísticas",
+        "uniqueClubs": "Clubes únicos",
+        "uniqueCountries": "Países representados",
+        "uniqueLeagues": "Ligas diferentes"
+      }
     },
     "features": {
       "title": "Porquê escolher Le Vestiaire Foot?",

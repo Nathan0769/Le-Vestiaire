@@ -15,6 +15,7 @@
     "jerseySuggestions": "Sugerencias de Camisetas",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
+    "stats": "Mis Estadísticas",
     "bonsPlansSectionLabel": "Ofertas",
     "cfsSalesLink": "Camisetas en oferta CFS"
   },
@@ -477,9 +478,22 @@
       "withCustomPhoto": "Con foto personalizada"
     },
     "spendingTimeline": {
-      "title": "Evolución del gasto",
+      "title": "Inversión acumulada",
       "spent": "gastado",
+      "monthlySpent": "Este mes",
+      "totalInvested": "Total invertido",
       "noData": "No hay datos de gastos disponibles"
+    },
+    "activityHeatmap": {
+      "title": "Actividad de adquisición (últimos 12 meses)",
+      "noJersey": "Sin camiseta ese día",
+      "jerseyCount": "{count, plural, one {# camiseta añadida} other {# camisetas añadidas}}",
+      "less": "Menos",
+      "more": "Más"
+    },
+    "decadeDistribution": {
+      "title": "Distribución por década",
+      "jerseyCount": "{count, plural, one {# camiseta} other {# camisetas}}"
     },
     "financial": {
       "totalCollectionValue": "Valor total",
@@ -492,6 +506,9 @@
       "totalRetailValueDescription": "Precio retail acumulado",
       "mostExpensive": "Más cara",
       "leastExpensive": "Más barata",
+      "marketValue": "Valor de mercado",
+      "marketValueDescription": "Estimación via precios de reventa",
+      "comingSoon": "Próximamente",
       "noData": "No hay datos disponibles"
     },
     "diversity": {
@@ -517,6 +534,16 @@
     "records": {
       "oldestAcquisition": "Primera adquisición",
       "newestAcquisition": "Última adquisición",
+      "topClub": "Club favorito",
+      "topLeague": "Liga favorita",
+      "topBrand": "Marca fiel",
+      "topSeason": "Temporada destacada",
+      "mostActiveMonth": "Mes más activo",
+      "longestStreak": "Racha más larga",
+      "streakMonths": "{count, plural, one {# mes consecutivo} other {# meses consecutivos}}",
+      "mostExpensive": "Camiseta más cara",
+      "leastExpensive": "Camiseta más barata",
+      "jerseyCount": "{count, plural, one {# camiseta} other {# camisetas}}",
       "customizationStats": "Personalizaciones",
       "withTags": "Con etiquetas",
       "withPersonalization": "Personalizadas",
@@ -1005,7 +1032,15 @@
       "jerseysFrom": "Camisetas de",
       "startCollection": "¡Comienza tu colección para ver tus estadísticas!",
       "recentAdditionsCollection": "Últimas adiciones a tu colección",
-      "recentAdditionsWishlist": "Últimas adiciones a tu lista de deseos"
+      "recentAdditionsWishlist": "Últimas adiciones a tu lista de deseos",
+      "statsTeaser": {
+        "title": "Tus estadísticas en detalle",
+        "subtitle": "Analiza tu colección desde todos los ángulos",
+        "cta": "Ver estadísticas",
+        "uniqueClubs": "Clubes únicos",
+        "uniqueCountries": "Países representados",
+        "uniqueLeagues": "Ligas diferentes"
+      }
     },
     "features": {
       "title": "¿Por qué elegir Le Vestiaire Foot?",

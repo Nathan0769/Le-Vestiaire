@@ -15,6 +15,7 @@
     "jerseySuggestions": "Jersey Suggestions",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
+    "stats": "My Statistics",
     "bonsPlansSectionLabel": "Deals",
     "cfsSalesLink": "CFS Sale Jerseys"
   },
@@ -477,9 +478,22 @@
       "withCustomPhoto": "Custom photo"
     },
     "spendingTimeline": {
-      "title": "Spending Evolution",
+      "title": "Cumulative Investment",
       "spent": "spent",
+      "monthlySpent": "This month",
+      "totalInvested": "Total invested",
       "noData": "No spending data available"
+    },
+    "activityHeatmap": {
+      "title": "Acquisition Activity (last 12 months)",
+      "noJersey": "No jersey that day",
+      "jerseyCount": "{count, plural, one {# jersey added} other {# jerseys added}}",
+      "less": "Less",
+      "more": "More"
+    },
+    "decadeDistribution": {
+      "title": "Distribution by Decade",
+      "jerseyCount": "{count, plural, one {# jersey} other {# jerseys}}"
     },
     "financial": {
       "totalCollectionValue": "Total Value",
@@ -492,6 +506,9 @@
       "totalRetailValueDescription": "Cumulative retail price",
       "mostExpensive": "Most Expensive",
       "leastExpensive": "Least Expensive",
+      "marketValue": "Market Value",
+      "marketValueDescription": "Estimated via resale prices",
+      "comingSoon": "Soon",
       "noData": "No data available"
     },
     "diversity": {
@@ -517,6 +534,16 @@
     "records": {
       "oldestAcquisition": "First Acquisition",
       "newestAcquisition": "Latest Acquisition",
+      "topClub": "Favourite Club",
+      "topLeague": "Favourite League",
+      "topBrand": "Loyal Brand",
+      "topSeason": "Top Season",
+      "mostActiveMonth": "Most Active Month",
+      "longestStreak": "Longest Streak",
+      "streakMonths": "{count, plural, one {# consecutive month} other {# consecutive months}}",
+      "mostExpensive": "Most expensive jersey",
+      "leastExpensive": "Least expensive jersey",
+      "jerseyCount": "{count, plural, one {# jersey} other {# jerseys}}",
       "customizationStats": "Customizations",
       "withTags": "With tags",
       "withPersonalization": "Personalized",
@@ -1005,7 +1032,15 @@
       "jerseysFrom": "Jerseys from",
       "startCollection": "Start your collection to see your stats!",
       "recentAdditionsCollection": "Recent additions to your collection",
-      "recentAdditionsWishlist": "Recent additions to your wishlist"
+      "recentAdditionsWishlist": "Recent additions to your wishlist",
+      "statsTeaser": {
+        "title": "Your Stats in Detail",
+        "subtitle": "Analyse your collection from every angle",
+        "cta": "View statistics",
+        "uniqueClubs": "Unique clubs",
+        "uniqueCountries": "Countries represented",
+        "uniqueLeagues": "Different leagues"
+      }
     },
     "features": {
       "title": "Why choose Le Vestiaire Foot?",
