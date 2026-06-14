@@ -2,7 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
-import { Wallet, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
+import { Wallet, TrendingUp, TrendingDown, DollarSign, BarChart2 } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 interface FinancialStatsCardsProps {
   financial: {
@@ -80,19 +81,22 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="opacity-60">
           <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center gap-2">
-              <TrendingUp className="w-4 h-4 text-primary" />
-              {t("totalRetailValue")}
+            <CardTitle className="text-sm font-medium flex items-center justify-between gap-2">
+              <span className="flex items-center gap-2">
+                <BarChart2 className="w-4 h-4 text-muted-foreground" />
+                {t("marketValue")}
+              </span>
+              <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
+                {t("comingSoon")}
+              </Badge>
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">
-              {financial.totalRetailValue.toFixed(2)}€
-            </p>
+            <p className="text-2xl font-bold text-muted-foreground">—</p>
             <p className="text-xs text-muted-foreground mt-1">
-              {t("totalRetailValueDescription")}
+              {t("marketValueDescription")}
             </p>
           </CardContent>
         </Card>

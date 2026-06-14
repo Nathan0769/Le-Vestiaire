@@ -269,9 +269,9 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
       }),
     ]);
 
-  const [leagueStats, recentWishlistItems] = await Promise.all([
+  const [leagueStats, recentWishlistItems, diversityStats] = await Promise.all([
     prisma.$queryRaw<Array<{ league_name: string; count: number }>>`
-        SELECT 
+        SELECT
         l.name as league_name,
         COUNT(*)::int as count
       FROM user_jerseys uj
@@ -313,12 +313,26 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
       orderBy: { createdAt: "desc" },
       take: 3,
     }),
+
+    prisma.$queryRaw<Array<{ unique_clubs: number; unique_leagues: number; unique_countries: number }>>`
+      SELECT
+        COUNT(DISTINCT c.id)::int as unique_clubs,
+        COUNT(DISTINCT c."leagueId")::int as unique_leagues,
+        COUNT(DISTINCT l.country)::int as unique_countries
+      FROM user_jerseys uj
+      JOIN jerseys j ON uj."jerseyId" = j.id
+      JOIN clubs c ON j."clubId" = c.id
+      JOIN leagues l ON c."leagueId" = l.id
+      WHERE uj."userId" = ${userId}
+    `,
   ]);
 
   const leagueStatsObject: Record<string, number> = {};
   leagueStats.forEach((stat) => {
     leagueStatsObject[stat.league_name] = stat.count;
   });
+
+  const diversity = diversityStats[0] ?? { unique_clubs: 0, unique_leagues: 0, unique_countries: 0 };
 
   const formattedRecentCollection = recentCollectionItems.map((item) => ({
     id: item.id,
@@ -371,6 +385,9 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
         : null,
       recentItems: formattedRecentCollection,
       leagueStats: leagueStatsObject,
+      uniqueClubs: diversity.unique_clubs,
+      uniqueCountries: diversity.unique_countries,
+      uniqueLeagues: diversity.unique_leagues,
     },
     wishlist: {
       total: wishlistStats._count.id || 0,

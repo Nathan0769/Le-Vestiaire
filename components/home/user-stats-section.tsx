@@ -6,6 +6,9 @@ import {
   TrendingUp,
   ArrowRight,
   Trophy,
+  BarChart3,
+  Globe,
+  Shield,
 } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
@@ -150,6 +153,45 @@ export function UserStatsSection({ userStats }: UserStatsSectionProps) {
             </CardContent>
           </Card>
         </div>
+
+        {userStats.collection.total > 0 && (
+          <div className="mb-8 p-5 bg-card rounded-xl border border-border/50">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+              <div>
+                <h3 className="text-lg font-semibold flex items-center gap-2">
+                  <BarChart3 className="w-5 h-5 text-primary" />
+                  {t("statsTeaser.title")}
+                </h3>
+                <p className="text-sm text-muted-foreground mt-0.5">
+                  {t("statsTeaser.subtitle")}
+                </p>
+              </div>
+              <Button asChild size="sm" className="shrink-0">
+                <Link href="/collection/stats" className="flex items-center gap-1.5">
+                  {t("statsTeaser.cta")}
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </Button>
+            </div>
+            <div className="grid grid-cols-3 gap-3">
+              <div className="flex flex-col items-center p-3 bg-muted/40 rounded-lg text-center">
+                <Shield className="w-4 h-4 text-primary mb-1.5" />
+                <span className="text-2xl font-bold">{userStats.collection.uniqueClubs}</span>
+                <span className="text-xs text-muted-foreground mt-0.5">{t("statsTeaser.uniqueClubs")}</span>
+              </div>
+              <div className="flex flex-col items-center p-3 bg-muted/40 rounded-lg text-center">
+                <Globe className="w-4 h-4 text-primary mb-1.5" />
+                <span className="text-2xl font-bold">{userStats.collection.uniqueCountries}</span>
+                <span className="text-xs text-muted-foreground mt-0.5">{t("statsTeaser.uniqueCountries")}</span>
+              </div>
+              <div className="flex flex-col items-center p-3 bg-muted/40 rounded-lg text-center">
+                <Trophy className="w-4 h-4 text-primary mb-1.5" />
+                <span className="text-2xl font-bold">{userStats.collection.uniqueLeagues}</span>
+                <span className="text-xs text-muted-foreground mt-0.5">{t("statsTeaser.uniqueLeagues")}</span>
+              </div>
+            </div>
+          </div>
+        )}
 
         {(userStats.collection.recentItems.length > 0 ||
           userStats.wishlist.recentItems.length > 0) && (

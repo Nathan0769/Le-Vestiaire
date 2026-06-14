@@ -101,6 +101,14 @@ export async function GET() {
       return acc;
     }, {} as Record<string, number>);
 
+    const uniqueClubs = new Set(jerseysWithLeagues.map((j) => j.clubId)).size;
+    const uniqueLeagues = new Set(
+      jerseysWithLeagues.map((j) => j.club.leagueId).filter(Boolean)
+    ).size;
+    const uniqueCountries = new Set(
+      jerseysWithLeagues.map((j) => j.club.league.country).filter(Boolean)
+    ).size;
+
     const response = {
       collection: {
         total: collectionCount,
@@ -121,6 +129,9 @@ export async function GET() {
           createdAt: item.createdAt,
         })),
         leagueStats: leagueCount,
+        uniqueClubs,
+        uniqueCountries,
+        uniqueLeagues,
       },
       wishlist: {
         total: wishlistCount,

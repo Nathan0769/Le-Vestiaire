@@ -10,6 +10,7 @@ import {
   Shield,
   Trophy,
   Tag,
+  BarChart3,
 } from "lucide-react";
 import {
   Sidebar,
@@ -67,6 +68,11 @@ export function AppSidebar() {
       title: t("collection"),
       url: "/collection",
       icon: ListTodo,
+    },
+    {
+      title: t("stats"),
+      url: "/collection/stats",
+      icon: BarChart3,
     },
     {
       title: t("wishlist"),

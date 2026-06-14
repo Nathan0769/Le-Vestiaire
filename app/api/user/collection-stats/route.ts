@@ -102,8 +102,7 @@ export async function GET() {
         season,
         count,
       }))
-      .sort((a, b) => b.season.localeCompare(a.season))
-      .slice(0, 10);
+      .sort((a, b) => b.season.localeCompare(a.season));
 
     const leagueStats = collection.reduce((acc, item) => {
       const league = item.jersey.club.league.name;
@@ -169,15 +168,11 @@ export async function GET() {
         (a, b) => Number(a.purchasePrice || 0) - Number(b.purchasePrice || 0)
       )[0];
 
-    const itemsWithDates = collection.filter(
-      (item) => item.purchasePrice && item.purchaseDate
-    );
-
     let spendingData: { month: string; amount: number }[] = [];
 
-    if (itemsWithDates.length > 0) {
-      const spendingTimeline = itemsWithDates.reduce((acc, item) => {
-        const date = new Date(item.purchaseDate!);
+    if (itemsWithPrice.length > 0) {
+      const spendingTimeline = itemsWithPrice.reduce((acc, item) => {
+        const date = new Date(item.purchaseDate ?? item.createdAt);
         const monthYear = `${date.getFullYear()}-${String(
           date.getMonth() + 1
         ).padStart(2, "0")}`;
@@ -279,8 +274,58 @@ export async function GET() {
       collection.map((item) => item.jersey.club.league.country)
     ).size;
 
-    const oldestAcquisition = collection[0];
-    const newestAcquisition = collection[collection.length - 1];
+    const getAcquisitionDate = (item: typeof collection[0]) =>
+      item.purchaseDate ? new Date(item.purchaseDate) : new Date(item.createdAt);
+
+    const oldestAcquisition = collection.reduce((oldest, item) =>
+      getAcquisitionDate(item) < getAcquisitionDate(oldest) ? item : oldest
+    );
+    const newestAcquisition = collection.reduce((newest, item) =>
+      getAcquisitionDate(item) > getAcquisitionDate(newest) ? item : newest
+    );
+
+    const topSeason = seasonDistribution.length > 0
+      ? [...seasonDistribution].sort((a, b) => b.count - a.count)[0]
+      : null;
+
+    const mostActiveMonth = timeline.length > 0
+      ? timeline.reduce((max, item) => item.count > max.count ? item : max)
+      : null;
+
+    const allMonths = new Set(
+      collection.map((item) => {
+        const d = new Date(item.createdAt);
+        return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`;
+      })
+    );
+    const sortedActiveMonths = Array.from(allMonths).sort();
+    let longestStreak = sortedActiveMonths.length > 0 ? 1 : 0;
+    let currentStreak = sortedActiveMonths.length > 0 ? 1 : 0;
+    for (let i = 1; i < sortedActiveMonths.length; i++) {
+      const [py, pm] = sortedActiveMonths[i - 1].split("-").map(Number);
+      const [cy, cm] = sortedActiveMonths[i].split("-").map(Number);
+      const isConsecutive =
+        (cy === py && cm === pm + 1) || (cy === py + 1 && cm === 1 && pm === 12);
+      if (isConsecutive) {
+        currentStreak++;
+        if (currentStreak > longestStreak) longestStreak = currentStreak;
+      } else {
+        currentStreak = 1;
+      }
+    }
+
+    const oneYearAgo = new Date();
+    oneYearAgo.setDate(oneYearAgo.getDate() - 364);
+    const activityByDay = collection
+      .filter((item) => new Date(item.createdAt) >= oneYearAgo)
+      .reduce((acc, item) => {
+        const dateStr = item.createdAt.toISOString().split("T")[0];
+        acc[dateStr] = (acc[dateStr] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+    const activityHeatmap = Object.entries(activityByDay)
+      .map(([date, count]) => ({ date, count }))
+      .sort((a, b) => a.date.localeCompare(b.date));
 
     return NextResponse.json({
       totalJerseys: collection.length,
@@ -341,14 +386,21 @@ export async function GET() {
           oldestAcquisition: {
             jerseyName: oldestAcquisition.jersey.name,
             clubName: oldestAcquisition.jersey.club.name,
-            date: oldestAcquisition.createdAt,
+            date: oldestAcquisition.purchaseDate ?? oldestAcquisition.createdAt,
           },
           newestAcquisition: {
             jerseyName: newestAcquisition.jersey.name,
             clubName: newestAcquisition.jersey.club.name,
-            date: newestAcquisition.createdAt,
+            date: newestAcquisition.purchaseDate ?? newestAcquisition.createdAt,
           },
+          topClub: clubDistribution[0] || null,
+          topLeague: leagueDistribution[0] || null,
+          topBrand: brandDistribution[0] || null,
+          topSeason,
+          mostActiveMonth,
+          longestStreak,
         },
+        activityHeatmap,
       },
     });
   } catch (error) {
