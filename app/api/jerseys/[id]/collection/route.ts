@@ -195,35 +195,41 @@ export async function POST(
         ? parseFloat(purchasePrice.toString())
         : null;
 
-    const userJersey = await prisma.userJersey.create({
-      data: {
-        userId: user.id,
-        jerseyId,
-        version,
-        size: size || null,
-        condition,
-        hasTags,
-        playerName: playerName || null,
-        playerNumber: playerNumber ? parseInt(playerNumber.toString(), 10) : null,
-        purchasePrice: parsedPurchasePrice,
-        purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
-        notes: notes || null,
-        isGift: isGift || false,
-        isFromMysteryBox: isFromMysteryBox || false,
-        userPhotoUrl: userPhotoUrl || null,
-        isSigned,
-        signedBy: isSigned ? signedBy || null : null,
-        hasAuthCertificate,
-        certificateUrl: hasAuthCertificate ? certificateUrl || null : null,
-        matchDescription: matchDescription || null,
-        matchDate: matchDate ? new Date(matchDate) : null,
-      },
-    });
+    const [userJersey, deletedWishlist] = await prisma.$transaction([
+      prisma.userJersey.create({
+        data: {
+          userId: user.id,
+          jerseyId,
+          version,
+          size: size || null,
+          condition,
+          hasTags,
+          playerName: playerName || null,
+          playerNumber: playerNumber ? parseInt(playerNumber.toString(), 10) : null,
+          purchasePrice: parsedPurchasePrice,
+          purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
+          notes: notes || null,
+          isGift: isGift || false,
+          isFromMysteryBox: isFromMysteryBox || false,
+          userPhotoUrl: userPhotoUrl || null,
+          isSigned,
+          signedBy: isSigned ? signedBy || null : null,
+          hasAuthCertificate,
+          certificateUrl: hasAuthCertificate ? certificateUrl || null : null,
+          matchDescription: matchDescription || null,
+          matchDate: matchDate ? new Date(matchDate) : null,
+        },
+      }),
+      prisma.wishlist.deleteMany({
+        where: { userId: user.id, jerseyId },
+      }),
+    ]);
 
     return NextResponse.json({
       success: true,
       message: "Maillot ajouté à votre collection",
       userJersey,
+      removedFromWishlist: deletedWishlist.count > 0,
     });
   } catch (error) {
     console.error("Erreur lors de l'ajout à la collection:", error);

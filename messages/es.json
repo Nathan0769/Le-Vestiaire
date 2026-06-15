@@ -154,6 +154,8 @@
         "mustBeConnected": "Debes iniciar sesión para añadir a tu colección",
         "added": "Camiseta añadida a tu colección",
         "removed": "Camiseta eliminada de tu colección",
+        "wishlistRemoved": "Eliminado automáticamente de tus deseos",
+        "wishlistRemovedUndo": "Deshacer",
         "error": "Ha ocurrido un error",
         "connectionError": "Error de conexión. Por favor, inténtalo de nuevo.",
         "manageError": "Debes iniciar sesión para gestionar tu colección"
@@ -436,7 +438,8 @@
       "title": "Evolución de tu colección",
       "acquisitions": "Adquisiciones",
       "jerseys": "Camisetas",
-      "jerseysAdded": "{count, plural, one {# camiseta añadida} other {# camisetas añadidas}}"
+      "jerseysAdded": "{count, plural, one {# camiseta añadida} other {# camisetas añadidas}}",
+      "totalJerseys": "Total camisetas"
     },
     "brandDistribution": {
       "title": "Distribución por marca",

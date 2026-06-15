@@ -154,6 +154,8 @@
         "mustBeConnected": "Vous devez être connecté pour ajouter à votre collection",
         "added": "Maillot ajouté à votre collection",
         "removed": "Maillot retiré de votre collection",
+        "wishlistRemoved": "Retiré automatiquement de vos envies",
+        "wishlistRemovedUndo": "Annuler",
         "error": "Une erreur est survenue",
         "connectionError": "Erreur de connexion. Veuillez réessayer.",
         "manageError": "Vous devez être connecté pour gérer votre collection"
@@ -433,7 +435,8 @@
       "title": "Évolution de votre collection",
       "acquisitions": "Acquisitions",
       "jerseys": "Maillots",
-      "jerseysAdded": "{count, plural, one {# maillot ajouté} other {# maillots ajoutés}}"
+      "jerseysAdded": "{count, plural, one {# maillot ajouté} other {# maillots ajoutés}}",
+      "totalJerseys": "Total maillots"
     },
     "brandDistribution": {
       "title": "Répartition par marque",

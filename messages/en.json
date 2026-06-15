@@ -154,6 +154,8 @@
         "mustBeConnected": "You must be logged in to add to your collection",
         "added": "Jersey added to your collection",
         "removed": "Jersey removed from your collection",
+        "wishlistRemoved": "Automatically removed from your wishlist",
+        "wishlistRemovedUndo": "Undo",
         "error": "An error occurred",
         "connectionError": "Connection error. Please try again.",
         "manageError": "You must be logged in to manage your collection"
@@ -436,7 +438,8 @@
       "title": "Collection Evolution",
       "acquisitions": "Acquisitions",
       "jerseys": "Jerseys",
-      "jerseysAdded": "{count, plural, one {# jersey added} other {# jerseys added}}"
+      "jerseysAdded": "{count, plural, one {# jersey added} other {# jerseys added}}",
+      "totalJerseys": "Total jerseys"
     },
     "brandDistribution": {
       "title": "Distribution by Brand",
