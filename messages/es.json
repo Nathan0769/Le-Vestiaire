@@ -17,7 +17,10 @@
     "closeMenu": "Cerrar menú",
     "stats": "Mis Estadísticas",
     "bonsPlansSectionLabel": "Ofertas",
-    "cfsSalesLink": "Camisetas en oferta CFS"
+    "cfsSalesLink": "Camisetas en oferta CFS",
+    "supportSectionLabel": "Apoyar",
+    "buyMeACoffee": "Buy Me a Coffee",
+    "tipeee": "Tipeee"
   },
   "Common": {
     "loading": "Cargando...",
@@ -1092,6 +1095,13 @@
           "answer": "Sí, nos tomamos la seguridad muy en serio. Tus datos están alojados en Europa (Francia) y protegidos según las normas RGPD. Sigues siendo el propietario de tu colección y puedes exportarla en cualquier momento."
         }
       }
+    },
+    "support": {
+      "title": "Apoyar el proyecto",
+      "subtitle": "Apoya el desarrollo de la aplicación, sus próximas mejoras y el avance de la app móvil.",
+      "bmac": "Buy Me a Coffee",
+      "tipeee": "Tipeee",
+      "thanks": "Gracias a todos los que apoyan el proyecto, cada contribución cuenta de verdad."
     }
   },
   "Authentication": {

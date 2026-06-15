@@ -17,7 +17,10 @@
     "closeMenu": "Close menu",
     "stats": "My Statistics",
     "bonsPlansSectionLabel": "Deals",
-    "cfsSalesLink": "CFS Sale Jerseys"
+    "cfsSalesLink": "CFS Sale Jerseys",
+    "supportSectionLabel": "Support",
+    "buyMeACoffee": "Buy Me a Coffee",
+    "tipeee": "Tipeee"
   },
   "Common": {
     "loading": "Loading...",
@@ -1092,6 +1095,13 @@
           "answer": "Yes, we take security very seriously. Your data is hosted in Europe (France) and protected according to GDPR standards. You remain the owner of your collection and can export it at any time."
         }
       }
+    },
+    "support": {
+      "title": "Support the project",
+      "subtitle": "Support the development of the app, its upcoming improvements and the progress of the mobile app.",
+      "bmac": "Buy Me a Coffee",
+      "tipeee": "Tipeee",
+      "thanks": "Thank you to everyone who supports the project, every contribution truly matters."
     }
   },
   "Authentication": {
