@@ -17,7 +17,10 @@
     "closeMenu": "Menü schließen",
     "stats": "Meine Statistiken",
     "bonsPlansSectionLabel": "Angebote",
-    "cfsSalesLink": "CFS Sale-Trikots"
+    "cfsSalesLink": "CFS Sale-Trikots",
+    "supportSectionLabel": "Unterstützen",
+    "buyMeACoffee": "Buy Me a Coffee",
+    "tipeee": "Tipeee"
   },
   "Common": {
     "loading": "Laden...",
@@ -1092,6 +1095,13 @@
           "answer": "Ja, wir nehmen Sicherheit sehr ernst. Deine Daten werden in Europa (Frankreich) gehostet und gemäß DSGVO-Standards geschützt. Du bleibst der Eigentümer deiner Sammlung und kannst sie jederzeit exportieren."
         }
       }
+    },
+    "support": {
+      "title": "Das Projekt unterstützen",
+      "subtitle": "Unterstütze die Weiterentwicklung der App, ihre kommenden Verbesserungen und den Fortschritt der mobilen App.",
+      "bmac": "Buy Me a Coffee",
+      "tipeee": "Tipeee",
+      "thanks": "Danke an alle, die das Projekt unterstützen, jeder Beitrag zählt wirklich."
     }
   },
   "Authentication": {

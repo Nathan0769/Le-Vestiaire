@@ -13,6 +13,7 @@ import type {
   RawResult,
 } from "@/types/home";
 import { FAQSection } from "@/components/home/faq-section";
+import { SupportSection } from "@/components/home/support-section";
 import { FeaturesSection } from "@/components/home/features-section";
 import { StatsSection } from "@/components/home/stats-section";
 import { CfsPromoSection } from "@/components/home/cfs-promo-section";
@@ -799,6 +800,7 @@ export default async function HomePage({
       />
       <FeaturesSection />
       <FAQSection />
+      <SupportSection />
     </div>
     </>
   );
