@@ -154,6 +154,8 @@
         "mustBeConnected": "Tem de estar autenticado para adicionar à sua coleção",
         "added": "Camisola adicionada à sua coleção",
         "removed": "Camisola removida da sua coleção",
+        "wishlistRemoved": "Removido automaticamente dos seus desejos",
+        "wishlistRemovedUndo": "Desfazer",
         "error": "Ocorreu um erro",
         "connectionError": "Erro de ligação. Tente novamente.",
         "manageError": "Tem de estar autenticado para gerir a sua coleção"
@@ -436,7 +438,8 @@
       "title": "Evolução da Coleção",
       "acquisitions": "Aquisições",
       "jerseys": "Camisolas",
-      "jerseysAdded": "{count, plural, one {# camisola adicionada} other {# camisolas adicionadas}}"
+      "jerseysAdded": "{count, plural, one {# camisola adicionada} other {# camisolas adicionadas}}",
+      "totalJerseys": "Total camisolas"
     },
     "brandDistribution": {
       "title": "Distribuição por Marca",

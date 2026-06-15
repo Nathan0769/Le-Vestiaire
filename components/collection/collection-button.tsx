@@ -63,7 +63,32 @@ export function CollectionButton({
       if (response.ok && result.success) {
         setCount((prev) => prev + 1);
         setShowModal(false);
-        toast.success(t("toast.added"));
+        if (result.removedFromWishlist) {
+          toast.custom(
+            (id) => (
+              <div className="flex items-center justify-between gap-4 bg-background border rounded-lg px-4 py-3 shadow-lg w-full">
+                <div className="flex flex-col gap-0.5 min-w-0">
+                  <p className="text-sm font-medium text-foreground">{t("toast.added")}</p>
+                  <p className="text-sm text-muted-foreground">{t("toast.wishlistRemoved")}</p>
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="shrink-0 cursor-pointer"
+                  onClick={async () => {
+                    toast.dismiss(id);
+                    await fetch(`/api/jerseys/${jerseyId}/wishlist`, { method: "POST" });
+                  }}
+                >
+                  {t("toast.wishlistRemovedUndo")}
+                </Button>
+              </div>
+            ),
+            { duration: 9000 }
+          );
+        } else {
+          toast.success(t("toast.added"));
+        }
       } else {
         toast.error(result.error || t("toast.error"));
       }

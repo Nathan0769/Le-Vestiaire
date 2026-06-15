@@ -154,6 +154,8 @@
         "mustBeConnected": "Du musst angemeldet sein, um zur Sammlung hinzuzufügen",
         "added": "Trikot zur Sammlung hinzugefügt",
         "removed": "Trikot aus der Sammlung entfernt",
+        "wishlistRemoved": "Automatisch aus deinen Wünschen entfernt",
+        "wishlistRemovedUndo": "Rückgängig",
         "error": "Ein Fehler ist aufgetreten",
         "connectionError": "Verbindungsfehler. Bitte versuche es erneut.",
         "manageError": "Du musst angemeldet sein, um deine Sammlung zu verwalten"
@@ -436,7 +438,8 @@
       "title": "Sammlungsentwicklung",
       "acquisitions": "Erwerbungen",
       "jerseys": "Trikots",
-      "jerseysAdded": "{count, plural, one {# Trikot hinzugefügt} other {# Trikots hinzugefügt}}"
+      "jerseysAdded": "{count, plural, one {# Trikot hinzugefügt} other {# Trikots hinzugefügt}}",
+      "totalJerseys": "Trikots gesamt"
     },
     "brandDistribution": {
       "title": "Verteilung nach Marke",
