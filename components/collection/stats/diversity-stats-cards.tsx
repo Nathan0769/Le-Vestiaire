@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
 import { Globe, Trophy, Users } from "lucide-react";
 
@@ -16,50 +16,39 @@ export function DiversityStatsCards({ stats }: DiversityStatsCardsProps) {
   const t = useTranslations("CollectionStats.diversity");
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div className="grid grid-cols-3 gap-3">
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium flex items-center gap-2">
-            <Users className="w-4 h-4 text-primary" />
+        <CardContent className="p-3 md:pt-6 md:p-6 text-center space-y-1 md:space-y-2">
+          <Users className="w-5 h-5 md:w-7 md:h-7 mx-auto text-primary" />
+          <p className="text-2xl md:text-3xl font-bold text-primary">
+            {stats.uniqueClubs}
+          </p>
+          <p className="text-[10px] md:text-[11px] text-muted-foreground uppercase tracking-wide leading-tight">
             {t("uniqueClubs")}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-3xl font-bold text-primary">{stats.uniqueClubs}</p>
-          <p className="text-xs text-muted-foreground mt-1">
-            {t("uniqueClubsDescription")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium flex items-center gap-2">
-            <Trophy className="w-4 h-4 text-primary" />
+        <CardContent className="p-3 md:pt-6 md:p-6 text-center space-y-1 md:space-y-2">
+          <Trophy className="w-5 h-5 md:w-7 md:h-7 mx-auto text-primary" />
+          <p className="text-2xl md:text-3xl font-bold text-primary">
+            {stats.uniqueLeagues}
+          </p>
+          <p className="text-[10px] md:text-[11px] text-muted-foreground uppercase tracking-wide leading-tight">
             {t("uniqueLeagues")}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-3xl font-bold text-primary">{stats.uniqueLeagues}</p>
-          <p className="text-xs text-muted-foreground mt-1">
-            {t("uniqueLeaguesDescription")}
           </p>
         </CardContent>
       </Card>
 
       <Card>
-        <CardHeader className="pb-3">
-          <CardTitle className="text-sm font-medium flex items-center gap-2">
-            <Globe className="w-4 h-4 text-primary" />
-            {t("uniqueCountries")}
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-3xl font-bold text-primary">
+        <CardContent className="p-3 md:pt-6 md:p-6 text-center space-y-1 md:space-y-2">
+          <Globe className="w-5 h-5 md:w-7 md:h-7 mx-auto text-primary" />
+          <p className="text-2xl md:text-3xl font-bold text-primary">
             {stats.uniqueCountries}
           </p>
-          <p className="text-xs text-muted-foreground mt-1">
-            {t("uniqueCountriesDescription")}
+          <p className="text-[10px] md:text-[11px] text-muted-foreground uppercase tracking-wide leading-tight">
+            {t("uniqueCountries")}
           </p>
         </CardContent>
       </Card>

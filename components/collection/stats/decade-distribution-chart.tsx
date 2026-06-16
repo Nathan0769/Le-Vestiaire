@@ -70,7 +70,7 @@ export function DecadeDistributionChart({ data }: DecadeDistributionChartProps) 
         >
           <BarChart
             data={decadeData}
-            margin={{ top: 5, right: 5, left: -20, bottom: 5 }}
+            margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
             <XAxis
@@ -79,7 +79,9 @@ export function DecadeDistributionChart({ data }: DecadeDistributionChartProps) 
             />
             <YAxis
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
-              width={30}
+              width={40}
+              domain={[0, "auto"]}
+              allowDecimals={false}
             />
             <ChartTooltip
               content={({ active, payload }) => {
