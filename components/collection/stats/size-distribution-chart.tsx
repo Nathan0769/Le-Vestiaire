@@ -31,7 +31,7 @@ export function SizeDistributionChart({ data }: SizeDistributionChartProps) {
           }}
           className="h-[200px] md:h-[300px] w-full"
         >
-          <BarChart data={data} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
+          <BarChart data={data} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
             <XAxis
               dataKey="size"
@@ -41,7 +41,9 @@ export function SizeDistributionChart({ data }: SizeDistributionChartProps) {
             <YAxis
               className="text-[10px]"
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
-              width={30}
+              width={40}
+              domain={[0, "auto"]}
+              allowDecimals={false}
             />
             <ChartTooltip
               content={({ active, payload }) => {

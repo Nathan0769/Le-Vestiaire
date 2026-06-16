@@ -13,37 +13,43 @@ interface TimelineChartProps {
 export function TimelineChart({ data }: TimelineChartProps) {
   const t = useTranslations("CollectionStats.timeline");
 
-  const formattedData = data.map((item) => {
-    const [year, month] = item.month.split("-");
-    const date = new Date(parseInt(year), parseInt(month) - 1);
-    return {
-      ...item,
-      monthLabel: date.toLocaleDateString("fr-FR", {
-        month: "short",
-        year: "2-digit",
-      }),
-    };
-  });
+  const formattedData = data.reduce(
+    (acc, item) => {
+      const prev = acc[acc.length - 1]?.total ?? 0;
+      const [year, month] = item.month.split("-");
+      const date = new Date(parseInt(year), parseInt(month) - 1);
+      acc.push({
+        ...item,
+        total: prev + item.count,
+        monthLabel: date.toLocaleDateString("fr-FR", {
+          month: "short",
+          year: "2-digit",
+        }),
+      });
+      return acc;
+    },
+    [] as Array<(typeof data)[0] & { total: number; monthLabel: string }>
+  );
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Calendar className="w-5 h-5 text-primary" />
+      <CardHeader className="p-3 md:p-6">
+        <CardTitle className="text-sm md:text-base flex items-center gap-2">
+          <Calendar className="w-4 h-4 md:w-5 md:h-5 text-primary shrink-0" />
           {t("title")}
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-3 md:p-6 pt-0 min-w-0 overflow-hidden">
         <ChartContainer
             config={{
-              count: {
-                label: t("acquisitions"),
+              total: {
+                label: t("totalJerseys"),
                 color: "oklch(0.70 0.25 260)",
               },
             }}
-            className="h-[200px] md:h-[300px] w-full"
+            className="h-[180px] md:h-[300px] w-full"
           >
-          <AreaChart data={formattedData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
+          <AreaChart data={formattedData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
             <defs>
               <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
                 <stop
@@ -70,19 +76,22 @@ export function TimelineChart({ data }: TimelineChartProps) {
             <YAxis
               className="text-[10px]"
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
-              width={30}
+              width={40}
+              domain={[0, "auto"]}
+              allowDecimals={false}
             />
             <ChartTooltip
               content={({ active, payload }) => {
                 if (!active || !payload?.length) return null;
-                const count = payload[0].value as number;
+                const d = payload[0].payload;
                 return (
-                  <div className="bg-background border border-border rounded-lg p-2 shadow-lg">
-                    <p className="text-sm font-medium">
-                      {payload[0].payload.monthLabel}
+                  <div className="bg-background border border-border rounded-lg p-2 shadow-lg space-y-1">
+                    <p className="text-sm font-medium">{d.monthLabel}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {t("totalJerseys")}: <span className="font-medium text-foreground">{d.total}</span>
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      {t("jerseysAdded", { count })}
+                      {t("jerseysAdded", { count: d.count })}
                     </p>
                   </div>
                 );
@@ -90,7 +99,7 @@ export function TimelineChart({ data }: TimelineChartProps) {
             />
             <Area
               type="monotone"
-              dataKey="count"
+              dataKey="total"
               stroke="oklch(0.70 0.25 260)"
               strokeWidth={2}
               fillOpacity={1}

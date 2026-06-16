@@ -46,7 +46,7 @@ export function VersionDistributionChart({ data }: VersionDistributionChartProps
           }, {} as Record<string, { label: string; color: string }>)}
           className="h-[200px] md:h-[300px] w-full"
         >
-          <BarChart data={formattedData} margin={{ top: 5, right: 5, left: -20, bottom: 5 }}>
+          <BarChart data={formattedData} margin={{ top: 5, right: 10, left: 10, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
             <XAxis
               dataKey="versionLabel"
@@ -56,7 +56,9 @@ export function VersionDistributionChart({ data }: VersionDistributionChartProps
             <YAxis
               className="text-[10px]"
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
-              width={30}
+              width={40}
+              domain={[0, "auto"]}
+              allowDecimals={false}
             />
             <ChartTooltip
               content={({ active, payload }) => {

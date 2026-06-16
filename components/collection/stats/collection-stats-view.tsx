@@ -136,36 +136,32 @@ export function CollectionStatsView() {
   return (
     <Tabs defaultValue="overview" className="space-y-6">
       <TabsList className="grid w-full grid-cols-4">
-        <TabsTrigger value="overview" className="flex items-center justify-center gap-2">
-          <Package className="w-4 h-4" />
-          <span className="hidden md:inline">{t("tabs.overview")}</span>
+        <TabsTrigger value="overview" className="flex items-center justify-center gap-1 md:gap-2 px-1 md:px-3">
+          <Package className="w-4 h-4 shrink-0" />
+          <span className="text-[10px] sm:text-xs md:text-sm truncate">{t("tabs.overview")}</span>
         </TabsTrigger>
-        <TabsTrigger value="distribution" className="flex items-center justify-center gap-2">
-          <TrendingUp className="w-4 h-4" />
-          <span className="hidden md:inline">{t("tabs.distribution")}</span>
+        <TabsTrigger value="distribution" className="flex items-center justify-center gap-1 md:gap-2 px-1 md:px-3">
+          <TrendingUp className="w-4 h-4 shrink-0" />
+          <span className="text-[10px] sm:text-xs md:text-sm truncate">{t("tabs.distribution")}</span>
         </TabsTrigger>
-        <TabsTrigger value="financial" className="flex items-center justify-center gap-2">
-          <Wallet className="w-4 h-4" />
-          <span className="hidden md:inline">{t("tabs.financial")}</span>
+        <TabsTrigger value="financial" className="flex items-center justify-center gap-1 md:gap-2 px-1 md:px-3">
+          <Wallet className="w-4 h-4 shrink-0" />
+          <span className="text-[10px] sm:text-xs md:text-sm truncate">{t("tabs.financial")}</span>
         </TabsTrigger>
-        <TabsTrigger value="records" className="flex items-center justify-center gap-2">
-          <Award className="w-4 h-4" />
-          <span className="hidden md:inline">{t("tabs.records")}</span>
+        <TabsTrigger value="records" className="flex items-center justify-center gap-1 md:gap-2 px-1 md:px-3">
+          <Award className="w-4 h-4 shrink-0" />
+          <span className="text-[10px] sm:text-xs md:text-sm truncate">{t("tabs.records")}</span>
         </TabsTrigger>
       </TabsList>
 
       <TabsContent value="overview" className="space-y-6">
-        <div className="grid gap-6">
-          <DiversityStatsCards stats={data.stats.diversity} />
-          <TimelineChart data={data.stats.timeline} />
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <BrandDistributionChart data={data.stats.brandDistribution} />
-            <TypeDistributionChart data={data.stats.typeDistribution} />
-          </div>
-          <div className="w-full">
-            <ActivityHeatmap data={data.stats.activityHeatmap} />
-          </div>
+        <DiversityStatsCards stats={data.stats.diversity} />
+        <TimelineChart data={data.stats.timeline} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 min-w-0">
+          <BrandDistributionChart data={data.stats.brandDistribution} />
+          <TypeDistributionChart data={data.stats.typeDistribution} />
         </div>
+        <ActivityHeatmap data={data.stats.activityHeatmap} />
       </TabsContent>
 
       <TabsContent value="distribution" className="space-y-6">

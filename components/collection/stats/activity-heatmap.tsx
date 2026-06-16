@@ -3,7 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
 import { Activity } from "lucide-react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 
 interface ActivityHeatmapProps {
   data: { date: string; count: number }[];
@@ -21,10 +21,16 @@ function getColor(count: number): string | undefined {
 export function ActivityHeatmap({ data }: ActivityHeatmapProps) {
   const t = useTranslations("CollectionStats.activityHeatmap");
   const [selected, setSelected] = useState<{ dateStr: string; count: number } | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
+    }
+  }, []);
 
   const activityMap = new Map(data.map((d) => [d.date, d.count]));
 
-  // Start of the grid: Monday 52 weeks ago
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -50,12 +56,10 @@ export function ActivityHeatmap({ data }: ActivityHeatmapProps) {
     weeks.push(week);
   }
 
-  // Month label: only on the 2nd week of each month to avoid overlap on narrow cells
   const monthLabels = weeks.map((week, i) => {
     const curMonth = week[0].dateStr.slice(5, 7);
     const prevMonth = i > 0 ? weeks[i - 1][0].dateStr.slice(5, 7) : null;
     if (curMonth !== prevMonth) {
-      // Skip first occurrence if it falls in the first column (no space for label)
       if (i === 0) return null;
       const d = new Date(week[0].dateStr + "T12:00:00");
       return d.toLocaleDateString("fr-FR", { month: "short" });
@@ -64,16 +68,16 @@ export function ActivityHeatmap({ data }: ActivityHeatmapProps) {
   });
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <Activity className="w-5 h-5 text-primary" />
+    <Card className="overflow-hidden">
+      <CardHeader className="p-3 md:p-6">
+        <CardTitle className="text-sm md:text-base flex items-center gap-2">
+          <Activity className="w-4 h-4 md:w-5 md:h-5 text-primary shrink-0" />
           {t("title")}
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <div className="overflow-x-auto pb-2">
-          <div className="inline-flex flex-col gap-1 min-w-max">
+      <CardContent className="p-3 md:p-6 pt-0 min-w-0">
+        <div ref={scrollRef} className="w-full overflow-x-auto pb-2">
+          <div className="flex flex-col gap-1 w-max">
             {/* Month labels */}
             <div className="flex gap-1 pl-6">
               {weeks.map((_, i) => (
@@ -116,7 +120,7 @@ export function ActivityHeatmap({ data }: ActivityHeatmapProps) {
           </div>
         </div>
 
-        {/* Info line — hover on desktop, tap on mobile */}
+        {/* Info line */}
         <div className="mt-3 h-4 text-xs text-center text-muted-foreground">
           {selected && (
             <>

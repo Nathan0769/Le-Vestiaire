@@ -69,7 +69,7 @@ export function SpendingTimelineChart({ data }: SpendingTimelineChartProps) {
         >
           <AreaChart
             data={formattedData}
-            margin={{ top: 5, right: 5, left: -20, bottom: 5 }}
+            margin={{ top: 5, right: 10, left: 10, bottom: 5 }}
           >
             <defs>
               <linearGradient id="colorCumulative" x1="0" y1="0" x2="0" y2="1">
@@ -97,7 +97,8 @@ export function SpendingTimelineChart({ data }: SpendingTimelineChartProps) {
             <YAxis
               className="text-[10px]"
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
-              width={40}
+              width={60}
+              domain={[0, "auto"]}
               tickFormatter={(v) => `${v}€`}
             />
             <ChartTooltip
