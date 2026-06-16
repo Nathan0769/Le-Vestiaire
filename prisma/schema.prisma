@@ -169,7 +169,6 @@ model UserJersey {
   jersey             Jersey        @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
   user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([userId, jerseyId])
   @@index([userId])
   @@index([jerseyId])
   @@map("user_jerseys")
