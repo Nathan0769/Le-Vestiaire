@@ -38,8 +38,12 @@ export function PatchesManagement() {
   const [editing, setEditing] = useState<AdminPatch | null>(null);
   const [formOpen, setFormOpen] = useState(false);
   const [versionsOpen, setVersionsOpen] = useState(false);
-  const [versionsPatch, setVersionsPatch] = useState<AdminPatch | null>(null);
+  const [versionsPatchId, setVersionsPatchId] = useState<string | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<AdminPatch | null>(null);
+
+  const versionsPatch = versionsPatchId
+    ? data?.find((p) => p.id === versionsPatchId) ?? null
+    : null;
 
   const openCreate = () => {
     setEditing(null);
@@ -52,7 +56,7 @@ export function PatchesManagement() {
   };
 
   const openVersions = (patch: AdminPatch) => {
-    setVersionsPatch(patch);
+    setVersionsPatchId(patch.id);
     setVersionsOpen(true);
   };
 
@@ -159,7 +163,10 @@ export function PatchesManagement() {
 
       <PatchVersionsDrawer
         open={versionsOpen}
-        onOpenChange={setVersionsOpen}
+        onOpenChange={(o) => {
+          setVersionsOpen(o);
+          if (!o) setVersionsPatchId(null);
+        }}
         patch={versionsPatch}
       />
 
