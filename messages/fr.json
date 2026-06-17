@@ -355,6 +355,18 @@
         "version": "Version",
         "versionPlaceholder": "Version du maillot",
         "signed": "Signé",
+        "longSleeves": "Manches longues",
+        "cards": {
+          "identity": "Le maillot",
+          "myJersey": "Mon exemplaire",
+          "acquisition": "Acquisition",
+          "authentication": "Authentification",
+          "flocageTitle": "Flocage",
+          "patchTitle": "Patch",
+          "patchesTitle": "Patches",
+          "myJerseyEmpty": "Pas de personnalisation",
+          "viewCertificate": "Voir le certificat"
+        },
         "authCertificate": "Certificat d'auth.",
         "isSigned": "Maillot signé",
         "signedBy": "Signé par",

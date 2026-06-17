@@ -344,6 +344,18 @@
         "version": "Versão",
         "versionPlaceholder": "Versão da camisola",
         "signed": "Assinada",
+        "longSleeves": "Manga comprida",
+        "cards": {
+          "identity": "A camisola",
+          "myJersey": "O meu exemplar",
+          "acquisition": "Aquisição",
+          "authentication": "Autenticação",
+          "flocageTitle": "Estampagem",
+          "patchTitle": "Patch",
+          "patchesTitle": "Patches",
+          "myJerseyEmpty": "Sem personalização",
+          "viewCertificate": "Ver certificado"
+        },
         "authCertificate": "Cert. autent.",
         "isSigned": "Camisola assinada",
         "signedBy": "Assinada por",
