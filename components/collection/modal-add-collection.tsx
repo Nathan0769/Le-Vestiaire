@@ -2,94 +2,103 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import Image from "next/image";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+  BadgeCheck,
+  Camera,
+  FileText,
+  ShoppingBag,
+  Trash2,
+  Upload,
+  User,
+} from "lucide-react";
 import { toast } from "sonner";
-import { Camera, X, ChevronDown } from "lucide-react";
-import Image from "next/image";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { PatchesSection } from "./patches-section";
 import type {
-  Size,
+  AddToCollectionData,
   Condition,
   JerseyVersion,
-  AddToCollectionData,
+  Size,
+  UpdateCollectionData,
 } from "@/types/collection";
-import { SIZE_LABELS } from "@/types/collection";
-import type { UserJerseyPatchInput } from "@/types/patch";
+import type { JerseyHeaderJersey } from "./jersey-modal/jersey-header";
+import { JerseyHeader } from "./jersey-modal/jersey-header";
+import { InfoCard } from "./jersey-modal/info-card";
+import { MyJerseyEditForm } from "./jersey-modal/forms/my-jersey-edit-form";
+import { AcquisitionEditForm } from "./jersey-modal/forms/acquisition-edit-form";
+import { AuthenticationEditForm } from "./jersey-modal/forms/authentication-edit-form";
+
+export type AddToCollectionJersey = JerseyHeaderJersey & {
+  id: string;
+  imageUrl: string;
+};
 
 interface AddToCollectionModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (data: AddToCollectionData) => Promise<void>;
   isLoading: boolean;
-  jerseyId: string;
+  jersey: AddToCollectionJersey;
 }
 
-const VERSION_ORDER: JerseyVersion[] = [
-  "REPLICA",
-  "AUTHENTIC",
-  "STOCK_PRO",
+const VERSIONS_WITH_MATCH_INFO: JerseyVersion[] = [
   "PLAYER_ISSUE",
   "MATCH_WORN",
 ];
 
-const VERSIONS_WITH_MATCH_INFO: JerseyVersion[] = ["PLAYER_ISSUE", "MATCH_WORN"];
+function getAccent(
+  version: string | null | undefined
+): "violet" | "amber" | undefined {
+  if (version === "MATCH_WORN") return "amber";
+  if (version === "PLAYER_ISSUE") return "violet";
+  return undefined;
+}
+
+function shouldShowAuthCard(formData: UpdateCollectionData): boolean {
+  if (formData.isSigned) return true;
+  if (formData.hasAuthCertificate) return true;
+  if (VERSIONS_WITH_MATCH_INFO.includes(formData.version as JerseyVersion))
+    return true;
+  return false;
+}
+
+const INITIAL_FORM: UpdateCollectionData = {
+  version: "REPLICA" as JerseyVersion,
+  size: "M" as Size,
+  condition: "MINT" as Condition,
+  hasTags: false,
+  isGift: false,
+  isFromMysteryBox: false,
+  isSigned: false,
+  hasAuthCertificate: false,
+  certificateUrl: undefined,
+  hasLongSleeves: false,
+  patches: [],
+};
 
 export function AddToCollectionModal({
   open,
   onOpenChange,
   onSubmit,
   isLoading,
-  jerseyId,
+  jersey,
 }: AddToCollectionModalProps) {
   const t = useTranslations("Collection.modal.add");
-  const tCondition = useTranslations("Condition");
-  const tVersion = useTranslations("JerseyVersion");
+  const tView = useTranslations("Collection.modal.view");
 
-  const [formData, setFormData] = useState<AddToCollectionData>({
-    version: "REPLICA" as JerseyVersion,
-    size: "M" as Size,
-    condition: "MINT" as Condition,
-    hasTags: false,
-    isGift: false,
-    isFromMysteryBox: false,
-    isSigned: false,
-    hasAuthCertificate: false,
-    certificateUrl: undefined,
-    hasLongSleeves: false,
-    patches: [],
-  });
-
+  const [formData, setFormData] = useState<UpdateCollectionData>(INITIAL_FORM);
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
-
-  const showMatchFields = VERSIONS_WITH_MATCH_INFO.includes(
-    formData.version as JerseyVersion
-  );
 
   const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -125,7 +134,13 @@ export function AddToCollectionModal({
       return;
     }
 
-    const dataToSubmit = { ...formData };
+    const dataToSubmit: AddToCollectionData = {
+      ...formData,
+      size: formData.size,
+      condition: formData.condition,
+      isGift: formData.isGift,
+      isFromMysteryBox: formData.isFromMysteryBox,
+    };
 
     if (photoFile) {
       setIsUploadingPhoto(true);
@@ -160,19 +175,7 @@ export function AddToCollectionModal({
   };
 
   const handleReset = () => {
-    setFormData({
-      version: "REPLICA" as JerseyVersion,
-      size: "M" as Size,
-      condition: "MINT" as Condition,
-      hasTags: false,
-      isGift: false,
-      isFromMysteryBox: false,
-      isSigned: false,
-      hasAuthCertificate: false,
-      certificateUrl: undefined,
-      hasLongSleeves: false,
-      patches: [],
-    });
+    setFormData(INITIAL_FORM);
     setPhotoFile(null);
     setPhotoPreview(null);
   };
@@ -182,362 +185,150 @@ export function AddToCollectionModal({
     onOpenChange(newOpen);
   };
 
+  const showAuthCard = shouldShowAuthCard(formData);
+  const hasUserPhoto = !!photoPreview;
+
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="w-[95vw] max-w-lg max-h-[90dvh] flex flex-col p-0">
-        <DialogHeader className="px-6 py-4 border-b">
+      <DialogContent className="w-[95vw] sm:max-w-6xl max-h-[90vh] flex flex-col p-0 @container">
+        <DialogHeader className="sr-only">
           <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto px-6 py-4">
-          <form onSubmit={handleSubmit} className="space-y-4" id="collection-form">
+        <form
+          id="add-collection-form"
+          onSubmit={handleSubmit}
+          className="flex-1 overflow-y-auto px-6 py-6 @xl:pt-8"
+        >
+          <div className="grid grid-cols-1 @xl:grid-cols-[380px_1fr] @4xl:grid-cols-[440px_1fr] gap-5 @4xl:gap-6 items-stretch">
+            {/* Colonne gauche : photo officielle + dropzone photo perso */}
+            <div className="flex flex-col gap-4">
+              <div className="rounded-2xl bg-[#FAF5EE] p-4 @xl:p-6 flex-1 flex items-center justify-center min-h-[280px] @xl:min-h-[420px]">
+                <div className="relative w-full aspect-square">
+                  <Image
+                    src={jersey.imageUrl}
+                    alt={jersey.name}
+                    fill
+                    className="object-contain"
+                    unoptimized
+                  />
+                </div>
+              </div>
 
-            {/* Taille + État */}
-            <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">
-                <Label htmlFor="size" className="flex items-center gap-1">
-                  {t("size")} <span className="text-destructive">{t("sizeRequired")}</span>
+                <Label className="flex items-center gap-2 text-sm">
+                  <Camera className="w-4 h-4" />
+                  {hasUserPhoto ? t("modifyPhoto") : t("addPhoto")}
                 </Label>
-                <Select
-                  value={formData.size}
-                  onValueChange={(value: Size) =>
-                    setFormData({ ...formData, size: value })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("sizePlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {Object.entries(SIZE_LABELS).map(([value, label]) => (
-                      <SelectItem key={value} value={value}>
-                        {label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="condition" className="flex items-center gap-1">
-                  {t("condition")} <span className="text-destructive">{t("conditionRequired")}</span>
-                </Label>
-                <Select
-                  value={formData.condition}
-                  onValueChange={(value: Condition) =>
-                    setFormData({ ...formData, condition: value })
-                  }
-                  required
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("conditionPlaceholder")} />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {(["MINT", "EXCELLENT", "GOOD", "FAIR", "POOR"] as const).map((value) => (
-                      <SelectItem key={value} value={value}>
-                        {tCondition(value)}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Version */}
-            <div className="w-1/2 space-y-2">
-              <Label htmlFor="version">{t("version")}</Label>
-              <Select
-                value={formData.version}
-                onValueChange={(value: JerseyVersion) =>
-                  setFormData({ ...formData, version: value })
-                }
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder={t("versionPlaceholder")} />
-                </SelectTrigger>
-                <SelectContent>
-                  {VERSION_ORDER.map((v) => (
-                    <SelectItem key={v} value={v}>
-                      {tVersion(v)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            {/* Infos match (Player Issue / Match Worn) */}
-            {showMatchFields && (
-              <div className="space-y-3 rounded-lg border p-3">
-                <div className="space-y-2">
-                  <Label htmlFor="matchDescription">{t("matchDescription")}</Label>
-                  <Input
-                    id="matchDescription"
-                    placeholder={t("matchDescriptionPlaceholder")}
-                    value={formData.matchDescription || ""}
-                    onChange={(e) =>
-                      setFormData({ ...formData, matchDescription: e.target.value })
-                    }
-                  />
+                <div className="flex gap-2">
+                  <label className="flex-1">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="w-full cursor-pointer"
+                      asChild
+                    >
+                      <span>
+                        <Upload className="w-4 h-4 mr-2" />
+                        {t("choosePhoto")}
+                      </span>
+                    </Button>
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept="image/*"
+                      onChange={handlePhotoChange}
+                    />
+                  </label>
+                  {hasUserPhoto && (
+                    <Button
+                      type="button"
+                      variant="destructive"
+                      onClick={handleRemovePhoto}
+                      className="cursor-pointer"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  )}
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="matchDate">{t("matchDate")}</Label>
-                  <Input
-                    id="matchDate"
-                    type="date"
-                    value={
-                      formData.matchDate
-                        ? formData.matchDate.toISOString().split("T")[0]
-                        : ""
-                    }
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        matchDate: e.target.value ? new Date(e.target.value) : undefined,
-                      })
-                    }
-                  />
-                </div>
-              </div>
-            )}
-
-            {/* Prix + Date achat */}
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="purchasePrice">{t("purchasePrice")}</Label>
-                <Input
-                  id="purchasePrice"
-                  type="number"
-                  step="0.01"
-                  min="0"
-                  placeholder={t("purchasePricePlaceholder")}
-                  value={formData.purchasePrice ?? ""}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      purchasePrice: e.target.value ? parseFloat(e.target.value) : undefined,
-                    })
-                  }
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="purchaseDate">{t("purchaseDate")}</Label>
-                <Input
-                  id="purchaseDate"
-                  type="date"
-                  value={
-                    formData.purchaseDate
-                      ? formData.purchaseDate.toISOString().split("T")[0]
-                      : ""
-                  }
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      purchaseDate: e.target.value ? new Date(e.target.value) : undefined,
-                    })
-                  }
-                />
-              </div>
-            </div>
-
-            {/* Flocage */}
-            <div className="grid grid-cols-2 gap-3">
-              <div className="space-y-2">
-                <Label htmlFor="playerName">{t("playerName")}</Label>
-                <Input
-                  id="playerName"
-                  placeholder={t("playerNamePlaceholder")}
-                  value={formData.playerName || ""}
-                  onChange={(e) =>
-                    setFormData({ ...formData, playerName: e.target.value })
-                  }
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="playerNumber">{t("playerNumber")}</Label>
-                <Input
-                  id="playerNumber"
-                  type="number"
-                  min={1}
-                  max={999}
-                  placeholder={t("playerNumberPlaceholder")}
-                  value={formData.playerNumber ?? ""}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      playerNumber: e.target.value ? parseInt(e.target.value, 10) : undefined,
-                    })
-                  }
-                />
-              </div>
-            </div>
-
-            {/* Checkboxes */}
-            <div className="space-y-3">
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="hasTags"
-                  checked={formData.hasTags}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, hasTags: !!checked })
-                  }
-                />
-                <Label htmlFor="hasTags">{t("hasTags")}</Label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="hasLongSleeves"
-                  checked={formData.hasLongSleeves}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, hasLongSleeves: !!checked })
-                  }
-                />
-                <Label htmlFor="hasLongSleeves">{t("hasLongSleeves")}</Label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="isSigned"
-                  checked={formData.isSigned}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, isSigned: !!checked, signedBy: checked ? formData.signedBy : undefined })
-                  }
-                />
-                <Label htmlFor="isSigned">{t("isSigned")}</Label>
-              </div>
-
-              {formData.isSigned && (
-                <div className="space-y-2 pl-6">
-                  <Input
-                    id="signedBy"
-                    placeholder={t("signedByPlaceholder")}
-                    value={formData.signedBy || ""}
-                    onChange={(e) =>
-                      setFormData({ ...formData, signedBy: e.target.value })
-                    }
-                  />
-                </div>
-              )}
-
-              {(formData.isSigned || formData.version === "MATCH_WORN") && (
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="hasAuthCertificate"
-                    checked={formData.hasAuthCertificate}
-                    onCheckedChange={(checked) =>
-                      setFormData({ ...formData, hasAuthCertificate: !!checked, certificateUrl: checked ? formData.certificateUrl : undefined })
-                    }
-                  />
-                  <Label htmlFor="hasAuthCertificate">{t("hasAuthCertificate")}</Label>
-                </div>
-              )}
-
-              {formData.hasAuthCertificate && (
-                <div className="space-y-1 pl-6">
-                  <Input
-                    id="certificateUrl"
-                    type="url"
-                    placeholder={t("certificateUrlPlaceholder")}
-                    value={formData.certificateUrl || ""}
-                    onChange={(e) =>
-                      setFormData({ ...formData, certificateUrl: e.target.value || undefined })
-                    }
-                  />
-                </div>
-              )}
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="isGift"
-                  checked={formData.isGift}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, isGift: !!checked })
-                  }
-                />
-                <Label htmlFor="isGift">{t("isGift")}</Label>
-              </div>
-
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="isFromMysteryBox"
-                  checked={formData.isFromMysteryBox}
-                  onCheckedChange={(checked) =>
-                    setFormData({ ...formData, isFromMysteryBox: !!checked })
-                  }
-                />
-                <Label htmlFor="isFromMysteryBox">{t("isFromMysteryBox")}</Label>
-              </div>
-            </div>
-
-            {/* Patches */}
-            <Collapsible className="rounded-lg border">
-              <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-2 text-sm font-medium cursor-pointer hover:bg-muted/40 [&[data-state=open]>svg]:rotate-180">
-                <span>{t("patches.title")}</span>
-                <ChevronDown className="h-4 w-4 transition-transform" />
-              </CollapsibleTrigger>
-              <CollapsibleContent className="px-3 pb-3">
-                <PatchesSection
-                  jerseyId={jerseyId}
-                  selectedPatches={formData.patches ?? []}
-                  onChange={(patches: UserJerseyPatchInput[]) =>
-                    setFormData({ ...formData, patches })
-                  }
-                />
-              </CollapsibleContent>
-            </Collapsible>
-
-            {/* Notes */}
-            <div className="space-y-2">
-              <Label htmlFor="notes">{t("notes")}</Label>
-              <Textarea
-                id="notes"
-                placeholder={t("notesPlaceholder")}
-                value={formData.notes || ""}
-                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                rows={3}
-              />
-            </div>
-
-            {/* Photo */}
-            <div className="space-y-2">
-              <Label className="flex items-center gap-2">{t("photo")}</Label>
-              {photoPreview ? (
-                <div className="relative w-full aspect-square bg-muted rounded-lg overflow-hidden">
-                  <Image src={photoPreview} alt="Aperçu" fill className="object-contain" />
-                  <Button
-                    type="button"
-                    variant="destructive"
-                    size="icon"
-                    aria-label="Supprimer la photo"
-                    className="absolute top-2 right-2 h-8 w-8"
-                    onClick={handleRemovePhoto}
-                  >
-                    <X className="w-4 h-4" />
-                  </Button>
-                </div>
-              ) : (
-                <label className="flex flex-col items-center justify-center w-full border-2 border-dashed rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
-                  <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                    <Camera className="w-12 h-12 mb-3 text-muted-foreground" />
-                    <p className="mb-2 text-sm text-muted-foreground">
-                      <span className="font-semibold">{t("photoClickToAdd")}</span>{" "}
-                      {t("photoYourPhoto")}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{t("photoFormats")}</p>
+                {photoPreview && (
+                  <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-muted border">
+                    <Image
+                      src={photoPreview}
+                      alt={t("photoYourPhoto")}
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
                   </div>
-                  <input type="file" className="hidden" accept="image/*" onChange={handlePhotoChange} />
-                </label>
-              )}
+                )}
+                <p className="text-xs text-muted-foreground">
+                  {t("photoFormats")}
+                </p>
+              </div>
             </div>
-          </form>
-        </div>
 
-        <DialogFooter className="px-6 py-4 border-t">
+            {/* Colonne droite : header + cards */}
+            <div className="space-y-4">
+              <JerseyHeader jersey={jersey} />
+
+              <InfoCard icon={User} title={tView("cards.myJersey")}>
+                <MyJerseyEditForm
+                  jerseyId={jersey.id}
+                  formData={formData}
+                  setFormData={setFormData}
+                />
+              </InfoCard>
+
+              <InfoCard
+                icon={ShoppingBag}
+                title={tView("cards.acquisition")}
+              >
+                <AcquisitionEditForm
+                  formData={formData}
+                  setFormData={setFormData}
+                />
+              </InfoCard>
+
+              {showAuthCard && (
+                <InfoCard
+                  icon={BadgeCheck}
+                  title={tView("cards.authentication")}
+                  accent={getAccent(formData.version)}
+                >
+                  <AuthenticationEditForm
+                    formData={formData}
+                    setFormData={setFormData}
+                  />
+                </InfoCard>
+              )}
+
+              <div className="rounded-xl border bg-card p-4 space-y-2">
+                <div className="flex items-center gap-2">
+                  <FileText className="h-4 w-4 text-muted-foreground" />
+                  <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                    {tView("personalNotes")}
+                  </h4>
+                </div>
+                <Textarea
+                  id="notes"
+                  placeholder={t("notesPlaceholder")}
+                  value={formData.notes || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, notes: e.target.value })
+                  }
+                  rows={3}
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <DialogFooter className="px-6 py-4 border-t flex-row gap-2">
           <Button
             type="button"
             variant="outline"
-            className="cursor-pointer"
+            className="flex-1 cursor-pointer"
             onClick={() => handleOpenChange(false)}
             disabled={isLoading || isUploadingPhoto}
           >
@@ -545,9 +336,9 @@ export function AddToCollectionModal({
           </Button>
           <Button
             type="submit"
-            form="collection-form"
+            form="add-collection-form"
             disabled={isLoading || isUploadingPhoto}
-            className="cursor-pointer"
+            className="flex-1 cursor-pointer"
           >
             {isUploadingPhoto ? (
               <div className="flex items-center gap-2">

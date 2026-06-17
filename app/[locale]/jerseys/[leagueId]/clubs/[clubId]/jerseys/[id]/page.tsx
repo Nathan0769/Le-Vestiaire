@@ -402,6 +402,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                 <div className="flex flex-col xl:flex-row gap-3 min-w-0">
                   <CollectionButton
                     jerseyId={jersey.id}
+                    jersey={jersey}
                     initialIsInCollection={jersey.isInCollection}
                   />
                   <WishlistButton
