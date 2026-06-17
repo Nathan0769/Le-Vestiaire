@@ -344,6 +344,18 @@
         "version": "Version",
         "versionPlaceholder": "Jersey version",
         "signed": "Signed",
+        "longSleeves": "Long sleeves",
+        "cards": {
+          "identity": "The jersey",
+          "myJersey": "My item",
+          "acquisition": "Acquisition",
+          "authentication": "Authentication",
+          "flocageTitle": "Lettering",
+          "patchTitle": "Patch",
+          "patchesTitle": "Patches",
+          "myJerseyEmpty": "No personalization",
+          "viewCertificate": "View certificate"
+        },
         "authCertificate": "Auth. cert.",
         "isSigned": "Signed jersey",
         "signedBy": "Signed by",

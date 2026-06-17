@@ -344,6 +344,18 @@
         "version": "Version",
         "versionPlaceholder": "Trikotversion",
         "signed": "Signiert",
+        "longSleeves": "Lange Ärmel",
+        "cards": {
+          "identity": "Das Trikot",
+          "myJersey": "Mein Exemplar",
+          "acquisition": "Erwerb",
+          "authentication": "Authentifizierung",
+          "flocageTitle": "Beflockung",
+          "patchTitle": "Patch",
+          "patchesTitle": "Patches",
+          "myJerseyEmpty": "Keine Personalisierung",
+          "viewCertificate": "Zertifikat ansehen"
+        },
         "authCertificate": "Echtheitszert.",
         "isSigned": "Signiertes Trikot",
         "signedBy": "Signiert von",

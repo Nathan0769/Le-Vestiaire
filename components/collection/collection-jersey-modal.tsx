@@ -1,28 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import {
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -34,42 +23,29 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
-  FileText,
-  Tag,
-  Package,
-  Star,
-  Edit3,
-  Trash2,
-  Save,
-  X,
-  Gift,
   Camera,
+  Edit3,
+  FileText,
+  Package,
+  Save,
+  Trash2,
   Upload,
-  ExternalLink,
+  X,
 } from "lucide-react";
-import { SIZE_LABELS } from "@/types/collection";
 import type {
-  Size,
   Condition,
   JerseyVersion,
+  Size,
   UpdateCollectionData,
 } from "@/types/collection";
-import type { JerseyType } from "@/types/jersey";
-import { format } from "date-fns";
-import { translateJerseyName } from "@/lib/translate-jersey-name";
-import { fr } from "date-fns/locale";
 import { toast } from "sonner";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { ImageCarousel } from "./image-carousel";
-import { jerseyTypeLabel } from "@/lib/jersey-utils";
-import { PatchesSection } from "./patches-section";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown } from "lucide-react";
-import type { UserJerseyPatchInput } from "@/types/patch";
+import { BadgesSummary } from "./jersey-modal/badges-summary";
+import { JerseyHeader } from "./jersey-modal/jersey-header";
+import { MyJerseyCard } from "./jersey-modal/my-jersey-card";
+import { AcquisitionCard } from "./jersey-modal/acquisition-card";
+import { AuthenticationCard } from "./jersey-modal/authentication-card";
 
 interface CollectionJerseyModalProps {
   isOpen: boolean;
@@ -79,6 +55,20 @@ interface CollectionJerseyModalProps {
   onDelete?: (deletedItemId: string) => void;
 }
 
+const VERSIONS_WITH_MATCH_INFO: JerseyVersion[] = [
+  "PLAYER_ISSUE",
+  "MATCH_WORN",
+];
+
+function shouldShowAuthCard(item: CollectionItemWithJersey): boolean {
+  if (item.isSigned) return true;
+  if (item.hasAuthCertificate) return true;
+  if (item.matchDescription || item.matchDate) return true;
+  if (VERSIONS_WITH_MATCH_INFO.includes(item.version as JerseyVersion))
+    return true;
+  return false;
+}
+
 export function CollectionJerseyModal({
   isOpen,
   onClose,
@@ -86,22 +76,9 @@ export function CollectionJerseyModal({
   onUpdate,
   onDelete,
 }: CollectionJerseyModalProps) {
-  const locale = useLocale();
   const t = useTranslations("Collection.modal.view");
   const tDelete = useTranslations("Collection.modal.delete");
-  const tJerseyType = useTranslations("JerseyType");
-  const tCondition = useTranslations("Condition");
-  const tVersion = useTranslations("JerseyVersion");
 
-  const VERSION_ORDER: JerseyVersion[] = [
-    "REPLICA",
-    "AUTHENTIC",
-    "STOCK_PRO",
-    "PLAYER_ISSUE",
-    "MATCH_WORN",
-  ];
-
-  const VERSIONS_WITH_MATCH_INFO: JerseyVersion[] = ["PLAYER_ISSUE", "MATCH_WORN"];
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -111,7 +88,7 @@ export function CollectionJerseyModal({
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [photoDeleted, setPhotoDeleted] = useState(false);
 
-  const [formData, setFormData] = useState<UpdateCollectionData>({
+  const buildInitialFormData = (): UpdateCollectionData => ({
     version: (collectionItem.version || "REPLICA") as JerseyVersion,
     size: (collectionItem.size || "M") as Size,
     condition: collectionItem.condition as Condition,
@@ -130,35 +107,19 @@ export function CollectionJerseyModal({
     certificateUrl: collectionItem.certificateUrl || "",
     matchDescription: collectionItem.matchDescription || "",
     matchDate: collectionItem.matchDate || undefined,
+    hasLongSleeves: collectionItem.hasLongSleeves || false,
+    patches: (collectionItem.patches ?? []).map((p) => ({
+      patchId: p.patchId ?? undefined,
+      customLabel: p.customLabel ?? undefined,
+    })),
   });
 
+  const [formData, setFormData] = useState<UpdateCollectionData>(
+    buildInitialFormData()
+  );
+
   const resetForm = () => {
-    setFormData({
-      version: (collectionItem.version || "REPLICA") as JerseyVersion,
-      size: (collectionItem.size || "M") as Size,
-      condition: collectionItem.condition as Condition,
-      hasTags: collectionItem.hasTags,
-      playerName: collectionItem.playerName || "",
-      playerNumber: collectionItem.playerNumber ?? undefined,
-      purchasePrice: collectionItem.purchasePrice || undefined,
-      purchaseDate: collectionItem.purchaseDate || undefined,
-      notes: collectionItem.notes || "",
-      isGift: collectionItem.isGift || false,
-      isFromMysteryBox: collectionItem.isFromMysteryBox || false,
-      userPhotoUrl: collectionItem.userPhotoUrl || undefined,
-      isSigned: collectionItem.isSigned || false,
-      signedBy: collectionItem.signedBy || "",
-      hasAuthCertificate: collectionItem.hasAuthCertificate || false,
-      certificateUrl: collectionItem.certificateUrl || "",
-      matchDescription: collectionItem.matchDescription || "",
-      matchDate: collectionItem.matchDate || undefined,
-      hasLongSleeves: collectionItem.hasLongSleeves || false,
-      patches: (collectionItem.patches ?? [])
-        .map((p) => ({
-          patchId: p.patchId ?? undefined,
-          customLabel: p.customLabel ?? undefined,
-        })),
-    });
+    setFormData(buildInitialFormData());
     setPhotoFile(null);
     setPhotoPreview(null);
     setPhotoDeleted(false);
@@ -276,23 +237,17 @@ export function CollectionJerseyModal({
         payload.userPhotoUrl = null;
       }
 
-      const response = await fetch(
-        `/api/user-jerseys/${collectionItem.id}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
+      const response = await fetch(`/api/user-jerseys/${collectionItem.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       const result = await response.json();
 
       if (response.ok && result.success) {
         setIsEditing(false);
         toast.success(t("toast.updated"));
-
         if (onUpdate && result.userJersey) {
           onUpdate(result.userJersey);
         }
@@ -310,12 +265,9 @@ export function CollectionJerseyModal({
   const handleDelete = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch(
-        `/api/user-jerseys/${collectionItem.id}`,
-        {
-          method: "DELETE",
-        }
-      );
+      const response = await fetch(`/api/user-jerseys/${collectionItem.id}`, {
+        method: "DELETE",
+      });
 
       const result = await response.json();
 
@@ -323,7 +275,6 @@ export function CollectionJerseyModal({
         toast.success(t("toast.deleted"));
         setShowDeleteDialog(false);
         onClose();
-
         if (onDelete) {
           onDelete(collectionItem.id);
         }
@@ -338,39 +289,7 @@ export function CollectionJerseyModal({
     }
   };
 
-  const getConditionColor = (condition: string) => {
-    switch (condition) {
-      case "MINT":
-        return "bg-green-500/20 text-green-700 border-green-200";
-      case "EXCELLENT":
-        return "bg-blue-500/20 text-blue-700 border-blue-200";
-      case "GOOD":
-        return "bg-yellow-500/20 text-yellow-700 border-yellow-200";
-      case "FAIR":
-        return "bg-orange-500/20 text-orange-700 border-orange-200";
-      case "POOR":
-        return "bg-red-500/20 text-red-700 border-red-200";
-      default:
-        return "bg-muted text-muted-foreground";
-    }
-  };
-
-  const getJerseyTypeLabel = (type: string, variant: number) => {
-    return jerseyTypeLabel(tJerseyType(type as JerseyType), type, variant);
-  };
-
-  const translatedJerseyName = translateJerseyName({
-    jersey: {
-      name: collectionItem.jersey.name,
-      type: collectionItem.jersey.type as JerseyType,
-      season: collectionItem.jersey.season,
-      clubShortName: collectionItem.jersey.club.shortName,
-    },
-    locale,
-    typeTranslation: jerseyTypeLabel(tJerseyType(collectionItem.jersey.type as JerseyType), collectionItem.jersey.type, collectionItem.jersey.variant ?? 1),
-  });
-
-  const carouselImages = [];
+  const carouselImages: { src: string; alt: string; label: string }[] = [];
 
   if (photoPreview) {
     carouselImages.push({
@@ -392,31 +311,43 @@ export function CollectionJerseyModal({
     label: t("officialPhoto"),
   });
 
+  const showAuthCard = isEditing || shouldShowAuthCard(collectionItem);
+  const showNotes = isEditing || !!collectionItem.notes;
+  const hasUserPhoto =
+    (collectionItem.userPhotoUrl && !photoDeleted) || photoPreview;
+
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] flex flex-col p-0">
-          <DialogHeader className="px-6 py-4 border-b">
-            <DialogTitle className="flex items-center gap-2">
-              <Package className="w-5 h-5 text-primary" />
-              {isEditing
-                ? t("titleEdit")
-                : t("titleView")}
-            </DialogTitle>
-          </DialogHeader>
+        <DialogContent className="w-[95vw] sm:max-w-6xl max-h-[90vh] flex flex-col p-0 @container">
+          {isEditing ? (
+            <DialogHeader className="px-6 py-4 border-b">
+              <DialogTitle className="flex items-center gap-2">
+                <Package className="w-5 h-5 text-primary" />
+                {t("titleEdit")}
+              </DialogTitle>
+            </DialogHeader>
+          ) : (
+            <DialogHeader className="sr-only">
+              <DialogTitle>{t("titleView")}</DialogTitle>
+            </DialogHeader>
+          )}
 
-          <div className="flex-1 overflow-y-auto px-6 py-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <ImageCarousel images={carouselImages} />
+          <div className="flex-1 overflow-y-auto px-6 py-6 @xl:pt-8">
+            <div className="grid grid-cols-1 @xl:grid-cols-[380px_1fr] @4xl:grid-cols-[440px_1fr] gap-5 @4xl:gap-6 items-stretch">
+              {/* Colonne gauche : photo dans un cadre coloré, centrée verticalement */}
+              <div className="flex flex-col gap-4">
+                <div className="rounded-2xl bg-[#FAF5EE] p-4 @xl:p-6 flex-1 flex items-center justify-center min-h-[420px]">
+                  <div className="w-full">
+                    <ImageCarousel images={carouselImages} />
+                  </div>
+                </div>
 
                 {isEditing && (
                   <div className="space-y-2">
-                    <Label className="flex items-center gap-2">
+                    <Label className="flex items-center gap-2 text-sm">
                       <Camera className="w-4 h-4" />
-                      {(collectionItem.userPhotoUrl && !photoDeleted) || photoPreview
-                        ? t("modifyPhoto")
-                        : t("addPhoto")}
+                      {hasUserPhoto ? t("modifyPhoto") : t("addPhoto")}
                     </Label>
                     <div className="flex gap-2">
                       <label className="flex-1">
@@ -438,7 +369,7 @@ export function CollectionJerseyModal({
                           onChange={handlePhotoChange}
                         />
                       </label>
-                      {((collectionItem.userPhotoUrl && !photoDeleted) || photoPreview) && (
+                      {hasUserPhoto && (
                         <Button
                           type="button"
                           variant="destructive"
@@ -454,622 +385,61 @@ export function CollectionJerseyModal({
                     </p>
                   </div>
                 )}
-
-                {!isEditing && (
-                  <div className="flex flex-wrap gap-2">
-                    <Badge
-                      variant="secondary"
-                      className={`${getConditionColor(
-                        collectionItem.condition
-                      )}`}
-                    >
-                      {tCondition(collectionItem.condition as "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR")}
-                    </Badge>
-
-                    {collectionItem.size && (
-                      <Badge variant="outline">
-                        {t("size")} {collectionItem.size}
-                      </Badge>
-                    )}
-
-                    {collectionItem.version && collectionItem.version !== "REPLICA" && (
-                      <Badge variant="outline" className="text-purple-700 bg-purple-500/10 border-purple-200">
-                        {tVersion(collectionItem.version as JerseyVersion)}
-                      </Badge>
-                    )}
-
-                    {collectionItem.isSigned && (
-                      <Badge variant="outline" className="text-amber-700 bg-amber-500/10 border-amber-200">
-                        {t("signed")}
-                      </Badge>
-                    )}
-
-                    {collectionItem.hasAuthCertificate && (
-                      collectionItem.certificateUrl ? (
-                        <a
-                          href={collectionItem.certificateUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Badge variant="outline" className="text-emerald-700 bg-emerald-500/10 border-emerald-200 cursor-pointer hover:bg-emerald-500/20 gap-1">
-                            {t("authCertificate")}
-                            <ExternalLink className="w-3 h-3" />
-                          </Badge>
-                        </a>
-                      ) : (
-                        <Badge variant="outline" className="text-emerald-700 bg-emerald-500/10 border-emerald-200">
-                          {t("authCertificate")}
-                        </Badge>
-                      )
-                    )}
-
-                    {collectionItem.hasTags && (
-                      <Badge variant="outline" className="text-green-600">
-                        <Tag className="w-3 h-3 mr-1" />
-                        {t("withTags")}
-                      </Badge>
-                    )}
-
-                    {collectionItem.isGift && (
-                      <Badge
-                        variant="outline"
-                        className="text-primary bg-primary/20"
-                      >
-                        <Gift className="w-3 h-3 mr-1" />
-                        {t("gift")}
-                      </Badge>
-                    )}
-
-                    {collectionItem.isFromMysteryBox && (
-                      <Badge
-                        variant="outline"
-                        className="text-primary bg-primary/20"
-                      >
-                        <Package className="w-3 h-3 mr-1" />
-                        {t("mysteryBox")}
-                      </Badge>
-                    )}
-
-                    {collectionItem.hasLongSleeves && (
-                      <Badge variant="outline">Manches longues</Badge>
-                    )}
-                  </div>
-                )}
-
-                {!isEditing && collectionItem.patches && collectionItem.patches.length > 0 && (
-                  <div className="mt-4 space-y-2">
-                    <h4 className="text-xs font-semibold uppercase text-muted-foreground">
-                      Patches
-                    </h4>
-                    <div className="flex flex-wrap gap-2">
-                      {collectionItem.patches.map((p) => {
-                        const label = p.patch?.name ?? p.customLabel ?? "";
-                        const activeVersion = p.patch?.versions.find((v) => {
-                          const afterStart = v.seasonStart <= collectionItem.jersey.season;
-                          const beforeEnd = v.seasonEnd === null || v.seasonEnd >= collectionItem.jersey.season;
-                          return afterStart && beforeEnd;
-                        });
-                        return (
-                          <Badge
-                            key={p.id}
-                            variant="secondary"
-                            className="text-xs flex items-center gap-1"
-                          >
-                            {activeVersion?.imageUrl && (
-                              <span className="relative w-3 h-3 inline-block">
-                                {/* eslint-disable-next-line @next/next/no-img-element */}
-                                <img
-                                  src={activeVersion.imageUrl}
-                                  alt={label}
-                                  className="w-3 h-3 object-contain"
-                                />
-                              </span>
-                            )}
-                            {label}
-                          </Badge>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
               </div>
 
-              <div className="space-y-6">
-                <div>
-                  <h3 className="font-semibold text-lg mb-3">
-                    {translatedJerseyName}
-                  </h3>
+              {/* Colonne droite : header + cards empilées verticalement */}
+              <div className="space-y-4">
+                <JerseyHeader collectionItem={collectionItem} />
 
-                  <div className="space-y-2 text-sm">
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">{t("club")}</span>
-                      <span className="font-medium">
-                        {collectionItem.jersey.club.name}
-                      </span>
-                    </div>
+                {!isEditing && <BadgesSummary collectionItem={collectionItem} />}
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">{t("league")}</span>
-                      <span className="font-medium">
-                        {collectionItem.jersey.club.league.name}
-                      </span>
-                    </div>
+                <MyJerseyCard
+                  collectionItem={collectionItem}
+                  isEditing={isEditing}
+                  formData={formData}
+                  setFormData={setFormData}
+                />
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">{t("type")}</span>
-                      <span className="font-medium">
-                        {getJerseyTypeLabel(collectionItem.jersey.type, collectionItem.jersey.variant ?? 1)}
-                      </span>
-                    </div>
+                <AcquisitionCard
+                  collectionItem={collectionItem}
+                  isEditing={isEditing}
+                  formData={formData}
+                  setFormData={setFormData}
+                />
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">{t("season")}</span>
-                      <span className="font-medium">
-                        {collectionItem.jersey.season}
-                      </span>
-                    </div>
+                {showAuthCard && (
+                  <AuthenticationCard
+                    collectionItem={collectionItem}
+                    isEditing={isEditing}
+                    formData={formData}
+                    setFormData={setFormData}
+                  />
+                )}
 
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">{t("brand")}</span>
-                      <span className="font-medium">
-                        {collectionItem.jersey.brand}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div>
-                  <h4 className="font-semibold mb-3 flex items-center gap-2">
-                    <Star className="w-4 h-4" />
-                    {t("yourJersey")}
-                  </h4>
-
-                  {isEditing ? (
-                    <div className="space-y-4">
-
-                      {/* Version */}
-                      <div className="space-y-2">
-                        <Label htmlFor="version">{t("version")}</Label>
-                        <Select
-                          value={formData.version}
-                          onValueChange={(value: JerseyVersion) =>
-                            setFormData({ ...formData, version: value })
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {VERSION_ORDER.map((v) => (
-                              <SelectItem key={v} value={v}>
-                                {tVersion(v)}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label
-                            htmlFor="size"
-                            className="flex items-center gap-1"
-                          >
-                            {t("size")} <span className="text-destructive">{t("sizeRequired")}</span>
-                          </Label>
-                          <Select
-                            value={formData.size}
-                            onValueChange={(value: Size) =>
-                              setFormData({ ...formData, size: value })
-                            }
-                            required
-                          >
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {Object.entries(SIZE_LABELS).map(
-                                ([value, label]) => (
-                                  <SelectItem key={value} value={value}>
-                                    {label}
-                                  </SelectItem>
-                                )
-                              )}
-                            </SelectContent>
-                          </Select>
-                        </div>
-
-                        <div className="space-y-2">
-                          <Label
-                            htmlFor="condition"
-                            className="flex items-center gap-1"
-                          >
-                            {t("condition")} <span className="text-destructive">{t("conditionRequired")}</span>
-                          </Label>
-                          <Select
-                            value={formData.condition}
-                            onValueChange={(value: Condition) =>
-                              setFormData({ ...formData, condition: value })
-                            }
-                            required
-                          >
-                            <SelectTrigger>
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                              {(["MINT", "EXCELLENT", "GOOD", "FAIR", "POOR"] as const).map(
-                                (value) => (
-                                  <SelectItem key={value} value={value}>
-                                    {tCondition(value)}
-                                  </SelectItem>
-                                )
-                              )}
-                            </SelectContent>
-                          </Select>
-                        </div>
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="purchasePrice">
-                          {t("purchasePrice")}
-                        </Label>
-                        <Input
-                          id="purchasePrice"
-                          type="number"
-                          step="0.01"
-                          min="0"
-                          placeholder={t("purchasePricePlaceholder")}
-                          value={formData.purchasePrice || ""}
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              purchasePrice: e.target.value
-                                ? parseFloat(e.target.value)
-                                : undefined,
-                            })
-                          }
-                        />
-                      </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="purchaseDate">{t("purchaseDate")}</Label>
-                        <Input
-                          id="purchaseDate"
-                          type="date"
-                          value={
-                            formData.purchaseDate
-                              ? formData.purchaseDate instanceof Date
-                                ? formData.purchaseDate
-                                    .toISOString()
-                                    .split("T")[0]
-                                : new Date(formData.purchaseDate)
-                                    .toISOString()
-                                    .split("T")[0]
-                              : ""
-                          }
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              purchaseDate: e.target.value
-                                ? new Date(e.target.value)
-                                : undefined,
-                            })
-                          }
-                        />
-                      </div>
-
-                      <div className="grid grid-cols-2 gap-3">
-                        <div className="space-y-2">
-                          <Label htmlFor="playerName">{t("playerName")}</Label>
-                          <Input
-                            id="playerName"
-                            placeholder={t("playerNamePlaceholder")}
-                            value={formData.playerName || ""}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                playerName: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="playerNumber">{t("playerNumber")}</Label>
-                          <Input
-                            id="playerNumber"
-                            type="number"
-                            min={1}
-                            max={999}
-                            placeholder={t("playerNumberPlaceholder")}
-                            value={formData.playerNumber ?? ""}
-                            onChange={(e) =>
-                              setFormData({
-                                ...formData,
-                                playerNumber: e.target.value ? parseInt(e.target.value, 10) : undefined,
-                              })
-                            }
-                          />
-                        </div>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="hasTags"
-                          checked={formData.hasTags}
-                          onCheckedChange={(checked) =>
-                            setFormData({ ...formData, hasTags: !!checked })
-                          }
-                        />
-                        <Label htmlFor="hasTags">
-                          {t("hasTags")}
-                        </Label>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="hasLongSleevesEdit"
-                          checked={formData.hasLongSleeves}
-                          onCheckedChange={(checked) =>
-                            setFormData({ ...formData, hasLongSleeves: !!checked })
-                          }
-                        />
-                        <Label htmlFor="hasLongSleevesEdit">Manches longues</Label>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="isGift"
-                          checked={formData.isGift}
-                          onCheckedChange={(checked) =>
-                            setFormData({ ...formData, isGift: !!checked })
-                          }
-                        />
-                        <Label
-                          htmlFor="isGift"
-                          className="flex items-center gap-2"
-                        >
-                          {t("isGift")}
-                        </Label>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="isFromMysteryBox"
-                          checked={formData.isFromMysteryBox}
-                          onCheckedChange={(checked) =>
-                            setFormData({
-                              ...formData,
-                              isFromMysteryBox: !!checked,
-                            })
-                          }
-                        />
-                        <Label
-                          htmlFor="isFromMysteryBox"
-                          className="flex items-center gap-2"
-                        >
-                          {t("isFromMysteryBox")}
-                        </Label>
-                      </div>
-
-                      <div className="flex items-center space-x-2">
-                        <Checkbox
-                          id="isSigned"
-                          checked={formData.isSigned}
-                          onCheckedChange={(checked) =>
-                            setFormData({ ...formData, isSigned: !!checked, signedBy: checked ? formData.signedBy : "" })
-                          }
-                        />
-                        <Label htmlFor="isSigned">{t("isSigned")}</Label>
-                      </div>
-
-                      {formData.isSigned && (
-                        <div className="space-y-2 pl-6">
-                          <Input
-                            placeholder={t("signedByPlaceholder")}
-                            value={formData.signedBy || ""}
-                            onChange={(e) =>
-                              setFormData({ ...formData, signedBy: e.target.value })
-                            }
-                          />
-                        </div>
-                      )}
-
-                      {(formData.isSigned || formData.version === "MATCH_WORN") && (
-                        <div className="flex items-center space-x-2">
-                          <Checkbox
-                            id="hasAuthCertificate"
-                            checked={formData.hasAuthCertificate}
-                            onCheckedChange={(checked) =>
-                              setFormData({ ...formData, hasAuthCertificate: !!checked, certificateUrl: checked ? formData.certificateUrl : "" })
-                            }
-                          />
-                          <Label htmlFor="hasAuthCertificate">{t("hasAuthCertificate")}</Label>
-                        </div>
-                      )}
-
-                      {formData.hasAuthCertificate && (
-                        <div className="space-y-1 pl-6">
-                          <Input
-                            id="certificateUrl"
-                            type="url"
-                            placeholder={t("certificateUrlPlaceholder")}
-                            value={formData.certificateUrl || ""}
-                            onChange={(e) =>
-                              setFormData({ ...formData, certificateUrl: e.target.value })
-                            }
-                          />
-                        </div>
-                      )}
-
-                      {VERSIONS_WITH_MATCH_INFO.includes(formData.version as JerseyVersion) && (
-                        <div className="space-y-3 rounded-lg border p-3">
-                          <div className="space-y-2">
-                            <Label htmlFor="matchDescription">{t("matchDescription")}</Label>
-                            <Input
-                              id="matchDescription"
-                              placeholder={t("matchDescriptionPlaceholder")}
-                              value={formData.matchDescription || ""}
-                              onChange={(e) =>
-                                setFormData({ ...formData, matchDescription: e.target.value })
-                              }
-                            />
-                          </div>
-                          <div className="space-y-2">
-                            <Label htmlFor="matchDate">{t("matchDate")}</Label>
-                            <Input
-                              id="matchDate"
-                              type="date"
-                              value={
-                                formData.matchDate
-                                  ? formData.matchDate instanceof Date
-                                    ? formData.matchDate.toISOString().split("T")[0]
-                                    : new Date(formData.matchDate).toISOString().split("T")[0]
-                                  : ""
-                              }
-                              onChange={(e) =>
-                                setFormData({
-                                  ...formData,
-                                  matchDate: e.target.value ? new Date(e.target.value) : undefined,
-                                })
-                              }
-                            />
-                          </div>
-                        </div>
-                      )}
-
-                      <Collapsible className="rounded-lg border">
-                        <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-2 text-sm font-medium cursor-pointer hover:bg-muted/40 [&[data-state=open]>svg]:rotate-180">
-                          <span>Patches du maillot</span>
-                          <ChevronDown className="h-4 w-4 transition-transform" />
-                        </CollapsibleTrigger>
-                        <CollapsibleContent className="px-3 pb-3">
-                          <PatchesSection
-                            jerseyId={collectionItem.jersey.id}
-                            selectedPatches={formData.patches ?? []}
-                            onChange={(patches: UserJerseyPatchInput[]) =>
-                              setFormData({ ...formData, patches })
-                            }
-                          />
-                        </CollapsibleContent>
-                      </Collapsible>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="notes">{t("notes")}</Label>
-                        <Textarea
-                          id="notes"
-                          placeholder={t("notesPlaceholder")}
-                          value={formData.notes || ""}
-                          onChange={(e) =>
-                            setFormData({ ...formData, notes: e.target.value })
-                          }
-                          rows={3}
-                        />
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="space-y-2 text-sm">
-                      {collectionItem.purchasePrice && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">
-                            {t("purchasePrice")}
-                          </span>
-                          <span className="font-semibold text-primary">
-                            {collectionItem.purchasePrice}€
-                          </span>
-                        </div>
-                      )}
-
-                      {collectionItem.purchaseDate && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">
-                            {t("purchasedOn")}
-                          </span>
-                          <span className="font-medium">
-                            {format(
-                              new Date(collectionItem.purchaseDate),
-                              "dd MMMM yyyy",
-                              { locale: fr }
-                            )}
-                          </span>
-                        </div>
-                      )}
-
-                      {collectionItem.playerName && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">
-                            {t("player")}
-                          </span>
-                          <span className="font-medium">
-                            {collectionItem.playerName}
-                          </span>
-                        </div>
-                      )}
-
-                      {collectionItem.playerNumber && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">
-                            {t("number")}
-                          </span>
-                          <span className="font-medium">
-                            {collectionItem.playerNumber}
-                          </span>
-                        </div>
-                      )}
-
-                      {collectionItem.isSigned && collectionItem.signedBy && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">{t("signedBy")}</span>
-                          <span className="font-medium">{collectionItem.signedBy}</span>
-                        </div>
-                      )}
-
-                      {collectionItem.matchDescription && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">{t("matchDescription")}</span>
-                          <span className="font-medium text-right max-w-[60%]">
-                            {collectionItem.matchDescription}
-                          </span>
-                        </div>
-                      )}
-
-                      {collectionItem.matchDate && (
-                        <div className="flex items-center justify-between">
-                          <span className="text-muted-foreground">{t("matchDate")}</span>
-                          <span className="font-medium">
-                            {format(new Date(collectionItem.matchDate), "dd MMMM yyyy", { locale: fr })}
-                          </span>
-                        </div>
-                      )}
-
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">{t("addedOn")}</span>
-                        <span className="font-medium">
-                          {format(
-                            new Date(collectionItem.createdAt),
-                            "dd MMMM yyyy",
-                            { locale: fr }
-                          )}
-                        </span>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {!isEditing && collectionItem.notes && (
-                  <>
-                    <Separator />
-                    <div>
-                      <h4 className="font-semibold mb-2 flex items-center gap-2">
-                        <FileText className="w-4 h-4" />
+                {showNotes && (
+                  <div className="rounded-xl border bg-card p-4 space-y-2">
+                    <div className="flex items-center gap-2">
+                      <FileText className="h-4 w-4 text-muted-foreground" />
+                      <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                         {t("personalNotes")}
                       </h4>
-                      <p className="text-sm text-muted-foreground bg-muted/50 p-3 rounded-lg">
+                    </div>
+                    {isEditing ? (
+                      <Textarea
+                        id="notes"
+                        placeholder={t("notesPlaceholder")}
+                        value={formData.notes || ""}
+                        onChange={(e) =>
+                          setFormData({ ...formData, notes: e.target.value })
+                        }
+                        rows={3}
+                      />
+                    ) : (
+                      <p className="text-sm text-foreground/80 whitespace-pre-wrap">
                         {collectionItem.notes}
                       </p>
-                    </div>
-                  </>
+                    )}
+                  </div>
                 )}
               </div>
             </div>

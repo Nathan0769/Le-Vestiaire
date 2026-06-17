@@ -344,6 +344,18 @@
         "version": "Versión",
         "versionPlaceholder": "Versión de la camiseta",
         "signed": "Firmada",
+        "longSleeves": "Manga larga",
+        "cards": {
+          "identity": "La camiseta",
+          "myJersey": "Mi ejemplar",
+          "acquisition": "Adquisición",
+          "authentication": "Autenticación",
+          "flocageTitle": "Estampado",
+          "patchTitle": "Parche",
+          "patchesTitle": "Parches",
+          "myJerseyEmpty": "Sin personalización",
+          "viewCertificate": "Ver certificado"
+        },
         "authCertificate": "Cert. autent.",
         "isSigned": "Camiseta firmada",
         "signedBy": "Firmada por",
