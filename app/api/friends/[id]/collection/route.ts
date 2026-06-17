@@ -64,7 +64,9 @@ export async function GET(
       where: { userId },
       select: {
         id: true,
+        userId: true,
         jerseyId: true,
+        version: true,
         size: true,
         condition: true,
         hasTags: true,
@@ -72,11 +74,41 @@ export async function GET(
         playerNumber: true,
         purchasePrice: true,
         purchaseDate: true,
+        notes: true,
         isGift: true,
         isFromMysteryBox: true,
         userPhotoUrl: true,
+        isSigned: true,
+        signedBy: true,
+        hasAuthCertificate: true,
+        certificateUrl: true,
+        matchDescription: true,
+        matchDate: true,
+        hasLongSleeves: true,
         createdAt: true,
         updatedAt: true,
+        patches: {
+          select: {
+            id: true,
+            patchId: true,
+            customLabel: true,
+            patch: {
+              select: {
+                id: true,
+                name: true,
+                family: true,
+                versions: {
+                  select: {
+                    id: true,
+                    seasonStart: true,
+                    seasonEnd: true,
+                    imageUrl: true,
+                  },
+                },
+              },
+            },
+          },
+        },
         jersey: {
           include: {
             club: {

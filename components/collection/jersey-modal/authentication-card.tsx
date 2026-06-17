@@ -18,9 +18,9 @@ const VERSIONS_WITH_MATCH_INFO: JerseyVersion[] = [
 
 interface AuthenticationCardProps {
   collectionItem: CollectionItemWithJersey;
-  isEditing: boolean;
-  formData: UpdateCollectionData;
-  setFormData: (data: UpdateCollectionData) => void;
+  isEditing?: boolean;
+  formData?: UpdateCollectionData;
+  setFormData?: (data: UpdateCollectionData) => void;
 }
 
 function getAccent(
@@ -33,13 +33,13 @@ function getAccent(
 
 export function AuthenticationCard({
   collectionItem,
-  isEditing,
+  isEditing = false,
   formData,
   setFormData,
 }: AuthenticationCardProps) {
   const t = useTranslations("Collection.modal.view");
 
-  if (isEditing) {
+  if (isEditing && formData && setFormData) {
     const accent = getAccent(formData.version);
     const showMatchInfo = VERSIONS_WITH_MATCH_INFO.includes(
       formData.version as JerseyVersion

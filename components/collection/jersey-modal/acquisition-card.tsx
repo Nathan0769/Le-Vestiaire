@@ -13,20 +13,20 @@ import type { UpdateCollectionData } from "@/types/collection";
 
 interface AcquisitionCardProps {
   collectionItem: CollectionItemWithJersey;
-  isEditing: boolean;
-  formData: UpdateCollectionData;
-  setFormData: (data: UpdateCollectionData) => void;
+  isEditing?: boolean;
+  formData?: UpdateCollectionData;
+  setFormData?: (data: UpdateCollectionData) => void;
 }
 
 export function AcquisitionCard({
   collectionItem,
-  isEditing,
+  isEditing = false,
   formData,
   setFormData,
 }: AcquisitionCardProps) {
   const t = useTranslations("Collection.modal.view");
 
-  if (isEditing) {
+  if (isEditing && formData && setFormData) {
     return (
       <InfoCard icon={ShoppingBag} title={t("cards.acquisition")}>
         <div className="space-y-3">

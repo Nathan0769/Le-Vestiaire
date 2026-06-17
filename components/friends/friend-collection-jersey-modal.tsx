@@ -5,20 +5,18 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
-import { Tag, Package, Star, Gift } from "lucide-react";
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { FileText } from "lucide-react";
 import type { FriendCollectionItem } from "@/types/friend-collection";
+import type { CollectionItemWithJersey } from "@/types/collection-page";
+import type { JerseyVersion } from "@/types/collection";
 import { ImageCarousel } from "@/components/collection/image-carousel";
-import { useTranslations, useLocale } from "next-intl";
-import { translateJerseyName } from "@/lib/translate-jersey-name";
-import type { JerseyType } from "@/types/jersey";
-import { jerseyTypeLabel } from "@/lib/jersey-utils";
+import { JerseyHeader } from "@/components/collection/jersey-modal/jersey-header";
+import { BadgesSummary } from "@/components/collection/jersey-modal/badges-summary";
+import { MyJerseyCard } from "@/components/collection/jersey-modal/my-jersey-card";
+import { AcquisitionCard } from "@/components/collection/jersey-modal/acquisition-card";
+import { AuthenticationCard } from "@/components/collection/jersey-modal/authentication-card";
+import { useTranslations } from "next-intl";
 
 interface FriendCollectionJerseyModalProps {
   isOpen: boolean;
@@ -26,45 +24,31 @@ interface FriendCollectionJerseyModalProps {
   collectionItem: FriendCollectionItem;
 }
 
+const VERSIONS_WITH_MATCH_INFO: JerseyVersion[] = [
+  "PLAYER_ISSUE",
+  "MATCH_WORN",
+];
+
+function shouldShowAuthCard(item: FriendCollectionItem): boolean {
+  if (item.isSigned) return true;
+  if (item.hasAuthCertificate) return true;
+  if (item.matchDescription || item.matchDate) return true;
+  if (VERSIONS_WITH_MATCH_INFO.includes(item.version as JerseyVersion))
+    return true;
+  return false;
+}
+
 export function FriendCollectionJerseyModal({
   isOpen,
   onClose,
   collectionItem,
 }: FriendCollectionJerseyModalProps) {
-  const locale = useLocale();
   const t = useTranslations("Friends.modal");
-  const tJerseyType = useTranslations("JerseyType");
-  const tCondition = useTranslations("Condition");
+  const tView = useTranslations("Collection.modal.view");
 
-  const translatedJerseyName = translateJerseyName({
-    jersey: {
-      name: collectionItem.jersey.name,
-      type: collectionItem.jersey.type as JerseyType,
-      season: collectionItem.jersey.season,
-      clubShortName: collectionItem.jersey.club.shortName,
-    },
-    locale,
-    typeTranslation: jerseyTypeLabel(tJerseyType(collectionItem.jersey.type as JerseyType), collectionItem.jersey.type, collectionItem.jersey.variant ?? 1),
-  });
+  const item = collectionItem as unknown as CollectionItemWithJersey;
 
-  const getConditionColor = (condition: string) => {
-    switch (condition) {
-      case "MINT":
-        return "bg-green-500/20 text-green-700 border-green-200";
-      case "EXCELLENT":
-        return "bg-blue-500/20 text-blue-700 border-blue-200";
-      case "GOOD":
-        return "bg-yellow-500/20 text-yellow-700 border-yellow-200";
-      case "FAIR":
-        return "bg-orange-500/20 text-orange-700 border-orange-200";
-      case "POOR":
-        return "bg-red-500/20 text-red-700 border-red-200";
-      default:
-        return "bg-muted text-muted-foreground";
-    }
-  };
-
-  const carouselImages = [];
+  const carouselImages: { src: string; alt: string; label: string }[] = [];
 
   if (collectionItem.userPhotoUrl) {
     carouselImages.push({
@@ -76,199 +60,60 @@ export function FriendCollectionJerseyModal({
 
   carouselImages.push({
     src: collectionItem.jersey.imageUrl,
-    alt: translatedJerseyName,
+    alt: collectionItem.jersey.name,
     label: t("officialPhoto"),
   });
 
+  const showAuthCard = shouldShowAuthCard(collectionItem);
+  const showNotes = !!collectionItem.notes;
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] flex flex-col p-0">
-        <DialogHeader className="px-6 py-4 border-b">
-          <DialogTitle className="flex items-center gap-2">
-            <Package className="w-5 h-5 text-primary" />
-            {t("title")}
-          </DialogTitle>
+      <DialogContent className="w-[95vw] sm:max-w-6xl max-h-[90vh] flex flex-col p-0 @container">
+        <DialogHeader className="sr-only">
+          <DialogTitle>{t("title")}</DialogTitle>
         </DialogHeader>
 
-        <div className="flex-1 overflow-y-auto px-6 py-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <ImageCarousel images={carouselImages} />
-
-              <div className="flex flex-wrap gap-2">
-                <Badge
-                  variant="secondary"
-                  className={`${getConditionColor(collectionItem.condition)}`}
-                >
-                  {tCondition(collectionItem.condition as "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR")}
-                </Badge>
-
-                {collectionItem.size && (
-                  <Badge variant="outline">{t("size")} {collectionItem.size}</Badge>
-                )}
-
-                {collectionItem.hasTags && (
-                  <Badge variant="outline" className="text-green-600">
-                    <Tag className="w-3 h-3 mr-1" />
-                    {t("withTags")}
-                  </Badge>
-                )}
-
-                {collectionItem.isGift && (
-                  <Badge
-                    variant="outline"
-                    className="text-primary bg-primary/20"
-                  >
-                    <Gift className="w-3 h-3 mr-1" />
-                    {t("gift")}
-                  </Badge>
-                )}
-
-                {collectionItem.isFromMysteryBox && (
-                  <Badge
-                    variant="outline"
-                    className="text-primary bg-primary/20"
-                  >
-                    <Package className="w-3 h-3 mr-1" />
-                    {t("mysteryBox")}
-                  </Badge>
-                )}
+        <div className="flex-1 overflow-y-auto px-6 py-6 @xl:pt-8">
+          <div className="grid grid-cols-1 @xl:grid-cols-[380px_1fr] @4xl:grid-cols-[440px_1fr] gap-5 @4xl:gap-6 items-stretch">
+            {/* Colonne gauche : photo dans un cadre coloré, centrée verticalement */}
+            <div className="flex flex-col gap-4">
+              <div className="rounded-2xl bg-[#FAF5EE] p-4 @xl:p-6 flex-1 flex items-center justify-center min-h-[420px]">
+                <div className="w-full">
+                  <ImageCarousel images={carouselImages} />
+                </div>
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div>
-                <h3 className="font-semibold text-lg mb-3">
-                  {translatedJerseyName}
-                </h3>
+            {/* Colonne droite : header + cards empilées verticalement */}
+            <div className="space-y-4">
+              <JerseyHeader collectionItem={item} />
 
-                <div className="space-y-2 text-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">{t("club")}</span>
-                    <span className="font-medium">
-                      {collectionItem.jersey.club.name}
-                    </span>
-                  </div>
+              <BadgesSummary collectionItem={item} />
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">{t("league")}</span>
-                    <span className="font-medium">
-                      {collectionItem.jersey.club.league.name}
-                    </span>
-                  </div>
+              <MyJerseyCard collectionItem={item} />
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">{t("type")}</span>
-                    <span className="font-medium">
-                      {jerseyTypeLabel(tJerseyType(collectionItem.jersey.type as JerseyType), collectionItem.jersey.type, collectionItem.jersey.variant ?? 1)}
-                    </span>
-                  </div>
+              <AcquisitionCard collectionItem={item} />
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">{t("season")}</span>
-                    <span className="font-medium">
-                      {collectionItem.jersey.season}
-                    </span>
-                  </div>
+              {showAuthCard && <AuthenticationCard collectionItem={item} />}
 
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">{t("brand")}</span>
-                    <span className="font-medium">
-                      {collectionItem.jersey.brand}
-                    </span>
+              {showNotes && (
+                <div className="rounded-xl border bg-card p-4 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <FileText className="h-4 w-4 text-muted-foreground" />
+                    <h4 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                      {tView("personalNotes")}
+                    </h4>
                   </div>
+                  <p className="text-sm text-foreground/80 whitespace-pre-wrap">
+                    {collectionItem.notes}
+                  </p>
                 </div>
-              </div>
-
-              <Separator />
-
-              <div>
-                <h4 className="font-semibold mb-3 flex items-center gap-2">
-                  <Star className="w-4 h-4" />
-                  {t("collectionInfo")}
-                </h4>
-
-                <div className="space-y-2 text-sm">
-                  {collectionItem.purchasePrice && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">
-                        {t("purchasePrice")}
-                      </span>
-                      <span className="font-semibold text-primary">
-                        {collectionItem.purchasePrice}€
-                      </span>
-                    </div>
-                  )}
-
-                  {collectionItem.purchaseDate && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">{t("purchasedOn")}</span>
-                      <span className="font-medium">
-                        {format(
-                          new Date(collectionItem.purchaseDate),
-                          "dd MMMM yyyy",
-                          { locale: fr }
-                        )}
-                      </span>
-                    </div>
-                  )}
-
-                  {collectionItem.playerName && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">
-                        {t("player")}
-                      </span>
-                      <span className="font-medium">
-                        {collectionItem.playerName}
-                      </span>
-                    </div>
-                  )}
-
-                  {collectionItem.playerNumber && (
-                    <div className="flex items-center justify-between">
-                      <span className="text-muted-foreground">
-                        {t("number")}
-                      </span>
-                      <span className="font-medium">
-                        {collectionItem.playerNumber}
-                      </span>
-                    </div>
-                  )}
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-muted-foreground">{t("addedOn")}</span>
-                    <span className="font-medium">
-                      {format(
-                        new Date(collectionItem.createdAt),
-                        "dd MMMM yyyy",
-                        { locale: fr }
-                      )}
-                    </span>
-                  </div>
-
-                  {collectionItem.notes && (
-                    <div className="pt-2">
-                      <span className="text-muted-foreground block mb-1">{t("notes")}</span>
-                      <p className="text-sm bg-muted/50 rounded-md p-2 italic">
-                        {collectionItem.notes}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </div>
 
-        <DialogFooter className="px-6 py-4 border-t flex-row gap-2">
-          <Button
-            variant="outline"
-            onClick={onClose}
-            className="flex-1 cursor-pointer"
-          >
-            {t("close")}
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );
