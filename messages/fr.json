@@ -273,6 +273,13 @@
         "playerNumber": "Numéro de maillot",
         "playerNumberPlaceholder": "Ex: 10",
         "hasTags": "Possède encore les étiquettes",
+        "hasLongSleeves": "Manches longues",
+        "patches": {
+          "title": "Patches du maillot",
+          "empty": "Aucun patch disponible pour ce maillot",
+          "customPlaceholder": "Ex: 100 ans du club",
+          "addCustom": "Ajouter"
+        },
         "isGift": "Reçu en cadeau",
         "isFromMysteryBox": "Provenant d'une Box Mystère",
         "isSigned": "Maillot signé",

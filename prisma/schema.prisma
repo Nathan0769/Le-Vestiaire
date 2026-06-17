@@ -143,35 +143,85 @@ model Rating {
 }
 
 model UserJersey {
-  id                 String        @id @default(cuid())
+  id                 String            @id @default(cuid())
   userId             String
   jerseyId           String
   size               Size?
   condition          Condition
-  hasTags            Boolean       @default(false)
+  hasTags            Boolean           @default(false)
   purchasePrice      Decimal?
   purchaseDate       DateTime?
   notes              String?
   userPhotoUrl       String?
-  createdAt          DateTime      @default(now())
-  updatedAt          DateTime      @updatedAt
-  isFromMysteryBox   Boolean       @default(false)
-  isGift             Boolean       @default(false)
+  createdAt          DateTime          @default(now())
+  updatedAt          DateTime          @updatedAt
+  isFromMysteryBox   Boolean           @default(false)
+  isGift             Boolean           @default(false)
   playerName         String?
   playerNumber       Int?
-  version            JerseyVersion @default(REPLICA)
-  isSigned           Boolean       @default(false)
+  version            JerseyVersion     @default(REPLICA)
+  isSigned           Boolean           @default(false)
   signedBy           String?
-  hasAuthCertificate Boolean       @default(false)
+  hasAuthCertificate Boolean           @default(false)
   matchDescription   String?
   matchDate          DateTime?
   certificateUrl     String?
-  jersey             Jersey        @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-  user               User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  hasLongSleeves     Boolean           @default(false)
+  jersey             Jersey            @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  user               User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  patches            UserJerseyPatch[]
 
   @@index([userId])
   @@index([jerseyId])
   @@map("user_jerseys")
+}
+
+model Patch {
+  id          String            @id @default(cuid())
+  name        String
+  family      PatchFamily
+  leagueId    String?
+  isActive    Boolean           @default(true)
+  notes       String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  league      League?           @relation(fields: [leagueId], references: [id], onDelete: SetNull)
+  versions    PatchVersion[]
+  userPatches UserJerseyPatch[]
+
+  @@index([family])
+  @@index([leagueId])
+  @@index([isActive])
+  @@map("patches")
+}
+
+model PatchVersion {
+  id          String   @id @default(cuid())
+  patchId     String
+  seasonStart String
+  seasonEnd   String?
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  patch       Patch    @relation(fields: [patchId], references: [id], onDelete: Cascade)
+
+  @@index([patchId])
+  @@map("patch_versions")
+}
+
+model UserJerseyPatch {
+  id           String     @id @default(cuid())
+  userJerseyId String
+  patchId      String?
+  customLabel  String?
+  createdAt    DateTime   @default(now())
+  userJersey   UserJersey @relation(fields: [userJerseyId], references: [id], onDelete: Cascade)
+  patch        Patch?     @relation(fields: [patchId], references: [id], onDelete: SetNull)
+
+  @@unique([userJerseyId, patchId])
+  @@index([userJerseyId])
+  @@index([patchId])
+  @@map("user_jersey_patches")
 }
 
 model Club {
@@ -216,6 +266,7 @@ model League {
   tier        Int     @default(1)
   logoDarkUrl String?
   clubs       Club[]
+  patches     Patch[]
 
   @@map("leagues")
 }
@@ -445,4 +496,16 @@ enum PlayerPosition {
   DEFENDER
   MIDFIELDER
   FORWARD
+}
+
+enum PatchFamily {
+  UEFA_COMPETITION
+  CONFED_CLUB_COMPETITION
+  FIFA_CLUB_COMPETITION
+  DOMESTIC_LEAGUE_BADGE
+  DOMESTIC_CHAMPION
+  DOMESTIC_CUP
+  DOMESTIC_SUPERCUP
+  NATIONAL_TEAM_COMPETITION
+  CUSTOM
 }

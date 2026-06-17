@@ -1,0 +1,11 @@
+BEGIN;
+
+DROP TABLE IF EXISTS "user_jersey_patches" CASCADE;
+DROP TABLE IF EXISTS "patch_versions" CASCADE;
+DROP TABLE IF EXISTS "patches" CASCADE;
+
+ALTER TABLE "user_jerseys" DROP COLUMN IF EXISTS "hasLongSleeves";
+
+DROP TYPE IF EXISTS "PatchFamily";
+
+COMMIT;

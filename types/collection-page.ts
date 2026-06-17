@@ -1,3 +1,22 @@
+import type { PatchFamily } from "@prisma/client";
+
+export type CollectionItemPatch = {
+  id: string;
+  patchId: string | null;
+  customLabel: string | null;
+  patch: {
+    id: string;
+    name: string;
+    family: PatchFamily;
+    versions: {
+      id: string;
+      seasonStart: string;
+      seasonEnd: string | null;
+      imageUrl: string | null;
+    }[];
+  } | null;
+};
+
 export type CollectionItemWithJersey = {
   id: string;
   userId: string;
@@ -20,6 +39,8 @@ export type CollectionItemWithJersey = {
   certificateUrl?: string | null;
   matchDescription?: string | null;
   matchDate?: Date | null;
+  hasLongSleeves?: boolean;
+  patches?: CollectionItemPatch[];
   createdAt: Date;
   updatedAt: Date;
   jersey: {

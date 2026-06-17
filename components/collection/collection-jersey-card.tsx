@@ -118,6 +118,18 @@ export function CollectionJerseyCard({
                   {tVersion(localItem.version as "REPLICA" | "AUTHENTIC" | "STOCK_PRO" | "PLAYER_ISSUE" | "MATCH_WORN")}
                 </Badge>
               )}
+
+              {localItem.hasLongSleeves && (
+                <Badge variant="outline" className="text-xs px-1.5 py-0.5">
+                  Manches longues
+                </Badge>
+              )}
+
+              {localItem.patches && localItem.patches.length > 0 && (
+                <Badge variant="outline" className="text-xs px-1.5 py-0.5">
+                  {localItem.patches.length} patch{localItem.patches.length > 1 ? "es" : ""}
+                </Badge>
+              )}
             </div>
 
             {localItem.purchasePrice && (

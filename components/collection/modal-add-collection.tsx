@@ -23,8 +23,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { toast } from "sonner";
-import { Camera, X } from "lucide-react";
+import { Camera, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { PatchesSection } from "./patches-section";
 import type {
   Size,
   Condition,
@@ -32,12 +38,14 @@ import type {
   AddToCollectionData,
 } from "@/types/collection";
 import { SIZE_LABELS } from "@/types/collection";
+import type { UserJerseyPatchInput } from "@/types/patch";
 
 interface AddToCollectionModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (data: AddToCollectionData) => Promise<void>;
   isLoading: boolean;
+  jerseyId: string;
 }
 
 const VERSION_ORDER: JerseyVersion[] = [
@@ -55,6 +63,7 @@ export function AddToCollectionModal({
   onOpenChange,
   onSubmit,
   isLoading,
+  jerseyId,
 }: AddToCollectionModalProps) {
   const t = useTranslations("Collection.modal.add");
   const tCondition = useTranslations("Condition");
@@ -70,6 +79,8 @@ export function AddToCollectionModal({
     isSigned: false,
     hasAuthCertificate: false,
     certificateUrl: undefined,
+    hasLongSleeves: false,
+    patches: [],
   });
 
   const [photoFile, setPhotoFile] = useState<File | null>(null);
@@ -159,6 +170,8 @@ export function AddToCollectionModal({
       isSigned: false,
       hasAuthCertificate: false,
       certificateUrl: undefined,
+      hasLongSleeves: false,
+      patches: [],
     });
     setPhotoFile(null);
     setPhotoPreview(null);
@@ -374,6 +387,17 @@ export function AddToCollectionModal({
 
               <div className="flex items-center space-x-2">
                 <Checkbox
+                  id="hasLongSleeves"
+                  checked={formData.hasLongSleeves}
+                  onCheckedChange={(checked) =>
+                    setFormData({ ...formData, hasLongSleeves: !!checked })
+                  }
+                />
+                <Label htmlFor="hasLongSleeves">{t("hasLongSleeves")}</Label>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Checkbox
                   id="isSigned"
                   checked={formData.isSigned}
                   onCheckedChange={(checked) =>
@@ -445,6 +469,23 @@ export function AddToCollectionModal({
                 <Label htmlFor="isFromMysteryBox">{t("isFromMysteryBox")}</Label>
               </div>
             </div>
+
+            {/* Patches */}
+            <Collapsible className="rounded-lg border">
+              <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-2 text-sm font-medium cursor-pointer hover:bg-muted/40 [&[data-state=open]>svg]:rotate-180">
+                <span>{t("patches.title")}</span>
+                <ChevronDown className="h-4 w-4 transition-transform" />
+              </CollapsibleTrigger>
+              <CollapsibleContent className="px-3 pb-3">
+                <PatchesSection
+                  jerseyId={jerseyId}
+                  selectedPatches={formData.patches ?? []}
+                  onChange={(patches: UserJerseyPatchInput[]) =>
+                    setFormData({ ...formData, patches })
+                  }
+                />
+              </CollapsibleContent>
+            </Collapsible>
 
             {/* Notes */}
             <div className="space-y-2">

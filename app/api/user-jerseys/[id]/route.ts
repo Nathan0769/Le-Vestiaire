@@ -64,6 +64,8 @@ export async function PATCH(
       certificateUrl,
       matchDescription,
       matchDate,
+      hasLongSleeves,
+      patches,
     } = await request.json();
 
     if (version && !VALID_VERSIONS.includes(version)) {
@@ -151,6 +153,56 @@ export async function PATCH(
       }
     }
 
+    type PatchInput = { patchId?: string; customLabel?: string };
+    let normalizedPatches: PatchInput[] | null = null;
+    if (patches !== undefined && patches !== null) {
+      if (!Array.isArray(patches)) {
+        return NextResponse.json(
+          { error: "patches doit être un tableau" },
+          { status: 400 }
+        );
+      }
+      normalizedPatches = [];
+      const seenPatchIds = new Set<string>();
+      for (const raw of patches as PatchInput[]) {
+        const patchId = typeof raw.patchId === "string" ? raw.patchId : undefined;
+        const customLabel =
+          typeof raw.customLabel === "string" ? raw.customLabel.trim() : undefined;
+        if (!patchId && !customLabel) {
+          return NextResponse.json(
+            { error: "Chaque patch doit avoir un patchId ou un customLabel" },
+            { status: 400 }
+          );
+        }
+        if (customLabel && customLabel.length > 50) {
+          return NextResponse.json(
+            { error: "Le label personnalisé ne peut pas dépasser 50 caractères" },
+            { status: 400 }
+          );
+        }
+        if (patchId) {
+          if (seenPatchIds.has(patchId)) continue;
+          seenPatchIds.add(patchId);
+        }
+        normalizedPatches.push({ patchId, customLabel: customLabel || undefined });
+      }
+
+      const refIds = normalizedPatches
+        .map((p) => p.patchId)
+        .filter((v): v is string => typeof v === "string");
+      if (refIds.length > 0) {
+        const existsCount = await prisma.patch.count({
+          where: { id: { in: refIds } },
+        });
+        if (existsCount !== refIds.length) {
+          return NextResponse.json(
+            { error: "Un ou plusieurs patches sont introuvables" },
+            { status: 400 }
+          );
+        }
+      }
+    }
+
     if (userPhotoUrl === null && existing.userPhotoUrl) {
       try {
         await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, existing.userPhotoUrl);
@@ -184,22 +236,42 @@ export async function PATCH(
       certificateUrl: hasAuthCertificate ? certificateUrl || null : null,
       matchDescription: matchDescription || null,
       matchDate: matchDate ? new Date(matchDate) : null,
+      ...(hasLongSleeves !== undefined && { hasLongSleeves: Boolean(hasLongSleeves) }),
       updatedAt: new Date(),
       ...(userPhotoUrl !== undefined && { userPhotoUrl: userPhotoUrl || null }),
     };
 
-    const updated = await prisma.userJersey.update({
-      where: { id },
-      data: updateData,
-      include: {
-        jersey: {
-          include: {
-            club: {
-              include: { league: true },
+    const updated = await prisma.$transaction(async (tx) => {
+      if (normalizedPatches !== null) {
+        await tx.userJerseyPatch.deleteMany({ where: { userJerseyId: id } });
+        if (normalizedPatches.length > 0) {
+          await tx.userJerseyPatch.createMany({
+            data: normalizedPatches.map((p) => ({
+              userJerseyId: id,
+              patchId: p.patchId ?? null,
+              customLabel: p.customLabel ?? null,
+            })),
+          });
+        }
+      }
+      return tx.userJersey.update({
+        where: { id },
+        data: updateData,
+        include: {
+          jersey: {
+            include: {
+              club: {
+                include: { league: true },
+              },
+            },
+          },
+          patches: {
+            include: {
+              patch: { include: { versions: true } },
             },
           },
         },
-      },
+      });
     });
 
     let signedPhotoUrl = null;

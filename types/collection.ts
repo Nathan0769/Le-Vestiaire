@@ -3,6 +3,7 @@ import type {
   Condition as PrismaCondition,
   JerseyVersion as PrismaJerseyVersion,
 } from "@prisma/client";
+import type { UserJerseyPatchInput } from "@/types/patch";
 
 export type Size = PrismaSize;
 export type Condition = PrismaCondition;
@@ -78,6 +79,8 @@ export interface AddToCollectionData {
   certificateUrl?: string;
   matchDescription?: string;
   matchDate?: Date;
+  hasLongSleeves?: boolean;
+  patches?: UserJerseyPatchInput[];
 }
 
 export interface UpdateCollectionData {
@@ -99,6 +102,8 @@ export interface UpdateCollectionData {
   certificateUrl?: string;
   matchDescription?: string;
   matchDate?: Date;
+  hasLongSleeves?: boolean;
+  patches?: UserJerseyPatchInput[];
 }
 
 export interface CollectionResponse {

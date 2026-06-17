@@ -63,6 +63,15 @@ export default async function CollectionPage() {
             },
           },
         },
+        patches: {
+          include: {
+            patch: {
+              include: {
+                versions: true,
+              },
+            },
+          },
+        },
       },
       orderBy: {
         createdAt: "desc",
