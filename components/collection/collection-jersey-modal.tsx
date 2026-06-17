@@ -337,7 +337,7 @@ export function CollectionJerseyModal({
             <div className="grid grid-cols-1 @xl:grid-cols-[380px_1fr] @4xl:grid-cols-[440px_1fr] gap-5 @4xl:gap-6 items-stretch">
               {/* Colonne gauche : photo dans un cadre coloré, centrée verticalement */}
               <div className="flex flex-col gap-4">
-                <div className="rounded-2xl bg-[#FAF5EE] p-4 @xl:p-6 flex-1 flex items-center justify-center min-h-[420px]">
+                <div className="rounded-2xl bg-[#FAF5EE] p-4 @xl:p-6 flex-1 flex items-center justify-center min-h-[280px] @xl:min-h-[420px]">
                   <div className="w-full">
                     <ImageCarousel images={carouselImages} />
                   </div>
@@ -389,7 +389,7 @@ export function CollectionJerseyModal({
 
               {/* Colonne droite : header + cards empilées verticalement */}
               <div className="space-y-4">
-                <JerseyHeader collectionItem={collectionItem} />
+                <JerseyHeader jersey={collectionItem.jersey} />
 
                 {!isEditing && <BadgesSummary collectionItem={collectionItem} />}
 

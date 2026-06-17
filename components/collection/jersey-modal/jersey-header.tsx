@@ -2,32 +2,45 @@
 
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import type { CollectionItemWithJersey } from "@/types/collection-page";
 import type { JerseyType } from "@/types/jersey";
 import { jerseyTypeLabel } from "@/lib/jersey-utils";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 
-interface JerseyHeaderProps {
-  collectionItem: CollectionItemWithJersey;
+export interface JerseyHeaderJersey {
+  name: string;
+  type: string;
+  variant: number;
+  season: string;
+  brand: string;
+  club: {
+    name: string;
+    shortName: string;
+    logoUrl: string;
+    league: { name: string };
+  };
 }
 
-export function JerseyHeader({ collectionItem }: JerseyHeaderProps) {
+interface JerseyHeaderProps {
+  jersey: JerseyHeaderJersey;
+}
+
+export function JerseyHeader({ jersey }: JerseyHeaderProps) {
   const locale = useLocale();
   const t = useTranslations("Collection.modal.view");
   const tJerseyType = useTranslations("JerseyType");
 
   const typeLabel = jerseyTypeLabel(
-    tJerseyType(collectionItem.jersey.type as JerseyType),
-    collectionItem.jersey.type,
-    collectionItem.jersey.variant ?? 1
+    tJerseyType(jersey.type as JerseyType),
+    jersey.type,
+    jersey.variant ?? 1
   );
 
   const translatedJerseyName = translateJerseyName({
     jersey: {
-      name: collectionItem.jersey.name,
-      type: collectionItem.jersey.type as JerseyType,
-      season: collectionItem.jersey.season,
-      clubShortName: collectionItem.jersey.club.shortName,
+      name: jersey.name,
+      type: jersey.type as JerseyType,
+      season: jersey.season,
+      clubShortName: jersey.club.shortName,
     },
     locale,
     typeTranslation: typeLabel,
@@ -37,8 +50,8 @@ export function JerseyHeader({ collectionItem }: JerseyHeaderProps) {
     <div className="flex items-start gap-3 pb-1">
       <div className="relative w-12 h-12 @4xl:w-14 @4xl:h-14 shrink-0 rounded-full bg-white border overflow-hidden">
         <Image
-          src={collectionItem.jersey.club.logoUrl}
-          alt={collectionItem.jersey.club.name}
+          src={jersey.club.logoUrl}
+          alt={jersey.club.name}
           fill
           className="object-contain p-1"
           unoptimized
@@ -49,17 +62,16 @@ export function JerseyHeader({ collectionItem }: JerseyHeaderProps) {
           {translatedJerseyName}
         </h2>
         <p className="text-sm text-muted-foreground mt-1">
-          {collectionItem.jersey.club.name} ·{" "}
-          {collectionItem.jersey.club.league.name}
+          {jersey.club.name} · {jersey.club.league.name}
         </p>
         <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1 mt-2 text-xs text-muted-foreground">
           <span>
-            {t("season")} {collectionItem.jersey.season}
+            {t("season")} {jersey.season}
           </span>
           <span aria-hidden>·</span>
           <span>{typeLabel}</span>
           <span aria-hidden>·</span>
-          <span>{collectionItem.jersey.brand}</span>
+          <span>{jersey.brand}</span>
         </div>
       </div>
     </div>

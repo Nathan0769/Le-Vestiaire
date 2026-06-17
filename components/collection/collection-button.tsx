@@ -4,17 +4,22 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
-import { AddToCollectionModal } from "./modal-add-collection";
+import {
+  AddToCollectionModal,
+  type AddToCollectionJersey,
+} from "./modal-add-collection";
 import type { AddToCollectionData, CollectionResponse } from "@/types/collection";
 import { useTranslations } from "next-intl";
 
 interface CollectionButtonProps {
   jerseyId: string;
+  jersey: AddToCollectionJersey;
   initialIsInCollection?: boolean;
 }
 
 export function CollectionButton({
   jerseyId,
+  jersey,
   initialIsInCollection = false,
 }: CollectionButtonProps) {
   const t = useTranslations("Collection.button");
@@ -138,7 +143,7 @@ export function CollectionButton({
         onOpenChange={setShowModal}
         onSubmit={handleAddToCollection}
         isLoading={isLoading}
-        jerseyId={jerseyId}
+        jersey={jersey}
       />
     </>
   );

@@ -216,7 +216,7 @@ export function ImageCarousel({
             </div>
 
             {!singleImage && (
-              <div className="flex justify-center gap-2 px-4 py-3 border-t border-white/10 bg-black/60">
+              <div className="flex flex-wrap justify-center gap-2 px-4 py-3 border-t border-white/10 bg-black/60">
                 {images.map((img, index) => (
                   <button
                     key={index}
