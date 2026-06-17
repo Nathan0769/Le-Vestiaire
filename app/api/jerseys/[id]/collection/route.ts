@@ -94,6 +94,8 @@ export async function POST(
       certificateUrl,
       matchDescription,
       matchDate,
+      hasLongSleeves = false,
+      patches,
     } = await request.json();
 
     if (version && !VALID_VERSIONS.includes(version)) {
@@ -181,6 +183,57 @@ export async function POST(
       }
     }
 
+    type PatchInput = { patchId?: string; customLabel?: string };
+    let normalizedPatches: PatchInput[] = [];
+    if (patches !== undefined && patches !== null) {
+      if (!Array.isArray(patches)) {
+        return NextResponse.json(
+          { success: false, error: "patches doit être un tableau" },
+          { status: 400 }
+        );
+      }
+      const seenPatchIds = new Set<string>();
+      for (const raw of patches as PatchInput[]) {
+        const patchId = typeof raw.patchId === "string" ? raw.patchId : undefined;
+        const customLabel =
+          typeof raw.customLabel === "string" ? raw.customLabel.trim() : undefined;
+
+        if (!patchId && !customLabel) {
+          return NextResponse.json(
+            { success: false, error: "Chaque patch doit avoir un patchId ou un customLabel" },
+            { status: 400 }
+          );
+        }
+        if (customLabel && customLabel.length > 50) {
+          return NextResponse.json(
+            { success: false, error: "Le label personnalisé ne peut pas dépasser 50 caractères" },
+            { status: 400 }
+          );
+        }
+        if (patchId) {
+          if (seenPatchIds.has(patchId)) continue;
+          seenPatchIds.add(patchId);
+        }
+        normalizedPatches.push({ patchId, customLabel: customLabel || undefined });
+      }
+
+      const referencedIds = normalizedPatches
+        .map((p) => p.patchId)
+        .filter((v): v is string => typeof v === "string");
+      if (referencedIds.length > 0) {
+        const existing = await prisma.patch.findMany({
+          where: { id: { in: referencedIds } },
+          select: { id: true },
+        });
+        if (existing.length !== referencedIds.length) {
+          return NextResponse.json(
+            { success: false, error: "Un ou plusieurs patches sont introuvables" },
+            { status: 400 }
+          );
+        }
+      }
+    }
+
     const jersey = await prisma.jersey.findUnique({ where: { id: jerseyId } });
 
     if (!jersey) {
@@ -218,6 +271,15 @@ export async function POST(
           certificateUrl: hasAuthCertificate ? certificateUrl || null : null,
           matchDescription: matchDescription || null,
           matchDate: matchDate ? new Date(matchDate) : null,
+          hasLongSleeves: Boolean(hasLongSleeves),
+          patches: normalizedPatches.length > 0
+            ? {
+                create: normalizedPatches.map((p) => ({
+                  patchId: p.patchId ?? null,
+                  customLabel: p.customLabel ?? null,
+                })),
+              }
+            : undefined,
         },
       }),
       prisma.wishlist.deleteMany({

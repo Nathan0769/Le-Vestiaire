@@ -62,6 +62,14 @@ import { toast } from "sonner";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { ImageCarousel } from "./image-carousel";
 import { jerseyTypeLabel } from "@/lib/jersey-utils";
+import { PatchesSection } from "./patches-section";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import { ChevronDown } from "lucide-react";
+import type { UserJerseyPatchInput } from "@/types/patch";
 
 interface CollectionJerseyModalProps {
   isOpen: boolean;
@@ -144,6 +152,12 @@ export function CollectionJerseyModal({
       certificateUrl: collectionItem.certificateUrl || "",
       matchDescription: collectionItem.matchDescription || "",
       matchDate: collectionItem.matchDate || undefined,
+      hasLongSleeves: collectionItem.hasLongSleeves || false,
+      patches: (collectionItem.patches ?? [])
+        .map((p) => ({
+          patchId: p.patchId ?? undefined,
+          customLabel: p.customLabel ?? undefined,
+        })),
     });
     setPhotoFile(null);
     setPhotoPreview(null);
@@ -249,6 +263,8 @@ export function CollectionJerseyModal({
         hasAuthCertificate: dataToSave.hasAuthCertificate ?? false,
         matchDescription: dataToSave.matchDescription || null,
         matchDate: dataToSave.matchDate || null,
+        hasLongSleeves: dataToSave.hasLongSleeves ?? false,
+        patches: dataToSave.patches ?? [],
       };
 
       if (photoFile) {
@@ -513,6 +529,47 @@ export function CollectionJerseyModal({
                         {t("mysteryBox")}
                       </Badge>
                     )}
+
+                    {collectionItem.hasLongSleeves && (
+                      <Badge variant="outline">Manches longues</Badge>
+                    )}
+                  </div>
+                )}
+
+                {!isEditing && collectionItem.patches && collectionItem.patches.length > 0 && (
+                  <div className="mt-4 space-y-2">
+                    <h4 className="text-xs font-semibold uppercase text-muted-foreground">
+                      Patches
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {collectionItem.patches.map((p) => {
+                        const label = p.patch?.name ?? p.customLabel ?? "";
+                        const activeVersion = p.patch?.versions.find((v) => {
+                          const afterStart = v.seasonStart <= collectionItem.jersey.season;
+                          const beforeEnd = v.seasonEnd === null || v.seasonEnd >= collectionItem.jersey.season;
+                          return afterStart && beforeEnd;
+                        });
+                        return (
+                          <Badge
+                            key={p.id}
+                            variant="secondary"
+                            className="text-xs flex items-center gap-1"
+                          >
+                            {activeVersion?.imageUrl && (
+                              <span className="relative w-3 h-3 inline-block">
+                                {/* eslint-disable-next-line @next/next/no-img-element */}
+                                <img
+                                  src={activeVersion.imageUrl}
+                                  alt={label}
+                                  className="w-3 h-3 object-contain"
+                                />
+                              </span>
+                            )}
+                            {label}
+                          </Badge>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
               </div>
@@ -752,6 +809,17 @@ export function CollectionJerseyModal({
 
                       <div className="flex items-center space-x-2">
                         <Checkbox
+                          id="hasLongSleevesEdit"
+                          checked={formData.hasLongSleeves}
+                          onCheckedChange={(checked) =>
+                            setFormData({ ...formData, hasLongSleeves: !!checked })
+                          }
+                        />
+                        <Label htmlFor="hasLongSleevesEdit">Manches longues</Label>
+                      </div>
+
+                      <div className="flex items-center space-x-2">
+                        <Checkbox
                           id="isGift"
                           checked={formData.isGift}
                           onCheckedChange={(checked) =>
@@ -870,6 +938,22 @@ export function CollectionJerseyModal({
                           </div>
                         </div>
                       )}
+
+                      <Collapsible className="rounded-lg border">
+                        <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-2 text-sm font-medium cursor-pointer hover:bg-muted/40 [&[data-state=open]>svg]:rotate-180">
+                          <span>Patches du maillot</span>
+                          <ChevronDown className="h-4 w-4 transition-transform" />
+                        </CollapsibleTrigger>
+                        <CollapsibleContent className="px-3 pb-3">
+                          <PatchesSection
+                            jerseyId={collectionItem.jersey.id}
+                            selectedPatches={formData.patches ?? []}
+                            onChange={(patches: UserJerseyPatchInput[]) =>
+                              setFormData({ ...formData, patches })
+                            }
+                          />
+                        </CollapsibleContent>
+                      </Collapsible>
 
                       <div className="space-y-2">
                         <Label htmlFor="notes">{t("notes")}</Label>

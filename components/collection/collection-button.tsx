@@ -138,6 +138,7 @@ export function CollectionButton({
         onOpenChange={setShowModal}
         onSubmit={handleAddToCollection}
         isLoading={isLoading}
+        jerseyId={jerseyId}
       />
     </>
   );

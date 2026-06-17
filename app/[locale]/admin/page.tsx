@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Users, ShieldCheck, UserCheck, Tag } from "lucide-react";
+import { Users, ShieldCheck, UserCheck, Tag, Sparkles } from "lucide-react";
 
 export default async function AdminPage() {
   const user = await getCurrentUser();
@@ -102,6 +102,27 @@ export default async function AdminPage() {
               <Link href="/admin/cfs-promos">
                 <Button className="w-full cursor-pointer">
                   Gérer les promos
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
+
+        {isSuperAdmin && (
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <Sparkles className="h-5 w-5" />
+                <CardTitle>Patches</CardTitle>
+              </div>
+              <CardDescription>
+                Catalogue des patches/badges et leurs versions par saison
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/admin/patches">
+                <Button className="w-full cursor-pointer">
+                  Gérer les patches
                 </Button>
               </Link>
             </CardContent>
