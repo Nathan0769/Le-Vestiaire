@@ -8,7 +8,11 @@ import { FriendshipButton } from "@/components/users/friendship-button";
 import { BackButton } from "@/components/ui/back-button";
 import { Package, Heart, EyeOff } from "lucide-react";
 import prisma from "@/lib/prisma";
-import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
+import {
+  getR2PresignedUrl,
+  AVATARS_BUCKET,
+  USER_JERSEY_PHOTOS_BUCKET,
+} from "@/lib/r2-storage";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import type { FriendshipStatus } from "@/types/friendship";
@@ -84,6 +88,10 @@ export default async function PublicCollectionPage({
     notFound();
   }
 
+  if (targetUser.leaderboardAnonymous) {
+    notFound();
+  }
+
   const isAnonymous = targetUser.leaderboardAnonymous ?? false;
   const displayName = isAnonymous
     ? t("anonymous")
@@ -98,17 +106,51 @@ export default async function PublicCollectionPage({
     where: { userId },
     select: {
       id: true,
+      userId: true,
       jerseyId: true,
+      version: true,
       size: true,
       condition: true,
       hasTags: true,
       playerName: true,
       playerNumber: true,
+      purchasePrice: true,
+      purchaseDate: true,
       notes: true,
       isGift: true,
       isFromMysteryBox: true,
+      userPhotoUrl: true,
+      isSigned: true,
+      signedBy: true,
+      hasAuthCertificate: true,
+      certificateUrl: true,
+      matchDescription: true,
+      matchDate: true,
+      hasLongSleeves: true,
       createdAt: true,
       updatedAt: true,
+      patches: {
+        select: {
+          id: true,
+          patchId: true,
+          customLabel: true,
+          patch: {
+            select: {
+              id: true,
+              name: true,
+              family: true,
+              versions: {
+                select: {
+                  id: true,
+                  seasonStart: true,
+                  seasonEnd: true,
+                  imageUrl: true,
+                },
+              },
+            },
+          },
+        },
+      },
       jersey: {
         include: {
           club: { include: { league: true } },
@@ -120,18 +162,30 @@ export default async function PublicCollectionPage({
 
   const myJerseyIdSet = new Set(myJerseyIds.map((j) => j.jerseyId));
 
-  const formattedCollection = collectionItems.map((item) => ({
-    ...item,
-    userPhotoUrl: null,
-    purchasePrice: null,
-    purchaseDate: null,
-    jersey: {
-      ...item.jersey,
-      retailPrice: item.jersey.retailPrice
-        ? Number(item.jersey.retailPrice)
-        : null,
-    },
-  }));
+  const formattedCollection = await Promise.all(
+    collectionItems.map(async (item) => {
+      let userPhotoSignedUrl: string | null = null;
+      if (item.userPhotoUrl) {
+        userPhotoSignedUrl = await getR2PresignedUrl(
+          USER_JERSEY_PHOTOS_BUCKET,
+          item.userPhotoUrl,
+          60 * 60
+        );
+      }
+
+      return {
+        ...item,
+        userPhotoUrl: userPhotoSignedUrl,
+        purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
+        jersey: {
+          ...item.jersey,
+          retailPrice: item.jersey.retailPrice
+            ? Number(item.jersey.retailPrice)
+            : null,
+        },
+      };
+    })
+  );
 
   const commonItems = formattedCollection.filter((item) =>
     myJerseyIdSet.has(item.jerseyId)

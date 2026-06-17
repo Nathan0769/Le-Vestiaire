@@ -12,9 +12,28 @@ export interface FriendBasicInfo {
   } | null;
 }
 
+export interface FriendCollectionItemPatch {
+  id: string;
+  patchId: string | null;
+  customLabel: string | null;
+  patch: {
+    id: string;
+    name: string;
+    family: string;
+    versions: {
+      id: string;
+      seasonStart: string;
+      seasonEnd: string | null;
+      imageUrl: string | null;
+    }[];
+  } | null;
+}
+
 export interface FriendCollectionItem {
   id: string;
+  userId: string;
   jerseyId: string;
+  version: string;
   size: string | null;
   condition: string;
   hasTags: boolean;
@@ -26,6 +45,14 @@ export interface FriendCollectionItem {
   isGift: boolean;
   isFromMysteryBox: boolean;
   userPhotoUrl: string | null;
+  isSigned: boolean;
+  signedBy?: string | null;
+  hasAuthCertificate: boolean;
+  certificateUrl?: string | null;
+  matchDescription?: string | null;
+  matchDate?: Date | null;
+  hasLongSleeves?: boolean;
+  patches?: FriendCollectionItemPatch[];
   createdAt: Date;
   updatedAt: Date;
   jersey: {
@@ -41,6 +68,7 @@ export interface FriendCollectionItem {
       id: string;
       name: string;
       shortName: string;
+      leagueId: string;
       logoUrl: string;
       primaryColor: string;
       league: {

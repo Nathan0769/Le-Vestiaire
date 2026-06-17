@@ -41,14 +41,14 @@ const VERSION_ORDER: JerseyVersion[] = [
 
 interface MyJerseyCardProps {
   collectionItem: CollectionItemWithJersey;
-  isEditing: boolean;
-  formData: UpdateCollectionData;
-  setFormData: (data: UpdateCollectionData) => void;
+  isEditing?: boolean;
+  formData?: UpdateCollectionData;
+  setFormData?: (data: UpdateCollectionData) => void;
 }
 
 export function MyJerseyCard({
   collectionItem,
-  isEditing,
+  isEditing = false,
   formData,
   setFormData,
 }: MyJerseyCardProps) {
@@ -56,7 +56,7 @@ export function MyJerseyCard({
   const tCondition = useTranslations("Condition");
   const tVersion = useTranslations("JerseyVersion");
 
-  if (isEditing) {
+  if (isEditing && formData && setFormData) {
     return (
       <InfoCard icon={User} title={t("cards.myJersey")}>
         <div className="space-y-3">
