@@ -113,11 +113,11 @@ export function PatchVersionsDrawer({
               </div>
             </div>
             <div className="space-y-1">
-              <Label htmlFor="file">Image (PNG/WebP, max 2 MB)</Label>
+              <Label htmlFor="file">Image (PNG/WebP/AVIF/JPEG, max 2 MB)</Label>
               <Input
                 id="file"
                 type="file"
-                accept="image/png,image/webp,image/jpeg"
+                accept="image/png,image/webp,image/jpeg,image/avif,image/jxl"
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
               />
             </div>
