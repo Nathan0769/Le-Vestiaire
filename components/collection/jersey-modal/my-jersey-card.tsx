@@ -240,19 +240,19 @@ export function MyJerseyCard({
               </span>
               <div
                 className={cn(
-                  "relative flex flex-col items-center justify-center rounded-lg shadow-sm overflow-hidden py-3 px-5 bg-[#FAF5EE] border w-fit mx-auto @4xl:mx-0 min-h-[120px]",
+                  "relative flex flex-col items-center justify-center rounded-lg shadow-sm overflow-hidden py-3 px-5 bg-[#FAF5EE] border border-zinc-900/10 w-fit mx-auto @4xl:mx-0 min-h-[120px]",
                   sideBySide && "@4xl:flex-1"
                 )}
               >
-                <div className="pointer-events-none absolute inset-1.5 rounded-md border border-dashed border-foreground/15" />
+                <div className="pointer-events-none absolute inset-1.5 rounded-md border border-dashed border-zinc-900/15" />
                 <div className="relative flex flex-col items-center gap-1">
                   {collectionItem.playerName && (
-                    <span className="text-xl font-black uppercase tracking-[0.08em] text-foreground leading-none text-center">
+                    <span className="text-xl font-black uppercase tracking-[0.08em] text-zinc-900 leading-none text-center">
                       {collectionItem.playerName}
                     </span>
                   )}
                   {collectionItem.playerNumber && (
-                    <span className="text-3xl font-black tabular-nums text-foreground leading-none">
+                    <span className="text-3xl font-black tabular-nums text-zinc-900 leading-none">
                       {collectionItem.playerNumber}
                     </span>
                   )}
