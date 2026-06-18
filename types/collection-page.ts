@@ -53,6 +53,7 @@ export type CollectionItemWithJersey = {
     brand: string;
     retailPrice?: number | null;
     description?: string | null;
+    mainColor?: string | null;
     club: {
       id: string;
       name: string;

@@ -43,9 +43,11 @@ export function MyJerseyCard({
   const hasPatches = patchesCount > 0;
   const sideBySide = hasFlocage && hasPatches && patchesCount <= 2;
 
-  const clubColor =
-    collectionItem.jersey.club.primaryColor || "#1f2937";
-  const lightBg = isLightColor(clubColor);
+  const baseColor =
+    collectionItem.jersey.mainColor ||
+    collectionItem.jersey.club.primaryColor ||
+    "#1f2937";
+  const lightBg = isLightColor(baseColor);
   const flocageTextColor = lightBg ? "#0A0A0A" : "#FFFFFF";
   const flocageBorderColor = lightBg
     ? "rgba(0,0,0,0.15)"
@@ -77,7 +79,7 @@ export function MyJerseyCard({
                   sideBySide && "@4xl:flex-1"
                 )}
                 style={{
-                  backgroundColor: clubColor,
+                  backgroundColor: baseColor,
                   color: flocageTextColor,
                   borderColor: flocageBorderColor,
                 }}

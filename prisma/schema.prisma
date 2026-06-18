@@ -114,6 +114,7 @@ model Jersey {
   slug                    String?               @unique
   descriptionTranslations Json?
   variant                 Int                   @default(1)
+  mainColor               String?
   descriptionProposals    DescriptionProposal[]
   club                    Club                  @relation(fields: [clubId], references: [id])
   ratings                 Rating[]
