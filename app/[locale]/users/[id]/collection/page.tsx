@@ -88,10 +88,6 @@ export default async function PublicCollectionPage({
     notFound();
   }
 
-  if (targetUser.leaderboardAnonymous) {
-    notFound();
-  }
-
   const isAnonymous = targetUser.leaderboardAnonymous ?? false;
   const displayName = isAnonymous
     ? t("anonymous")
