@@ -8,6 +8,7 @@ export interface Jersey {
   type: JerseyType;
   brand: string;
   imageUrl: string;
+  mainColor?: string | null;
   retailPrice?: number;
   description?: string | null;
   descriptionTranslations?: Record<string, string> | null;

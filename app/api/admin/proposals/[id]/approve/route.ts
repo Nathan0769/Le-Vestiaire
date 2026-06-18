@@ -9,6 +9,7 @@ import {
   deleteFromR2,
   JERSEY_PROPOSALS_BUCKET,
 } from "@/lib/r2-storage";
+import { extractMainColor } from "@/lib/extract-main-color";
 
 export async function POST(
   request: Request,
@@ -160,6 +161,19 @@ export async function POST(
       await deleteFromR2(JERSEY_PROPOSALS_BUCKET, oldImagePath);
     } catch (deleteError) {
       console.error("Erreur suppression image du bucket jersey-proposals:", deleteError);
+    }
+
+    // Couleur principale du maillot (best-effort, n'echoue pas l'approbation)
+    try {
+      const { color } = await extractMainColor(newImageUrl);
+      if (color) {
+        await prisma.jersey.update({
+          where: { id: result.jersey.id },
+          data: { mainColor: color },
+        });
+      }
+    } catch (colorError) {
+      console.error("Erreur extraction couleur principale:", colorError);
     }
 
     return NextResponse.json({

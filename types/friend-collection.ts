@@ -64,6 +64,7 @@ export interface FriendCollectionItem {
     season: string;
     brand: string;
     retailPrice: number | null;
+    mainColor?: string | null;
     club: {
       id: string;
       name: string;

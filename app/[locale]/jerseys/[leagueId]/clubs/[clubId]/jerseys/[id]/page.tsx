@@ -20,6 +20,7 @@ import { getTranslations, getLocale } from "next-intl/server";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 import { jerseyTypeLabel } from "@/lib/jersey-utils";
 import { EditableBrand } from "@/components/jerseys/editable-brand";
+import { EditableMainColor } from "@/components/jerseys/editable-main-color";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 import { JerseyNavigator } from "@/components/jerseys/jersey-navigator";
@@ -163,6 +164,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   const currentUser = await getCurrentUser();
   const isAdmin =
     currentUser?.role === "admin" || currentUser?.role === "superadmin";
+  const isSuperAdmin = currentUser?.role === "superadmin";
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}`,
@@ -316,9 +318,16 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
             <div className="bg-card border border-border rounded-xl shadow-lg p-4 sm:p-6 h-full flex flex-col justify-between min-w-0 overflow-hidden">
               <div className="space-y-6 min-w-0">
                 <div className="min-w-0">
-                  <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 break-words">
-                    {translatedJerseyName}
-                  </h1>
+                  <EditableMainColor
+                    jerseyId={jersey.id}
+                    currentMainColor={jersey.mainColor ?? null}
+                    clubPrimaryColor={jersey.club.primaryColor}
+                    isSuperAdmin={isSuperAdmin}
+                  >
+                    <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 break-words">
+                      {translatedJerseyName}
+                    </h1>
+                  </EditableMainColor>
 
                   <div className="space-y-3 min-w-0">
                     <div className="flex items-center justify-between gap-2 py-2 border-b border-border/50 min-w-0">
