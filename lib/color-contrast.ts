@@ -26,7 +26,8 @@ export function isLightColor(hex: string | null | undefined): boolean {
   if (!hex) return false;
   const rgb = hexToRgb(hex);
   if (!rgb) return false;
-  // Perceived luminance (ITU-R BT.601)
+  // Perceived luminance (ITU-R BT.601). Seuil eleve a 0.7 pour que les bleus
+  // clairs / cyans / verts vifs basculent vers du texte blanc.
   const luminance = (0.299 * rgb.r + 0.587 * rgb.g + 0.114 * rgb.b) / 255;
-  return luminance > 0.6;
+  return luminance > 0.7;
 }

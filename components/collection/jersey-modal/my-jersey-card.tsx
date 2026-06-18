@@ -48,7 +48,16 @@ export function MyJerseyCard({
     collectionItem.jersey.club.primaryColor ||
     "#1f2937";
   const lightBg = isLightColor(baseColor);
-  const flocageTextColor = lightBg ? "#0A0A0A" : "#FFFFFF";
+  const clubColor = collectionItem.jersey.club.primaryColor;
+  const isWhiteJersey = baseColor === "#fafafa";
+  const clubIsLight = isLightColor(clubColor);
+  const flocageTextColor = isWhiteJersey
+    ? clubIsLight
+      ? "#0A0A0A"
+      : clubColor
+    : lightBg
+      ? "#0A0A0A"
+      : "#FFFFFF";
   const flocageBorderColor = lightBg
     ? "rgba(0,0,0,0.15)"
     : "rgba(255,255,255,0.25)";
