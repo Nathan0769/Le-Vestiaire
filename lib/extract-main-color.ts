@@ -15,13 +15,35 @@ export interface MainColorResult {
   source: MainColorSource;
 }
 
-const CASCADE: Exclude<
+type PaletteName = Exclude<
   MainColorSource,
   null | "BlackJersey" | "WhiteJersey"
->[] = ["Vibrant", "DarkVibrant", "LightVibrant", "Muted"];
+>;
+
+const CASCADE_DEFAULT: PaletteName[] = [
+  "Vibrant",
+  "DarkVibrant",
+  "LightVibrant",
+  "Muted",
+];
+
+// Pour les maillots globalement sombres (bleu marine, vert fonce, bordeaux),
+// Vibrant peut capter un accent dore / metallique au lieu de la couleur de
+// fond. On privilegie DarkVibrant en premier.
+const CASCADE_DARK: PaletteName[] = [
+  "DarkVibrant",
+  "Vibrant",
+  "Muted",
+  "LightVibrant",
+];
+
+const DARK_JERSEY_AVG_LUM = 0.4;
 
 const WHITE_COLLAR_LUM = 0.9;
 const BLACK_PIXEL_LUM = 0.18;
+// Un pixel n est compte comme "noir" que si R, G, B sont proches (pixel
+// neutre). Ca exclut les bleus marines, verts tres fonces, rouges sombres, etc.
+const BLACK_PIXEL_NEUTRAL_DELTA = 20;
 const BLACK_DOMINANT_THRESHOLD = 0.5;
 
 function luminance(r: number, g: number, b: number): number {
@@ -57,15 +79,17 @@ async function getCollarStripDominant(
 }
 
 /**
- * Compte la proportion de pixels noirs sur un crop central du maillot. Utilise
- * pour detecter les maillots noirs meme s ils ont un col / un lisere d une
- * autre couleur.
+ * Analyse un crop central du maillot : proportion de pixels noirs (neutres
+ * et sombres) + luminance moyenne. Permet de detecter les maillots noirs et
+ * les maillots globalement sombres.
  */
-async function blackPixelRatio(rawBuffer: Buffer): Promise<number> {
+async function analyzeJerseyCenter(
+  rawBuffer: Buffer
+): Promise<{ blackRatio: number; avgLum: number }> {
   const meta = await sharp(rawBuffer).metadata();
   const w = meta.width ?? 0;
   const h = meta.height ?? 0;
-  if (w < 80 || h < 80) return 0;
+  if (w < 80 || h < 80) return { blackRatio: 0, avgLum: 0.5 };
 
   const { data, info } = await sharp(rawBuffer)
     .extract({
@@ -82,13 +106,26 @@ async function blackPixelRatio(rawBuffer: Buffer): Promise<number> {
   const channels = info.channels;
   const totalPixels = info.width * info.height;
   let blackPixels = 0;
+  let lumSum = 0;
 
   for (let i = 0; i < data.length; i += channels) {
-    const lum = luminance(data[i], data[i + 1], data[i + 2]);
-    if (lum < BLACK_PIXEL_LUM) blackPixels++;
+    const r = data[i];
+    const g = data[i + 1];
+    const b = data[i + 2];
+    const lum = luminance(r, g, b);
+    lumSum += lum;
+    if (lum < BLACK_PIXEL_LUM) {
+      const delta = Math.max(r, g, b) - Math.min(r, g, b);
+      if (delta < BLACK_PIXEL_NEUTRAL_DELTA) {
+        blackPixels++;
+      }
+    }
   }
 
-  return blackPixels / totalPixels;
+  return {
+    blackRatio: blackPixels / totalPixels,
+    avgLum: lumSum / totalPixels,
+  };
 }
 
 export async function extractMainColor(
@@ -114,21 +151,22 @@ export async function extractMainColor(
       }
     }
 
-    // Maillot noir : proportion de pixels noirs sur tout le maillot
-    const blackRatio = await blackPixelRatio(rawBuffer);
+    // Analyse du centre du maillot : proportion noir + luminance moyenne
+    const { blackRatio, avgLum } = await analyzeJerseyCenter(rawBuffer);
     if (blackRatio >= BLACK_DOMINANT_THRESHOLD) {
       return { color: "#0a0a0a", source: "BlackJersey" };
     }
 
-    // Sinon : pipeline Vibrant standard
+    // Sinon : Vibrant avec cascade adaptee selon la luminance du maillot
     const sampleBuffer = await sharp(rawBuffer)
       .resize({ width: 256, withoutEnlargement: true })
       .png()
       .toBuffer();
 
     const palette = await Vibrant.from(sampleBuffer).getPalette();
+    const cascade = avgLum < DARK_JERSEY_AVG_LUM ? CASCADE_DARK : CASCADE_DEFAULT;
 
-    for (const name of CASCADE) {
+    for (const name of cascade) {
       const swatch = palette[name];
       if (swatch?.hex) {
         return { color: swatch.hex.toLowerCase(), source: name };
