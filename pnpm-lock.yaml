@@ -191,6 +191,9 @@ importers:
       resend:
         specifier: ^6.11.0
         version: 6.11.0(@react-email/render@2.0.6(react-dom@19.1.0(react@19.1.0))(react@19.1.0))
+      sharp:
+        specifier: ^0.35.1
+        version: 0.35.1
       sonner:
         specifier: ^2.0.7
         version: 2.0.7(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -267,9 +270,6 @@ importers:
       puppeteer-extra-plugin-stealth:
         specifier: ^2.11.2
         version: 2.11.2(puppeteer-extra@3.3.6(puppeteer-core@24.26.0)(puppeteer@24.26.0(typescript@5.8.3)))
-      sharp:
-        specifier: ^0.35.1
-        version: 0.35.1
       tailwindcss:
         specifier: ^4
         version: 4.2.2
