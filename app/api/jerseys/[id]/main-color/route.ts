@@ -5,7 +5,6 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
-import { extractMainColor } from "@/lib/extract-main-color";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -74,6 +73,10 @@ export async function PATCH(
     } else if (validation.data.mode === "reset") {
       nextColor = null;
     } else {
+      // Import dynamique : sharp / node-vibrant ne sont charges que pour la
+      // regeneration. Set / reset n ont pas besoin et marchent toujours meme
+      // si sharp n est pas dispo sur la plateforme.
+      const { extractMainColor } = await import("@/lib/extract-main-color");
       const { color } = await extractMainColor(jersey.imageUrl);
       nextColor = color;
     }
