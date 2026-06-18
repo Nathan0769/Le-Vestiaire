@@ -1943,6 +1943,28 @@
     "backToHome": "Volver al inicio"
   },
   "Jerseys": {
+    "report": {
+      "buttonLabel": "Reportar un problema",
+      "title": "Reportar un problema",
+      "description": "Ayúdanos a corregir esta camiseta. Describe brevemente el problema si es necesario.",
+      "category": "Categoría",
+      "categoryPlaceholder": "Seleccionar...",
+      "categories": {
+        "LETTERING": "Estampado",
+        "SEASON": "Temporada",
+        "BRAND": "Marca",
+        "IMAGE": "Imagen",
+        "OTHER": "Otro"
+      },
+      "descriptionLabel": "Detalles (opcional)",
+      "descriptionPlaceholder": "Ej: el número mostrado no coincide, la imagen está borrosa, etc.",
+      "cancel": "Cancelar",
+      "submit": "Enviar",
+      "submitting": "Enviando...",
+      "successToast": "Gracias por tu reporte",
+      "errorToast": "Error al enviar el reporte",
+      "mustBeConnected": "Debes iniciar sesión para reportar un problema"
+    },
     "selectLeague": "Elige tu liga",
     "searchLeague": "Buscar una liga...",
     "searchLeagueOrClub": "Buscar una liga o club...",
@@ -2180,6 +2202,39 @@
       "october": "Octubre",
       "november": "Noviembre",
       "december": "Diciembre"
+    }
+  },
+  "Reports": {
+    "Admin": {
+      "pageTitle": "Reportes",
+      "pageDescription": "Gestión de reportes de camisetas",
+      "heading": "Reportes de camisetas",
+      "tabPending": "Pendientes",
+      "tabResolved": "Resueltos",
+      "tabRejected": "Rechazados",
+      "loading": "Cargando...",
+      "empty": "Sin reportes",
+      "category": "Categoría",
+      "categories": {
+        "LETTERING": "Estampado",
+        "SEASON": "Temporada",
+        "BRAND": "Marca",
+        "IMAGE": "Imagen",
+        "OTHER": "Otro"
+      },
+      "reportedBy": "Reportado por",
+      "reportedOn": "el",
+      "resolvedOn": "Resuelto el",
+      "rejectedOn": "Rechazado el",
+      "by": "por",
+      "viewJersey": "Ver camiseta",
+      "resolve": "Marcar resuelto",
+      "reject": "Rechazar",
+      "resolving": "Procesando...",
+      "successResolved": "Reporte marcado resuelto",
+      "successRejected": "Reporte rechazado",
+      "errorAction": "Error de acción",
+      "errorLoading": "Error al cargar"
     }
   },
   "Proposals": {

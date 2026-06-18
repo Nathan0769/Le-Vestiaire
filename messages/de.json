@@ -1943,6 +1943,28 @@
     "backToHome": "Zurück zur Startseite"
   },
   "Jerseys": {
+    "report": {
+      "buttonLabel": "Problem melden",
+      "title": "Problem melden",
+      "description": "Hilf uns, dieses Trikot zu korrigieren. Beschreibe das Problem kurz, falls nötig.",
+      "category": "Kategorie",
+      "categoryPlaceholder": "Auswählen...",
+      "categories": {
+        "LETTERING": "Beflockung",
+        "SEASON": "Saison",
+        "BRAND": "Marke",
+        "IMAGE": "Bild",
+        "OTHER": "Sonstiges"
+      },
+      "descriptionLabel": "Details (optional)",
+      "descriptionPlaceholder": "z. B. die Nummer stimmt nicht, das Bild ist unscharf usw.",
+      "cancel": "Abbrechen",
+      "submit": "Senden",
+      "submitting": "Wird gesendet...",
+      "successToast": "Danke für deine Meldung",
+      "errorToast": "Fehler beim Senden der Meldung",
+      "mustBeConnected": "Du musst angemeldet sein, um ein Problem zu melden"
+    },
     "selectLeague": "Liga auswählen",
     "searchLeague": "Liga suchen...",
     "searchLeagueOrClub": "Liga oder Verein suchen...",
@@ -2180,6 +2202,39 @@
       "october": "Oktober",
       "november": "November",
       "december": "Dezember"
+    }
+  },
+  "Reports": {
+    "Admin": {
+      "pageTitle": "Meldungen",
+      "pageDescription": "Verwaltung der Trikot-Meldungen",
+      "heading": "Trikot-Meldungen",
+      "tabPending": "Ausstehend",
+      "tabResolved": "Gelöst",
+      "tabRejected": "Abgelehnt",
+      "loading": "Wird geladen...",
+      "empty": "Keine Meldungen",
+      "category": "Kategorie",
+      "categories": {
+        "LETTERING": "Beflockung",
+        "SEASON": "Saison",
+        "BRAND": "Marke",
+        "IMAGE": "Bild",
+        "OTHER": "Sonstiges"
+      },
+      "reportedBy": "Gemeldet von",
+      "reportedOn": "am",
+      "resolvedOn": "Gelöst am",
+      "rejectedOn": "Abgelehnt am",
+      "by": "von",
+      "viewJersey": "Trikot ansehen",
+      "resolve": "Als gelöst markieren",
+      "reject": "Ablehnen",
+      "resolving": "Wird verarbeitet...",
+      "successResolved": "Meldung als gelöst markiert",
+      "successRejected": "Meldung abgelehnt",
+      "errorAction": "Aktionsfehler",
+      "errorLoading": "Ladefehler"
     }
   },
   "Proposals": {

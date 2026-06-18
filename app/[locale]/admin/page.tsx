@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/get-current-user";
+import prisma from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,7 +10,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Users, ShieldCheck, UserCheck, Tag, Sparkles } from "lucide-react";
+import {
+  Users,
+  ShieldCheck,
+  UserCheck,
+  Tag,
+  Sparkles,
+  Flag,
+} from "lucide-react";
 
 export default async function AdminPage() {
   const user = await getCurrentUser();
@@ -19,6 +27,10 @@ export default async function AdminPage() {
   }
 
   const isSuperAdmin = user.role === "superadmin";
+
+  const pendingReportsCount = await prisma.jerseyReport.count({
+    where: { status: "PENDING" },
+  });
 
   return (
     <div className="space-y-6">
@@ -63,6 +75,30 @@ export default async function AdminPage() {
             <Link href="/admin/proposals">
               <Button className="w-full cursor-pointer">
                 Gérer les propositions
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Flag className="h-5 w-5" />
+              <CardTitle className="flex-1">Signalements</CardTitle>
+              {pendingReportsCount > 0 && (
+                <span className="inline-flex items-center justify-center min-w-6 h-6 px-2 rounded-full bg-destructive text-destructive-foreground text-xs font-bold">
+                  {pendingReportsCount}
+                </span>
+              )}
+            </div>
+            <CardDescription>
+              Signalements de maillots envoyés par les utilisateurs
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/admin/reports">
+              <Button className="w-full cursor-pointer">
+                Voir les signalements
               </Button>
             </Link>
           </CardContent>

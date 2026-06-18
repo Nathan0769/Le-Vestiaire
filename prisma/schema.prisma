@@ -49,6 +49,8 @@ model User {
   favoriteClub               Club?                 @relation(fields: [favoriteClubId], references: [id])
   collection                 UserJersey[]
   wishlist                   Wishlist[]
+  reportedJerseys            JerseyReport[]        @relation("ReportedBy")
+  resolvedReports            JerseyReport[]        @relation("ReportResolver")
 
   @@map("user")
 }
@@ -120,11 +122,47 @@ model Jersey {
   ratings                 Rating[]
   collection              UserJersey[]
   wishlist                Wishlist[]
+  reports                 JerseyReport[]
 
   @@unique([clubId, season, type, variant])
   @@index([clubId], map: "idx_jerseys_club_id")
   @@index([createdAt(sort: Desc)], map: "idx_jerseys_createdat")
   @@map("jerseys")
+}
+
+model JerseyReport {
+  id          String               @id @default(cuid())
+  jerseyId    String
+  userId      String
+  category    JerseyReportCategory
+  description String?
+  status      JerseyReportStatus   @default(PENDING)
+  createdAt   DateTime             @default(now())
+  resolvedAt  DateTime?
+  resolvedBy  String?
+
+  jersey   Jersey @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  user     User   @relation("ReportedBy", fields: [userId], references: [id], onDelete: Cascade)
+  resolver User?  @relation("ReportResolver", fields: [resolvedBy], references: [id], onDelete: SetNull)
+
+  @@index([jerseyId])
+  @@index([userId])
+  @@index([status])
+  @@map("jersey_reports")
+}
+
+enum JerseyReportCategory {
+  LETTERING
+  SEASON
+  BRAND
+  IMAGE
+  OTHER
+}
+
+enum JerseyReportStatus {
+  PENDING
+  RESOLVED
+  REJECTED
 }
 
 model Rating {
