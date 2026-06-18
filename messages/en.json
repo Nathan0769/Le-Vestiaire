@@ -2234,7 +2234,9 @@
       "successResolved": "Report marked resolved",
       "successRejected": "Report rejected",
       "errorAction": "Action error",
-      "errorLoading": "Error loading"
+      "errorLoading": "Error loading",
+      "confirmCancel": "Cancel",
+      "confirmTitle": "Confirm action"
     }
   },
   "Proposals": {

@@ -2234,7 +2234,9 @@
       "successResolved": "Meldung als gelöst markiert",
       "successRejected": "Meldung abgelehnt",
       "errorAction": "Aktionsfehler",
-      "errorLoading": "Ladefehler"
+      "errorLoading": "Ladefehler",
+      "confirmCancel": "Abbrechen",
+      "confirmTitle": "Aktion bestätigen"
     }
   },
   "Proposals": {

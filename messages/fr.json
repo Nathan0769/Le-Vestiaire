@@ -2238,7 +2238,9 @@
       "successResolved": "Signalement marqué résolu",
       "successRejected": "Signalement ignoré",
       "errorAction": "Erreur lors de l'action",
-      "errorLoading": "Erreur lors du chargement"
+      "errorLoading": "Erreur lors du chargement",
+      "confirmCancel": "Annuler",
+      "confirmTitle": "Confirmer l'action"
     }
   },
   "Proposals": {
