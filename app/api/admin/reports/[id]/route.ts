@@ -1,4 +1,9 @@
 import { requirePermission } from "@/lib/check-permission";
+import {
+  standardRateLimit,
+  getRateLimitIdentifier,
+  checkRateLimit,
+} from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
@@ -14,6 +19,12 @@ export async function PATCH(
 ) {
   const { error, session } = await requirePermission({ report: ["manage"] });
   if (error) return error;
+
+  const identifier = await getRateLimitIdentifier(session!.user.id);
+  const rateLimitResult = await checkRateLimit(standardRateLimit, identifier);
+  if (!rateLimitResult.success) {
+    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
+  }
 
   try {
     const body = await request.json();

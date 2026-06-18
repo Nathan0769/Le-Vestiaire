@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -97,24 +97,27 @@ export function ReportsList() {
   const [dialogReport, setDialogReport] = useState<Report | null>(null);
   const [pendingAction, setPendingAction] = useState<Action | null>(null);
 
-  const loadReports = async (s: Status) => {
-    setIsLoading(true);
-    try {
-      const response = await fetch(`/api/admin/reports?status=${s}`);
-      if (!response.ok) throw new Error(t("errorLoading"));
-      const data = await response.json();
-      setReports(data.reports);
-    } catch (err) {
-      console.error(err);
-      toast.error(t("errorLoading"));
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const loadReports = useCallback(
+    async (s: Status) => {
+      setIsLoading(true);
+      try {
+        const response = await fetch(`/api/admin/reports?status=${s}`);
+        if (!response.ok) throw new Error(t("errorLoading"));
+        const data = await response.json();
+        setReports(data.reports);
+      } catch (err) {
+        console.error(err);
+        toast.error(t("errorLoading"));
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [t]
+  );
 
   useEffect(() => {
     loadReports(status);
-  }, [status]);
+  }, [status, loadReports]);
 
   const handleAction = async (report: Report, action: Action) => {
     setActionLoading(report.id);
@@ -170,14 +173,14 @@ export function ReportsList() {
               {reports.map((report) => (
                 <div
                   key={report.id}
-                  className="rounded-xl border bg-card p-4 flex flex-col @xl:flex-row gap-4"
+                  className="rounded-xl border bg-card p-4 flex flex-row gap-4"
                 >
-                  <div className="relative w-full @xl:w-32 aspect-square rounded-md bg-[#FAF5EE] overflow-hidden shrink-0">
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-md bg-[#FAF5EE] overflow-hidden shrink-0">
                     <Image
                       src={report.jersey.imageUrl}
                       alt={report.jersey.name}
                       fill
-                      className="object-contain p-2"
+                      className="object-contain p-1.5"
                       unoptimized
                     />
                   </div>
@@ -336,7 +339,7 @@ export function ReportsList() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel className="cursor-pointer">
-              {t("tabPending") /* fallback simple */}
+              {t("confirmCancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               className="cursor-pointer"

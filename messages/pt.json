@@ -2234,7 +2234,9 @@
       "successResolved": "Reporte marcado como resolvido",
       "successRejected": "Reporte rejeitado",
       "errorAction": "Erro na ação",
-      "errorLoading": "Erro ao carregar"
+      "errorLoading": "Erro ao carregar",
+      "confirmCancel": "Cancelar",
+      "confirmTitle": "Confirmar ação"
     }
   },
   "Proposals": {
