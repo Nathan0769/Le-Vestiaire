@@ -9,7 +9,6 @@ import {
   deleteFromR2,
   JERSEY_PROPOSALS_BUCKET,
 } from "@/lib/r2-storage";
-import { extractMainColor } from "@/lib/extract-main-color";
 
 export async function POST(
   request: Request,
@@ -163,8 +162,11 @@ export async function POST(
       console.error("Erreur suppression image du bucket jersey-proposals:", deleteError);
     }
 
-    // Couleur principale du maillot (best-effort, n'echoue pas l'approbation)
+    // Couleur principale du maillot (best-effort, n'echoue pas l'approbation).
+    // Import dynamique : sharp / node-vibrant ne sont charges qu ici, pas au
+    // boot de la route (sinon crash sur Vercel si libvips ne se charge pas).
     try {
+      const { extractMainColor } = await import("@/lib/extract-main-color");
       const { color } = await extractMainColor(newImageUrl);
       if (color) {
         await prisma.jersey.update({
