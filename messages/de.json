@@ -146,6 +146,27 @@
     }
   },
   "Collection": {
+    "filters": {
+      "button": "Filter",
+      "title": "Sammlung filtern",
+      "reset": "Zurücksetzen",
+      "resultsCount": "{count, plural, =1 {# Trikot angezeigt} other {# Trikots angezeigt}}",
+      "emptyFiltered": "Keine Trikots entsprechen den Filtern",
+      "sections": {
+        "condition": "Zustand",
+        "type": "Trikot-Typ",
+        "league": "Liga",
+        "flocked": "Beflockt",
+        "signed": "Signiert",
+        "withPatches": "Mit Aufnähern",
+        "gift": "Geschenk"
+      },
+      "triState": {
+        "all": "Alle",
+        "yes": "Ja",
+        "no": "Nein"
+      }
+    },
     "button": {
       "loading": "Laden...",
       "inCollection": "In meiner Sammlung",

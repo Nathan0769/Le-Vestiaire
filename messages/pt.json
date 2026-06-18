@@ -146,6 +146,27 @@
     }
   },
   "Collection": {
+    "filters": {
+      "button": "Filtros",
+      "title": "Filtrar a coleção",
+      "reset": "Repor",
+      "resultsCount": "{count, plural, =1 {# camisola exibida} other {# camisolas exibidas}}",
+      "emptyFiltered": "Nenhuma camisola corresponde aos filtros",
+      "sections": {
+        "condition": "Estado",
+        "type": "Tipo de camisola",
+        "league": "Liga",
+        "flocked": "Estampada",
+        "signed": "Autografada",
+        "withPatches": "Com patches",
+        "gift": "Prenda"
+      },
+      "triState": {
+        "all": "Todos",
+        "yes": "Sim",
+        "no": "Não"
+      }
+    },
     "button": {
       "loading": "A carregar...",
       "inCollection": "Na minha coleção",

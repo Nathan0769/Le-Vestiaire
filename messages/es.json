@@ -146,6 +146,27 @@
     }
   },
   "Collection": {
+    "filters": {
+      "button": "Filtros",
+      "title": "Filtrar la colección",
+      "reset": "Restablecer",
+      "resultsCount": "{count, plural, =1 {# camiseta mostrada} other {# camisetas mostradas}}",
+      "emptyFiltered": "Ninguna camiseta coincide con los filtros",
+      "sections": {
+        "condition": "Estado",
+        "type": "Tipo de camiseta",
+        "league": "Liga",
+        "flocked": "Estampada",
+        "signed": "Firmada",
+        "withPatches": "Con parches",
+        "gift": "Regalo"
+      },
+      "triState": {
+        "all": "Todos",
+        "yes": "Sí",
+        "no": "No"
+      }
+    },
     "button": {
       "loading": "Cargando...",
       "inCollection": "En mi colección",
