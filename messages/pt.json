@@ -1943,6 +1943,28 @@
     "backToHome": "Voltar ao início"
   },
   "Jerseys": {
+    "report": {
+      "buttonLabel": "Reportar um problema",
+      "title": "Reportar um problema",
+      "description": "Ajude-nos a corrigir esta camisola. Descreva brevemente o problema se necessário.",
+      "category": "Categoria",
+      "categoryPlaceholder": "Selecionar...",
+      "categories": {
+        "LETTERING": "Estampagem",
+        "SEASON": "Época",
+        "BRAND": "Marca",
+        "IMAGE": "Imagem",
+        "OTHER": "Outro"
+      },
+      "descriptionLabel": "Detalhes (opcional)",
+      "descriptionPlaceholder": "Ex: o número apresentado não corresponde, a imagem está desfocada, etc.",
+      "cancel": "Cancelar",
+      "submit": "Enviar",
+      "submitting": "A enviar...",
+      "successToast": "Obrigado pelo seu reporte",
+      "errorToast": "Erro ao enviar o reporte",
+      "mustBeConnected": "Tem de estar autenticado para reportar um problema"
+    },
     "selectLeague": "Escolha a sua liga",
     "searchLeague": "Pesquisar uma liga...",
     "searchLeagueOrClub": "Pesquisar uma liga ou clube...",
@@ -2180,6 +2202,39 @@
       "october": "Outubro",
       "november": "Novembro",
       "december": "Dezembro"
+    }
+  },
+  "Reports": {
+    "Admin": {
+      "pageTitle": "Reportes",
+      "pageDescription": "Gestão de reportes de camisolas",
+      "heading": "Reportes de camisolas",
+      "tabPending": "Pendentes",
+      "tabResolved": "Resolvidos",
+      "tabRejected": "Rejeitados",
+      "loading": "A carregar...",
+      "empty": "Sem reportes",
+      "category": "Categoria",
+      "categories": {
+        "LETTERING": "Estampagem",
+        "SEASON": "Época",
+        "BRAND": "Marca",
+        "IMAGE": "Imagem",
+        "OTHER": "Outro"
+      },
+      "reportedBy": "Reportado por",
+      "reportedOn": "em",
+      "resolvedOn": "Resolvido em",
+      "rejectedOn": "Rejeitado em",
+      "by": "por",
+      "viewJersey": "Ver camisola",
+      "resolve": "Marcar resolvido",
+      "reject": "Rejeitar",
+      "resolving": "A processar...",
+      "successResolved": "Reporte marcado como resolvido",
+      "successRejected": "Reporte rejeitado",
+      "errorAction": "Erro na ação",
+      "errorLoading": "Erro ao carregar"
     }
   },
   "Proposals": {

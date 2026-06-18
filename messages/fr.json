@@ -1947,6 +1947,28 @@
     "backToHome": "Retour à l'accueil"
   },
   "Jerseys": {
+    "report": {
+      "buttonLabel": "Signaler un problème",
+      "title": "Signaler un problème",
+      "description": "Aidez-nous à corriger ce maillot. Décrivez brièvement le problème si besoin.",
+      "category": "Catégorie",
+      "categoryPlaceholder": "Sélectionner...",
+      "categories": {
+        "LETTERING": "Flocage",
+        "SEASON": "Saison",
+        "BRAND": "Marque",
+        "IMAGE": "Image",
+        "OTHER": "Autre"
+      },
+      "descriptionLabel": "Précisions (optionnel)",
+      "descriptionPlaceholder": "Ex : le numéro affiché ne correspond pas, l'image est floue, etc.",
+      "cancel": "Annuler",
+      "submit": "Envoyer",
+      "submitting": "Envoi en cours...",
+      "successToast": "Merci pour votre signalement",
+      "errorToast": "Erreur lors de l'envoi du signalement",
+      "mustBeConnected": "Vous devez être connecté pour signaler un problème"
+    },
     "selectLeague": "Choisis ta ligue",
     "searchLeague": "Rechercher une ligue...",
     "searchLeagueOrClub": "Rechercher une ligue ou un club...",
@@ -2184,6 +2206,39 @@
       "october": "Octobre",
       "november": "Novembre",
       "december": "Décembre"
+    }
+  },
+  "Reports": {
+    "Admin": {
+      "pageTitle": "Signalements",
+      "pageDescription": "Gestion des signalements de maillots",
+      "heading": "Signalements de maillots",
+      "tabPending": "En attente",
+      "tabResolved": "Résolus",
+      "tabRejected": "Ignorés",
+      "loading": "Chargement...",
+      "empty": "Aucun signalement",
+      "category": "Catégorie",
+      "categories": {
+        "LETTERING": "Flocage",
+        "SEASON": "Saison",
+        "BRAND": "Marque",
+        "IMAGE": "Image",
+        "OTHER": "Autre"
+      },
+      "reportedBy": "Signalé par",
+      "reportedOn": "le",
+      "resolvedOn": "Résolu le",
+      "rejectedOn": "Ignoré le",
+      "by": "par",
+      "viewJersey": "Voir le maillot",
+      "resolve": "Marquer résolu",
+      "reject": "Ignorer",
+      "resolving": "Traitement...",
+      "successResolved": "Signalement marqué résolu",
+      "successRejected": "Signalement ignoré",
+      "errorAction": "Erreur lors de l'action",
+      "errorLoading": "Erreur lors du chargement"
     }
   },
   "Proposals": {

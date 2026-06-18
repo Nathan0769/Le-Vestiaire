@@ -16,11 +16,13 @@ const ROLE_PERMISSIONS: Record<string, Record<string, string[]>> = {
   admin: {
     jersey: ["propose"],
     proposal: ["list", "view", "approve", "reject"],
+    report: ["list", "manage"],
     user: ["manageRoles"],
   },
   superadmin: {
     jersey: ["propose"],
     proposal: ["list", "view", "approve", "reject"],
+    report: ["list", "manage"],
     user: ["manageRoles"],
   },
 };

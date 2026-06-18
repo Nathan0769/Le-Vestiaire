@@ -1943,6 +1943,28 @@
     "backToHome": "Back to home"
   },
   "Jerseys": {
+    "report": {
+      "buttonLabel": "Report an issue",
+      "title": "Report an issue",
+      "description": "Help us fix this jersey. Briefly describe the issue if needed.",
+      "category": "Category",
+      "categoryPlaceholder": "Select...",
+      "categories": {
+        "LETTERING": "Lettering",
+        "SEASON": "Season",
+        "BRAND": "Brand",
+        "IMAGE": "Image",
+        "OTHER": "Other"
+      },
+      "descriptionLabel": "Details (optional)",
+      "descriptionPlaceholder": "Ex: the displayed number doesn't match, the image is blurry, etc.",
+      "cancel": "Cancel",
+      "submit": "Send",
+      "submitting": "Sending...",
+      "successToast": "Thanks for your report",
+      "errorToast": "Error while sending the report",
+      "mustBeConnected": "You must be logged in to report an issue"
+    },
     "selectLeague": "Choose your league",
     "searchLeague": "Search for a league...",
     "searchLeagueOrClub": "Search for a league or club...",
@@ -2180,6 +2202,39 @@
       "october": "October",
       "november": "November",
       "december": "December"
+    }
+  },
+  "Reports": {
+    "Admin": {
+      "pageTitle": "Reports",
+      "pageDescription": "Jersey reports management",
+      "heading": "Jersey reports",
+      "tabPending": "Pending",
+      "tabResolved": "Resolved",
+      "tabRejected": "Rejected",
+      "loading": "Loading...",
+      "empty": "No reports",
+      "category": "Category",
+      "categories": {
+        "LETTERING": "Lettering",
+        "SEASON": "Season",
+        "BRAND": "Brand",
+        "IMAGE": "Image",
+        "OTHER": "Other"
+      },
+      "reportedBy": "Reported by",
+      "reportedOn": "on",
+      "resolvedOn": "Resolved on",
+      "rejectedOn": "Rejected on",
+      "by": "by",
+      "viewJersey": "View jersey",
+      "resolve": "Mark resolved",
+      "reject": "Reject",
+      "resolving": "Processing...",
+      "successResolved": "Report marked resolved",
+      "successRejected": "Report rejected",
+      "errorAction": "Action error",
+      "errorLoading": "Error loading"
     }
   },
   "Proposals": {

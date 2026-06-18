@@ -21,6 +21,7 @@ import { translateJerseyName } from "@/lib/translate-jersey-name";
 import { jerseyTypeLabel } from "@/lib/jersey-utils";
 import { EditableBrand } from "@/components/jerseys/editable-brand";
 import { EditableMainColor } from "@/components/jerseys/editable-main-color";
+import { JerseyReportButton } from "@/components/jerseys/jersey-report-button";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 import { JerseyNavigator } from "@/components/jerseys/jersey-navigator";
@@ -433,6 +434,13 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
             clubId={jersey.club.id}
             season={jersey.season}
           />
+
+          <div className="mt-8 flex justify-center">
+            <JerseyReportButton
+              jerseyId={jersey.id}
+              isAuthenticated={!!currentUser}
+            />
+          </div>
         </div>
         </JerseyNavigator>
 
