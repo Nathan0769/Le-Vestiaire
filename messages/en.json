@@ -146,6 +146,27 @@
     }
   },
   "Collection": {
+    "filters": {
+      "button": "Filters",
+      "title": "Filter the collection",
+      "reset": "Reset",
+      "resultsCount": "{count, plural, =1 {# jersey shown} other {# jerseys shown}}",
+      "emptyFiltered": "No jersey matches the filters",
+      "sections": {
+        "condition": "Condition",
+        "type": "Jersey type",
+        "league": "League",
+        "flocked": "Flocked",
+        "signed": "Signed",
+        "withPatches": "With patches",
+        "gift": "Gift"
+      },
+      "triState": {
+        "all": "All",
+        "yes": "Yes",
+        "no": "No"
+      }
+    },
     "button": {
       "loading": "Loading...",
       "inCollection": "In my collection",

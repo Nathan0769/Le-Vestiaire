@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -7,7 +7,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Button } from "@/components/ui/button";
 import { FriendCollectionJerseyCard } from "./friend-collection-jersey-card";
+import { CollectionFiltersPopover } from "@/components/collection/collection-filters-popover";
+import {
+  EMPTY_FILTERS,
+  applyCollectionFilters,
+  countActiveFilters,
+  type CollectionFilters,
+} from "@/lib/collection-filters";
 import type { FriendCollectionItem } from "@/types/friend-collection";
 import { useTranslations } from "next-intl";
 
@@ -21,7 +29,9 @@ export function FriendCollectionGrid({
   showPriceSortOptions = true,
 }: FriendCollectionGridProps) {
   const t = useTranslations("Friends");
+  const tFilters = useTranslations("Collection.filters");
   const [sortBy, setSortBy] = useState("date-desc");
+  const [filters, setFilters] = useState<CollectionFilters>(EMPTY_FILTERS);
 
   const allSortOptions = [
     { value: "date-desc", label: t("mostRecent") },
@@ -37,7 +47,25 @@ export function FriendCollectionGrid({
     ? allSortOptions
     : allSortOptions.filter((o) => !o.value.startsWith("price"));
 
-  const sortedItems = [...collectionItems].sort((a, b) => {
+  const availableLeagues = useMemo(() => {
+    const map = new Map<string, number>();
+    for (const item of collectionItems) {
+      const { name, tier } = item.jersey.club.league;
+      if (!map.has(name)) map.set(name, tier);
+    }
+    return Array.from(map.entries())
+      .map(([name, tier]) => ({ name, tier }))
+      .sort((a, b) => a.tier - b.tier || a.name.localeCompare(b.name));
+  }, [collectionItems]);
+
+  const filteredItems = useMemo(
+    () => applyCollectionFilters(collectionItems, filters),
+    [collectionItems, filters]
+  );
+
+  const activeFiltersCount = countActiveFilters(filters);
+
+  const sortedItems = [...filteredItems].sort((a, b) => {
     switch (sortBy) {
       case "date-desc":
         return (
@@ -78,32 +106,57 @@ export function FriendCollectionGrid({
 
   return (
     <div className="space-y-6 w-full overflow-hidden">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <h2 className="text-lg font-medium">{t("hisHerJerseys")}</h2>
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="flex flex-col gap-1">
+          <h2 className="text-lg font-medium">{t("hisHerJerseys")}</h2>
+          {activeFiltersCount > 0 && collectionItems.length > 0 && (
+            <p className="text-xs text-muted-foreground">
+              {tFilters("resultsCount", { count: sortedItems.length })}
+            </p>
+          )}
+        </div>
         <div className="flex items-center gap-2 w-full sm:w-auto">
-          <span className="text-sm text-muted-foreground whitespace-nowrap">
-            {t("sortBy")}
-          </span>
-          <Select value={sortBy} onValueChange={setSortBy}>
-            <SelectTrigger className="w-full sm:w-40">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {sortOptions.map((option) => (
-                <SelectItem key={option.value} value={option.value}>
-                  {option.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="flex-1 sm:flex-initial">
+            <CollectionFiltersPopover
+              filters={filters}
+              onChange={setFilters}
+              availableLeagues={availableLeagues}
+            />
+          </div>
+          <div className="flex items-center gap-2 flex-1 sm:flex-initial">
+            <span className="text-sm text-muted-foreground whitespace-nowrap hidden sm:inline">
+              {t("sortBy")}
+            </span>
+            <Select value={sortBy} onValueChange={setSortBy}>
+              <SelectTrigger className="w-full sm:w-40">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                {sortOptions.map((option) => (
+                  <SelectItem key={option.value} value={option.value}>
+                    {option.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
       </div>
 
-      {sortedItems.length === 0 ? (
+      {collectionItems.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-muted-foreground">
-            {t("noJerseysInCollection")}
-          </p>
+          <p className="text-muted-foreground">{t("noJerseysInCollection")}</p>
+        </div>
+      ) : sortedItems.length === 0 ? (
+        <div className="flex flex-col items-center justify-center text-center py-12 gap-3">
+          <p className="text-muted-foreground">{tFilters("emptyFiltered")}</p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setFilters(EMPTY_FILTERS)}
+          >
+            {tFilters("reset")}
+          </Button>
         </div>
       ) : (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 w-full">

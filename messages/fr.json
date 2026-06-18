@@ -146,6 +146,27 @@
     }
   },
   "Collection": {
+    "filters": {
+      "button": "Filtres",
+      "title": "Filtrer la collection",
+      "reset": "Réinitialiser",
+      "resultsCount": "{count, plural, =1 {# maillot affiché} other {# maillots affichés}}",
+      "emptyFiltered": "Aucun maillot ne correspond aux filtres",
+      "sections": {
+        "condition": "État",
+        "type": "Type de maillot",
+        "league": "Ligue",
+        "flocked": "Floqué",
+        "signed": "Signé",
+        "withPatches": "Avec patches",
+        "gift": "Cadeau"
+      },
+      "triState": {
+        "all": "Tous",
+        "yes": "Oui",
+        "no": "Non"
+      }
+    },
     "button": {
       "loading": "Chargement...",
       "inCollection": "Dans ma collection",
