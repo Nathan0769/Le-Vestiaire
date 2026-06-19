@@ -7,6 +7,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import { filterApplicablePatches } from "@/lib/patches/filter-applicable-patches";
+import { resolveJerseyLeagueIdFromContext } from "@/lib/club-season-league/resolve";
 
 export async function GET(
   _request: Request,
@@ -28,12 +29,26 @@ export async function GET(
 
     const jersey = await prisma.jersey.findUnique({
       where: { id },
-      include: { club: { include: { league: true } } },
+      include: {
+        club: {
+          include: {
+            league: true,
+            seasonLeagues: {
+              select: { season: true, leagueId: true },
+            },
+          },
+        },
+      },
     });
 
     if (!jersey) {
       return NextResponse.json({ error: "Maillot introuvable" }, { status: 404 });
     }
+
+    const resolvedLeagueId = resolveJerseyLeagueIdFromContext({
+      season: jersey.season,
+      club: jersey.club,
+    });
 
     const allPatches = await prisma.patch.findMany({
       where: { isActive: true },
@@ -41,7 +56,7 @@ export async function GET(
       orderBy: { name: "asc" },
     });
 
-    const applicable = filterApplicablePatches(allPatches, jersey);
+    const applicable = filterApplicablePatches(allPatches, jersey, resolvedLeagueId);
     return NextResponse.json(applicable);
   } catch (error) {
     console.error("GET applicable-patches error:", error);

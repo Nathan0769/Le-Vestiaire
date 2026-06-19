@@ -216,17 +216,18 @@ model UserJersey {
 }
 
 model Patch {
-  id          String            @id @default(cuid())
-  name        String
-  family      PatchFamily
-  leagueId    String?
-  isActive    Boolean           @default(true)
-  notes       String?
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
-  league      League?           @relation(fields: [leagueId], references: [id], onDelete: SetNull)
-  versions    PatchVersion[]
-  userPatches UserJerseyPatch[]
+  id               String            @id @default(cuid())
+  name             String
+  family           PatchFamily
+  leagueId         String?
+  isActive         Boolean           @default(true)
+  notes            String?
+  eligibleClubIds  String[]          @default([])
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  league           League?           @relation(fields: [leagueId], references: [id], onDelete: SetNull)
+  versions         PatchVersion[]
+  userPatches      UserJerseyPatch[]
 
   @@index([family])
   @@index([leagueId])
@@ -264,7 +265,7 @@ model UserJerseyPatch {
 }
 
 model Club {
-  id                String           @id @default(cuid())
+  id                String             @id @default(cuid())
   name              String
   shortName         String
   leagueId          String
@@ -272,14 +273,31 @@ model Club {
   primaryColor      String
   apiFootballTeamId Int?
   trophies          ClubTrophy[]
-  league            League           @relation(fields: [leagueId], references: [id])
+  league            League             @relation(fields: [leagueId], references: [id])
   jerseyProposals   JerseyProposal[]
   jerseys           Jersey[]
   seasonPlayers     SeasonPlayer[]
+  seasonLeagues     ClubSeasonLeague[]
   favoriteBy        User[]
 
   @@index([leagueId], map: "idx_clubs_league_id")
   @@map("clubs")
+}
+
+model ClubSeasonLeague {
+  id        String   @id @default(cuid())
+  clubId    String
+  season    String
+  leagueId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  club      Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  league    League   @relation(fields: [leagueId], references: [id])
+
+  @@unique([clubId, season])
+  @@index([clubId])
+  @@index([leagueId])
+  @@map("club_season_leagues")
 }
 
 model ClubTrophy {
@@ -298,13 +316,14 @@ model ClubTrophy {
 }
 
 model League {
-  id          String  @id @default(cuid())
+  id          String             @id @default(cuid())
   name        String
   country     String
   logoUrl     String
-  tier        Int     @default(1)
+  tier        Int                @default(1)
   logoDarkUrl String?
   clubs       Club[]
+  clubSeasons ClubSeasonLeague[]
   patches     Patch[]
 
   @@map("leagues")

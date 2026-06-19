@@ -17,6 +17,7 @@ import {
   Tag,
   Sparkles,
   Flag,
+  CalendarRange,
 } from "lucide-react";
 
 export default async function AdminPage() {
@@ -159,6 +160,27 @@ export default async function AdminPage() {
               <Link href="/admin/patches">
                 <Button className="w-full cursor-pointer">
                   Gérer les patches
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
+
+        {isSuperAdmin && (
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
+                <CalendarRange className="h-5 w-5" />
+                <CardTitle>Ligues par saison</CardTitle>
+              </div>
+              <CardDescription>
+                Associer un club à une ligue pour une saison passée
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/admin/club-leagues">
+                <Button className="w-full cursor-pointer">
+                  Gérer les associations
                 </Button>
               </Link>
             </CardContent>
