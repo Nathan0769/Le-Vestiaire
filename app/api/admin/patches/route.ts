@@ -22,6 +22,7 @@ const createPatchSchema = z.object({
   leagueId: z.string().optional().nullable(),
   isActive: z.boolean().optional(),
   notes: z.string().max(500).optional().nullable(),
+  eligibleClubIds: z.array(z.string()).optional(),
 });
 
 export async function GET(request: Request) {
@@ -70,7 +71,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, family, leagueId, isActive, notes } = validation.data;
+    const { name, family, leagueId, isActive, notes, eligibleClubIds } = validation.data;
 
     if (leagueId) {
       const league = await prisma.league.findUnique({ where: { id: leagueId } });
@@ -86,6 +87,7 @@ export async function POST(request: Request) {
         leagueId: leagueId ?? null,
         isActive: isActive ?? true,
         notes: notes ?? null,
+        eligibleClubIds: eligibleClubIds ?? [],
       },
       include: { versions: true, league: true },
     });

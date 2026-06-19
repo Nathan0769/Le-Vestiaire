@@ -32,6 +32,7 @@ import {
   useUpdatePatch,
   type AdminPatch,
 } from "@/hooks/admin/usePatchesAdmin";
+import { ClubsMultiSelect } from "./clubs-multi-select";
 
 interface PatchFormDialogProps {
   open: boolean;
@@ -53,6 +54,7 @@ export function PatchFormDialog({
   const [leagueId, setLeagueId] = useState("");
   const [isActive, setIsActive] = useState(true);
   const [notes, setNotes] = useState("");
+  const [eligibleClubIds, setEligibleClubIds] = useState<string[]>([]);
 
   useEffect(() => {
     if (patch) {
@@ -61,12 +63,14 @@ export function PatchFormDialog({
       setLeagueId(patch.leagueId ?? "");
       setIsActive(patch.isActive);
       setNotes(patch.notes ?? "");
+      setEligibleClubIds(patch.eligibleClubIds ?? []);
     } else {
       setName("");
       setFamily("UEFA_COMPETITION");
       setLeagueId("");
       setIsActive(true);
       setNotes("");
+      setEligibleClubIds([]);
     }
   }, [patch, open]);
 
@@ -83,6 +87,7 @@ export function PatchFormDialog({
       leagueId: leagueId.trim() || null,
       isActive,
       notes: notes.trim() || null,
+      eligibleClubIds,
     };
 
     try {
@@ -152,6 +157,18 @@ export function PatchFormDialog({
             />
             <p className="text-xs text-muted-foreground">
               Requis pour DOMESTIC_*. Doit correspondre à un League.id existant.
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Clubs éligibles (optionnel)</Label>
+            <ClubsMultiSelect
+              value={eligibleClubIds}
+              onChange={setEligibleClubIds}
+              leagueIds={family === "NATIONAL_TEAM_COMPETITION" ? ["national", "national-2"] : undefined}
+            />
+            <p className="text-xs text-muted-foreground">
+              Vide = applicable à tous les clubs qui passent les autres filtres.
             </p>
           </div>
 
