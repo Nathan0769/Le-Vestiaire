@@ -5,6 +5,13 @@ import { filterApplicablePatches } from "./filter-applicable-patches";
 type PatchWithVersions = Patch & { versions: PatchVersion[] };
 type JerseyContext = Jersey & { club: Club & { league: League } };
 
+function filterWithCurrentLeague(
+  patches: PatchWithVersions[],
+  jersey: JerseyContext
+) {
+  return filterApplicablePatches(patches, jersey, jersey.club.leagueId);
+}
+
 function makePatch(overrides: Partial<PatchWithVersions> = {}): PatchWithVersions {
   return {
     id: "p1",
@@ -49,6 +56,7 @@ function makeJersey(leagueId: string, season = "2024-25"): JerseyContext {
     slug: null,
     descriptionTranslations: null,
     variant: 1,
+    mainColor: null,
     club: {
       id: "c1",
       name: "Test Club",
@@ -74,7 +82,7 @@ describe("filterApplicablePatches", () => {
   it("1. Club UEFA voit un patch UEFA_COMPETITION", () => {
     const jersey = makeJersey("ligue-1");
     const patch = makePatch({ family: "UEFA_COMPETITION" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(1);
     expect(result[0].patch.id).toBe("p1");
   });
@@ -82,56 +90,56 @@ describe("filterApplicablePatches", () => {
   it("2. Club CONMEBOL ne voit pas un patch UEFA_COMPETITION", () => {
     const jersey = makeJersey("brasileirao");
     const patch = makePatch({ family: "UEFA_COMPETITION" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
   });
 
   it("3. Club CONMEBOL voit un patch CONFED_CLUB_COMPETITION", () => {
     const jersey = makeJersey("brasileirao");
     const patch = makePatch({ family: "CONFED_CLUB_COMPETITION" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(1);
   });
 
   it("4. Club UEFA ne voit pas un patch CONFED_CLUB_COMPETITION", () => {
     const jersey = makeJersey("ligue-1");
     const patch = makePatch({ family: "CONFED_CLUB_COMPETITION" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
   });
 
   it("5. DOMESTIC_LEAGUE_BADGE visible si leagueId match", () => {
     const jersey = makeJersey("ligue-1");
     const patch = makePatch({ family: "DOMESTIC_LEAGUE_BADGE", leagueId: "ligue-1" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(1);
   });
 
   it("6. DOMESTIC_LEAGUE_BADGE invisible si autre leagueId", () => {
     const jersey = makeJersey("ligue-1");
     const patch = makePatch({ family: "DOMESTIC_LEAGUE_BADGE", leagueId: "serie-a" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
   });
 
   it("7. Selection nationale voit un patch NATIONAL_TEAM_COMPETITION", () => {
     const jersey = makeJersey("national");
     const patch = makePatch({ family: "NATIONAL_TEAM_COMPETITION" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(1);
   });
 
   it("8. Club non national ne voit pas un patch NATIONAL_TEAM_COMPETITION", () => {
     const jersey = makeJersey("ligue-1");
     const patch = makePatch({ family: "NATIONAL_TEAM_COMPETITION" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
   });
 
   it("9. Selection nationale ne voit pas un patch UEFA_COMPETITION", () => {
     const jersey = makeJersey("national");
     const patch = makePatch({ family: "UEFA_COMPETITION" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
   });
 
@@ -139,7 +147,7 @@ describe("filterApplicablePatches", () => {
     const jersey = makeJersey("ligue-1", "2022-23");
     const v1 = makeVersion({ seasonStart: "2020-21", seasonEnd: "2023-24" });
     const patch = makePatch({ versions: [v1] });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result[0].activeVersion?.id).toBe("v1");
   });
 
@@ -147,14 +155,14 @@ describe("filterApplicablePatches", () => {
     const jersey = makeJersey("ligue-1", "2019-20");
     const v1 = makeVersion({ seasonStart: "2020-21", seasonEnd: "2023-24" });
     const patch = makePatch({ versions: [v1] });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result[0].activeVersion).toBeNull();
   });
 
   it("12. Patch isActive=false est exclu", () => {
     const jersey = makeJersey("ligue-1");
     const patch = makePatch({ isActive: false });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
   });
 
@@ -162,20 +170,20 @@ describe("filterApplicablePatches", () => {
     const jerseyUEFA = makeJersey("ligue-1");
     const jerseyCONMEBOL = makeJersey("brasileirao");
     const patch = makePatch({ family: "FIFA_CLUB_COMPETITION" });
-    expect(filterApplicablePatches([patch], jerseyUEFA)).toHaveLength(1);
-    expect(filterApplicablePatches([patch], jerseyCONMEBOL)).toHaveLength(1);
+    expect(filterWithCurrentLeague([patch], jerseyUEFA)).toHaveLength(1);
+    expect(filterWithCurrentLeague([patch], jerseyCONMEBOL)).toHaveLength(1);
   });
 
   it("14. FIFA_CLUB_COMPETITION invisible pour selection nationale", () => {
     const jersey = makeJersey("national");
     const patch = makePatch({ family: "FIFA_CLUB_COMPETITION" });
-    expect(filterApplicablePatches([patch], jersey)).toHaveLength(0);
+    expect(filterWithCurrentLeague([patch], jersey)).toHaveLength(0);
   });
 
   it("15. CUSTOM est toujours exclu du catalogue applicable", () => {
     const jersey = makeJersey("ligue-1");
     const patch = makePatch({ family: "CUSTOM", name: "Centenaire club" });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
   });
 
@@ -185,7 +193,31 @@ describe("filterApplicablePatches", () => {
     const v2 = makeVersion({ id: "v2", seasonStart: "2021-22", seasonEnd: "2023-24" });
     const v3 = makeVersion({ id: "v3", seasonStart: "2024-25", seasonEnd: null });
     const patch = makePatch({ versions: [v1, v2, v3] });
-    const result = filterApplicablePatches([patch], jersey);
+    const result = filterWithCurrentLeague([patch], jersey);
     expect(result[0].activeVersion?.id).toBe("v2");
+  });
+
+  it("17. resolvedLeagueId force la ligue historique pour DOMESTIC_LEAGUE_BADGE", () => {
+    const jersey = makeJersey("ligue-1", "2010-11");
+    const patchL1 = makePatch({
+      id: "p-l1",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "ligue-1",
+    });
+    const patchL2 = makePatch({
+      id: "p-l2",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "ligue-2",
+    });
+
+    const resultDefault = filterWithCurrentLeague([patchL1, patchL2], jersey);
+    expect(resultDefault.map((r) => r.patch.id)).toEqual(["p-l1"]);
+
+    const resultHistorical = filterApplicablePatches(
+      [patchL1, patchL2],
+      jersey,
+      "ligue-2"
+    );
+    expect(resultHistorical.map((r) => r.patch.id)).toEqual(["p-l2"]);
   });
 });

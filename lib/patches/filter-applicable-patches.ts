@@ -10,17 +10,20 @@ type JerseyContext = Jersey & { club: Club & { league: League } };
 
 export function filterApplicablePatches(
   allPatches: PatchWithVersions[],
-  jersey: JerseyContext
+  jersey: JerseyContext,
+  resolvedLeagueId: string
 ): ApplicablePatch[] {
-  const isNational = isNationalTeamLeague(jersey.club.leagueId);
+  const isNational = isNationalTeamLeague(resolvedLeagueId);
   const clubConfederation: Confederation | null = isNational
     ? null
-    : CONFEDERATION_BY_LEAGUE_ID[jersey.club.leagueId] ?? null;
+    : CONFEDERATION_BY_LEAGUE_ID[resolvedLeagueId] ?? null;
 
   return allPatches
     .filter((p) => p.isActive)
     .filter((p) => p.family !== "CUSTOM")
-    .filter((p) => isPatchEligible(p, jersey, isNational, clubConfederation))
+    .filter((p) =>
+      isPatchEligible(p, resolvedLeagueId, isNational, clubConfederation)
+    )
     .map((p) => ({
       patch: {
         id: p.id,
@@ -35,7 +38,7 @@ export function filterApplicablePatches(
 
 function isPatchEligible(
   patch: PatchWithVersions,
-  jersey: JerseyContext,
+  resolvedLeagueId: string,
   isNational: boolean,
   clubConfederation: Confederation | null
 ): boolean {
@@ -53,7 +56,7 @@ function isPatchEligible(
     case "DOMESTIC_CHAMPION":
     case "DOMESTIC_CUP":
     case "DOMESTIC_SUPERCUP":
-      return !isNational && patch.leagueId === jersey.club.leagueId;
+      return !isNational && patch.leagueId === resolvedLeagueId;
 
     case "NATIONAL_TEAM_COMPETITION":
       return isNational;

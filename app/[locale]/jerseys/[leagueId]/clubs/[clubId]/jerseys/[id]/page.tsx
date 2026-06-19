@@ -203,11 +203,19 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     GOALKEEPER: 20,
   };
 
-  const clubJerseys = await prisma.jersey.findMany({
-    where: { clubId: jersey.clubId },
-    select: { id: true, slug: true, season: true, type: true, imageUrl: true },
-    orderBy: { season: "desc" },
-  });
+  const [clubJerseys, seasonLeagueEntry] = await Promise.all([
+    prisma.jersey.findMany({
+      where: { clubId: jersey.clubId },
+      select: { id: true, slug: true, season: true, type: true, imageUrl: true },
+      orderBy: { season: "desc" },
+    }),
+    prisma.clubSeasonLeague.findUnique({
+      where: { clubId_season: { clubId: jersey.clubId, season: jersey.season } },
+      select: { league: { select: { id: true, name: true, logoUrl: true } } },
+    }),
+  ]);
+
+  const displayLeague = seasonLeagueEntry?.league ?? jersey.club.league;
 
   const sortedJerseys = [...clubJerseys].sort((a, b) => {
     if (b.season !== a.season) return b.season.localeCompare(a.season);
@@ -259,7 +267,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   ];
 
   const canonicalUrl = `https://le-vestiaire-foot.fr/jerseys/${leagueId}/clubs/${clubId}/jerseys/${jersey.slug || id}`;
-  const pageDescription = `Maillot ${getJerseyTypeLabel(jersey.type).toLowerCase()} du ${jersey.club.name} pour la saison ${jersey.season}, conçu par ${jersey.brand}. ${jersey.club.league.name}.`;
+  const pageDescription = `Maillot ${getJerseyTypeLabel(jersey.type).toLowerCase()} du ${jersey.club.name} pour la saison ${jersey.season}, conçu par ${jersey.brand}. ${displayLeague.name}.`;
 
   return (
     <>
@@ -345,7 +353,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                         {t("season")}
                       </span>
                       <span className="text-sm font-semibold text-foreground text-right break-words">
-                        {jersey.season}
+                        {jersey.season} | {displayLeague.name}
                       </span>
                     </div>
 
