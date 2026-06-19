@@ -4,6 +4,7 @@ import {
   CONFEDERATION_BY_LEAGUE_ID,
   isNationalTeamLeague,
 } from "./confederation-by-league";
+import { isJerseySeasonInPatchPeriod } from "./season-format";
 
 type PatchWithVersions = Patch & { versions: PatchVersion[] };
 type JerseyContext = Jersey & { club: Club & { league: League } };
@@ -24,6 +25,7 @@ export function filterApplicablePatches(
     .filter((p) =>
       isPatchEligible(p, resolvedLeagueId, isNational, clubConfederation)
     )
+    .filter((p) => isClubEligible(p, jersey.clubId))
     .map((p) => ({
       patch: {
         id: p.id,
@@ -59,7 +61,9 @@ function isPatchEligible(
       return !isNational && patch.leagueId === resolvedLeagueId;
 
     case "NATIONAL_TEAM_COMPETITION":
-      return isNational;
+      if (!isNational) return false;
+      if (patch.leagueId !== null && patch.leagueId !== resolvedLeagueId) return false;
+      return true;
 
     case "CUSTOM":
       return false;
@@ -69,15 +73,18 @@ function isPatchEligible(
   }
 }
 
+function isClubEligible(patch: PatchWithVersions, clubId: string): boolean {
+  if (patch.eligibleClubIds.length === 0) return true;
+  return patch.eligibleClubIds.includes(clubId);
+}
+
 function pickActiveVersion(
   versions: PatchVersion[],
   season: string
 ): PatchVersionData | null {
-  const match = versions.find((v) => {
-    const afterStart = v.seasonStart <= season;
-    const beforeEnd = v.seasonEnd === null || v.seasonEnd >= season;
-    return afterStart && beforeEnd;
-  });
+  const match = versions.find((v) =>
+    isJerseySeasonInPatchPeriod(season, v.seasonStart, v.seasonEnd)
+  );
 
   if (!match) return null;
 

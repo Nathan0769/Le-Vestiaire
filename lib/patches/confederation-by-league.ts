@@ -41,7 +41,14 @@ export const CONFEDERATION_BY_LEAGUE_ID: Record<string, Confederation> = {
   "brasileirao": "CONMEBOL",
 };
 
-export const NATIONAL_TEAM_LEAGUE_IDS = ["national", "national-2"] as const;
+export const NATIONAL_TEAM_LEAGUE_IDS = [
+  "uefa",
+  "caf",
+  "concacaf",
+  "conmebol",
+  "afc",
+  "ofc",
+] as const;
 
 export function getConfederationForLeague(leagueId: string): Confederation | null {
   return CONFEDERATION_BY_LEAGUE_ID[leagueId] ?? null;

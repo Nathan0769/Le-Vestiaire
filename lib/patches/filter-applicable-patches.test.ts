@@ -20,6 +20,7 @@ function makePatch(overrides: Partial<PatchWithVersions> = {}): PatchWithVersion
     leagueId: null,
     isActive: true,
     notes: null,
+    eligibleClubIds: [],
     createdAt: new Date(),
     updatedAt: new Date(),
     versions: [],
@@ -123,7 +124,7 @@ describe("filterApplicablePatches", () => {
   });
 
   it("7. Selection nationale voit un patch NATIONAL_TEAM_COMPETITION", () => {
-    const jersey = makeJersey("national");
+    const jersey = makeJersey("uefa");
     const patch = makePatch({ family: "NATIONAL_TEAM_COMPETITION" });
     const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(1);
@@ -137,7 +138,7 @@ describe("filterApplicablePatches", () => {
   });
 
   it("9. Selection nationale ne voit pas un patch UEFA_COMPETITION", () => {
-    const jersey = makeJersey("national");
+    const jersey = makeJersey("uefa");
     const patch = makePatch({ family: "UEFA_COMPETITION" });
     const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
@@ -175,7 +176,7 @@ describe("filterApplicablePatches", () => {
   });
 
   it("14. FIFA_CLUB_COMPETITION invisible pour selection nationale", () => {
-    const jersey = makeJersey("national");
+    const jersey = makeJersey("uefa");
     const patch = makePatch({ family: "FIFA_CLUB_COMPETITION" });
     expect(filterWithCurrentLeague([patch], jersey)).toHaveLength(0);
   });
@@ -197,7 +198,93 @@ describe("filterApplicablePatches", () => {
     expect(result[0].activeVersion?.id).toBe("v2");
   });
 
-  it("17. resolvedLeagueId force la ligue historique pour DOMESTIC_LEAGUE_BADGE", () => {
+  it("17a. Patch national en année matche un maillot national sur la même année", () => {
+    const jersey = makeJersey("uefa", "2024");
+    const v1 = makeVersion({ seasonStart: "2024", seasonEnd: "2024" });
+    const patch = makePatch({ family: "NATIONAL_TEAM_COMPETITION", versions: [v1] });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result[0].activeVersion?.id).toBe("v1");
+  });
+
+  it("17b. Patch national en plage d'années couvre les années intermédiaires", () => {
+    const jersey = makeJersey("uefa", "2025");
+    const v1 = makeVersion({ seasonStart: "2024", seasonEnd: "2026" });
+    const patch = makePatch({ family: "NATIONAL_TEAM_COMPETITION", versions: [v1] });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result[0].activeVersion?.id).toBe("v1");
+  });
+
+  it("17c. Maillot national antérieur au start n'a pas de version active", () => {
+    const jersey = makeJersey("uefa", "2023");
+    const v1 = makeVersion({ seasonStart: "2024", seasonEnd: "2024" });
+    const patch = makePatch({ family: "NATIONAL_TEAM_COMPETITION", versions: [v1] });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(1);
+    expect(result[0].activeVersion).toBeNull();
+  });
+
+  it("17g. Patch national UEFA visible pour sélection UEFA", () => {
+    const jersey = makeJersey("uefa", "2024");
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      leagueId: "uefa",
+    });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(1);
+  });
+
+  it("17h. Patch national UEFA invisible pour sélection CONMEBOL", () => {
+    const jersey = makeJersey("conmebol", "2024");
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      leagueId: "uefa",
+    });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(0);
+  });
+
+  it("17i. Patch national sans leagueId (FIFA) visible pour toutes les sélections", () => {
+    const jerseyUefa = makeJersey("uefa", "2026");
+    const jerseyConmebol = makeJersey("conmebol", "2026");
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      leagueId: null,
+    });
+    expect(filterWithCurrentLeague([patch], jerseyUefa)).toHaveLength(1);
+    expect(filterWithCurrentLeague([patch], jerseyConmebol)).toHaveLength(1);
+  });
+
+  it("17d. eligibleClubIds vide laisse le patch applicable (régression)", () => {
+    const jersey = makeJersey("uefa", "2024");
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      eligibleClubIds: [],
+    });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(1);
+  });
+
+  it("17e. eligibleClubIds inclut le clubId du maillot, applicable", () => {
+    const jersey = makeJersey("uefa", "2024");
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      eligibleClubIds: ["c1"],
+    });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(1);
+  });
+
+  it("17f. eligibleClubIds n'inclut pas le clubId du maillot, non applicable", () => {
+    const jersey = makeJersey("uefa", "2024");
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      eligibleClubIds: ["c-other"],
+    });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(0);
+  });
+
+  it("18. resolvedLeagueId force la ligue historique pour DOMESTIC_LEAGUE_BADGE", () => {
     const jersey = makeJersey("ligue-1", "2010-11");
     const patchL1 = makePatch({
       id: "p-l1",

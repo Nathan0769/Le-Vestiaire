@@ -19,6 +19,7 @@ import {
   useDeletePatchVersion,
   type AdminPatch,
 } from "@/hooks/admin/usePatchesAdmin";
+import { isYearFormat } from "@/lib/patches/season-format";
 
 interface PatchVersionsDrawerProps {
   open: boolean;
@@ -37,17 +38,30 @@ export function PatchVersionsDrawer({
   const [seasonEnd, setSeasonEnd] = useState("");
   const [file, setFile] = useState<File | null>(null);
 
+  const useYear = patch ? isYearFormat(patch.family) : false;
+  const formatRegex = useYear ? /^\d{4}$/ : /^\d{4}-\d{2}$/;
+  const formatLabel = useYear ? "YYYY" : "YYYY-YY";
+  const startLabel = useYear ? "Année début" : "Saison début";
+  const endLabel = useYear ? "Année fin" : "Saison fin";
+  const startPlaceholder = useYear ? "2024" : "2024-25";
+  const endPlaceholder = useYear
+    ? "2026 (vide = actif)"
+    : "2025-26 (vide = actif)";
+
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!patch) return;
 
-    const ssRegex = /^\d{4}-\d{2}$/;
-    if (!ssRegex.test(seasonStart)) {
-      toast.error("Saison début invalide (format YYYY-YY)");
+    if (!formatRegex.test(seasonStart)) {
+      toast.error(`${startLabel} invalide (format ${formatLabel})`);
       return;
     }
-    if (seasonEnd && !ssRegex.test(seasonEnd)) {
-      toast.error("Saison fin invalide (format YYYY-YY)");
+    if (seasonEnd && !formatRegex.test(seasonEnd)) {
+      toast.error(`${endLabel} invalide (format ${formatLabel})`);
+      return;
+    }
+    if (seasonEnd && seasonEnd < seasonStart) {
+      toast.error("La fin doit être postérieure ou égale au début");
       return;
     }
 
@@ -84,7 +98,7 @@ export function PatchVersionsDrawer({
         <SheetHeader>
           <SheetTitle>Versions de {patch?.name ?? "..."}</SheetTitle>
           <SheetDescription>
-            Une version par tranche de saisons. seasonEnd = vide = encore actif.
+            Une version par tranche de {useYear ? "années" : "saisons"}. Fin vide = encore actif.
           </SheetDescription>
         </SheetHeader>
 
@@ -93,20 +107,20 @@ export function PatchVersionsDrawer({
             <h4 className="font-semibold text-sm">Nouvelle version</h4>
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-1">
-                <Label htmlFor="ss">Saison début</Label>
+                <Label htmlFor="ss">{startLabel}</Label>
                 <Input
                   id="ss"
-                  placeholder="2024-25"
+                  placeholder={startPlaceholder}
                   value={seasonStart}
                   onChange={(e) => setSeasonStart(e.target.value)}
                   required
                 />
               </div>
               <div className="space-y-1">
-                <Label htmlFor="se">Saison fin</Label>
+                <Label htmlFor="se">{endLabel}</Label>
                 <Input
                   id="se"
-                  placeholder="2025-26 (vide = actif)"
+                  placeholder={endPlaceholder}
                   value={seasonEnd}
                   onChange={(e) => setSeasonEnd(e.target.value)}
                 />

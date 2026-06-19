@@ -1,21 +1,10 @@
 import { NextResponse } from "next/server";
-import { z } from "zod";
 import { requirePermission } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
 import { validateImageFile } from "@/lib/file-validation";
 import { uploadToR2, getR2PublicUrl, PATCHES_BUCKET } from "@/lib/r2-storage";
+import { validatePatchVersionPeriod } from "@/lib/patches/season-format";
 import crypto from "crypto";
-
-const seasonRegex = /^\d{4}-\d{2}$/;
-
-const createVersionMetaSchema = z.object({
-  seasonStart: z.string().regex(seasonRegex, "Format de saison invalide (YYYY-YY)"),
-  seasonEnd: z
-    .string()
-    .regex(seasonRegex, "Format de saison invalide (YYYY-YY)")
-    .optional()
-    .nullable(),
-});
 
 const MAX_PATCH_IMAGE_SIZE = 2 * 1024 * 1024;
 
@@ -35,17 +24,31 @@ export async function POST(
     }
 
     const formData = await request.formData();
-    const seasonStart = formData.get("seasonStart");
-    const seasonEnd = formData.get("seasonEnd");
+    const seasonStartRaw = formData.get("seasonStart");
+    const seasonEndRaw = formData.get("seasonEnd");
     const file = formData.get("file");
 
-    const validation = createVersionMetaSchema.safeParse({
-      seasonStart,
-      seasonEnd: seasonEnd === null || seasonEnd === "" ? null : seasonEnd,
-    });
-    if (!validation.success) {
+    if (typeof seasonStartRaw !== "string" || seasonStartRaw.length === 0) {
       return NextResponse.json(
-        { error: validation.error.issues[0].message },
+        { error: "seasonStart requis" },
+        { status: 400 }
+      );
+    }
+
+    const seasonStart = seasonStartRaw;
+    const seasonEnd =
+      typeof seasonEndRaw === "string" && seasonEndRaw.length > 0
+        ? seasonEndRaw
+        : null;
+
+    const periodValidation = validatePatchVersionPeriod(
+      patch.family,
+      seasonStart,
+      seasonEnd
+    );
+    if (!periodValidation.valid) {
+      return NextResponse.json(
+        { error: periodValidation.error },
         { status: 400 }
       );
     }
@@ -73,8 +76,8 @@ export async function POST(
     const version = await prisma.patchVersion.create({
       data: {
         patchId,
-        seasonStart: validation.data.seasonStart,
-        seasonEnd: validation.data.seasonEnd ?? null,
+        seasonStart,
+        seasonEnd,
         imageUrl,
       },
     });

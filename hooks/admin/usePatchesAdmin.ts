@@ -8,6 +8,7 @@ export interface AdminPatch {
   leagueId: string | null;
   isActive: boolean;
   notes: string | null;
+  eligibleClubIds: string[];
   createdAt: string;
   updatedAt: string;
   league: { id: string; name: string; country: string } | null;
@@ -42,6 +43,7 @@ export function useCreatePatch() {
       leagueId?: string | null;
       isActive?: boolean;
       notes?: string | null;
+      eligibleClubIds?: string[];
     }) => {
       const res = await fetch("/api/admin/patches", {
         method: "POST",
@@ -74,6 +76,7 @@ export function useUpdatePatch() {
         leagueId: string | null;
         isActive: boolean;
         notes: string | null;
+        eligibleClubIds: string[];
       }>;
     }) => {
       const res = await fetch(`/api/admin/patches/${id}`, {

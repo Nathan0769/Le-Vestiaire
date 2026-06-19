@@ -22,6 +22,7 @@ const updatePatchSchema = z.object({
   leagueId: z.string().optional().nullable(),
   isActive: z.boolean().optional(),
   notes: z.string().max(500).optional().nullable(),
+  eligibleClubIds: z.array(z.string()).optional(),
 });
 
 export async function PATCH(
@@ -66,6 +67,9 @@ export async function PATCH(
         }),
         ...(validation.data.isActive !== undefined && { isActive: validation.data.isActive }),
         ...(validation.data.notes !== undefined && { notes: validation.data.notes ?? null }),
+        ...(validation.data.eligibleClubIds !== undefined && {
+          eligibleClubIds: validation.data.eligibleClubIds,
+        }),
       },
       include: { versions: true, league: true },
     });
