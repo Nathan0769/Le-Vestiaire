@@ -35,6 +35,7 @@ export async function generateMetadata({
     es: "es_ES",
     de: "de_DE",
     pt: "pt_PT",
+    nl: "nl_NL",
   };
 
   const titles: Record<string, string> = {
@@ -43,6 +44,7 @@ export async function generateMetadata({
     es: "El Vestuario - Gestiona tu Colección de Camisetas de Fútbol",
     de: "Le Vestiaire Foot - Verwalte deine Fußballtrikot-Sammlung",
     pt: "Le Vestiaire Foot - Gere a tua Coleção de Camisolas de Futebol",
+    nl: "Le Vestiaire Foot - Beheer je Voetbalshirts Collectie",
   };
 
   const descriptions: Record<string, string> = {
@@ -51,6 +53,7 @@ export async function generateMetadata({
     es: "Únete a miles de coleccionistas: cataloga tus camisetas de fútbol, crea una lista de deseos para compartir, puntúa camisetas de tu club y descubre las mejor valoradas por la comunidad.",
     de: "Schließ dich tausenden Sammlern an: katalogisiere deine Fußballtrikots, erstelle eine teilbare Wunschliste, bewerte Trikots deines Clubs und entdecke die bestbewerteten Stücke der Community.",
     pt: "Junta-te a milhares de colecionadores: cataloga as tuas camisolas de futebol, cria uma lista de desejos partilhável, avalia camisolas do teu clube e descobre as peças mais bem avaliadas da comunidade.",
+    nl: "Sluit je aan bij duizenden verzamelaars: catalogiseer je voetbalshirts, maak een deelbare verlanglijst, beoordeel shirts van je club en ontdek de best beoordeelde stukken van de community.",
   };
 
   const keywords: Record<string, string> = {
@@ -59,6 +62,7 @@ export async function generateMetadata({
     es: "colección camisetas fútbol, app camisetas fútbol, wishlist camisetas fútbol, valorar camisetas fútbol, coleccionistas camisetas fútbol",
     de: "Fußballtrikot Sammlung, Trikot Sammlung App, Fußballtrikot Wunschliste, Trikots bewerten, Trikot Sammler, vintage Fußballtrikots, Trikot Sammlung verwalten",
     pt: "coleção camisolas futebol, app camisolas futebol, lista de desejos camisolas futebol, avaliar camisolas futebol, colecionadores camisolas futebol",
+    nl: "voetbalshirts collectie, voetbalshirts app, verlanglijst voetbalshirts, voetbalshirts beoordelen, voetbalshirts verzamelaars, vintage voetbalshirts, voetbalshirts collectie beheren",
   };
 
   return {
@@ -96,6 +100,7 @@ export async function generateMetadata({
         es: "https://le-vestiaire-foot.fr/es",
         de: "https://le-vestiaire-foot.fr/de",
         pt: "https://le-vestiaire-foot.fr/pt",
+        nl: "https://le-vestiaire-foot.fr/nl",
       },
     },
   };
@@ -663,6 +668,41 @@ const schemaContent: Record<
       {
         q: "Os meus dados estão seguros?",
         a: "Sim. Le Vestiaire Foot protege os dados pessoais dos seus utilizadores. A aplicação utiliza apenas cookies essenciais para o seu funcionamento, bem como cookies de análise opcionais que podes recusar a qualquer momento. A política completa está disponível na página dedicada.",
+      },
+    ],
+  },
+  nl: {
+    appDescription:
+      "Le Vestiaire Foot is een gratis webapp waarmee voetbalshirts-verzamelaars hun collectie kunnen catalogiseren, een deelbare verlanglijst kunnen aanmaken, shirts kunnen authentiseren en zich kunnen aansluiten bij een community van liefhebbers.",
+    featureList: [
+      "Catalogiseren van voetbalshirts met volledige details (maat, staat, aankoopprijs, personalisatie)",
+      "Deelbare verlanglijst voor Kerstmis en verjaardagen",
+      "Authenticatiegidsen voor shirts (Nike, Adidas, Puma)",
+      "Community van verzamelaars en delen van collecties",
+      "Ranglijst van best beoordeelde shirts",
+    ],
+    orgDescription:
+      "Gratis communityplatform voor voetbalshirts-verzamelaars, waarmee je shirtcollecties kunt catalogiseren, beoordelen, authentiseren en delen.",
+    faq: [
+      {
+        q: "Hoe voeg ik een shirt toe aan mijn collectie?",
+        a: "Om een shirt toe te voegen aan je collectie op Le Vestiaire Foot, maak je een gratis account aan, ga je naar het gedeelte 'Mijn Collectie' en selecteer je het shirt uit de catalogus. Je kunt de maat, staat, aankoopprijs en personalisatie voor elk shirt invullen om de waarde van je collectie nauwkeurig bij te houden.",
+      },
+      {
+        q: "Kan ik mijn verlanglijst delen voor Kerstmis of mijn verjaardag?",
+        a: "Ja. Met Le Vestiaire Foot kun je een verlanglijst met voetbalshirts samenstellen en deze via een directe link delen met vrienden en familie. Zo weten zij precies welke shirts je graag wilt ontvangen voor Kerstmis, een verjaardag of een andere speciale gelegenheid.",
+      },
+      {
+        q: "Hoe herken ik een nep voetbalshirt?",
+        a: "Le Vestiaire Foot biedt gedetailleerde authenticatiegidsen voor elk groot shirtmerk: Nike, Adidas, Puma en andere. Deze gidsen leggen de belangrijkste controlepunten uit — stiksels, badges, labels, stof — om een authentiek shirt van een vervalsing te onderscheiden.",
+      },
+      {
+        q: "Welke clubs en competities zijn beschikbaar op Le Vestiaire Foot?",
+        a: "De catalogus van Le Vestiaire Foot omvat veel internationale competities, waaronder de Ligue 1, de Bundesliga en de nationale teams van UEFA en AFC. Er worden regelmatig nieuwe clubs en nationale teams aan de catalogus toegevoegd.",
+      },
+      {
+        q: "Zijn mijn gegevens veilig?",
+        a: "Ja. Le Vestiaire Foot beschermt de persoonsgegevens van zijn gebruikers. De app gebruikt alleen essentiële cookies voor de werking en optionele analytische cookies die je op elk moment kunt weigeren. Het volledige beleid is beschikbaar op de daarvoor bestemde pagina.",
       },
     ],
   },

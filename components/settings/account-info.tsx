@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { User } from "lucide-react";
 import { format } from "date-fns";
-import { fr, enUS, es } from "date-fns/locale";
+import { fr, enUS, es, de, pt, nl } from "date-fns/locale";
 import type { CurrentUser } from "@/hooks/useCurrentUser";
 import { useTranslations, useLocale } from "next-intl";
 
@@ -25,6 +25,12 @@ export function AccountInfo({ user }: AccountInfoProps) {
         return enUS;
       case "es":
         return es;
+      case "de":
+        return de;
+      case "pt":
+        return pt;
+      case "nl":
+        return nl;
       default:
         return fr;
     }
