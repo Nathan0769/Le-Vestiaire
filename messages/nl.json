@@ -1,0 +1,2513 @@
+{
+  "Sidebar": {
+    "appName": "The Locker Room",
+    "home": "Home",
+    "collection": "Mijn Collectie",
+    "wishlist": "Mijn Verlanglijst",
+    "jerseys": "Shirts",
+    "community": "Community",
+    "leaderboard": "Ranglijst",
+    "authentication": "Authenticatie",
+    "pricing": "Abonnement",
+    "settings": "Account",
+    "friends": "Vrienden",
+    "friendsCollections": "Collecties van vrienden",
+    "jerseySuggestions": "Shirt suggesties",
+    "openMenu": "Menu openen",
+    "closeMenu": "Menu sluiten",
+    "stats": "Mijn statistieken",
+    "bonsPlansSectionLabel": "Aanbiedingen",
+    "cfsSalesLink": "CFS Shirts in de aanbieding",
+    "supportSectionLabel": "Steun",
+    "buyMeACoffee": "Buy Me a Coffee",
+    "tipeee": "Tipeee"
+  },
+  "Common": {
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Gelukt",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "add": "Toevoegen",
+    "search": "Zoeken",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "confirm": "Bevestigen",
+    "close": "Sluiten"
+  },
+  "JerseyType": {
+    "HOME": "Thuis",
+    "AWAY": "Uit",
+    "THIRD": "Derde",
+    "FOURTH": "Vierde",
+    "GOALKEEPER": "Keeper",
+    "SPECIAL": "Speciaal",
+    "HALLOWEEN": "Halloween",
+    "ANNIVERSARY": "Jubileum",
+    "CENTENAIRE": "Eeuwfeest",
+    "OKTOBERFEST": "Oktoberfest",
+    "HUMANRACE": "Humanrace",
+    "ONE_PLANET": "One Planet",
+    "OCTOBRE_ROSE": "Roze Oktober",
+    "ANTI_RACISME": "Anti-racisme",
+    "HOMMAGE": "Eerbetoon",
+    "RETRO": "Retro",
+    "NOUVEL_AN_CHINOIS": "Chinees Nieuwjaar",
+    "OFF_WHITE": "Off-White",
+    "KOCHE": "Koché",
+    "CHAMPION": "Kampioen"
+  },
+  "PlayerPosition": {
+    "GOALKEEPER": "Keeper",
+    "DEFENDER": "Verdediger",
+    "MIDFIELDER": "Middenvelder",
+    "FORWARD": "Aanvaller"
+  },
+  "PlayerPositionPlural": {
+    "GOALKEEPER": "Keepers",
+    "DEFENDER": "Verdedigers",
+    "MIDFIELDER": "Middenvelders",
+    "FORWARD": "Aanvallers"
+  },
+  "Size": {
+    "XS": "XS",
+    "S": "S",
+    "M": "M",
+    "L": "L",
+    "XL": "XL",
+    "XXL": "XXL"
+  },
+  "Condition": {
+    "MINT": "Nieuwstaat",
+    "EXCELLENT": "Uitstekend",
+    "GOOD": "Goed",
+    "FAIR": "Redelijk",
+    "POOR": "Slecht"
+  },
+  "JerseyVersion": {
+    "REPLICA": "Standaard",
+    "AUTHENTIC": "Authentiek",
+    "STOCK_PRO": "Pro Stock",
+    "PLAYER_ISSUE": "Player Issue",
+    "MATCH_WORN": "Match Worn"
+  },
+  "Auth": {
+    "login": "Inloggen",
+    "logout": "Uitloggen",
+    "signup": "Registreren",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "noAccount": "Heb je nog geen account?",
+    "hasAccount": "Heb je al een account?",
+    "continueWithGoogle": "Doorgaan met Google"
+  },
+  "SignUp": {
+    "title": "Maak een account aan",
+    "subtitle": "Word lid van de community van shirtverzamelaars",
+    "continueWithGoogle": "Doorgaan met Google",
+    "orContinueWith": "Of ga verder met",
+    "form": {
+      "firstName": "Voornaam",
+      "lastName": "Achternaam",
+      "email": "E-mail",
+      "password": "Wachtwoord",
+      "confirmPassword": "Bevestig wachtwoord",
+      "required": "*",
+      "passwordPlaceholder": "••••••••"
+    },
+    "button": {
+      "creating": "Account aanmaken…",
+      "create": "Maak mijn account aan"
+    },
+    "hasAccount": "Heb je al een account?",
+    "signIn": "Inloggen",
+    "terms": {
+      "text": "Door op Maak mijn account aan te klikken, ga je akkoord met onze",
+      "termsOfService": "Algemene Voorwaarden",
+      "and": "en",
+      "privacyPolicy": "Privacybeleid"
+    },
+    "errors": {
+      "firstNameRequired": "Voornaam verplicht",
+      "lastNameRequired": "Achternaam verplicht",
+      "emailRequired": "E-mail verplicht",
+      "emailInvalid": "Ongeldig e-mailadres",
+      "passwordRequired": "Wachtwoord verplicht",
+      "passwordTooShort": "Minimaal 8 tekens vereist",
+      "passwordNoUppercase": "Minimaal een hoofdletter vereist",
+      "passwordNoNumber": "Minimaal een cijfer vereist",
+      "passwordNoSpecial": "Minimaal een speciaal teken vereist",
+      "passwordMismatch": "Wachtwoorden komen niet overeen",
+      "signupError": "Fout tijdens registratie"
+    }
+  },
+  "Collection": {
+    "filters": {
+      "button": "Filters",
+      "title": "Filter de collectie",
+      "reset": "Herstellen",
+      "resultsCount": "{count, plural, =1 {# shirt getoond} other {# shirts getoond}}",
+      "emptyFiltered": "Geen shirt voldoet aan de filters",
+      "sections": {
+        "condition": "Staat",
+        "type": "Type shirt",
+        "league": "Competitie",
+        "flocked": "Bedrukt",
+        "signed": "Gesigneerd",
+        "withPatches": "Met patches",
+        "gift": "Cadeau"
+      },
+      "triState": {
+        "all": "Alles",
+        "yes": "Ja",
+        "no": "Nee"
+      }
+    },
+    "button": {
+      "loading": "Laden...",
+      "inCollection": "In mijn collectie",
+      "addToCollection": "Toevoegen aan mijn collectie",
+      "toast": {
+        "mustBeConnected": "Je moet ingelogd zijn om aan je collectie toe te voegen",
+        "added": "Shirt toegevoegd aan je collectie",
+        "removed": "Shirt verwijderd uit je collectie",
+        "wishlistRemoved": "Automatisch verwijderd uit je verlanglijst",
+        "wishlistRemovedUndo": "Ongedaan maken",
+        "error": "Er is een fout opgetreden",
+        "connectionError": "Verbindingsfout. Probeer het opnieuw.",
+        "manageError": "Je moet ingelogd zijn om je collectie te beheren"
+      }
+    },
+    "stats": {
+      "owned": "Shirts in bezit",
+      "jerseyInCollection": "Shirt in je collectie",
+      "jerseysInCollection": "Shirts in je collectie",
+      "favoriteLeagues": "Favoriete competities",
+      "conditions": "Staat",
+      "source": "Bron",
+      "purchased": "Gekocht",
+      "gifts": "Cadeaus",
+      "mysteryBox": "Mystery box"
+    },
+    "landing": {
+      "badge": "Collectiebeheer",
+      "title": "Beheer je collectie van",
+      "titleHighlight": "voetbalshirts",
+      "subtitle": "Catalogiseer, organiseer en volg de evolutie van je collectie. Word lid van",
+      "subtitleHighlight": "meer dan 100 verzamelaars",
+      "subtitleEnd": "die gepassioneerd zijn over shirts.",
+      "signIn": "Inloggen",
+      "signUp": "Maak een account aan",
+      "exampleTitle": "Eén collectie, duizend mogelijkheden",
+      "exampleSubtitle": "Voorbeeldcollectie met 24 shirts",
+      "statsTotal": "Totaal",
+      "statsTotalDesc": "Shirts in bezit",
+      "statsValue": "Waarde",
+      "statsValueDesc": "Totale waarde",
+      "statsLeagues": "Competities",
+      "statsConditions": "Staat",
+      "moreJerseys": "+ 18 andere shirts in deze collectie",
+      "createCollection": "Maak mijn collectie aan",
+      "featuresTitle": "Alles wat je nodig hebt",
+      "featuresSubtitle": "Functies ontworpen voor verzamelaars",
+      "features": {
+        "catalog": {
+          "title": "Catalogiseer alles",
+          "description": "Maat, staat, aankoopprijs, datum, personalisatie... Beheer elk detail van je shirts"
+        },
+        "photos": {
+          "title": "Voeg je foto's toe",
+          "description": "Vereeuwig je collectie met je eigen foto's naast de officiële afbeeldingen"
+        },
+        "stats": {
+          "title": "Gedetailleerde statistieken",
+          "description": "Totale waarde, verdeling per competitie, staat, type... Analyseer je collectie"
+        },
+        "evolution": {
+          "title": "Volg je evolutie",
+          "description": "Zie hoe je collectie groeit in de tijd met grafieken"
+        },
+        "security": {
+          "title": "Veilig en privé",
+          "description": "Je gegevens zijn beschermd. Jij bepaalt wat je deelt met de community"
+        },
+        "friends": {
+          "title": "Vergelijk met vrienden",
+          "description": "Voeg vrienden toe, ontdek hun collecties en deel je passie"
+        }
+      },
+      "testimonialsTitle": "Zij deelden hun collectie",
+      "testimonialsSubtitle": "Duizenden tevreden gebruikers",
+      "testimonials": {
+        "thomas": "Eindelijk een app om mijn collectie te beheren! De competitiestatistieken zijn geweldig 🔥",
+        "julie": "Ik kan eindelijk de waarde van mijn collectie volgen. Super intuïtieve interface!",
+        "alexandre": "Het uploaden van eigen foto's is geweldig. Mijn collectie is nog nooit zo goed georganiseerd geweest."
+      },
+      "ctaTitle": "Klaar om je collectie te beheren?",
+      "ctaSubtitle": "Catalogiseer je shirts en volg de evolutie van je collectie met een paar klikken",
+      "ctaButton": "Maak mijn gratis account aan",
+      "ctaSignIn": "Inloggen",
+      "ctaSecure": "100% veilig",
+      "ctaNoCommitment": "Geen verplichting",
+      "faqTitle": "Veelgestelde vragen",
+      "faqSubtitle": "Alles wat je moet weten over Le Vestiaire",
+      "faqs": {
+        "addJersey": {
+          "q": "Hoe voeg ik een shirt toe aan mijn collectie?",
+          "a": "Blader door onze catalogus van duizenden shirts, klik op een shirt en vervolgens op 'Toevoegen aan mijn collectie'. Je kunt maat, staat, aankoopprijs en nog veel meer invoeren."
+        },
+        "customPhotos": {
+          "q": "Kan ik mijn eigen foto's toevoegen?",
+          "a": "Ja! Naast officiële foto's kun je je eigen foto's uploaden voor elk shirt in je collectie."
+        },
+        "privacy": {
+          "q": "Is mijn collectie privé?",
+          "a": "Ja, standaard is je collectie privé. Je kunt ervoor kiezen om hem te delen met je vrienden of anoniem te blijven in de ranglijsten."
+        },
+        "pricing": {
+          "q": "Is de app gratis?",
+          "a": "Ja, Le Vestiaire is 100% gratis om je collectie en verlanglijst te beheren en van alle functies te genieten."
+        }
+      }
+    },
+    "modal": {
+      "add": {
+        "title": "Toevoegen aan mijn collectie",
+        "description": "Voer de gegevens van je shirt in.",
+        "size": "Maat",
+        "sizeRequired": "*",
+        "sizePlaceholder": "Maat",
+        "condition": "Staat",
+        "conditionRequired": "*",
+        "conditionPlaceholder": "Staat",
+        "purchasePrice": "Aankoopprijs (€)",
+        "purchasePricePlaceholder": "Bijv.: 90.99",
+        "purchaseDate": "Aankoopdatum",
+        "personalization": "Personalisatie (naam, nummer...)",
+        "personalizationPlaceholder": "Bijv.: MESSI 10",
+        "playerName": "Spelersnaam (bedrukking)",
+        "playerNamePlaceholder": "Bijv.: MESSI",
+        "playerNumber": "Shirtnummer",
+        "playerNumberPlaceholder": "Bijv.: 10",
+        "hasTags": "Nog met labels",
+        "isGift": "Ontvangen als cadeau",
+        "isFromMysteryBox": "Uit een Mystery Box",
+        "isSigned": "Gesigneerd shirt",
+        "signedBy": "Gesigneerd door",
+        "signedByPlaceholder": "Bijv.: Mbappé, Dembélé",
+        "hasAuthCertificate": "Echtheidscertificaat",
+        "certificateUrlPlaceholder": "Certificaatlink (bijv. Fabriks, PSA...)",
+        "matchDescription": "Wedstrijd",
+        "matchDescriptionPlaceholder": "Bijv.: PSG vs OL - L1 - 15/03/2019",
+        "matchDate": "Wedstrijddatum",
+        "version": "Versie",
+        "versionPlaceholder": "Versie van het shirt",
+        "notes": "Persoonlijke notities",
+        "notesPlaceholder": "Voeg je opmerkingen over dit shirt toe...",
+        "photo": "Persoonlijke foto (optioneel)",
+        "photoClickToAdd": "Klik om toe te voegen",
+        "photoYourPhoto": "jouw foto",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
+        "modifyPhoto": "Wijzig je foto",
+        "addPhoto": "Voeg je foto toe",
+        "choosePhoto": "Kies een foto",
+        "cancel": "Annuleren",
+        "uploadPhoto": "Foto uploaden...",
+        "adding": "Toevoegen...",
+        "addToCollection": "Toevoegen aan mijn collectie",
+        "toast": {
+          "fileNotImage": "Het bestand moet een afbeelding zijn",
+          "fileTooLarge": "De foto mag niet groter zijn dan 5MB",
+          "sizeRequired": "Maat is verplicht",
+          "conditionRequired": "Staat is verplicht",
+          "uploadError": "Fout bij het uploaden van de foto"
+        }
+      },
+      "view": {
+        "titleEdit": "Bewerk je shirt",
+        "titleView": "Details van je shirt",
+        "yourPhoto": "Jouw foto",
+        "officialPhoto": "Officiële foto",
+        "modifyPhoto": "Wijzig je foto",
+        "addPhoto": "Voeg je foto toe",
+        "choosePhoto": "Kies een foto",
+        "withTags": "Met labels",
+        "gift": "Cadeau",
+        "mysteryBox": "Mystery box",
+        "club": "Club",
+        "league": "Competitie",
+        "type": "Type",
+        "season": "Seizoen",
+        "brand": "Merk",
+        "yourJersey": "Jouw shirt",
+        "purchasePrice": "Aankoopprijs",
+        "purchasedOn": "Gekocht op",
+        "player": "Speler",
+        "number": "Nummer",
+        "personalization": "Personalisatie",
+        "addedOn": "Toegevoegd op",
+        "personalNotes": "Persoonlijke notities",
+        "close": "Sluiten",
+        "edit": "Bewerken",
+        "delete": "Verwijderen",
+        "cancel": "Annuleren",
+        "save": "Opslaan",
+        "uploading": "Uploaden...",
+        "saving": "Opslaan...",
+        "size": "Maat",
+        "sizeRequired": "*",
+        "condition": "Staat",
+        "conditionRequired": "*",
+        "isGift": "Dit shirt is een cadeau",
+        "isFromMysteryBox": "Shirt ontvangen in een mystery box",
+        "hasTags": "Nog met labels",
+        "version": "Versie",
+        "versionPlaceholder": "Versie van het shirt",
+        "signed": "Gesigneerd",
+        "longSleeves": "Lange mouwen",
+        "cards": {
+          "identity": "Het shirt",
+          "myJersey": "Mijn exemplaar",
+          "acquisition": "Aanschaf",
+          "authentication": "Authenticatie",
+          "flocageTitle": "Bedrukking",
+          "patchTitle": "Patch",
+          "patchesTitle": "Patches",
+          "myJerseyEmpty": "Geen personalisatie",
+          "viewCertificate": "Certificaat bekijken"
+        },
+        "authCertificate": "Echtheidscert.",
+        "isSigned": "Gesigneerd shirt",
+        "signedBy": "Gesigneerd door",
+        "signedByPlaceholder": "Bijv.: Mbappé, Dembélé",
+        "hasAuthCertificate": "Echtheidscertificaat",
+        "certificateUrlPlaceholder": "Certificaatlink (bijv. Fabriks, PSA...)",
+        "matchDescription": "Wedstrijd",
+        "matchDescriptionPlaceholder": "Bijv.: PSG vs OL - L1 - 15/03/2019",
+        "matchDate": "Wedstrijddatum",
+        "purchaseDate": "Aankoopdatum",
+        "notes": "Persoonlijke notities",
+        "personalizationPlaceholder": "Bijv.: MESSI 10",
+        "playerName": "Spelersnaam (bedrukking)",
+        "playerNamePlaceholder": "Bijv.: MESSI",
+        "playerNumber": "Shirtnummer",
+        "playerNumberPlaceholder": "Bijv.: 10",
+        "notesPlaceholder": "Voeg je opmerkingen over dit shirt toe...",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
+        "purchasePricePlaceholder": "Bijv.: 90.50",
+        "toast": {
+          "fileNotImage": "Het bestand moet een afbeelding zijn",
+          "fileTooLarge": "De foto mag niet groter zijn dan 5MB",
+          "sizeConditionRequired": "Maat en staat zijn verplicht",
+          "uploadError": "Fout bij het uploaden van de foto",
+          "updated": "Shirt met succes bijgewerkt",
+          "error": "Er is een fout opgetreden",
+          "connectionError": "Verbindingsfout. Probeer het opnieuw.",
+          "deleted": "Shirt verwijderd uit je collectie"
+        }
+      },
+      "delete": {
+        "title": "Shirt verwijderen?",
+        "description": "Weet je zeker dat je dit shirt uit je collectie wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+        "cancel": "Annuleren",
+        "confirm": "Verwijderen",
+        "deleting": "Verwijderen..."
+      }
+    },
+    "grid": {
+      "title": "Je shirts",
+      "sortBy": "Sorteren op:",
+      "sortOptions": {
+        "dateDesc": "Nieuwste",
+        "dateAsc": "Oudste",
+        "priceDesc": "Prijs aflopend",
+        "priceAsc": "Prijs oplopend",
+        "condition": "Staat",
+        "club": "Club (A-Z)",
+        "season": "Seizoen"
+      },
+      "noJerseys": "Geen shirts in je collectie."
+    },
+    "page": {
+      "title": "Mijn Collectie",
+      "jersey": "shirt",
+      "jerseys": "shirts",
+      "emptyTitle": "Je collectie is leeg",
+      "emptyDescription": "Begin met het opbouwen van je collectie door je eerste shirts toe te voegen!",
+      "errorTitle": "Laadfout",
+      "errorDescription": "Er is een fout opgetreden bij het laden van je collectie. Vernieuw de pagina of probeer het later opnieuw.",
+      "reload": "Pagina opnieuw laden"
+    }
+  },
+  "Onboarding": {
+    "step1Title": "Kies je gebruikersnaam",
+    "step1Subtitle": "Dit is de naam die andere verzamelaars zullen zien",
+    "step2Title": "Je favoriete team",
+    "step2Subtitle": "Het verschijnt op de ranglijst en je profiel",
+    "usernamePlaceholder": "Je gebruikersnaam...",
+    "usernameRules": "5 tot 20 tekens, letters, cijfers, - en _",
+    "usernameAvailable": "Gebruikersnaam beschikbaar",
+    "usernameUnavailable": "Gebruikersnaam al in gebruik",
+    "placeholder": "Zoek een team...",
+    "cta": "Doorgaan",
+    "skip": "Deze stap overslaan",
+    "bannerText": "Kies je favoriete team om te verschijnen in de ranglijst en bij je vrienden",
+    "bannerCta": "Mijn team kiezen"
+  },
+  "CollectionStats": {
+    "title": "Collectiestatistieken",
+    "errorTitle": "Laadfout",
+    "errorDescription": "Statistieken kunnen niet worden geladen. Probeer het opnieuw.",
+    "emptyTitle": "Geen statistieken beschikbaar",
+    "emptyDescription": "Voeg shirts toe aan je collectie om gedetailleerde statistieken te zien.",
+    "tabs": {
+      "overview": "Overzicht",
+      "distribution": "Verdeling",
+      "financial": "Financieel",
+      "records": "Records"
+    },
+    "timeline": {
+      "title": "Evolutie van de collectie",
+      "acquisitions": "Aanschaffingen",
+      "jerseys": "Shirts",
+      "jerseysAdded": "{count, plural, one {# shirt toegevoegd} other {# shirts toegevoegd}}",
+      "totalJerseys": "Totaal aantal shirts"
+    },
+    "brandDistribution": {
+      "title": "Verdeling per merk",
+      "jerseys": "Shirts",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}"
+    },
+    "typeDistribution": {
+      "title": "Verdeling per type",
+      "jerseys": "Shirts",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}"
+    },
+    "leagueDistribution": {
+      "title": "Verdeling per competitie",
+      "jerseys": "Shirts",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}"
+    },
+    "clubDistribution": {
+      "title": "Top 10 clubs",
+      "jerseys": "Shirts",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}"
+    },
+    "sizeDistribution": {
+      "title": "Verdeling per maat",
+      "jerseys": "Shirts",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}"
+    },
+    "conditionDistribution": {
+      "title": "Verdeling per staat",
+      "jerseys": "Shirts",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}"
+    },
+    "sourceDistribution": {
+      "title": "Bronnen van de shirts",
+      "additionalTitle": "Details van de collectie",
+      "jerseys": "Shirts",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}",
+      "purchased": "Gekocht",
+      "gift": "Cadeaus",
+      "mysteryBox": "Mystery Box",
+      "withTags": "Met labels",
+      "withPersonalization": "Gepersonaliseerd",
+      "withCustomPhoto": "Eigen foto"
+    },
+    "spendingTimeline": {
+      "title": "Cumulatieve investering",
+      "spent": "uitgegeven",
+      "monthlySpent": "Deze maand",
+      "totalInvested": "Totaal geïnvesteerd",
+      "noData": "Geen uitgavengegevens beschikbaar"
+    },
+    "activityHeatmap": {
+      "title": "Aankoopactiviteit (laatste 12 maanden)",
+      "noJersey": "Geen shirt die dag",
+      "jerseyCount": "{count, plural, one {# shirt toegevoegd} other {# shirts toegevoegd}}",
+      "less": "Minder",
+      "more": "Meer"
+    },
+    "decadeDistribution": {
+      "title": "Verdeling per decennium",
+      "jerseyCount": "{count, plural, one {# shirt} other {# shirts}}"
+    },
+    "financial": {
+      "totalCollectionValue": "Totale waarde",
+      "totalCollectionValueDescription": "Totale waarde van de collectie",
+      "totalSpent": "Totaal uitgegeven",
+      "totalSpentDescription": "Totaal geïnvesteerd bedrag",
+      "averagePrice": "Gemiddelde prijs",
+      "averagePriceDescription": "Per gekocht shirt",
+      "totalRetailValue": "Totale winkelwaarde",
+      "totalRetailValueDescription": "Cumulatieve adviesprijs",
+      "mostExpensive": "Duurste",
+      "leastExpensive": "Goedkoopste",
+      "marketValue": "Marktwaarde",
+      "marketValueDescription": "Geschat via doorverkoopprijzen",
+      "comingSoon": "Binnenkort",
+      "noData": "Geen gegevens beschikbaar"
+    },
+    "diversity": {
+      "uniqueClubs": "Verschillende clubs",
+      "uniqueClubsDescription": "In je collectie",
+      "uniqueLeagues": "Verschillende competities",
+      "uniqueLeaguesDescription": "Vertegenwoordigd",
+      "uniqueCountries": "Verschillende landen",
+      "uniqueCountriesDescription": "Over de hele wereld"
+    },
+    "versionDistribution": {
+      "title": "Verdeling per versie",
+      "jerseys": "Shirts",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}",
+      "labels": {
+        "REPLICA": "Standaard",
+        "AUTHENTIC": "Authentiek",
+        "STOCK_PRO": "Stock Pro",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      }
+    },
+    "records": {
+      "oldestAcquisition": "Eerste aanschaf",
+      "newestAcquisition": "Laatste aanschaf",
+      "topClub": "Favoriete club",
+      "topLeague": "Favoriete competitie",
+      "topBrand": "Trouw merk",
+      "topSeason": "Topseizoen",
+      "mostActiveMonth": "Actiefste maand",
+      "longestStreak": "Langste reeks",
+      "streakMonths": "{count, plural, one {# opeenvolgende maand} other {# opeenvolgende maanden}}",
+      "mostExpensive": "Duurste shirt",
+      "leastExpensive": "Goedkoopste shirt",
+      "jerseyCount": "{count, plural, one {# shirt} other {# shirts}}",
+      "customizationStats": "Personalisaties",
+      "withTags": "Met labels",
+      "withPersonalization": "Gepersonaliseerd",
+      "withCustomPhoto": "Eigen foto's",
+      "withSigned": "Gesigneerd",
+      "withAuthCertificate": "Met certificaat"
+    },
+    "upgrade": {
+      "distribution": {
+        "title": "PRO verdelingsstatistieken",
+        "description": "Analyseer de verdeling van je collectie tot in detail",
+        "feature1": "Verdeling per competitie en land",
+        "feature2": "Topclubs in je collectie",
+        "feature3": "Verdeling per maat en staat",
+        "feature4": "Analyse van de aanschafbron"
+      },
+      "financial": {
+        "title": "PRO financiële statistieken",
+        "description": "Volg je uitgaven en de waarde van je collectie",
+        "feature1": "Totale en gemiddelde uitgaven",
+        "feature2": "Geschatte waarde van de collectie",
+        "feature3": "Tijdlijn van uitgaven",
+        "feature4": "Duurste en goedkoopste shirts"
+      },
+      "records": {
+        "title": "PRO records en statistieken",
+        "description": "Ontdek de records van je collectie",
+        "feature1": "Oudste/nieuwste aanschaffingen",
+        "feature2": "Personalisatiestatistieken",
+        "feature3": "Percentage shirts met labels",
+        "feature4": "Kwaliteitsmetrieken van de collectie"
+      }
+    }
+  },
+  "Wishlist": {
+    "button": {
+      "loading": "Laden...",
+      "addToWishlist": "Toevoegen aan mijn verlanglijst",
+      "removeFromWishlist": "Verwijderen uit verlanglijst",
+      "toast": {
+        "mustBeConnected": "Je moet ingelogd zijn om toe te voegen aan je verlanglijst",
+        "added": "Shirt toegevoegd aan je verlanglijst",
+        "removed": "Shirt verwijderd uit je verlanglijst",
+        "error": "Er is een fout opgetreden",
+        "connectionError": "Verbindingsfout. Probeer het opnieuw."
+      }
+    },
+    "share": {
+      "button": "Delen",
+      "shareAll": "Mijn volledige verlanglijst",
+      "shareAllCount": "{count, plural, =0 {0 shirts} one {# shirt} other {# shirts}}",
+      "shareSelection": "Een selectie",
+      "shareSelectionDesc": "Kies shirts om te delen"
+    },
+    "selectionModal": {
+      "title": "Mijn verlanglijst delen",
+      "chooseTheme": "Kies een thema",
+      "listTitle": "Titel van de lijst",
+      "listTitlePlaceholder": "Bijv.: Mijn kerstlijst 🎄",
+      "personalMessage": "Persoonlijk bericht",
+      "personalMessagePlaceholder": "Voeg een bericht toe voor je dierbaren...",
+      "charactersCount": "{count}/500 tekens",
+      "selectJerseys": "Selecteer je shirts ({selected}/{total})",
+      "selectAll": "Alles selecteren",
+      "deselectAll": "Alles deselecteren",
+      "cancel": "Annuleren",
+      "share": "Delen ({count, plural, one {# shirt} other {# shirts}})"
+    },
+    "themeModal": {
+      "title": "Mijn verlanglijst aanpassen",
+      "selectedCount": "{count, plural, one {# shirt geselecteerd} other {# shirts geselecteerd}}",
+      "chooseTheme": "Kies een thema",
+      "listTitle": "Titel van de lijst",
+      "listTitlePlaceholder": "Bijv.: Mijn kerstlijst 🎄",
+      "personalMessage": "Persoonlijk bericht",
+      "personalMessagePlaceholder": "Voeg een bericht toe voor je dierbaren...",
+      "charactersCount": "{count}/500 tekens",
+      "cancel": "Annuleren",
+      "continue": "Doorgaan",
+      "themes": {
+        "christmas": {
+          "name": "Kerst",
+          "defaultTitle": "Mijn Kerstlijst 🎄",
+          "defaultMessage": "Hoi! Hier zijn een paar shirt-ideeën die ik graag zou ontvangen 😊"
+        },
+        "birthday": {
+          "name": "Verjaardag",
+          "defaultTitle": "Mijn Verjaardagsverlanglijst 🎂",
+          "defaultMessage": "Mijn verjaardag komt eraan! Hier zijn mijn shirtwensen 🎉"
+        },
+        "valentine": {
+          "name": "Valentijnsdag",
+          "defaultTitle": "Mijn Valentijnslijst 💝",
+          "defaultMessage": "Een paar shirt-ideeën die me erg blij zouden maken ❤️"
+        },
+        "default": {
+          "name": "Klassiek",
+          "defaultTitle": "Mijn Shirtverlanglijst ⚽",
+          "defaultMessage": "Hier zijn een paar shirts die ik graag aan mijn collectie zou toevoegen!"
+        }
+      }
+    },
+    "shareFormatModal": {
+      "title": "Hoe wil je je lijst delen?",
+      "selectedCount": "{count, plural, one {# shirt geselecteerd} other {# shirts geselecteerd}}",
+      "formats": {
+        "link": {
+          "title": "Link om te delen",
+          "description": "Webpagina te bekijken op mobiel en pc"
+        },
+        "image": {
+          "title": "Afbeelding downloaden",
+          "description": "Perfect voor Instagram stories of WhatsApp"
+        },
+        "pdf": {
+          "title": "PDF downloaden",
+          "description": "Net document om te printen of te versturen"
+        }
+      },
+      "generating": "Genereren...",
+      "creatingLink": "Je link wordt aangemaakt",
+      "creatingImage": "Je afbeelding wordt aangemaakt",
+      "creatingPdf": "Je PDF wordt aangemaakt",
+      "ready": "Klaar!",
+      "yourShareLink": "Jouw deellink:",
+      "copyLink": "Link kopiëren",
+      "copied": "Gekopieerd!",
+      "share": "Delen",
+      "close": "Sluiten",
+      "toast": {
+        "linkGenerated": "Link gegenereerd!",
+        "linkError": "Fout bij het genereren van de link",
+        "imageDownloaded": "Afbeelding succesvol gedownload!",
+        "imageError": "Fout bij het genereren van de afbeelding",
+        "pdfDownloaded": "PDF succesvol gedownload!",
+        "pdfError": "Fout bij het genereren van de PDF",
+        "linkCopied": "Link gekopieerd!"
+      }
+    },
+    "landing": {
+      "badge": "Verlanglijst",
+      "hero": {
+        "title": "Maak je verlanglijst van",
+        "titleHighlight": "voetbalshirts",
+        "subtitle": "Maak een lijst van je wensen en deel deze gemakkelijk met je dierbaren, met vloeiende animaties en premium design.",
+        "signIn": "Inloggen",
+        "signUp": "Account aanmaken"
+      },
+      "example": {
+        "badge": "Voorbeeld verlanglijst",
+        "title": "Mijn kerstlijst 🎄",
+        "message": "Een paar shirt-ideeën die me blij zouden maken 😊",
+        "jerseyCount": "{count, plural, one {# shirt} other {# shirts}}",
+        "createdWith": "Gemaakt met Le Vestiaire Foot ⚽",
+        "createButton": "Maak mijn verlanglijst aan"
+      },
+      "shareSection": {
+        "title": "Deel zoals jij wilt",
+        "subtitle": "3 formaten voor al je behoeften"
+      },
+      "featuresSection": {
+        "title": "Alles is inbegrepen",
+        "subtitle": "Functies ontworpen om je leven gemakkelijker te maken",
+        "features": {
+          "create": {
+            "title": "Maak je lijst aan",
+            "description": "Voeg met één klik alle shirts toe waar je van droomt vanuit onze catalogus"
+          },
+          "share": {
+            "title": "Eenvoudig delen",
+            "description": "Genereer een link, afbeelding of PDF om te delen met je dierbaren voor Kerst, verjaardagen..."
+          },
+          "customize": {
+            "title": "Pas het thema aan",
+            "description": "Kies uit verschillende thema's (Kerst, Verjaardag, Standaard) en voeg een persoonlijk bericht toe"
+          },
+          "manage": {
+            "title": "Beheer je gelegenheden",
+            "description": "Maak meerdere verlanglijsten voor verschillende gelegenheden: Kerst, verjaardag, persoonlijke doelen..."
+          },
+          "noDuplicates": {
+            "title": "Voorkom dubbele exemplaren",
+            "description": "Zodra het aan je collectie is toegevoegd, verdwijnt het shirt automatisch uit je verlanglijst"
+          },
+          "free": {
+            "title": "100% gratis",
+            "description": "Maak en deel zoveel verlanglijsten als je wilt zonder kosten"
+          }
+        }
+      },
+      "useCasesSection": {
+        "title": "Voor alle gelegenheden",
+        "subtitle": "Een verlanglijst voor elk belangrijk moment",
+        "useCases": {
+          "christmas": {
+            "title": "Kerst komt eraan",
+            "description": "Maak je kerstlijst aan en deel deze met je familie. Geen ongewenste cadeaus meer!"
+          },
+          "birthday": {
+            "title": "Verjaardag",
+            "description": "Deel je shirtwensen voor je verjaardag. Je vrienden weten wat ze je moeten geven."
+          },
+          "collection": {
+            "title": "Doelen voor je collectie",
+            "description": "Maak een lijst van de shirts die je zoekt om je collectie compleet te maken. Houd je doelen in zicht."
+          },
+          "valentine": {
+            "title": "Valentijnsdag",
+            "description": "Deel je shirtwensen als koppel: clubduo's, speciale edities en cadeau-ideeën om jullie passie samen te vieren."
+          }
+        }
+      },
+      "testimonialsSection": {
+        "title": "Zij deelden hun verlanglijst",
+        "subtitle": "Duizenden tevreden gebruikers",
+        "testimonials": {
+          "lucas": {
+            "name": "Lucas M.",
+            "quote": "Ik heb mijn verlanglijst met Kerst gedeeld en mijn familie vond het geweldig! Geen dubbele cadeaus meer en ik kreeg precies de shirts die ik wilde."
+          },
+          "sarah": {
+            "name": "Sarah D.",
+            "quote": "Super handig om mijn collectie te organiseren. Ik kan mijn wensen met één klik delen en bijhouden wat ik al heb ontvangen."
+          },
+          "tom": {
+            "name": "Tom R.",
+            "quote": "Mijn vrienden hebben mij precies de shirts van mijn verlanglijst gegeven voor mijn verjaardag. Het is geweldig om je passies zo gemakkelijk te kunnen delen!"
+          }
+        }
+      },
+      "ctaSection": {
+        "title": "Klaar om je verlanglijst aan te maken?",
+        "subtitle": "Maak een lijst van je wensen en deel ze in een paar klikken met je dierbaren",
+        "signUpButton": "Maak mijn gratis account aan",
+        "signInButton": "Inloggen",
+        "createAccount": "Maak mijn gratis account aan",
+        "login": "Inloggen",
+        "secure": "100% veilig",
+        "noCommitment": "Geen verplichting"
+      },
+      "faqSection": {
+        "title": "Veelgestelde vragen",
+        "faqs": {
+          "howToCreate": {
+            "question": "Hoe maak ik mijn verlanglijst aan?",
+            "answer": "Het is heel eenvoudig! Blader door onze catalogus, klik op het hartje om een shirt aan je verlanglijst toe te voegen. Klik vervolgens op 'Delen' om je persoonlijke link te genereren."
+          },
+          "multipleWishlists": {
+            "question": "Kan ik meerdere verlanglijsten aanmaken?",
+            "answer": "Voor nu heb je één verlanglijst die je op elk moment kunt aanpassen. Je kunt elke keer kiezen welke shirts je wilt delen."
+          },
+          "howToView": {
+            "question": "Hoe zien mijn dierbaren mijn verlanglijst?",
+            "answer": "Je genereert een unieke link die je via bericht, e-mail of sociale media deelt. Ze kunnen je lijst bekijken op mobiel of pc, zonder een account aan te maken."
+          },
+          "pricing": {
+            "question": "Is de verlanglijst gratis?",
+            "answer": "Ja! Het aanmaken, beheren en delen van je verlanglijst is 100% gratis, zonder limieten."
+          },
+          "received": {
+            "question": "Wat gebeurt er als ik een shirt ontvang?",
+            "answer": "Zodra je het shirt aan je collectie toevoegt, verdwijnt het automatisch uit je verlanglijst. Geen dubbele cadeaus meer!"
+          },
+          "customize": {
+            "question": "Kan ik mijn verlanglijst aanpassen?",
+            "answer": "Ja! Je kunt een thema kiezen (Kerst, Verjaardag...), een titel toevoegen en een persoonlijk bericht voor je dierbaren."
+          }
+        }
+      }
+    },
+    "page": {
+      "title": "Mijn Verlanglijst",
+      "jerseyCount": "{count, plural, one {# shirt} other {# shirts}}",
+      "empty": {
+        "title": "Je hebt nog geen shirts die je leuk vindt",
+        "description": "Blader door onze collectie en voeg je favoriete shirts toe aan je verlanglijst!",
+        "cta": "Verken de catalogus"
+      },
+      "error": {
+        "title": "Fout bij het laden van je verlanglijst",
+        "description": "Er is een fout opgetreden. Probeer het later opnieuw."
+      },
+      "stats": {
+        "wanted": "Gewenste shirts",
+        "wantedSingular": "Shirt op je verlanglijst",
+        "wantedPlural": "Shirts op je verlanglijst",
+        "favoriteLeagues": "Favoriete competities",
+        "preferredTypes": "Voorkeurstypes"
+      },
+      "jerseys": "Je shirts"
+    },
+    "sharedClient": {
+      "wishlist": "Verlanglijst",
+      "jerseyCount": "{count, plural, one {# shirt} other {# shirts}}",
+      "createdWith": "Deze lijst is gemaakt met",
+      "brandName": "Le Vestiaire Foot",
+      "createOwn": "Maak je eigen shirtcollectie aan",
+      "shareWithLovedOnes": "en deel je wensen met je dierbaren ⚽"
+    },
+    "wishlist": "Verlanglijst",
+    "sortBy": "Sorteren op",
+    "recentlyAdded": "Recent toegevoegd",
+    "oldestAdded": "Oudste",
+    "priceDescending": "Prijs (hoog naar laag)",
+    "priceAscending": "Prijs (laag naar hoog)",
+    "clubAZ": "Club (A-Z)",
+    "emptyWishlist": "Lege verlanglijst",
+    "jerseysWanted": "Gewenste shirts",
+    "jersey": "shirt",
+    "jerseys": "shirts",
+    "inWishlist": "op verlanglijst",
+    "estimatedValue": "Geschatte waarde",
+    "wantedLeagues": "Gewenste competities",
+    "wantedTypes": "Gewenste types",
+    "noData": "Geen gegevens",
+    "wishlistNotFound": "Verlanglijst niet gevonden",
+    "wishlistOf": "Verlanglijst van {name}",
+    "discoverWishlist": "Ontdek de verlanglijst van",
+    "user": "Gebruiker",
+    "noJerseysInWishlistYet": "{name} heeft nog geen shirts aan zijn/haar verlanglijst toegevoegd.",
+    "highestPriority": "Hoogste prioriteit",
+    "lowestPriority": "Laagste prioriteit",
+    "priorities": "Prioriteiten",
+    "priorityHigh": "Hoog",
+    "priorityMedium": "Gemiddeld",
+    "priorityLow": "Laag"
+  },
+  "Login": {
+    "title": "Welkom terug",
+    "subtitle": "Log in met je Google-account",
+    "signInWithGoogle": "Inloggen met Google",
+    "orContinueWith": "Of ga verder met",
+    "lastUsed": "Laatst gebruikt",
+    "form": {
+      "email": "E-mail",
+      "emailPlaceholder": "m@example.com",
+      "password": "Wachtwoord",
+      "forgotPassword": "Wachtwoord vergeten?"
+    },
+    "button": {
+      "loading": "Laden…",
+      "signIn": "Inloggen"
+    },
+    "noAccount": "Heb je nog geen account?",
+    "createAccount": "Maak een account aan",
+    "terms": {
+      "text": "Door op Inloggen te klikken, ga je akkoord met onze",
+      "termsOfService": "Algemene Voorwaarden",
+      "and": "en",
+      "privacyPolicy": "Privacybeleid"
+    },
+    "errors": {
+      "signInError": "Inlogfout",
+      "googleSignInError": "Fout bij inloggen met Google"
+    }
+  },
+  "Errors": {
+    "required": "Dit veld is verplicht",
+    "invalidEmail": "Ongeldig e-mailadres",
+    "passwordTooShort": "Wachtwoord moet minstens 8 tekens bevatten",
+    "generic": "Er is een fout opgetreden",
+    "unauthorized": "Niet geautoriseerd",
+    "notFound": "Niet gevonden",
+    "rateLimited": "Te veel verzoeken, probeer het later opnieuw"
+  },
+  "Profile": {
+    "editButton": "Bewerk je profiel",
+    "title": "Mijn profiel",
+    "description": "Bewerk hier je profiel. Klik op Opslaan wanneer je klaar bent.",
+    "friends": "{count} vriend",
+    "friends_other": "{count} vrienden",
+    "favoriteTeam": "Favoriete team",
+    "choosePlaceholder": "Kies een team",
+    "saveChanges": "Wijzigingen opslaan",
+    "saving": "Opslaan…",
+    "close": "Sluiten",
+    "updateSuccess": "Profiel bijgewerkt!",
+    "avatarUpdateSuccess": "Avatar bijgewerkt!",
+    "avatarUploadError": "Fout bij het uploaden van avatar",
+    "userNotAuthenticated": "Gebruiker niet geauthenticeerd",
+    "serverUploadError": "Server uploadfout",
+    "saveError": "Fout bij opslaan.",
+    "bio": {
+      "label": "Bio",
+      "placeholder": "Schrijf een paar woorden over jezelf…",
+      "charactersCount": "{current}/{max} tekens"
+    },
+    "themeColor": {
+      "label": "Themakleur",
+      "placeholder": "Kies een kleur",
+      "colors": {
+        "bleu": "Blauw",
+        "bleu-nuit": "Nachtblauw",
+        "rouge": "Rood",
+        "violet": "Paars",
+        "vert": "Groen",
+        "orange": "Oranje",
+        "jaune": "Geel",
+        "rose": "Roze",
+        "violet-leger": "Lichtpaars",
+        "marine": "Marineblauw",
+        "gold": "Goud"
+      }
+    },
+    "username": {
+      "label": "Gebruikersnaam",
+      "placeholder": "mijn_gebruikersnaam",
+      "rules": "5-20 tekens • Alleen letters, cijfers, koppeltekens en underscores",
+      "notAvailable": "Deze gebruikersnaam is niet beschikbaar",
+      "available": "✓ Deze gebruikersnaam is beschikbaar"
+    }
+  },
+  "HomePage": {
+    "hero": {
+      "title": "Welkom bij",
+      "appName": "The Locker Room",
+      "subtitle": "Beheer je voetbalshirtcollectie, maak je verlanglijst en word lid van een community van enthousiaste fans.",
+      "myCollection": "Mijn Collectie",
+      "myWishlist": "Mijn Verlanglijst",
+      "login": "Inloggen",
+      "signup": "Account aanmaken",
+      "discoverJerseys": "Ontdek shirts",
+      "ariaLabelBanner": "Home sectie - Voetbalshirtcollectie",
+      "ariaLabelStats": "Statistieken van je shirtcollectie",
+      "ariaLabelAuth": "Authenticatieacties",
+      "ariaLabelCollectionCount": "{count} shirts in je collectie",
+      "ariaLabelWishlistCount": "{count} shirts op je verlanglijst"
+    },
+    "topRated": {
+      "title": "Best beoordeelde shirts",
+      "subtitle": "Ontdek de favoriete shirts van de community",
+      "viewAll": "Alle shirts bekijken"
+    },
+    "recent": {
+      "title": "Recent toegevoegde shirts",
+      "subtitle": "Nieuwe toevoegingen aan de catalogus",
+      "viewAll": "Alle shirts bekijken",
+      "new": "Nieuw",
+      "recently": "Recent"
+    },
+    "cfsPromos": {
+      "title": "Vervolledig je collectie voor een goede prijs",
+      "subtitle": "Selectie van afgeprijsde shirts van onze partner Classic Football Shirts",
+      "cta": "Alle aanbiedingen bekijken",
+      "partnerNotice": "Affiliate link - we ontvangen een commissie bij aankopen via deze links.",
+      "showMore": "Bekijk nog {count} aanbiedingen",
+      "showLess": "Minder tonen",
+      "terms": {
+        "Authentic Home Shirt": "Authentiek Thuisshirt",
+        "Authentic Away Shirt": "Authentiek Uitshirt",
+        "Authentic Third Shirt": "Authentiek Derde Shirt",
+        "Authentic Fourth Shirt": "Authentiek Vierde Shirt",
+        "Player Issue Home Shirt": "Player Issue Thuisshirt",
+        "Player Issue Away Shirt": "Player Issue Uitshirt",
+        "Player Issue Third Shirt": "Player Issue Derde Shirt",
+        "Home Shirt": "Thuisshirt",
+        "Away Shirt": "Uitshirt",
+        "Third Shirt": "Derde Shirt",
+        "Fourth Shirt": "Vierde Shirt",
+        "Anniversary Shirt": "Jubileumshirt",
+        "Player Issue": "Player Issue",
+        "In Box": "In doos",
+        "L/S": "L/M",
+        "Authentic": "Authentiek",
+        "Anniversary": "Jubileum",
+        "Fourth": "Vierde",
+        "Third": "Derde",
+        "Away": "Uit",
+        "Home": "Thuis",
+        "Shirt": "Shirt"
+      }
+    },
+    "userStats": {
+      "title": "Jouw Collectie",
+      "subtitle": "Een overzicht van je passie voor voetbalshirts",
+      "myCollection": "Mijn Collectie",
+      "jerseyCollected": "Shirt verzameld",
+      "jerseysCollected": "Shirts verzameld",
+      "invested": "geïnvesteerd",
+      "viewMyCollection": "Mijn collectie bekijken",
+      "myWishlist": "Mijn Verlanglijst",
+      "jerseyDesired": "Gewenst shirt",
+      "jerseysDesired": "Gewenste shirts",
+      "viewMyWishlist": "Mijn verlanglijst bekijken",
+      "favoriteLeague": "Favoriete competitie",
+      "jerseysFrom": "Shirts uit",
+      "startCollection": "Begin je collectie om je statistieken te zien!",
+      "recentAdditionsCollection": "Recente toevoegingen aan je collectie",
+      "recentAdditionsWishlist": "Recente toevoegingen aan je verlanglijst",
+      "statsTeaser": {
+        "title": "Je statistieken in detail",
+        "subtitle": "Analyseer je collectie vanuit elke invalshoek",
+        "cta": "Statistieken bekijken",
+        "uniqueClubs": "Unieke clubs",
+        "uniqueCountries": "Vertegenwoordigde landen",
+        "uniqueLeagues": "Verschillende competities"
+      }
+    },
+    "features": {
+      "title": "Waarom kiezen voor Le Vestiaire Foot?",
+      "subtitle": "Le Vestiaire Foot is een gratis web-app ontworpen door verzamelaars, voor verzamelaars.",
+      "catalogCollection": {
+        "title": "Catalogiseer je shirtcollectie",
+        "description": "Noteer de maat, staat en aankoopprijs van elk shirt. Le Vestiaire Foot houdt automatisch de totale waarde van je collectie bij."
+      },
+      "shareableWishlist": {
+        "title": "Deelbare shirtverlanglijst",
+        "description": "Maak je verlanglijst aan en deel deze met vrienden en familie via een directe link. Perfect voor Kerst, verjaardagen of elke andere speciale gelegenheid."
+      },
+      "authentication": {
+        "title": "Authenticatie van voetbalshirts",
+        "description": "Leer authentieke shirts onderscheiden van vervalsingen.<br></br>Le Vestiaire Foot biedt <link>gedetailleerde authenticatiegidsen</link> voor Nike, Adidas, Puma en meer."
+      },
+      "community": {
+        "title": "Community van voetbalshirtverzamelaars",
+        "description": "Le Vestiaire Foot brengt verzamelaars samen. Voeg vrienden toe, verken hun collecties en ontdek de best beoordeelde shirts."
+      }
+    },
+    "stats": {
+      "collectors": "Verzamelaars",
+      "jerseys": "Geregistreerde shirts",
+      "clubs": "Clubs"
+    },
+    "faq": {
+      "title": "Veelgestelde vragen",
+      "subtitle": "Alles wat je moet weten over The Locker Room",
+      "questions": {
+        "addToCollection": {
+          "question": "Hoe voeg ik een shirt toe aan mijn collectie?",
+          "answer": "Heel eenvoudig! Zoek het shirt dat je bezit in onze database, klik vervolgens op 'Toevoegen aan mijn collectie'. Je kunt dan alle details invullen: maat, staat, aankoopprijs, enz."
+        },
+        "shareWishlist": {
+          "question": "Kan ik mijn verlanglijst delen voor Kerst of mijn verjaardag?",
+          "answer": "Absoluut! Maak je verlanglijst aan, personaliseer deze met een bericht en genereer een unieke link om te delen met je dierbaren. Ze kunnen je wensen zien zonder een account aan te maken."
+        },
+        "authenticateJersey": {
+          "question": "Hoe herken ik een nep shirt?",
+          "answer": "Bekijk onze 'Authenticatie' sectie waar je gedetailleerde gidsen voor elk merk vindt. We leggen uit hoe je labels, stiksels, logo's en andere details kunt controleren die een authentiek shirt onderscheiden van een vervalsing."
+        },
+        "availableClubs": {
+          "question": "Welke clubs en competities zijn beschikbaar?",
+          "answer": "Onze database bevat shirts van alle grote Europese competities (Ligue 1, Premier League, La Liga, Serie A, Bundesliga) evenals veel internationale clubs en kleinere competities. We voegen regelmatig nieuwe shirts toe!"
+        },
+        "dataSecurity": {
+          "question": "Zijn mijn gegevens veilig?",
+          "answer": "Ja, we nemen beveiliging zeer serieus. Je gegevens worden gehost in Europa (Frankrijk) en beschermd volgens de AVG-normen. Jij blijft eigenaar van je collectie en kunt deze op elk moment exporteren."
+        }
+      }
+    },
+    "support": {
+      "title": "Steun het project",
+      "subtitle": "Steun de ontwikkeling van de app, de komende verbeteringen en de voortgang van de mobiele app.",
+      "bmac": "Buy Me a Coffee",
+      "tipeee": "Tipeee",
+      "thanks": "Dank aan iedereen die het project steunt, elke bijdrage telt echt."
+    }
+  },
+  "Authentication": {
+    "title": "Shirt Authenticatie",
+    "subtitle": "Leer authentieke voetbalshirts van vervalsingen te onderscheiden",
+    "page": {
+      "protectInvestment": {
+        "title": "Bescherm je investering",
+        "description": "De markt voor voetbalshirts wordt helaas overspoeld met vervalsingen. Onze gidsen helpen je authentieke shirts te herkennen en oplichting te vermijden."
+      },
+      "whyImportant": {
+        "title": "Waarom is authenticatie belangrijk?",
+        "reason1": "Vervalsingen vertegenwoordigen tot 30% van de online shirtmarkt",
+        "reason2": "Een nep shirt slijt snel en heeft geen doorverkoopwaarde",
+        "reason3": "Het kopen van een vervalsing financiert smokkelnetwerken",
+        "reason4": "Authentieke shirts garanderen kwaliteit, comfort en duurzaamheid"
+      }
+    },
+    "brands": {
+      "adidas": {
+        "name": "Adidas",
+        "description": "Verifieer de authenticiteit van je Adidas shirts"
+      },
+      "nike": {
+        "name": "Nike",
+        "description": "Verifieer de authenticiteit van je Nike shirts"
+      },
+      "puma": {
+        "name": "Puma",
+        "description": "Verifieer de authenticiteit van je Puma shirts"
+      },
+      "hummel": {
+        "name": "Hummel",
+        "description": "Verifieer de authenticiteit van je Hummel shirts"
+      }
+    },
+    "common": {
+      "authenticationSteps": "Authenticatiestappen",
+      "commonFakes": "Veelvoorkomende kenmerken van vervalsingen",
+      "commonFakesDescription": "Let op deze elementen die wijzen op een nep shirt",
+      "buyingTips": "Aankooptips",
+      "buyingTipsDescription": "Aanbevelingen voor veilig aankopen",
+      "authentic": "AUTHENTIEK",
+      "counterfeit": "VERVALSING",
+      "scanFeature": {
+        "title": "Binnenkort: Automatische scanner",
+        "description": "We werken aan een scanfunctie om je {brand} shirts direct te authenticeren.",
+        "howItWorks": "Hoe het zal werken:",
+        "step1": "Maak een foto van de labels",
+        "step2": "Onze AI analyseert codes en details",
+        "step3": "Ontvang een authenticatieresultaat",
+        "notify": "Stel mij op de hoogte bij de lancering"
+      },
+      "scanPlaceholder": {
+        "title": "Scan het label",
+        "description": "Automatische verificatie met behulp van kunstmatige intelligentie",
+        "comingSoon": "Functie binnenkort beschikbaar!",
+        "kitlegitInfo": "We werken aan de integratie van {kitlegit}, een AI-authenticatieoplossing gespecialiseerd in voetbalshirts.",
+        "kitlegit": "KitLegit",
+        "manualGuide": "Gebruik in de tussentijd de gids hierboven om de authenticiteit van je {brand} shirt handmatig te verifiëren.",
+        "scanButton": "Scan mijn label (Binnenkort)",
+        "photosRequired": "Automatisch scannen vereist 3 tot 8 foto's van je shirt voor een volledige analyse."
+      }
+    },
+    "metadata": {
+      "notFound": "Merk niet gevonden - The Locker Room",
+      "titleTemplate": "Een {brand} shirt authenticeren - Volledige gids",
+      "ogTitleTemplate": "{brand} shirt authenticatiegids",
+      "twitterTitleTemplate": "Hoe een {brand} shirt te authenticeren",
+      "adidas": {
+        "description": "Volledige gids om een Adidas shirt te authenticeren. Verifieer productcode, swing tag, barcode en herken kenmerken van vervalsingen. Gedetailleerde methode met visuele voorbeelden.",
+        "ogDescription": "Leer een authentiek Adidas shirt te herkennen van een vervalsing"
+      },
+      "nike": {
+        "description": "Leer een authentiek Nike shirt te herkennen: productcode, productiecode, swing tag en security tag. Volledige anti-vervalsing gids met vergelijkende foto's.",
+        "ogDescription": "Leer een authentiek Nike shirt te herkennen van een vervalsing"
+      },
+      "puma": {
+        "description": "Puma shirt authenticatie: productcode, productiedatum, QR-code, security tag. Herken de 'Fat Cat' en andere kenmerken van een nep Puma shirt.",
+        "ogDescription": "Leer een authentiek Puma shirt te herkennen van een vervalsing"
+      },
+      "hummel": {
+        "description": "Authenticatiegids voor Hummel shirts: karakteristieke chevrons, labels, textielkwaliteit en afwerking. Vermijd vervalsingen.",
+        "ogDescription": "Leer een authentiek Hummel shirt te herkennen van een vervalsing"
+      }
+    },
+    "adidas": {
+      "title": "Adidas Authenticatiegids",
+      "description": "Volledige methode om de authenticiteit van een Adidas shirt te verifiëren met behulp van productcodes en labels",
+      "criteria": {
+        "step1": {
+          "title": "Stap 1: Lokaliseer het label met de productcode",
+          "description": "Het label bevindt zich meestal in de kraag rechts, of soms onderaan het shirt met wasinstructies",
+          "points": {
+            "point1": "Zoek het label genaaid in de kraag (rechterkant)",
+            "point2": "Indien niet in de kraag, controleer onderaan het shirt nabij de wasinstructies",
+            "point3": "Dit label bevat 3 essentiële codes: maat, productcode (midden) en productiecode",
+            "point4": "Als het label door de verkoper is afgesneden, is het onmogelijk om de authenticiteit te verifiëren"
+          }
+        },
+        "step2": {
+          "title": "Stap 2: De productcode (BELANGRIJKSTE CODE)",
+          "description": "De middelste productcode is de sleutel om authenticiteit te verifiëren. Voorbeeld: IB0907",
+          "points": {
+            "point1": "Identificeer de code in het MIDDEN van het label (bijv. IB0907, HS5184, P95985)",
+            "point2": "Deze code is uniek per shirtmodel (thuis, uit, derde)",
+            "point3": "Typ deze code in Google Afbeeldingen: de resultaten moeten PRECIES overeenkomen met je shirt",
+            "point4": "Voorbeeld: 'IB0907' = Lyon Uitshirt 2023/2024 alleen",
+            "point5": "Als de code overeenkomt met een andere club/seizoen = HET IS NEP",
+            "point6": "Uitzondering: Sommige kleine clubs delen dezelfde code (gemeenschappelijke templates), maar dit is zeldzaam"
+          }
+        },
+        "step3": {
+          "title": "Stap 3: De swing tag (indien aanwezig)",
+          "description": "Het kartonnen label bevestigd aan het nieuwe shirt bevat waardevolle informatie",
+          "points": {
+            "point1": "Op een ECHT shirt: De clubnaam is duidelijk aangegeven (bijv. 'OL', 'Manchester United')",
+            "point2": "De type-vermelding is aanwezig: 'H' (Home), 'A' (Away), 'T' (Third)",
+            "point3": "De productcode staat boven de modelnaam geschreven",
+            "point4": "NEP indien alleen gemarkeerd met 'adidas JSY' zonder clubnaam = VERVALSING",
+            "point5": "Let op: Deze labels kunnen worden verwijderd en opnieuw aan een nep shirt bevestigd!"
+          }
+        },
+        "step4": {
+          "title": "Stap 4: Het barcodenummer (aanvullende verificatie)",
+          "description": "De barcode op de swing tag maakt nauwkeurige verificatie mogelijk",
+          "points": {
+            "point1": "Vind de numerieke code onder de barcode (bijv. 4066761557500)",
+            "point2": "Ga naar ean-search.org en voer deze code in",
+            "point3": "Het resultaat moet PRECIES overeenkomen met je shirt",
+            "point4": "Voorbeeld: 4066761557500 = 'adidas Lyon Away Shirt 2023/24'",
+            "point5": "Als de code overeenkomt met een ander shirt = NEP",
+            "point6": "Opmerking: Adidas drukt deze code NIET op het genaaide label, alleen op de swing tag"
+          }
+        },
+        "step5": {
+          "title": "Stap 5: Aanvullende visuele controles",
+          "description": "Onderzoek na het verifiëren van codes de algehele kwaliteit",
+          "points": {
+            "point1": "Adidas-logo: De 3 strepen moeten perfect uitgelijnd zijn en netjes geborduurd",
+            "point2": "Stiksels: Recht, regelmatig, geen losse draden",
+            "point3": "Stof: Technisch materiaal (Climalite, Climacool, Aeroready) vermeld op het label",
+            "point4": "Geen sterke chemische geur of zichtbare lijm"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Swing tag gemarkeerd met 'adidas JSY' zonder clubnaam",
+        "fake2": "Productcode die overeenkomt met een ander shirt (bijv. HS5184 voor Man Utd = Flamengo shirt)",
+        "fake3": "Onjuist barcodenummer (bijv. komt overeen met Duitsland 2017 in plaats van Man Utd 2024)",
+        "fake4": "Kraaglabel afgesneden of afwezig (verdachte verkoper)",
+        "fake5": "Geen resultaten op Google Afbeeldingen voor de productcode",
+        "fake6": "Vervormd Adidas-logo, slecht geborduurd of geprint (in plaats van geborduurd)",
+        "fake7": "Abnormaal lage prijs (50-70% goedkoper dan officiële prijs)",
+        "fake8": "Verkoper die weigert het kraaglabel op foto's te tonen"
+      },
+      "tips": {
+        "tip1": "Vraag ALTIJD om een foto van het kraaglabel voor aankoop",
+        "tip2": "Verifieer de productcode op Google Afbeeldingen (meest betrouwbare methode)",
+        "tip3": "Geef de voorkeur aan verkopers met een gevestigde reputatie en positieve recensies",
+        "tip4": "Vergelijk met officiële foto's van Adidas-website of club",
+        "tip5": "Pas op voor te aantrekkelijke prijzen (korting > 50% = verdacht)",
+        "tip6": "Deze methode werkt ook voor oude shirts (2000+)",
+        "tip7": "Gebruik ean-search.org voor de barcode indien de swing tag aanwezig is",
+        "tip8": "Bij twijfel: Niet kopen. Een echt shirt behoudt zijn waarde, een nep niet"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Voorbeeld 1: Label met productcode",
+          "description": "Zo identificeer je de productcode op het kraaglabel",
+          "authentic": {
+            "points": {
+              "point1": "Zichtbare productcode: JL9623",
+              "point2": "Drukdatum gekoppeld aan het shirtjaar",
+              "point3": "3 codes correct uitgelijnd",
+              "point4": "Goed gedefinieerd Adidas-logo"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Code H13881 komt overeen met Man United in plaats van Mexico in ons voorbeeld",
+              "point2": "Wazige of slecht uitgelijnde druk",
+              "point3": "Onregelmatige tekens"
+            }
+          }
+        },
+        "example2": {
+          "title": "Voorbeeld 2: Swing tag",
+          "description": "Het kartonnen label bevestigd aan nieuwe shirts",
+          "authentic": {
+            "points": {
+              "point1": "Clubnaam aangegeven: 'OL'",
+              "point2": "Type-vermelding: '75' (OL 75-jarig jubileumshirt)",
+              "point3": "Zichtbare productcode",
+              "point4": "QR-code naar het juiste shirt"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Alleen gemarkeerd met 'adidas JSY'",
+              "point2": "Geen clubnaam",
+              "point3": "Onjuiste barcode"
+            }
+          }
+        }
+      }
+    },
+    "nike": {
+      "title": "Nike Authenticatiegids",
+      "description": "Volledige methode om de authenticiteit van een Nike shirt te verifiëren met behulp van productcodes, labels en productiedetails",
+      "criteria": {
+        "step1": {
+          "title": "Stap 1: De productcode",
+          "description": "Bevindt zich op het kleine label onder het waslabel, de productcode is je eerste indicator",
+          "points": {
+            "point1": "Formaat: 6 cijfers voor stijl + 3 cijfers voor kleur (bijv. 894430-010)",
+            "point2": "De stijlcode identificeert het ontwerp/template van het shirt",
+            "point3": "De kleurcode (na de streepje) identificeert de specifieke kleurvariant",
+            "point4": "Typ de volledige code in Google Afbeeldingen om te verifiëren dat deze PRECIES overeenkomt met je shirt",
+            "point5": "WAARSCHUWING: Vervalsingen hergebruiken vaak echte codes! Als de code voor Frankrijk 2020 Uit (CD0069-100) is maar op een shirt van een ander team staat = NEP",
+            "point6": "Oude shirts (voor 2010) hebben mogelijk geen kleurcode, dit is normaal"
+          }
+        },
+        "step2": {
+          "title": "Stap 2: De productiecode",
+          "description": "Op hetzelfde kleine label onthult deze code wanneer het shirt is geproduceerd",
+          "points": {
+            "point1": "Formaat: HO150407SYG (voorbeeld = Holiday 2015, geproduceerd van april tot juli)",
+            "point2": "Eerste 2-3 tekens = seizoen: SP (Spring), SU (Summer), FA (Fall), HO (Holiday/Winter)",
+            "point3": "Volgende 2 cijfers = jaar (15 = 2015, 23 = 2023)",
+            "point4": "Volgende 4 cijfers = begin- en eindproductiemaanden (0407 = april tot juli)",
+            "point5": "Deze code moet consistent zijn met het seizoen van het shirt! Een 2023/24 shirt kan geen HO15-code hebben",
+            "point6": "Vervalsingen hergebruiken vaak labels op verschillende shirts, wat tot inconsistenties leidt"
+          }
+        },
+        "step3": {
+          "title": "Stap 3: De swing tag",
+          "description": "Het kartonnen label bevestigd aan nieuwe shirts bevat cruciale informatie",
+          "points": {
+            "point1": "Moderne plaatsing (sinds 2021/22): enkel label op de LINKERMOUW",
+            "point2": "2016-2020: twee labels, één onder elke mouw (oksels)",
+            "point3": "Voor 2016: label bevestigd aan de kraag",
+            "point4": "De sticker moet een ECHTE fysieke sticker zijn, nooit direct gedrukt",
+            "point5": "De barb (plastic bevestiging) is bij echte Nike ALTIJD zwart",
+            "point6": "De productcode op de swing tag MOET overeenkomen met het interne label",
+            "point7": "Kleurbalk maat: Grijs=XS, Geel=S, Blauw=M, Rood=L, Groen=XL, Wit=XXL+"
+          }
+        },
+        "step4": {
+          "title": "Stap 4: Het kraagmaatlabel",
+          "description": "Het kraaglabel bevat belangrijke regionale informatie",
+          "points": {
+            "point1": "Het land van productie ('Made in...') MOET overeenkomen tussen kraaglabel en waslabel",
+            "point2": "Voorbeeld: als de kraag 'Made in Indonesia' zegt, moet het binnenlabel hetzelfde zeggen",
+            "point3": "Controleer regionale maatcorrespondenties, vooral de Japanse maat (J)",
+            "point4": "Veelvoorkomende fout bij vervalsingen: onjuiste Japanse maat (bijv. 'J: S' voor US L in plaats van 'J: 2XO')",
+            "point5": "Correcte tabel: US S=J M, US M=J L, US L=J 2XO, US XL=J 3XO, US XXL=J 4XO"
+          }
+        },
+        "step5": {
+          "title": "Stap 5: De security tag",
+          "description": "Bevindt zich rechtsonder op het shirt, de security tag bevat een unieke code",
+          "points": {
+            "point1": "De alfanumerieke code MOET uniek zijn voor je shirt",
+            "point2": "Als je dezelfde code op meerdere online advertenties vindt = NEP",
+            "point3": "Op recente shirts: kwaliteitsvolle metallic/holografische strip die verandert onder licht",
+            "point4": "Vervalsingen gebruiken vaak eenvoudige platte druk in plaats van een metallic strip",
+            "point5": "Spelersversie: gouden/metallic accenten | Fanversie: zilveren accenten",
+            "point6": "Sommige verborgen details: mini Nike-logo's of fragmenten van het woord 'SECURITY' in de strip",
+            "point7": "Sommige oudere versies: letters 'HEN' of beide 'T's van 'AUTHENTIC' in glanzend materiaal"
+          }
+        },
+        "step6": {
+          "title": "Stap 6: De Swoosh en badges",
+          "description": "De kwaliteit van de toepassing van het Nike-logo en clubbadge is onthullend",
+          "points": {
+            "point1": "De Swoosh moet PERFECT zijn: precieze vorm, schone randen, geen zichtbare draden",
+            "point2": "Op een NIEUW shirt moet de stof rond de Swoosh PLAT zijn (geen kreukels)",
+            "point3": "Draai het shirt om: de binnenkant achter de Swoosh/badge moet schoon zijn, zonder overtollige stof",
+            "point4": "Geborduurde badge = fanversie | Hittegeperste/siliconen badge = spelersversie",
+            "point5": "Verifieer dat het type badge overeenkomt met de versie (fan of speler)",
+            "point6": "Let op verkeerd geplaatste badges, te groot/klein of met grove stiksels"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Correcte productcode maar voor een ander shirt/team (bijv. Frankrijk 2020 code op Duitsland shirt)",
+        "fake2": "Productiecode inconsistent met seizoen (2024 shirt met HO15 code)",
+        "fake3": "Swing tag met gedrukte sticker in plaats van echte fysieke sticker",
+        "fake4": "Label barb-bevestiging die niet zwart is",
+        "fake5": "'Made in...' verschillend tussen kraaglabel en waslabel",
+        "fake6": "Onjuiste Japanse maat op kraaglabel",
+        "fake7": "Identieke security code gevonden op meerdere online advertenties",
+        "fake8": "Security strip zonder holografisch/metallic effect (platte druk)",
+        "fake9": "Swoosh met gekreukte stof eromheen op nieuw shirt",
+        "fake10": "Vuile binnenkant achter Swoosh/badge (overtollige stof, grove stiksels)",
+        "fake11": "Inconsistente kleurcode (bijv. rood shirt met 100-199 code)",
+        "fake12": "Verkeerd geplaatste swing tag (bijv. op kraag voor post-2021 shirt)",
+        "fake13": "Onjuiste of afwezige kleurbalk maat op swing tag"
+      },
+      "tips": {
+        "tip1": "Verifieer ALTIJD de volledige productcode (stijl + kleur) op Google Afbeeldingen",
+        "tip2": "Vergelijk productiecode met seizoen van het shirt om inconsistenties op te sporen",
+        "tip3": "Vraag foto's van ALLE labels: kraag, was, klein productlabel, swing tag",
+        "tip4": "Verifieer 'Made in...' consistentie over alle labels",
+        "tip5": "Voor nieuwe shirts: vereis foto van swing tag met zwarte bevestiging",
+        "tip6": "Zoek de security code online om de uniciteit te verifiëren",
+        "tip7": "Onderzoek de kwaliteit van de Swoosh en badge (draai het shirt om indien mogelijk)",
+        "tip8": "Gebruik de regionale maattabel om de consistentie van het kraaglabel te verifiëren",
+        "tip9": "Spelersversie shirts zonder swing tag zijn normaal (directe teamdistributie)",
+        "tip10": "Pas op voor te lage prijzen: echte Nike shirts behouden hun waarde",
+        "tip11": "Bij twijfel over een label of code: niet kopen"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Voorbeeld 1: Productcode en productiecode",
+          "description": "Het kleine label onder het waslabel bevat essentiële codes",
+          "authentic": {
+            "points": {
+              "point1": "Zichtbare productcode: 658789-426 (stijl + kleur)",
+              "point2": "Consistente productiecode: HO150710 (Holiday 2015, juli-oktober)",
+              "point3": "Heldere en leesbare druk",
+              "point4": "Correct formaat en perfecte uitlijning"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Productcode voor een ander shirt (Hier PSG-shirt met FN8721-456 = Barcelona Thuis 24/25)",
+              "point2": "Productiecode inconsistent met seizoen",
+              "point3": "Wazige druk of onregelmatige tekens",
+              "point4": "Slechte uitlijning of onjuist formaat"
+            }
+          }
+        },
+        "example2": {
+          "title": "Voorbeeld 2: Swing tag",
+          "description": "Het kartonnen label bevestigd aan nieuwe shirts",
+          "authentic": {
+            "points": {
+              "point1": "Fysieke sticker (niet gedrukt)",
+              "point2": "Zwarte barb-bevestiging",
+              "point3": "Correcte kleurbalk maat",
+              "point4": "Productcode komt overeen met intern label",
+              "point5": "Correcte plaatsing voor het jaar (linkermouw post-2021)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Gedrukte sticker (niet een echte sticker)",
+              "point2": "Witte barb-bevestiging of onjuiste kleur",
+              "point3": "Afwezige of onjuiste kleurbalk",
+              "point4": "Productcode komt niet overeen (CD0699-100 = Frankrijk 2020/22)"
+            }
+          }
+        },
+        "example3": {
+          "title": "Voorbeeld 3: Security tag",
+          "description": "Het label rechtsonder op het shirt met unieke code en metallic strip",
+          "authentic": {
+            "points": {
+              "point1": "Kwaliteitsvolle metallic/holografische strip",
+              "point2": "Kleurveranderend effect onder licht",
+              "point3": "Unieke alfanumerieke code",
+              "point4": "Schone en regelmatige stiksels",
+              "point5": "Gouden accenten (spelersversie) of zilver (fanversie)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Platte gedrukte strip (geen holografisch effect)",
+              "point2": "Code herhaald op meerdere shirts",
+              "point3": "Grove stiksels",
+              "point4": "Geen metallic effect"
+            }
+          }
+        }
+      }
+    },
+    "puma": {
+      "title": "Puma Authenticatiegids",
+      "description": "Volledige methode om de authenticiteit van een Puma shirt te verifiëren met behulp van productcodes, labels en productiedetails",
+      "criteria": {
+        "step1": {
+          "title": "Stap 1: De productcode (Style No / Article No)",
+          "description": "Te vinden op een groot label genaaid aan de linkerkant van het shirt",
+          "points": {
+            "point1": "Formaat: 6 cijfers + 2 variatiecijfers (bijv. 736251-01)",
+            "point2": "Eerste 6 cijfers = basis shirtmodel",
+            "point3": "Laatste 2 cijfers = kleurvariatie (recenter, afwezig op oude shirts)",
+            "point4": "Typ de code op kitcod.es of Google Afbeeldingen om te verifiëren dat deze PRECIES overeenkomt met je shirt",
+            "point5": "WAARSCHUWING: Vervalsingen hergebruiken vaak echte codes! Als de code voor Marseille is maar op een Milan shirt staat = NEP",
+            "point6": "Shirts van voor 2000 hebben mogelijk geen label met productcode, dit is normaal"
+          }
+        },
+        "step2": {
+          "title": "Stap 2: De productiedatum",
+          "description": "Op recente labelversies geeft Puma de exacte productiedatum aan",
+          "points": {
+            "point1": "Recent formaat: Volledige zichtbare datum (bijv. 15/03/2023)",
+            "point2": "Deze datum moet consistent zijn met het seizoen van het shirt",
+            "point3": "Een shirt van seizoen 2023/24 kan geen productiedatum in 2020 hebben",
+            "point4": "Vervalsingen hergebruiken vaak hetzelfde label op verschillende shirts, wat tot inconsistenties leidt",
+            "point5": "Als de datum niet overeenkomt met het seizoen = grote RED FLAG"
+          }
+        },
+        "step3": {
+          "title": "Stap 3: De productieregiocode",
+          "description": "Alfanumerieke code onder de productiedatum die de fabriek aangeeft",
+          "points": {
+            "point1": "Formaat: TVNAO (voorbeeld voor Vietnam, Alliance One fabriek)",
+            "point2": "Eerste teken = Waarschijnlijk 'T' voor Textiel",
+            "point3": "Volgende 2 tekens = ISO-landcode (VN=Vietnam, TH=Thailand, TR=Turkije)",
+            "point4": "Laatste 2 tekens = Specifieke fabrieksidentificatie",
+            "point5": "Landcode MOET overeenkomen met 'Made in...' op het label",
+            "point6": "Je kunt officiële Puma-fabrieken verifiëren met hun openbare lijsten (2018, 2023, 2025)"
+          }
+        },
+        "step4": {
+          "title": "Stap 4: De regionale marktcode",
+          "description": "Code aan de linkerkant van het label die de bestemmingsmarkt aangeeft",
+          "points": {
+            "point1": "AM = Amerika's",
+            "point2": "AP = Azië-Pacific",
+            "point3": "EU = Europa",
+            "point4": "Deze code geeft aan WAAR het product bedoeld was om verkocht te worden, niet waar het is geproduceerd",
+            "point5": "Nuttig voor verzamelaars die specifieke regionale releases zoeken",
+            "point6": "Kan kleine variaties hebben in verpakking of compliance-informatie"
+          }
+        },
+        "step5": {
+          "title": "Stap 5: De QR-code",
+          "description": "Recente Puma-labels bevatten een QR-code met uniek AD-nummer",
+          "points": {
+            "point1": "QR-code bevindt zich meestal onder de productcode",
+            "point2": "Het scannen van de code leidt naar puma.com met 'AD' nummerparameter",
+            "point3": "Linkformaat: https://www.puma.com?TSL1D33P02450",
+            "point4": "AD-nummer staat boven de QR-code gedrukt",
+            "point5": "Deze code dient voor interne tracking en Puma-authenticatie",
+            "point6": "Afwezigheid van QR-code op oude shirts is normaal"
+          }
+        },
+        "step6": {
+          "title": "Stap 6: De swing tag",
+          "description": "Kartonnen label bevestigd aan de kraag van nieuwe shirts",
+          "points": {
+            "point1": "Sticker moet een ECHTE fysieke sticker zijn, nooit direct gedrukt",
+            "point2": "Productcode op swing tag MOET overeenkomen met het interne label",
+            "point3": "Vervalsingen gebruiken vaak een generiek label zoals 'Puma Shirt' zonder details",
+            "point4": "Echt label vermeldt: Clubnaam + Type shirt (Home/Away) + Kleur",
+            "point5": "Controleer regionale maatconventies: Brazilië/Canada = 'G' (Grande) in plaats van 'L'",
+            "point6": "Japan kan '2XO' gebruiken in plaats van 'XL' - verifieer consistentie met regio"
+          }
+        },
+        "step7": {
+          "title": "Stap 7: Het kraaglabel en 'Made in'",
+          "description": "Het kraaglabel bevat belangrijke regionale informatie",
+          "points": {
+            "point1": "Land van productie ('Made in...') MOET overeenkomen tussen kraag en alle interne labels",
+            "point2": "Voorbeeld: als de kraag 'Made in Vietnam' zegt, moet het waslabel hetzelfde zeggen",
+            "point3": "Controleer regionale maatcorrespondenties, vooral de Japanse maat (J)",
+            "point4": "Correcte tabel: US S=J M, US M=J O (of recent L), US L=J 2XO, US XL=J 3XO, US XXL=J 4XO",
+            "point5": "Opmerking: Recente Puma gebruikt soms 'L' in plaats van 'O' voor Japan (westerse afstemming)",
+            "point6": "Veelvoorkomende fout bij vervalsingen: onjuiste Japanse maat (bijv. 'J: S' voor US L)"
+          }
+        },
+        "step8": {
+          "title": "Stap 8: De security tag",
+          "description": "Klein zwart label linksonder op het shirt (vooraanzicht)",
+          "points": {
+            "point1": "Op recente modellen: simpelweg gemarkeerd met 'Authentic Licensed Football'",
+            "point2": "Op oudere modellen: unieke alfanumerieke code",
+            "point3": "Deze code mag NIET verschijnen in zoekopdrachten (tenzij het nep is)",
+            "point4": "Label moet netjes genaaid zijn met kwaliteitsdraad",
+            "point5": "Volledige afwezigheid van label op recent shirt = verdacht"
+          }
+        },
+        "step9": {
+          "title": "Stap 9: Het Puma-logo (pas op voor 'Fat Cat')",
+          "description": "Springende kat-logo moet perfect zijn - pas op voor 'Fat Cat'",
+          "points": {
+            "point1": "Puma moet ELEGANT en atletisch zijn, niet gedrongen of opgeblazen",
+            "point2": "'Fat Cat' = typisch nepdefect: kat te dik, vervormd, ziet er 'gespierd' uit",
+            "point3": "Goed gedefinieerde karakteristieke vorm met exacte proporties",
+            "point4": "Kwaliteitsborduurwerk of flocking met schone randen",
+            "point5": "Exacte positie volgens model (meestal rechterborst)",
+            "point6": "Vergelijk altijd met officiële foto's - zelfs licht verschil = verdacht"
+          }
+        },
+        "step10": {
+          "title": "Stap 10: Het clubbadge",
+          "description": "Badge moet met precisie zijn aangebracht",
+          "points": {
+            "point1": "Precies borduurwerk OF kwaliteitsvolle hittetransfer afhankelijk van model",
+            "point2": "Schone randen zonder uitlopen",
+            "point3": "Alle elementen (sterren, tekst, randen) perfect uitgelijnd",
+            "point4": "Correcte spatiëring en gerespecteerde proporties",
+            "point5": "Geen wazige, niet-gecentreerde of slecht gespatieerde tekst",
+            "point6": "Vergelijk met officieel clubbadge - zelfs kleine details tellen"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Correcte productcode maar voor een ander shirt/team (bijv. Marseille code op Milan shirt)",
+        "fake2": "Productiedatum inconsistent met seizoen van het shirt",
+        "fake3": "Productieregiocode (bijv. TVNAO) komt niet overeen met 'Made in...'",
+        "fake4": "Generiek swing tag gemarkeerd met 'Puma Shirt' zonder clubvermelding",
+        "fake5": "Gedrukte sticker op swing tag in plaats van echte sticker",
+        "fake6": "'Made in...' verschillend tussen kraaglabel en was-/productlabel",
+        "fake7": "Onjuiste Japanse maat op kraaglabel (bijv. J:S voor US L in plaats van J:2XO)",
+        "fake8": "Security code verschijnt op meerdere online shirts (zou uniek moeten zijn)",
+        "fake9": "De beruchte 'Fat Cat' - vervormd, gedrongen of te dik Puma-logo",
+        "fake10": "Clubbadge met wazige tekst, niet-gecentreerde elementen of onjuiste proporties",
+        "fake11": "Grove stiksels of zichtbare draden op logo/badge",
+        "fake12": "Afwezigheid van security tag op recent shirt",
+        "fake13": "Typefouten of onjuiste grammatica op waslabels",
+        "fake14": "Ontbrekende QR-code op zeer recent shirt (post-2020)"
+      },
+      "tips": {
+        "tip1": "Verifieer ALTIJD de volledige productcode op kitcod.es of Google Afbeeldingen",
+        "tip2": "Verifieer dat productiedatum overeenkomt met seizoen van het shirt",
+        "tip3": "Vergelijk regiocode (TVNAO) met 'Made in...' voor consistentie",
+        "tip4": "Vraag foto's van ALLE labels: kraag, was, groot productlabel, swing tag",
+        "tip5": "Scan QR-code indien aanwezig en verifieer dat deze leidt naar puma.com met AD-parameter",
+        "tip6": "Onderzoek Puma-logo NAUWKEURIG - 'Fat Cat' is een zeer veelvoorkomend nepdefect",
+        "tip7": "Vergelijk clubbadge pixel voor pixel met officiële foto's",
+        "tip8": "Verifieer regionale maatconsistentie op kraaglabel (vooral Japanse maat)",
+        "tip9": "Raadpleeg officiële Puma-fabriekslijsten als je de fabriekscode wilt verifiëren",
+        "tip10": "Voor nieuwe shirts: vereis foto van swing tag met zichtbare clubnaam",
+        "tip11": "Pas op voor te lage prijzen: echte Puma shirts behouden hun waarde",
+        "tip12": "Bij twijfel over een label, logo of code: niet kopen"
+      }
+    },
+    "hummel": {
+      "title": "Hummel Authenticatiegids",
+      "description": "Leer authentieke Hummel shirts te identificeren met deze essentiële criteria",
+      "criteria": {
+        "step1": {
+          "title": "Het hoofdlabel",
+          "description": "Het Hummel-label heeft specifieke kenmerken",
+          "points": {
+            "point1": "Hummel-logo met onderscheidende chevrons",
+            "point2": "Unieke productcode",
+            "point3": "Maat- en samenstellingsinformatie",
+            "point4": "Aangegeven land van productie",
+            "point5": "Heldere en duurzame druk"
+          }
+        },
+        "step2": {
+          "title": "Hummel chevrons",
+          "description": "Chevrons zijn het handelsmerk van het merk",
+          "points": {
+            "point1": "Karakteristieke V-vorm",
+            "point2": "Precieze hoeken van 45 graden",
+            "point3": "Borduurwerk van superieure kwaliteit",
+            "point4": "Perfecte uitlijning van de chevrons",
+            "point5": "Heldere en gecontrasteerde kleuren"
+          }
+        },
+        "step3": {
+          "title": "Textielkwaliteit",
+          "description": "Hummel gebruikt kwaliteitsmaterialen",
+          "points": {
+            "point1": "Ademende technische stof",
+            "point2": "Aangenaam materiaal om aan te raken",
+            "point3": "Slijtagebestendigheid",
+            "point4": "Kleuren die niet verbleken",
+            "point5": "Antitranspiratie-eigenschappen"
+          }
+        },
+        "step4": {
+          "title": "Afwerking",
+          "description": "Afwerkingsdetails zijn belangrijk",
+          "points": {
+            "point1": "Rechte en stevige stiksels",
+            "point2": "Goed gestructureerde en comfortabele kraag",
+            "point3": "Clubbadge van premium kwaliteit",
+            "point4": "Duurzame nummerafdruk",
+            "point5": "Zorgvuldige assemblage"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Verkeerd uitgelijnde of vervormde chevrons",
+        "fake2": "Wazig label of met fouten",
+        "fake3": "Lagere kwaliteit stof",
+        "fake4": "Benaderend Hummel-logo",
+        "fake5": "Stiksels die snel losgaan"
+      },
+      "tips": {
+        "tip1": "Koop bij geautoriseerde Hummel-verkopers",
+        "tip2": "Vergelijk chevrons met authentieke modellen",
+        "tip3": "Controleer algehele productiekwaliteit",
+        "tip4": "Onderzoek het label in detail",
+        "tip5": "Te lage prijs moet alarmeren"
+      }
+    },
+    "supporterVsPro": {
+      "title": "Supporter vs Pro: wat zijn de verschillen?",
+      "description": "We vragen ons vaak af wat het verschil is tussen de shirts gedragen door spelers op het veld en die verkocht in winkels, de \"Supporter\" shirts. Hier is een volledig overzicht van de verschillen.",
+      "context": "Vergelijking gemaakt op de 25/26 Stade Rennais thuisshirts (Puma). Pro shirt in maat M, Supporter shirt in maat XL.",
+      "comparisons": {
+        "logo": {
+          "title": "Clublogo",
+          "description": "Het clublogo op Supporter shirts is altijd geborduurd. Op Pro shirts is het hittegeperst. Dit jaar is op het Pro thuisshirt het logo stijf met verhoogd reliëf op de kammen.",
+          "supporter": "Geborduurd",
+          "pro": "Hittegeperst, stijf met verhoogd reliëf op de kammen"
+        },
+        "marque": {
+          "title": "Puma sponsor",
+          "description": "Net als de logo's verschilt de Puma-branding (voorkant en schouders) tussen de twee uitvoeringen.",
+          "supporter": "Over het algemeen geborduurd",
+          "pro": "Hittegeperst, met een rubberachtige verhoogde afwerking, zeer duurzaam"
+        },
+        "technology1": {
+          "title": "Twee verschillende technologieën - stof",
+          "supporter": "DRYCELL met RE-FIBRE",
+          "pro": "ULTRAWEAVE (sterk geëvolueerd sinds zijn debuut in het 2022/2023 seizoen)"
+        },
+        "technology2": {
+          "title": "Twee verschillende technologieën - weefsel",
+          "description": "Het verschil tussen de weefsels is direct met het blote oog zichtbaar.",
+          "supporter": "Standaard stof",
+          "pro": "Lichtere stof om spelersprestaties op het veld te verbeteren"
+        },
+        "detail1": {
+          "title": "Club-specifieke bewoording",
+          "supporter": "Op de buitenkant van het shirt (bijv. #TOUTDONNER)",
+          "pro": "Op de binnenkant van het shirt (bijv. #TOUTDONNER)"
+        },
+        "detail2": {
+          "title": "\"Authentic Licensed Football\" badge",
+          "description": "Het badge onderaan het shirt heeft een andere afwerking afhankelijk van de uitvoering.",
+          "supporter": "Flexibel",
+          "pro": "Stijf"
+        },
+        "detail3": {
+          "title": "Stiksels",
+          "description": "Verschillende interne stiksels kunnen ook worden opgemerkt tussen de twee uitvoeringen.",
+          "supporter": "Standaard stiksels, geen onderscheidend kenmerk",
+          "pro": "Specifieke rode stiksels op de schouders, afwezig op het Supporter shirt"
+        }
+      }
+    }
+  },
+  "CookiesPolicy": {
+    "title": "Cookiebeleid",
+    "lastUpdate": "Laatst bijgewerkt",
+    "whatIsCookie": {
+      "title": "Wat is een cookie?",
+      "description": "Een cookie is een klein tekstbestand dat op je apparaat wordt opgeslagen wanneer je een website bezoekt. Cookies helpen ons een betere gebruikerservaring te bieden en onze diensten te verbeteren."
+    },
+    "cookiesUsed": {
+      "title": "Cookies gebruikt op Le Vestiaire",
+      "necessary": {
+        "title": "1. Strikt noodzakelijke cookies",
+        "description": "Deze cookies zijn essentieel voor het functioneren van de site en kunnen niet worden uitgeschakeld.",
+        "auth": {
+          "label": "Authenticatie cookies",
+          "description": "Stellen je in staat in te loggen en je actieve sessie te behouden"
+        },
+        "consent": {
+          "label": "cookieConsent",
+          "description": "Onthoudt je keuze met betrekking tot cookies"
+        }
+      },
+      "analytics": {
+        "title": "2. Analyse en prestatiecookies",
+        "description": "Deze cookies helpen ons begrijpen hoe je de site gebruikt om onze diensten te verbeteren.",
+        "vercel": {
+          "label": "Vercel Analytics",
+          "description": "Verkeersanalyse en gebruikersgedrag"
+        },
+        "insights": {
+          "label": "Vercel Speed Insights",
+          "description": "Meting van siteprestaties"
+        },
+        "optOut": "Je kunt deze cookies weigeren via de toestemmingsbanner zonder je browse-ervaring te beïnvloeden."
+      }
+    },
+    "preferences": {
+      "title": "Je voorkeuren beheren",
+      "description": "Je kunt je cookievoorkeuren op elk moment wijzigen:",
+      "options": {
+        "browser": "Door cookies uit je browserinstellingen te verwijderen",
+        "banner": "Door de \"cookieConsent\" cookie te wissen om de banner opnieuw te laten verschijnen",
+        "contact": "Door contact op te nemen met ons team via"
+      }
+    },
+    "retention": {
+      "title": "Bewaartermijn",
+      "session": {
+        "label": "Sessiecookies",
+        "description": "Verwijderd wanneer de browser wordt gesloten"
+      },
+      "consent": {
+        "label": "Toestemmingscookie",
+        "description": "Bewaard tot 2099 of tot handmatige verwijdering"
+      },
+      "analytics": {
+        "label": "Analytische cookies",
+        "description": "Maximaal 13 maanden"
+      }
+    },
+    "rights": {
+      "title": "Jouw rechten (AVG)",
+      "description": "In overeenstemming met de Algemene Verordening Gegevensbescherming (AVG) heb je het recht om je persoonlijke gegevens in te zien, te corrigeren en te verwijderen. Om deze rechten uit te oefenen, neem contact met ons op via"
+    },
+    "modifications": {
+      "title": "Wijzigingen in dit beleid",
+      "description": "We behouden ons het recht voor om dit cookiebeleid op elk moment te wijzigen. Wijzigingen worden van kracht bij publicatie op deze pagina. We moedigen je aan om deze pagina regelmatig te bekijken."
+    }
+  },
+  "Settings": {
+    "loading": "Laden...",
+    "title": "Accountinstellingen",
+    "footer": {
+      "text": "Door je account te gebruiken, ga je akkoord met onze",
+      "terms": "Algemene Voorwaarden",
+      "privacy": "Privacybeleid",
+      "and": "en",
+      "cookies": "Cookiebeleid"
+    },
+    "accountInfo": {
+      "title": "Accountinformatie",
+      "username": "Gebruikersnaam",
+      "email": "E-mailadres",
+      "memberSince": "Lid sinds"
+    },
+    "emailSettings": {
+      "title": "E-mailadres wijzigen",
+      "invalidEmail": "Ongeldig e-mailadres",
+      "changeSuccess": "E-mailwijzigingsverzoek verzonden. Controleer je inbox.",
+      "changeError": "Fout bij het wijzigen van e-mail",
+      "googleOnlyMessage": "Je account is gekoppeld via Google. Om je e-mailadres te wijzigen, moet je dit rechtstreeks in je Google-account doen.",
+      "newEmailLabel": "Nieuw e-mailadres",
+      "emailPlaceholder": "nieuw@email.com",
+      "changing": "Wijzigen...",
+      "changeButton": "E-mail wijzigen"
+    },
+    "passwordSettings": {
+      "title": "Beveiliging",
+      "passwordMismatch": "Nieuwe wachtwoorden komen niet overeen",
+      "passwordTooShort": "Wachtwoord moet minstens 8 tekens bevatten",
+      "passwordNoUppercase": "Wachtwoord moet minstens één hoofdletter bevatten",
+      "passwordNoNumber": "Wachtwoord moet minstens één cijfer bevatten",
+      "passwordNoSpecial": "Wachtwoord moet minstens één speciaal teken bevatten",
+      "changeSuccess": "Wachtwoord succesvol gewijzigd",
+      "changeError": "Fout bij het wijzigen van wachtwoord",
+      "googleOnlyMessage": "Je account is gekoppeld via Google. De beveiliging van je account wordt beheerd door Google. Je kunt je wachtwoord wijzigen in je Google-accountinstellingen.",
+      "currentPassword": "Huidig wachtwoord",
+      "newPassword": "Nieuw wachtwoord",
+      "confirmPassword": "Bevestig wachtwoord",
+      "changing": "Wijzigen...",
+      "changeButton": "Wachtwoord wijzigen"
+    },
+    "sessionSettings": {
+      "title": "Sessie",
+      "signOutSuccess": "Succesvol uitgelogd",
+      "signOutError": "Fout bij uitloggen",
+      "signOutLabel": "Uitloggen",
+      "signOutDescription": "Je wordt uitgelogd uit je huidige sessie",
+      "signOutButton": "Uitloggen"
+    },
+    "leaderboardPrivacy": {
+      "title": "Privacy ranglijst",
+      "description": "Beheer je zichtbaarheid in openbare ranglijsten",
+      "loading": "Laden...",
+      "anonymousSuccess": "Je verschijnt nu anoniem in ranglijsten",
+      "visibleSuccess": "Je profiel is nu zichtbaar in ranglijsten",
+      "updateError": "Kan je instellingen niet bijwerken",
+      "anonymousLabel": "Anoniem verschijnen",
+      "anonymousDescription": "Je naam, avatar en favoriete team worden verborgen. Je verschijnt als \"Verzamelaar #XXXX\"",
+      "currentlyAnonymous": "Je verschijnt momenteel als anoniem in alle openbare ranglijsten."
+    },
+    "cookieSettings": {
+      "title": "Cookiebeheer",
+      "description": "Beheer je cookievoorkeuren op Le Vestiaire. Je kunt je keuzes op elk moment wijzigen.",
+      "modifyButton": "Mijn voorkeuren wijzigen",
+      "modifyDescription": "Klik om de toestemmingsbanner opnieuw te openen en je keuzes te wijzigen.",
+      "viewPolicyLink": "Volledig cookiebeleid bekijken"
+    },
+    "subscription": {
+      "title": "Abonnement",
+      "description": "Beheer je abonnement en premium functies",
+      "currentPlan": "Huidig abonnement",
+      "upgradeToPremium": "Upgraden naar Premium",
+      "manageSubscription": "Abonnement beheren",
+      "loading": "Laden...",
+      "features": "Inbegrepen functies",
+      "price": "Prijs",
+      "or": "of",
+      "free": {
+        "feature1": "Tot 50 shirts in collectie",
+        "feature2": "Tot 20 shirts op verlanglijst",
+        "feature3": "Basisstatistieken",
+        "feature4": "Vriendensysteem en delen"
+      },
+      "premium": {
+        "feature1": "Onbeperkte shirtcollectie",
+        "feature2": "Onbeperkte verlanglijst",
+        "feature3": "Volledige geavanceerde statistieken",
+        "feature4": "Tot 5 foto's per shirt",
+        "feature5": "Premium badge op je profiel"
+      },
+      "freeInfo": "Upgrade naar Premium om alle functies te ontgrendelen en een onbeperkte collectie te beheren.",
+      "premiumInfo": {
+        "title": "Bedankt dat je Premium bent!",
+        "description": "Je geniet van alle premium functies. Beheer je abonnement via het Stripe-portaal."
+      }
+    }
+  },
+  "CookieConsent": {
+    "title": "Gebruik van cookies",
+    "defaultDescription": "We gebruiken cookies om je ervaring op Le Vestiaire te verbeteren. Deze cookies stellen ons in staat het gebruik van de site te analyseren en onze diensten te verbeteren.",
+    "acceptInfo": "Door op \"Accepteren\" te klikken, ga je akkoord met het gebruik van analytische cookies. Essentiële cookies blijven actief.",
+    "learnMore": "Meer informatie",
+    "decline": "Weigeren",
+    "accept": "Accepteren"
+  },
+  "LegalPages": {
+    "backToHome": "Terug naar home"
+  },
+  "Jerseys": {
+    "report": {
+      "buttonLabel": "Een probleem melden",
+      "title": "Een probleem melden",
+      "description": "Help ons dit shirt te corrigeren. Beschrijf het probleem kort indien nodig.",
+      "category": "Categorie",
+      "categoryPlaceholder": "Selecteren...",
+      "categories": {
+        "LETTERING": "Bedrukking",
+        "SEASON": "Seizoen",
+        "BRAND": "Merk",
+        "IMAGE": "Afbeelding",
+        "OTHER": "Anders"
+      },
+      "descriptionLabel": "Details (optioneel)",
+      "descriptionPlaceholder": "Bijv.: het weergegeven nummer klopt niet, de afbeelding is wazig, enz.",
+      "cancel": "Annuleren",
+      "submit": "Verzenden",
+      "submitting": "Verzenden...",
+      "successToast": "Bedankt voor je melding",
+      "errorToast": "Fout bij het verzenden van de melding",
+      "mustBeConnected": "Je moet ingelogd zijn om een probleem te melden"
+    },
+    "selectLeague": "Kies je competitie",
+    "searchLeague": "Zoek een competitie...",
+    "searchLeagueOrClub": "Zoek een competitie of club...",
+    "searchClub": "Zoek een club...",
+    "clubs": "Clubs",
+    "leagues": "Competities",
+    "searching": "Zoeken...",
+    "noClubsFound": "Geen clubs gevonden",
+    "noLeaguesFound": "Geen competities gevonden",
+    "allLeagues": "Alle competities",
+    "theLeagues": "Competities",
+    "club": "Club",
+    "season": "Seizoen",
+    "brand": "Merk",
+    "type": "Type",
+    "findOnCFS": "Waar te kopen",
+    "averageRating": "Gemiddelde beoordeling",
+    "collectorStats": "Verzamelaarsstatistieken",
+    "inCollection": "In {count} collectie",
+    "inCollections": "In {count} collecties",
+    "inWishlist": "Op {count} verlanglijst",
+    "inWishlists": "Op {count} verlanglijsten",
+    "clubNotFound": "Club niet gevonden",
+    "clubNotFoundText": "Club niet gevonden.",
+    "leagueNotFound": "Competitie niet gevonden",
+    "jerseyNotFound": "Shirt niet gevonden",
+    "jerseyNotFoundText": "Dit shirt bestaat niet of is niet meer beschikbaar.",
+    "allSeasons": "Alle seizoenen",
+    "completeCollection": "Volledige collectie",
+    "discover": "Ontdek",
+    "designedBy": "Ontworpen door",
+    "collectiblePiece": "is een verzamelobject",
+    "addToCollection": "Voeg het toe aan je collectie",
+    "rateIt": "beoordeel het",
+    "clubsAndJerseys": "clubs en hun historische shirts",
+    "largestDatabase": "De grootste shirtdatabase",
+    "jerseyCollection": "Collectie van vintage en recente voetbalshirts",
+    "allClubs": "Alle clubs",
+    "since": "sinds",
+    "ofTheClub": "van de club"
+  },
+  "JerseyDetail": {
+    "tabs": {
+      "description": "Beschrijving",
+      "players": "Spelers",
+      "achievements": "Prestaties",
+      "comingSoon": "Binnenkort beschikbaar",
+      "noDescription": "Er is geen beschrijving beschikbaar voor dit shirt.",
+      "proposeDescription": "Een beschrijving voorstellen",
+      "suggestImprovement": "Een verbetering voorstellen"
+    },
+    "palmares": {
+      "errorLoading": "Fout bij het laden van trofeeën",
+      "noTrophies": "Geen trofeeën geregistreerd voor dit seizoen",
+      "winner": "Winnaar",
+      "finalist": "Finalist"
+    },
+    "players": {
+      "errorLoading": "Fout bij het laden van spelers",
+      "noPlayers": "Geen spelers geregistreerd voor dit seizoen",
+      "matches": "wedstrijden",
+      "goals": "goals",
+      "assists": "assists",
+      "assistsFull": "Assists",
+      "cleanSheets": "clean s.",
+      "cleanSheetsFull": "Clean Sheets",
+      "goalsConceded": "tegengoals",
+      "goalsConcededFull": "Tegengoals"
+    },
+    "proposeDescription": {
+      "title": "Een beschrijving voorstellen",
+      "titleImprove": "Een verbetering voorstellen",
+      "description": "Help de database te verrijken door een beschrijving voor te stellen voor {name}.",
+      "descriptionImprove": "Help ons de beschrijving van {name} te verbeteren.",
+      "currentDescription": "Huidige beschrijving",
+      "yourDescription": "Je voorstel",
+      "yourImprovement": "Je verbetering",
+      "placeholder": "Beschrijf de geschiedenis van dit shirt, de context, de bijzonderheden, gerelateerde memorabele gebeurtenissen, enz.",
+      "hint": "Minimaal 50 tekens. Wees precies en feitelijk.",
+      "cancel": "Annuleren",
+      "submit": "Mijn voorstel indienen",
+      "submitting": "Indienen...",
+      "success": "Je voorstel is succesvol ingediend! Het zal door ons team worden beoordeeld.",
+      "errors": {
+        "tooShort": "De beschrijving moet minstens {min} tekens bevatten",
+        "tooLong": "De beschrijving mag niet langer zijn dan {max} tekens",
+        "generic": "Er is een fout opgetreden tijdens het indienen"
+      }
+    }
+  },
+  "Friends": {
+    "myFriends": "Mijn vrienden",
+    "friends": "Vrienden",
+    "pending": "In afwachting",
+    "search": "Zoeken",
+    "noFriendsYet": "Nog geen vrienden",
+    "searchUsersToStart": "Zoek gebruikers om je netwerk op te bouwen",
+    "noPendingRequests": "Geen verzoeken in afwachting",
+    "requestsWillAppear": "Je vriendschapsverzoeken verschijnen hier",
+    "error": "Fout",
+    "searchPlaceholder": "Zoek op gebruikersnaam of naam...",
+    "minCharacters": "Typ minimaal 2 tekens om te zoeken",
+    "noUsersFound": "Geen gebruikers gevonden",
+    "result": "resultaat",
+    "results": "resultaten",
+    "requestSent": "Verzoek verzonden",
+    "userBlocked": "Gebruiker geblokkeerd",
+    "blockUserConfirm": "Deze gebruiker blokkeren?",
+    "user": "Gebruiker",
+    "noFavoriteTeam": "Geen favoriet team",
+    "removeFriendConfirm": "{name} verwijderen uit je vrienden?",
+    "friendRemoved": "Vriend verwijderd",
+    "errorRemoving": "Fout bij verwijderen van vriend",
+    "blockConfirm": "{name} blokkeren?",
+    "errorBlocking": "Fout bij blokkeren van gebruiker",
+    "removeFriend": "Vriend verwijderen",
+    "block": "Blokkeren",
+    "nowFriendsWith": "Je bent nu vrienden met {name}",
+    "requestRejected": "Verzoek afgewezen",
+    "errorAccepting": "Fout bij accepteren van verzoek",
+    "errorRejecting": "Fout bij afwijzen van verzoek",
+    "accept": "Accepteren",
+    "reject": "Afwijzen",
+    "add": "Toevoegen",
+    "addFriend": "Toevoegen als vriend",
+    "resend": "Opnieuw verzenden",
+    "friendsCollections": "Collecties van vrienden",
+    "discoverCollections": "Ontdek de shirtcollecties van je vrienden en vind inspiratie voor je eigen collectie",
+    "addFriendsToDiscover": "Voeg vrienden toe om hun shirtcollecties te ontdekken!",
+    "searchFriends": "Zoek vrienden →",
+    "noBio": "Geen bio",
+    "viewCollection": "Collectie bekijken →",
+    "viewWishlist": "Verlanglijst bekijken →",
+    "collectionNotFound": "Collectie niet gevonden",
+    "collectionOf": "Collectie van {name}",
+    "jersey": "shirt",
+    "jerseys": "shirts",
+    "emptyCollection": "Lege collectie",
+    "noJerseysYet": "{name} heeft nog geen shirts aan zijn/haar collectie toegevoegd.",
+    "thisUser": "Deze gebruiker",
+    "jerseysOwned": "Shirts in bezit",
+    "inCollection": "in collectie",
+    "favoriteLeagues": "Favoriete competities",
+    "noData": "Geen gegevens",
+    "preferredTypes": "Voorkeurstypes",
+    "origin": "Herkomst",
+    "purchased": "Gekocht",
+    "gifts": "Cadeaus",
+    "mysteryBox": "Mystery box",
+    "hisHerJerseys": "Zijn/haar shirts",
+    "sortBy": "Sorteren op:",
+    "mostRecent": "Nieuwste",
+    "oldest": "Oudste",
+    "priceDescending": "Prijs aflopend",
+    "priceAscending": "Prijs oplopend",
+    "condition": "Staat",
+    "clubAZ": "Club (A-Z)",
+    "season": "Seizoen",
+    "noJerseysInCollection": "Geen shirts in deze collectie.",
+    "modal": {
+      "title": "Shirtdetails",
+      "yourPhoto": "Persoonlijke foto",
+      "officialPhoto": "Officiële foto",
+      "size": "Maat",
+      "withTags": "Met labels",
+      "gift": "Cadeau",
+      "mysteryBox": "Mystery box",
+      "club": "Club",
+      "league": "Competitie",
+      "type": "Type",
+      "season": "Seizoen",
+      "brand": "Merk",
+      "collectionInfo": "Collectie-informatie",
+      "purchasePrice": "Aankoopprijs",
+      "purchasedOn": "Gekocht op",
+      "player": "Speler",
+      "number": "Nummer",
+      "personalization": "Personalisatie",
+      "addedOn": "Toegevoegd op",
+      "notes": "Notities",
+      "close": "Sluiten"
+    }
+  },
+  "Leaderboard": {
+    "page": {
+      "title": "Ranglijst - The Locker Room",
+      "description": "Ontdek de beste voetbalshirtverzamelaars",
+      "heading": "Ranglijst",
+      "howItWorks": "Hoe werkt het?",
+      "howItWorksDescription": "Ranglijsten worden in realtime bijgewerkt. De top 3 aller tijden en de #1 van de maand verdienen een permanente badge!"
+    },
+    "tabs": {
+      "allTime": "Aller tijden",
+      "emptyState": "Geen ranglijst beschikbaar voor deze categorie",
+      "yourPosition": "Jouw positie:"
+    },
+    "categories": {
+      "title": "Categorie",
+      "collection_size": "Grootste collectie",
+      "collection_diversity": "Meest diverse collectie",
+      "league_diversity": "Globetrotter",
+      "vintage_specialist": "Vintage specialist",
+      "descriptions": {
+        "collection_size": "Totaal aantal shirts in bezit",
+        "collection_diversity": "Aantal verschillende clubs",
+        "league_diversity": "Aantal verschillende competities",
+        "vintage_specialist": "Shirts van voor 2005"
+      }
+    },
+    "card": {
+      "jersey": "shirt",
+      "jerseys": "shirts",
+      "club": "club",
+      "clubs": "clubs",
+      "league": "competitie",
+      "leagues": "competities",
+      "vintage": "vintage",
+      "currentUser": "(Jij)",
+      "defaultUsername": "Gebruiker"
+    },
+    "errors": {
+      "rateLimitError": "Te veel ranglijstverzoeken. Wacht even.",
+      "serverError": "Serverfout"
+    },
+    "months": {
+      "january": "Januari",
+      "february": "Februari",
+      "march": "Maart",
+      "april": "April",
+      "may": "Mei",
+      "june": "Juni",
+      "july": "Juli",
+      "august": "Augustus",
+      "september": "September",
+      "october": "Oktober",
+      "november": "November",
+      "december": "December"
+    }
+  },
+  "Reports": {
+    "Admin": {
+      "pageTitle": "Meldingen",
+      "pageDescription": "Beheer van shirtmeldingen",
+      "heading": "Shirtmeldingen",
+      "tabPending": "In afwachting",
+      "tabResolved": "Opgelost",
+      "tabRejected": "Afgewezen",
+      "loading": "Laden...",
+      "empty": "Geen meldingen",
+      "category": "Categorie",
+      "categories": {
+        "LETTERING": "Bedrukking",
+        "SEASON": "Seizoen",
+        "BRAND": "Merk",
+        "IMAGE": "Afbeelding",
+        "OTHER": "Anders"
+      },
+      "reportedBy": "Gemeld door",
+      "reportedOn": "op",
+      "resolvedOn": "Opgelost op",
+      "rejectedOn": "Afgewezen op",
+      "by": "door",
+      "viewJersey": "Shirt bekijken",
+      "resolve": "Markeren als opgelost",
+      "reject": "Afwijzen",
+      "resolving": "Verwerken...",
+      "successResolved": "Melding gemarkeerd als opgelost",
+      "successRejected": "Melding afgewezen",
+      "errorAction": "Actiefout",
+      "errorLoading": "Laadfout",
+      "confirmCancel": "Annuleren",
+      "confirmTitle": "Actie bevestigen"
+    }
+  },
+  "Proposals": {
+    "Admin": {
+      "pageTitle": "Beheer van voorstellen - The Locker Room",
+      "pageDescription": "Beheer shirtvoorstellen ingediend door bijdragers",
+      "heading": "Beheer van voorstellen",
+      "tabJerseys": "Shirts",
+      "tabDescriptions": "Beschrijvingen",
+      "about": "Over voorstellen",
+      "aboutDescription": "Gebruikers met de rol bijdrager kunnen nieuwe shirts voorstellen om aan onze database toe te voegen. Als beheerder kun je deze voorstellen goedkeuren of afwijzen.",
+      "approveLabel": "Goedkeuren:",
+      "approveDescription": "Het shirt wordt aangemaakt in de database en de bijdrager krijgt de credits.",
+      "rejectLabel": "Afwijzen:",
+      "rejectDescription": "Het voorstel wordt definitief verwijderd",
+      "errorLoading": "Fout bij het laden van voorstellen",
+      "errorLoadingToast": "Kan voorstellen niet laden",
+      "approveSuccess": "Voorstel succesvol goedgekeurd!",
+      "rejectSuccess": "Voorstel afgewezen",
+      "emptyStateTitle": "Geen voorstellen in afwachting",
+      "emptyStateDescription": "Er zijn momenteel geen shirtvoorstellen in afwachting.",
+      "brandLabel": "Merk:",
+      "proposedByLabel": "Voorgesteld door:",
+      "contributionsLabel": "Bijdragen:",
+      "dateLabel": "Op:",
+      "approveButton": "Goedkeuren",
+      "rejectButton": "Afwijzen",
+      "approveDialogTitle": "Dit voorstel goedkeuren?",
+      "rejectDialogTitle": "Dit voorstel afwijzen?",
+      "approveDialogDescription": "Het shirt <strong>{jerseyName}</strong> wordt toegevoegd aan de database en de bijdrager krijgt de credits.",
+      "rejectDialogDescription": "Het voorstel <strong>{jerseyName}</strong> wordt definitief verwijderd. Deze actie is onomkeerbaar.",
+      "cancel": "Annuleren",
+      "confirm": "Bevestigen",
+      "approveAllButton": "Alles goedkeuren ({count})",
+      "approveAllLoading": "Goedkeuren...",
+      "approveAllDialogTitle": "Alle voorstellen goedkeuren?",
+      "approveAllDialogDescription": "Je staat op het punt {count} voorstel(len) goed te keuren. Deze actie is onomkeerbaar.",
+      "approveAllSuccess": "{count} voorstel(len) succesvol goedgekeurd!",
+      "approveAllPartial": "{approved} goedgekeurd, {failed} mislukt",
+      "DescriptionProposals": {
+        "aboutTitle": "Over beschrijvingsvoorstellen",
+        "aboutDescription": "Gebruikers kunnen beschrijvingen voorstellen om shirtpagina's te verrijken. Je kunt deze voorstellen goedkeuren of afwijzen. Bijdragers krijgen credits voor elke goedgekeurde beschrijving.",
+        "emptyStateTitle": "Geen beschrijvingsvoorstellen",
+        "emptyStateDescription": "Er zijn momenteel geen beschrijvingsvoorstellen in afwachting.",
+        "currentDescription": "Huidige beschrijving",
+        "proposedDescription": "Voorgestelde beschrijving",
+        "proposedImprovement": "Voorgestelde verbetering",
+        "proposedBy": "Voorgesteld door:",
+        "date": "Op:",
+        "viewJersey": "Shirt bekijken",
+        "approve": "Goedkeuren",
+        "reject": "Afwijzen",
+        "approveDialogTitle": "Deze beschrijving goedkeuren?",
+        "approveDialogDescription": "Deze beschrijving vervangt de huidige shirtbeschrijving. De bijdrager krijgt de credits.",
+        "rejectDialogTitle": "Dit voorstel afwijzen?",
+        "rejectDialogDescription": "Het voorstel wordt gemarkeerd als afgewezen. Je kunt optioneel een reden opgeven.",
+        "rejectionReason": "Reden voor afwijzing (optioneel)",
+        "rejectionReasonPlaceholder": "Leg uit waarom dit voorstel wordt afgewezen...",
+        "cancel": "Annuleren",
+        "confirmApprove": "Goedkeuren",
+        "confirmReject": "Afwijzen",
+        "approveSuccess": "Beschrijving succesvol goedgekeurd!",
+        "rejectSuccess": "Voorstel afgewezen",
+        "errorLoading": "Fout bij het laden van voorstellen",
+        "errorApprove": "Fout tijdens goedkeuring",
+        "errorReject": "Fout tijdens afwijzing"
+      }
+    },
+    "User": {
+      "myProposalsTitle": "Mijn voorstellen - The Locker Room",
+      "myProposalsDescription": "Bekijk de status van je shirtvoorstellen",
+      "myProposalsHeading": "Mijn voorstellen",
+      "newProposal": "Nieuw voorstel",
+      "proposeJerseyTitle": "Een shirt voorstellen - The Locker Room",
+      "proposeJerseyDescription": "Stel een nieuw shirt voor om aan de database toe te voegen",
+      "proposeJerseyHeading": "Een shirt voorstellen",
+      "proposeJerseyInfo": "Je kunt een nieuw shirt voorstellen om aan onze database toe te voegen. Beheerders zullen je voorstel beoordelen voordat ze het goedkeuren.",
+      "tipsHeading": "Tips voor een goed voorstel",
+      "tip1": "Controleer of het shirt nog niet in de database bestaat",
+      "tip2": "Gebruik een duidelijke en hoogwaardige foto",
+      "tip3": "Voer het seizoen in JJJJ-JJ formaat in (bijv. 2025-26, 2024-25) voor clubs en JJJJ formaat (2025, 2022, enz.) voor nationale teams",
+      "tip4": "Wees precies in de naam en beschrijving",
+      "errorLoading": "Fout bij het laden van voorstellen",
+      "errorLoadingToast": "Kan je voorstellen niet laden",
+      "emptyStateTitle": "Geen voorstellen",
+      "emptyStateDescription": "Je hebt nog geen shirtvoorstellen ingediend.",
+      "brandLabel": "Merk:",
+      "statusPending": "In afwachting"
+    },
+    "Form": {
+      "jerseyNameLabel": "Naam van het shirt",
+      "autoGenerated": "(Automatisch gegenereerd)",
+      "jerseyNamePlaceholder": "Wordt automatisch gegenereerd op basis van je selecties...",
+      "clubLabel": "Club *",
+      "clubLoading": "Laden...",
+      "clubSearchPlaceholder": "Zoek een club...",
+      "clubCommandPlaceholder": "Zoek een club...",
+      "clubNotFound": "Geen club gevonden.",
+      "seasonLabel": "Seizoen *",
+      "seasonPlaceholder": "Bijv. 2025-26",
+      "seasonPlaceholderNationalTeam": "Bijv. 2025",
+      "typeLabel": "Type *",
+      "typePlaceholder": "Type shirt",
+      "specialNameLabel": "Naam van speciaal shirt",
+      "specialNameOptional": "(optioneel)",
+      "specialNamePlaceholder": "Bijv. Jubileum, Beperkte editie, Kerst...",
+      "specialNameHelper": "Indien leeg, wordt de naam \"Speciaal Shirt [Club] [Seizoen]\"",
+      "brandLabel": "Merk *",
+      "brandPlaceholder": "Bijv. Nike, Adidas, Puma...",
+      "descriptionLabel": "Beschrijving (optioneel)",
+      "descriptionPlaceholder": "Voeg een beschrijving of details toe over dit shirt...",
+      "photoLabel": "Foto van het shirt *",
+      "photoClickToAdd": "Klik om een foto toe te voegen",
+      "photoFormats": "PNG, JPG, WEBP, AVIF (Max 2MB)",
+      "errorFileNotImage": "Het bestand moet een afbeelding zijn",
+      "errorFileTooLarge": "De foto mag niet groter zijn dan 2MB",
+      "errorAllFieldsRequired": "Alle velden zijn verplicht behalve beschrijving",
+      "errorPhotoRequired": "Een foto is verplicht",
+      "errorUpload": "Fout tijdens upload",
+      "errorUploadToast": "Fout bij het uploaden van de foto",
+      "errorCreate": "Fout tijdens aanmaken",
+      "successToast": "Voorstel succesvol ingediend!",
+      "errorCreateToast": "Fout bij het aanmaken van voorstel",
+      "buttonUploading": "Foto uploaden...",
+      "buttonSubmitting": "Indienen...",
+      "buttonSubmit": "Voorstel indienen",
+      "generatedJerseyName": "{type} Shirt {club} {season}",
+      "seasonErrorClub": "Ongeldig formaat. Gebruik JJJJ-JJ (bijv. 2025-26) voor clubs",
+      "seasonErrorNationalTeam": "Ongeldig formaat. Gebruik JJJJ (bijv. 2025) voor nationale teams"
+    },
+    "Errors": {
+      "notContributor": "Je moet bijdrager zijn om shirts voor te stellen",
+      "rateLimitProposals": "Te veel voorstellen. Probeer het later opnieuw.",
+      "rateLimitUploads": "Te veel uploads. Probeer het later opnieuw.",
+      "allFieldsRequired": "Alle velden zijn verplicht behalve beschrijving",
+      "invalidType": "Ongeldig shirttype",
+      "clubNotFound": "Club niet gevonden",
+      "jerseyExists": "Dit shirt bestaat al in de database",
+      "proposalExists": "Een voorstel voor dit shirt is al in afwachting",
+      "noFile": "Geen bestand ontvangen",
+      "proposalNotFound": "Voorstel niet gevonden",
+      "jerseyAlreadyExists": "Een shirt met deze kenmerken bestaat al",
+      "invalidImageUrl": "Ongeldig afbeeldings-URL formaat",
+      "cannotDownloadImage": "Kan voorstelafbeelding niet downloaden",
+      "cannotMoveImage": "Kan afbeelding niet verplaatsen naar shirts bucket"
+    }
+  },
+  "Pricing": {
+    "title": "Kies je abonnement",
+    "subtitle": "Beheer je shirtcollectie als een pro",
+    "toggle": {
+      "monthly": "Maandelijks",
+      "yearly": "Jaarlijks"
+    },
+    "free": {
+      "name": "Gratis",
+      "description": "Om je collectie te starten",
+      "period": "gratis",
+      "features": {
+        "jerseys": "Tot 50 shirts",
+        "wishlist": "Tot 20 shirts op verlanglijst",
+        "basicStats": "Basisstatistieken",
+        "friends": "Vriendensysteem",
+        "ratings": "Beoordelingen en commentaren"
+      },
+      "button": "Gratis"
+    },
+    "premium": {
+      "name": "Premium",
+      "monthly": {
+        "description": "Voor gepassioneerde verzamelaars",
+        "period": "maand",
+        "button": "Upgraden naar Premium"
+      },
+      "yearly": {
+        "description": "Voor gepassioneerde verzamelaars",
+        "period": "jaar",
+        "button": "Upgraden naar Premium Jaarlijks",
+        "savings": "2 maanden gratis"
+      },
+      "features": {
+        "unlimitedJerseys": "Onbeperkte collectie",
+        "unlimitedWishlist": "Onbeperkte verlanglijst",
+        "advancedStats": "Volledige geavanceerde statistieken",
+        "multiplePhotos": "Tot 5 foto's per shirt",
+        "badge": "Premium badge op je profiel"
+      }
+    }
+  },
+  "PublicCollection": {
+    "title": "Collectie van {name}",
+    "jerseys": "shirts",
+    "jersey": "shirt",
+    "anonymous": "Anonieme verzamelaar",
+    "anonymousMessage": "Deze verzamelaar geeft de voorkeur aan anonimiteit",
+    "emptyTitle": "Lege collectie",
+    "emptyMessage": "{name} heeft nog geen shirts aan zijn/haar collectie toegevoegd.",
+    "tabs": {
+      "collection": "Collectie",
+      "wishlist": "Verlanglijst"
+    },
+    "commonJerseysTitle": "Gemeenschappelijk met jou",
+    "commonJerseys": "{count} gemeenschappelijk(e) shirt(s)",
+    "wishlistTitle": "Verlanglijst van {name}",
+    "wishlistEmpty": "Lege verlanglijst",
+    "wishlistEmptyMessage": "{name} heeft nog geen shirts aan zijn/haar verlanglijst toegevoegd."
+  },
+  "ForgotPassword": {
+    "title": "Wachtwoord vergeten",
+    "subtitle": "Voer je e-mailadres in om een resetlink te ontvangen.",
+    "form": {
+      "email": "E-mail",
+      "emailPlaceholder": "jouw@email.com"
+    },
+    "button": {
+      "submit": "Link verzenden",
+      "loading": "Verzenden…"
+    },
+    "success": {
+      "title": "E-mail verzonden",
+      "message": "Als er een account bestaat met dit e-mailadres, ontvang je binnen enkele minuten een resetlink."
+    },
+    "backToLogin": "Terug naar inloggen"
+  },
+  "ResetPassword": {
+    "title": "Nieuw wachtwoord",
+    "subtitle": "Kies een nieuw wachtwoord voor je account.",
+    "form": {
+      "password": "Nieuw wachtwoord",
+      "passwordPlaceholder": "Minimaal 8 tekens",
+      "passwordConfirm": "Bevestig wachtwoord",
+      "passwordConfirmPlaceholder": "Herhaal je wachtwoord"
+    },
+    "button": {
+      "submit": "Wachtwoord resetten",
+      "loading": "Resetten…"
+    },
+    "success": {
+      "title": "Wachtwoord gewijzigd",
+      "message": "Je wachtwoord is gereset. Je kunt nu inloggen."
+    },
+    "errors": {
+      "invalidToken": "Deze link is ongeldig of verlopen. Doe een nieuw verzoek.",
+      "passwordMismatch": "Wachtwoorden komen niet overeen.",
+      "passwordTooShort": "Minimaal 8 tekens vereist",
+      "passwordNoUppercase": "Minimaal één hoofdletter vereist",
+      "passwordNoNumber": "Minimaal één cijfer vereist",
+      "passwordNoSpecial": "Minimaal één speciaal teken vereist",
+      "resetError": "Er is een fout opgetreden. Probeer het opnieuw."
+    },
+    "backToLogin": "Inloggen"
+  }
+}
