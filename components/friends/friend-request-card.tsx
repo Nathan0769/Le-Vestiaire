@@ -13,7 +13,7 @@ import { Check, X, Heart } from "lucide-react";
 import type { FriendshipRequest } from "@/types/friendship";
 import { toast } from "sonner";
 import { formatDistanceToNow } from "date-fns";
-import { fr, enUS, es, de, pt, nl } from "date-fns/locale";
+import { fr, enUS, es, de, pt, nl, it } from "date-fns/locale";
 import { useTranslations } from "next-intl";
 import { useLocale } from "next-intl";
 
@@ -58,6 +58,7 @@ export function FriendRequestCard({
       case "de": return de;
       case "pt": return pt;
       case "nl": return nl;
+      case "it": return it;
       default: return fr;
     }
   };

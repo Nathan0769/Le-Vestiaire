@@ -23,6 +23,7 @@ export async function generateMetadata({
     de: "de_DE",
     pt: "pt_PT",
     nl: "nl_NL",
+    it: "it_IT",
   };
 
   const titles: Record<string, string> = {
@@ -32,6 +33,7 @@ export async function generateMetadata({
     de: "Le Vestiaire Foot - Verwalte deine Fußballtrikot-Sammlung | Kostenlose App",
     pt: "Le Vestiaire Foot - Gere a tua Coleção de Camisolas de Futebol | App Gratuita",
     nl: "Le Vestiaire Foot - Beheer je Voetbalshirts Collectie | Gratis App",
+    it: "Le Vestiaire Foot - Gestisci la tua Collezione di Maglie da Calcio | App Gratuita",
   };
 
   const descriptions: Record<string, string> = {
@@ -41,6 +43,7 @@ export async function generateMetadata({
     de: "Katalogisiere und verwalte deine Fußballtrikot-Sammlung kostenlos. Erstelle eine teilbare Wunschliste, erkenne Fälschungen und tritt einer leidenschaftlichen Sammlergemeinschaft bei.",
     pt: "Cataloga e gere a tua coleção de camisolas de futebol gratuitamente. Cria a tua lista de desejos partilhável, autentica camisolas e junta-te a uma comunidade apaixonada de colecionadores.",
     nl: "Catalogiseer en beheer je voetbalshirts-collectie gratis. Maak je deelbare verlanglijst, herken echte van valse shirts en sluit je aan bij een gepassioneerde community van verzamelaars.",
+    it: "Cataloga e gestisci la tua collezione di maglie da calcio gratuitamente. Crea la tua lista dei desideri da condividere, riconosci le maglie autentiche da quelle false e unisciti a una community appassionata di collezionisti.",
   };
 
   return {
@@ -59,6 +62,7 @@ export async function generateMetadata({
         de: "https://le-vestiaire-foot.fr/de",
         pt: "https://le-vestiaire-foot.fr/pt",
         nl: "https://le-vestiaire-foot.fr/nl",
+        it: "https://le-vestiaire-foot.fr/it",
       },
     },
     openGraph: {

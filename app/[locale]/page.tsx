@@ -36,6 +36,7 @@ export async function generateMetadata({
     de: "de_DE",
     pt: "pt_PT",
     nl: "nl_NL",
+    it: "it_IT",
   };
 
   const titles: Record<string, string> = {
@@ -45,6 +46,7 @@ export async function generateMetadata({
     de: "Le Vestiaire Foot - Verwalte deine Fußballtrikot-Sammlung",
     pt: "Le Vestiaire Foot - Gere a tua Coleção de Camisolas de Futebol",
     nl: "Le Vestiaire Foot - Beheer je Voetbalshirts Collectie",
+    it: "Le Vestiaire Foot - Gestisci la tua Collezione di Maglie da Calcio",
   };
 
   const descriptions: Record<string, string> = {
@@ -54,6 +56,7 @@ export async function generateMetadata({
     de: "Schließ dich tausenden Sammlern an: katalogisiere deine Fußballtrikots, erstelle eine teilbare Wunschliste, bewerte Trikots deines Clubs und entdecke die bestbewerteten Stücke der Community.",
     pt: "Junta-te a milhares de colecionadores: cataloga as tuas camisolas de futebol, cria uma lista de desejos partilhável, avalia camisolas do teu clube e descobre as peças mais bem avaliadas da comunidade.",
     nl: "Sluit je aan bij duizenden verzamelaars: catalogiseer je voetbalshirts, maak een deelbare verlanglijst, beoordeel shirts van je club en ontdek de best beoordeelde stukken van de community.",
+    it: "Unisciti a migliaia di collezionisti: cataloga le tue maglie da calcio, crea una lista dei desideri condivisibile, valuta le maglie del tuo club e scopri i pezzi più apprezzati dalla community.",
   };
 
   const keywords: Record<string, string> = {
@@ -63,6 +66,7 @@ export async function generateMetadata({
     de: "Fußballtrikot Sammlung, Trikot Sammlung App, Fußballtrikot Wunschliste, Trikots bewerten, Trikot Sammler, vintage Fußballtrikots, Trikot Sammlung verwalten",
     pt: "coleção camisolas futebol, app camisolas futebol, lista de desejos camisolas futebol, avaliar camisolas futebol, colecionadores camisolas futebol",
     nl: "voetbalshirts collectie, voetbalshirts app, verlanglijst voetbalshirts, voetbalshirts beoordelen, voetbalshirts verzamelaars, vintage voetbalshirts, voetbalshirts collectie beheren",
+    it: "collezione maglie calcio, app maglie calcio, lista dei desideri maglie calcio, valutare maglie calcio, collezionisti maglie calcio, maglie calcio vintage, gestire collezione maglie",
   };
 
   return {
@@ -101,6 +105,7 @@ export async function generateMetadata({
         de: "https://le-vestiaire-foot.fr/de",
         pt: "https://le-vestiaire-foot.fr/pt",
         nl: "https://le-vestiaire-foot.fr/nl",
+        it: "https://le-vestiaire-foot.fr/it",
       },
     },
   };
@@ -703,6 +708,41 @@ const schemaContent: Record<
       {
         q: "Zijn mijn gegevens veilig?",
         a: "Ja. Le Vestiaire Foot beschermt de persoonsgegevens van zijn gebruikers. De app gebruikt alleen essentiële cookies voor de werking en optionele analytische cookies die je op elk moment kunt weigeren. Het volledige beleid is beschikbaar op de daarvoor bestemde pagina.",
+      },
+    ],
+  },
+  it: {
+    appDescription:
+      "Le Vestiaire Foot è una web app gratuita che permette ai collezionisti di maglie da calcio di catalogare la propria collezione, creare una lista dei desideri condivisibile, autenticare le maglie e unirsi a una community di appassionati.",
+    featureList: [
+      "Catalogazione delle maglie da calcio con dettagli completi (taglia, condizione, prezzo d'acquisto, personalizzazione)",
+      "Lista dei desideri condivisibile per Natale e compleanni",
+      "Guide all'autenticazione delle maglie (Nike, Adidas, Puma)",
+      "Community di collezionisti e condivisione delle collezioni",
+      "Classifica delle maglie meglio valutate",
+    ],
+    orgDescription:
+      "Piattaforma community gratuita per collezionisti di maglie da calcio, che permette di catalogare, valutare, autenticare e condividere collezioni di maglie.",
+    faq: [
+      {
+        q: "Come aggiungo una maglia alla mia collezione?",
+        a: "Per aggiungere una maglia alla tua collezione su Le Vestiaire Foot, crea un account gratuito, vai alla sezione 'La mia collezione' e seleziona la maglia dal catalogo. Puoi indicare la taglia, la condizione, il prezzo d'acquisto e la personalizzazione di ogni maglia per tenere traccia con precisione del valore della tua collezione.",
+      },
+      {
+        q: "Posso condividere la mia lista dei desideri per Natale o per il mio compleanno?",
+        a: "Sì. Con Le Vestiaire Foot puoi creare una lista dei desideri di maglie da calcio e condividerla tramite un link diretto con amici e famiglia. Così sapranno esattamente quali maglie vorresti ricevere per Natale, un compleanno o un'altra occasione speciale.",
+      },
+      {
+        q: "Come riconosco una maglia da calcio falsa?",
+        a: "Le Vestiaire Foot offre guide all'autenticazione dettagliate per ogni grande marchio di maglie: Nike, Adidas, Puma e altri. Queste guide spiegano i principali punti di controllo, come cuciture, stemmi, etichette e tessuto, per distinguere una maglia autentica da una contraffazione.",
+      },
+      {
+        q: "Quali club e campionati sono disponibili su Le Vestiaire Foot?",
+        a: "Il catalogo di Le Vestiaire Foot include molti campionati internazionali, tra cui la Serie A, la Ligue 1, la Bundesliga e le nazionali UEFA e AFC. Nuovi club e nazionali vengono aggiunti regolarmente al catalogo.",
+      },
+      {
+        q: "I miei dati sono al sicuro?",
+        a: "Sì. Le Vestiaire Foot protegge i dati personali dei suoi utenti. L'app utilizza solo i cookie essenziali per il suo funzionamento e cookie analitici opzionali che puoi rifiutare in qualsiasi momento. La policy completa è disponibile nella pagina dedicata.",
       },
     ],
   },

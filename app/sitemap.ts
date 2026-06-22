@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import prisma from "@/lib/prisma";
 
 const BASE_URL = "https://le-vestiaire-foot.fr";
-const LOCALES = ["fr", "en", "es", "de", "pt", "nl"] as const;
+const LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"] as const;
 
 function staticLocalizedEntries(
   path: string,
@@ -21,7 +21,7 @@ function staticLocalizedEntries(
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   try {
-    // Static pages: list all 6 locales so Google crawls de/pt/nl
+    // Static pages: list all 7 locales so Google crawls de/pt/nl/it
     const staticRoutes: MetadataRoute.Sitemap = [
       ...staticLocalizedEntries("", { changeFrequency: "weekly", priority: 1 }),
       ...staticLocalizedEntries("/jerseys", {
