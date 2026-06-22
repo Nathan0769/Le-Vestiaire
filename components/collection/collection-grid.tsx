@@ -35,6 +35,8 @@ export function CollectionGrid({ collectionItems }: CollectionGridProps) {
   const sortOptions = [
     { value: "date-desc", label: t("sortOptions.dateDesc") },
     { value: "date-asc", label: t("sortOptions.dateAsc") },
+    { value: "purchase-date-desc", label: t("sortOptions.purchaseDateDesc") },
+    { value: "purchase-date-asc", label: t("sortOptions.purchaseDateAsc") },
     { value: "price-desc", label: t("sortOptions.priceDesc") },
     { value: "price-asc", label: t("sortOptions.priceAsc") },
     { value: "condition", label: t("sortOptions.condition") },
@@ -82,6 +84,22 @@ export function CollectionGrid({ collectionItems }: CollectionGridProps) {
         return (
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
+      case "purchase-date-desc": {
+        const dateA = a.purchaseDate ? new Date(a.purchaseDate).getTime() : null;
+        const dateB = b.purchaseDate ? new Date(b.purchaseDate).getTime() : null;
+        if (dateA === null && dateB === null) return 0;
+        if (dateA === null) return 1;
+        if (dateB === null) return -1;
+        return dateB - dateA;
+      }
+      case "purchase-date-asc": {
+        const dateA = a.purchaseDate ? new Date(a.purchaseDate).getTime() : null;
+        const dateB = b.purchaseDate ? new Date(b.purchaseDate).getTime() : null;
+        if (dateA === null && dateB === null) return 0;
+        if (dateA === null) return 1;
+        if (dateB === null) return -1;
+        return dateA - dateB;
+      }
       case "price-desc":
         const priceA = a.purchasePrice || 0;
         const priceB = b.purchasePrice || 0;

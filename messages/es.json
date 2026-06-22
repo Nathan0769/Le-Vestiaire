@@ -424,6 +424,8 @@
       "sortOptions": {
         "dateDesc": "Más recientes",
         "dateAsc": "Más antiguas",
+        "purchaseDateDesc": "Fecha de compra (reciente)",
+        "purchaseDateAsc": "Fecha de compra (antigua)",
         "priceDesc": "Precio descendente",
         "priceAsc": "Precio ascendente",
         "condition": "Estado",
@@ -2139,6 +2141,8 @@
     "sortBy": "Ordenar por:",
     "mostRecent": "Más recientes",
     "oldest": "Más antiguas",
+    "purchaseDateMostRecent": "Fecha de compra (reciente)",
+    "purchaseDateOldest": "Fecha de compra (antigua)",
     "priceDescending": "Precio descendente",
     "priceAscending": "Precio ascendente",
     "condition": "Estado",
