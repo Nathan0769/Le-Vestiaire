@@ -85,8 +85,11 @@ describe('slug-generator', () => {
       expect(isSlug('psgdomicile202324')).toBe(false)
     })
 
-    it('retourne false pour moins de 4 parties séparées par tirets', () => {
-      expect(isSlug('psg-domicile-2023')).toBe(false)
+    it('retourne true pour un slug court à 3 segments (saison single-year)', () => {
+      // Slug type Brasileirão/J1/MLS : flamengo-2026-away
+      // Un CUID ne contient jamais de tiret, donc tout param avec tiret = slug
+      expect(isSlug('flamengo-2026-away')).toBe(true)
+      expect(isSlug('psg-domicile-2023')).toBe(true)
     })
 
     it('retourne true pour exactement 4 parties', () => {
