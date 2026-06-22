@@ -94,6 +94,7 @@ function formatJerseyCount(count: number, translations: Translations, locale: st
     de: { one: "Trikot", other: "Trikots" },
     pt: { one: "camisola", other: "camisolas" },
     nl: { one: "shirt", other: "shirts" },
+    it: { one: "maglia", other: "maglie" },
   };
 
   const words = jerseyWord[locale] || jerseyWord.fr;
@@ -113,6 +114,7 @@ export async function generatePDFHTML(options: GeneratePDFHTMLOptions): Promise<
     de: "de-DE",
     pt: "pt-PT",
     nl: "nl-NL",
+    it: "it-IT",
   };
 
   const currentDate = new Date().toLocaleDateString(localeMap[locale] || "fr-FR", {

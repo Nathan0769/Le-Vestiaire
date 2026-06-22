@@ -14,6 +14,7 @@ export async function generateMetadata({
     de: "de_DE",
     pt: "pt_PT",
     nl: "nl_NL",
+    it: "it_IT",
   };
 
   const titles: Record<string, string> = {
@@ -23,6 +24,7 @@ export async function generateMetadata({
     de: "Fußballtrikot-Katalog - Alle Ligen und Clubs | Le Vestiaire",
     pt: "Catálogo de Camisolas de Futebol - Todas as Ligas e Clubes | Le Vestiaire",
     nl: "Voetbalshirts-Catalogus - Alle Competities en Clubs | Le Vestiaire",
+    it: "Catalogo di Maglie da Calcio - Tutti i Campionati e Club | Le Vestiaire",
   };
 
   const descriptions: Record<string, string> = {
@@ -32,6 +34,7 @@ export async function generateMetadata({
     de: "Durchsuche unseren vollständigen Fußballtrikot-Katalog: Premier League, Ligue 1, Bundesliga, Champions League und alle großen Ligen. Finde das Trikot deines Lieblingsclubs und füge es deiner Sammlung hinzu.",
     pt: "Explora o nosso catálogo completo de camisolas de futebol: Premier League, Ligue 1, La Liga, Champions League e todas as principais ligas. Encontra a camisola do teu clube favorito e adiciona-a à tua coleção.",
     nl: "Verken onze volledige voetbalshirts-catalogus: Premier League, Ligue 1, La Liga, Champions League en alle grote competities. Vind het shirt van je favoriete club, beoordeel het en voeg het toe aan je collectie.",
+    it: "Esplora il nostro catalogo completo di maglie da calcio: Premier League, Ligue 1, La Liga, Champions League e tutti i principali campionati. Trova la maglia del tuo club preferito, valutala e aggiungila alla tua collezione.",
   };
 
   const keywords: Record<string, string> = {
@@ -41,6 +44,7 @@ export async function generateMetadata({
     de: "Fußballtrikot Katalog, Premier League Trikots, Ligue 1 Trikots, Bundesliga Trikots, Champions League Trikots, Trikots nach Club, vintage Fußballtrikots, Trikot finden",
     pt: "catálogo camisolas futebol, camisolas Premier League, camisolas Ligue 1, camisolas La Liga, camisolas Champions League, camisolas por clube, camisolas futebol vintage",
     nl: "voetbalshirts catalogus, Premier League shirts, Ligue 1 shirts, La Liga shirts, Champions League shirts, shirts per club, vintage voetbalshirts, voetbalshirt vinden",
+    it: "catalogo maglie calcio, maglie Premier League, maglie Ligue 1, maglie Serie A, maglie La Liga, maglie Champions League, maglie per club, maglie calcio vintage, trovare maglia calcio",
   };
 
   return {
@@ -78,6 +82,7 @@ export async function generateMetadata({
         de: "https://le-vestiaire-foot.fr/de/jerseys",
         pt: "https://le-vestiaire-foot.fr/pt/jerseys",
         nl: "https://le-vestiaire-foot.fr/nl/jerseys",
+        it: "https://le-vestiaire-foot.fr/it/jerseys",
       },
     },
     robots: {

@@ -1,0 +1,2513 @@
+{
+  "Sidebar": {
+    "appName": "Lo Spogliatoio",
+    "home": "Home",
+    "collection": "La mia collezione",
+    "wishlist": "Lista dei desideri",
+    "jerseys": "Maglie",
+    "community": "Community",
+    "leaderboard": "Classifica",
+    "authentication": "Autenticazione",
+    "pricing": "Abbonamento",
+    "settings": "Account",
+    "friends": "Amici",
+    "friendsCollections": "Collezioni degli amici",
+    "jerseySuggestions": "Suggerimenti di maglie",
+    "openMenu": "Apri menu",
+    "closeMenu": "Chiudi menu",
+    "stats": "Le mie statistiche",
+    "bonsPlansSectionLabel": "Offerte",
+    "cfsSalesLink": "Maglie in saldo CFS",
+    "supportSectionLabel": "Sostieni",
+    "buyMeACoffee": "Buy Me a Coffee",
+    "tipeee": "Tipeee"
+  },
+  "Common": {
+    "loading": "Caricamento...",
+    "error": "Errore",
+    "success": "Successo",
+    "save": "Salva",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "edit": "Modifica",
+    "add": "Aggiungi",
+    "search": "Cerca",
+    "back": "Indietro",
+    "next": "Avanti",
+    "previous": "Precedente",
+    "confirm": "Conferma",
+    "close": "Chiudi"
+  },
+  "JerseyType": {
+    "HOME": "Casa",
+    "AWAY": "Trasferta",
+    "THIRD": "Terza",
+    "FOURTH": "Quarta",
+    "GOALKEEPER": "Portiere",
+    "SPECIAL": "Speciale",
+    "HALLOWEEN": "Halloween",
+    "ANNIVERSARY": "Anniversario",
+    "CENTENAIRE": "Centenario",
+    "OKTOBERFEST": "Oktoberfest",
+    "HUMANRACE": "Humanrace",
+    "ONE_PLANET": "One Planet",
+    "OCTOBRE_ROSE": "Ottobre Rosa",
+    "ANTI_RACISME": "Anti-Razzismo",
+    "HOMMAGE": "Omaggio",
+    "RETRO": "Retro",
+    "NOUVEL_AN_CHINOIS": "Capodanno Cinese",
+    "OFF_WHITE": "Off-White",
+    "KOCHE": "Koché",
+    "CHAMPION": "Campione"
+  },
+  "PlayerPosition": {
+    "GOALKEEPER": "Portiere",
+    "DEFENDER": "Difensore",
+    "MIDFIELDER": "Centrocampista",
+    "FORWARD": "Attaccante"
+  },
+  "PlayerPositionPlural": {
+    "GOALKEEPER": "Portieri",
+    "DEFENDER": "Difensori",
+    "MIDFIELDER": "Centrocampisti",
+    "FORWARD": "Attaccanti"
+  },
+  "Size": {
+    "XS": "XS",
+    "S": "S",
+    "M": "M",
+    "L": "L",
+    "XL": "XL",
+    "XXL": "XXL"
+  },
+  "Condition": {
+    "MINT": "Nuova",
+    "EXCELLENT": "Eccellente",
+    "GOOD": "Buona",
+    "FAIR": "Discreta",
+    "POOR": "Scarsa"
+  },
+  "JerseyVersion": {
+    "REPLICA": "Standard",
+    "AUTHENTIC": "Authentic",
+    "STOCK_PRO": "Stock Pro",
+    "PLAYER_ISSUE": "Player Issue",
+    "MATCH_WORN": "Match Worn"
+  },
+  "Auth": {
+    "login": "Accedi",
+    "logout": "Esci",
+    "signup": "Registrati",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Password dimenticata?",
+    "noAccount": "Non hai un account?",
+    "hasAccount": "Hai già un account?",
+    "continueWithGoogle": "Continua con Google"
+  },
+  "SignUp": {
+    "title": "Crea un account",
+    "subtitle": "Unisciti alla community dei collezionisti di maglie",
+    "continueWithGoogle": "Continua con Google",
+    "orContinueWith": "Oppure continua con",
+    "form": {
+      "firstName": "Nome",
+      "lastName": "Cognome",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Conferma password",
+      "required": "*",
+      "passwordPlaceholder": "••••••••"
+    },
+    "button": {
+      "creating": "Creazione account…",
+      "create": "Crea il mio account"
+    },
+    "hasAccount": "Hai già un account?",
+    "signIn": "Accedi",
+    "terms": {
+      "text": "Cliccando su crea il mio account, accetti i nostri",
+      "termsOfService": "Termini di servizio",
+      "and": "e",
+      "privacyPolicy": "Informativa sulla privacy"
+    },
+    "errors": {
+      "firstNameRequired": "Nome obbligatorio",
+      "lastNameRequired": "Cognome obbligatorio",
+      "emailRequired": "Email obbligatoria",
+      "emailInvalid": "Email non valida",
+      "passwordRequired": "Password obbligatoria",
+      "passwordTooShort": "Sono richiesti almeno 8 caratteri",
+      "passwordNoUppercase": "È richiesta almeno una lettera maiuscola",
+      "passwordNoNumber": "È richiesto almeno un numero",
+      "passwordNoSpecial": "È richiesto almeno un carattere speciale",
+      "passwordMismatch": "Le password non corrispondono",
+      "signupError": "Errore durante la registrazione"
+    }
+  },
+  "Collection": {
+    "filters": {
+      "button": "Filtri",
+      "title": "Filtra la collezione",
+      "reset": "Reimposta",
+      "resultsCount": "{count, plural, =1 {# maglia mostrata} other {# maglie mostrate}}",
+      "emptyFiltered": "Nessuna maglia corrisponde ai filtri",
+      "sections": {
+        "condition": "Condizione",
+        "type": "Tipo di maglia",
+        "league": "Campionato",
+        "flocked": "Personalizzata",
+        "signed": "Autografata",
+        "withPatches": "Con patch",
+        "gift": "Regalo"
+      },
+      "triState": {
+        "all": "Tutte",
+        "yes": "Sì",
+        "no": "No"
+      }
+    },
+    "button": {
+      "loading": "Caricamento...",
+      "inCollection": "Nella mia collezione",
+      "addToCollection": "Aggiungi alla mia collezione",
+      "toast": {
+        "mustBeConnected": "Devi essere connesso per aggiungere alla tua collezione",
+        "added": "Maglia aggiunta alla tua collezione",
+        "removed": "Maglia rimossa dalla tua collezione",
+        "wishlistRemoved": "Rimossa automaticamente dalla tua lista dei desideri",
+        "wishlistRemovedUndo": "Annulla",
+        "error": "Si è verificato un errore",
+        "connectionError": "Errore di connessione. Riprova.",
+        "manageError": "Devi essere connesso per gestire la tua collezione"
+      }
+    },
+    "stats": {
+      "owned": "Maglie possedute",
+      "jerseyInCollection": "Maglia nella tua collezione",
+      "jerseysInCollection": "Maglie nella tua collezione",
+      "favoriteLeagues": "Campionati preferiti",
+      "conditions": "Condizioni",
+      "source": "Origine",
+      "purchased": "Acquistate",
+      "gifts": "Regali",
+      "mysteryBox": "Mystery box"
+    },
+    "landing": {
+      "badge": "Gestione collezione",
+      "title": "Gestisci la tua collezione di",
+      "titleHighlight": "maglie da calcio",
+      "subtitle": "Cataloga, organizza e segui l'evoluzione della tua collezione. Unisciti a",
+      "subtitleHighlight": "oltre 100 collezionisti",
+      "subtitleEnd": "appassionati di maglie.",
+      "signIn": "Accedi",
+      "signUp": "Crea un account",
+      "exampleTitle": "Una collezione, mille possibilità",
+      "exampleSubtitle": "Esempio di collezione con 24 maglie",
+      "statsTotal": "Totale",
+      "statsTotalDesc": "Maglie possedute",
+      "statsValue": "Valore",
+      "statsValueDesc": "Valore totale",
+      "statsLeagues": "Campionati",
+      "statsConditions": "Condizioni",
+      "moreJerseys": "+ 18 altre maglie in questa collezione",
+      "createCollection": "Crea la mia collezione",
+      "featuresTitle": "Tutto ciò di cui hai bisogno",
+      "featuresSubtitle": "Funzionalità pensate per i collezionisti",
+      "features": {
+        "catalog": {
+          "title": "Cataloga tutto",
+          "description": "Taglia, condizione, prezzo d'acquisto, data, personalizzazione... Gestisci ogni dettaglio delle tue maglie"
+        },
+        "photos": {
+          "title": "Aggiungi le tue foto",
+          "description": "Immortala la tua collezione con le tue foto oltre alle immagini ufficiali"
+        },
+        "stats": {
+          "title": "Statistiche dettagliate",
+          "description": "Valore totale, distribuzione per campionato, condizioni, tipi... Analizza la tua collezione"
+        },
+        "evolution": {
+          "title": "Segui la tua evoluzione",
+          "description": "Guarda crescere la tua collezione nel tempo con i grafici"
+        },
+        "security": {
+          "title": "Sicuro e privato",
+          "description": "I tuoi dati sono protetti. Scegli tu cosa condividere con la community"
+        },
+        "friends": {
+          "title": "Confrontati con gli amici",
+          "description": "Aggiungi amici, scopri le loro collezioni e condividi la tua passione"
+        }
+      },
+      "testimonialsTitle": "Hanno condiviso la loro collezione",
+      "testimonialsSubtitle": "Migliaia di utenti soddisfatti",
+      "testimonials": {
+        "thomas": "Finalmente un'app per gestire la mia collezione! Le statistiche per campionato sono pazzesche 🔥",
+        "julie": "Finalmente posso seguire il valore della mia collezione. Interfaccia super intuitiva!",
+        "alexandre": "Il caricamento delle foto personali è fantastico. La mia collezione non è mai stata così organizzata."
+      },
+      "ctaTitle": "Pronto a gestire la tua collezione?",
+      "ctaSubtitle": "Cataloga le tue maglie e segui l'evoluzione della tua collezione in pochi clic",
+      "ctaButton": "Crea il mio account gratuito",
+      "ctaSignIn": "Accedi",
+      "ctaSecure": "100% sicuro",
+      "ctaNoCommitment": "Nessun impegno",
+      "faqTitle": "Domande frequenti",
+      "faqSubtitle": "Tutto quello che devi sapere su Le Vestiaire",
+      "faqs": {
+        "addJersey": {
+          "q": "Come aggiungo una maglia alla mia collezione?",
+          "a": "Sfoglia il nostro catalogo di migliaia di maglie, clicca su una maglia e poi su 'Aggiungi alla mia collezione'. Puoi inserire taglia, condizione, prezzo d'acquisto e molto altro."
+        },
+        "customPhotos": {
+          "q": "Posso aggiungere le mie foto?",
+          "a": "Sì! Oltre alle foto ufficiali, puoi caricare le tue foto per ogni maglia della tua collezione."
+        },
+        "privacy": {
+          "q": "La mia collezione è privata?",
+          "a": "Sì, per impostazione predefinita la tua collezione è privata. Puoi scegliere di condividerla con i tuoi amici o restare anonimo nelle classifiche."
+        },
+        "pricing": {
+          "q": "L'app è gratuita?",
+          "a": "Sì, Le Vestiaire è 100% gratuita per gestire la tua collezione, la lista dei desideri e accedere a tutte le funzionalità."
+        }
+      }
+    },
+    "modal": {
+      "add": {
+        "title": "Aggiungi alla mia collezione",
+        "description": "Inserisci i dettagli della tua maglia.",
+        "size": "Taglia",
+        "sizeRequired": "*",
+        "sizePlaceholder": "Taglia",
+        "condition": "Condizione",
+        "conditionRequired": "*",
+        "conditionPlaceholder": "Condizione",
+        "purchasePrice": "Prezzo d'acquisto (€)",
+        "purchasePricePlaceholder": "Es: 90.99",
+        "purchaseDate": "Data di acquisto",
+        "personalization": "Personalizzazione (nome, numero...)",
+        "personalizationPlaceholder": "Es: MESSI 10",
+        "playerName": "Nome del giocatore (stampa)",
+        "playerNamePlaceholder": "Es: MESSI",
+        "playerNumber": "Numero di maglia",
+        "playerNumberPlaceholder": "Es: 10",
+        "hasTags": "Ancora con cartellini",
+        "isGift": "Ricevuta in regalo",
+        "isFromMysteryBox": "Da una Mystery Box",
+        "isSigned": "Maglia autografata",
+        "signedBy": "Autografata da",
+        "signedByPlaceholder": "Es: Mbappé, Dembélé",
+        "hasAuthCertificate": "Certificato di autenticità",
+        "certificateUrlPlaceholder": "Link al certificato (es. Fabriks, PSA...)",
+        "matchDescription": "Partita",
+        "matchDescriptionPlaceholder": "Es: PSG vs OL - L1 - 15/03/2019",
+        "matchDate": "Data della partita",
+        "version": "Versione",
+        "versionPlaceholder": "Versione della maglia",
+        "notes": "Note personali",
+        "notesPlaceholder": "Aggiungi i tuoi commenti su questa maglia...",
+        "photo": "Foto personale (opzionale)",
+        "photoClickToAdd": "Clicca per aggiungere",
+        "photoYourPhoto": "la tua foto",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
+        "modifyPhoto": "Modifica la tua foto",
+        "addPhoto": "Aggiungi la tua foto",
+        "choosePhoto": "Scegli una foto",
+        "cancel": "Annulla",
+        "uploadPhoto": "Caricamento foto...",
+        "adding": "Aggiunta in corso...",
+        "addToCollection": "Aggiungi alla mia collezione",
+        "toast": {
+          "fileNotImage": "Il file deve essere un'immagine",
+          "fileTooLarge": "La foto non deve superare 5MB",
+          "sizeRequired": "La taglia è obbligatoria",
+          "conditionRequired": "La condizione è obbligatoria",
+          "uploadError": "Errore durante il caricamento della foto"
+        }
+      },
+      "view": {
+        "titleEdit": "Modifica la tua maglia",
+        "titleView": "Dettagli della tua maglia",
+        "yourPhoto": "La tua foto",
+        "officialPhoto": "Foto ufficiale",
+        "modifyPhoto": "Modifica la tua foto",
+        "addPhoto": "Aggiungi la tua foto",
+        "choosePhoto": "Scegli una foto",
+        "withTags": "Con cartellini",
+        "gift": "Regalo",
+        "mysteryBox": "Mystery box",
+        "club": "Club",
+        "league": "Campionato",
+        "type": "Tipo",
+        "season": "Stagione",
+        "brand": "Marca",
+        "yourJersey": "La tua maglia",
+        "purchasePrice": "Prezzo d'acquisto",
+        "purchasedOn": "Acquistata il",
+        "player": "Giocatore",
+        "number": "Numero",
+        "personalization": "Personalizzazione",
+        "addedOn": "Aggiunta il",
+        "personalNotes": "Note personali",
+        "close": "Chiudi",
+        "edit": "Modifica",
+        "delete": "Elimina",
+        "cancel": "Annulla",
+        "save": "Salva",
+        "uploading": "Caricamento...",
+        "saving": "Salvataggio...",
+        "size": "Taglia",
+        "sizeRequired": "*",
+        "condition": "Condizione",
+        "conditionRequired": "*",
+        "isGift": "Questa maglia è un regalo",
+        "isFromMysteryBox": "Maglia ricevuta in una mystery box",
+        "hasTags": "Ancora con cartellini",
+        "version": "Versione",
+        "versionPlaceholder": "Versione della maglia",
+        "signed": "Autografata",
+        "longSleeves": "Maniche lunghe",
+        "cards": {
+          "identity": "La maglia",
+          "myJersey": "Il mio pezzo",
+          "acquisition": "Acquisizione",
+          "authentication": "Autenticazione",
+          "flocageTitle": "Stampa",
+          "patchTitle": "Patch",
+          "patchesTitle": "Patch",
+          "myJerseyEmpty": "Nessuna personalizzazione",
+          "viewCertificate": "Vedi certificato"
+        },
+        "authCertificate": "Cert. auth.",
+        "isSigned": "Maglia autografata",
+        "signedBy": "Autografata da",
+        "signedByPlaceholder": "Es: Mbappé, Dembélé",
+        "hasAuthCertificate": "Certificato di autenticità",
+        "certificateUrlPlaceholder": "Link al certificato (es. Fabriks, PSA...)",
+        "matchDescription": "Partita",
+        "matchDescriptionPlaceholder": "Es: PSG vs OL - L1 - 15/03/2019",
+        "matchDate": "Data della partita",
+        "purchaseDate": "Data di acquisto",
+        "notes": "Note personali",
+        "personalizationPlaceholder": "Es: MESSI 10",
+        "playerName": "Nome del giocatore (stampa)",
+        "playerNamePlaceholder": "Es: MESSI",
+        "playerNumber": "Numero di maglia",
+        "playerNumberPlaceholder": "Es: 10",
+        "notesPlaceholder": "Aggiungi i tuoi commenti su questa maglia...",
+        "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
+        "purchasePricePlaceholder": "Es: 90.50",
+        "toast": {
+          "fileNotImage": "Il file deve essere un'immagine",
+          "fileTooLarge": "La foto non deve superare 5MB",
+          "sizeConditionRequired": "Taglia e condizione sono obbligatorie",
+          "uploadError": "Errore durante il caricamento della foto",
+          "updated": "Maglia aggiornata con successo",
+          "error": "Si è verificato un errore",
+          "connectionError": "Errore di connessione. Riprova.",
+          "deleted": "Maglia rimossa dalla tua collezione"
+        }
+      },
+      "delete": {
+        "title": "Eliminare la maglia?",
+        "description": "Sei sicuro di voler rimuovere questa maglia dalla tua collezione? Questa azione non può essere annullata.",
+        "cancel": "Annulla",
+        "confirm": "Elimina",
+        "deleting": "Eliminazione..."
+      }
+    },
+    "grid": {
+      "title": "Le tue maglie",
+      "sortBy": "Ordina per:",
+      "sortOptions": {
+        "dateDesc": "Più recenti",
+        "dateAsc": "Più vecchie",
+        "priceDesc": "Prezzo decrescente",
+        "priceAsc": "Prezzo crescente",
+        "condition": "Condizione",
+        "club": "Club (A-Z)",
+        "season": "Stagione"
+      },
+      "noJerseys": "Nessuna maglia nella tua collezione."
+    },
+    "page": {
+      "title": "La mia collezione",
+      "jersey": "maglia",
+      "jerseys": "maglie",
+      "emptyTitle": "La tua collezione è vuota",
+      "emptyDescription": "Inizia a costruire la tua collezione aggiungendo le tue prime maglie!",
+      "errorTitle": "Errore di caricamento",
+      "errorDescription": "Si è verificato un errore durante il caricamento della tua collezione. Aggiorna la pagina o riprova più tardi.",
+      "reload": "Ricarica la pagina"
+    }
+  },
+  "Onboarding": {
+    "step1Title": "Scegli il tuo username",
+    "step1Subtitle": "È il nome che vedranno gli altri collezionisti",
+    "step2Title": "La tua squadra del cuore",
+    "step2Subtitle": "Apparirà nella classifica e nel tuo profilo",
+    "usernamePlaceholder": "Il tuo username...",
+    "usernameRules": "Da 5 a 20 caratteri, lettere, numeri, - e _",
+    "usernameAvailable": "Username disponibile",
+    "usernameUnavailable": "Username già in uso",
+    "placeholder": "Cerca una squadra...",
+    "cta": "Continua",
+    "skip": "Salta questo passaggio",
+    "bannerText": "Scegli la tua squadra del cuore per apparire nella classifica e con i tuoi amici",
+    "bannerCta": "Scegli la mia squadra"
+  },
+  "CollectionStats": {
+    "title": "Statistiche della collezione",
+    "errorTitle": "Errore di caricamento",
+    "errorDescription": "Impossibile caricare le statistiche. Riprova.",
+    "emptyTitle": "Nessuna statistica disponibile",
+    "emptyDescription": "Aggiungi maglie alla tua collezione per vedere statistiche dettagliate.",
+    "tabs": {
+      "overview": "Panoramica",
+      "distribution": "Distribuzione",
+      "financial": "Finanziario",
+      "records": "Record"
+    },
+    "timeline": {
+      "title": "Evoluzione della collezione",
+      "acquisitions": "Acquisizioni",
+      "jerseys": "Maglie",
+      "jerseysAdded": "{count, plural, one {# maglia aggiunta} other {# maglie aggiunte}}",
+      "totalJerseys": "Totale maglie"
+    },
+    "brandDistribution": {
+      "title": "Distribuzione per marca",
+      "jerseys": "Maglie",
+      "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}"
+    },
+    "typeDistribution": {
+      "title": "Distribuzione per tipo",
+      "jerseys": "Maglie",
+      "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}"
+    },
+    "leagueDistribution": {
+      "title": "Distribuzione per campionato",
+      "jerseys": "Maglie",
+      "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}"
+    },
+    "clubDistribution": {
+      "title": "Top 10 Club",
+      "jerseys": "Maglie",
+      "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}"
+    },
+    "sizeDistribution": {
+      "title": "Distribuzione per taglia",
+      "jerseys": "Maglie",
+      "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}"
+    },
+    "conditionDistribution": {
+      "title": "Distribuzione per condizione",
+      "jerseys": "Maglie",
+      "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}"
+    },
+    "sourceDistribution": {
+      "title": "Origini delle maglie",
+      "additionalTitle": "Dettagli della collezione",
+      "jerseys": "Maglie",
+      "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}",
+      "purchased": "Acquistate",
+      "gift": "Regali",
+      "mysteryBox": "Mystery Box",
+      "withTags": "Con cartellini",
+      "withPersonalization": "Personalizzate",
+      "withCustomPhoto": "Foto personali"
+    },
+    "spendingTimeline": {
+      "title": "Investimento cumulativo",
+      "spent": "spesi",
+      "monthlySpent": "Questo mese",
+      "totalInvested": "Totale investito",
+      "noData": "Nessun dato di spesa disponibile"
+    },
+    "activityHeatmap": {
+      "title": "Attività di acquisizione (ultimi 12 mesi)",
+      "noJersey": "Nessuna maglia quel giorno",
+      "jerseyCount": "{count, plural, one {# maglia aggiunta} other {# maglie aggiunte}}",
+      "less": "Meno",
+      "more": "Più"
+    },
+    "decadeDistribution": {
+      "title": "Distribuzione per decennio",
+      "jerseyCount": "{count, plural, one {# maglia} other {# maglie}}"
+    },
+    "financial": {
+      "totalCollectionValue": "Valore totale",
+      "totalCollectionValueDescription": "Valore totale della collezione",
+      "totalSpent": "Totale speso",
+      "totalSpentDescription": "Importo totale investito",
+      "averagePrice": "Prezzo medio",
+      "averagePriceDescription": "Per maglia acquistata",
+      "totalRetailValue": "Valore retail totale",
+      "totalRetailValueDescription": "Prezzo retail cumulativo",
+      "mostExpensive": "Più costosa",
+      "leastExpensive": "Meno costosa",
+      "marketValue": "Valore di mercato",
+      "marketValueDescription": "Stimato tramite prezzi di rivendita",
+      "comingSoon": "Presto",
+      "noData": "Nessun dato disponibile"
+    },
+    "diversity": {
+      "uniqueClubs": "Club diversi",
+      "uniqueClubsDescription": "Nella tua collezione",
+      "uniqueLeagues": "Campionati diversi",
+      "uniqueLeaguesDescription": "Rappresentati",
+      "uniqueCountries": "Paesi diversi",
+      "uniqueCountriesDescription": "In tutto il mondo"
+    },
+    "versionDistribution": {
+      "title": "Distribuzione per versione",
+      "jerseys": "Maglie",
+      "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}",
+      "labels": {
+        "REPLICA": "Standard",
+        "AUTHENTIC": "Authentic",
+        "STOCK_PRO": "Stock Pro",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      }
+    },
+    "records": {
+      "oldestAcquisition": "Prima acquisizione",
+      "newestAcquisition": "Ultima acquisizione",
+      "topClub": "Club preferito",
+      "topLeague": "Campionato preferito",
+      "topBrand": "Marca fedele",
+      "topSeason": "Stagione top",
+      "mostActiveMonth": "Mese più attivo",
+      "longestStreak": "Striscia più lunga",
+      "streakMonths": "{count, plural, one {# mese consecutivo} other {# mesi consecutivi}}",
+      "mostExpensive": "Maglia più costosa",
+      "leastExpensive": "Maglia meno costosa",
+      "jerseyCount": "{count, plural, one {# maglia} other {# maglie}}",
+      "customizationStats": "Personalizzazioni",
+      "withTags": "Con cartellini",
+      "withPersonalization": "Personalizzate",
+      "withCustomPhoto": "Foto personali",
+      "withSigned": "Autografate",
+      "withAuthCertificate": "Con certificato"
+    },
+    "upgrade": {
+      "distribution": {
+        "title": "Statistiche di distribuzione PRO",
+        "description": "Analizza la distribuzione della tua collezione nel dettaglio",
+        "feature1": "Distribuzione per campionato e paese",
+        "feature2": "Top club nella tua collezione",
+        "feature3": "Distribuzione per taglia e condizione",
+        "feature4": "Analisi delle fonti di acquisizione"
+      },
+      "financial": {
+        "title": "Statistiche finanziarie PRO",
+        "description": "Segui le tue spese e il valore della tua collezione",
+        "feature1": "Spesa totale e media",
+        "feature2": "Valore stimato della collezione",
+        "feature3": "Timeline delle spese",
+        "feature4": "Maglie più e meno costose"
+      },
+      "records": {
+        "title": "Record e statistiche PRO",
+        "description": "Scopri i record della tua collezione",
+        "feature1": "Acquisizioni più vecchie/recenti",
+        "feature2": "Statistiche di personalizzazione",
+        "feature3": "Tasso di maglie con cartellini",
+        "feature4": "Metriche di qualità della collezione"
+      }
+    }
+  },
+  "Wishlist": {
+    "button": {
+      "loading": "Caricamento...",
+      "addToWishlist": "Aggiungi alla mia lista dei desideri",
+      "removeFromWishlist": "Rimuovi dalla lista dei desideri",
+      "toast": {
+        "mustBeConnected": "Devi essere connesso per aggiungere alla tua lista dei desideri",
+        "added": "Maglia aggiunta alla tua lista dei desideri",
+        "removed": "Maglia rimossa dalla tua lista dei desideri",
+        "error": "Si è verificato un errore",
+        "connectionError": "Errore di connessione. Riprova."
+      }
+    },
+    "share": {
+      "button": "Condividi",
+      "shareAll": "Tutta la mia lista dei desideri",
+      "shareAllCount": "{count, plural, =0 {0 maglie} one {# maglia} other {# maglie}}",
+      "shareSelection": "Una selezione",
+      "shareSelectionDesc": "Scegli le maglie da condividere"
+    },
+    "selectionModal": {
+      "title": "Condividi la mia lista dei desideri",
+      "chooseTheme": "Scegli un tema",
+      "listTitle": "Titolo della lista",
+      "listTitlePlaceholder": "Es: La mia lista di Natale 🎄",
+      "personalMessage": "Messaggio personale",
+      "personalMessagePlaceholder": "Aggiungi un messaggio per i tuoi cari...",
+      "charactersCount": "{count}/500 caratteri",
+      "selectJerseys": "Seleziona le tue maglie ({selected}/{total})",
+      "selectAll": "Seleziona tutto",
+      "deselectAll": "Deseleziona tutto",
+      "cancel": "Annulla",
+      "share": "Condividi ({count, plural, one {# maglia} other {# maglie}})"
+    },
+    "themeModal": {
+      "title": "Personalizza la mia lista dei desideri",
+      "selectedCount": "{count, plural, one {# maglia selezionata} other {# maglie selezionate}}",
+      "chooseTheme": "Scegli un tema",
+      "listTitle": "Titolo della lista",
+      "listTitlePlaceholder": "Es: La mia lista di Natale 🎄",
+      "personalMessage": "Messaggio personale",
+      "personalMessagePlaceholder": "Aggiungi un messaggio per i tuoi cari...",
+      "charactersCount": "{count}/500 caratteri",
+      "cancel": "Annulla",
+      "continue": "Continua",
+      "themes": {
+        "christmas": {
+          "name": "Natale",
+          "defaultTitle": "La mia lista di Natale 🎄",
+          "defaultMessage": "Ciao! Ecco alcune idee di maglie che mi piacerebbe ricevere 😊"
+        },
+        "birthday": {
+          "name": "Compleanno",
+          "defaultTitle": "La mia wishlist di compleanno 🎂",
+          "defaultMessage": "Il mio compleanno si avvicina! Ecco i miei desideri di maglie 🎉"
+        },
+        "valentine": {
+          "name": "San Valentino",
+          "defaultTitle": "La mia lista di San Valentino 💝",
+          "defaultMessage": "Alcune idee di maglie che mi renderebbero molto felice ❤️"
+        },
+        "default": {
+          "name": "Classica",
+          "defaultTitle": "La mia wishlist di maglie ⚽",
+          "defaultMessage": "Ecco alcune maglie che vorrei aggiungere alla mia collezione!"
+        }
+      }
+    },
+    "shareFormatModal": {
+      "title": "Come vuoi condividere la tua lista?",
+      "selectedCount": "{count, plural, one {# maglia selezionata} other {# maglie selezionate}}",
+      "formats": {
+        "link": {
+          "title": "Link da condividere",
+          "description": "Pagina web visualizzabile su mobile e PC"
+        },
+        "image": {
+          "title": "Scarica immagine",
+          "description": "Perfetta per le storie Instagram o WhatsApp"
+        },
+        "pdf": {
+          "title": "Scarica PDF",
+          "description": "Documento pulito da stampare o inviare"
+        }
+      },
+      "generating": "Generazione...",
+      "creatingLink": "Creazione del tuo link",
+      "creatingImage": "Creazione della tua immagine",
+      "creatingPdf": "Creazione del tuo PDF",
+      "ready": "Pronto!",
+      "yourShareLink": "Il tuo link da condividere:",
+      "copyLink": "Copia link",
+      "copied": "Copiato!",
+      "share": "Condividi",
+      "close": "Chiudi",
+      "toast": {
+        "linkGenerated": "Link generato!",
+        "linkError": "Errore nella generazione del link",
+        "imageDownloaded": "Immagine scaricata con successo!",
+        "imageError": "Errore nella generazione dell'immagine",
+        "pdfDownloaded": "PDF scaricato con successo!",
+        "pdfError": "Errore nella generazione del PDF",
+        "linkCopied": "Link copiato!"
+      }
+    },
+    "landing": {
+      "badge": "Lista dei desideri",
+      "hero": {
+        "title": "Crea la tua lista dei desideri di",
+        "titleHighlight": "maglie da calcio",
+        "subtitle": "Elenca i tuoi desideri e condividili facilmente con i tuoi cari, con animazioni fluide e design premium.",
+        "signIn": "Accedi",
+        "signUp": "Crea account"
+      },
+      "example": {
+        "badge": "Esempio di wishlist",
+        "title": "La mia lista di Natale 🎄",
+        "message": "Alcune idee di maglie che mi farebbero felice 😊",
+        "jerseyCount": "{count, plural, one {# maglia} other {# maglie}}",
+        "createdWith": "Creata con Le Vestiaire Foot ⚽",
+        "createButton": "Crea la mia lista dei desideri"
+      },
+      "shareSection": {
+        "title": "Condividi come vuoi",
+        "subtitle": "3 formati adatti a tutte le tue esigenze"
+      },
+      "featuresSection": {
+        "title": "Tutto è incluso",
+        "subtitle": "Funzionalità pensate per semplificarti la vita",
+        "features": {
+          "create": {
+            "title": "Crea la tua lista",
+            "description": "Aggiungi tutte le maglie che sogni con un clic dal nostro catalogo"
+          },
+          "share": {
+            "title": "Condividi facilmente",
+            "description": "Genera un link, un'immagine o un PDF da condividere con i tuoi cari per Natale, compleanni..."
+          },
+          "customize": {
+            "title": "Personalizza il tema",
+            "description": "Scegli tra diversi temi (Natale, Compleanno, Standard) e aggiungi un messaggio personale"
+          },
+          "manage": {
+            "title": "Gestisci le tue occasioni",
+            "description": "Crea più liste dei desideri per occasioni diverse: Natale, compleanno, obiettivi personali..."
+          },
+          "noDuplicates": {
+            "title": "Evita i doppioni",
+            "description": "Una volta aggiunta alla tua collezione, la maglia scompare automaticamente dalla lista dei desideri"
+          },
+          "free": {
+            "title": "100% gratuito",
+            "description": "Crea e condividi tutte le liste dei desideri che vuoi senza alcun costo"
+          }
+        }
+      },
+      "useCasesSection": {
+        "title": "Per ogni occasione",
+        "subtitle": "Una lista dei desideri per ogni momento importante",
+        "useCases": {
+          "christmas": {
+            "title": "Arriva Natale",
+            "description": "Crea la tua lista di Natale e condividila con la famiglia. Basta con i regali indesiderati!"
+          },
+          "birthday": {
+            "title": "Compleanno",
+            "description": "Condividi i tuoi desideri di maglie per il tuo compleanno. I tuoi amici sapranno cosa regalarti."
+          },
+          "collection": {
+            "title": "Obiettivi di collezione",
+            "description": "Elenca le maglie che stai cercando per completare la tua collezione. Tieni d'occhio i tuoi obiettivi."
+          },
+          "valentine": {
+            "title": "San Valentino",
+            "description": "Condividete i vostri desideri di maglie in coppia: duo di club, edizioni speciali e idee regalo per celebrare insieme la vostra passione."
+          }
+        }
+      },
+      "testimonialsSection": {
+        "title": "Hanno condiviso la loro wishlist",
+        "subtitle": "Migliaia di utenti soddisfatti",
+        "testimonials": {
+          "lucas": {
+            "name": "Lucas M.",
+            "quote": "Ho condiviso la mia wishlist a Natale e la mia famiglia l'ha adorata! Niente più doppioni e ho ricevuto esattamente le maglie che volevo."
+          },
+          "sarah": {
+            "name": "Sarah D.",
+            "quote": "Super pratica per organizzare la mia collezione. Posso condividere i miei desideri in un clic e tenere traccia di ciò che ho già ricevuto."
+          },
+          "tom": {
+            "name": "Tom R.",
+            "quote": "I miei amici mi hanno regalato esattamente le maglie della mia wishlist per il compleanno. È bellissimo poter condividere facilmente le proprie passioni!"
+          }
+        }
+      },
+      "ctaSection": {
+        "title": "Pronto a creare la tua lista dei desideri?",
+        "subtitle": "Elenca i tuoi desideri e condividili in pochi clic con i tuoi cari",
+        "signUpButton": "Crea il mio account gratuito",
+        "signInButton": "Accedi",
+        "createAccount": "Crea il mio account gratuito",
+        "login": "Accedi",
+        "secure": "100% sicuro",
+        "noCommitment": "Nessun impegno"
+      },
+      "faqSection": {
+        "title": "Domande frequenti",
+        "faqs": {
+          "howToCreate": {
+            "question": "Come creo la mia lista dei desideri?",
+            "answer": "È semplice! Sfoglia il nostro catalogo, clicca sul cuore per aggiungere una maglia alla tua lista. Poi clicca su 'Condividi' per generare il tuo link personalizzato."
+          },
+          "multipleWishlists": {
+            "question": "Posso creare più liste dei desideri?",
+            "answer": "Per ora hai un'unica lista dei desideri che puoi modificare in qualsiasi momento. Puoi scegliere quali maglie condividere ogni volta."
+          },
+          "howToView": {
+            "question": "Come fanno i miei cari a vedere la mia lista?",
+            "answer": "Generi un link unico da condividere via messaggio, email o social. Possono vedere la tua lista da mobile o PC, senza dover creare un account."
+          },
+          "pricing": {
+            "question": "La lista dei desideri è gratuita?",
+            "answer": "Sì! Creare, gestire e condividere la tua lista dei desideri è 100% gratuito, senza limiti."
+          },
+          "received": {
+            "question": "Cosa succede quando ricevo una maglia?",
+            "answer": "Una volta aggiunta la maglia alla tua collezione, scompare automaticamente dalla lista dei desideri. Niente più doppioni!"
+          },
+          "customize": {
+            "question": "Posso personalizzare la mia lista dei desideri?",
+            "answer": "Sì! Puoi scegliere un tema (Natale, Compleanno...), aggiungere un titolo e un messaggio personale per i tuoi cari."
+          }
+        }
+      }
+    },
+    "page": {
+      "title": "La mia lista dei desideri",
+      "jerseyCount": "{count, plural, one {# maglia} other {# maglie}}",
+      "empty": {
+        "title": "Non hai maglie che ti hanno colpito",
+        "description": "Sfoglia la nostra collezione e aggiungi le tue maglie preferite alla lista dei desideri!",
+        "cta": "Esplora il catalogo"
+      },
+      "error": {
+        "title": "Errore nel caricamento della tua lista dei desideri",
+        "description": "Si è verificato un errore. Riprova più tardi."
+      },
+      "stats": {
+        "wanted": "Maglie desiderate",
+        "wantedSingular": "Maglia nella tua lista dei desideri",
+        "wantedPlural": "Maglie nella tua lista dei desideri",
+        "favoriteLeagues": "Campionati preferiti",
+        "preferredTypes": "Tipi preferiti"
+      },
+      "jerseys": "Le tue maglie"
+    },
+    "sharedClient": {
+      "wishlist": "Lista dei desideri",
+      "jerseyCount": "{count, plural, one {# maglia} other {# maglie}}",
+      "createdWith": "Questa lista è stata creata con",
+      "brandName": "Le Vestiaire Foot",
+      "createOwn": "Crea la tua collezione di maglie",
+      "shareWithLovedOnes": "e condividi i tuoi desideri con i tuoi cari ⚽"
+    },
+    "wishlist": "Lista dei desideri",
+    "sortBy": "Ordina per",
+    "recentlyAdded": "Aggiunte di recente",
+    "oldestAdded": "Più vecchie",
+    "priceDescending": "Prezzo (decrescente)",
+    "priceAscending": "Prezzo (crescente)",
+    "clubAZ": "Club (A-Z)",
+    "emptyWishlist": "Lista dei desideri vuota",
+    "jerseysWanted": "Maglie desiderate",
+    "jersey": "maglia",
+    "jerseys": "maglie",
+    "inWishlist": "nella lista dei desideri",
+    "estimatedValue": "Valore stimato",
+    "wantedLeagues": "Campionati desiderati",
+    "wantedTypes": "Tipi desiderati",
+    "noData": "Nessun dato",
+    "wishlistNotFound": "Lista dei desideri non trovata",
+    "wishlistOf": "Lista dei desideri di {name}",
+    "discoverWishlist": "Scopri la lista dei desideri di",
+    "user": "Utente",
+    "noJerseysInWishlistYet": "{name} non ha ancora aggiunto maglie alla sua lista dei desideri.",
+    "highestPriority": "Priorità più alta",
+    "lowestPriority": "Priorità più bassa",
+    "priorities": "Priorità",
+    "priorityHigh": "Alta",
+    "priorityMedium": "Media",
+    "priorityLow": "Bassa"
+  },
+  "Login": {
+    "title": "Bentornato",
+    "subtitle": "Accedi con il tuo account Google",
+    "signInWithGoogle": "Accedi con Google",
+    "orContinueWith": "Oppure continua con",
+    "lastUsed": "Ultimo utilizzo",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "m@esempio.com",
+      "password": "Password",
+      "forgotPassword": "Password dimenticata?"
+    },
+    "button": {
+      "loading": "Caricamento…",
+      "signIn": "Accedi"
+    },
+    "noAccount": "Non hai un account?",
+    "createAccount": "Crea un account",
+    "terms": {
+      "text": "Cliccando su accedi, accetti i nostri",
+      "termsOfService": "Termini di servizio",
+      "and": "e",
+      "privacyPolicy": "Informativa sulla privacy"
+    },
+    "errors": {
+      "signInError": "Errore di accesso",
+      "googleSignInError": "Errore nell'accesso con Google"
+    }
+  },
+  "Errors": {
+    "required": "Questo campo è obbligatorio",
+    "invalidEmail": "Email non valida",
+    "passwordTooShort": "La password deve contenere almeno 8 caratteri",
+    "generic": "Si è verificato un errore",
+    "unauthorized": "Non autorizzato",
+    "notFound": "Non trovato",
+    "rateLimited": "Troppe richieste, riprova più tardi"
+  },
+  "Profile": {
+    "editButton": "Modifica il tuo profilo",
+    "title": "Il mio profilo",
+    "description": "Modifica qui il tuo profilo. Clicca su Salva quando hai finito.",
+    "friends": "{count} amico",
+    "friends_other": "{count} amici",
+    "favoriteTeam": "Squadra del cuore",
+    "choosePlaceholder": "Scegli una squadra",
+    "saveChanges": "Salva modifiche",
+    "saving": "Salvataggio…",
+    "close": "Chiudi",
+    "updateSuccess": "Profilo aggiornato!",
+    "avatarUpdateSuccess": "Avatar aggiornato!",
+    "avatarUploadError": "Errore nel caricamento dell'avatar",
+    "userNotAuthenticated": "Utente non autenticato",
+    "serverUploadError": "Errore di caricamento sul server",
+    "saveError": "Errore nel salvataggio.",
+    "bio": {
+      "label": "Bio",
+      "placeholder": "Scrivi qualcosa su di te…",
+      "charactersCount": "{current}/{max} caratteri"
+    },
+    "themeColor": {
+      "label": "Colore tema",
+      "placeholder": "Scegli un colore",
+      "colors": {
+        "bleu": "Blu",
+        "bleu-nuit": "Blu notte",
+        "rouge": "Rosso",
+        "violet": "Viola",
+        "vert": "Verde",
+        "orange": "Arancione",
+        "jaune": "Giallo",
+        "rose": "Rosa",
+        "violet-leger": "Viola chiaro",
+        "marine": "Blu marino",
+        "gold": "Oro"
+      }
+    },
+    "username": {
+      "label": "Username",
+      "placeholder": "il_mio_username",
+      "rules": "5-20 caratteri • Solo lettere, numeri, trattini e underscore",
+      "notAvailable": "Questo username non è disponibile",
+      "available": "✓ Questo username è disponibile"
+    }
+  },
+  "HomePage": {
+    "hero": {
+      "title": "Benvenuto su",
+      "appName": "Lo Spogliatoio",
+      "subtitle": "Gestisci la tua collezione di maglie da calcio, crea la tua lista dei desideri e unisciti a una community di appassionati.",
+      "myCollection": "La mia collezione",
+      "myWishlist": "Lista dei desideri",
+      "login": "Accedi",
+      "signup": "Crea account",
+      "discoverJerseys": "Scopri le maglie",
+      "ariaLabelBanner": "Sezione home - Collezione di maglie da calcio",
+      "ariaLabelStats": "Statistiche della tua collezione di maglie",
+      "ariaLabelAuth": "Azioni di autenticazione",
+      "ariaLabelCollectionCount": "{count} maglie nella tua collezione",
+      "ariaLabelWishlistCount": "{count} maglie nella tua lista dei desideri"
+    },
+    "topRated": {
+      "title": "Maglie più votate",
+      "subtitle": "Scopri le maglie preferite dalla community",
+      "viewAll": "Vedi tutte le maglie"
+    },
+    "recent": {
+      "title": "Maglie aggiunte di recente",
+      "subtitle": "Nuove aggiunte al catalogo",
+      "viewAll": "Vedi tutte le maglie",
+      "new": "Nuova",
+      "recently": "Di recente"
+    },
+    "cfsPromos": {
+      "title": "Completa la tua collezione a prezzo vantaggioso",
+      "subtitle": "Selezione di maglie in saldo dal nostro partner Classic Football Shirts",
+      "cta": "Vedi tutte le offerte",
+      "partnerNotice": "Link affiliato - guadagniamo una commissione sugli acquisti effettuati tramite questi link.",
+      "showMore": "Vedi altre {count} offerte",
+      "showLess": "Mostra meno",
+      "terms": {
+        "Authentic Home Shirt": "Maglia Home Authentic",
+        "Authentic Away Shirt": "Maglia Away Authentic",
+        "Authentic Third Shirt": "Maglia Third Authentic",
+        "Authentic Fourth Shirt": "Maglia Fourth Authentic",
+        "Player Issue Home Shirt": "Maglia Home Player Issue",
+        "Player Issue Away Shirt": "Maglia Away Player Issue",
+        "Player Issue Third Shirt": "Maglia Third Player Issue",
+        "Home Shirt": "Maglia Home",
+        "Away Shirt": "Maglia Away",
+        "Third Shirt": "Maglia Third",
+        "Fourth Shirt": "Maglia Fourth",
+        "Anniversary Shirt": "Maglia Anniversario",
+        "Player Issue": "Player Issue",
+        "In Box": "In scatola",
+        "L/S": "M/L",
+        "Authentic": "Authentic",
+        "Anniversary": "Anniversario",
+        "Fourth": "Quarta",
+        "Third": "Terza",
+        "Away": "Trasferta",
+        "Home": "Casa",
+        "Shirt": "Maglia"
+      }
+    },
+    "userStats": {
+      "title": "La tua collezione",
+      "subtitle": "Una panoramica della tua passione per le maglie da calcio",
+      "myCollection": "La mia collezione",
+      "jerseyCollected": "Maglia collezionata",
+      "jerseysCollected": "Maglie collezionate",
+      "invested": "investiti",
+      "viewMyCollection": "Vedi la mia collezione",
+      "myWishlist": "Lista dei desideri",
+      "jerseyDesired": "Maglia desiderata",
+      "jerseysDesired": "Maglie desiderate",
+      "viewMyWishlist": "Vedi la mia lista dei desideri",
+      "favoriteLeague": "Campionato preferito",
+      "jerseysFrom": "Maglie di",
+      "startCollection": "Inizia la tua collezione per vedere le tue statistiche!",
+      "recentAdditionsCollection": "Aggiunte recenti alla tua collezione",
+      "recentAdditionsWishlist": "Aggiunte recenti alla tua lista dei desideri",
+      "statsTeaser": {
+        "title": "Le tue statistiche nel dettaglio",
+        "subtitle": "Analizza la tua collezione da ogni angolazione",
+        "cta": "Vedi statistiche",
+        "uniqueClubs": "Club unici",
+        "uniqueCountries": "Paesi rappresentati",
+        "uniqueLeagues": "Campionati diversi"
+      }
+    },
+    "features": {
+      "title": "Perché scegliere Le Vestiaire Foot?",
+      "subtitle": "Le Vestiaire Foot è un'app web gratuita pensata dai collezionisti, per i collezionisti.",
+      "catalogCollection": {
+        "title": "Cataloga la tua collezione di maglie",
+        "description": "Registra taglia, condizione e prezzo d'acquisto di ogni maglia. Le Vestiaire Foot tiene traccia automaticamente del valore totale della tua collezione."
+      },
+      "shareableWishlist": {
+        "title": "Lista dei desideri di maglie condivisibile",
+        "description": "Costruisci la tua lista dei desideri e condividila con amici e familiari tramite un link diretto. Perfetta per Natale, compleanni o qualsiasi occasione speciale."
+      },
+      "authentication": {
+        "title": "Autenticazione delle maglie da calcio",
+        "description": "Impara a distinguere le maglie autentiche dalle contraffazioni.<br></br>Le Vestiaire Foot offre <link>guide di autenticazione dettagliate</link> per Nike, Adidas, Puma e molto altro."
+      },
+      "community": {
+        "title": "Community di collezionisti di maglie da calcio",
+        "description": "Le Vestiaire Foot riunisce i collezionisti. Aggiungi amici, esplora le loro collezioni e scopri le maglie più votate."
+      }
+    },
+    "stats": {
+      "collectors": "Collezionisti",
+      "jerseys": "Maglie catalogate",
+      "clubs": "Club"
+    },
+    "faq": {
+      "title": "Domande frequenti",
+      "subtitle": "Tutto quello che devi sapere su Lo Spogliatoio",
+      "questions": {
+        "addToCollection": {
+          "question": "Come aggiungo una maglia alla mia collezione?",
+          "answer": "È molto semplice! Cerca la maglia che possiedi nel nostro database, poi clicca su 'Aggiungi alla mia collezione'. Potrai inserire tutti i dettagli: taglia, condizione, prezzo d'acquisto, ecc."
+        },
+        "shareWishlist": {
+          "question": "Posso condividere la mia lista dei desideri per Natale o il compleanno?",
+          "answer": "Assolutamente! Crea la tua lista dei desideri, personalizzala con un messaggio e genera un link unico da condividere con i tuoi cari. Potranno vedere i tuoi desideri senza bisogno di creare un account."
+        },
+        "authenticateJersey": {
+          "question": "Come posso riconoscere una maglia falsa?",
+          "answer": "Dai un'occhiata alla nostra sezione 'Autenticazione' dove troverai guide dettagliate per ogni marca. Ti spieghiamo come verificare etichette, cuciture, loghi e altri dettagli che distinguono una maglia autentica da una contraffazione."
+        },
+        "availableClubs": {
+          "question": "Quali club e campionati sono disponibili?",
+          "answer": "Il nostro database include maglie di tutti i principali campionati europei (Ligue 1, Premier League, La Liga, Serie A, Bundesliga) oltre a molti club internazionali e campionati minori. Aggiungiamo regolarmente nuove maglie!"
+        },
+        "dataSecurity": {
+          "question": "I miei dati sono al sicuro?",
+          "answer": "Sì, prendiamo la sicurezza molto seriamente. I tuoi dati sono ospitati in Europa (Francia) e protetti secondo gli standard GDPR. Resti proprietario della tua collezione e puoi esportarla in qualsiasi momento."
+        }
+      }
+    },
+    "support": {
+      "title": "Sostieni il progetto",
+      "subtitle": "Sostieni lo sviluppo dell'app, i miglioramenti in arrivo e l'avanzamento dell'app mobile.",
+      "bmac": "Buy Me a Coffee",
+      "tipeee": "Tipeee",
+      "thanks": "Grazie a tutti coloro che sostengono il progetto, ogni contributo conta davvero."
+    }
+  },
+  "Authentication": {
+    "title": "Autenticazione delle maglie",
+    "subtitle": "Impara a riconoscere le maglie da calcio autentiche dalle contraffazioni",
+    "page": {
+      "protectInvestment": {
+        "title": "Proteggi il tuo investimento",
+        "description": "Il mercato delle maglie da calcio è purtroppo invaso da contraffazioni. Le nostre guide ti aiutano a identificare le maglie autentiche e a evitare le truffe."
+      },
+      "whyImportant": {
+        "title": "Perché l'autenticazione è importante?",
+        "reason1": "Le contraffazioni rappresentano fino al 30% del mercato online delle maglie",
+        "reason2": "Una maglia falsa si deteriora velocemente e non ha valore di rivendita",
+        "reason3": "Comprare una contraffazione finanzia reti di contrabbando",
+        "reason4": "Le maglie autentiche garantiscono qualità, comfort e durata"
+      }
+    },
+    "brands": {
+      "adidas": {
+        "name": "Adidas",
+        "description": "Verifica l'autenticità delle tue maglie Adidas"
+      },
+      "nike": {
+        "name": "Nike",
+        "description": "Verifica l'autenticità delle tue maglie Nike"
+      },
+      "puma": {
+        "name": "Puma",
+        "description": "Verifica l'autenticità delle tue maglie Puma"
+      },
+      "hummel": {
+        "name": "Hummel",
+        "description": "Verifica l'autenticità delle tue maglie Hummel"
+      }
+    },
+    "common": {
+      "authenticationSteps": "Passaggi di autenticazione",
+      "commonFakes": "Segni comuni di contraffazione",
+      "commonFakesDescription": "Fai attenzione a questi elementi che indicano una maglia falsa",
+      "buyingTips": "Consigli per l'acquisto",
+      "buyingTipsDescription": "Raccomandazioni per acquisti sicuri",
+      "authentic": "AUTENTICA",
+      "counterfeit": "CONTRAFFAZIONE",
+      "scanFeature": {
+        "title": "In arrivo: scanner automatico",
+        "description": "Stiamo lavorando a una funzione di scansione per autenticare istantaneamente le tue maglie {brand}.",
+        "howItWorks": "Come funzionerà:",
+        "step1": "Scatta una foto delle etichette",
+        "step2": "La nostra IA analizza codici e dettagli",
+        "step3": "Ricevi un risultato di autenticazione",
+        "notify": "Avvisami al lancio"
+      },
+      "scanPlaceholder": {
+        "title": "Scansiona l'etichetta",
+        "description": "Verifica automatica tramite intelligenza artificiale",
+        "comingSoon": "Funzione in arrivo!",
+        "kitlegitInfo": "Stiamo lavorando all'integrazione di {kitlegit}, una soluzione di autenticazione IA specializzata in maglie da calcio.",
+        "kitlegit": "KitLegit",
+        "manualGuide": "Nel frattempo, usa la guida qui sopra per verificare manualmente l'autenticità della tua maglia {brand}.",
+        "scanButton": "Scansiona la mia etichetta (in arrivo)",
+        "photosRequired": "La scansione automatica richiederà da 3 a 8 foto della tua maglia per un'analisi completa."
+      }
+    },
+    "metadata": {
+      "notFound": "Marca non trovata - Lo Spogliatoio",
+      "titleTemplate": "Autenticare una maglia {brand} - Guida completa",
+      "ogTitleTemplate": "Guida all'autenticazione delle maglie {brand}",
+      "twitterTitleTemplate": "Come autenticare una maglia {brand}",
+      "adidas": {
+        "description": "Guida completa per autenticare una maglia Adidas. Verifica codice prodotto, swing tag, codice a barre e individua i segni di contraffazione. Metodo dettagliato con esempi visivi.",
+        "ogDescription": "Impara a riconoscere una maglia Adidas autentica da una contraffazione"
+      },
+      "nike": {
+        "description": "Impara a riconoscere una maglia Nike autentica: codice prodotto, codice di produzione, swing tag e security tag. Guida anti-contraffazione completa con foto comparative.",
+        "ogDescription": "Impara a riconoscere una maglia Nike autentica da una contraffazione"
+      },
+      "puma": {
+        "description": "Autenticazione delle maglie Puma: codice prodotto, data di produzione, codice QR, security tag. Riconosci il 'Fat Cat' e altri segni di maglie Puma false.",
+        "ogDescription": "Impara a riconoscere una maglia Puma autentica da una contraffazione"
+      },
+      "hummel": {
+        "description": "Guida all'autenticazione delle maglie Hummel: chevron caratteristici, etichette, qualità del tessuto e finiture. Evita le contraffazioni.",
+        "ogDescription": "Impara a riconoscere una maglia Hummel autentica da una contraffazione"
+      }
+    },
+    "adidas": {
+      "title": "Guida all'autenticazione Adidas",
+      "description": "Metodo completo per verificare l'autenticità di una maglia Adidas tramite codici prodotto ed etichette",
+      "criteria": {
+        "step1": {
+          "title": "Passo 1: localizza l'etichetta con il codice prodotto",
+          "description": "L'etichetta si trova solitamente nel colletto a destra, o talvolta sul fondo della maglia con le istruzioni di lavaggio",
+          "points": {
+            "point1": "Cerca l'etichetta cucita nel colletto (lato destro)",
+            "point2": "Se non è nel colletto, controlla sul fondo della maglia vicino alle istruzioni di lavaggio",
+            "point3": "Questa etichetta contiene 3 codici essenziali: taglia, codice prodotto (al centro) e codice di produzione",
+            "point4": "Se l'etichetta è stata tagliata dal venditore, è impossibile verificare l'autenticità"
+          }
+        },
+        "step2": {
+          "title": "Passo 2: il codice prodotto (CODICE PIÙ IMPORTANTE)",
+          "description": "Il codice prodotto centrale è la chiave per verificare l'autenticità. Esempio: IB0907",
+          "points": {
+            "point1": "Identifica il codice al CENTRO dell'etichetta (es. IB0907, HS5184, P95985)",
+            "point2": "Questo codice è unico per modello di maglia (casa, trasferta, terza)",
+            "point3": "Digita questo codice su Google Immagini: i risultati devono corrispondere ESATTAMENTE alla tua maglia",
+            "point4": "Esempio: 'IB0907' = Maglia Away Lione 2023/2024 e basta",
+            "point5": "Se il codice corrisponde a un altro club/stagione = È FALSA",
+            "point6": "Eccezione: alcuni piccoli club condividono lo stesso codice (template comuni), ma è raro"
+          }
+        },
+        "step3": {
+          "title": "Passo 3: lo swing tag (se presente)",
+          "description": "L'etichetta di cartone attaccata alla maglia nuova contiene informazioni preziose",
+          "points": {
+            "point1": "Su una maglia VERA: il nome del club è chiaramente indicato (es. 'OL', 'Manchester United')",
+            "point2": "La menzione del tipo è presente: 'H' (Home), 'A' (Away), 'T' (Third)",
+            "point3": "Il codice prodotto è scritto sopra il nome del modello",
+            "point4": "FALSO se contrassegnato solo 'adidas JSY' senza nome del club = CONTRAFFAZIONE",
+            "point5": "Attenzione: queste etichette possono essere rimosse e riattaccate a una maglia falsa!"
+          }
+        },
+        "step4": {
+          "title": "Passo 4: il numero del codice a barre (verifica aggiuntiva)",
+          "description": "Il codice a barre dello swing tag permette una verifica precisa",
+          "points": {
+            "point1": "Trova il codice numerico sotto il codice a barre (es. 4066761557500)",
+            "point2": "Vai su ean-search.org e inserisci questo codice",
+            "point3": "Il risultato deve corrispondere ESATTAMENTE alla tua maglia",
+            "point4": "Esempio: 4066761557500 = 'adidas Lyon Away Shirt 2023/24'",
+            "point5": "Se il codice corrisponde a un'altra maglia = FALSA",
+            "point6": "Nota: Adidas NON stampa questo codice sull'etichetta cucita, solo sullo swing tag"
+          }
+        },
+        "step5": {
+          "title": "Passo 5: controlli visivi aggiuntivi",
+          "description": "Dopo aver verificato i codici, esamina la qualità generale",
+          "points": {
+            "point1": "Logo Adidas: le 3 strisce devono essere perfettamente allineate e ricamate con precisione",
+            "point2": "Cuciture: dritte, regolari, senza fili allentati",
+            "point3": "Tessuto: materiale tecnico (Climalite, Climacool, Aeroready) menzionato sull'etichetta",
+            "point4": "Nessun forte odore chimico o colla visibile"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Swing tag contrassegnato 'adidas JSY' senza nome del club",
+        "fake2": "Codice prodotto che corrisponde a un'altra maglia (es. HS5184 per Man Utd = maglia Flamengo)",
+        "fake3": "Numero di codice a barre errato (es. corrisponde a Germania 2017 invece di Man Utd 2024)",
+        "fake4": "Etichetta del colletto tagliata o assente (venditore sospetto)",
+        "fake5": "Nessun risultato su Google Immagini per il codice prodotto",
+        "fake6": "Logo Adidas deformato, mal ricamato o stampato (invece di ricamato)",
+        "fake7": "Prezzo anormalmente basso (50-70% in meno del prezzo ufficiale)",
+        "fake8": "Venditore che si rifiuta di mostrare l'etichetta del colletto nelle foto"
+      },
+      "tips": {
+        "tip1": "Chiedi SEMPRE una foto dell'etichetta del colletto prima di comprare",
+        "tip2": "Verifica il codice prodotto su Google Immagini (metodo più affidabile)",
+        "tip3": "Preferisci venditori con reputazione consolidata e recensioni positive",
+        "tip4": "Confronta con le foto ufficiali del sito Adidas o del club",
+        "tip5": "Attenzione ai prezzi troppo allettanti (sconto > 50% = sospetto)",
+        "tip6": "Questo metodo funziona anche per maglie vecchie (anni 2000 in poi)",
+        "tip7": "Usa ean-search.org per il codice a barre se lo swing tag è presente",
+        "tip8": "Nel dubbio: non comprare. Una maglia vera mantiene il valore, una falsa no"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Esempio 1: etichetta con codice prodotto",
+          "description": "Ecco come identificare il codice prodotto sull'etichetta del colletto",
+          "authentic": {
+            "points": {
+              "point1": "Codice prodotto visibile: JL9623",
+              "point2": "Data di stampa legata all'anno della maglia",
+              "point3": "3 codici allineati correttamente",
+              "point4": "Logo Adidas ben definito"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Il codice H13881 corrisponde a Man United invece che al Messico nel nostro esempio",
+              "point2": "Stampa sfocata o disallineata",
+              "point3": "Caratteri irregolari"
+            }
+          }
+        },
+        "example2": {
+          "title": "Esempio 2: swing tag",
+          "description": "L'etichetta di cartone attaccata alle maglie nuove",
+          "authentic": {
+            "points": {
+              "point1": "Nome del club indicato: 'OL'",
+              "point2": "Menzione del tipo: '75' (Maglia 75° anniversario OL)",
+              "point3": "Codice prodotto visibile",
+              "point4": "QR Code che porta alla maglia corretta"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Contrassegnato solo 'adidas JSY'",
+              "point2": "Nessun nome del club",
+              "point3": "Codice a barre errato"
+            }
+          }
+        }
+      }
+    },
+    "nike": {
+      "title": "Guida all'autenticazione Nike",
+      "description": "Metodo completo per verificare l'autenticità di una maglia Nike tramite codici prodotto, etichette e dettagli di produzione",
+      "criteria": {
+        "step1": {
+          "title": "Passo 1: il codice prodotto",
+          "description": "Situato sulla piccola etichetta sotto l'etichetta di lavaggio, il codice prodotto è il tuo primo indicatore",
+          "points": {
+            "point1": "Formato: 6 cifre per lo stile + 3 cifre per il colore (es. 894430-010)",
+            "point2": "Il codice stile identifica il design/template della maglia",
+            "point3": "Il codice colore (dopo il trattino) identifica la specifica variante di colore",
+            "point4": "Digita il codice completo su Google Immagini per verificare che corrisponda ESATTAMENTE alla tua maglia",
+            "point5": "ATTENZIONE: i falsi spesso riutilizzano codici reali! Se il codice è per la Francia 2020 Away (CD0069-100) ma su una maglia di un'altra nazionale = FALSO",
+            "point6": "Le maglie vecchie (prima del 2010) potrebbero non avere il codice colore, è normale"
+          }
+        },
+        "step2": {
+          "title": "Passo 2: il codice di produzione",
+          "description": "Sulla stessa piccola etichetta, questo codice rivela quando è stata prodotta la maglia",
+          "points": {
+            "point1": "Formato: HO150407SYG (esempio = Holiday 2015, prodotta da aprile a luglio)",
+            "point2": "Primi 2-3 caratteri = stagione: SP (Primavera), SU (Estate), FA (Autunno), HO (Holiday/Inverno)",
+            "point3": "Successive 2 cifre = anno (15 = 2015, 23 = 2023)",
+            "point4": "Successive 4 cifre = mesi di inizio e fine produzione (0407 = aprile a luglio)",
+            "point5": "Questo codice deve essere coerente con la stagione della maglia! Una maglia 2023/24 non può avere un codice HO15",
+            "point6": "I falsi spesso riutilizzano le etichette su maglie diverse, creando incoerenze"
+          }
+        },
+        "step3": {
+          "title": "Passo 3: lo swing tag",
+          "description": "L'etichetta di cartone attaccata alle maglie nuove contiene informazioni cruciali",
+          "points": {
+            "point1": "Posizionamento moderno (dal 2021/22): etichetta singola solo sulla manica SINISTRA",
+            "point2": "2016-2020: due etichette, una sotto ogni manica (ascelle)",
+            "point3": "Prima del 2016: etichetta attaccata al colletto",
+            "point4": "Lo sticker deve essere un VERO sticker fisico, mai stampato direttamente",
+            "point5": "Il barb (attacco di plastica) è SEMPRE nero su una Nike vera",
+            "point6": "Il codice prodotto sullo swing tag DEVE corrispondere all'etichetta interna",
+            "point7": "Barra colorata della taglia: Grigio=XS, Giallo=S, Blu=M, Rosso=L, Verde=XL, Bianco=XXL+"
+          }
+        },
+        "step4": {
+          "title": "Passo 4: l'etichetta della taglia nel colletto",
+          "description": "L'etichetta del colletto contiene importanti informazioni regionali",
+          "points": {
+            "point1": "Il paese di produzione ('Made in...') DEVE corrispondere tra etichetta del colletto ed etichetta di lavaggio",
+            "point2": "Esempio: se il colletto dice 'Made in Indonesia', l'etichetta interna deve dire lo stesso",
+            "point3": "Verifica le corrispondenze regionali delle taglie, in particolare la taglia giapponese (J)",
+            "point4": "Errore comune sui falsi: taglia giapponese errata (es. 'J: S' per US L invece di 'J: 2XO')",
+            "point5": "Tabella corretta: US S=J M, US M=J L, US L=J 2XO, US XL=J 3XO, US XXL=J 4XO"
+          }
+        },
+        "step5": {
+          "title": "Passo 5: il security tag",
+          "description": "Situato in basso a destra della maglia, il security tag contiene un codice unico",
+          "points": {
+            "point1": "Il codice alfanumerico DEVE essere unico per la tua maglia",
+            "point2": "Se trovi lo stesso codice su più annunci online = FALSO",
+            "point3": "Sulle maglie recenti: striscia metallizzata/olografica di qualità che cambia sotto la luce",
+            "point4": "I falsi usano spesso una semplice stampa piatta invece della striscia metallica",
+            "point5": "Versione player: accenti dorati/metallizzati | Versione fan: accenti argento",
+            "point6": "Alcuni dettagli nascosti: mini loghi Nike o frammenti della parola 'SECURITY' nella striscia",
+            "point7": "Alcune versioni più vecchie: lettere 'HEN' o entrambe le 'T' di 'AUTHENTIC' in materiale lucido"
+          }
+        },
+        "step6": {
+          "title": "Passo 6: lo Swoosh e i badge",
+          "description": "La qualità di applicazione del logo Nike e dello stemma del club è rivelatrice",
+          "points": {
+            "point1": "Lo Swoosh deve essere PERFETTO: forma precisa, bordi puliti, nessun filo visibile",
+            "point2": "Su una maglia NUOVA, il tessuto attorno allo Swoosh deve essere PIATTO (senza pieghe)",
+            "point3": "Gira la maglia: l'interno dietro lo Swoosh/badge deve essere pulito, senza tessuto in eccesso",
+            "point4": "Badge ricamato = versione fan | Badge termopressato/in silicone = versione player",
+            "point5": "Verifica che il tipo di badge corrisponda alla versione (fan o player)",
+            "point6": "Attenzione a badge mal posizionati, troppo grandi/piccoli o con cuciture grossolane"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Codice prodotto corretto ma per un'altra maglia/squadra (es. codice Francia 2020 su maglia Germania)",
+        "fake2": "Codice di produzione incoerente con la stagione (maglia 2024 con codice HO15)",
+        "fake3": "Swing tag con sticker stampato invece di vero sticker fisico",
+        "fake4": "Attacco barb dell'etichetta non nero",
+        "fake5": "'Made in...' diverso tra etichetta del colletto ed etichetta di lavaggio",
+        "fake6": "Taglia giapponese errata sull'etichetta del colletto",
+        "fake7": "Codice di sicurezza identico trovato su più annunci online",
+        "fake8": "Striscia di sicurezza senza effetto olografico/metallico (stampa piatta)",
+        "fake9": "Swoosh con tessuto increspato attorno su maglia nuova",
+        "fake10": "Interno sporco dietro Swoosh/badge (tessuto in eccesso, cuciture grossolane)",
+        "fake11": "Codice colore incoerente (es. maglia rossa con codice 100-199)",
+        "fake12": "Swing tag mal posizionato (es. sul colletto per maglia post-2021)",
+        "fake13": "Barra colorata della taglia errata o assente sullo swing tag"
+      },
+      "tips": {
+        "tip1": "Verifica SEMPRE il codice prodotto completo (stile + colore) su Google Immagini",
+        "tip2": "Confronta il codice di produzione con la stagione della maglia per individuare incoerenze",
+        "tip3": "Richiedi foto di TUTTE le etichette: colletto, lavaggio, piccola etichetta prodotto, swing tag",
+        "tip4": "Verifica la coerenza del 'Made in...' su tutte le etichette",
+        "tip5": "Per le maglie nuove: richiedi foto dello swing tag con attacco nero",
+        "tip6": "Cerca il codice di sicurezza online per verificarne l'unicità",
+        "tip7": "Esamina la qualità dello Swoosh e del badge (gira la maglia se possibile)",
+        "tip8": "Usa la tabella delle taglie regionali per verificare la coerenza dell'etichetta del colletto",
+        "tip9": "Le maglie versione player senza swing tag sono normali (distribuzione diretta alla squadra)",
+        "tip10": "Attenzione ai prezzi troppo bassi: le vere maglie Nike mantengono il valore",
+        "tip11": "Nel dubbio su qualsiasi etichetta o codice: non comprare"
+      },
+      "visualExamples": {
+        "example1": {
+          "title": "Esempio 1: codice prodotto e codice di produzione",
+          "description": "La piccola etichetta sotto l'etichetta di lavaggio contiene codici essenziali",
+          "authentic": {
+            "points": {
+              "point1": "Codice prodotto visibile: 658789-426 (stile + colore)",
+              "point2": "Codice di produzione coerente: HO150710 (Holiday 2015, luglio-ottobre)",
+              "point3": "Stampa chiara e leggibile",
+              "point4": "Formato corretto e allineamento perfetto"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Codice prodotto per un'altra maglia (qui maglia PSG con FN8721-456 = Barcellona Home 24/25)",
+              "point2": "Codice di produzione incoerente con la stagione",
+              "point3": "Stampa sfocata o caratteri irregolari",
+              "point4": "Allineamento scarso o formato errato"
+            }
+          }
+        },
+        "example2": {
+          "title": "Esempio 2: swing tag",
+          "description": "L'etichetta di cartone attaccata alle maglie nuove",
+          "authentic": {
+            "points": {
+              "point1": "Sticker fisico (non stampato)",
+              "point2": "Attacco barb nero",
+              "point3": "Barra colorata della taglia corretta",
+              "point4": "Codice prodotto corrispondente all'etichetta interna",
+              "point5": "Posizionamento corretto per l'anno (manica sinistra post-2021)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Sticker stampato (non un vero sticker)",
+              "point2": "Attacco barb bianco o di colore errato",
+              "point3": "Barra colorata assente o errata",
+              "point4": "Il codice prodotto non corrisponde (CD0699-100 = Francia 2020/22)"
+            }
+          }
+        },
+        "example3": {
+          "title": "Esempio 3: security tag",
+          "description": "Il tag in basso a destra della maglia con codice unico e striscia metallica",
+          "authentic": {
+            "points": {
+              "point1": "Striscia metallizzata/olografica di qualità",
+              "point2": "Effetto cambiacolore sotto la luce",
+              "point3": "Codice alfanumerico unico",
+              "point4": "Cuciture pulite e regolari",
+              "point5": "Accenti dorati (versione player) o argento (versione fan)"
+            }
+          },
+          "fake": {
+            "points": {
+              "point1": "Striscia stampata piatta (nessun effetto olografico)",
+              "point2": "Codice ripetuto su più maglie",
+              "point3": "Cuciture grossolane",
+              "point4": "Nessun effetto metallico"
+            }
+          }
+        }
+      }
+    },
+    "puma": {
+      "title": "Guida all'autenticazione Puma",
+      "description": "Metodo completo per verificare l'autenticità di una maglia Puma tramite codici prodotto, etichette e dettagli di produzione",
+      "criteria": {
+        "step1": {
+          "title": "Passo 1: il codice prodotto (Style No / Article No)",
+          "description": "Si trova su una grande etichetta cucita sul lato sinistro della maglia",
+          "points": {
+            "point1": "Formato: 6 cifre + 2 cifre di variazione (es. 736251-01)",
+            "point2": "Prime 6 cifre = modello base della maglia",
+            "point3": "Ultime 2 cifre = variazione di colore (più recenti, assenti sulle maglie vecchie)",
+            "point4": "Digita il codice su kitcod.es o Google Immagini per verificare che corrisponda ESATTAMENTE alla tua maglia",
+            "point5": "ATTENZIONE: i falsi spesso riutilizzano codici reali! Se il codice è per il Marsiglia ma sulla maglia del Milan = FALSO",
+            "point6": "Le maglie prima del 2000 potrebbero non avere etichetta con codice prodotto, è normale"
+          }
+        },
+        "step2": {
+          "title": "Passo 2: la data di produzione",
+          "description": "Sulle versioni recenti delle etichette, Puma indica la data esatta di produzione",
+          "points": {
+            "point1": "Formato recente: data completa visibile (es. 15/03/2023)",
+            "point2": "Questa data deve essere coerente con la stagione della maglia",
+            "point3": "Una maglia della stagione 2023/24 non può avere una data di produzione nel 2020",
+            "point4": "I falsi spesso riutilizzano la stessa etichetta su maglie diverse, creando incoerenze",
+            "point5": "Se la data non corrisponde alla stagione = grande CAMPANELLO D'ALLARME"
+          }
+        },
+        "step3": {
+          "title": "Passo 3: il codice della regione di produzione",
+          "description": "Codice alfanumerico sotto la data di produzione che indica la fabbrica",
+          "points": {
+            "point1": "Formato: TVNAO (esempio per Vietnam, fabbrica Alliance One)",
+            "point2": "Primo carattere = probabilmente 'T' per Textile",
+            "point3": "Successivi 2 caratteri = codice paese ISO (VN=Vietnam, TH=Thailandia, TR=Turchia)",
+            "point4": "Ultimi 2 caratteri = identificatore specifico della fabbrica",
+            "point5": "Il codice paese DEVE corrispondere al 'Made in...' sull'etichetta",
+            "point6": "Puoi verificare le fabbriche ufficiali Puma con le loro liste pubbliche (2018, 2023, 2025)"
+          }
+        },
+        "step4": {
+          "title": "Passo 4: il codice del mercato regionale",
+          "description": "Codice sul lato sinistro dell'etichetta che indica il mercato di destinazione",
+          "points": {
+            "point1": "AM = Americhe",
+            "point2": "AP = Asia Pacifico",
+            "point3": "EU = Europa",
+            "point4": "Questo codice indica DOVE il prodotto doveva essere venduto, non dove è stato prodotto",
+            "point5": "Utile per i collezionisti che cercano release regionali specifiche",
+            "point6": "Possono esserci leggere variazioni nel packaging o nelle informazioni di conformità"
+          }
+        },
+        "step5": {
+          "title": "Passo 5: il codice QR",
+          "description": "Le etichette Puma recenti includono un codice QR con un numero AD unico",
+          "points": {
+            "point1": "Il codice QR è generalmente situato sotto il codice prodotto",
+            "point2": "La scansione del codice reindirizza a puma.com con il parametro numero 'AD'",
+            "point3": "Formato del link: https://www.puma.com?TSL1D33P02450",
+            "point4": "Il numero AD è stampato sopra il codice QR",
+            "point5": "Questo codice serve per il tracciamento interno e l'autenticazione Puma",
+            "point6": "L'assenza del codice QR sulle maglie vecchie è normale"
+          }
+        },
+        "step6": {
+          "title": "Passo 6: lo swing tag",
+          "description": "Etichetta di cartone attaccata al colletto delle maglie nuove",
+          "points": {
+            "point1": "Lo sticker deve essere un VERO sticker fisico, mai stampato direttamente",
+            "point2": "Il codice prodotto sullo swing tag DEVE corrispondere all'etichetta interna",
+            "point3": "I falsi usano spesso etichette generiche tipo 'Puma Shirt' senza dettagli",
+            "point4": "L'etichetta vera menziona: nome del club + tipo di maglia (Home/Away) + colore",
+            "point5": "Verifica le convenzioni regionali delle taglie: Brasile/Canada = 'G' (Grande) invece di 'L'",
+            "point6": "Il Giappone può usare '2XO' invece di 'XL' - verifica la coerenza con la regione"
+          }
+        },
+        "step7": {
+          "title": "Passo 7: l'etichetta del colletto e il 'Made in'",
+          "description": "L'etichetta del colletto contiene importanti informazioni regionali",
+          "points": {
+            "point1": "Il paese di produzione ('Made in...') DEVE corrispondere tra colletto e tutte le etichette interne",
+            "point2": "Esempio: se il colletto dice 'Made in Vietnam', l'etichetta di lavaggio deve dire lo stesso",
+            "point3": "Verifica le corrispondenze regionali delle taglie, in particolare la taglia giapponese (J)",
+            "point4": "Tabella corretta: US S=J M, US M=J O (o L recente), US L=J 2XO, US XL=J 3XO, US XXL=J 4XO",
+            "point5": "Nota: Puma recente a volte usa 'L' invece di 'O' per il Giappone (allineamento occidentale)",
+            "point6": "Errore comune sui falsi: taglia giapponese errata (es. 'J: S' per US L)"
+          }
+        },
+        "step8": {
+          "title": "Passo 8: il security tag",
+          "description": "Piccolo tag nero in basso a sinistra della maglia (vista frontale)",
+          "points": {
+            "point1": "Sui modelli recenti: semplicemente contrassegnato 'Authentic Licensed Football'",
+            "point2": "Sui modelli più vecchi: codice alfanumerico unico",
+            "point3": "Questo codice NON dovrebbe apparire nelle ricerche (a meno che non sia falso)",
+            "point4": "Il tag deve essere cucito con precisione con filo di qualità",
+            "point5": "Assenza totale del tag su maglia recente = sospetto"
+          }
+        },
+        "step9": {
+          "title": "Passo 9: il logo Puma (attenzione al 'Fat Cat')",
+          "description": "Il logo del gatto in salto deve essere perfetto - attenzione al 'Fat Cat'",
+          "points": {
+            "point1": "Il Puma deve essere ELEGANTE e atletico, non tozzo o gonfio",
+            "point2": "'Fat Cat' = difetto tipico dei falsi: gatto troppo spesso, deformato, sembra 'muscoloso'",
+            "point3": "Forma caratteristica ben definita con proporzioni esatte",
+            "point4": "Ricamo o stampa di qualità con bordi puliti",
+            "point5": "Posizione esatta secondo il modello (solitamente petto destro)",
+            "point6": "Confronta sempre con le foto ufficiali - anche una leggera differenza = sospetto"
+          }
+        },
+        "step10": {
+          "title": "Passo 10: lo stemma del club",
+          "description": "Lo stemma deve essere applicato con precisione",
+          "points": {
+            "point1": "Ricamo preciso O termoadesivo di qualità a seconda del modello",
+            "point2": "Bordi puliti senza sbavature",
+            "point3": "Tutti gli elementi (stelle, testo, bordi) perfettamente allineati",
+            "point4": "Spaziatura corretta e proporzioni rispettate",
+            "point5": "Nessun testo sfocato, decentrato o mal spaziato",
+            "point6": "Confronta con lo stemma ufficiale del club - anche i piccoli dettagli contano"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Codice prodotto corretto ma per un'altra maglia/squadra (es. codice Marsiglia su maglia Milan)",
+        "fake2": "Data di produzione incoerente con la stagione della maglia",
+        "fake3": "Codice regione di produzione (es. TVNAO) non corrispondente al 'Made in...'",
+        "fake4": "Swing tag generico contrassegnato 'Puma Shirt' senza menzione del club",
+        "fake5": "Sticker stampato sullo swing tag invece di vero sticker",
+        "fake6": "'Made in...' diverso tra etichetta del colletto e etichetta di lavaggio/prodotto",
+        "fake7": "Taglia giapponese errata sull'etichetta del colletto (es. J:S per US L invece di J:2XO)",
+        "fake8": "Codice di sicurezza che appare su più maglie online (dovrebbe essere unico)",
+        "fake9": "Il famoso 'Fat Cat' - logo Puma deformato, tozzo o troppo spesso",
+        "fake10": "Stemma del club con testo sfocato, elementi decentrati o proporzioni errate",
+        "fake11": "Cuciture grossolane o fili visibili su logo/stemma",
+        "fake12": "Assenza di security tag su maglia recente",
+        "fake13": "Errori di battitura o grammatica errata sulle etichette di lavaggio",
+        "fake14": "Codice QR mancante su maglia molto recente (post-2020)"
+      },
+      "tips": {
+        "tip1": "Verifica SEMPRE il codice prodotto completo su kitcod.es o Google Immagini",
+        "tip2": "Verifica che la data di produzione corrisponda alla stagione della maglia",
+        "tip3": "Confronta il codice regione (TVNAO) con il 'Made in...' per coerenza",
+        "tip4": "Richiedi foto di TUTTE le etichette: colletto, lavaggio, grande etichetta prodotto, swing tag",
+        "tip5": "Scansiona il codice QR se presente e verifica che porti a puma.com con parametro AD",
+        "tip6": "Esamina ATTENTAMENTE il logo Puma - il 'Fat Cat' è un difetto molto comune dei falsi",
+        "tip7": "Confronta lo stemma del club pixel per pixel con le foto ufficiali",
+        "tip8": "Verifica la coerenza regionale delle taglie sull'etichetta del colletto (in particolare la taglia giapponese)",
+        "tip9": "Consulta le liste ufficiali delle fabbriche Puma se vuoi verificare il codice della fabbrica",
+        "tip10": "Per le maglie nuove: richiedi foto dello swing tag con nome del club visibile",
+        "tip11": "Attenzione ai prezzi troppo bassi: le vere maglie Puma mantengono il valore",
+        "tip12": "Nel dubbio su qualsiasi etichetta, logo o codice: non comprare"
+      }
+    },
+    "hummel": {
+      "title": "Guida all'autenticazione Hummel",
+      "description": "Impara a identificare le maglie Hummel autentiche con questi criteri essenziali",
+      "criteria": {
+        "step1": {
+          "title": "L'etichetta principale",
+          "description": "L'etichetta Hummel ha caratteristiche specifiche",
+          "points": {
+            "point1": "Logo Hummel con i caratteristici chevron",
+            "point2": "Codice prodotto unico",
+            "point3": "Informazioni su taglia e composizione",
+            "point4": "Paese di produzione indicato",
+            "point5": "Stampa chiara e durevole"
+          }
+        },
+        "step2": {
+          "title": "I chevron Hummel",
+          "description": "I chevron sono la firma del marchio",
+          "points": {
+            "point1": "Forma a V caratteristica",
+            "point2": "Angoli precisi a 45 gradi",
+            "point3": "Ricamo di qualità superiore",
+            "point4": "Allineamento perfetto dei chevron",
+            "point5": "Colori vivaci e contrastati"
+          }
+        },
+        "step3": {
+          "title": "Qualità del tessuto",
+          "description": "Hummel usa materiali di qualità",
+          "points": {
+            "point1": "Tessuto tecnico traspirante",
+            "point2": "Materiale piacevole al tatto",
+            "point3": "Resistenza all'usura",
+            "point4": "Colori che non sbiadiscono",
+            "point5": "Proprietà antitraspiranti"
+          }
+        },
+        "step4": {
+          "title": "Finiture",
+          "description": "I dettagli di finitura sono importanti",
+          "points": {
+            "point1": "Cuciture dritte e solide",
+            "point2": "Colletto ben strutturato e comodo",
+            "point3": "Stemma del club di qualità premium",
+            "point4": "Stampa dei numeri duratura",
+            "point5": "Assemblaggio curato"
+          }
+        }
+      },
+      "commonFakes": {
+        "fake1": "Chevron disallineati o deformati",
+        "fake2": "Etichetta sfocata o con errori",
+        "fake3": "Tessuto di qualità inferiore",
+        "fake4": "Logo Hummel approssimativo",
+        "fake5": "Cuciture che si disfano rapidamente"
+      },
+      "tips": {
+        "tip1": "Compra da rivenditori Hummel autorizzati",
+        "tip2": "Confronta i chevron con modelli autentici",
+        "tip3": "Verifica la qualità generale di produzione",
+        "tip4": "Esamina l'etichetta nel dettaglio",
+        "tip5": "Un prezzo troppo basso deve allertare"
+      }
+    },
+    "supporterVsPro": {
+      "title": "Supporter vs Pro: quali sono le differenze?",
+      "description": "Ci si chiede spesso quale sia la differenza tra le maglie indossate dai giocatori in campo e quelle vendute in negozio, le maglie \"Supporter\". Ecco una panoramica completa delle differenze.",
+      "context": "Confronto effettuato sulle maglie home 25/26 dello Stade Rennais (Puma). Maglia Pro in taglia M, maglia Supporter in taglia XL.",
+      "comparisons": {
+        "logo": {
+          "title": "Stemma del club",
+          "description": "Lo stemma del club sulle maglie Supporter è sempre ricamato. Sulle maglie Pro è termopressato. Quest'anno sulla maglia Pro home, lo stemma è rigido con rilievi in risalto sugli stemmi.",
+          "supporter": "Ricamato",
+          "pro": "Termopressato, rigido con rilievi in risalto sugli stemmi"
+        },
+        "marque": {
+          "title": "Sponsor Puma",
+          "description": "Proprio come gli stemmi, il branding Puma (anteriore e spalle) differisce tra le due gamme.",
+          "supporter": "Generalmente ricamato",
+          "pro": "Termopressato, con finitura gommata in rilievo, molto duratura"
+        },
+        "technology1": {
+          "title": "Due tecnologie diverse - tessuto",
+          "supporter": "DRYCELL con RE-FIBRE",
+          "pro": "ULTRAWEAVE (molto evoluto dal suo debutto nella stagione 2022/2023)"
+        },
+        "technology2": {
+          "title": "Due tecnologie diverse - trama",
+          "description": "La differenza tra le trame è visibile direttamente a occhio nudo.",
+          "supporter": "Tessuto standard",
+          "pro": "Tessuto più leggero per migliorare le prestazioni del giocatore in campo"
+        },
+        "detail1": {
+          "title": "Scritta specifica del club",
+          "supporter": "All'esterno della maglia (es. #TOUTDONNER)",
+          "pro": "All'interno della maglia (es. #TOUTDONNER)"
+        },
+        "detail2": {
+          "title": "Badge \"Authentic Licensed Football\"",
+          "description": "Il badge in fondo alla maglia ha una finitura diversa a seconda della gamma.",
+          "supporter": "Flessibile",
+          "pro": "Rigido"
+        },
+        "detail3": {
+          "title": "Cuciture",
+          "description": "Si notano anche cuciture interne diverse tra le due gamme.",
+          "supporter": "Cuciture standard, nessuna caratteristica distintiva",
+          "pro": "Cuciture rosse specifiche sulle spalle, assenti dalla maglia Supporter"
+        }
+      }
+    }
+  },
+  "CookiesPolicy": {
+    "title": "Politica sui cookie",
+    "lastUpdate": "Ultimo aggiornamento",
+    "whatIsCookie": {
+      "title": "Cos'è un cookie?",
+      "description": "Un cookie è un piccolo file di testo memorizzato sul tuo dispositivo quando visiti un sito web. I cookie ci aiutano a fornire una migliore esperienza utente e a migliorare i nostri servizi."
+    },
+    "cookiesUsed": {
+      "title": "Cookie usati su Le Vestiaire",
+      "necessary": {
+        "title": "1. Cookie strettamente necessari",
+        "description": "Questi cookie sono essenziali per il funzionamento del sito e non possono essere disabilitati.",
+        "auth": {
+          "label": "Cookie di autenticazione",
+          "description": "Ti permettono di accedere e mantenere la sessione attiva"
+        },
+        "consent": {
+          "label": "cookieConsent",
+          "description": "Ricorda la tua scelta sui cookie"
+        }
+      },
+      "analytics": {
+        "title": "2. Cookie di analisi e prestazioni",
+        "description": "Questi cookie ci aiutano a capire come usi il sito per migliorare i nostri servizi.",
+        "vercel": {
+          "label": "Vercel Analytics",
+          "description": "Analisi del traffico e del comportamento degli utenti"
+        },
+        "insights": {
+          "label": "Vercel Speed Insights",
+          "description": "Misurazione delle prestazioni del sito"
+        },
+        "optOut": "Puoi rifiutare questi cookie tramite il banner di consenso senza influire sulla tua esperienza di navigazione."
+      }
+    },
+    "preferences": {
+      "title": "Gestire le tue preferenze",
+      "description": "Puoi modificare le tue preferenze sui cookie in qualsiasi momento:",
+      "options": {
+        "browser": "Eliminando i cookie dalle impostazioni del browser",
+        "banner": "Cancellando il cookie \"cookieConsent\" per far riapparire il banner",
+        "contact": "Contattando il nostro team a"
+      }
+    },
+    "retention": {
+      "title": "Periodo di conservazione",
+      "session": {
+        "label": "Cookie di sessione",
+        "description": "Eliminati alla chiusura del browser"
+      },
+      "consent": {
+        "label": "Cookie di consenso",
+        "description": "Conservato fino al 2099 o fino all'eliminazione manuale"
+      },
+      "analytics": {
+        "label": "Cookie di analisi",
+        "description": "13 mesi al massimo"
+      }
+    },
+    "rights": {
+      "title": "I tuoi diritti (GDPR)",
+      "description": "In conformità con il Regolamento generale sulla protezione dei dati (GDPR), hai il diritto di accedere, rettificare e cancellare i tuoi dati personali. Per esercitare questi diritti, contattaci a"
+    },
+    "modifications": {
+      "title": "Modifiche a questa politica",
+      "description": "Ci riserviamo il diritto di modificare questa politica sui cookie in qualsiasi momento. Le modifiche avranno effetto dalla pubblicazione su questa pagina. Ti invitiamo a consultare regolarmente questa pagina."
+    }
+  },
+  "Settings": {
+    "loading": "Caricamento...",
+    "title": "Impostazioni account",
+    "footer": {
+      "text": "Usando il tuo account, accetti i nostri",
+      "terms": "Termini di servizio",
+      "privacy": "Informativa sulla privacy",
+      "and": "e",
+      "cookies": "Politica sui cookie"
+    },
+    "accountInfo": {
+      "title": "Informazioni account",
+      "username": "Username",
+      "email": "Indirizzo email",
+      "memberSince": "Membro dal"
+    },
+    "emailSettings": {
+      "title": "Cambia indirizzo email",
+      "invalidEmail": "Indirizzo email non valido",
+      "changeSuccess": "Richiesta di cambio email inviata. Controlla la tua casella di posta.",
+      "changeError": "Errore nel cambio email",
+      "googleOnlyMessage": "Il tuo account è connesso tramite Google. Per cambiare il tuo indirizzo email, devi farlo direttamente nel tuo account Google.",
+      "newEmailLabel": "Nuovo indirizzo email",
+      "emailPlaceholder": "nuova@email.com",
+      "changing": "Cambio in corso...",
+      "changeButton": "Cambia email"
+    },
+    "passwordSettings": {
+      "title": "Sicurezza",
+      "passwordMismatch": "Le nuove password non corrispondono",
+      "passwordTooShort": "La password deve contenere almeno 8 caratteri",
+      "passwordNoUppercase": "La password deve contenere almeno una lettera maiuscola",
+      "passwordNoNumber": "La password deve contenere almeno un numero",
+      "passwordNoSpecial": "La password deve contenere almeno un carattere speciale",
+      "changeSuccess": "Password cambiata con successo",
+      "changeError": "Errore nel cambio password",
+      "googleOnlyMessage": "Il tuo account è connesso tramite Google. La sicurezza del tuo account è gestita da Google. Puoi cambiare la password nelle impostazioni del tuo account Google.",
+      "currentPassword": "Password attuale",
+      "newPassword": "Nuova password",
+      "confirmPassword": "Conferma password",
+      "changing": "Cambio in corso...",
+      "changeButton": "Cambia password"
+    },
+    "sessionSettings": {
+      "title": "Sessione",
+      "signOutSuccess": "Disconnessione effettuata con successo",
+      "signOutError": "Errore durante la disconnessione",
+      "signOutLabel": "Disconnettiti",
+      "signOutDescription": "Verrai disconnesso dalla tua sessione attuale",
+      "signOutButton": "Disconnetti"
+    },
+    "leaderboardPrivacy": {
+      "title": "Privacy della classifica",
+      "description": "Gestisci la tua visibilità nelle classifiche pubbliche",
+      "loading": "Caricamento...",
+      "anonymousSuccess": "Ora appari in modo anonimo nelle classifiche",
+      "visibleSuccess": "Il tuo profilo è ora visibile nelle classifiche",
+      "updateError": "Impossibile aggiornare le tue impostazioni",
+      "anonymousLabel": "Appari in modo anonimo",
+      "anonymousDescription": "Il tuo nome, avatar e squadra del cuore saranno nascosti. Apparirai come \"Collezionista #XXXX\"",
+      "currentlyAnonymous": "Attualmente appari come anonimo in tutte le classifiche pubbliche."
+    },
+    "cookieSettings": {
+      "title": "Gestione cookie",
+      "description": "Gestisci le tue preferenze sui cookie su Le Vestiaire. Puoi cambiare le tue scelte in qualsiasi momento.",
+      "modifyButton": "Modifica le mie preferenze",
+      "modifyDescription": "Clicca per riaprire il banner di consenso e modificare le tue scelte.",
+      "viewPolicyLink": "Vedi la politica completa sui cookie"
+    },
+    "subscription": {
+      "title": "Abbonamento",
+      "description": "Gestisci il tuo abbonamento e le funzionalità premium",
+      "currentPlan": "Piano attuale",
+      "upgradeToPremium": "Passa a Premium",
+      "manageSubscription": "Gestisci abbonamento",
+      "loading": "Caricamento...",
+      "features": "Funzionalità incluse",
+      "price": "Prezzo",
+      "or": "oppure",
+      "free": {
+        "feature1": "Fino a 50 maglie in collezione",
+        "feature2": "Fino a 20 maglie nella lista dei desideri",
+        "feature3": "Statistiche di base",
+        "feature4": "Sistema di amicizie e condivisione"
+      },
+      "premium": {
+        "feature1": "Collezione di maglie illimitata",
+        "feature2": "Lista dei desideri illimitata",
+        "feature3": "Statistiche avanzate complete",
+        "feature4": "Fino a 5 foto per maglia",
+        "feature5": "Badge Premium sul tuo profilo"
+      },
+      "freeInfo": "Passa a Premium per sbloccare tutte le funzionalità e gestire una collezione illimitata.",
+      "premiumInfo": {
+        "title": "Grazie per essere Premium!",
+        "description": "Hai accesso a tutte le funzionalità premium. Gestisci il tuo abbonamento tramite il portale Stripe."
+      }
+    }
+  },
+  "CookieConsent": {
+    "title": "Utilizzo dei cookie",
+    "defaultDescription": "Usiamo i cookie per migliorare la tua esperienza su Le Vestiaire. Questi cookie ci permettono di analizzare l'uso del sito e migliorare i nostri servizi.",
+    "acceptInfo": "Cliccando \"Accetta\" acconsenti all'uso dei cookie di analisi. I cookie essenziali restano attivi.",
+    "learnMore": "Scopri di più",
+    "decline": "Rifiuta",
+    "accept": "Accetta"
+  },
+  "LegalPages": {
+    "backToHome": "Torna alla home"
+  },
+  "Jerseys": {
+    "report": {
+      "buttonLabel": "Segnala un problema",
+      "title": "Segnala un problema",
+      "description": "Aiutaci a correggere questa maglia. Descrivi brevemente il problema se necessario.",
+      "category": "Categoria",
+      "categoryPlaceholder": "Seleziona...",
+      "categories": {
+        "LETTERING": "Stampa",
+        "SEASON": "Stagione",
+        "BRAND": "Marca",
+        "IMAGE": "Immagine",
+        "OTHER": "Altro"
+      },
+      "descriptionLabel": "Dettagli (opzionale)",
+      "descriptionPlaceholder": "Es: il numero mostrato non corrisponde, l'immagine è sfocata, ecc.",
+      "cancel": "Annulla",
+      "submit": "Invia",
+      "submitting": "Invio in corso...",
+      "successToast": "Grazie per la tua segnalazione",
+      "errorToast": "Errore durante l'invio della segnalazione",
+      "mustBeConnected": "Devi essere connesso per segnalare un problema"
+    },
+    "selectLeague": "Scegli il tuo campionato",
+    "searchLeague": "Cerca un campionato...",
+    "searchLeagueOrClub": "Cerca un campionato o un club...",
+    "searchClub": "Cerca un club...",
+    "clubs": "Club",
+    "leagues": "Campionati",
+    "searching": "Ricerca in corso...",
+    "noClubsFound": "Nessun club trovato",
+    "noLeaguesFound": "Nessun campionato trovato",
+    "allLeagues": "Tutti i campionati",
+    "theLeagues": "Campionati",
+    "club": "Club",
+    "season": "Stagione",
+    "brand": "Marca",
+    "type": "Tipo",
+    "findOnCFS": "Dove acquistare",
+    "averageRating": "Voto medio",
+    "collectorStats": "Statistiche dei collezionisti",
+    "inCollection": "In {count} collezione",
+    "inCollections": "In {count} collezioni",
+    "inWishlist": "In {count} lista dei desideri",
+    "inWishlists": "In {count} liste dei desideri",
+    "clubNotFound": "Club non trovato",
+    "clubNotFoundText": "Club non trovato.",
+    "leagueNotFound": "Campionato non trovato",
+    "jerseyNotFound": "Maglia non trovata",
+    "jerseyNotFoundText": "Questa maglia non esiste o non è più disponibile.",
+    "allSeasons": "Tutte le stagioni",
+    "completeCollection": "Collezione completa",
+    "discover": "Scopri",
+    "designedBy": "Disegnata da",
+    "collectiblePiece": "è un pezzo da collezione",
+    "addToCollection": "Aggiungila alla tua collezione",
+    "rateIt": "vota",
+    "clubsAndJerseys": "club e le loro maglie storiche",
+    "largestDatabase": "Il più grande database di maglie",
+    "jerseyCollection": "Collezione di maglie da calcio vintage e recenti",
+    "allClubs": "Tutti i club",
+    "since": "dal",
+    "ofTheClub": "del club"
+  },
+  "JerseyDetail": {
+    "tabs": {
+      "description": "Descrizione",
+      "players": "Giocatori",
+      "achievements": "Trofei",
+      "comingSoon": "In arrivo",
+      "noDescription": "Nessuna descrizione disponibile per questa maglia.",
+      "proposeDescription": "Proponi una descrizione",
+      "suggestImprovement": "Suggerisci un miglioramento"
+    },
+    "palmares": {
+      "errorLoading": "Errore nel caricamento dei trofei",
+      "noTrophies": "Nessun trofeo registrato per questa stagione",
+      "winner": "Vincitore",
+      "finalist": "Finalista"
+    },
+    "players": {
+      "errorLoading": "Errore nel caricamento dei giocatori",
+      "noPlayers": "Nessun giocatore registrato per questa stagione",
+      "matches": "partite",
+      "goals": "gol",
+      "assists": "assist",
+      "assistsFull": "Assist",
+      "cleanSheets": "porta inv.",
+      "cleanSheetsFull": "Porta inviolata",
+      "goalsConceded": "gol sub.",
+      "goalsConcededFull": "Gol subiti"
+    },
+    "proposeDescription": {
+      "title": "Proponi una descrizione",
+      "titleImprove": "Suggerisci un miglioramento",
+      "description": "Aiuta ad arricchire il database proponendo una descrizione per {name}.",
+      "descriptionImprove": "Aiutaci a migliorare la descrizione di {name}.",
+      "currentDescription": "Descrizione attuale",
+      "yourDescription": "La tua proposta",
+      "yourImprovement": "Il tuo miglioramento",
+      "placeholder": "Descrivi la storia di questa maglia, il suo contesto, le sue particolarità, gli eventi memorabili associati, ecc.",
+      "hint": "Minimo 50 caratteri. Sii preciso e fattuale.",
+      "cancel": "Annulla",
+      "submit": "Invia la mia proposta",
+      "submitting": "Invio in corso...",
+      "success": "La tua proposta è stata inviata con successo! Sarà esaminata dal nostro team.",
+      "errors": {
+        "tooShort": "La descrizione deve contenere almeno {min} caratteri",
+        "tooLong": "La descrizione non può superare {max} caratteri",
+        "generic": "Si è verificato un errore durante l'invio"
+      }
+    }
+  },
+  "Friends": {
+    "myFriends": "I miei amici",
+    "friends": "Amici",
+    "pending": "In attesa",
+    "search": "Cerca",
+    "noFriendsYet": "Ancora nessun amico",
+    "searchUsersToStart": "Cerca utenti per iniziare a costruire il tuo network",
+    "noPendingRequests": "Nessuna richiesta in attesa",
+    "requestsWillAppear": "Le tue richieste di amicizia appariranno qui",
+    "error": "Errore",
+    "searchPlaceholder": "Cerca per username o nome...",
+    "minCharacters": "Digita almeno 2 caratteri per cercare",
+    "noUsersFound": "Nessun utente trovato",
+    "result": "risultato",
+    "results": "risultati",
+    "requestSent": "Richiesta inviata",
+    "userBlocked": "Utente bloccato",
+    "blockUserConfirm": "Bloccare questo utente?",
+    "user": "Utente",
+    "noFavoriteTeam": "Nessuna squadra del cuore",
+    "removeFriendConfirm": "Rimuovere {name} dai tuoi amici?",
+    "friendRemoved": "Amico rimosso",
+    "errorRemoving": "Errore nella rimozione dell'amico",
+    "blockConfirm": "Bloccare {name}?",
+    "errorBlocking": "Errore nel bloccare l'utente",
+    "removeFriend": "Rimuovi amico",
+    "block": "Blocca",
+    "nowFriendsWith": "Ora sei amico di {name}",
+    "requestRejected": "Richiesta rifiutata",
+    "errorAccepting": "Errore nell'accettare la richiesta",
+    "errorRejecting": "Errore nel rifiutare la richiesta",
+    "accept": "Accetta",
+    "reject": "Rifiuta",
+    "add": "Aggiungi",
+    "addFriend": "Aggiungi come amico",
+    "resend": "Invia di nuovo",
+    "friendsCollections": "Collezioni degli amici",
+    "discoverCollections": "Scopri le collezioni di maglie dei tuoi amici e trova ispirazione per la tua collezione",
+    "addFriendsToDiscover": "Aggiungi amici per scoprire le loro collezioni di maglie!",
+    "searchFriends": "Cerca amici →",
+    "noBio": "Nessuna bio",
+    "viewCollection": "Vedi collezione →",
+    "viewWishlist": "Vedi lista dei desideri →",
+    "collectionNotFound": "Collezione non trovata",
+    "collectionOf": "Collezione di {name}",
+    "jersey": "maglia",
+    "jerseys": "maglie",
+    "emptyCollection": "Collezione vuota",
+    "noJerseysYet": "{name} non ha ancora aggiunto maglie alla sua collezione.",
+    "thisUser": "Questo utente",
+    "jerseysOwned": "Maglie possedute",
+    "inCollection": "in collezione",
+    "favoriteLeagues": "Campionati preferiti",
+    "noData": "Nessun dato",
+    "preferredTypes": "Tipi preferiti",
+    "origin": "Origine",
+    "purchased": "Acquistate",
+    "gifts": "Regali",
+    "mysteryBox": "Mystery box",
+    "hisHerJerseys": "Le sue maglie",
+    "sortBy": "Ordina per:",
+    "mostRecent": "Più recenti",
+    "oldest": "Più vecchie",
+    "priceDescending": "Prezzo decrescente",
+    "priceAscending": "Prezzo crescente",
+    "condition": "Condizione",
+    "clubAZ": "Club (A-Z)",
+    "season": "Stagione",
+    "noJerseysInCollection": "Nessuna maglia in questa collezione.",
+    "modal": {
+      "title": "Dettagli della maglia",
+      "yourPhoto": "Foto personale",
+      "officialPhoto": "Foto ufficiale",
+      "size": "Taglia",
+      "withTags": "Con cartellini",
+      "gift": "Regalo",
+      "mysteryBox": "Mystery box",
+      "club": "Club",
+      "league": "Campionato",
+      "type": "Tipo",
+      "season": "Stagione",
+      "brand": "Marca",
+      "collectionInfo": "Informazioni di collezione",
+      "purchasePrice": "Prezzo d'acquisto",
+      "purchasedOn": "Acquistata il",
+      "player": "Giocatore",
+      "number": "Numero",
+      "personalization": "Personalizzazione",
+      "addedOn": "Aggiunta il",
+      "notes": "Note",
+      "close": "Chiudi"
+    }
+  },
+  "Leaderboard": {
+    "page": {
+      "title": "Classifica - Lo Spogliatoio",
+      "description": "Scopri i migliori collezionisti di maglie da calcio",
+      "heading": "Classifica",
+      "howItWorks": "Come funziona?",
+      "howItWorksDescription": "Le classifiche sono aggiornate in tempo reale. I primi 3 di sempre e il #1 del mese guadagnano un badge permanente!"
+    },
+    "tabs": {
+      "allTime": "Di sempre",
+      "emptyState": "Nessuna classifica disponibile per questa categoria",
+      "yourPosition": "La tua posizione:"
+    },
+    "categories": {
+      "title": "Categoria",
+      "collection_size": "Collezione più grande",
+      "collection_diversity": "Collezione più variegata",
+      "league_diversity": "Globe-trotter",
+      "vintage_specialist": "Specialista vintage",
+      "descriptions": {
+        "collection_size": "Numero totale di maglie possedute",
+        "collection_diversity": "Numero di club diversi",
+        "league_diversity": "Numero di campionati diversi",
+        "vintage_specialist": "Maglie precedenti al 2005"
+      }
+    },
+    "card": {
+      "jersey": "maglia",
+      "jerseys": "maglie",
+      "club": "club",
+      "clubs": "club",
+      "league": "campionato",
+      "leagues": "campionati",
+      "vintage": "vintage",
+      "currentUser": "(Tu)",
+      "defaultUsername": "Utente"
+    },
+    "errors": {
+      "rateLimitError": "Troppe richieste alla classifica. Aspetta un momento.",
+      "serverError": "Errore del server"
+    },
+    "months": {
+      "january": "Gennaio",
+      "february": "Febbraio",
+      "march": "Marzo",
+      "april": "Aprile",
+      "may": "Maggio",
+      "june": "Giugno",
+      "july": "Luglio",
+      "august": "Agosto",
+      "september": "Settembre",
+      "october": "Ottobre",
+      "november": "Novembre",
+      "december": "Dicembre"
+    }
+  },
+  "Reports": {
+    "Admin": {
+      "pageTitle": "Segnalazioni",
+      "pageDescription": "Gestione delle segnalazioni di maglie",
+      "heading": "Segnalazioni di maglie",
+      "tabPending": "In attesa",
+      "tabResolved": "Risolte",
+      "tabRejected": "Rifiutate",
+      "loading": "Caricamento...",
+      "empty": "Nessuna segnalazione",
+      "category": "Categoria",
+      "categories": {
+        "LETTERING": "Stampa",
+        "SEASON": "Stagione",
+        "BRAND": "Marca",
+        "IMAGE": "Immagine",
+        "OTHER": "Altro"
+      },
+      "reportedBy": "Segnalato da",
+      "reportedOn": "il",
+      "resolvedOn": "Risolto il",
+      "rejectedOn": "Rifiutato il",
+      "by": "da",
+      "viewJersey": "Vedi maglia",
+      "resolve": "Segna come risolto",
+      "reject": "Rifiuta",
+      "resolving": "Elaborazione...",
+      "successResolved": "Segnalazione segnata come risolta",
+      "successRejected": "Segnalazione rifiutata",
+      "errorAction": "Errore di azione",
+      "errorLoading": "Errore di caricamento",
+      "confirmCancel": "Annulla",
+      "confirmTitle": "Conferma azione"
+    }
+  },
+  "Proposals": {
+    "Admin": {
+      "pageTitle": "Gestione proposte - Lo Spogliatoio",
+      "pageDescription": "Gestisci le proposte di maglie inviate dai collaboratori",
+      "heading": "Gestione proposte",
+      "tabJerseys": "Maglie",
+      "tabDescriptions": "Descrizioni",
+      "about": "Informazioni sulle proposte",
+      "aboutDescription": "Gli utenti con il ruolo di collaboratore possono proporre nuove maglie da aggiungere al nostro database. Come amministratore, puoi approvare o rifiutare queste proposte.",
+      "approveLabel": "Approva:",
+      "approveDescription": "La maglia sarà creata nel database e il collaboratore verrà accreditato.",
+      "rejectLabel": "Rifiuta:",
+      "rejectDescription": "La proposta sarà eliminata definitivamente",
+      "errorLoading": "Errore nel caricamento delle proposte",
+      "errorLoadingToast": "Impossibile caricare le proposte",
+      "approveSuccess": "Proposta approvata con successo!",
+      "rejectSuccess": "Proposta rifiutata",
+      "emptyStateTitle": "Nessuna proposta in attesa",
+      "emptyStateDescription": "Al momento non ci sono proposte di maglie in attesa.",
+      "brandLabel": "Marca:",
+      "proposedByLabel": "Proposta da:",
+      "contributionsLabel": "Contributi:",
+      "dateLabel": "Il:",
+      "approveButton": "Approva",
+      "rejectButton": "Rifiuta",
+      "approveDialogTitle": "Approvare questa proposta?",
+      "rejectDialogTitle": "Rifiutare questa proposta?",
+      "approveDialogDescription": "La maglia <strong>{jerseyName}</strong> sarà aggiunta al database e il collaboratore verrà accreditato.",
+      "rejectDialogDescription": "La proposta <strong>{jerseyName}</strong> sarà eliminata definitivamente. Questa azione è irreversibile.",
+      "cancel": "Annulla",
+      "confirm": "Conferma",
+      "approveAllButton": "Approva tutte ({count})",
+      "approveAllLoading": "Approvazione in corso...",
+      "approveAllDialogTitle": "Approvare tutte le proposte?",
+      "approveAllDialogDescription": "Stai per approvare {count} proposta/e. Questa azione è irreversibile.",
+      "approveAllSuccess": "{count} proposta/e approvata/e con successo!",
+      "approveAllPartial": "{approved} approvate, {failed} fallite",
+      "DescriptionProposals": {
+        "aboutTitle": "Informazioni sulle proposte di descrizione",
+        "aboutDescription": "Gli utenti possono proporre descrizioni per arricchire le pagine delle maglie. Puoi approvare o rifiutare queste proposte. I collaboratori vengono accreditati per ogni descrizione approvata.",
+        "emptyStateTitle": "Nessuna proposta di descrizione",
+        "emptyStateDescription": "Al momento non ci sono proposte di descrizione in attesa.",
+        "currentDescription": "Descrizione attuale",
+        "proposedDescription": "Descrizione proposta",
+        "proposedImprovement": "Miglioramento proposto",
+        "proposedBy": "Proposta da:",
+        "date": "Il:",
+        "viewJersey": "Vedi maglia",
+        "approve": "Approva",
+        "reject": "Rifiuta",
+        "approveDialogTitle": "Approvare questa descrizione?",
+        "approveDialogDescription": "Questa descrizione sostituirà l'attuale descrizione della maglia. Il collaboratore verrà accreditato.",
+        "rejectDialogTitle": "Rifiutare questa proposta?",
+        "rejectDialogDescription": "La proposta sarà segnata come rifiutata. Puoi facoltativamente fornire un motivo.",
+        "rejectionReason": "Motivo del rifiuto (opzionale)",
+        "rejectionReasonPlaceholder": "Spiega perché questa proposta viene rifiutata...",
+        "cancel": "Annulla",
+        "confirmApprove": "Approva",
+        "confirmReject": "Rifiuta",
+        "approveSuccess": "Descrizione approvata con successo!",
+        "rejectSuccess": "Proposta rifiutata",
+        "errorLoading": "Errore nel caricamento delle proposte",
+        "errorApprove": "Errore durante l'approvazione",
+        "errorReject": "Errore durante il rifiuto"
+      }
+    },
+    "User": {
+      "myProposalsTitle": "Le mie proposte - Lo Spogliatoio",
+      "myProposalsDescription": "Vedi lo stato delle tue proposte di maglie",
+      "myProposalsHeading": "Le mie proposte",
+      "newProposal": "Nuova proposta",
+      "proposeJerseyTitle": "Proponi una maglia - Lo Spogliatoio",
+      "proposeJerseyDescription": "Proponi una nuova maglia da aggiungere al database",
+      "proposeJerseyHeading": "Proponi una maglia",
+      "proposeJerseyInfo": "Puoi proporre una nuova maglia da aggiungere al nostro database. Gli amministratori esamineranno la tua proposta prima di approvarla.",
+      "tipsHeading": "Consigli per una buona proposta",
+      "tip1": "Verifica che la maglia non esista già nel database",
+      "tip2": "Usa una foto chiara e di alta qualità",
+      "tip3": "Inserisci la stagione in formato AAAA-AA (es. 2025-26, 2024-25) per i club e formato AAAA (2025, 2022, ecc.) per le nazionali",
+      "tip4": "Sii preciso nel nome e nella descrizione",
+      "errorLoading": "Errore nel caricamento delle proposte",
+      "errorLoadingToast": "Impossibile caricare le tue proposte",
+      "emptyStateTitle": "Nessuna proposta",
+      "emptyStateDescription": "Non hai ancora inviato proposte di maglie.",
+      "brandLabel": "Marca:",
+      "statusPending": "In attesa"
+    },
+    "Form": {
+      "jerseyNameLabel": "Nome della maglia",
+      "autoGenerated": "(Generato automaticamente)",
+      "jerseyNamePlaceholder": "Sarà generato automaticamente in base alle tue selezioni...",
+      "clubLabel": "Club *",
+      "clubLoading": "Caricamento...",
+      "clubSearchPlaceholder": "Cerca un club...",
+      "clubCommandPlaceholder": "Cerca un club...",
+      "clubNotFound": "Nessun club trovato.",
+      "seasonLabel": "Stagione *",
+      "seasonPlaceholder": "Es., 2025-26",
+      "seasonPlaceholderNationalTeam": "Es., 2025",
+      "typeLabel": "Tipo *",
+      "typePlaceholder": "Tipo di maglia",
+      "specialNameLabel": "Nome maglia speciale",
+      "specialNameOptional": "(opzionale)",
+      "specialNamePlaceholder": "Es., Anniversario, Edizione Limitata, Natale...",
+      "specialNameHelper": "Se vuoto, il nome sarà \"Maglia Speciale [Club] [Stagione]\"",
+      "brandLabel": "Marca *",
+      "brandPlaceholder": "Es., Nike, Adidas, Puma...",
+      "descriptionLabel": "Descrizione (opzionale)",
+      "descriptionPlaceholder": "Aggiungi una descrizione o dei dettagli su questa maglia...",
+      "photoLabel": "Foto della maglia *",
+      "photoClickToAdd": "Clicca per aggiungere una foto",
+      "photoFormats": "PNG, JPG, WEBP, AVIF (Max 2MB)",
+      "errorFileNotImage": "Il file deve essere un'immagine",
+      "errorFileTooLarge": "La foto non deve superare 2MB",
+      "errorAllFieldsRequired": "Tutti i campi sono obbligatori tranne la descrizione",
+      "errorPhotoRequired": "È richiesta una foto",
+      "errorUpload": "Errore durante il caricamento",
+      "errorUploadToast": "Errore nel caricamento della foto",
+      "errorCreate": "Errore durante la creazione",
+      "successToast": "Proposta inviata con successo!",
+      "errorCreateToast": "Errore nella creazione della proposta",
+      "buttonUploading": "Caricamento foto...",
+      "buttonSubmitting": "Invio in corso...",
+      "buttonSubmit": "Invia proposta",
+      "generatedJerseyName": "Maglia {type} {club} {season}",
+      "seasonErrorClub": "Formato non valido. Usa AAAA-AA (es. 2025-26) per i club",
+      "seasonErrorNationalTeam": "Formato non valido. Usa AAAA (es. 2025) per le nazionali"
+    },
+    "Errors": {
+      "notContributor": "Devi essere un collaboratore per proporre maglie",
+      "rateLimitProposals": "Troppe proposte. Riprova più tardi.",
+      "rateLimitUploads": "Troppi caricamenti. Riprova più tardi.",
+      "allFieldsRequired": "Tutti i campi sono obbligatori tranne la descrizione",
+      "invalidType": "Tipo di maglia non valido",
+      "clubNotFound": "Club non trovato",
+      "jerseyExists": "Questa maglia esiste già nel database",
+      "proposalExists": "Una proposta per questa maglia è già in attesa",
+      "noFile": "Nessun file ricevuto",
+      "proposalNotFound": "Proposta non trovata",
+      "jerseyAlreadyExists": "Una maglia con queste caratteristiche esiste già",
+      "invalidImageUrl": "Formato URL dell'immagine non valido",
+      "cannotDownloadImage": "Impossibile scaricare l'immagine della proposta",
+      "cannotMoveImage": "Impossibile spostare l'immagine nel bucket delle maglie"
+    }
+  },
+  "Pricing": {
+    "title": "Scegli il tuo piano",
+    "subtitle": "Gestisci la tua collezione di maglie come un pro",
+    "toggle": {
+      "monthly": "Mensile",
+      "yearly": "Annuale"
+    },
+    "free": {
+      "name": "Gratuito",
+      "description": "Per iniziare la tua collezione",
+      "period": "gratis",
+      "features": {
+        "jerseys": "Fino a 50 maglie",
+        "wishlist": "Fino a 20 maglie nella lista dei desideri",
+        "basicStats": "Statistiche di base",
+        "friends": "Sistema di amicizie",
+        "ratings": "Voti e commenti"
+      },
+      "button": "Gratuito"
+    },
+    "premium": {
+      "name": "Premium",
+      "monthly": {
+        "description": "Per collezionisti appassionati",
+        "period": "mese",
+        "button": "Passa a Premium"
+      },
+      "yearly": {
+        "description": "Per collezionisti appassionati",
+        "period": "anno",
+        "button": "Passa a Premium Annuale",
+        "savings": "2 mesi gratis"
+      },
+      "features": {
+        "unlimitedJerseys": "Collezione illimitata",
+        "unlimitedWishlist": "Lista dei desideri illimitata",
+        "advancedStats": "Statistiche avanzate complete",
+        "multiplePhotos": "Fino a 5 foto per maglia",
+        "badge": "Badge Premium sul tuo profilo"
+      }
+    }
+  },
+  "PublicCollection": {
+    "title": "Collezione di {name}",
+    "jerseys": "maglie",
+    "jersey": "maglia",
+    "anonymous": "Collezionista anonimo",
+    "anonymousMessage": "Questo collezionista preferisce restare anonimo",
+    "emptyTitle": "Collezione vuota",
+    "emptyMessage": "{name} non ha ancora aggiunto maglie alla sua collezione.",
+    "tabs": {
+      "collection": "Collezione",
+      "wishlist": "Lista dei desideri"
+    },
+    "commonJerseysTitle": "In comune con te",
+    "commonJerseys": "{count} maglia/e in comune",
+    "wishlistTitle": "Lista dei desideri di {name}",
+    "wishlistEmpty": "Lista dei desideri vuota",
+    "wishlistEmptyMessage": "{name} non ha ancora aggiunto maglie alla sua lista dei desideri."
+  },
+  "ForgotPassword": {
+    "title": "Password dimenticata",
+    "subtitle": "Inserisci la tua email per ricevere un link di reset.",
+    "form": {
+      "email": "Email",
+      "emailPlaceholder": "tua@email.com"
+    },
+    "button": {
+      "submit": "Invia link",
+      "loading": "Invio…"
+    },
+    "success": {
+      "title": "Email inviata",
+      "message": "Se esiste un account con questa email, riceverai un link di reset entro pochi minuti."
+    },
+    "backToLogin": "Torna al login"
+  },
+  "ResetPassword": {
+    "title": "Nuova password",
+    "subtitle": "Scegli una nuova password per il tuo account.",
+    "form": {
+      "password": "Nuova password",
+      "passwordPlaceholder": "8 caratteri minimo",
+      "passwordConfirm": "Conferma password",
+      "passwordConfirmPlaceholder": "Ripeti la tua password"
+    },
+    "button": {
+      "submit": "Reimposta password",
+      "loading": "Reimpostazione…"
+    },
+    "success": {
+      "title": "Password cambiata",
+      "message": "La tua password è stata reimpostata. Ora puoi accedere."
+    },
+    "errors": {
+      "invalidToken": "Questo link non è valido o è scaduto. Effettua una nuova richiesta.",
+      "passwordMismatch": "Le password non corrispondono.",
+      "passwordTooShort": "Sono richiesti almeno 8 caratteri",
+      "passwordNoUppercase": "È richiesta almeno una lettera maiuscola",
+      "passwordNoNumber": "È richiesto almeno un numero",
+      "passwordNoSpecial": "È richiesto almeno un carattere speciale",
+      "resetError": "Si è verificato un errore. Riprova."
+    },
+    "backToLogin": "Accedi"
+  }
+}

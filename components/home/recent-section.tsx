@@ -6,7 +6,7 @@ import { Clock, ArrowRight, Sparkles } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
-import { fr, enUS, es, de, pt, nl } from "date-fns/locale";
+import { fr, enUS, es, de, pt, nl, it } from "date-fns/locale";
 import type { RecentJersey } from "@/types/home";
 import { useTranslations, useLocale } from "next-intl";
 import { useJerseyTypeTranslation } from "@/lib/translations";
@@ -70,6 +70,8 @@ export function RecentSection({
         return pt;
       case "nl":
         return nl;
+      case "it":
+        return it;
       case "fr":
       default:
         return fr;
