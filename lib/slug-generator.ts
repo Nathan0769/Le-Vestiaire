@@ -35,5 +35,5 @@ export function isSlug(param: string): boolean {
 
   if (/^[a-z0-9]{25,27}$/i.test(param)) return false;
 
-  return param.includes("-") && param.split("-").length >= 4;
+  return param.includes("-");
 }
