@@ -36,6 +36,8 @@ export function FriendCollectionGrid({
   const allSortOptions = [
     { value: "date-desc", label: t("mostRecent") },
     { value: "date-asc", label: t("oldest") },
+    { value: "purchase-date-desc", label: t("purchaseDateMostRecent") },
+    { value: "purchase-date-asc", label: t("purchaseDateOldest") },
     { value: "price-desc", label: t("priceDescending") },
     { value: "price-asc", label: t("priceAscending") },
     { value: "condition", label: t("condition") },
@@ -75,6 +77,22 @@ export function FriendCollectionGrid({
         return (
           new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
         );
+      case "purchase-date-desc": {
+        const dateA = a.purchaseDate ? new Date(a.purchaseDate).getTime() : null;
+        const dateB = b.purchaseDate ? new Date(b.purchaseDate).getTime() : null;
+        if (dateA === null && dateB === null) return 0;
+        if (dateA === null) return 1;
+        if (dateB === null) return -1;
+        return dateB - dateA;
+      }
+      case "purchase-date-asc": {
+        const dateA = a.purchaseDate ? new Date(a.purchaseDate).getTime() : null;
+        const dateB = b.purchaseDate ? new Date(b.purchaseDate).getTime() : null;
+        if (dateA === null && dateB === null) return 0;
+        if (dateA === null) return 1;
+        if (dateB === null) return -1;
+        return dateA - dateB;
+      }
       case "price-desc":
         const priceA = a.purchasePrice || 0;
         const priceB = b.purchasePrice || 0;

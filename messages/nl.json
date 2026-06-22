@@ -424,6 +424,8 @@
       "sortOptions": {
         "dateDesc": "Nieuwste",
         "dateAsc": "Oudste",
+        "purchaseDateDesc": "Aankoopdatum (recent)",
+        "purchaseDateAsc": "Aankoopdatum (oudst)",
         "priceDesc": "Prijs aflopend",
         "priceAsc": "Prijs oplopend",
         "condition": "Staat",
@@ -2139,6 +2141,8 @@
     "sortBy": "Sorteren op:",
     "mostRecent": "Nieuwste",
     "oldest": "Oudste",
+    "purchaseDateMostRecent": "Aankoopdatum (recent)",
+    "purchaseDateOldest": "Aankoopdatum (oudst)",
     "priceDescending": "Prijs aflopend",
     "priceAscending": "Prijs oplopend",
     "condition": "Staat",
