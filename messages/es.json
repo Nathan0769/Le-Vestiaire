@@ -89,7 +89,7 @@
   },
   "JerseyVersion": {
     "REPLICA": "Estándar",
-    "AUTHENTIC": "Auténtico",
+    "AUTHENTIC": "Tienda - versión Jugador",
     "STOCK_PRO": "Stock Pro",
     "PLAYER_ISSUE": "Preparado / Player Issue",
     "MATCH_WORN": "Usado en Partido"
@@ -569,7 +569,7 @@
       "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}",
       "labels": {
         "REPLICA": "Estándar",
-        "AUTHENTIC": "Auténtica",
+        "AUTHENTIC": "Tienda - versión Jugador",
         "STOCK_PRO": "Stock Pro",
         "PLAYER_ISSUE": "Player Issue",
         "MATCH_WORN": "Match Worn"
