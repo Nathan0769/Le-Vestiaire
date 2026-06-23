@@ -89,7 +89,7 @@
   },
   "JerseyVersion": {
     "REPLICA": "Standaard",
-    "AUTHENTIC": "Authentiek",
+    "AUTHENTIC": "Winkel - Spelersversie",
     "STOCK_PRO": "Pro Stock",
     "PLAYER_ISSUE": "Player Issue",
     "MATCH_WORN": "Match Worn"
@@ -569,7 +569,7 @@
       "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}",
       "labels": {
         "REPLICA": "Standaard",
-        "AUTHENTIC": "Authentiek",
+        "AUTHENTIC": "Winkel - Spelersversie",
         "STOCK_PRO": "Stock Pro",
         "PLAYER_ISSUE": "Player Issue",
         "MATCH_WORN": "Match Worn"

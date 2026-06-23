@@ -28,7 +28,7 @@ export const CONDITION_LABELS: Record<Condition, string> = {
 
 export const JERSEY_VERSION_LABELS: Record<JerseyVersion, string> = {
   REPLICA: "Standard",
-  AUTHENTIC: "Authentique",
+  AUTHENTIC: "Boutique - version Joueur",
   STOCK_PRO: "Stock Pro",
   PLAYER_ISSUE: "Préparé / Player Issue",
   MATCH_WORN: "Porté en Match",
