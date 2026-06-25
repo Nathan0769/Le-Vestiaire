@@ -470,7 +470,30 @@
       "overview": "Overview",
       "distribution": "Distribution",
       "financial": "Financial",
-      "records": "Records"
+      "records": "Records",
+      "community": "Community"
+    },
+    "community": {
+      "globalTitle": "Global app stats",
+      "yourPosition": "Your position",
+      "topClubs": "Most collected clubs",
+      "topLeagues": "Most collected leagues",
+      "topBrands": "Most collected brands",
+      "mostOwnedJersey": "Most owned jersey",
+      "topRatedJersey": "Top rated jersey",
+      "topSeason": "Dominant season",
+      "acquisitionsThisMonth": "Acquisitions this month",
+      "catalogCoverage": "Catalog coverage",
+      "rarestJerseys": "Gems in your collection",
+      "ratingWithVotes": "{rating}/5 ({count, plural, one {# vote} other {# votes}})",
+      "error": "Unable to load community statistics.",
+      "averageRating": "Global average rating",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}",
+      "collectorsCount": "{count, plural, one {# collector} other {# collectors}}",
+      "favoriteClubCoverage": "Your favorite club coverage",
+      "noFavoriteClub": "Set your favorite club to track your progress.",
+      "setFavoriteClub": "Set my favorite club",
+      "ownedOutOf": "{owned} out of {total} jerseys"
     },
     "timeline": {
       "title": "Collection Evolution",
@@ -1110,6 +1133,17 @@
       "collectors": "Collectors",
       "jerseys": "Listed jerseys",
       "clubs": "Clubs"
+    },
+    "communityHighlights": {
+      "title": "The community in numbers",
+      "subtitle": "Trends and records from collectors",
+      "topClub": "Club of the moment",
+      "mostOwnedJersey": "Most collected",
+      "totalCollected": "Jerseys collected",
+      "inCollections": "in collections",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}",
+      "collectorsCount": "{count, plural, one {# collector} other {# collectors}}",
+      "topLeague": "Top league"
     },
     "faq": {
       "title": "Frequently Asked Questions",

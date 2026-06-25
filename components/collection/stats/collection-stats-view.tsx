@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Loader2, Package, TrendingUp, Wallet, Award } from "lucide-react";
+import { Loader2, Package, TrendingUp, Wallet, Award, Users } from "lucide-react";
 import { TimelineChart } from "./timeline-chart";
 import { BrandDistributionChart } from "./brand-distribution-chart";
 import { TypeDistributionChart } from "./type-distribution-chart";
@@ -17,6 +17,7 @@ import { DiversityStatsCards } from "./diversity-stats-cards";
 import { RecordsCards } from "./records-cards";
 import { ActivityHeatmap } from "./activity-heatmap";
 import { DecadeDistributionChart } from "./decade-distribution-chart";
+import { CommunityTab } from "./community-tab";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslations } from "next-intl";
 
@@ -135,7 +136,7 @@ export function CollectionStatsView() {
 
   return (
     <Tabs defaultValue="overview" className="space-y-6">
-      <TabsList className="grid w-full grid-cols-4">
+      <TabsList className="grid w-full grid-cols-5">
         <TabsTrigger value="overview" className="flex items-center justify-center gap-1 md:gap-2 px-1 md:px-3">
           <Package className="w-4 h-4 shrink-0" />
           <span className="text-[10px] sm:text-xs md:text-sm truncate">{t("tabs.overview")}</span>
@@ -151,6 +152,10 @@ export function CollectionStatsView() {
         <TabsTrigger value="records" className="flex items-center justify-center gap-1 md:gap-2 px-1 md:px-3">
           <Award className="w-4 h-4 shrink-0" />
           <span className="text-[10px] sm:text-xs md:text-sm truncate">{t("tabs.records")}</span>
+        </TabsTrigger>
+        <TabsTrigger value="community" className="flex items-center justify-center gap-1 md:gap-2 px-1 md:px-3">
+          <Users className="w-4 h-4 shrink-0" />
+          <span className="text-[10px] sm:text-xs md:text-sm truncate">{t("tabs.community")}</span>
         </TabsTrigger>
       </TabsList>
 
@@ -195,6 +200,10 @@ export function CollectionStatsView() {
             leastExpensive: data.stats.financial.leastExpensive,
           }}
         />
+      </TabsContent>
+
+      <TabsContent value="community" className="space-y-6">
+        <CommunityTab />
       </TabsContent>
     </Tabs>
   );

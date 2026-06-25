@@ -16,6 +16,7 @@ import { FAQSection } from "@/components/home/faq-section";
 import { SupportSection } from "@/components/home/support-section";
 import { FeaturesSection } from "@/components/home/features-section";
 import { StatsSection } from "@/components/home/stats-section";
+import { CommunityHighlights } from "@/components/home/community-highlights";
 import { CfsPromoSection } from "@/components/home/cfs-promo-section";
 
 export const dynamic = "force-dynamic";
@@ -878,6 +879,7 @@ export default async function HomePage({
         jerseyCount={globalStats.jerseyCount}
         clubCount={globalStats.clubCount}
       />
+      <CommunityHighlights />
       <FeaturesSection />
       <FAQSection />
       <SupportSection />

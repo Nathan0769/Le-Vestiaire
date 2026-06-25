@@ -470,7 +470,30 @@
       "overview": "Overzicht",
       "distribution": "Verdeling",
       "financial": "Financieel",
-      "records": "Records"
+      "records": "Records",
+      "community": "Community"
+    },
+    "community": {
+      "globalTitle": "Globale app-statistieken",
+      "yourPosition": "Jouw positie",
+      "topClubs": "Meest verzamelde clubs",
+      "topLeagues": "Meest verzamelde competities",
+      "topBrands": "Meest verzamelde merken",
+      "mostOwnedJersey": "Meest bezeten shirt",
+      "topRatedJersey": "Best beoordeelde shirt",
+      "topSeason": "Dominant seizoen",
+      "acquisitionsThisMonth": "Aanschaffingen deze maand",
+      "catalogCoverage": "Catalogusdekking",
+      "rarestJerseys": "De pareltjes van je collectie",
+      "ratingWithVotes": "{rating}/5 ({count, plural, one {# stem} other {# stemmen}})",
+      "error": "Kan community-statistieken niet laden.",
+      "averageRating": "Globale gemiddelde beoordeling",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}",
+      "collectorsCount": "{count, plural, one {# verzamelaar} other {# verzamelaars}}",
+      "favoriteClubCoverage": "Dekking van je favoriete club",
+      "noFavoriteClub": "Stel je favoriete club in om je voortgang te volgen.",
+      "setFavoriteClub": "Mijn favoriete club instellen",
+      "ownedOutOf": "{owned} van de {total} shirts"
     },
     "timeline": {
       "title": "Evolutie van de collectie",
@@ -1110,6 +1133,17 @@
       "collectors": "Verzamelaars",
       "jerseys": "Geregistreerde shirts",
       "clubs": "Clubs"
+    },
+    "communityHighlights": {
+      "title": "De community in cijfers",
+      "subtitle": "Trends en records van de verzamelaars",
+      "topClub": "Club van het moment",
+      "mostOwnedJersey": "Meest verzameld",
+      "totalCollected": "Verzamelde shirts",
+      "inCollections": "in collecties",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}",
+      "collectorsCount": "{count, plural, one {# verzamelaar} other {# verzamelaars}}",
+      "topLeague": "Dominante competitie"
     },
     "faq": {
       "title": "Veelgestelde vragen",

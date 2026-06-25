@@ -470,7 +470,30 @@
       "overview": "Visão geral",
       "distribution": "Distribuição",
       "financial": "Financeiro",
-      "records": "Recordes"
+      "records": "Recordes",
+      "community": "Comunidade"
+    },
+    "community": {
+      "globalTitle": "Estatísticas globais da aplicação",
+      "yourPosition": "A sua posição",
+      "topClubs": "Clubes mais colecionados",
+      "topLeagues": "Ligas mais colecionadas",
+      "topBrands": "Marcas mais colecionadas",
+      "mostOwnedJersey": "Camisola mais possuída",
+      "topRatedJersey": "Camisola mais bem avaliada",
+      "topSeason": "Temporada dominante",
+      "acquisitionsThisMonth": "Aquisições este mês",
+      "catalogCoverage": "Cobertura do catálogo",
+      "rarestJerseys": "As pérolas da sua coleção",
+      "ratingWithVotes": "{rating}/5 ({count, plural, one {# voto} other {# votos}})",
+      "error": "Não foi possível carregar as estatísticas da comunidade.",
+      "averageRating": "Avaliação média global",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}",
+      "collectorsCount": "{count, plural, one {# colecionador} other {# colecionadores}}",
+      "favoriteClubCoverage": "Cobertura do teu clube favorito",
+      "noFavoriteClub": "Define o teu clube favorito para acompanhar o teu progresso.",
+      "setFavoriteClub": "Definir o meu clube favorito",
+      "ownedOutOf": "{owned} de {total} camisolas"
     },
     "timeline": {
       "title": "Evolução da Coleção",
@@ -1110,6 +1133,17 @@
       "collectors": "Colecionadores",
       "jerseys": "Camisolas listadas",
       "clubs": "Clubes"
+    },
+    "communityHighlights": {
+      "title": "A comunidade em números",
+      "subtitle": "As tendências e recordes dos colecionadores",
+      "topClub": "Clube do momento",
+      "mostOwnedJersey": "A mais colecionada",
+      "totalCollected": "Camisolas colecionadas",
+      "inCollections": "nas coleções",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}",
+      "collectorsCount": "{count, plural, one {# colecionador} other {# colecionadores}}",
+      "topLeague": "Liga dominante"
     },
     "faq": {
       "title": "Perguntas Frequentes",
