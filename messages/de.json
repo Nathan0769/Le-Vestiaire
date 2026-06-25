@@ -470,7 +470,30 @@
       "overview": "Übersicht",
       "distribution": "Verteilung",
       "financial": "Finanzen",
-      "records": "Rekorde"
+      "records": "Rekorde",
+      "community": "Community"
+    },
+    "community": {
+      "globalTitle": "Globale App-Statistiken",
+      "yourPosition": "Deine Position",
+      "topClubs": "Meistgesammelte Vereine",
+      "topLeagues": "Meistgesammelte Ligen",
+      "topBrands": "Meistgesammelte Marken",
+      "mostOwnedJersey": "Meistbesessenes Trikot",
+      "topRatedJersey": "Bestbewertetes Trikot",
+      "topSeason": "Dominierende Saison",
+      "acquisitionsThisMonth": "Erwerbungen diesen Monat",
+      "catalogCoverage": "Katalogabdeckung",
+      "rarestJerseys": "Die Schätze deiner Sammlung",
+      "ratingWithVotes": "{rating}/5 ({count, plural, one {# Stimme} other {# Stimmen}})",
+      "error": "Community-Statistiken konnten nicht geladen werden.",
+      "averageRating": "Globale Durchschnittsbewertung",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}",
+      "collectorsCount": "{count, plural, one {# Sammler} other {# Sammler}}",
+      "favoriteClubCoverage": "Abdeckung deines Lieblingsvereins",
+      "noFavoriteClub": "Lege deinen Lieblingsverein fest, um deinen Fortschritt zu verfolgen.",
+      "setFavoriteClub": "Meinen Lieblingsverein festlegen",
+      "ownedOutOf": "{owned} von {total} Trikots"
     },
     "timeline": {
       "title": "Sammlungsentwicklung",
@@ -1110,6 +1133,17 @@
       "collectors": "Sammler",
       "jerseys": "Gelistete Trikots",
       "clubs": "Clubs"
+    },
+    "communityHighlights": {
+      "title": "Die Community in Zahlen",
+      "subtitle": "Trends und Rekorde der Sammler",
+      "topClub": "Club des Moments",
+      "mostOwnedJersey": "Am meisten gesammelt",
+      "totalCollected": "Gesammelte Trikots",
+      "inCollections": "in Sammlungen",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}",
+      "collectorsCount": "{count, plural, one {# Sammler} other {# Sammler}}",
+      "topLeague": "Dominante Liga"
     },
     "faq": {
       "title": "Häufig gestellte Fragen",
