@@ -8,8 +8,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import { Grid2x2, Grid3x3 } from "lucide-react";
 import { FriendCollectionJerseyCard } from "./friend-collection-jersey-card";
 import { CollectionFiltersPopover } from "@/components/collection/collection-filters-popover";
+import { useCollectionViewMode } from "@/hooks/useCollectionViewMode";
+import { comparePinnedFirst } from "@/lib/collection-pin";
 import {
   EMPTY_FILTERS,
   applyCollectionFilters,
@@ -30,8 +38,10 @@ export function FriendCollectionGrid({
 }: FriendCollectionGridProps) {
   const t = useTranslations("Friends");
   const tFilters = useTranslations("Collection.filters");
+  const tGrid = useTranslations("Collection.grid");
   const [sortBy, setSortBy] = useState("date-desc");
   const [filters, setFilters] = useState<CollectionFilters>(EMPTY_FILTERS);
+  const [viewMode, setViewMode] = useCollectionViewMode();
 
   const allSortOptions = [
     { value: "date-desc", label: t("mostRecent") },
@@ -68,6 +78,8 @@ export function FriendCollectionGrid({
   const activeFiltersCount = countActiveFilters(filters);
 
   const sortedItems = [...filteredItems].sort((a, b) => {
+    const pinnedCmp = comparePinnedFirst(a.pinnedAt, b.pinnedAt);
+    if (pinnedCmp !== 0) return pinnedCmp;
     switch (sortBy) {
       case "date-desc":
         return (
@@ -158,6 +170,44 @@ export function FriendCollectionGrid({
               </SelectContent>
             </Select>
           </div>
+          <div className="flex items-center rounded-md border bg-background overflow-hidden shrink-0">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={() => setViewMode("showcase")}
+                  aria-label={tGrid("viewMode.detailed")}
+                  aria-pressed={viewMode === "showcase"}
+                  className={`p-1.5 transition-colors ${
+                    viewMode === "showcase"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <Grid2x2 className="w-4 h-4" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>{tGrid("viewMode.detailed")}</TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <button
+                  type="button"
+                  onClick={() => setViewMode("compact")}
+                  aria-label={tGrid("viewMode.compact")}
+                  aria-pressed={viewMode === "compact"}
+                  className={`p-1.5 transition-colors ${
+                    viewMode === "compact"
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-muted"
+                  }`}
+                >
+                  <Grid3x3 className="w-4 h-4" />
+                </button>
+              </TooltipTrigger>
+              <TooltipContent>{tGrid("viewMode.compact")}</TooltipContent>
+            </Tooltip>
+          </div>
         </div>
       </div>
 
@@ -177,9 +227,19 @@ export function FriendCollectionGrid({
           </Button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-3 sm:gap-4 w-full">
+        <div
+          className={`grid gap-3 sm:gap-4 w-full ${
+            viewMode === "compact"
+              ? "grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7"
+              : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+          }`}
+        >
           {sortedItems.map((item) => (
-            <FriendCollectionJerseyCard key={item.id} collectionItem={item} />
+            <FriendCollectionJerseyCard
+              key={item.id}
+              collectionItem={item}
+              compact={viewMode === "compact"}
+            />
           ))}
         </div>
       )}

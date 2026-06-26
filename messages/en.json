@@ -410,6 +410,17 @@
           "deleted": "Jersey removed from your collection"
         }
       },
+      "card": {
+        "pin": "Pin",
+        "unpin": "Unpin",
+        "toast": {
+          "pinned": "Jersey pinned",
+          "unpinned": "Jersey unpinned",
+          "pinLimitReached": "Limit of {max} pinned jerseys reached",
+          "error": "An error occurred",
+          "connectionError": "Connection error. Please try again."
+        }
+      },
       "delete": {
         "title": "Delete jersey?",
         "description": "Are you sure you want to remove this jersey from your collection? This action cannot be undone.",
@@ -432,7 +443,11 @@
         "club": "Club (A-Z)",
         "season": "Season"
       },
-      "noJerseys": "No jerseys in your collection."
+      "noJerseys": "No jerseys in your collection.",
+      "viewMode": {
+        "detailed": "Detailed view",
+        "compact": "Compact view"
+      }
     },
     "page": {
       "title": "My Collection",

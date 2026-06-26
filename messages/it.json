@@ -410,6 +410,17 @@
           "deleted": "Maglia rimossa dalla tua collezione"
         }
       },
+      "card": {
+        "pin": "Fissa",
+        "unpin": "Rimuovi",
+        "toast": {
+          "pinned": "Maglia fissata",
+          "unpinned": "Maglia rimossa dai fissati",
+          "pinLimitReached": "Limite di {max} maglie fissate raggiunto",
+          "error": "Si è verificato un errore",
+          "connectionError": "Errore di connessione. Riprova."
+        }
+      },
       "delete": {
         "title": "Eliminare la maglia?",
         "description": "Sei sicuro di voler rimuovere questa maglia dalla tua collezione? Questa azione non può essere annullata.",
@@ -432,7 +443,11 @@
         "club": "Club (A-Z)",
         "season": "Stagione"
       },
-      "noJerseys": "Nessuna maglia nella tua collezione."
+      "noJerseys": "Nessuna maglia nella tua collezione.",
+      "viewMode": {
+        "detailed": "Vista dettagliata",
+        "compact": "Vista compatta"
+      }
     },
     "page": {
       "title": "La mia collezione",

@@ -410,6 +410,17 @@
           "deleted": "Shirt verwijderd uit je collectie"
         }
       },
+      "card": {
+        "pin": "Vastmaken",
+        "unpin": "Losmaken",
+        "toast": {
+          "pinned": "Shirt vastgemaakt",
+          "unpinned": "Shirt losgemaakt",
+          "pinLimitReached": "Limiet van {max} vastgemaakte shirts bereikt",
+          "error": "Er is een fout opgetreden",
+          "connectionError": "Verbindingsfout. Probeer het opnieuw."
+        }
+      },
       "delete": {
         "title": "Shirt verwijderen?",
         "description": "Weet je zeker dat je dit shirt uit je collectie wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
@@ -432,7 +443,11 @@
         "club": "Club (A-Z)",
         "season": "Seizoen"
       },
-      "noJerseys": "Geen shirts in je collectie."
+      "noJerseys": "Geen shirts in je collectie.",
+      "viewMode": {
+        "detailed": "Gedetailleerde weergave",
+        "compact": "Compacte weergave"
+      }
     },
     "page": {
       "title": "Mijn Collectie",

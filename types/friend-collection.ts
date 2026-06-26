@@ -53,6 +53,7 @@ export interface FriendCollectionItem {
   matchDate?: Date | null;
   hasLongSleeves?: boolean;
   patches?: FriendCollectionItemPatch[];
+  pinnedAt?: Date | string | null;
   createdAt: Date;
   updatedAt: Date;
   jersey: {
