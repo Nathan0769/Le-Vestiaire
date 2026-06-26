@@ -9,6 +9,7 @@ export type TopLeagueEntry = {
   id: string;
   name: string;
   logoUrl: string;
+  logoDarkUrl: string | null;
   count: number;
 };
 

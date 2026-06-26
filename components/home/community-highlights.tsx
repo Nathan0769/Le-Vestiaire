@@ -100,13 +100,32 @@ export async function CommunityHighlights() {
             {topLeague ? (
               <div className="flex flex-col items-center gap-2">
                 <div className="relative w-12 h-12">
-                  <Image
-                    src={topLeague.logoUrl}
-                    alt={topLeague.name}
-                    fill
-                    className="object-contain"
-                    unoptimized
-                  />
+                  {topLeague.logoDarkUrl ? (
+                    <>
+                      <Image
+                        src={topLeague.logoUrl}
+                        alt={topLeague.name}
+                        fill
+                        className="object-contain dark:hidden"
+                        unoptimized
+                      />
+                      <Image
+                        src={topLeague.logoDarkUrl}
+                        alt={topLeague.name}
+                        fill
+                        className="object-contain hidden dark:block"
+                        unoptimized
+                      />
+                    </>
+                  ) : (
+                    <Image
+                      src={topLeague.logoUrl}
+                      alt={topLeague.name}
+                      fill
+                      className="object-contain"
+                      unoptimized
+                    />
+                  )}
                 </div>
                 <span className="text-lg font-semibold">{topLeague.name}</span>
                 <span className="text-xs text-muted-foreground">
