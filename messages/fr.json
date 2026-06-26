@@ -414,6 +414,17 @@
           "deleted": "Maillot supprimé de votre collection"
         }
       },
+      "card": {
+        "pin": "Épingler",
+        "unpin": "Désépingler",
+        "toast": {
+          "pinned": "Maillot épinglé",
+          "unpinned": "Maillot désépinglé",
+          "pinLimitReached": "Limite de {max} maillots épinglés atteinte",
+          "error": "Une erreur est survenue",
+          "connectionError": "Erreur de connexion. Veuillez réessayer."
+        }
+      },
       "delete": {
         "title": "Supprimer le maillot ?",
         "description": "Êtes-vous sûr de vouloir supprimer ce maillot de votre collection ? Cette action ne peut pas être annulée.",
@@ -436,7 +447,11 @@
         "club": "Club (A-Z)",
         "season": "Saison"
       },
-      "noJerseys": "Aucun maillot dans votre collection."
+      "noJerseys": "Aucun maillot dans votre collection.",
+      "viewMode": {
+        "detailed": "Vue détaillée",
+        "compact": "Vue compacte"
+      }
     },
     "page": {
       "title": "Ma Collection",

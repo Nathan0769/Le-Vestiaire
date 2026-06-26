@@ -33,6 +33,7 @@ export async function GET() {
         certificateUrl: true,
         matchDescription: true,
         matchDate: true,
+        pinnedAt: true,
         createdAt: true,
         updatedAt: true,
         jersey: {

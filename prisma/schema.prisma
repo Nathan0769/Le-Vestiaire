@@ -206,12 +206,14 @@ model UserJersey {
   matchDate          DateTime?
   certificateUrl     String?
   hasLongSleeves     Boolean           @default(false)
+  pinnedAt           DateTime?
   jersey             Jersey            @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
   user               User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   patches            UserJerseyPatch[]
 
   @@index([userId])
   @@index([jerseyId])
+  @@index([userId, pinnedAt])
   @@map("user_jerseys")
 }
 

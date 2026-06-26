@@ -41,6 +41,7 @@ export type CollectionItemWithJersey = {
   matchDate?: Date | null;
   hasLongSleeves?: boolean;
   patches?: CollectionItemPatch[];
+  pinnedAt?: Date | string | null;
   createdAt: Date;
   updatedAt: Date;
   jersey: {

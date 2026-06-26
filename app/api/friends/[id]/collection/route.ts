@@ -85,6 +85,7 @@ export async function GET(
         matchDescription: true,
         matchDate: true,
         hasLongSleeves: true,
+        pinnedAt: true,
         createdAt: true,
         updatedAt: true,
         patches: {
