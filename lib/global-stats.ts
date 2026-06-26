@@ -34,14 +34,20 @@ async function getTopClubs(): Promise<TopClubEntry[]> {
 
 async function getTopLeagues(): Promise<TopLeagueEntry[]> {
   const rows = await prisma.$queryRaw<
-    { id: string; name: string; logoUrl: string; count: bigint }[]
+    {
+      id: string;
+      name: string;
+      logoUrl: string;
+      logoDarkUrl: string | null;
+      count: bigint;
+    }[]
   >`
-    SELECT l.id, l.name, l."logoUrl", COUNT(*)::bigint as count
+    SELECT l.id, l.name, l."logoUrl", l."logoDarkUrl", COUNT(*)::bigint as count
     FROM user_jerseys uj
     JOIN jerseys j ON j.id = uj."jerseyId"
     JOIN clubs c ON c.id = j."clubId"
     JOIN leagues l ON l.id = c."leagueId"
-    GROUP BY l.id, l.name, l."logoUrl"
+    GROUP BY l.id, l.name, l."logoUrl", l."logoDarkUrl"
     ORDER BY count DESC
     LIMIT 5
   `;
@@ -49,6 +55,7 @@ async function getTopLeagues(): Promise<TopLeagueEntry[]> {
     id: r.id,
     name: r.name,
     logoUrl: r.logoUrl,
+    logoDarkUrl: r.logoDarkUrl,
     count: Number(r.count),
   }));
 }
@@ -222,7 +229,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
 
 export const getGlobalStatsCached = unstable_cache(
   getGlobalStats,
-  ["global-stats-v3"],
+  ["global-stats-v4"],
   { revalidate: 21600, tags: ["global-stats"] }
 );
 

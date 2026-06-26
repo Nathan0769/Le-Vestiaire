@@ -54,6 +54,11 @@ function TopList({ title, icon: Icon, entries, countLabel, withLogo = false }: T
         <ul className="space-y-3">
           {entries.map((entry, index) => {
             const hasLogo = withLogo && "logoUrl" in entry;
+            const darkLogoUrl =
+              hasLogo && "logoDarkUrl" in entry ? entry.logoDarkUrl : null;
+            const lightLogoUrl = hasLogo
+              ? (entry as TopClubEntry).logoUrl
+              : null;
             return (
               <li
                 key={"id" in entry ? entry.id : entry.name}
@@ -63,15 +68,33 @@ function TopList({ title, icon: Icon, entries, countLabel, withLogo = false }: T
                   #{index + 1}
                 </span>
                 <div className="relative w-8 h-8 shrink-0">
-                  {hasLogo && (
-                    <Image
-                      src={(entry as TopClubEntry).logoUrl}
-                      alt={entry.name}
-                      fill
-                      className="object-contain"
-                      unoptimized
-                    />
-                  )}
+                  {lightLogoUrl &&
+                    (darkLogoUrl ? (
+                      <>
+                        <Image
+                          src={lightLogoUrl}
+                          alt={entry.name}
+                          fill
+                          className="object-contain dark:hidden"
+                          unoptimized
+                        />
+                        <Image
+                          src={darkLogoUrl}
+                          alt={entry.name}
+                          fill
+                          className="object-contain hidden dark:block"
+                          unoptimized
+                        />
+                      </>
+                    ) : (
+                      <Image
+                        src={lightLogoUrl}
+                        alt={entry.name}
+                        fill
+                        className="object-contain"
+                        unoptimized
+                      />
+                    ))}
                 </div>
                 <span className="text-sm font-medium flex-1 truncate">
                   {entry.name}
