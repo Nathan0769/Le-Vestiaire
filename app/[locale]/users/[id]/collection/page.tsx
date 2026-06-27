@@ -259,16 +259,7 @@ export default async function PublicCollectionPage({
             />
           )}
           <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-xl font-semibold truncate flex-1 min-w-0">{displayName}</h2>
-              <FriendshipButton
-                targetUserId={userId}
-                friendshipId={friendship?.id}
-                status={friendship?.status ?? null}
-                isSender={friendship?.isSender}
-                isAnonymous={isAnonymous}
-              />
-            </div>
+            <h2 className="text-xl font-semibold truncate min-w-0">{displayName}</h2>
             {!isAnonymous && targetUser.favoriteClub && (
               <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
                 <Heart className="w-4 h-4 text-red-500" />
@@ -284,6 +275,15 @@ export default async function PublicCollectionPage({
                 {t("anonymousMessage")}
               </p>
             )}
+            <div className="mt-3">
+              <FriendshipButton
+                targetUserId={userId}
+                friendshipId={friendship?.id}
+                status={friendship?.status ?? null}
+                isSender={friendship?.isSender}
+                isAnonymous={isAnonymous}
+              />
+            </div>
 
             {commonItems.length > 0 && (
               <div className="mt-4 pt-4 border-t border-border">
