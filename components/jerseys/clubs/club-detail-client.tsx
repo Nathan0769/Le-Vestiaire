@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import Image from "next/image";
 import { JerseysBySeason } from "@/components/jerseys/jerseys/jerseys-by-season";
 import { SimpleJersey, ClubWithLeague } from "@/types/jersey";
@@ -9,21 +9,34 @@ type Props = {
   jerseys: (SimpleJersey & { slug?: string | null })[];
   primaryColor: string;
   club: ClubWithLeague;
-  isAdmin: boolean;
 };
 
-export function ClubDetailClient({ jerseys, primaryColor, club, isAdmin }: Props) {
+export function ClubDetailClient({ jerseys, primaryColor, club }: Props) {
   const [deleteMode, setDeleteMode] = useState(false);
+  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetch("/api/user/is-admin")
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (!cancelled && data?.isSuperAdmin) setIsSuperAdmin(true);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleNameClick = useCallback(
     (e: React.MouseEvent) => {
-      if (!isAdmin) return;
+      if (!isSuperAdmin) return;
       if (e.shiftKey) {
         e.preventDefault();
         setDeleteMode((prev) => !prev);
       }
     },
-    [isAdmin]
+    [isSuperAdmin]
   );
 
   return (
@@ -40,10 +53,10 @@ export function ClubDetailClient({ jerseys, primaryColor, club, isAdmin }: Props
         <div className="flex items-center gap-3">
           <h1
             className={`text-2xl font-semibold select-none ${
-              isAdmin ? "cursor-pointer" : ""
+              isSuperAdmin ? "cursor-pointer" : ""
             } ${deleteMode ? "text-destructive" : ""}`}
             onClick={handleNameClick}
-            title={isAdmin ? "Maj + clic pour activer le mode suppression" : undefined}
+            title={isSuperAdmin ? "Maj + clic pour activer le mode suppression" : undefined}
           >
             {club.name}
           </h1>
