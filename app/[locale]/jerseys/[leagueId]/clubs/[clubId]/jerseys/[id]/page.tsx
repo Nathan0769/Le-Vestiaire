@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { cache } from "react";
 import { isSlug } from "@/lib/slug-generator";
 import type {
   JerseyWithWishlistAndCollection,
@@ -36,25 +37,72 @@ interface JerseyPageProps {
   }>;
 }
 
+const getCachedUser = cache(() => getCurrentUser());
+
+const getCachedJersey = cache(async (id: string) => {
+  const user = await getCachedUser();
+  const searchBySlug = isSlug(id);
+
+  const jersey = await prisma.jersey.findUnique({
+    where: searchBySlug ? { slug: id } : { id },
+    include: {
+      club: { include: { league: true } },
+      ...(user && {
+        wishlist: {
+          where: { userId: user.id },
+          select: { id: true },
+        },
+      }),
+    },
+  });
+
+  if (!jersey) return null;
+  const { wishlist, retailPrice, ...rest } = jersey as typeof jersey & {
+    wishlist?: { id: string }[];
+  };
+  return {
+    ...rest,
+    retailPrice: retailPrice == null ? undefined : Number(retailPrice),
+    isInWishlist: user ? (wishlist?.length ?? 0) > 0 : false,
+    isInCollection: false,
+  } as unknown as JerseyWithWishlistAndCollection;
+});
+
+const getCachedRating = cache(async (jerseyId: string) => {
+  const aggregate = await prisma.rating.aggregate({
+    where: { jerseyId },
+    _avg: { rating: true },
+    _count: { rating: true },
+  });
+  return {
+    averageRating: aggregate._avg.rating ? Number(aggregate._avg.rating) : 0,
+    totalRatings: aggregate._count.rating || 0,
+  };
+});
+
+const getCachedStats = cache(async (jerseyId: string) => {
+  const [collectionCount, wishlistCount] = await Promise.all([
+    prisma.userJersey.count({ where: { jerseyId } }),
+    prisma.wishlist.count({ where: { jerseyId } }),
+  ]);
+  return { collectionCount, wishlistCount };
+});
+
 export async function generateMetadata({
   params,
 }: JerseyPageProps): Promise<Metadata> {
   const { leagueId, clubId, id } = await params;
 
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}`,
-      { next: { revalidate: 3600 } }
-    );
+    const jersey = await getCachedJersey(id);
 
-    if (!res.ok) {
+    if (!jersey) {
       return {
         title: "Maillot introuvable - Le Vestiaire",
         description: "Ce maillot n'existe pas ou n'est plus disponible.",
       };
     }
 
-    const jersey: JerseyWithWishlistAndCollection = await res.json();
     const locale = await getLocale();
     const tJerseyType = await getTranslations("JerseyType");
 
@@ -73,18 +121,10 @@ export async function generateMetadata({
     });
 
     let ratingText = "";
-    try {
-      const ratingRes = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}/rating`,
-        { cache: "no-store" }
-      );
-      if (ratingRes.ok) {
-        const ratingData = await ratingRes.json();
-        if (ratingData.totalRatings > 0) {
-          ratingText = ` - Note ${ratingData.averageRating.toFixed(1)}/5 ⭐`;
-        }
-      }
-    } catch {}
+    const rating = await getCachedRating(jersey.id);
+    if (rating.totalRatings > 0) {
+      ratingText = ` - Note ${rating.averageRating.toFixed(1)}/5 ⭐`;
+    }
 
     const title = `${translatedJerseyName} ${jersey.brand}${ratingText} | Le Vestiaire`;
     const description = `Découvrez le maillot ${typeLower} du ${jersey.club.name} pour la saison ${jersey.season}. Conçu par ${jersey.brand}, ce maillot ${jersey.club.league.name} est une pièce de collection. Ajoutez-le à votre collection et évaluez-le !`;
@@ -161,38 +201,22 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
 
   const isSlugParam = isSlug(id);
 
-  // Check if current user is admin or superadmin
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCachedUser();
   const isAdmin =
     currentUser?.role === "admin" || currentUser?.role === "superadmin";
   const isSuperAdmin = currentUser?.role === "superadmin";
 
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}`,
-    { cache: "no-store" }
-  );
-
-  if (!res.ok) {
-    notFound();
-  }
-
-  const jersey: JerseyWithWishlistAndCollection = await res.json();
+  const jersey = await getCachedJersey(id);
+  if (!jersey) notFound();
 
   if (!isSlugParam && jersey.slug) {
     redirect(`/jerseys/${leagueId}/clubs/${clubId}/jerseys/${jersey.slug}`);
   }
 
-  const [ratingRes, statsRes] = await Promise.all([
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}/rating`, {
-      cache: "no-store",
-    }).catch(() => null),
-    fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/jerseys/${id}/stats`, {
-      cache: "no-store",
-    }).catch(() => null),
+  const [ratingData, statsData] = await Promise.all([
+    getCachedRating(jersey.id),
+    getCachedStats(jersey.id),
   ]);
-
-  const ratingData = ratingRes && ratingRes.ok ? await ratingRes.json() : null;
-  const statsData = statsRes && statsRes.ok ? await statsRes.json() : null;
 
   const typeOrder: Record<string, number> = {
     HOME: 1,
