@@ -8,12 +8,12 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import prisma from "@/lib/prisma";
-import { getCurrentUser } from "@/lib/get-current-user";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import { cache } from "react";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 type Props = {
   params: Promise<{
@@ -22,20 +22,34 @@ type Props = {
   }>;
 };
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { clubId } = await params;
-
-  const club = await prisma.club.findUnique({
+const getCachedClub = cache(async (clubId: string) => {
+  return prisma.club.findUnique({
     where: { id: clubId },
     include: {
       league: true,
       jerseys: {
-        select: { season: true },
         orderBy: { season: "desc" },
-        take: 1,
+        select: {
+          id: true,
+          name: true,
+          imageUrl: true,
+          type: true,
+          variant: true,
+          season: true,
+          brand: true,
+          clubId: true,
+          description: true,
+          slug: true,
+        },
       },
     },
   });
+});
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { clubId } = await params;
+
+  const club = await getCachedClub(clubId);
 
   if (!club) {
     return {
@@ -84,30 +98,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ClubDetailPage(props: Props) {
   const { clubId } = await props.params;
 
-  const [user, club] = await Promise.all([
-    getCurrentUser(),
-    prisma.club.findUnique({
-      where: { id: clubId },
-      include: {
-        league: true,
-        jerseys: {
-          orderBy: { season: "desc" },
-          select: {
-            id: true,
-            name: true,
-            imageUrl: true,
-            type: true,
-            variant: true,
-            season: true,
-            brand: true,
-            clubId: true,
-            description: true,
-            slug: true,
-          },
-        },
-      },
-    }),
-  ]);
+  const club = await getCachedClub(clubId);
 
   const t = await getTranslations("Jerseys");
 
@@ -150,7 +141,6 @@ export default async function ClubDetailPage(props: Props) {
         jerseys={club.jerseys}
         primaryColor={club.primaryColor}
         club={club}
-        isAdmin={user?.role === "superadmin"}
       />
     </div>
   );
