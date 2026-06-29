@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { FriendWishlistStats } from "@/components/friends/friend-wishlist-stats";
 import { FriendWishlistGrid } from "@/components/friends/friend-wishlist-grid";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { SocialLinksRow } from "@/components/profiles/social-links-row";
 import { PublicUserTabs } from "@/components/users/public-user-tabs";
 import { FriendshipButton } from "@/components/users/friendship-button";
 import { BackButton } from "@/components/ui/back-button";
@@ -62,6 +63,11 @@ export default async function PublicWishlistPage({
         bio: true,
         leaderboardAnonymous: true,
         favoriteClub: { select: { id: true, name: true } },
+        instagramHandle: true,
+        twitterHandle: true,
+        tiktokHandle: true,
+        youtubeHandle: true,
+        twitchHandle: true,
       },
     }),
     prisma.friendship.findFirst({
@@ -198,6 +204,17 @@ export default async function PublicWishlistPage({
                 <Heart className="w-4 h-4 text-red-500" />
                 {targetUser.favoriteClub.name}
               </p>
+            )}
+            {!isAnonymous && (
+              <div className="mt-2">
+                <SocialLinksRow
+                  instagramHandle={targetUser.instagramHandle}
+                  twitterHandle={targetUser.twitterHandle}
+                  tiktokHandle={targetUser.tiktokHandle}
+                  youtubeHandle={targetUser.youtubeHandle}
+                  twitchHandle={targetUser.twitchHandle}
+                />
+              </div>
             )}
             {!isAnonymous && targetUser.bio && (
               <p className="text-sm text-muted-foreground mt-2">{targetUser.bio}</p>

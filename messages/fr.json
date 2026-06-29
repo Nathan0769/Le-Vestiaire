@@ -1040,6 +1040,12 @@
       "rules": "5-20 caractères • Lettres, chiffres, tirets et underscores uniquement",
       "notAvailable": "Ce pseudo n'est pas disponible",
       "available": "✓ Ce pseudo est disponible"
+    },
+    "socialLinks": {
+      "title": "Réseaux sociaux",
+      "invalidHandle": "Identifiant {network} invalide",
+      "fixInvalidBeforeSave": "Corrige les identifiants invalides avant d'enregistrer",
+      "saveError": "Erreur lors de la sauvegarde des réseaux sociaux"
     }
   },
   "HomePage": {

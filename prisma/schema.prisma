@@ -35,6 +35,11 @@ model User {
   emailMarketing             Boolean               @default(true) @map("email_marketing")
   reminderStep               Int                   @default(0) @map("reminder_step")
   notificationsEnabled       Boolean               @default(true) @map("notifications_enabled")
+  instagramHandle            String?
+  twitterHandle              String?
+  tiktokHandle               String?
+  youtubeHandle              String?
+  twitchHandle               String?
   accounts                   Account[]
   achievements               Achievement[]
   contributionHistory        ContributionHistory[]

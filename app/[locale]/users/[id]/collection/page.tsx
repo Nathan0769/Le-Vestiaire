@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { FriendCollectionStats } from "@/components/friends/friend-collection-stats";
 import { FriendCollectionGrid } from "@/components/friends/friend-collection-grid";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { SocialLinksRow } from "@/components/profiles/social-links-row";
 import { PublicUserTabs } from "@/components/users/public-user-tabs";
 import { FriendshipButton } from "@/components/users/friendship-button";
 import { BackButton } from "@/components/ui/back-button";
@@ -67,6 +68,11 @@ export default async function PublicCollectionPage({
         bio: true,
         leaderboardAnonymous: true,
         favoriteClub: { select: { id: true, name: true } },
+        instagramHandle: true,
+        twitterHandle: true,
+        tiktokHandle: true,
+        youtubeHandle: true,
+        twitchHandle: true,
       },
     }),
     prisma.friendship.findFirst({
@@ -95,7 +101,11 @@ export default async function PublicCollectionPage({
 
   let avatarUrl: string | null = null;
   if (!isAnonymous && targetUser.avatar) {
-    avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, targetUser.avatar, 60 * 60);
+    avatarUrl = await getR2PresignedUrl(
+      AVATARS_BUCKET,
+      targetUser.avatar,
+      60 * 60,
+    );
   }
 
   const collectionItems = await prisma.userJersey.findMany({
@@ -165,7 +175,7 @@ export default async function PublicCollectionPage({
         userPhotoSignedUrl = await getR2PresignedUrl(
           USER_JERSEY_PHOTOS_BUCKET,
           item.userPhotoUrl,
-          60 * 60
+          60 * 60,
         );
       }
 
@@ -180,35 +190,44 @@ export default async function PublicCollectionPage({
             : null,
         },
       };
-    })
+    }),
   );
 
   const commonItems = formattedCollection.filter((item) =>
-    myJerseyIdSet.has(item.jerseyId)
+    myJerseyIdSet.has(item.jerseyId),
   );
 
-  const leagueStats = collectionItems.reduce((acc, item) => {
-    const league = item.jersey.club.league.name;
-    acc[league] = (acc[league] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const leagueStats = collectionItems.reduce(
+    (acc, item) => {
+      const league = item.jersey.club.league.name;
+      acc[league] = (acc[league] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
-  const conditionStats = collectionItems.reduce((acc, item) => {
-    acc[item.condition] = (acc[item.condition] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const conditionStats = collectionItems.reduce(
+    (acc, item) => {
+      acc[item.condition] = (acc[item.condition] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
-  const typeStats = collectionItems.reduce((acc, item) => {
-    acc[item.jersey.type] = (acc[item.jersey.type] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const typeStats = collectionItems.reduce(
+    (acc, item) => {
+      acc[item.jersey.type] = (acc[item.jersey.type] || 0) + 1;
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
 
   const giftCount = collectionItems.filter((item) => item.isGift).length;
   const mysteryBoxCount = collectionItems.filter(
-    (item) => item.isFromMysteryBox
+    (item) => item.isFromMysteryBox,
   ).length;
   const regularCount = collectionItems.filter(
-    (item) => !item.isGift && !item.isFromMysteryBox
+    (item) => !item.isGift && !item.isFromMysteryBox,
   ).length;
 
   const stats = {
@@ -217,7 +236,11 @@ export default async function PublicCollectionPage({
     leagueStats,
     conditionStats,
     typeStats,
-    provenanceStats: { regular: regularCount, gifts: giftCount, mysteryBox: mysteryBoxCount },
+    provenanceStats: {
+      regular: regularCount,
+      gifts: giftCount,
+      mysteryBox: mysteryBoxCount,
+    },
   };
 
   const friendship = friendshipRaw
@@ -233,11 +256,11 @@ export default async function PublicCollectionPage({
       <div className="flex items-center gap-4">
         <BackButton href="/leaderboard" />
         <div className="flex items-center gap-3 flex-1 min-w-0">
-          <Package className="w-6 h-6 text-primary flex-shrink-0" />
+          <Package className="w-6 h-6 text-primary shrink-0" />
           <h1 className="text-2xl font-semibold truncate">
             {t("title", { name: displayName })}
           </h1>
-          <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium flex-shrink-0">
+          <span className="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm font-medium shrink-0">
             {stats.total} {stats.total > 1 ? t("jerseys") : t("jersey")}
           </span>
         </div>
@@ -248,7 +271,7 @@ export default async function PublicCollectionPage({
       <div className="bg-card border border-border rounded-lg p-6">
         <div className="flex items-start gap-4">
           {isAnonymous ? (
-            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center shrink-0">
               <EyeOff className="w-7 h-7 text-muted-foreground" />
             </div>
           ) : (
@@ -259,15 +282,30 @@ export default async function PublicCollectionPage({
             />
           )}
           <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-semibold truncate min-w-0">{displayName}</h2>
+            <h2 className="text-xl font-semibold truncate min-w-0">
+              {displayName}
+            </h2>
             {!isAnonymous && targetUser.favoriteClub && (
               <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
                 <Heart className="w-4 h-4 text-red-500" />
                 {targetUser.favoriteClub.name}
               </p>
             )}
+            {!isAnonymous && (
+              <div className="mt-2">
+                <SocialLinksRow
+                  instagramHandle={targetUser.instagramHandle}
+                  twitterHandle={targetUser.twitterHandle}
+                  tiktokHandle={targetUser.tiktokHandle}
+                  youtubeHandle={targetUser.youtubeHandle}
+                  twitchHandle={targetUser.twitchHandle}
+                />
+              </div>
+            )}
             {!isAnonymous && targetUser.bio && (
-              <p className="text-sm text-muted-foreground mt-2">{targetUser.bio}</p>
+              <p className="text-sm text-muted-foreground mt-2">
+                {targetUser.bio}
+              </p>
             )}
             {isAnonymous && (
               <p className="text-sm text-muted-foreground mt-1 flex items-center gap-1">
@@ -288,7 +326,8 @@ export default async function PublicCollectionPage({
             {commonItems.length > 0 && (
               <div className="mt-4 pt-4 border-t border-border">
                 <p className="text-sm font-medium text-primary mb-2">
-                  {t("commonJerseysTitle")} — {t("commonJerseys", { count: commonItems.length })}
+                  {t("commonJerseysTitle")} —{" "}
+                  {t("commonJerseys", { count: commonItems.length })}
                 </p>
                 <div className="flex gap-2 flex-wrap">
                   {commonItems.slice(0, 5).map((item) => (

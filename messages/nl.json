@@ -1036,6 +1036,12 @@
       "rules": "5-20 tekens • Alleen letters, cijfers, koppeltekens en underscores",
       "notAvailable": "Deze gebruikersnaam is niet beschikbaar",
       "available": "✓ Deze gebruikersnaam is beschikbaar"
+    },
+    "socialLinks": {
+      "title": "Sociale netwerken",
+      "invalidHandle": "Ongeldige {network}-gebruikersnaam",
+      "fixInvalidBeforeSave": "Corrigeer ongeldige gebruikersnamen voor het opslaan",
+      "saveError": "Fout bij het opslaan van sociale netwerken"
     }
   },
   "HomePage": {

@@ -1036,6 +1036,12 @@
       "rules": "5-20 Zeichen - Nur Buchstaben, Zahlen, Bindestriche und Unterstriche",
       "notAvailable": "Dieser Benutzername ist nicht verfügbar",
       "available": "✓ Dieser Benutzername ist verfügbar"
+    },
+    "socialLinks": {
+      "title": "Soziale Netzwerke",
+      "invalidHandle": "Ungültiger {network}-Nutzername",
+      "fixInvalidBeforeSave": "Korrigiere ungültige Nutzernamen vor dem Speichern",
+      "saveError": "Fehler beim Speichern der sozialen Netzwerke"
     }
   },
   "HomePage": {

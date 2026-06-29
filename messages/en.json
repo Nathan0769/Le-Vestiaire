@@ -1036,6 +1036,12 @@
       "rules": "5-20 characters • Letters, numbers, dashes and underscores only",
       "notAvailable": "This username is not available",
       "available": "✓ This username is available"
+    },
+    "socialLinks": {
+      "title": "Social networks",
+      "invalidHandle": "Invalid {network} handle",
+      "fixInvalidBeforeSave": "Fix invalid handles before saving",
+      "saveError": "Error while saving social networks"
     }
   },
   "HomePage": {

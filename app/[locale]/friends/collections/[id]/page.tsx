@@ -3,6 +3,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { FriendCollectionStats } from "@/components/friends/friend-collection-stats";
 import { FriendCollectionGrid } from "@/components/friends/friend-collection-grid";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { SocialLinksRow } from "@/components/profiles/social-links-row";
 import { Package, ArrowLeft, Heart } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -41,6 +42,11 @@ async function getFriendCollection(currentUserId: string, friendId: string) {
       favoriteClub: {
         select: { id: true, name: true },
       },
+      instagramHandle: true,
+      twitterHandle: true,
+      tiktokHandle: true,
+      youtubeHandle: true,
+      twitchHandle: true,
     },
   });
 
@@ -170,6 +176,11 @@ async function getFriendCollection(currentUserId: string, friendId: string) {
       avatarUrl,
       bio: friendUser.bio,
       favoriteClub: friendUser.favoriteClub || null,
+      instagramHandle: friendUser.instagramHandle,
+      twitterHandle: friendUser.twitterHandle,
+      tiktokHandle: friendUser.tiktokHandle,
+      youtubeHandle: friendUser.youtubeHandle,
+      twitchHandle: friendUser.twitchHandle,
     },
     collection,
     stats: {
@@ -265,6 +276,15 @@ export default async function FriendCollectionPage({
                 {user.favoriteClub.name}
               </p>
             )}
+            <div className="mt-2">
+              <SocialLinksRow
+                instagramHandle={user.instagramHandle}
+                twitterHandle={user.twitterHandle}
+                tiktokHandle={user.tiktokHandle}
+                youtubeHandle={user.youtubeHandle}
+                twitchHandle={user.twitchHandle}
+              />
+            </div>
             {user.bio && (
               <p className="text-sm text-muted-foreground mt-2">{user.bio}</p>
             )}
