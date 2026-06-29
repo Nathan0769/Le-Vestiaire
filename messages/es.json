@@ -410,23 +410,23 @@
           "deleted": "Camiseta eliminada de tu colección"
         }
       },
-      "card": {
-        "pin": "Fijar",
-        "unpin": "Desfijar",
-        "toast": {
-          "pinned": "Camiseta fijada",
-          "unpinned": "Camiseta desfijada",
-          "pinLimitReached": "Límite de {max} camisetas fijadas alcanzado",
-          "error": "Ocurrió un error",
-          "connectionError": "Error de conexión. Inténtalo de nuevo."
-        }
-      },
       "delete": {
         "title": "¿Eliminar camiseta?",
         "description": "¿Estás seguro de que quieres eliminar esta camiseta de tu colección? Esta acción no se puede deshacer.",
         "cancel": "Cancelar",
         "confirm": "Eliminar",
         "deleting": "Eliminando..."
+      }
+    },
+    "card": {
+      "pin": "Fijar",
+      "unpin": "Desfijar",
+      "toast": {
+        "pinned": "Camiseta fijada",
+        "unpinned": "Camiseta desfijada",
+        "pinLimitReached": "Límite de {max} camisetas fijadas alcanzado",
+        "error": "Ocurrió un error",
+        "connectionError": "Error de conexión. Inténtalo de nuevo."
       }
     },
     "grid": {

@@ -414,23 +414,23 @@
           "deleted": "Maillot supprimé de votre collection"
         }
       },
-      "card": {
-        "pin": "Épingler",
-        "unpin": "Désépingler",
-        "toast": {
-          "pinned": "Maillot épinglé",
-          "unpinned": "Maillot désépinglé",
-          "pinLimitReached": "Limite de {max} maillots épinglés atteinte",
-          "error": "Une erreur est survenue",
-          "connectionError": "Erreur de connexion. Veuillez réessayer."
-        }
-      },
       "delete": {
         "title": "Supprimer le maillot ?",
         "description": "Êtes-vous sûr de vouloir supprimer ce maillot de votre collection ? Cette action ne peut pas être annulée.",
         "cancel": "Annuler",
         "confirm": "Supprimer",
         "deleting": "Suppression..."
+      }
+    },
+    "card": {
+      "pin": "Épingler",
+      "unpin": "Désépingler",
+      "toast": {
+        "pinned": "Maillot épinglé",
+        "unpinned": "Maillot désépinglé",
+        "pinLimitReached": "Limite de {max} maillots épinglés atteinte",
+        "error": "Une erreur est survenue",
+        "connectionError": "Erreur de connexion. Veuillez réessayer."
       }
     },
     "grid": {

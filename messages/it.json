@@ -410,23 +410,23 @@
           "deleted": "Maglia rimossa dalla tua collezione"
         }
       },
-      "card": {
-        "pin": "Fissa",
-        "unpin": "Rimuovi",
-        "toast": {
-          "pinned": "Maglia fissata",
-          "unpinned": "Maglia rimossa dai fissati",
-          "pinLimitReached": "Limite di {max} maglie fissate raggiunto",
-          "error": "Si è verificato un errore",
-          "connectionError": "Errore di connessione. Riprova."
-        }
-      },
       "delete": {
         "title": "Eliminare la maglia?",
         "description": "Sei sicuro di voler rimuovere questa maglia dalla tua collezione? Questa azione non può essere annullata.",
         "cancel": "Annulla",
         "confirm": "Elimina",
         "deleting": "Eliminazione..."
+      }
+    },
+    "card": {
+      "pin": "Fissa",
+      "unpin": "Rimuovi",
+      "toast": {
+        "pinned": "Maglia fissata",
+        "unpinned": "Maglia rimossa dai fissati",
+        "pinLimitReached": "Limite di {max} maglie fissate raggiunto",
+        "error": "Si è verificato un errore",
+        "connectionError": "Errore di connessione. Riprova."
       }
     },
     "grid": {
