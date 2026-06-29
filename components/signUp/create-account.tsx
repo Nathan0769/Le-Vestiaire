@@ -1,6 +1,6 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useMemo, useState } from "react";
 import { Link } from "@/i18n/routing";
 import { useAuth } from "@/hooks/useAuth";
 import { Eye, EyeOff } from "lucide-react";
@@ -17,6 +17,7 @@ import { Label } from "@/components/ui/label";
 //import { AppleIcon } from "../icons/Apple-icon";
 import { GoogleIcon } from "../icons/Google-icon";
 import { handleGoogleSignIn } from "@/lib/auth-client";
+import { isValidReturnTo } from "@/lib/auth-gate";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { validatePasswordStrength } from "@/lib/password-validation";
@@ -30,7 +31,7 @@ const formDefaults = {
 };
 type FieldErrors = Partial<Record<keyof typeof formDefaults, string>>;
 
-function SocialButtons() {
+function SocialButtons({ returnTo }: { returnTo?: string }) {
   const t = useTranslations("SignUp");
 
   return (
@@ -43,7 +44,7 @@ function SocialButtons() {
         variant="outline"
         className="w-full cursor-pointer"
         type="button"
-        onClick={handleGoogleSignIn}
+        onClick={() => handleGoogleSignIn(returnTo)}
       >
         <GoogleIcon />
         {t("continueWithGoogle")}
@@ -64,10 +65,15 @@ function Separator() {
   );
 }
 
+interface SignupPageProps extends React.ComponentProps<"div"> {
+  returnTo?: string;
+}
+
 export default function SignupPage({
   className,
+  returnTo,
   ...props
-}: React.ComponentProps<"div">) {
+}: SignupPageProps) {
   const t = useTranslations("SignUp");
   const { signUp, loading } = useAuth();
   const [formData, setFormData] = useState({ ...formDefaults });
@@ -75,6 +81,15 @@ export default function SignupPage({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+
+  const safeReturnTo = useMemo(
+    () => (isValidReturnTo(returnTo) ? returnTo : undefined),
+    [returnTo]
+  );
+
+  const loginHref = safeReturnTo
+    ? { pathname: "/auth/login" as const, query: { returnTo: safeReturnTo } }
+    : "/auth/login";
 
   const handleChange = (field: keyof typeof formDefaults, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -109,7 +124,7 @@ export default function SignupPage({
     if (!validate()) return;
 
     try {
-      await signUp(formData.email, formData.password);
+      await signUp(formData.email, formData.password, safeReturnTo);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       setErrorMsg(msg || t("errors.signupError"));
@@ -131,7 +146,7 @@ export default function SignupPage({
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
-            <SocialButtons />
+            <SocialButtons returnTo={safeReturnTo} />
             <Separator />
 
             <div className="grid gap-4">
@@ -257,7 +272,7 @@ export default function SignupPage({
 
             <p className="text-center text-sm">
               {t("hasAccount")}{" "}
-              <Link href="/auth/login" className="underline hover:text-primary">
+              <Link href={loginHref} className="underline hover:text-primary">
                 {t("signIn")}
               </Link>
             </p>

@@ -105,6 +105,26 @@
     "hasAccount": "Already have an account?",
     "continueWithGoogle": "Continue with Google"
   },
+  "AuthGate": {
+    "intent": {
+      "add_collection": {
+        "title": "Add this jersey to your collection",
+        "promise": "Create your account to track your jerseys, unlock stats and compete with other collectors."
+      },
+      "add_wishlist": {
+        "title": "Add this jersey to your wishlist",
+        "promise": "Save the jerseys you want and share your wishlist with your friends."
+      },
+      "report": {
+        "title": "Report this jersey",
+        "promise": "To maintain data quality, reports require an account."
+      }
+    },
+    "continueWithGoogle": "Continue with Google",
+    "continueWithEmail": "Continue with email",
+    "alreadyAccount": "Already have an account?",
+    "signIn": "Sign in"
+  },
   "SignUp": {
     "title": "Create an account",
     "subtitle": "Join the jersey collectors community",
@@ -172,14 +192,12 @@
       "inCollection": "In my collection",
       "addToCollection": "Add to my collection",
       "toast": {
-        "mustBeConnected": "You must be logged in to add to your collection",
         "added": "Jersey added to your collection",
         "removed": "Jersey removed from your collection",
         "wishlistRemoved": "Automatically removed from your wishlist",
         "wishlistRemovedUndo": "Undo",
         "error": "An error occurred",
-        "connectionError": "Connection error. Please try again.",
-        "manageError": "You must be logged in to manage your collection"
+        "connectionError": "Connection error. Please try again."
       }
     },
     "stats": {
@@ -666,7 +684,6 @@
       "addToWishlist": "Add to my wishlist",
       "removeFromWishlist": "Remove from wishlist",
       "toast": {
-        "mustBeConnected": "You must be logged in to add to your wishlist",
         "added": "Jersey added to your wishlist",
         "removed": "Jersey removed from your wishlist",
         "error": "An error occurred",
@@ -2040,8 +2057,7 @@
       "submit": "Send",
       "submitting": "Sending...",
       "successToast": "Thanks for your report",
-      "errorToast": "Error while sending the report",
-      "mustBeConnected": "You must be logged in to report an issue"
+      "errorToast": "Error while sending the report"
     },
     "selectLeague": "Choose your league",
     "searchLeague": "Search for a league...",

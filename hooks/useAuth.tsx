@@ -59,24 +59,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     session?.user?.email,
   ]);
 
-  const signIn = async (email: string, password: string) => {
+  const buildOnboardingUrl = (returnTo?: string) =>
+    returnTo
+      ? `/auth/onboarding?returnTo=${encodeURIComponent(returnTo)}`
+      : "/auth/onboarding";
+
+  const signIn = async (email: string, password: string, returnTo?: string) => {
     setLoading(true);
     try {
       const { error } = await authClient.signIn.email({ email, password });
       if (error) throw new Error(error.message);
-      router.push("/auth/onboarding");
+      router.push(buildOnboardingUrl(returnTo));
     } catch (error) {
       setLoading(false);
       throw error;
     }
   };
 
-  const signInWithGoogle = async () => {
+  const signInWithGoogle = async (returnTo?: string) => {
     setLoading(true);
     try {
       const { error, data } = await authClient.signIn.social({
         provider: "google",
-        callbackURL: "/auth/onboarding",
+        callbackURL: buildOnboardingUrl(returnTo),
         errorCallbackURL: "/auth/login",
       });
 
@@ -104,7 +109,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, password: string) => {
+  const signUp = async (email: string, password: string, returnTo?: string) => {
     setLoading(true);
     try {
       const { error, data } = await authClient.signUp.email({
@@ -127,7 +132,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       }
 
-      router.push("/auth/onboarding");
+      router.push(buildOnboardingUrl(returnTo));
     } catch (error) {
       setLoading(false);
       throw error;

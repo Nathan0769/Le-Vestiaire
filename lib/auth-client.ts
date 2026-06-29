@@ -6,9 +6,13 @@ export const authClient = createAuthClient({
   plugins: [adminClient(), lastLoginMethodClient()],
 });
 
-export const handleGoogleSignIn = async () => {
+export const handleGoogleSignIn = async (returnTo?: string) => {
+  const callbackURL = returnTo
+    ? `/auth/onboarding?returnTo=${encodeURIComponent(returnTo)}`
+    : undefined;
   const { error } = await authClient.signIn.social({
     provider: "google",
+    ...(callbackURL ? { callbackURL } : {}),
   });
   if (error) console.error(error);
 };

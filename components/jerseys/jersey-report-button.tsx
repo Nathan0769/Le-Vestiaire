@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { Flag, Loader2, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,6 +23,9 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
+import { AuthGateModal } from "@/components/auth/auth-gate-modal";
+import { usePendingIntent } from "@/hooks/usePendingIntent";
+import { buildReturnTo } from "@/lib/auth-gate";
 
 const CATEGORIES = ["LETTERING", "SEASON", "BRAND", "IMAGE", "OTHER"] as const;
 type Category = (typeof CATEGORIES)[number];
@@ -30,24 +33,28 @@ type Category = (typeof CATEGORIES)[number];
 interface JerseyReportButtonProps {
   jerseyId: string;
   isAuthenticated: boolean;
+  jersey: { name: string; imageUrl: string };
 }
 
 export function JerseyReportButton({
   jerseyId,
   isAuthenticated,
+  jersey,
 }: JerseyReportButtonProps) {
   const t = useTranslations("Jerseys.report");
-  const router = useRouter();
+  const pathname = usePathname();
 
   const [open, setOpen] = useState(false);
+  const [showAuthGate, setShowAuthGate] = useState(false);
   const [category, setCategory] = useState<Category | "">("");
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  usePendingIntent("report", () => setOpen(true));
+
   const handleOpen = () => {
     if (!isAuthenticated) {
-      toast.error(t("mustBeConnected"));
-      router.push("/auth/login");
+      setShowAuthGate(true);
       return;
     }
     setOpen(true);
@@ -92,6 +99,14 @@ export function JerseyReportButton({
         <Flag className="w-3.5 h-3.5" />
         {t("buttonLabel")}
       </button>
+
+      <AuthGateModal
+        open={showAuthGate}
+        onOpenChange={setShowAuthGate}
+        intent="report"
+        jersey={jersey}
+        returnTo={buildReturnTo(pathname, "report")}
+      />
 
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-[440px]">

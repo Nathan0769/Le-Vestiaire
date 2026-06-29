@@ -12,9 +12,10 @@ import { Check, X, Loader2 } from "lucide-react";
 
 interface OnboardingProps {
   initialUsername: string;
+  returnTo?: string;
 }
 
-export function OnboardingFavoriteClub({ initialUsername }: OnboardingProps) {
+export function OnboardingFavoriteClub({ initialUsername, returnTo = "/" }: OnboardingProps) {
   const t = useTranslations("Onboarding");
   const router = useRouter();
 
@@ -106,7 +107,7 @@ export function OnboardingFavoriteClub({ initialUsername }: OnboardingProps) {
 
   const handleStep2Continue = async () => {
     if (!selectedClub) {
-      router.push("/");
+      router.push(returnTo);
       return;
     }
     setLoading(true);
@@ -121,7 +122,7 @@ export function OnboardingFavoriteClub({ initialUsername }: OnboardingProps) {
       console.error("Erreur sauvegarde club favori :", err);
       setLoading(false);
     }
-    router.push("/");
+    router.push(returnTo);
   };
 
   const statusIcon = isChecking ? (
@@ -233,7 +234,7 @@ export function OnboardingFavoriteClub({ initialUsername }: OnboardingProps) {
                 {loading ? "..." : t("cta")}
               </Button>
               <button
-                onClick={() => router.push("/")}
+                onClick={() => router.push(returnTo)}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors text-center cursor-pointer"
               >
                 {t("skip")}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
@@ -10,6 +11,9 @@ import {
 } from "./modal-add-collection";
 import type { AddToCollectionData, CollectionResponse } from "@/types/collection";
 import { useTranslations } from "next-intl";
+import { AuthGateModal } from "@/components/auth/auth-gate-modal";
+import { usePendingIntent } from "@/hooks/usePendingIntent";
+import { buildReturnTo } from "@/lib/auth-gate";
 
 interface CollectionButtonProps {
   jerseyId: string;
@@ -26,7 +30,11 @@ export function CollectionButton({
   const [count, setCount] = useState(initialIsInCollection ? 1 : 0);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showAuthGate, setShowAuthGate] = useState(false);
   const { user } = useAuth();
+  const pathname = usePathname();
+
+  usePendingIntent("add_collection", () => setShowModal(true));
 
   useEffect(() => {
     const fetchCollectionState = async () => {
@@ -50,10 +58,7 @@ export function CollectionButton({
   }, [jerseyId, user]);
 
   const handleAddToCollection = async (data: AddToCollectionData) => {
-    if (!user) {
-      toast.error(t("toast.mustBeConnected"));
-      return;
-    }
+    if (!user) return;
 
     setIsLoading(true);
     try {
@@ -107,7 +112,7 @@ export function CollectionButton({
 
   const handleButtonClick = () => {
     if (!user) {
-      toast.error(t("toast.manageError"));
+      setShowAuthGate(true);
       return;
     }
     setShowModal(true);
@@ -144,6 +149,14 @@ export function CollectionButton({
         onSubmit={handleAddToCollection}
         isLoading={isLoading}
         jersey={jersey}
+      />
+
+      <AuthGateModal
+        open={showAuthGate}
+        onOpenChange={setShowAuthGate}
+        intent="add_collection"
+        jersey={{ name: jersey.name, imageUrl: jersey.imageUrl }}
+        returnTo={buildReturnTo(pathname, "add_collection")}
       />
     </>
   );

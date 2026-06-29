@@ -1,25 +1,33 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Heart, HeartOff } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
+import { AuthGateModal } from "@/components/auth/auth-gate-modal";
+import { usePendingIntent } from "@/hooks/usePendingIntent";
+import { buildReturnTo } from "@/lib/auth-gate";
 
 interface WishlistButtonProps {
   jerseyId: string;
   initialIsInWishlist: boolean;
+  jersey: { name: string; imageUrl: string };
 }
 
 export function WishlistButton({
   jerseyId,
   initialIsInWishlist,
+  jersey,
 }: WishlistButtonProps) {
   const t = useTranslations("Wishlist.button");
   const [isInWishlist, setIsInWishlist] = useState(initialIsInWishlist);
   const [isLoading, setIsLoading] = useState(false);
+  const [showAuthGate, setShowAuthGate] = useState(false);
   const { user } = useAuth();
+  const pathname = usePathname();
 
   useEffect(() => {
     const fetchWishlistState = async () => {
@@ -42,12 +50,7 @@ export function WishlistButton({
     fetchWishlistState();
   }, [jerseyId, user]);
 
-  const handleWishlistToggle = async () => {
-    if (!user) {
-      toast.error(t("toast.mustBeConnected"));
-      return;
-    }
-
+  const performToggle = async () => {
     setIsLoading(true);
     try {
       const response = await fetch(`/api/jerseys/${jerseyId}/wishlist`, {
@@ -78,33 +81,55 @@ export function WishlistButton({
     }
   };
 
+  const handleWishlistToggle = async () => {
+    if (!user) {
+      setShowAuthGate(true);
+      return;
+    }
+    await performToggle();
+  };
+
+  usePendingIntent("add_wishlist", () => {
+    void performToggle();
+  });
+
   return (
-    <Button
-      variant="outline"
-      className="flex-1 h-11 font-medium shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-      onClick={handleWishlistToggle}
-      disabled={isLoading}
-    >
-      {isLoading ? (
-        <div className="flex items-center gap-2">
-          <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
-          <span>{t("loading")}</span>
-        </div>
-      ) : (
-        <div className="flex items-center gap-2">
-          {isInWishlist ? (
-            <>
-              <HeartOff className="w-4 h-4" />
-              <span>{t("removeFromWishlist")}</span>
-            </>
-          ) : (
-            <>
-              <Heart className="w-4 h-4" />
-              <span>{t("addToWishlist")}</span>
-            </>
-          )}
-        </div>
-      )}
-    </Button>
+    <>
+      <Button
+        variant="outline"
+        className="flex-1 h-11 font-medium shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+        onClick={handleWishlistToggle}
+        disabled={isLoading}
+      >
+        {isLoading ? (
+          <div className="flex items-center gap-2">
+            <div className="animate-spin w-4 h-4 border-2 border-current border-t-transparent rounded-full" />
+            <span>{t("loading")}</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            {isInWishlist ? (
+              <>
+                <HeartOff className="w-4 h-4" />
+                <span>{t("removeFromWishlist")}</span>
+              </>
+            ) : (
+              <>
+                <Heart className="w-4 h-4" />
+                <span>{t("addToWishlist")}</span>
+              </>
+            )}
+          </div>
+        )}
+      </Button>
+
+      <AuthGateModal
+        open={showAuthGate}
+        onOpenChange={setShowAuthGate}
+        intent="add_wishlist"
+        jersey={jersey}
+        returnTo={buildReturnTo(pathname, "add_wishlist")}
+      />
+    </>
   );
 }

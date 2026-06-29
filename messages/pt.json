@@ -105,6 +105,26 @@
     "hasAccount": "Já tem conta?",
     "continueWithGoogle": "Continuar com o Google"
   },
+  "AuthGate": {
+    "intent": {
+      "add_collection": {
+        "title": "Adiciona esta camisola à tua coleção",
+        "promise": "Cria a tua conta para seguir as tuas camisolas, desbloquear estatísticas e competir com outros colecionadores."
+      },
+      "add_wishlist": {
+        "title": "Adiciona esta camisola à tua lista de desejos",
+        "promise": "Guarda as camisolas que queres e partilha a tua lista de desejos com os teus amigos."
+      },
+      "report": {
+        "title": "Reportar esta camisola",
+        "promise": "Para garantir a qualidade dos dados, os reportes requerem uma conta."
+      }
+    },
+    "continueWithGoogle": "Continuar com o Google",
+    "continueWithEmail": "Continuar com email",
+    "alreadyAccount": "Já tens conta?",
+    "signIn": "Iniciar sessão"
+  },
   "SignUp": {
     "title": "Criar uma conta",
     "subtitle": "Junte-se à comunidade de colecionadores de camisolas",
@@ -172,14 +192,12 @@
       "inCollection": "Na minha coleção",
       "addToCollection": "Adicionar à minha coleção",
       "toast": {
-        "mustBeConnected": "Tem de estar autenticado para adicionar à sua coleção",
         "added": "Camisola adicionada à sua coleção",
         "removed": "Camisola removida da sua coleção",
         "wishlistRemoved": "Removido automaticamente dos seus desejos",
         "wishlistRemovedUndo": "Desfazer",
         "error": "Ocorreu um erro",
-        "connectionError": "Erro de ligação. Tente novamente.",
-        "manageError": "Tem de estar autenticado para gerir a sua coleção"
+        "connectionError": "Erro de ligação. Tente novamente."
       }
     },
     "stats": {
@@ -666,7 +684,6 @@
       "addToWishlist": "Adicionar à minha lista de desejos",
       "removeFromWishlist": "Remover da lista de desejos",
       "toast": {
-        "mustBeConnected": "Tem de ter sessão iniciada para adicionar à sua lista de desejos",
         "added": "Camisola adicionada à sua lista de desejos",
         "removed": "Camisola removida da sua lista de desejos",
         "error": "Ocorreu um erro",
@@ -2040,8 +2057,7 @@
       "submit": "Enviar",
       "submitting": "A enviar...",
       "successToast": "Obrigado pelo seu reporte",
-      "errorToast": "Erro ao enviar o reporte",
-      "mustBeConnected": "Tem de estar autenticado para reportar um problema"
+      "errorToast": "Erro ao enviar o reporte"
     },
     "selectLeague": "Escolha a sua liga",
     "searchLeague": "Pesquisar uma liga...",
