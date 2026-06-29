@@ -105,6 +105,26 @@
     "hasAccount": "¿Ya tienes cuenta?",
     "continueWithGoogle": "Continuar con Google"
   },
+  "AuthGate": {
+    "intent": {
+      "add_collection": {
+        "title": "Añade esta camiseta a tu colección",
+        "promise": "Crea tu cuenta para seguir tus camisetas, desbloquear estadísticas y competir con otros coleccionistas."
+      },
+      "add_wishlist": {
+        "title": "Añade esta camiseta a tu lista de deseos",
+        "promise": "Guarda las camisetas que quieres y comparte tu lista de deseos con tus amigos."
+      },
+      "report": {
+        "title": "Reportar esta camiseta",
+        "promise": "Para garantizar la calidad de los datos, los reportes requieren una cuenta."
+      }
+    },
+    "continueWithGoogle": "Continuar con Google",
+    "continueWithEmail": "Continuar con email",
+    "alreadyAccount": "¿Ya tienes cuenta?",
+    "signIn": "Iniciar sesión"
+  },
   "SignUp": {
     "title": "Crear una cuenta",
     "subtitle": "Únete a la comunidad de coleccionistas de camisetas",
@@ -172,14 +192,12 @@
       "inCollection": "En mi colección",
       "addToCollection": "Añadir a mi colección",
       "toast": {
-        "mustBeConnected": "Debes iniciar sesión para añadir a tu colección",
         "added": "Camiseta añadida a tu colección",
         "removed": "Camiseta eliminada de tu colección",
         "wishlistRemoved": "Eliminado automáticamente de tus deseos",
         "wishlistRemovedUndo": "Deshacer",
         "error": "Ha ocurrido un error",
-        "connectionError": "Error de conexión. Por favor, inténtalo de nuevo.",
-        "manageError": "Debes iniciar sesión para gestionar tu colección"
+        "connectionError": "Error de conexión. Por favor, inténtalo de nuevo."
       }
     },
     "stats": {
@@ -666,7 +684,6 @@
       "addToWishlist": "Añadir a mi lista de deseos",
       "removeFromWishlist": "Quitar de la lista",
       "toast": {
-        "mustBeConnected": "Debes iniciar sesión para añadir a tu lista de deseos",
         "added": "Camiseta añadida a tu lista de deseos",
         "removed": "Camiseta eliminada de tu lista de deseos",
         "error": "Ha ocurrido un error",
@@ -2040,8 +2057,7 @@
       "submit": "Enviar",
       "submitting": "Enviando...",
       "successToast": "Gracias por tu reporte",
-      "errorToast": "Error al enviar el reporte",
-      "mustBeConnected": "Debes iniciar sesión para reportar un problema"
+      "errorToast": "Error al enviar el reporte"
     },
     "selectLeague": "Elige tu liga",
     "searchLeague": "Buscar una liga...",

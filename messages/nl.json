@@ -105,6 +105,26 @@
     "hasAccount": "Heb je al een account?",
     "continueWithGoogle": "Doorgaan met Google"
   },
+  "AuthGate": {
+    "intent": {
+      "add_collection": {
+        "title": "Voeg dit shirt toe aan je collectie",
+        "promise": "Maak je account aan om je shirts te volgen, statistieken vrij te spelen en je te meten met andere verzamelaars."
+      },
+      "add_wishlist": {
+        "title": "Voeg dit shirt toe aan je verlanglijst",
+        "promise": "Bewaar de shirts die je wilt en deel je verlanglijst met je vrienden."
+      },
+      "report": {
+        "title": "Dit shirt melden",
+        "promise": "Om de datakwaliteit te waarborgen, vereisen meldingen een account."
+      }
+    },
+    "continueWithGoogle": "Doorgaan met Google",
+    "continueWithEmail": "Doorgaan met e-mail",
+    "alreadyAccount": "Heb je al een account?",
+    "signIn": "Inloggen"
+  },
   "SignUp": {
     "title": "Maak een account aan",
     "subtitle": "Word lid van de community van shirtverzamelaars",
@@ -172,14 +192,12 @@
       "inCollection": "In mijn collectie",
       "addToCollection": "Toevoegen aan mijn collectie",
       "toast": {
-        "mustBeConnected": "Je moet ingelogd zijn om aan je collectie toe te voegen",
         "added": "Shirt toegevoegd aan je collectie",
         "removed": "Shirt verwijderd uit je collectie",
         "wishlistRemoved": "Automatisch verwijderd uit je verlanglijst",
         "wishlistRemovedUndo": "Ongedaan maken",
         "error": "Er is een fout opgetreden",
-        "connectionError": "Verbindingsfout. Probeer het opnieuw.",
-        "manageError": "Je moet ingelogd zijn om je collectie te beheren"
+        "connectionError": "Verbindingsfout. Probeer het opnieuw."
       }
     },
     "stats": {
@@ -666,7 +684,6 @@
       "addToWishlist": "Toevoegen aan mijn verlanglijst",
       "removeFromWishlist": "Verwijderen uit verlanglijst",
       "toast": {
-        "mustBeConnected": "Je moet ingelogd zijn om toe te voegen aan je verlanglijst",
         "added": "Shirt toegevoegd aan je verlanglijst",
         "removed": "Shirt verwijderd uit je verlanglijst",
         "error": "Er is een fout opgetreden",
@@ -2040,8 +2057,7 @@
       "submit": "Verzenden",
       "submitting": "Verzenden...",
       "successToast": "Bedankt voor je melding",
-      "errorToast": "Fout bij het verzenden van de melding",
-      "mustBeConnected": "Je moet ingelogd zijn om een probleem te melden"
+      "errorToast": "Fout bij het verzenden van de melding"
     },
     "selectLeague": "Kies je competitie",
     "searchLeague": "Zoek een competitie...",

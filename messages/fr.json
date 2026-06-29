@@ -105,6 +105,26 @@
     "hasAccount": "Déjà un compte ?",
     "continueWithGoogle": "Continuer avec Google"
   },
+  "AuthGate": {
+    "intent": {
+      "add_collection": {
+        "title": "Ajoute ce maillot à ta collection",
+        "promise": "Crée ton compte pour suivre tes maillots, débloquer tes stats et te comparer aux autres collectionneurs."
+      },
+      "add_wishlist": {
+        "title": "Ajoute ce maillot à ta wishlist",
+        "promise": "Garde tes envies de maillots et partage ta wishlist avec tes amis."
+      },
+      "report": {
+        "title": "Signaler ce maillot",
+        "promise": "Pour garantir la qualité des données, les signalements demandent un compte."
+      }
+    },
+    "continueWithGoogle": "Continuer avec Google",
+    "continueWithEmail": "Continuer avec email",
+    "alreadyAccount": "Déjà un compte ?",
+    "signIn": "Se connecter"
+  },
   "SignUp": {
     "title": "Créer un compte",
     "subtitle": "Rejoignez la communauté des collectionneurs de maillots",
@@ -172,14 +192,12 @@
       "inCollection": "Dans ma collection",
       "addToCollection": "Ajouter à ma collection",
       "toast": {
-        "mustBeConnected": "Vous devez être connecté pour ajouter à votre collection",
         "added": "Maillot ajouté à votre collection",
         "removed": "Maillot retiré de votre collection",
         "wishlistRemoved": "Retiré automatiquement de vos envies",
         "wishlistRemovedUndo": "Annuler",
         "error": "Une erreur est survenue",
-        "connectionError": "Erreur de connexion. Veuillez réessayer.",
-        "manageError": "Vous devez être connecté pour gérer votre collection"
+        "connectionError": "Erreur de connexion. Veuillez réessayer."
       }
     },
     "stats": {
@@ -670,7 +688,6 @@
       "addToWishlist": "Ajouter à ma wishlist",
       "removeFromWishlist": "Retirer de ma wishlist",
       "toast": {
-        "mustBeConnected": "Vous devez être connecté pour ajouter à votre wishlist",
         "added": "Maillot ajouté à votre wishlist",
         "removed": "Maillot retiré de votre wishlist",
         "error": "Une erreur est survenue",
@@ -2044,8 +2061,7 @@
       "submit": "Envoyer",
       "submitting": "Envoi en cours...",
       "successToast": "Merci pour votre signalement",
-      "errorToast": "Erreur lors de l'envoi du signalement",
-      "mustBeConnected": "Vous devez être connecté pour signaler un problème"
+      "errorToast": "Erreur lors de l'envoi du signalement"
     },
     "selectLeague": "Choisis ta ligue",
     "searchLeague": "Rechercher une ligue...",

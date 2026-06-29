@@ -105,6 +105,26 @@
     "hasAccount": "Hai già un account?",
     "continueWithGoogle": "Continua con Google"
   },
+  "AuthGate": {
+    "intent": {
+      "add_collection": {
+        "title": "Aggiungi questa maglia alla tua collezione",
+        "promise": "Crea il tuo account per seguire le tue maglie, sbloccare le statistiche e confrontarti con altri collezionisti."
+      },
+      "add_wishlist": {
+        "title": "Aggiungi questa maglia alla tua lista dei desideri",
+        "promise": "Salva le maglie che vuoi e condividi la tua lista dei desideri con i tuoi amici."
+      },
+      "report": {
+        "title": "Segnala questa maglia",
+        "promise": "Per garantire la qualità dei dati, le segnalazioni richiedono un account."
+      }
+    },
+    "continueWithGoogle": "Continua con Google",
+    "continueWithEmail": "Continua con email",
+    "alreadyAccount": "Hai già un account?",
+    "signIn": "Accedi"
+  },
   "SignUp": {
     "title": "Crea un account",
     "subtitle": "Unisciti alla community dei collezionisti di maglie",
@@ -172,14 +192,12 @@
       "inCollection": "Nella mia collezione",
       "addToCollection": "Aggiungi alla mia collezione",
       "toast": {
-        "mustBeConnected": "Devi essere connesso per aggiungere alla tua collezione",
         "added": "Maglia aggiunta alla tua collezione",
         "removed": "Maglia rimossa dalla tua collezione",
         "wishlistRemoved": "Rimossa automaticamente dalla tua lista dei desideri",
         "wishlistRemovedUndo": "Annulla",
         "error": "Si è verificato un errore",
-        "connectionError": "Errore di connessione. Riprova.",
-        "manageError": "Devi essere connesso per gestire la tua collezione"
+        "connectionError": "Errore di connessione. Riprova."
       }
     },
     "stats": {
@@ -666,7 +684,6 @@
       "addToWishlist": "Aggiungi alla mia lista dei desideri",
       "removeFromWishlist": "Rimuovi dalla lista dei desideri",
       "toast": {
-        "mustBeConnected": "Devi essere connesso per aggiungere alla tua lista dei desideri",
         "added": "Maglia aggiunta alla tua lista dei desideri",
         "removed": "Maglia rimossa dalla tua lista dei desideri",
         "error": "Si è verificato un errore",
@@ -2040,8 +2057,7 @@
       "submit": "Invia",
       "submitting": "Invio in corso...",
       "successToast": "Grazie per la tua segnalazione",
-      "errorToast": "Errore durante l'invio della segnalazione",
-      "mustBeConnected": "Devi essere connesso per segnalare un problema"
+      "errorToast": "Errore durante l'invio della segnalazione"
     },
     "selectLeague": "Scegli il tuo campionato",
     "searchLeague": "Cerca un campionato...",

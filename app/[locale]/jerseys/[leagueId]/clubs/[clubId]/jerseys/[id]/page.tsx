@@ -450,6 +450,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                   <WishlistButton
                     jerseyId={jersey.id}
                     initialIsInWishlist={jersey.isInWishlist}
+                    jersey={{ name: translatedJerseyName, imageUrl: jersey.imageUrl }}
                   />
                 </div>
               </div>
@@ -471,6 +472,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
             <JerseyReportButton
               jerseyId={jersey.id}
               isAuthenticated={!!currentUser}
+              jersey={{ name: translatedJerseyName, imageUrl: jersey.imageUrl }}
             />
           </div>
         </div>

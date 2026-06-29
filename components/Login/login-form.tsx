@@ -1,9 +1,10 @@
 "use client";
 
-import { FormEvent, useState } from "react";
+import { FormEvent, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/useAuth";
 import { authClient } from "@/lib/auth-client";
+import { isValidReturnTo } from "@/lib/auth-gate";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/routing";
 import {
@@ -19,10 +20,15 @@ import { Label } from "@/components/ui/label";
 import { GoogleIcon } from "../icons/Google-icon";
 import { useTranslations } from "next-intl";
 
+interface LoginFormProps extends React.ComponentProps<"div"> {
+  returnTo?: string;
+}
+
 export function LoginForm({
   className,
+  returnTo,
   ...props
-}: React.ComponentProps<"div">) {
+}: LoginFormProps) {
   const t = useTranslations("Login");
   const { signIn, loading, signInWithGoogle } = useAuth();
   const [email, setEmail] = useState("");
@@ -30,11 +36,16 @@ export function LoginForm({
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [lastLoginMethod] = useState<string | null>(() => authClient.getLastUsedLoginMethod());
 
+  const safeReturnTo = useMemo(
+    () => (isValidReturnTo(returnTo) ? returnTo : undefined),
+    [returnTo]
+  );
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setErrorMsg(null);
     try {
-      await signIn(email, password);
+      await signIn(email, password, safeReturnTo);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
       setErrorMsg(message || t("errors.signInError"));
@@ -44,12 +55,16 @@ export function LoginForm({
   const handleGoogleSignIn = async () => {
     setErrorMsg(null);
     try {
-      await signInWithGoogle();
+      await signInWithGoogle(safeReturnTo);
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : String(err);
       setErrorMsg(message || t("errors.googleSignInError"));
     }
   };
+
+  const signUpHref = safeReturnTo
+    ? { pathname: "/auth/signUp" as const, query: { returnTo: safeReturnTo } }
+    : "/auth/signUp";
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -140,7 +155,7 @@ export function LoginForm({
 
               <div className="text-center text-sm">
                 {t("noAccount")}{" "}
-                <Link href="/auth/signUp" className="underline underline-offset-4">
+                <Link href={signUpHref} className="underline underline-offset-4">
                   {t("createAccount")}
                 </Link>
               </div>

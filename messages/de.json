@@ -105,6 +105,26 @@
     "hasAccount": "Bereits ein Konto?",
     "continueWithGoogle": "Mit Google fortfahren"
   },
+  "AuthGate": {
+    "intent": {
+      "add_collection": {
+        "title": "Füge dieses Trikot zu deiner Sammlung hinzu",
+        "promise": "Erstelle dein Konto, um deine Trikots zu verfolgen, Statistiken freizuschalten und dich mit anderen Sammlern zu messen."
+      },
+      "add_wishlist": {
+        "title": "Füge dieses Trikot zu deiner Wunschliste hinzu",
+        "promise": "Speichere die Trikots, die du willst, und teile deine Wunschliste mit deinen Freunden."
+      },
+      "report": {
+        "title": "Trikot melden",
+        "promise": "Um die Datenqualität zu sichern, ist für Meldungen ein Konto erforderlich."
+      }
+    },
+    "continueWithGoogle": "Mit Google fortfahren",
+    "continueWithEmail": "Mit E-Mail fortfahren",
+    "alreadyAccount": "Bereits ein Konto?",
+    "signIn": "Anmelden"
+  },
   "SignUp": {
     "title": "Konto erstellen",
     "subtitle": "Tritt der Community der Trikot-Sammler bei",
@@ -172,14 +192,12 @@
       "inCollection": "In meiner Sammlung",
       "addToCollection": "Zu meiner Sammlung hinzufügen",
       "toast": {
-        "mustBeConnected": "Du musst angemeldet sein, um zur Sammlung hinzuzufügen",
         "added": "Trikot zur Sammlung hinzugefügt",
         "removed": "Trikot aus der Sammlung entfernt",
         "wishlistRemoved": "Automatisch aus deinen Wünschen entfernt",
         "wishlistRemovedUndo": "Rückgängig",
         "error": "Ein Fehler ist aufgetreten",
-        "connectionError": "Verbindungsfehler. Bitte versuche es erneut.",
-        "manageError": "Du musst angemeldet sein, um deine Sammlung zu verwalten"
+        "connectionError": "Verbindungsfehler. Bitte versuche es erneut."
       }
     },
     "stats": {
@@ -666,7 +684,6 @@
       "addToWishlist": "Zu meiner Wunschliste hinzufügen",
       "removeFromWishlist": "Von der Wunschliste entfernen",
       "toast": {
-        "mustBeConnected": "Du musst angemeldet sein, um etwas zu deiner Wunschliste hinzuzufügen",
         "added": "Trikot zu deiner Wunschliste hinzugefügt",
         "removed": "Trikot von deiner Wunschliste entfernt",
         "error": "Ein Fehler ist aufgetreten",
@@ -2040,8 +2057,7 @@
       "submit": "Senden",
       "submitting": "Wird gesendet...",
       "successToast": "Danke für deine Meldung",
-      "errorToast": "Fehler beim Senden der Meldung",
-      "mustBeConnected": "Du musst angemeldet sein, um ein Problem zu melden"
+      "errorToast": "Fehler beim Senden der Meldung"
     },
     "selectLeague": "Liga auswählen",
     "searchLeague": "Liga suchen...",
