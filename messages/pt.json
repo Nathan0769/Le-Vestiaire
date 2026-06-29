@@ -1036,6 +1036,12 @@
       "rules": "5-20 caracteres - apenas letras, números, hífenes e underscores",
       "notAvailable": "Este nome de utilizador não está disponível",
       "available": "✓ Este nome de utilizador está disponível"
+    },
+    "socialLinks": {
+      "title": "Redes sociais",
+      "invalidHandle": "Identificador {network} inválido",
+      "fixInvalidBeforeSave": "Corrige os identificadores inválidos antes de guardar",
+      "saveError": "Erro ao guardar as redes sociais"
     }
   },
   "HomePage": {

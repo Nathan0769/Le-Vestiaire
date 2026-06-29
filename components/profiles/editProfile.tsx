@@ -18,6 +18,11 @@ import { AutocompleteSelect, SelectOption } from "../ui/comboBox";
 import { ProfileBio } from "@/components/profiles/profile-bio";
 import { ThemeColorSelect } from "./themes-color";
 import { UsernameInput } from "@/components/profiles/username-input";
+import {
+  SocialLinksSection,
+  type SocialLinksValue,
+} from "@/components/profiles/social-links-section";
+import { SOCIAL_NETWORKS } from "@/lib/social-links";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { useFriendsCount } from "@/hooks/useFriendsCount";
 import { Users } from "lucide-react";
@@ -37,6 +42,13 @@ export function EditProfile() {
   const [favoriteClub, setFavoriteClub] = useState<SelectOption | null>(null);
   const [loading, setLoading] = useState(false);
   const [isUsernameValid, setIsUsernameValid] = useState(false);
+  const [socialLinks, setSocialLinks] = useState<SocialLinksValue>({
+    instagramHandle: "",
+    twitterHandle: "",
+    tiktokHandle: "",
+    youtubeHandle: "",
+    twitchHandle: "",
+  });
 
   useEffect(() => {
     if (currentUser?.avatarUrl) {
@@ -115,6 +127,23 @@ export function EditProfile() {
     }
   };
 
+  const fetchSocialLinks = async () => {
+    try {
+      const res = await fetch("/api/user/social-links", { cache: "no-store" });
+      if (!res.ok) return;
+      const data = await res.json();
+      setSocialLinks({
+        instagramHandle: data.instagramHandle ?? "",
+        twitterHandle: data.twitterHandle ?? "",
+        tiktokHandle: data.tiktokHandle ?? "",
+        youtubeHandle: data.youtubeHandle ?? "",
+        twitchHandle: data.twitchHandle ?? "",
+      });
+    } catch (err) {
+      console.error("Erreur chargement réseaux sociaux :", err);
+    }
+  };
+
   const fetchClubs = useCallback(async () => {
     try {
       const res = await fetch("/api/clubs", { cache: "no-store" });
@@ -129,6 +158,14 @@ export function EditProfile() {
   const handleSave = async () => {
     try {
       setLoading(true);
+
+      const hasInvalidSocial = SOCIAL_NETWORKS.some((net) => {
+        const v = socialLinks[net.field];
+        return v !== "" && !net.regex.test(v);
+      });
+      if (hasInvalidSocial) {
+        throw new Error(t("socialLinks.fixInvalidBeforeSave"));
+      }
 
       if (username && isUsernameValid && username !== initialUsername) {
         const resUsername = await fetch("/api/user/username", {
@@ -162,6 +199,13 @@ export function EditProfile() {
         if (!resClub.ok) throw new Error("Erreur club");
       }
 
+      const resSocial = await fetch("/api/user/social-links", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(socialLinks),
+      });
+      if (!resSocial.ok) throw new Error(t("socialLinks.saveError"));
+
       toast.success(t("updateSuccess"));
       setIsOpen(false);
     } catch (err) {
@@ -178,6 +222,7 @@ export function EditProfile() {
       fetchBio();
       fetchFavoriteClub();
       fetchClubs();
+      fetchSocialLinks();
     }
   }, [isOpen, fetchClubs]);
 
@@ -256,6 +301,10 @@ export function EditProfile() {
             />
 
             <ProfileBio value={bio} onChange={setBio} />
+            <SocialLinksSection
+              value={socialLinks}
+              onChange={setSocialLinks}
+            />
             <ThemeColorSelect />
           </div>
         </div>
