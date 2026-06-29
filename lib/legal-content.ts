@@ -22,15 +22,22 @@ const fileMapping: Record<string, Record<LegalPageType, string>> = {
 };
 
 export function getLegalContent(locale: string, pageType: LegalPageType): string {
-  const fileName = fileMapping[locale]?.[pageType] || fileMapping['fr'][pageType];
-  const filePath = path.join(process.cwd(), 'legal', locale, fileName);
+  const mapping = fileMapping[locale];
+  const readFrenchFallback = () =>
+    fs.readFileSync(
+      path.join(process.cwd(), 'legal', 'fr', fileMapping['fr'][pageType]),
+      'utf-8'
+    );
 
+  if (!mapping) {
+    return readFrenchFallback();
+  }
+
+  const filePath = path.join(process.cwd(), 'legal', locale, mapping[pageType]);
   try {
     return fs.readFileSync(filePath, 'utf-8');
   } catch (error) {
     console.error(`Failed to read legal file: ${filePath}`, error);
-    // Fallback to French if locale file doesn't exist
-    const fallbackPath = path.join(process.cwd(), 'legal', 'fr', fileMapping['fr'][pageType]);
-    return fs.readFileSync(fallbackPath, 'utf-8');
+    return readFrenchFallback();
   }
 }

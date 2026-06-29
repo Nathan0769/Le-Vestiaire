@@ -410,23 +410,23 @@
           "deleted": "Jersey removed from your collection"
         }
       },
-      "card": {
-        "pin": "Pin",
-        "unpin": "Unpin",
-        "toast": {
-          "pinned": "Jersey pinned",
-          "unpinned": "Jersey unpinned",
-          "pinLimitReached": "Limit of {max} pinned jerseys reached",
-          "error": "An error occurred",
-          "connectionError": "Connection error. Please try again."
-        }
-      },
       "delete": {
         "title": "Delete jersey?",
         "description": "Are you sure you want to remove this jersey from your collection? This action cannot be undone.",
         "cancel": "Cancel",
         "confirm": "Delete",
         "deleting": "Deleting..."
+      }
+    },
+    "card": {
+      "pin": "Pin",
+      "unpin": "Unpin",
+      "toast": {
+        "pinned": "Jersey pinned",
+        "unpinned": "Jersey unpinned",
+        "pinLimitReached": "Limit of {max} pinned jerseys reached",
+        "error": "An error occurred",
+        "connectionError": "Connection error. Please try again."
       }
     },
     "grid": {

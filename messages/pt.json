@@ -410,23 +410,23 @@
           "deleted": "Camisola removida da sua coleção"
         }
       },
-      "card": {
-        "pin": "Afixar",
-        "unpin": "Desafixar",
-        "toast": {
-          "pinned": "Camisola afixada",
-          "unpinned": "Camisola desafixada",
-          "pinLimitReached": "Limite de {max} camisolas afixadas atingido",
-          "error": "Ocorreu um erro",
-          "connectionError": "Erro de ligação. Tente novamente."
-        }
-      },
       "delete": {
         "title": "Eliminar camisola?",
         "description": "Tem a certeza de que pretende remover esta camisola da sua coleção? Esta ação não pode ser desfeita.",
         "cancel": "Cancelar",
         "confirm": "Eliminar",
         "deleting": "A eliminar..."
+      }
+    },
+    "card": {
+      "pin": "Afixar",
+      "unpin": "Desafixar",
+      "toast": {
+        "pinned": "Camisola afixada",
+        "unpinned": "Camisola desafixada",
+        "pinLimitReached": "Limite de {max} camisolas afixadas atingido",
+        "error": "Ocorreu um erro",
+        "connectionError": "Erro de ligação. Tente novamente."
       }
     },
     "grid": {
