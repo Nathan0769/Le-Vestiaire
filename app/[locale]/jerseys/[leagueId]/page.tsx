@@ -4,6 +4,9 @@ import { notFound } from "next/navigation";
 import { LeagueBreadcrumb } from "@/components/jerseys/leagues/league-bread-crumb";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import type { Metadata } from "next";
+import { cache } from "react";
+
+export const revalidate = 300;
 
 type Props = {
   params: Promise<{
@@ -11,17 +14,20 @@ type Props = {
   }>;
 };
 
+const getCachedLeague = cache(async (leagueId: string) => {
+  return prisma.league.findUnique({
+    where: { id: leagueId },
+    include: {
+      _count: { select: { clubs: true } },
+      clubs: { orderBy: { name: "asc" } },
+    },
+  });
+});
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { leagueId } = await params;
 
-  const league = await prisma.league.findUnique({
-    where: { id: leagueId },
-    include: {
-      _count: {
-        select: { clubs: true },
-      },
-    },
-  });
+  const league = await getCachedLeague(leagueId);
 
   if (!league) {
     return {
@@ -64,16 +70,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function LeagueDetailPage({ params }: Props) {
   const { leagueId } = await params;
 
-  const league = await prisma.league.findUnique({
-    where: { id: leagueId },
-    include: {
-      clubs: {
-        orderBy: {
-          name: "asc",
-        },
-      },
-    },
-  });
+  const league = await getCachedLeague(leagueId);
 
   if (!league) return notFound();
 
