@@ -445,12 +445,16 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                   <CollectionButton
                     jerseyId={jersey.id}
                     jersey={jersey}
+                    clubId={jersey.club.id}
+                    leagueId={jersey.club.league.id}
                     initialIsInCollection={jersey.isInCollection}
                   />
                   <WishlistButton
                     jerseyId={jersey.id}
                     initialIsInWishlist={jersey.isInWishlist}
                     jersey={{ name: translatedJerseyName, imageUrl: jersey.imageUrl }}
+                    clubId={jersey.club.id}
+                    leagueId={jersey.club.league.id}
                   />
                 </div>
               </div>

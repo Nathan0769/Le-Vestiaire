@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import type { FriendshipRequest } from "@/types/friendship";
+import { trackEvent } from "@/lib/analytics";
 
 export function useFriendRequests() {
   const [requests, setRequests] = useState<FriendshipRequest[]>([]);
@@ -58,6 +59,7 @@ export function useFriendRequests() {
   }, []);
 
   const acceptRequest = async (requestId: string) => {
+    const requesterId = requests.find((r) => r.id === requestId)?.sender.id;
     try {
       const res = await fetch(`/api/friends/${requestId}/accept`, {
         method: "POST",
@@ -65,6 +67,13 @@ export function useFriendRequests() {
 
       if (!res.ok) {
         throw new Error("Erreur lors de l'acceptation");
+      }
+
+      if (requesterId) {
+        trackEvent({
+          name: "friend_request_accepted",
+          params: { requester_id: requesterId },
+        });
       }
 
       setRequests((prev) => prev.filter((r) => r.id !== requestId));

@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Star } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { trackEvent } from "@/lib/analytics";
 
 interface StarRatingProps {
   jerseyId: string;
@@ -99,6 +100,10 @@ export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
           userRating: data.userRating,
         });
         setOptimisticRating(null);
+        trackEvent({
+          name: "jersey_rated",
+          params: { jersey_id: jerseyId, rating },
+        });
       } else {
         const errorData = await response.json();
         console.error("Erreur:", errorData.error);

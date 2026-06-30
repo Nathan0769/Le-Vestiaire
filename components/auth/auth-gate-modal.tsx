@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,12 +16,14 @@ import {
 import { GoogleIcon } from "@/components/icons/Google-icon";
 import { useAuth } from "@/hooks/useAuth";
 import { buildAuthUrl, type AuthGateIntent } from "@/lib/auth-gate";
+import { trackEvent } from "@/lib/analytics";
 
 interface AuthGateModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   intent: AuthGateIntent;
   jersey: {
+    id: string;
     name: string;
     imageUrl: string;
   };
@@ -37,8 +40,28 @@ export function AuthGateModal({
   const t = useTranslations("AuthGate");
   const router = useRouter();
   const { signInWithGoogle } = useAuth();
+  const hasFiredOpen = useRef(false);
+  const hasActedRef = useRef(false);
+
+  useEffect(() => {
+    if (open && !hasFiredOpen.current) {
+      hasFiredOpen.current = true;
+      hasActedRef.current = false;
+      trackEvent({
+        name: "auth_gate_opened",
+        params: { intent, jersey_id: jersey.id },
+      });
+    } else if (!open) {
+      hasFiredOpen.current = false;
+    }
+  }, [open, intent, jersey.id]);
 
   const handleGoogle = async () => {
+    hasActedRef.current = true;
+    trackEvent({
+      name: "auth_gate_signup_clicked",
+      params: { intent, provider: "google" },
+    });
     try {
       await signInWithGoogle(returnTo);
     } catch (err) {
@@ -47,15 +70,32 @@ export function AuthGateModal({
   };
 
   const handleEmail = () => {
+    hasActedRef.current = true;
+    trackEvent({
+      name: "auth_gate_signup_clicked",
+      params: { intent, provider: "email" },
+    });
     router.push(buildAuthUrl("signUp", returnTo));
   };
 
   const handleSignIn = () => {
+    hasActedRef.current = true;
+    trackEvent({
+      name: "auth_gate_login_clicked",
+      params: { intent },
+    });
     router.push(buildAuthUrl("login", returnTo));
   };
 
+  const handleOpenChange = (newOpen: boolean) => {
+    if (!newOpen && open && !hasActedRef.current) {
+      trackEvent({ name: "auth_gate_dismissed", params: { intent } });
+    }
+    onOpenChange(newOpen);
+  };
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="sm:max-w-[420px]">
         <DialogHeader>
           <div className="flex items-center gap-3">

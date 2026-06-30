@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { setConsent, declineConsent } from "@/lib/cookie-consent";
 
 interface CookieConsentProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: "default" | "small" | "mini";
@@ -45,10 +46,7 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
 
     const handleAccept = React.useCallback(() => {
       setIsOpen(false);
-      const expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
-      document.cookie = `cookieConsent=true; ${expires}; path=/; SameSite=Lax`;
-      document.cookie = `cookieConsentAnalytics=true; ${expires}; path=/; SameSite=Lax`;
-      document.cookie = `cookieConsentAdvertising=true; ${expires}; path=/; SameSite=Lax`;
+      setConsent(true, true);
       setTimeout(() => {
         setHide(true);
       }, 700);
@@ -57,10 +55,7 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
 
     const handleDecline = React.useCallback(() => {
       setIsOpen(false);
-      const expires = "expires=Fri, 31 Dec 9999 23:59:59 GMT";
-      document.cookie = `cookieConsent=true; ${expires}; path=/; SameSite=Lax`;
-      document.cookie = `cookieConsentAnalytics=false; ${expires}; path=/; SameSite=Lax`;
-      document.cookie = `cookieConsentAdvertising=false; ${expires}; path=/; SameSite=Lax`;
+      declineConsent();
       setTimeout(() => {
         setHide(true);
       }, 700);

@@ -10,17 +10,22 @@ import { useTranslations } from "next-intl";
 import { AuthGateModal } from "@/components/auth/auth-gate-modal";
 import { usePendingIntent } from "@/hooks/usePendingIntent";
 import { buildReturnTo } from "@/lib/auth-gate";
+import { trackEvent } from "@/lib/analytics";
 
 interface WishlistButtonProps {
   jerseyId: string;
   initialIsInWishlist: boolean;
   jersey: { name: string; imageUrl: string };
+  clubId: string;
+  leagueId: string;
 }
 
 export function WishlistButton({
   jerseyId,
   initialIsInWishlist,
   jersey,
+  clubId,
+  leagueId,
 }: WishlistButtonProps) {
   const t = useTranslations("Wishlist.button");
   const [isInWishlist, setIsInWishlist] = useState(initialIsInWishlist);
@@ -66,8 +71,21 @@ export function WishlistButton({
         setIsInWishlist(data.isInWishlist);
 
         if (data.isInWishlist) {
+          trackEvent({
+            name: "jersey_added_to_wishlist",
+            params: {
+              jersey_id: jerseyId,
+              club_id: clubId,
+              league_id: leagueId,
+              is_first: data.isFirst === true,
+            },
+          });
           toast.success(t("toast.added"));
         } else {
+          trackEvent({
+            name: "jersey_removed_from_wishlist",
+            params: { jersey_id: jerseyId },
+          });
           toast.success(t("toast.removed"));
         }
       } else {
@@ -89,8 +107,12 @@ export function WishlistButton({
     await performToggle();
   };
 
-  usePendingIntent("add_wishlist", () => {
-    void performToggle();
+  usePendingIntent({
+    intent: "add_wishlist",
+    jerseyId,
+    onTrigger: () => {
+      void performToggle();
+    },
   });
 
   return (
@@ -127,7 +149,7 @@ export function WishlistButton({
         open={showAuthGate}
         onOpenChange={setShowAuthGate}
         intent="add_wishlist"
-        jersey={jersey}
+        jersey={{ id: jerseyId, name: jersey.name, imageUrl: jersey.imageUrl }}
         returnTo={buildReturnTo(pathname, "add_wishlist")}
       />
     </>

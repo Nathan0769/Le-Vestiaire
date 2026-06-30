@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { FriendshipStatus } from "@/types/friendship";
+import { trackEvent } from "@/lib/analytics";
 
 interface UseFriendshipOptions {
   onSuccess?: () => void;
@@ -25,6 +26,11 @@ export function useFriendship(options?: UseFriendshipOptions) {
         throw new Error(data.error || "Erreur");
       }
 
+      trackEvent({
+        name: "friend_request_sent",
+        params: { target_user_id: userId },
+      });
+
       options?.onSuccess?.();
       return { success: true };
     } catch (err) {
@@ -36,7 +42,7 @@ export function useFriendship(options?: UseFriendshipOptions) {
     }
   };
 
-  const acceptRequest = async (friendshipId: string) => {
+  const acceptRequest = async (friendshipId: string, requesterId?: string) => {
     setLoading(true);
     try {
       const res = await fetch(`/api/friends/${friendshipId}/accept`, {
@@ -45,6 +51,13 @@ export function useFriendship(options?: UseFriendshipOptions) {
 
       if (!res.ok) {
         throw new Error("Erreur");
+      }
+
+      if (requesterId) {
+        trackEvent({
+          name: "friend_request_accepted",
+          params: { requester_id: requesterId },
+        });
       }
 
       options?.onSuccess?.();

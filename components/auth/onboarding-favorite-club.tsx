@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Logo } from "@/components/ui/Logo";
 import { useDebounce } from "@/hooks/useDebounce";
 import { Check, X, Loader2 } from "lucide-react";
+import { trackEvent } from "@/lib/analytics";
 
 interface OnboardingProps {
   initialUsername: string;
@@ -107,10 +108,15 @@ export function OnboardingFavoriteClub({ initialUsername, returnTo = "/" }: Onbo
 
   const handleStep2Continue = async () => {
     if (!selectedClub) {
+      trackEvent({
+        name: "onboarding_completed",
+        params: { has_favorite_club: false },
+      });
       router.push(returnTo);
       return;
     }
     setLoading(true);
+    let saved = false;
     try {
       const res = await fetch("/api/user/favorite-club", {
         method: "PATCH",
@@ -118,10 +124,15 @@ export function OnboardingFavoriteClub({ initialUsername, returnTo = "/" }: Onbo
         body: JSON.stringify({ favoriteClubId: selectedClub.id }),
       });
       if (!res.ok) throw new Error("Erreur");
+      saved = true;
     } catch (err) {
       console.error("Erreur sauvegarde club favori :", err);
       setLoading(false);
     }
+    trackEvent({
+      name: "onboarding_completed",
+      params: { has_favorite_club: saved },
+    });
     router.push(returnTo);
   };
 
@@ -234,7 +245,13 @@ export function OnboardingFavoriteClub({ initialUsername, returnTo = "/" }: Onbo
                 {loading ? "..." : t("cta")}
               </Button>
               <button
-                onClick={() => router.push(returnTo)}
+                onClick={() => {
+                  trackEvent({
+                    name: "onboarding_completed",
+                    params: { has_favorite_club: false },
+                  });
+                  router.push(returnTo);
+                }}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors text-center cursor-pointer"
               >
                 {t("skip")}

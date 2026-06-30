@@ -69,14 +69,17 @@ export async function POST(
       );
     }
 
-    const existingWishlist = await prisma.wishlist.findUnique({
-      where: {
-        userId_jerseyId: {
-          userId: user.id,
-          jerseyId,
+    const [existingWishlist, totalWishlistCount] = await Promise.all([
+      prisma.wishlist.findUnique({
+        where: {
+          userId_jerseyId: {
+            userId: user.id,
+            jerseyId,
+          },
         },
-      },
-    });
+      }),
+      prisma.wishlist.count({ where: { userId: user.id } }),
+    ]);
 
     if (existingWishlist) {
       // Retirer de la wishlist
@@ -91,6 +94,7 @@ export async function POST(
         action: "removed",
         message: "Maillot retiré de votre wishlist",
         isInWishlist: false,
+        isFirst: false,
       });
     } else {
       await prisma.wishlist.create({
@@ -106,6 +110,7 @@ export async function POST(
         action: "added",
         message: "Maillot ajouté à votre wishlist",
         isInWishlist: true,
+        isFirst: totalWishlistCount === 0,
       });
     }
   } catch (error) {
