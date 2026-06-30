@@ -72,3 +72,23 @@ export function useDeleteClubLeague() {
       qc.invalidateQueries({ queryKey: ["admin", "club-leagues"] }),
   });
 }
+
+export function useApplySeasonAsCurrent() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async (
+      season: string
+    ): Promise<{ updated: number; total: number }> => {
+      const res = await fetch("/api/admin/club-leagues/apply-season", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ season }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error ?? "Erreur");
+      return data;
+    },
+    onSuccess: () =>
+      qc.invalidateQueries({ queryKey: ["admin", "club-leagues"] }),
+  });
+}
