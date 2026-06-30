@@ -26,6 +26,7 @@ import { toast } from "sonner";
 import { AuthGateModal } from "@/components/auth/auth-gate-modal";
 import { usePendingIntent } from "@/hooks/usePendingIntent";
 import { buildReturnTo } from "@/lib/auth-gate";
+import { trackEvent } from "@/lib/analytics";
 
 const CATEGORIES = ["LETTERING", "SEASON", "BRAND", "IMAGE", "OTHER"] as const;
 type Category = (typeof CATEGORIES)[number];
@@ -50,7 +51,11 @@ export function JerseyReportButton({
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  usePendingIntent("report", () => setOpen(true));
+  usePendingIntent({
+    intent: "report",
+    jerseyId,
+    onTrigger: () => setOpen(true),
+  });
 
   const handleOpen = () => {
     if (!isAuthenticated) {
@@ -78,6 +83,10 @@ export function JerseyReportButton({
       if (!response.ok) {
         throw new Error(data.error || t("errorToast"));
       }
+      trackEvent({
+        name: "jersey_reported",
+        params: { jersey_id: jerseyId, category },
+      });
       toast.success(t("successToast"));
       setOpen(false);
       setCategory("");
@@ -104,7 +113,7 @@ export function JerseyReportButton({
         open={showAuthGate}
         onOpenChange={setShowAuthGate}
         intent="report"
-        jersey={jersey}
+        jersey={{ id: jerseyId, name: jersey.name, imageUrl: jersey.imageUrl }}
         returnTo={buildReturnTo(pathname, "report")}
       />
 

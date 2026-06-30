@@ -27,6 +27,7 @@ import {
 } from "@/lib/generate-wishlist-image";
 import type { Theme } from "@/types/theme";
 import type { ShareableWishlistItem } from "@/types/wishlist-share";
+import { trackEvent } from "@/lib/analytics";
 
 interface ShareFormatModalProps {
   isOpen: boolean;
@@ -198,6 +199,11 @@ export function ShareFormatModal({
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
+
+      trackEvent({
+        name: "wishlist_pdf_generated",
+        params: { jersey_count: selectedItems.length },
+      });
 
       toast.success(t("toast.pdfDownloaded"));
     } catch (error) {

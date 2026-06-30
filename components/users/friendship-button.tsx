@@ -62,7 +62,7 @@ export function FriendshipButton({
         <Button
           size="sm"
           onClick={async () => {
-            const res = await acceptRequest(currentFriendshipId);
+            const res = await acceptRequest(currentFriendshipId, targetUserId);
             if (res.success) setStatus("ACCEPTED");
           }}
           disabled={loading}

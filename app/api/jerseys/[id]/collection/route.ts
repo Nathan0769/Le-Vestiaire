@@ -234,7 +234,10 @@ export async function POST(
       }
     }
 
-    const jersey = await prisma.jersey.findUnique({ where: { id: jerseyId } });
+    const [jersey, existingUserJerseyCount] = await Promise.all([
+      prisma.jersey.findUnique({ where: { id: jerseyId } }),
+      prisma.userJersey.count({ where: { userId: user.id } }),
+    ]);
 
     if (!jersey) {
       return NextResponse.json(
@@ -242,6 +245,8 @@ export async function POST(
         { status: 404 }
       );
     }
+
+    const isFirst = existingUserJerseyCount === 0;
 
     const parsedPurchasePrice =
       purchasePrice !== null && purchasePrice !== undefined
@@ -292,6 +297,7 @@ export async function POST(
       message: "Maillot ajouté à votre collection",
       userJersey,
       removedFromWishlist: deletedWishlist.count > 0,
+      isFirst,
     });
   } catch (error) {
     console.error("Erreur lors de l'ajout à la collection:", error);

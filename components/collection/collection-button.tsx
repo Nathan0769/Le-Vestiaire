@@ -14,16 +14,21 @@ import { useTranslations } from "next-intl";
 import { AuthGateModal } from "@/components/auth/auth-gate-modal";
 import { usePendingIntent } from "@/hooks/usePendingIntent";
 import { buildReturnTo } from "@/lib/auth-gate";
+import { trackEvent } from "@/lib/analytics";
 
 interface CollectionButtonProps {
   jerseyId: string;
   jersey: AddToCollectionJersey;
+  clubId: string;
+  leagueId: string;
   initialIsInCollection?: boolean;
 }
 
 export function CollectionButton({
   jerseyId,
   jersey,
+  clubId,
+  leagueId,
   initialIsInCollection = false,
 }: CollectionButtonProps) {
   const t = useTranslations("Collection.button");
@@ -34,7 +39,11 @@ export function CollectionButton({
   const { user } = useAuth();
   const pathname = usePathname();
 
-  usePendingIntent("add_collection", () => setShowModal(true));
+  usePendingIntent({
+    intent: "add_collection",
+    jerseyId,
+    onTrigger: () => setShowModal(true),
+  });
 
   useEffect(() => {
     const fetchCollectionState = async () => {
@@ -73,6 +82,27 @@ export function CollectionButton({
       if (response.ok && result.success) {
         setCount((prev) => prev + 1);
         setShowModal(false);
+
+        const isFirst = result.isFirst === true;
+        trackEvent({
+          name: "jersey_added_to_collection",
+          params: { jersey_id: jerseyId, club_id: clubId, league_id: leagueId, is_first: isFirst },
+        });
+        if (isFirst && user) {
+          const createdAtRaw = user.createdAt;
+          const createdAt = createdAtRaw
+            ? new Date(createdAtRaw).getTime()
+            : Date.now();
+          trackEvent({
+            name: "first_jersey_added",
+            params: {
+              jersey_id: jerseyId,
+              club_id: clubId,
+              time_since_signup_ms: Math.max(0, Date.now() - createdAt),
+            },
+          });
+        }
+
         if (result.removedFromWishlist) {
           toast.custom(
             (id) => (
@@ -155,7 +185,7 @@ export function CollectionButton({
         open={showAuthGate}
         onOpenChange={setShowAuthGate}
         intent="add_collection"
-        jersey={{ name: jersey.name, imageUrl: jersey.imageUrl }}
+        jersey={{ id: jerseyId, name: jersey.name, imageUrl: jersey.imageUrl }}
         returnTo={buildReturnTo(pathname, "add_collection")}
       />
     </>

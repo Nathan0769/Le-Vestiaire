@@ -33,6 +33,7 @@ export async function POST(request: Request) {
         success: true,
         username: user.username,
         message: "Username déjà existant",
+        isNewUser: false,
       });
     }
 
@@ -49,6 +50,7 @@ export async function POST(request: Request) {
     return NextResponse.json({
       success: true,
       username,
+      isNewUser: true,
     });
   } catch (error) {
     console.error("❌ Erreur génération username:", error);

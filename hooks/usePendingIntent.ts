@@ -4,11 +4,19 @@ import { useEffect, useRef } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { parsePendingIntent, type AuthGateIntent } from "@/lib/auth-gate";
+import { trackEvent } from "@/lib/analytics";
 
-export function usePendingIntent(
-  expectedIntent: AuthGateIntent,
-  onTrigger: () => void
-): void {
+interface UsePendingIntentArgs {
+  intent: AuthGateIntent;
+  jerseyId: string;
+  onTrigger: () => void;
+}
+
+export function usePendingIntent({
+  intent: expectedIntent,
+  jerseyId,
+  onTrigger,
+}: UsePendingIntentArgs): void {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -25,9 +33,14 @@ export function usePendingIntent(
     hasTriggered.current = true;
     onTrigger();
 
+    trackEvent({
+      name: "auth_intent_resolved",
+      params: { intent: expectedIntent, jersey_id: jerseyId },
+    });
+
     const params = new URLSearchParams(searchParams.toString());
     params.delete("intent");
     const query = params.toString();
     router.replace(`${pathname}${query ? `?${query}` : ""}`, { scroll: false });
-  }, [loading, user, searchParams, expectedIntent, onTrigger, pathname, router]);
+  }, [loading, user, searchParams, expectedIntent, jerseyId, onTrigger, pathname, router]);
 }
