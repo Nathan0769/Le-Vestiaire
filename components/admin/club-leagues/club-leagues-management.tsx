@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
-import { Plus, Trash2, Loader2 } from "lucide-react";
+import { Plus, Trash2, Loader2, Wand2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import {
   useAdminClubLeagues,
+  useApplySeasonAsCurrent,
   useCreateClubLeague,
   useDeleteClubLeague,
   type AdminClubLeague,
@@ -52,6 +53,7 @@ export function ClubLeaguesManagement({ leagues }: Props) {
   const [leagueId, setLeagueId] = useState<string>("");
   const [seasonInput, setSeasonInput] = useState<string>("");
   const [deleteTarget, setDeleteTarget] = useState<AdminClubLeague | null>(null);
+  const [applyConfirmOpen, setApplyConfirmOpen] = useState(false);
 
   const seasonValid = SEASON_REGEX.test(seasonInput);
   const season = seasonValid ? seasonInput : "";
@@ -59,6 +61,7 @@ export function ClubLeaguesManagement({ leagues }: Props) {
   const { data, isLoading, isError } = useAdminClubLeagues(leagueId, season);
   const create = useCreateClubLeague();
   const remove = useDeleteClubLeague();
+  const applySeason = useApplySeasonAsCurrent();
 
   const groupedLeagues = useMemo(() => {
     const map = new Map<string, LeagueOption[]>();
@@ -90,6 +93,27 @@ export function ClubLeaguesManagement({ leagues }: Props) {
     try {
       await create.mutateAsync({ clubId, season, leagueId });
       toast.success("Club ajouté");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Erreur");
+    }
+  };
+
+  const handleApplySeason = async () => {
+    if (!season) return;
+    try {
+      const result = await applySeason.mutateAsync(season);
+      if (result.total === 0) {
+        toast.info(`Aucune entrée pour la saison ${season}`);
+      } else if (result.updated === 0) {
+        toast.info(
+          `Saison ${season} déjà alignée (${result.total} clubs vérifiés)`
+        );
+      } else {
+        toast.success(
+          `${result.updated} club${result.updated > 1 ? "s" : ""} mis à jour sur ${result.total}`
+        );
+      }
+      setApplyConfirmOpen(false);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Erreur");
     }
@@ -136,6 +160,34 @@ export function ClubLeaguesManagement({ leagues }: Props) {
           )}
         </div>
       </div>
+
+      {seasonValid && (
+        <div className="flex items-start justify-between gap-4 rounded-md border border-dashed p-4">
+          <div className="space-y-1">
+            <p className="text-sm font-medium">
+              Appliquer la saison {season} comme saison courante
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Met à jour la ligue actuelle de tous les clubs ayant une entrée
+              pour {season}. Utile après une vague de promotions/relégations.
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setApplyConfirmOpen(true)}
+            disabled={applySeason.isPending}
+            className="cursor-pointer shrink-0"
+          >
+            {applySeason.isPending ? (
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <Wand2 className="w-4 h-4 mr-2" />
+            )}
+            Appliquer
+          </Button>
+        </div>
+      )}
 
       {!filtersReady && (
         <p className="text-sm text-muted-foreground">
@@ -217,6 +269,47 @@ export function ClubLeaguesManagement({ leagues }: Props) {
           )}
         </>
       )}
+
+      <AlertDialog
+        open={applyConfirmOpen}
+        onOpenChange={(open) => !applySeason.isPending && setApplyConfirmOpen(open)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Appliquer la saison {season} comme courante ?
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              Tous les clubs ayant une entrée pour la saison {season} verront
+              leur ligue actuelle (<code>Club.leagueId</code>) mise à jour pour
+              correspondre à cette entrée. Les pages publiques affichant les
+              clubs par ligue seront impactées.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              disabled={applySeason.isPending}
+              className="cursor-pointer"
+            >
+              Annuler
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleApplySeason}
+              disabled={applySeason.isPending}
+              className="cursor-pointer"
+            >
+              {applySeason.isPending ? (
+                <>
+                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  Application...
+                </>
+              ) : (
+                "Appliquer"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
       <AlertDialog
         open={!!deleteTarget}
