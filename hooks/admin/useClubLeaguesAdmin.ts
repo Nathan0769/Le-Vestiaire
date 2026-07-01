@@ -19,13 +19,18 @@ export interface AdminClubLeague {
   };
 }
 
-export function useAdminClubLeagues(leagueId?: string, season?: string) {
+export function useAdminClubLeagues(
+  leagueId?: string,
+  season?: string,
+  country?: string
+) {
   return useQuery({
-    queryKey: ["admin", "club-leagues", leagueId, season],
+    queryKey: ["admin", "club-leagues", leagueId, season, country],
     queryFn: async (): Promise<AdminClubLeague[]> => {
       const params = new URLSearchParams();
       if (leagueId) params.set("leagueId", leagueId);
       if (season) params.set("season", season);
+      if (country) params.set("country", country);
       const res = await fetch(`/api/admin/club-leagues?${params}`);
       if (!res.ok) throw new Error("Erreur de chargement");
       return res.json();

@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { ClubList } from "@/components/jerseys/clubs/clubs-list";
+import { ClubListByCountry } from "@/components/jerseys/clubs/clubs-list-by-country";
 import { notFound } from "next/navigation";
 import { LeagueBreadcrumb } from "@/components/jerseys/leagues/league-bread-crumb";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
@@ -74,6 +75,8 @@ export default async function LeagueDetailPage({ params }: Props) {
 
   if (!league) return notFound();
 
+  const isAutresBucket = league.country === "Autres";
+
   return (
     <div className="p-5 space-y-6">
       <BreadcrumbSchema
@@ -86,7 +89,33 @@ export default async function LeagueDetailPage({ params }: Props) {
         ]}
       />
       <LeagueBreadcrumb leagueName={league.name} />
-      <ClubList clubs={league.clubs} leagueId={leagueId} />
+      {isAutresBucket ? (
+        <AutresClubs leagueId={leagueId} />
+      ) : (
+        <ClubList clubs={league.clubs} leagueId={leagueId} />
+      )}
     </div>
   );
+}
+
+async function AutresClubs({ leagueId }: { leagueId: string }) {
+  const clubs = await prisma.club.findMany({
+    where: { leagueId },
+    orderBy: { name: "asc" },
+    include: {
+      seasonLeagues: {
+        where: { league: { country: { not: "Autres" } } },
+        include: { league: { select: { country: true } } },
+        orderBy: { season: "desc" },
+        take: 1,
+      },
+    },
+  });
+
+  const enriched = clubs.map((c) => ({
+    club: c,
+    originCountry: c.seasonLeagues[0]?.league.country ?? null,
+  }));
+
+  return <ClubListByCountry entries={enriched} leagueId={leagueId} />;
 }

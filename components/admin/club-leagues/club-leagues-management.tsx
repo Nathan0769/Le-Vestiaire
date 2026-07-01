@@ -49,16 +49,30 @@ type Props = {
   leagues: LeagueOption[];
 };
 
+const AUTRES_COUNTRIES = ["France", "Italie", "Espagne", "Angleterre", "Allemagne"];
+
 export function ClubLeaguesManagement({ leagues }: Props) {
   const [leagueId, setLeagueId] = useState<string>("");
   const [seasonInput, setSeasonInput] = useState<string>("");
+  const [autresCountry, setAutresCountry] = useState<string>("");
   const [deleteTarget, setDeleteTarget] = useState<AdminClubLeague | null>(null);
   const [applyConfirmOpen, setApplyConfirmOpen] = useState(false);
 
   const seasonValid = SEASON_REGEX.test(seasonInput);
   const season = seasonValid ? seasonInput : "";
 
-  const { data, isLoading, isError } = useAdminClubLeagues(leagueId, season);
+  const selectedCountry = useMemo(
+    () => leagues.find((l) => l.id === leagueId)?.country,
+    [leagues, leagueId]
+  );
+  const isAutresBucket = selectedCountry === "Autres";
+  const clubCountry = isAutresBucket ? autresCountry : selectedCountry;
+
+  const { data, isLoading, isError } = useAdminClubLeagues(
+    leagueId,
+    season,
+    isAutresBucket ? autresCountry || undefined : undefined
+  );
   const create = useCreateClubLeague();
   const remove = useDeleteClubLeague();
   const applySeason = useApplySeasonAsCurrent();
@@ -71,11 +85,6 @@ export function ClubLeaguesManagement({ leagues }: Props) {
     }
     return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b));
   }, [leagues]);
-
-  const selectedCountry = useMemo(
-    () => leagues.find((l) => l.id === leagueId)?.country,
-    [leagues, leagueId]
-  );
 
   const existingClubIds = useMemo(
     () => new Set((data ?? []).map((e) => e.clubId)),
@@ -203,10 +212,36 @@ export function ClubLeaguesManagement({ leagues }: Props) {
 
       {filtersReady && (
         <>
+          {isAutresBucket && (
+            <div>
+              <label className="text-sm font-medium mb-1.5 block">
+                Pays du club (filtre)
+              </label>
+              <Select
+                value={autresCountry}
+                onValueChange={setAutresCountry}
+              >
+                <SelectTrigger className="w-full md:w-72">
+                  <SelectValue placeholder="Tous les pays" />
+                </SelectTrigger>
+                <SelectContent>
+                  {AUTRES_COUNTRIES.map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground mt-1">
+                Restreint la recherche et la table aux clubs de ce pays.
+              </p>
+            </div>
+          )}
+
           <AddClubForm
             disabled={create.isPending}
             existingClubIds={existingClubIds}
-            country={selectedCountry}
+            country={clubCountry}
             onAdd={handleAddClub}
           />
 
