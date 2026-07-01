@@ -17,6 +17,7 @@ export async function GET(request: NextRequest) {
 
     const { searchParams } = new URL(request.url);
     const query = searchParams.get("q")?.trim();
+    const country = searchParams.get("country")?.trim();
 
     if (!query || query.length < 2) {
       return NextResponse.json([]);
@@ -24,9 +25,14 @@ export async function GET(request: NextRequest) {
 
     const clubs = await prisma.club.findMany({
       where: {
-        OR: [
-          { name: { contains: query, mode: "insensitive" } },
-          { shortName: { contains: query, mode: "insensitive" } },
+        AND: [
+          {
+            OR: [
+              { name: { contains: query, mode: "insensitive" } },
+              { shortName: { contains: query, mode: "insensitive" } },
+            ],
+          },
+          ...(country ? [{ league: { country } }] : []),
         ],
       },
       select: {
