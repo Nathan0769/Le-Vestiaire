@@ -18,11 +18,13 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const leagueId = searchParams.get("leagueId");
     const season = searchParams.get("season");
+    const country = searchParams.get("country");
 
     const entries = await prisma.clubSeasonLeague.findMany({
       where: {
         ...(leagueId ? { leagueId } : {}),
         ...(season ? { season } : {}),
+        ...(country ? { club: { league: { country } } } : {}),
       },
       include: {
         club: {
