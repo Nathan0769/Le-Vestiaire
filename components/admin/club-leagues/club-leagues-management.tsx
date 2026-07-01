@@ -72,6 +72,11 @@ export function ClubLeaguesManagement({ leagues }: Props) {
     return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b));
   }, [leagues]);
 
+  const selectedCountry = useMemo(
+    () => leagues.find((l) => l.id === leagueId)?.country,
+    [leagues, leagueId]
+  );
+
   const existingClubIds = useMemo(
     () => new Set((data ?? []).map((e) => e.clubId)),
     [data]
@@ -201,6 +206,7 @@ export function ClubLeaguesManagement({ leagues }: Props) {
           <AddClubForm
             disabled={create.isPending}
             existingClubIds={existingClubIds}
+            country={selectedCountry}
             onAdd={handleAddClub}
           />
 
@@ -349,14 +355,16 @@ export function ClubLeaguesManagement({ leagues }: Props) {
 function AddClubForm({
   disabled,
   existingClubIds,
+  country,
   onAdd,
 }: {
   disabled: boolean;
   existingClubIds: Set<string>;
+  country?: string;
   onAdd: (clubId: string) => Promise<void> | void;
 }) {
   const [query, setQuery] = useState("");
-  const { clubs: results, isLoading: searching } = useSearchClubs(query);
+  const { clubs: results, isLoading: searching } = useSearchClubs(query, country);
 
   return (
     <div className="space-y-2">

@@ -12,7 +12,7 @@ export type ClubSearchResult = {
   };
 };
 
-export function useSearchClubs(query: string) {
+export function useSearchClubs(query: string, country?: string) {
   const [clubs, setClubs] = useState<ClubSearchResult[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const debouncedQuery = useDebounce(query, 300);
@@ -28,10 +28,11 @@ export function useSearchClubs(query: string) {
     const searchClubs = async () => {
       setIsLoading(true);
       try {
-        const res = await fetch(
-          `/api/clubs/search?q=${encodeURIComponent(debouncedQuery)}`,
-          { signal: controller.signal }
-        );
+        const params = new URLSearchParams({ q: debouncedQuery });
+        if (country) params.set("country", country);
+        const res = await fetch(`/api/clubs/search?${params.toString()}`, {
+          signal: controller.signal,
+        });
         if (res.ok) {
           const data = await res.json();
           setClubs(data);
@@ -48,7 +49,7 @@ export function useSearchClubs(query: string) {
     searchClubs();
 
     return () => controller.abort();
-  }, [debouncedQuery]);
+  }, [debouncedQuery, country]);
 
   return { clubs, isLoading };
 }
