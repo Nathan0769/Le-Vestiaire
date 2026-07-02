@@ -6,6 +6,9 @@ import { UserAvatar } from "@/components/profiles/user-avatar";
 import { SocialLinksRow } from "@/components/profiles/social-links-row";
 import { PublicUserTabs } from "@/components/users/public-user-tabs";
 import { FriendshipButton } from "@/components/users/friendship-button";
+import { TopAchievementsBadges } from "@/components/achievements/top-achievements-badges";
+import { maybeCheckAllAchievements } from "@/lib/achievements/check";
+import { pickTopAchievements } from "@/lib/achievements/top-achievements";
 import { BackButton } from "@/components/ui/back-button";
 import { Package, Heart, EyeOff } from "lucide-react";
 import prisma from "@/lib/prisma";
@@ -57,38 +60,60 @@ export default async function PublicCollectionPage({
     redirect("/collection");
   }
 
-  const [targetUser, friendshipRaw, myJerseyIds] = await Promise.all([
-    prisma.user.findUnique({
+  try {
+    const targetForCheck = await prisma.user.findUnique({
       where: { id: userId },
-      select: {
-        id: true,
-        username: true,
-        name: true,
-        avatar: true,
-        bio: true,
-        leaderboardAnonymous: true,
-        favoriteClub: { select: { id: true, name: true } },
-        instagramHandle: true,
-        twitterHandle: true,
-        tiktokHandle: true,
-        youtubeHandle: true,
-        twitchHandle: true,
-      },
-    }),
-    prisma.friendship.findFirst({
-      where: {
-        OR: [
-          { senderId: currentUser.id, receiverId: userId },
-          { senderId: userId, receiverId: currentUser.id },
-        ],
-      },
-      select: { id: true, status: true, senderId: true },
-    }),
-    prisma.userJersey.findMany({
-      where: { userId: currentUser.id },
-      select: { jerseyId: true },
-    }),
-  ]);
+      select: { lastAchievementsFullCheckAt: true },
+    });
+    if (targetForCheck) {
+      await maybeCheckAllAchievements(
+        userId,
+        targetForCheck.lastAchievementsFullCheckAt ?? null
+      );
+    }
+  } catch (error) {
+    console.error("maybeCheckAllAchievements failed for target user:", error);
+  }
+
+  const [targetUser, friendshipRaw, myJerseyIds, topAchievementsRaw] =
+    await Promise.all([
+      prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          username: true,
+          name: true,
+          avatar: true,
+          bio: true,
+          leaderboardAnonymous: true,
+          favoriteClub: { select: { id: true, name: true } },
+          instagramHandle: true,
+          twitterHandle: true,
+          tiktokHandle: true,
+          youtubeHandle: true,
+          twitchHandle: true,
+        },
+      }),
+      prisma.friendship.findFirst({
+        where: {
+          OR: [
+            { senderId: currentUser.id, receiverId: userId },
+            { senderId: userId, receiverId: currentUser.id },
+          ],
+        },
+        select: { id: true, status: true, senderId: true },
+      }),
+      prisma.userJersey.findMany({
+        where: { userId: currentUser.id },
+        select: { jerseyId: true },
+      }),
+      prisma.achievement.findMany({
+        where: { userId },
+        select: { key: true, tier: true, unlockedAt: true, metadata: true },
+      }),
+    ]);
+
+  const topAchievements = pickTopAchievements(topAchievementsRaw, 5);
 
   if (!targetUser) {
     notFound();
@@ -282,9 +307,20 @@ export default async function PublicCollectionPage({
             />
           )}
           <div className="flex-1 min-w-0">
-            <h2 className="text-xl font-semibold truncate min-w-0">
-              {displayName}
-            </h2>
+            <div className="flex items-start justify-between gap-3">
+              <h2 className="text-xl font-semibold truncate min-w-0">
+                {displayName}
+              </h2>
+              <div className="hidden md:block shrink-0">
+                <FriendshipButton
+                  targetUserId={userId}
+                  friendshipId={friendship?.id}
+                  status={friendship?.status ?? null}
+                  isSender={friendship?.isSender}
+                  isAnonymous={isAnonymous}
+                />
+              </div>
+            </div>
             {!isAnonymous && targetUser.favoriteClub && (
               <p className="text-sm text-muted-foreground flex items-center gap-1 mt-1">
                 <Heart className="w-4 h-4 text-red-500" />
@@ -313,7 +349,7 @@ export default async function PublicCollectionPage({
                 {t("anonymousMessage")}
               </p>
             )}
-            <div className="mt-3">
+            <div className="mt-3 md:hidden">
               <FriendshipButton
                 targetUserId={userId}
                 friendshipId={friendship?.id}
@@ -322,6 +358,15 @@ export default async function PublicCollectionPage({
                 isAnonymous={isAnonymous}
               />
             </div>
+
+            {!isAnonymous && topAchievements.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-border">
+                <p className="text-sm font-medium mb-2">
+                  {t("topAchievements")}
+                </p>
+                <TopAchievementsBadges achievements={topAchievements} />
+              </div>
+            )}
 
             {commonItems.length > 0 && (
               <div className="mt-4 pt-4 border-t border-border">

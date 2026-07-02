@@ -1,8 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
 import type { FriendshipRequest } from "@/types/friendship";
 import { trackEvent } from "@/lib/analytics";
+import { handleNewAchievements } from "@/lib/achievements/handle-response";
 
 export function useFriendRequests() {
   const [requests, setRequests] = useState<FriendshipRequest[]>([]);
@@ -11,6 +13,7 @@ export function useFriendRequests() {
   const [etag, setEtag] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const tRoot = useTranslations();
 
   const fetchRequests = async (opts?: {
     cursor?: string | null;
@@ -69,12 +72,16 @@ export function useFriendRequests() {
         throw new Error("Erreur lors de l'acceptation");
       }
 
+      const data = await res.json().catch(() => null);
+
       if (requesterId) {
         trackEvent({
           name: "friend_request_accepted",
           params: { requester_id: requesterId },
         });
       }
+
+      handleNewAchievements(data, tRoot);
 
       setRequests((prev) => prev.filter((r) => r.id !== requestId));
       return { success: true };

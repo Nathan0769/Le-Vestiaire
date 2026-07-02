@@ -7,6 +7,7 @@ import {
   getRateLimitIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit";
+import { checkAchievements } from "@/lib/achievements/check";
 
 const VALID_VERSIONS = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"] as const;
 
@@ -292,12 +293,20 @@ export async function POST(
       }),
     ]);
 
+    let newAchievements: Awaited<ReturnType<typeof checkAchievements>> = [];
+    try {
+      newAchievements = await checkAchievements(user.id, "collection.add");
+    } catch (achievementError) {
+      console.error("checkAchievements failed on collection.add:", achievementError);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Maillot ajouté à votre collection",
       userJersey,
       removedFromWishlist: deletedWishlist.count > 0,
       isFirst,
+      newAchievements,
     });
   } catch (error) {
     console.error("Erreur lors de l'ajout à la collection:", error);

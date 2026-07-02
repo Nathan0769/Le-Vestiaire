@@ -9,6 +9,7 @@ import {
   deleteFromR2,
   JERSEY_PROPOSALS_BUCKET,
 } from "@/lib/r2-storage";
+import { checkAchievements } from "@/lib/achievements/check";
 
 export async function POST(
   request: Request,
@@ -176,6 +177,12 @@ export async function POST(
       }
     } catch (colorError) {
       console.error("Erreur extraction couleur principale:", colorError);
+    }
+
+    try {
+      await checkAchievements(proposal.userId, "contribution.proposal_accepted");
+    } catch (achievementError) {
+      console.error("checkAchievements failed on contribution.proposal_accepted:", achievementError);
     }
 
     return NextResponse.json({

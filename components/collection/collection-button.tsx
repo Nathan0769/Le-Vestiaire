@@ -15,6 +15,7 @@ import { AuthGateModal } from "@/components/auth/auth-gate-modal";
 import { usePendingIntent } from "@/hooks/usePendingIntent";
 import { buildReturnTo } from "@/lib/auth-gate";
 import { trackEvent } from "@/lib/analytics";
+import { handleNewAchievements } from "@/lib/achievements/handle-response";
 
 interface CollectionButtonProps {
   jerseyId: string;
@@ -32,6 +33,7 @@ export function CollectionButton({
   initialIsInCollection = false,
 }: CollectionButtonProps) {
   const t = useTranslations("Collection.button");
+  const tRoot = useTranslations();
   const [count, setCount] = useState(initialIsInCollection ? 1 : 0);
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -82,6 +84,7 @@ export function CollectionButton({
       if (response.ok && result.success) {
         setCount((prev) => prev + 1);
         setShowModal(false);
+        handleNewAchievements(result, tRoot);
 
         const isFirst = result.isFirst === true;
         trackEvent({

@@ -7,6 +7,7 @@
     "jerseys": "Maglie",
     "community": "Community",
     "leaderboard": "Classifica",
+    "achievements": "Obiettivi",
     "authentication": "Autenticazione",
     "pricing": "Abbonamento",
     "settings": "Account",
@@ -475,7 +476,9 @@
       "emptyDescription": "Inizia a costruire la tua collezione aggiungendo le tue prime maglie!",
       "errorTitle": "Errore di caricamento",
       "errorDescription": "Si è verificato un errore durante il caricamento della tua collezione. Aggiorna la pagina o riprova più tardi.",
-      "reload": "Ricarica la pagina"
+      "reload": "Ricarica la pagina",
+      "topAchievements": "Migliori obiettivi",
+      "viewAllAchievements": "Vedi tutti gli obiettivi"
     }
   },
   "Onboarding": {
@@ -679,6 +682,16 @@
     }
   },
   "Wishlist": {
+    "cfsMatch": {
+      "badge": {
+        "discount": "Disponibile -{percent}% su CFS"
+      },
+      "banner": {
+        "title": "{count, plural, one {# maglia della tua wishlist è in offerta su CFS} other {# maglie della tua wishlist sono in offerta su CFS}}",
+        "cta": "Vedi le offerte",
+        "dismiss": "Nascondi"
+      }
+    },
     "button": {
       "loading": "Caricamento...",
       "addToWishlist": "Aggiungi alla mia lista dei desideri",
@@ -2532,13 +2545,15 @@
     "emptyMessage": "{name} non ha ancora aggiunto maglie alla sua collezione.",
     "tabs": {
       "collection": "Collezione",
-      "wishlist": "Lista dei desideri"
+      "wishlist": "Lista dei desideri",
+      "achievements": "Obiettivi"
     },
     "commonJerseysTitle": "In comune con te",
     "commonJerseys": "{count} maglia/e in comune",
     "wishlistTitle": "Lista dei desideri di {name}",
     "wishlistEmpty": "Lista dei desideri vuota",
-    "wishlistEmptyMessage": "{name} non ha ancora aggiunto maglie alla sua lista dei desideri."
+    "wishlistEmptyMessage": "{name} non ha ancora aggiunto maglie alla sua lista dei desideri.",
+    "topAchievements": "Migliori obiettivi"
   },
   "ForgotPassword": {
     "title": "Password dimenticata",
@@ -2584,5 +2599,212 @@
       "resetError": "Si è verificato un errore. Riprova."
     },
     "backToLogin": "Accedi"
+  },
+  "achievements": {
+    "page": {
+      "title": "Obiettivi",
+      "subtitle": "Sblocca obiettivi facendo crescere la tua collezione",
+      "nearlyUnlocked": "Quasi sbloccati",
+      "all": "Tutti",
+      "unlocked": "Sbloccati ({count})",
+      "inProgress": "In corso ({count})",
+      "hidden": "{count, plural, =0 {Nessun segreto} one {# obiettivo segreto da scoprire} other {# obiettivi segreti da scoprire}}"
+    },
+    "categories": {
+      "COLLECTION": "Collezione",
+      "DIVERSITY": "Diversità",
+      "SOCIAL": "Social",
+      "LEADERBOARD": "Classifica",
+      "LOYALTY": "Fedeltà",
+      "RARITY": "Rarità",
+      "CONTRIBUTION": "Contributo"
+    },
+    "tiers": {
+      "BRONZE": "Bronzo",
+      "SILVER": "Argento",
+      "GOLD": "Oro",
+      "PLATINUM": "Platino"
+    },
+    "toast": {
+      "unlocked": "Obiettivo sbloccato!"
+    },
+    "sinceLastVisit": "{count, plural, one {# nuovo obiettivo dall'ultima visita} other {# nuovi obiettivi dall'ultima visita}}",
+    "unlockedOn": "Sbloccato il {date}",
+    "definitions": {
+      "collection": {
+        "first": {
+          "title": "Prima maglia",
+          "description": "Aggiungi la tua prima maglia alla collezione"
+        },
+        "10": {
+          "title": "Si riempie",
+          "description": "10 maglie nella tua collezione"
+        },
+        "25": {
+          "title": "Piccolo collezionista",
+          "description": "25 maglie"
+        },
+        "50": {
+          "title": "Vero collezionista",
+          "description": "50 maglie"
+        },
+        "100": {
+          "title": "Centurione",
+          "description": "100 maglie"
+        },
+        "250": {
+          "title": "Museo personale",
+          "description": "250 maglie"
+        },
+        "value": {
+          "1k": {
+            "title": "1000€ investiti",
+            "description": "Valore totale della collezione a 1000€"
+          },
+          "10k": {
+            "title": "Big spender",
+            "description": "Valore totale della collezione a 10 000€"
+          }
+        },
+        "same_club": {
+          "5": {
+            "title": "Fedele",
+            "description": "5 maglie dello stesso club"
+          },
+          "15": {
+            "title": "Appassionato",
+            "description": "15 maglie dello stesso club"
+          },
+          "30": {
+            "title": "Fanatico",
+            "description": "30 maglie dello stesso club"
+          }
+        }
+      },
+      "diversity": {
+        "clubs": {
+          "5": {
+            "title": "Cinque club",
+            "description": "Maglie di 5 club diversi"
+          },
+          "20": {
+            "title": "Mente aperta",
+            "description": "20 club diversi"
+          },
+          "50": {
+            "title": "Neutrale svizzero",
+            "description": "50 club diversi"
+          }
+        },
+        "leagues": {
+          "3": {
+            "title": "Tre campionati",
+            "description": "Maglie di 3 campionati diversi"
+          },
+          "10": {
+            "title": "Globe-trotter",
+            "description": "10 campionati diversi"
+          }
+        },
+        "vintage": {
+          "pre2000": {
+            "title": "Old school",
+            "description": "5 maglie anteriori al 2000"
+          }
+        }
+      },
+      "social": {
+        "friend": {
+          "first": {
+            "title": "Primo amico",
+            "description": "Aggiungi il tuo primo amico"
+          },
+          "10": {
+            "title": "Socievole",
+            "description": "10 amici sulla piattaforma"
+          }
+        },
+        "rating": {
+          "first": {
+            "title": "Prima valutazione",
+            "description": "Valuta la tua prima maglia"
+          },
+          "50": {
+            "title": "Critico",
+            "description": "50 valutazioni lasciate"
+          }
+        },
+        "profile": {
+          "complete": {
+            "title": "Ben presentato",
+            "description": "Avatar, club preferito e bio completati"
+          }
+        }
+      },
+      "loyalty": {
+        "1year": {
+          "title": "Un anno insieme",
+          "description": "1 anno dalla creazione dell'account"
+        },
+        "2year": {
+          "title": "Due anni di fedeltà",
+          "description": "2 anni dalla creazione dell'account"
+        }
+      },
+      "rarity": {
+        "pre1990": {
+          "title": "Antiquario",
+          "description": "Possiedi una maglia anteriore al 1990"
+        },
+        "goalkeeper": {
+          "title": "Il muro",
+          "description": "Possiedi una maglia da portiere"
+        }
+      },
+      "contribution": {
+        "proposal": {
+          "first": {
+            "title": "Primo contributo",
+            "description": "Una delle tue proposte di maglia è stata accettata"
+          },
+          "10": {
+            "title": "Contributore regolare",
+            "description": "10 proposte accettate"
+          }
+        },
+        "description": {
+          "first": {
+            "title": "Redattore",
+            "description": "La tua prima descrizione è stata accettata"
+          }
+        }
+      },
+      "special": {
+        "founder": {
+          "title": "Fondatore",
+          "description": "Fondateur de Le Vestiaire Foot"
+        }
+      },
+      "leaderboard": {
+        "monthly_top3": {
+          "collection_size": {
+            "title": "Podio mensile Collezione - {month}",
+            "description": "Top {rank} aggiunte del mese"
+          }
+        }
+      }
+    },
+    "empty": {
+      "all": "Nessun obiettivo in questa categoria per ora.",
+      "unlocked": "Nessun obiettivo sbloccato in questa categoria.",
+      "inProgress": "Nessun obiettivo in corso in questa categoria."
+    },
+    "secret": "Segreto"
+  },
+  "PublicAchievements": {
+    "title": "Obiettivi di {name}",
+    "emptyTitle": "Nessun obiettivo",
+    "emptyDescription": "Questo utente non ha ancora sbloccato nessun obiettivo.",
+    "emptyCategory": "Nessun obiettivo in questa categoria."
   }
 }

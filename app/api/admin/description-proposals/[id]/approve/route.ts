@@ -3,6 +3,7 @@ import { requirePermission } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { translateDescription } from "@/lib/deepl";
+import { checkAchievements } from "@/lib/achievements/check";
 
 export async function POST(
   request: Request,
@@ -88,6 +89,12 @@ export async function POST(
       translationSuccess = true;
     } catch (err) {
       console.error("Traduction automatique échouée pour le maillot", proposal.jerseyId, err);
+    }
+
+    try {
+      await checkAchievements(proposal.userId, "contribution.description_accepted");
+    } catch (achievementError) {
+      console.error("checkAchievements failed on contribution.description_accepted:", achievementError);
     }
 
     return NextResponse.json({

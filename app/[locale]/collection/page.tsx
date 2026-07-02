@@ -6,6 +6,9 @@ import CollectionLanding from "@/components/collection/collection-landing";
 import { Package, AlertCircle, RefreshCw, BarChart3 } from "lucide-react";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
+import { TopAchievementsBadges } from "@/components/achievements/top-achievements-badges";
+import { maybeCheckAllAchievements } from "@/lib/achievements/check";
+import { pickTopAchievements } from "@/lib/achievements/top-achievements";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
@@ -49,6 +52,25 @@ export default async function CollectionPage() {
   }
 
   try {
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { lastAchievementsFullCheckAt: true },
+    });
+    try {
+      await maybeCheckAllAchievements(
+        user.id,
+        dbUser?.lastAchievementsFullCheckAt ?? null,
+      );
+    } catch (achievementError) {
+      console.error("maybeCheckAllAchievements failed on collection:", achievementError);
+    }
+
+    const topAchievementsRaw = await prisma.achievement.findMany({
+      where: { userId: user.id },
+      select: { key: true, tier: true, unlockedAt: true, metadata: true },
+    });
+    const topAchievements = pickTopAchievements(topAchievementsRaw, 5);
+
     const collectionItemsRaw = await prisma.userJersey.findMany({
       where: {
         userId: user.id,
@@ -152,6 +174,23 @@ export default async function CollectionPage() {
             </Button>
           </Link>
         </div>
+
+        {topAchievements.length > 0 && (
+          <div className="bg-card border border-border rounded-lg p-4">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-sm font-medium">{t("topAchievements")}</p>
+              <Link
+                href="/achievements"
+                className="text-xs text-primary hover:underline shrink-0"
+              >
+                {t("viewAllAchievements")}
+              </Link>
+            </div>
+            <div className="mt-3">
+              <TopAchievementsBadges achievements={topAchievements} />
+            </div>
+          </div>
+        )}
 
         <CollectionStats collectionItems={collectionItems} />
 

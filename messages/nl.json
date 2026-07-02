@@ -7,6 +7,7 @@
     "jerseys": "Shirts",
     "community": "Community",
     "leaderboard": "Ranglijst",
+    "achievements": "Prestaties",
     "authentication": "Authenticatie",
     "pricing": "Abonnement",
     "settings": "Account",
@@ -475,7 +476,9 @@
       "emptyDescription": "Begin met het opbouwen van je collectie door je eerste shirts toe te voegen!",
       "errorTitle": "Laadfout",
       "errorDescription": "Er is een fout opgetreden bij het laden van je collectie. Vernieuw de pagina of probeer het later opnieuw.",
-      "reload": "Pagina opnieuw laden"
+      "reload": "Pagina opnieuw laden",
+      "topAchievements": "Beste prestaties",
+      "viewAllAchievements": "Alle prestaties bekijken"
     }
   },
   "Onboarding": {
@@ -679,6 +682,16 @@
     }
   },
   "Wishlist": {
+    "cfsMatch": {
+      "badge": {
+        "discount": "Beschikbaar -{percent}% bij CFS"
+      },
+      "banner": {
+        "title": "{count, plural, one {# shirt uit je wishlist is in de aanbieding bij CFS} other {# shirts uit je wishlist zijn in de aanbieding bij CFS}}",
+        "cta": "Bekijk aanbiedingen",
+        "dismiss": "Verbergen"
+      }
+    },
     "button": {
       "loading": "Laden...",
       "addToWishlist": "Toevoegen aan mijn verlanglijst",
@@ -2532,13 +2545,15 @@
     "emptyMessage": "{name} heeft nog geen shirts aan zijn/haar collectie toegevoegd.",
     "tabs": {
       "collection": "Collectie",
-      "wishlist": "Verlanglijst"
+      "wishlist": "Verlanglijst",
+      "achievements": "Prestaties"
     },
     "commonJerseysTitle": "Gemeenschappelijk met jou",
     "commonJerseys": "{count} gemeenschappelijk(e) shirt(s)",
     "wishlistTitle": "Verlanglijst van {name}",
     "wishlistEmpty": "Lege verlanglijst",
-    "wishlistEmptyMessage": "{name} heeft nog geen shirts aan zijn/haar verlanglijst toegevoegd."
+    "wishlistEmptyMessage": "{name} heeft nog geen shirts aan zijn/haar verlanglijst toegevoegd.",
+    "topAchievements": "Beste prestaties"
   },
   "ForgotPassword": {
     "title": "Wachtwoord vergeten",
@@ -2584,5 +2599,212 @@
       "resetError": "Er is een fout opgetreden. Probeer het opnieuw."
     },
     "backToLogin": "Inloggen"
+  },
+  "achievements": {
+    "page": {
+      "title": "Prestaties",
+      "subtitle": "Ontgrendel prestaties door je collectie te laten groeien",
+      "nearlyUnlocked": "Bijna ontgrendeld",
+      "all": "Alle",
+      "unlocked": "Ontgrendeld ({count})",
+      "inProgress": "In uitvoering ({count})",
+      "hidden": "{count, plural, =0 {Geen geheimen} one {# geheime prestatie te ontdekken} other {# geheime prestaties te ontdekken}}"
+    },
+    "categories": {
+      "COLLECTION": "Collectie",
+      "DIVERSITY": "Diversiteit",
+      "SOCIAL": "Sociaal",
+      "LEADERBOARD": "Ranglijst",
+      "LOYALTY": "Loyaliteit",
+      "RARITY": "Zeldzaamheid",
+      "CONTRIBUTION": "Bijdrage"
+    },
+    "tiers": {
+      "BRONZE": "Brons",
+      "SILVER": "Zilver",
+      "GOLD": "Goud",
+      "PLATINUM": "Platina"
+    },
+    "toast": {
+      "unlocked": "Prestatie ontgrendeld!"
+    },
+    "sinceLastVisit": "{count, plural, one {# nieuwe prestatie sinds je laatste bezoek} other {# nieuwe prestaties sinds je laatste bezoek}}",
+    "unlockedOn": "Ontgrendeld op {date}",
+    "definitions": {
+      "collection": {
+        "first": {
+          "title": "Eerste shirt",
+          "description": "Voeg je allereerste shirt toe aan je collectie"
+        },
+        "10": {
+          "title": "Vult zich",
+          "description": "10 shirts in je collectie"
+        },
+        "25": {
+          "title": "Kleine verzamelaar",
+          "description": "25 shirts"
+        },
+        "50": {
+          "title": "Echte verzamelaar",
+          "description": "50 shirts"
+        },
+        "100": {
+          "title": "Centurion",
+          "description": "100 shirts"
+        },
+        "250": {
+          "title": "Persoonlijk museum",
+          "description": "250 shirts"
+        },
+        "value": {
+          "1k": {
+            "title": "1000€ geïnvesteerd",
+            "description": "Totale collectiewaarde bereikt 1000€"
+          },
+          "10k": {
+            "title": "Big spender",
+            "description": "Totale collectiewaarde bereikt 10 000€"
+          }
+        },
+        "same_club": {
+          "5": {
+            "title": "Trouw",
+            "description": "5 shirts van dezelfde club"
+          },
+          "15": {
+            "title": "Toegewijd",
+            "description": "15 shirts van dezelfde club"
+          },
+          "30": {
+            "title": "Ultra",
+            "description": "30 shirts van dezelfde club"
+          }
+        }
+      },
+      "diversity": {
+        "clubs": {
+          "5": {
+            "title": "Vijf clubs",
+            "description": "Shirts van 5 verschillende clubs"
+          },
+          "20": {
+            "title": "Ruimdenkend",
+            "description": "20 verschillende clubs"
+          },
+          "50": {
+            "title": "Zwitserse neutraal",
+            "description": "50 verschillende clubs"
+          }
+        },
+        "leagues": {
+          "3": {
+            "title": "Drie competities",
+            "description": "Shirts uit 3 verschillende competities"
+          },
+          "10": {
+            "title": "Globetrotter",
+            "description": "10 verschillende competities"
+          }
+        },
+        "vintage": {
+          "pre2000": {
+            "title": "Old school",
+            "description": "5 shirts van vóór 2000"
+          }
+        }
+      },
+      "social": {
+        "friend": {
+          "first": {
+            "title": "Eerste vriend",
+            "description": "Voeg je eerste vriend toe"
+          },
+          "10": {
+            "title": "Sociaal",
+            "description": "10 vrienden op het platform"
+          }
+        },
+        "rating": {
+          "first": {
+            "title": "Eerste beoordeling",
+            "description": "Beoordeel je eerste shirt"
+          },
+          "50": {
+            "title": "Criticus",
+            "description": "50 beoordelingen achtergelaten"
+          }
+        },
+        "profile": {
+          "complete": {
+            "title": "Goed gepresenteerd",
+            "description": "Avatar, favoriete club en bio ingesteld"
+          }
+        }
+      },
+      "loyalty": {
+        "1year": {
+          "title": "Een jaar samen",
+          "description": "1 jaar sinds accountaanmaak"
+        },
+        "2year": {
+          "title": "Twee jaar trouw",
+          "description": "2 jaar sinds accountaanmaak"
+        }
+      },
+      "rarity": {
+        "pre1990": {
+          "title": "Antiquair",
+          "description": "Bezit een shirt van vóór 1990"
+        },
+        "goalkeeper": {
+          "title": "De muur",
+          "description": "Bezit een keepersshirt"
+        }
+      },
+      "contribution": {
+        "proposal": {
+          "first": {
+            "title": "Eerste bijdrage",
+            "description": "Een van je shirt-voorstellen werd geaccepteerd"
+          },
+          "10": {
+            "title": "Vaste bijdrager",
+            "description": "10 voorstellen geaccepteerd"
+          }
+        },
+        "description": {
+          "first": {
+            "title": "Schrijver",
+            "description": "Je eerste beschrijving werd geaccepteerd"
+          }
+        }
+      },
+      "special": {
+        "founder": {
+          "title": "Oprichter",
+          "description": "Fondateur de Le Vestiaire Foot"
+        }
+      },
+      "leaderboard": {
+        "monthly_top3": {
+          "collection_size": {
+            "title": "Maandelijks Collectie-podium - {month}",
+            "description": "Top {rank} toevoegingen van de maand"
+          }
+        }
+      }
+    },
+    "empty": {
+      "all": "Nog geen prestaties in deze categorie.",
+      "unlocked": "Geen ontgrendelde prestaties in deze categorie.",
+      "inProgress": "Geen prestaties in uitvoering in deze categorie."
+    },
+    "secret": "Geheim"
+  },
+  "PublicAchievements": {
+    "title": "Prestaties van {name}",
+    "emptyTitle": "Geen prestaties",
+    "emptyDescription": "Deze gebruiker heeft nog geen prestatie ontgrendeld.",
+    "emptyCategory": "Geen prestaties in deze categorie."
   }
 }

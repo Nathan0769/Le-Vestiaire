@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { createClient } from "@supabase/supabase-js";
+import { checkAchievements } from "@/lib/achievements/check";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -62,6 +63,17 @@ export async function POST(
       // ignore realtime errors
     }
 
+    let newAchievements: Awaited<ReturnType<typeof checkAchievements>> = [];
+    try {
+      const [receiverUnlocks] = await Promise.all([
+        checkAchievements(user.id, "social.friend"),
+        checkAchievements(updated.senderId, "social.friend"),
+      ]);
+      newAchievements = receiverUnlocks;
+    } catch (achievementError) {
+      console.error("checkAchievements failed on social.friend:", achievementError);
+    }
+
     return NextResponse.json({
       success: true,
       message: "Demande acceptée",
@@ -69,6 +81,7 @@ export async function POST(
         id: updated.id,
         status: updated.status,
       },
+      newAchievements,
     });
   } catch (error) {
     console.error("Erreur accept:", error);

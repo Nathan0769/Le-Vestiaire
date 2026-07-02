@@ -1,8 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { FriendshipStatus } from "@/types/friendship";
 import { trackEvent } from "@/lib/analytics";
+import { handleNewAchievements } from "@/lib/achievements/handle-response";
 
 interface UseFriendshipOptions {
   onSuccess?: () => void;
@@ -11,6 +13,7 @@ interface UseFriendshipOptions {
 
 export function useFriendship(options?: UseFriendshipOptions) {
   const [loading, setLoading] = useState(false);
+  const tRoot = useTranslations();
 
   const sendRequest = async (userId: string) => {
     setLoading(true);
@@ -53,12 +56,16 @@ export function useFriendship(options?: UseFriendshipOptions) {
         throw new Error("Erreur");
       }
 
+      const data = await res.json().catch(() => null);
+
       if (requesterId) {
         trackEvent({
           name: "friend_request_accepted",
           params: { requester_id: requesterId },
         });
       }
+
+      handleNewAchievements(data, tRoot);
 
       options?.onSuccess?.();
       return { success: true };

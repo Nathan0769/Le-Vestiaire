@@ -9,53 +9,55 @@ datasource db {
 
 /// This model contains an expression index which requires additional setup for migrations. Visit https://pris.ly/d/expression-indexes for more info.
 model User {
-  id                         String                @id @default(cuid())
-  name                       String
-  email                      String                @unique
-  emailVerified              Boolean               @default(false)
-  image                      String?
-  firstName                  String?
-  lastName                   String?
-  avatar                     String?
-  bio                        String?
-  favoriteClubId             String?
-  createdAt                  DateTime              @default(now())
-  updatedAt                  DateTime              @updatedAt
-  username                   String?
-  leaderboardAnonymous       Boolean?              @default(true) @map("leaderboard_anonymous")
-  role                       String                @default("user")
-  banned                     Boolean               @default(false)
-  banReason                  String?
-  banExpiresIn               BigInt?
-  contributionsCount         Int                   @default(0)
-  approvedContributionsCount Int                   @default(0)
-  plan                       UserPlan              @default(FREE)
-  stripeCustomerId           String?
-  lastLoginMethod            String?
-  emailMarketing             Boolean               @default(true) @map("email_marketing")
-  reminderStep               Int                   @default(0) @map("reminder_step")
-  notificationsEnabled       Boolean               @default(true) @map("notifications_enabled")
-  instagramHandle            String?
-  twitterHandle              String?
-  tiktokHandle               String?
-  youtubeHandle              String?
-  twitchHandle               String?
-  accounts                   Account[]
-  achievements               Achievement[]
-  contributionHistory        ContributionHistory[]
-  reviewedDescriptions       DescriptionProposal[] @relation("ReviewedDescriptions")
-  descriptionProposals       DescriptionProposal[]
-  receivedFriendships        Friendship[]          @relation("ReceivedFriendships")
-  sentFriendships            Friendship[]          @relation("SentFriendships")
-  jerseyProposals            JerseyProposal[]
-  pushTokens                 PushToken[]
-  ratings                    Rating[]
-  sessions                   Session[]
-  favoriteClub               Club?                 @relation(fields: [favoriteClubId], references: [id])
-  collection                 UserJersey[]
-  wishlist                   Wishlist[]
-  reportedJerseys            JerseyReport[]        @relation("ReportedBy")
-  resolvedReports            JerseyReport[]        @relation("ReportResolver")
+  id                          String                @id @default(cuid())
+  name                        String
+  email                       String                @unique
+  emailVerified               Boolean               @default(false)
+  image                       String?
+  firstName                   String?
+  lastName                    String?
+  avatar                      String?
+  bio                         String?
+  favoriteClubId              String?
+  createdAt                   DateTime              @default(now())
+  updatedAt                   DateTime              @updatedAt
+  username                    String?
+  leaderboardAnonymous        Boolean?              @default(true) @map("leaderboard_anonymous")
+  role                        String                @default("user")
+  banned                      Boolean               @default(false)
+  banReason                   String?
+  banExpiresIn                BigInt?
+  contributionsCount          Int                   @default(0)
+  approvedContributionsCount  Int                   @default(0)
+  plan                        UserPlan              @default(FREE)
+  stripeCustomerId            String?
+  lastLoginMethod             String?
+  emailMarketing              Boolean               @default(true) @map("email_marketing")
+  reminderStep                Int                   @default(0) @map("reminder_step")
+  notificationsEnabled        Boolean               @default(true) @map("notifications_enabled")
+  lastAchievementsSeenAt      DateTime?             @map("last_achievements_seen_at") @db.Timestamp(6)
+  lastAchievementsFullCheckAt DateTime?             @map("last_achievements_full_check_at") @db.Timestamp(6)
+  instagramHandle             String?
+  twitterHandle               String?
+  tiktokHandle                String?
+  youtubeHandle               String?
+  twitchHandle                String?
+  accounts                    Account[]
+  achievements                Achievement[]
+  contributionHistory         ContributionHistory[]
+  reviewedDescriptions        DescriptionProposal[] @relation("ReviewedDescriptions")
+  descriptionProposals        DescriptionProposal[]
+  receivedFriendships         Friendship[]          @relation("ReceivedFriendships")
+  sentFriendships             Friendship[]          @relation("SentFriendships")
+  jerseyProposals             JerseyProposal[]
+  pushTokens                  PushToken[]
+  ratings                     Rating[]
+  sessions                    Session[]
+  favoriteClub                Club?                 @relation(fields: [favoriteClubId], references: [id])
+  collection                  UserJersey[]
+  wishlist                    Wishlist[]
+  reportedJerseys             JerseyReport[]        @relation("ReportedBy")
+  resolvedReports             JerseyReport[]        @relation("ReportResolver")
 
   @@map("user")
 }
@@ -128,6 +130,7 @@ model Jersey {
   collection              UserJersey[]
   wishlist                Wishlist[]
   reports                 JerseyReport[]
+  cfsPromos               CfsPromo[]
 
   @@unique([clubId, season, type, variant])
   @@index([clubId], map: "idx_jerseys_club_id")
@@ -223,18 +226,18 @@ model UserJersey {
 }
 
 model Patch {
-  id               String            @id @default(cuid())
-  name             String
-  family           PatchFamily
-  leagueId         String?
-  isActive         Boolean           @default(true)
-  notes            String?
-  eligibleClubIds  String[]          @default([])
-  createdAt        DateTime          @default(now())
-  updatedAt        DateTime          @updatedAt
-  league           League?           @relation(fields: [leagueId], references: [id], onDelete: SetNull)
-  versions         PatchVersion[]
-  userPatches      UserJerseyPatch[]
+  id              String            @id @default(cuid())
+  name            String
+  family          PatchFamily
+  leagueId        String?
+  isActive        Boolean           @default(true)
+  notes           String?
+  eligibleClubIds String[]          @default([])
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+  league          League?           @relation(fields: [leagueId], references: [id], onDelete: SetNull)
+  versions        PatchVersion[]
+  userPatches     UserJerseyPatch[]
 
   @@index([family])
   @@index([leagueId])
@@ -286,6 +289,7 @@ model Club {
   seasonPlayers     SeasonPlayer[]
   seasonLeagues     ClubSeasonLeague[]
   favoriteBy        User[]
+  cfsAliases        CfsClubAlias[]
 
   @@index([leagueId], map: "idx_clubs_league_id")
   @@map("clubs")
@@ -363,19 +367,28 @@ model Friendship {
   @@map("friendships")
 }
 
-model Achievement {
-  id         String   @id @default(cuid())
-  userId     String   @map("user_id")
-  badgeType  String   @map("badge_type")
-  badgeMonth String?  @map("badge_month")
-  rank       Int
-  category   String
-  metadata   Json?
-  earnedAt   DateTime @default(now()) @map("earned_at") @db.Timestamp(6)
-  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamp(6)
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "fk_user")
+enum AchievementCategory {
+  COLLECTION
+  DIVERSITY
+  SOCIAL
+  LEADERBOARD
+  LOYALTY
+  RARITY
+  CONTRIBUTION
+}
 
-  @@unique([userId, badgeType, badgeMonth, category], name: "unique_monthly_badge", map: "unique_monthly_badge")
+model Achievement {
+  id         String              @id @default(cuid())
+  userId     String              @map("user_id")
+  key        String
+  category   AchievementCategory
+  tier       String?
+  unlockedAt DateTime            @default(now()) @map("unlocked_at") @db.Timestamp(6)
+  metadata   Json?
+  user       User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, key])
+  @@index([userId, unlockedAt])
   @@map("achievements")
 }
 
@@ -465,7 +478,7 @@ model PushToken {
 }
 
 model CfsPromo {
-  id           String   @id @default(cuid())
+  id           String         @id @default(cuid())
   name         String
   imageUrl     String
   price        Decimal
@@ -473,14 +486,33 @@ model CfsPromo {
   affiliateUrl String
   club         String?
   brand        String?
-  isActive     Boolean  @default(true)
-  position     Int      @default(0)
-  source       String   @default("clearance")
-  sizes        String[] @default([])
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @default(now()) @updatedAt
+  isActive     Boolean        @default(true)
+  position     Int            @default(0)
+  source       String         @default("clearance")
+  sizes        String[]       @default([])
+  season       String?
+  type         JerseyType?
+  jerseyId     String?
+  jersey       Jersey?        @relation(fields: [jerseyId], references: [id], onDelete: SetNull)
+  matchStatus  CfsMatchStatus @default(PENDING)
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @default(now()) @updatedAt
 
+  @@index([jerseyId])
+  @@index([matchStatus])
   @@map("cfs_promos")
+}
+
+model CfsClubAlias {
+  id        String   @id @default(cuid())
+  cfsName   String   @unique
+  clubId    String
+  club      Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clubId])
+  @@map("cfs_club_aliases")
 }
 
 model stripe_events {
@@ -493,6 +525,14 @@ model stripe_events {
 enum UserPlan {
   FREE
   PRO
+}
+
+enum CfsMatchStatus {
+  PENDING
+  MATCHED
+  NEEDS_ALIAS
+  NO_JERSEY
+  PARSE_FAILED
 }
 
 enum JerseyVersion {

@@ -7,6 +7,7 @@
     "jerseys": "Camisolas",
     "community": "Comunidade",
     "leaderboard": "Classificação",
+    "achievements": "Conquistas",
     "authentication": "Autenticação",
     "pricing": "Subscrição",
     "settings": "Conta",
@@ -475,7 +476,9 @@
       "emptyDescription": "Comece a construir a sua coleção adicionando as suas primeiras camisolas!",
       "errorTitle": "Erro ao carregar",
       "errorDescription": "Ocorreu um erro ao carregar a sua coleção. Atualize a página ou tente novamente mais tarde.",
-      "reload": "Recarregar página"
+      "reload": "Recarregar página",
+      "topAchievements": "Melhores conquistas",
+      "viewAllAchievements": "Ver todas as conquistas"
     }
   },
   "Onboarding": {
@@ -679,6 +682,16 @@
     }
   },
   "Wishlist": {
+    "cfsMatch": {
+      "badge": {
+        "discount": "Disponível -{percent}% na CFS"
+      },
+      "banner": {
+        "title": "{count, plural, one {# camisola da tua wishlist está em promoção na CFS} other {# camisolas da tua wishlist estão em promoção na CFS}}",
+        "cta": "Ver ofertas",
+        "dismiss": "Ocultar"
+      }
+    },
     "button": {
       "loading": "A carregar...",
       "addToWishlist": "Adicionar à minha lista de desejos",
@@ -2532,13 +2545,15 @@
     "emptyMessage": "{name} ainda não adicionou nenhuma camisola à sua coleção.",
     "tabs": {
       "collection": "Coleção",
-      "wishlist": "Lista de desejos"
+      "wishlist": "Lista de desejos",
+      "achievements": "Conquistas"
     },
     "commonJerseysTitle": "Em comum consigo",
     "commonJerseys": "{count} camisola(s) em comum",
     "wishlistTitle": "Lista de desejos de {name}",
     "wishlistEmpty": "Lista de desejos vazia",
-    "wishlistEmptyMessage": "{name} ainda não adicionou nenhuma camisola à sua lista de desejos."
+    "wishlistEmptyMessage": "{name} ainda não adicionou nenhuma camisola à sua lista de desejos.",
+    "topAchievements": "Melhores conquistas"
   },
   "ForgotPassword": {
     "title": "Esqueceu a palavra-passe",
@@ -2584,5 +2599,212 @@
       "resetError": "Ocorreu um erro. Por favor, tente novamente."
     },
     "backToLogin": "Iniciar sessão"
+  },
+  "achievements": {
+    "page": {
+      "title": "Conquistas",
+      "subtitle": "Desbloqueia conquistas ao aumentar a tua colecção",
+      "nearlyUnlocked": "Quase desbloqueados",
+      "all": "Todas",
+      "unlocked": "Desbloqueadas ({count})",
+      "inProgress": "Em progresso ({count})",
+      "hidden": "{count, plural, =0 {Sem segredos} one {# conquista secreta a descobrir} other {# conquistas secretas a descobrir}}"
+    },
+    "categories": {
+      "COLLECTION": "Coleção",
+      "DIVERSITY": "Diversidade",
+      "SOCIAL": "Social",
+      "LEADERBOARD": "Classificação",
+      "LOYALTY": "Fidelidade",
+      "RARITY": "Raridade",
+      "CONTRIBUTION": "Contribuição"
+    },
+    "tiers": {
+      "BRONZE": "Bronze",
+      "SILVER": "Prata",
+      "GOLD": "Ouro",
+      "PLATINUM": "Platina"
+    },
+    "toast": {
+      "unlocked": "Conquista desbloqueada!"
+    },
+    "sinceLastVisit": "{count, plural, one {# nova conquista desde a tua última visita} other {# novas conquistas desde a tua última visita}}",
+    "unlockedOn": "Desbloqueada em {date}",
+    "definitions": {
+      "collection": {
+        "first": {
+          "title": "Primeira camisola",
+          "description": "Adiciona a tua primeira camisola à colecção"
+        },
+        "10": {
+          "title": "Começa a encher",
+          "description": "10 camisolas na tua colecção"
+        },
+        "25": {
+          "title": "Pequeno colecionador",
+          "description": "25 camisolas"
+        },
+        "50": {
+          "title": "Verdadeiro colecionador",
+          "description": "50 camisolas"
+        },
+        "100": {
+          "title": "Centurião",
+          "description": "100 camisolas"
+        },
+        "250": {
+          "title": "Museu pessoal",
+          "description": "250 camisolas"
+        },
+        "value": {
+          "1k": {
+            "title": "1000€ investidos",
+            "description": "Valor total da colecção atinge 1000€"
+          },
+          "10k": {
+            "title": "Big spender",
+            "description": "Valor total da colecção atinge 10 000€"
+          }
+        },
+        "same_club": {
+          "5": {
+            "title": "Fiel",
+            "description": "5 camisolas do mesmo clube"
+          },
+          "15": {
+            "title": "Apaixonado",
+            "description": "15 camisolas do mesmo clube"
+          },
+          "30": {
+            "title": "Fanático",
+            "description": "30 camisolas do mesmo clube"
+          }
+        }
+      },
+      "diversity": {
+        "clubs": {
+          "5": {
+            "title": "Cinco clubes",
+            "description": "Camisolas de 5 clubes diferentes"
+          },
+          "20": {
+            "title": "Mente aberta",
+            "description": "20 clubes diferentes"
+          },
+          "50": {
+            "title": "Neutro suíço",
+            "description": "50 clubes diferentes"
+          }
+        },
+        "leagues": {
+          "3": {
+            "title": "Três ligas",
+            "description": "Camisolas de 3 ligas diferentes"
+          },
+          "10": {
+            "title": "Globe-trotter",
+            "description": "10 ligas diferentes"
+          }
+        },
+        "vintage": {
+          "pre2000": {
+            "title": "Old school",
+            "description": "5 camisolas anteriores a 2000"
+          }
+        }
+      },
+      "social": {
+        "friend": {
+          "first": {
+            "title": "Primeiro amigo",
+            "description": "Adiciona o teu primeiro amigo"
+          },
+          "10": {
+            "title": "Sociável",
+            "description": "10 amigos na plataforma"
+          }
+        },
+        "rating": {
+          "first": {
+            "title": "Primeira avaliação",
+            "description": "Avalia a tua primeira camisola"
+          },
+          "50": {
+            "title": "Crítico",
+            "description": "50 avaliações deixadas"
+          }
+        },
+        "profile": {
+          "complete": {
+            "title": "Bem apresentado",
+            "description": "Avatar, clube favorito e bio preenchidos"
+          }
+        }
+      },
+      "loyalty": {
+        "1year": {
+          "title": "Um ano juntos",
+          "description": "1 ano desde a criação da conta"
+        },
+        "2year": {
+          "title": "Dois anos fiel",
+          "description": "2 anos desde a criação da conta"
+        }
+      },
+      "rarity": {
+        "pre1990": {
+          "title": "Antiquário",
+          "description": "Possui uma camisola anterior a 1990"
+        },
+        "goalkeeper": {
+          "title": "O muro",
+          "description": "Possui uma camisola de guarda-redes"
+        }
+      },
+      "contribution": {
+        "proposal": {
+          "first": {
+            "title": "Primeira contribuição",
+            "description": "Uma das tuas propostas de camisola foi aceite"
+          },
+          "10": {
+            "title": "Contribuidor regular",
+            "description": "10 propostas aceites"
+          }
+        },
+        "description": {
+          "first": {
+            "title": "Redator",
+            "description": "A tua primeira descrição foi aceite"
+          }
+        }
+      },
+      "special": {
+        "founder": {
+          "title": "Fundador",
+          "description": "Fondateur de Le Vestiaire Foot"
+        }
+      },
+      "leaderboard": {
+        "monthly_top3": {
+          "collection_size": {
+            "title": "Pódio mensal Coleção - {month}",
+            "description": "Top {rank} de adições do mês"
+          }
+        }
+      }
+    },
+    "empty": {
+      "all": "Sem conquistas nesta categoria ainda.",
+      "unlocked": "Sem conquistas desbloqueadas nesta categoria.",
+      "inProgress": "Sem conquistas em progresso nesta categoria."
+    },
+    "secret": "Secreto"
+  },
+  "PublicAchievements": {
+    "title": "Conquistas de {name}",
+    "emptyTitle": "Sem conquistas",
+    "emptyDescription": "Este utilizador ainda não desbloqueou nenhuma conquista.",
+    "emptyCategory": "Sem conquistas nesta categoria."
   }
 }
