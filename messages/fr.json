@@ -7,6 +7,7 @@
     "jerseys": "Les Maillots",
     "community": "La Communauté",
     "leaderboard": "Classement",
+    "achievements": "Palmarès",
     "authentication": "Authentification",
     "pricing": "Abonnement",
     "settings": "Compte",
@@ -479,7 +480,9 @@
       "emptyDescription": "Commencez à construire votre collection en ajoutant vos premiers maillots !",
       "errorTitle": "Erreur de chargement",
       "errorDescription": "Une erreur est survenue lors du chargement de votre collection. Veuillez rafraîchir la page ou réessayer ultérieurement.",
-      "reload": "Recharger la page"
+      "reload": "Recharger la page",
+      "topAchievements": "Meilleurs succès",
+      "viewAllAchievements": "Voir tout le palmarès"
     }
   },
   "Onboarding": {
@@ -683,6 +686,16 @@
     }
   },
   "Wishlist": {
+    "cfsMatch": {
+      "badge": {
+        "discount": "Dispo -{percent}% chez CFS"
+      },
+      "banner": {
+        "title": "{count, plural, one {# maillot de ta wishlist est en promo chez CFS} other {# maillots de ta wishlist sont en promo chez CFS}}",
+        "cta": "Voir les offres",
+        "dismiss": "Masquer"
+      }
+    },
     "button": {
       "loading": "Chargement...",
       "addToWishlist": "Ajouter à ma wishlist",
@@ -2536,13 +2549,15 @@
     "emptyMessage": "{name} n'a pas encore ajouté de maillots à sa collection.",
     "tabs": {
       "collection": "Collection",
-      "wishlist": "Wishlist"
+      "wishlist": "Wishlist",
+      "achievements": "Palmarès"
     },
     "commonJerseysTitle": "En commun avec vous",
     "commonJerseys": "{count} maillot(s) en commun",
     "wishlistTitle": "Wishlist de {name}",
     "wishlistEmpty": "Wishlist vide",
-    "wishlistEmptyMessage": "{name} n'a pas encore ajouté de maillots à sa wishlist."
+    "wishlistEmptyMessage": "{name} n'a pas encore ajouté de maillots à sa wishlist.",
+    "topAchievements": "Meilleurs succès"
   },
   "ForgotPassword": {
     "title": "Mot de passe oublié",
@@ -2588,5 +2603,212 @@
       "resetError": "Une erreur est survenue. Veuillez réessayer."
     },
     "backToLogin": "Se connecter"
+  },
+  "achievements": {
+    "page": {
+      "title": "Palmarès",
+      "subtitle": "Débloque des succès en enrichissant ta collection",
+      "nearlyUnlocked": "Bientôt débloqués",
+      "all": "Tous",
+      "unlocked": "Débloqués ({count})",
+      "inProgress": "En cours ({count})",
+      "hidden": "{count, plural, =0 {Aucun secret} one {# succès secret à découvrir} other {# succès secrets à découvrir}}"
+    },
+    "categories": {
+      "COLLECTION": "Collection",
+      "DIVERSITY": "Diversité",
+      "SOCIAL": "Social",
+      "LEADERBOARD": "Classement",
+      "LOYALTY": "Fidélité",
+      "RARITY": "Rareté",
+      "CONTRIBUTION": "Contribution"
+    },
+    "tiers": {
+      "BRONZE": "Bronze",
+      "SILVER": "Argent",
+      "GOLD": "Or",
+      "PLATINUM": "Platine"
+    },
+    "toast": {
+      "unlocked": "Succès débloqué !"
+    },
+    "sinceLastVisit": "{count, plural, one {# nouveau succès depuis ta dernière visite} other {# nouveaux succès depuis ta dernière visite}}",
+    "unlockedOn": "Débloqué le {date}",
+    "definitions": {
+      "collection": {
+        "first": {
+          "title": "Premier maillot",
+          "description": "Ajoute ton tout premier maillot à ta collection"
+        },
+        "10": {
+          "title": "Ça se remplit",
+          "description": "10 maillots dans ta collection"
+        },
+        "25": {
+          "title": "Petit collectionneur",
+          "description": "25 maillots"
+        },
+        "50": {
+          "title": "Vrai collectionneur",
+          "description": "50 maillots"
+        },
+        "100": {
+          "title": "Centurion",
+          "description": "100 maillots"
+        },
+        "250": {
+          "title": "Musée personnel",
+          "description": "250 maillots"
+        },
+        "value": {
+          "1k": {
+            "title": "1000€ investis",
+            "description": "Valeur totale de collection à 1000€"
+          },
+          "10k": {
+            "title": "Big spender",
+            "description": "Valeur totale de collection à 10 000€"
+          }
+        },
+        "same_club": {
+          "5": {
+            "title": "Fidèle",
+            "description": "5 maillots d'un même club"
+          },
+          "15": {
+            "title": "Passionné",
+            "description": "15 maillots d'un même club"
+          },
+          "30": {
+            "title": "Fanatique",
+            "description": "30 maillots d'un même club"
+          }
+        }
+      },
+      "diversity": {
+        "clubs": {
+          "5": {
+            "title": "Cinq clubs",
+            "description": "Maillots de 5 clubs différents"
+          },
+          "20": {
+            "title": "Ouvert d'esprit",
+            "description": "20 clubs différents"
+          },
+          "50": {
+            "title": "Neutre suisse",
+            "description": "50 clubs différents"
+          }
+        },
+        "leagues": {
+          "3": {
+            "title": "Trois championnats",
+            "description": "Maillots de 3 championnats différents"
+          },
+          "10": {
+            "title": "Globe-trotter",
+            "description": "10 championnats différents"
+          }
+        },
+        "vintage": {
+          "pre2000": {
+            "title": "Old school",
+            "description": "5 maillots antérieurs à 2000"
+          }
+        }
+      },
+      "social": {
+        "friend": {
+          "first": {
+            "title": "Premier ami",
+            "description": "Ajoute ton premier ami"
+          },
+          "10": {
+            "title": "Sociable",
+            "description": "10 amis sur la plateforme"
+          }
+        },
+        "rating": {
+          "first": {
+            "title": "Premier avis",
+            "description": "Note ton premier maillot"
+          },
+          "50": {
+            "title": "Critique",
+            "description": "50 notes laissées"
+          }
+        },
+        "profile": {
+          "complete": {
+            "title": "Bien présenté",
+            "description": "Avatar, club favori et bio renseignés"
+          }
+        }
+      },
+      "loyalty": {
+        "1year": {
+          "title": "Un an ensemble",
+          "description": "1 an depuis la création de ton compte"
+        },
+        "2year": {
+          "title": "Fidèle depuis deux ans",
+          "description": "2 ans depuis la création de ton compte"
+        }
+      },
+      "rarity": {
+        "pre1990": {
+          "title": "Antiquaire",
+          "description": "Possède un maillot antérieur à 1990"
+        },
+        "goalkeeper": {
+          "title": "Le mur",
+          "description": "Possède un maillot de gardien"
+        }
+      },
+      "contribution": {
+        "proposal": {
+          "first": {
+            "title": "Premier apport",
+            "description": "Une de tes propositions de maillot a été acceptée"
+          },
+          "10": {
+            "title": "Contributeur régulier",
+            "description": "10 propositions acceptées"
+          }
+        },
+        "description": {
+          "first": {
+            "title": "Rédacteur",
+            "description": "Ta première description a été acceptée"
+          }
+        }
+      },
+      "special": {
+        "founder": {
+          "title": "Fondateur",
+          "description": "Fondateur de Le Vestiaire Foot"
+        }
+      },
+      "leaderboard": {
+        "monthly_top3": {
+          "collection_size": {
+            "title": "Podium mensuel Collection - {month}",
+            "description": "Top {rank} des ajouts du mois"
+          }
+        }
+      }
+    },
+    "empty": {
+      "all": "Aucun succès dans cette catégorie pour l'instant.",
+      "unlocked": "Aucun succès débloqué dans cette catégorie.",
+      "inProgress": "Aucun succès en cours dans cette catégorie."
+    },
+    "secret": "Secret"
+  },
+  "PublicAchievements": {
+    "title": "Palmarès de {name}",
+    "emptyTitle": "Aucun succès",
+    "emptyDescription": "Cet utilisateur n'a encore débloqué aucun succès.",
+    "emptyCategory": "Aucun succès dans cette catégorie."
   }
 }

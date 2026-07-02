@@ -7,6 +7,7 @@
     "jerseys": "Camisetas",
     "community": "Comunidad",
     "leaderboard": "Clasificación",
+    "achievements": "Logros",
     "authentication": "Autenticación",
     "pricing": "Suscripción",
     "settings": "Cuenta",
@@ -475,7 +476,9 @@
       "emptyDescription": "¡Comienza a construir tu colección añadiendo tus primeras camisetas!",
       "errorTitle": "Error de carga",
       "errorDescription": "Ha ocurrido un error al cargar tu colección. Por favor, actualiza la página o inténtalo de nuevo más tarde.",
-      "reload": "Recargar página"
+      "reload": "Recargar página",
+      "topAchievements": "Mejores logros",
+      "viewAllAchievements": "Ver todos los logros"
     }
   },
   "Onboarding": {
@@ -679,6 +682,16 @@
     }
   },
   "Wishlist": {
+    "cfsMatch": {
+      "badge": {
+        "discount": "Disponible -{percent}% en CFS"
+      },
+      "banner": {
+        "title": "{count, plural, one {# camiseta de tu wishlist está en oferta en CFS} other {# camisetas de tu wishlist están en oferta en CFS}}",
+        "cta": "Ver ofertas",
+        "dismiss": "Ocultar"
+      }
+    },
     "button": {
       "loading": "Cargando...",
       "addToWishlist": "Añadir a mi lista de deseos",
@@ -2532,13 +2545,15 @@
     "emptyMessage": "{name} aún no ha añadido camisetas a su colección.",
     "tabs": {
       "collection": "Colección",
-      "wishlist": "Lista de deseos"
+      "wishlist": "Lista de deseos",
+      "achievements": "Logros"
     },
     "commonJerseysTitle": "En común contigo",
     "commonJerseys": "{count} camiseta(s) en común",
     "wishlistTitle": "Lista de deseos de {name}",
     "wishlistEmpty": "Lista de deseos vacía",
-    "wishlistEmptyMessage": "{name} aún no ha añadido camisetas a su lista de deseos."
+    "wishlistEmptyMessage": "{name} aún no ha añadido camisetas a su lista de deseos.",
+    "topAchievements": "Mejores logros"
   },
   "ForgotPassword": {
     "title": "Contraseña olvidada",
@@ -2584,5 +2599,212 @@
       "resetError": "Ha ocurrido un error. Por favor, inténtalo de nuevo."
     },
     "backToLogin": "Iniciar sesión"
+  },
+  "achievements": {
+    "page": {
+      "title": "Logros",
+      "subtitle": "Desbloquea logros mientras haces crecer tu colección",
+      "nearlyUnlocked": "Casi desbloqueados",
+      "all": "Todos",
+      "unlocked": "Desbloqueados ({count})",
+      "inProgress": "En progreso ({count})",
+      "hidden": "{count, plural, =0 {Sin secretos} one {# logro secreto por descubrir} other {# logros secretos por descubrir}}"
+    },
+    "categories": {
+      "COLLECTION": "Colección",
+      "DIVERSITY": "Diversidad",
+      "SOCIAL": "Social",
+      "LEADERBOARD": "Clasificación",
+      "LOYALTY": "Fidelidad",
+      "RARITY": "Rareza",
+      "CONTRIBUTION": "Contribución"
+    },
+    "tiers": {
+      "BRONZE": "Bronce",
+      "SILVER": "Plata",
+      "GOLD": "Oro",
+      "PLATINUM": "Platino"
+    },
+    "toast": {
+      "unlocked": "¡Logro desbloqueado!"
+    },
+    "sinceLastVisit": "{count, plural, one {# nuevo logro desde tu última visita} other {# nuevos logros desde tu última visita}}",
+    "unlockedOn": "Desbloqueado el {date}",
+    "definitions": {
+      "collection": {
+        "first": {
+          "title": "Primera camiseta",
+          "description": "Añade tu primera camiseta a la colección"
+        },
+        "10": {
+          "title": "Empieza a llenarse",
+          "description": "10 camisetas en tu colección"
+        },
+        "25": {
+          "title": "Pequeño coleccionista",
+          "description": "25 camisetas"
+        },
+        "50": {
+          "title": "Verdadero coleccionista",
+          "description": "50 camisetas"
+        },
+        "100": {
+          "title": "Centurión",
+          "description": "100 camisetas"
+        },
+        "250": {
+          "title": "Museo personal",
+          "description": "250 camisetas"
+        },
+        "value": {
+          "1k": {
+            "title": "1000€ invertidos",
+            "description": "Valor total de colección a 1000€"
+          },
+          "10k": {
+            "title": "Big spender",
+            "description": "Valor total de colección a 10 000€"
+          }
+        },
+        "same_club": {
+          "5": {
+            "title": "Fiel",
+            "description": "5 camisetas del mismo club"
+          },
+          "15": {
+            "title": "Apasionado",
+            "description": "15 camisetas del mismo club"
+          },
+          "30": {
+            "title": "Fanático",
+            "description": "30 camisetas del mismo club"
+          }
+        }
+      },
+      "diversity": {
+        "clubs": {
+          "5": {
+            "title": "Cinco clubes",
+            "description": "Camisetas de 5 clubes diferentes"
+          },
+          "20": {
+            "title": "Mente abierta",
+            "description": "20 clubes diferentes"
+          },
+          "50": {
+            "title": "Neutralidad suiza",
+            "description": "50 clubes diferentes"
+          }
+        },
+        "leagues": {
+          "3": {
+            "title": "Tres ligas",
+            "description": "Camisetas de 3 ligas diferentes"
+          },
+          "10": {
+            "title": "Globe-trotter",
+            "description": "10 ligas diferentes"
+          }
+        },
+        "vintage": {
+          "pre2000": {
+            "title": "Old school",
+            "description": "5 camisetas anteriores a 2000"
+          }
+        }
+      },
+      "social": {
+        "friend": {
+          "first": {
+            "title": "Primer amigo",
+            "description": "Añade a tu primer amigo"
+          },
+          "10": {
+            "title": "Sociable",
+            "description": "10 amigos en la plataforma"
+          }
+        },
+        "rating": {
+          "first": {
+            "title": "Primera valoración",
+            "description": "Valora tu primera camiseta"
+          },
+          "50": {
+            "title": "Crítico",
+            "description": "50 valoraciones dejadas"
+          }
+        },
+        "profile": {
+          "complete": {
+            "title": "Bien presentado",
+            "description": "Avatar, club favorito y biografía completados"
+          }
+        }
+      },
+      "loyalty": {
+        "1year": {
+          "title": "Un año juntos",
+          "description": "1 año desde la creación de tu cuenta"
+        },
+        "2year": {
+          "title": "Fiel dos años",
+          "description": "2 años desde la creación de tu cuenta"
+        }
+      },
+      "rarity": {
+        "pre1990": {
+          "title": "Anticuario",
+          "description": "Posees una camiseta anterior a 1990"
+        },
+        "goalkeeper": {
+          "title": "El muro",
+          "description": "Posees una camiseta de portero"
+        }
+      },
+      "contribution": {
+        "proposal": {
+          "first": {
+            "title": "Primera contribución",
+            "description": "Una de tus propuestas de camiseta fue aceptada"
+          },
+          "10": {
+            "title": "Contribuidor regular",
+            "description": "10 propuestas aceptadas"
+          }
+        },
+        "description": {
+          "first": {
+            "title": "Redactor",
+            "description": "Tu primera descripción fue aceptada"
+          }
+        }
+      },
+      "special": {
+        "founder": {
+          "title": "Fundador",
+          "description": "Fondateur de Le Vestiaire Foot"
+        }
+      },
+      "leaderboard": {
+        "monthly_top3": {
+          "collection_size": {
+            "title": "Podio mensual Colección - {month}",
+            "description": "Top {rank} de adiciones del mes"
+          }
+        }
+      }
+    },
+    "empty": {
+      "all": "Sin logros en esta categoría todavía.",
+      "unlocked": "Sin logros desbloqueados en esta categoría.",
+      "inProgress": "Sin logros en progreso en esta categoría."
+    },
+    "secret": "Secreto"
+  },
+  "PublicAchievements": {
+    "title": "Logros de {name}",
+    "emptyTitle": "Sin logros",
+    "emptyDescription": "Este usuario aún no ha desbloqueado ningún logro.",
+    "emptyCategory": "Sin logros en esta categoría."
   }
 }

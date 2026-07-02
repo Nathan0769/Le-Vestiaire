@@ -3,7 +3,9 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Star } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
+import { useTranslations } from "next-intl";
 import { trackEvent } from "@/lib/analytics";
+import { handleNewAchievements } from "@/lib/achievements/handle-response";
 
 interface StarRatingProps {
   jerseyId: string;
@@ -18,6 +20,7 @@ interface RatingData {
 
 interface ApiResponse extends RatingData {
   message?: string;
+  newAchievements?: Array<{ key: string; category: string; tier: string | null }>;
 }
 
 export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
@@ -29,6 +32,7 @@ export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [optimisticRating, setOptimisticRating] = useState<number | null>(null);
   const { user } = useAuth();
+  const tRoot = useTranslations();
 
   const abortControllerRef = useRef<AbortController | null>(null);
 
@@ -104,6 +108,7 @@ export function StarRating({ jerseyId, readonly = false }: StarRatingProps) {
           name: "jersey_rated",
           params: { jersey_id: jerseyId, rating },
         });
+        handleNewAchievements(data, tRoot);
       } else {
         const errorData = await response.json();
         console.error("Erreur:", errorData.error);

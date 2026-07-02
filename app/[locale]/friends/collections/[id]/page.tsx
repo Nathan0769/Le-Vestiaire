@@ -4,6 +4,9 @@ import { FriendCollectionStats } from "@/components/friends/friend-collection-st
 import { FriendCollectionGrid } from "@/components/friends/friend-collection-grid";
 import { UserAvatar } from "@/components/profiles/user-avatar";
 import { SocialLinksRow } from "@/components/profiles/social-links-row";
+import { TopAchievementsBadges } from "@/components/achievements/top-achievements-badges";
+import { maybeCheckAllAchievements } from "@/lib/achievements/check";
+import { pickTopAchievements } from "@/lib/achievements/top-achievements";
 import { Package, ArrowLeft, Heart } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -39,6 +42,7 @@ async function getFriendCollection(currentUserId: string, friendId: string) {
       name: true,
       avatar: true,
       bio: true,
+      lastAchievementsFullCheckAt: true,
       favoriteClub: {
         select: { id: true, name: true },
       },
@@ -51,6 +55,15 @@ async function getFriendCollection(currentUserId: string, friendId: string) {
   });
 
   if (!friendUser) return null;
+
+  try {
+    await maybeCheckAllAchievements(
+      friendId,
+      friendUser.lastAchievementsFullCheckAt ?? null
+    );
+  } catch (error) {
+    console.error("maybeCheckAllAchievements failed for friend:", error);
+  }
 
   let avatarUrl = null;
   if (friendUser.avatar) {
@@ -167,6 +180,12 @@ async function getFriendCollection(currentUserId: string, friendId: string) {
     (item) => !item.isGift && !item.isFromMysteryBox
   ).length;
 
+  const topAchievementsRaw = await prisma.achievement.findMany({
+    where: { userId: friendId },
+    select: { key: true, tier: true, unlockedAt: true, metadata: true },
+  });
+  const topAchievements = pickTopAchievements(topAchievementsRaw, 5);
+
   return {
     user: {
       id: friendUser.id,
@@ -195,6 +214,7 @@ async function getFriendCollection(currentUserId: string, friendId: string) {
         mysteryBox: mysteryBoxCount,
       },
     },
+    topAchievements,
   };
 }
 
@@ -237,8 +257,9 @@ export default async function FriendCollectionPage({
     notFound();
   }
 
-  const { user, collection, stats } = data;
+  const { user, collection, stats, topAchievements } = data;
   const displayName = user.username ?? t("user");
+  const tPublic = await getTranslations("PublicCollection");
 
   return (
     <div className="p-6 space-y-8">
@@ -287,6 +308,14 @@ export default async function FriendCollectionPage({
             </div>
             {user.bio && (
               <p className="text-sm text-muted-foreground mt-2">{user.bio}</p>
+            )}
+            {topAchievements.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-border">
+                <p className="text-sm font-medium mb-2">
+                  {tPublic("topAchievements")}
+                </p>
+                <TopAchievementsBadges achievements={topAchievements} />
+              </div>
             )}
           </div>
         </div>

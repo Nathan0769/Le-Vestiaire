@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { checkAchievements } from "@/lib/achievements/check";
 
 export async function GET(
   request: Request,
@@ -105,12 +106,20 @@ export async function POST(
         },
       });
 
+      let newAchievements: Awaited<ReturnType<typeof checkAchievements>> = [];
+      try {
+        newAchievements = await checkAchievements(user.id, "wishlist.add");
+      } catch (achievementError) {
+        console.error("checkAchievements failed on wishlist.add:", achievementError);
+      }
+
       return NextResponse.json({
         success: true,
         action: "added",
         message: "Maillot ajouté à votre wishlist",
         isInWishlist: true,
         isFirst: totalWishlistCount === 0,
+        newAchievements,
       });
     }
   } catch (error) {

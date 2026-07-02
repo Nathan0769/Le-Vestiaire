@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Package, Gift } from "lucide-react";
+import { Package, Gift, Award } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface PublicUserTabsProps {
@@ -18,13 +18,19 @@ export function PublicUserTabs({ userId }: PublicUserTabsProps) {
       label: t("collection"),
       href: `/users/${userId}/collection`,
       icon: Package,
-      active: pathname.includes("/collection"),
+      active: pathname.endsWith("/collection"),
     },
     {
       label: t("wishlist"),
       href: `/users/${userId}/wishlist`,
       icon: Gift,
-      active: pathname.includes("/wishlist"),
+      active: pathname.endsWith("/wishlist"),
+    },
+    {
+      label: t("achievements"),
+      href: `/users/${userId}/achievements`,
+      icon: Award,
+      active: pathname.endsWith("/achievements"),
     },
   ];
 

@@ -9,6 +9,7 @@ import {
   Heart,
   Shield,
   Trophy,
+  Award,
   Tag,
   BarChart3,
 } from "lucide-react";
@@ -36,6 +37,7 @@ import {
 import { ChevronDown } from "lucide-react";
 import React from "react";
 import { usePendingRequestsCount } from "@/hooks/usePendingRequestsCount";
+import { useAchievementsUnreadCount } from "@/hooks/useAchievementsUnreadCount";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { isHotkeyPressed } from "react-hotkeys-hook";
 import { useRouter } from "@/i18n/routing";
@@ -47,6 +49,7 @@ export function AppSidebar() {
   const t = useTranslations("Sidebar");
   const [openCommunaute, setOpenCommunaute] = React.useState(true);
   const { count: pendingCount } = usePendingRequestsCount();
+  const { data: achievementsUnread } = useAchievementsUnreadCount();
   const currentUser = useCurrentUser();
   const router = useRouter();
 
@@ -94,6 +97,12 @@ export function AppSidebar() {
       title: t("leaderboard"),
       url: "/leaderboard",
       icon: Trophy,
+    },
+    {
+      title: t("achievements"),
+      url: "/achievements",
+      icon: Award,
+      badgeCount: achievementsUnread?.count ?? 0,
     },
     {
       title: t("authentication"),
@@ -180,15 +189,6 @@ export function AppSidebar() {
                             </SidebarMenuSubItem>
                             <SidebarMenuSubItem>
                               <SidebarMenuSubButton
-                                href="/friends/collections"
-                                isActive={false}
-                                className="hover:bg-primary/20"
-                              >
-                                {t("friendsCollections")}
-                              </SidebarMenuSubButton>
-                            </SidebarMenuSubItem>
-                            <SidebarMenuSubItem>
-                              <SidebarMenuSubButton
                                 href={
                                   isContributor
                                     ? "/community/propose-jersey"
@@ -233,9 +233,16 @@ export function AppSidebar() {
                           <span>{item.title}</span>
                         </div>
                       ) : (
-                        <a href={item.url} className="flex items-center w-full">
-                          <item.icon className="h-5 w-5" />
-                          <span>{item.title}</span>
+                        <a href={item.url} className="flex items-center w-full justify-between">
+                          <span className="flex items-center gap-3">
+                            <item.icon className="h-5 w-5" />
+                            <span>{item.title}</span>
+                          </span>
+                          {"badgeCount" in item && (item.badgeCount ?? 0) > 0 && (
+                            <span className="px-2 py-0.5 bg-red-500 text-white rounded-full text-xs font-medium">
+                              {item.badgeCount}
+                            </span>
+                          )}
                         </a>
                       )}
                     </SidebarMenuButton>

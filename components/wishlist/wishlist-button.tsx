@@ -11,6 +11,7 @@ import { AuthGateModal } from "@/components/auth/auth-gate-modal";
 import { usePendingIntent } from "@/hooks/usePendingIntent";
 import { buildReturnTo } from "@/lib/auth-gate";
 import { trackEvent } from "@/lib/analytics";
+import { handleNewAchievements } from "@/lib/achievements/handle-response";
 
 interface WishlistButtonProps {
   jerseyId: string;
@@ -28,6 +29,7 @@ export function WishlistButton({
   leagueId,
 }: WishlistButtonProps) {
   const t = useTranslations("Wishlist.button");
+  const tRoot = useTranslations();
   const [isInWishlist, setIsInWishlist] = useState(initialIsInWishlist);
   const [isLoading, setIsLoading] = useState(false);
   const [showAuthGate, setShowAuthGate] = useState(false);
@@ -81,6 +83,7 @@ export function WishlistButton({
             },
           });
           toast.success(t("toast.added"));
+          handleNewAchievements(data, tRoot);
         } else {
           trackEvent({
             name: "jersey_removed_from_wishlist",

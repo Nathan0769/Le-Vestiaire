@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { checkAchievements } from "@/lib/achievements/check";
 
 interface RatingData {
   averageRating: number;
@@ -142,9 +143,17 @@ export async function POST(
       userRating: ratingNumber,
     };
 
+    let newAchievements: Awaited<ReturnType<typeof checkAchievements>> = [];
+    try {
+      newAchievements = await checkAchievements(user.id, "social.rating");
+    } catch (achievementError) {
+      console.error("checkAchievements failed on social.rating:", achievementError);
+    }
+
     return NextResponse.json({
       message: "Rating mis à jour avec succès",
       ...responseData,
+      newAchievements,
     });
   } catch (error) {
     console.error("Erreur lors de la mise à jour du rating:", error);

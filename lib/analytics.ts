@@ -17,7 +17,31 @@ export type AnalyticsEvent =
   | { name: "jersey_reported"; params: { jersey_id: string; category: string } }
   | { name: "wishlist_pdf_generated"; params: { jersey_count: number } }
   | { name: "friend_request_sent"; params: { target_user_id: string } }
-  | { name: "friend_request_accepted"; params: { requester_id: string } };
+  | { name: "friend_request_accepted"; params: { requester_id: string } }
+  | {
+      name: "cfs_wishlist_match_view";
+      params: {
+        jersey_id: string;
+        club_id: string;
+        season: string;
+        promo_id: string;
+        discount_pct: number;
+      };
+    }
+  | {
+      name: "cfs_wishlist_match_click";
+      params: {
+        jersey_id: string;
+        club_id: string;
+        season: string;
+        promo_id: string;
+        discount_pct: number;
+      };
+    }
+  | { name: "cfs_wishlist_banner_dismiss"; params: { count: number } }
+  | { name: "achievement_unlocked"; params: { key: string; category: string; tier: string | null } }
+  | { name: "achievements_page_viewed"; params: Record<string, never> }
+  | { name: "achievement_toast_clicked"; params: { key: string } };
 
 declare global {
   interface Window {

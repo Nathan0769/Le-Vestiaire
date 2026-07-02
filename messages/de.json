@@ -7,6 +7,7 @@
     "jerseys": "Trikots",
     "community": "Community",
     "leaderboard": "Rangliste",
+    "achievements": "Erfolge",
     "authentication": "Authentifizierung",
     "pricing": "Abonnement",
     "settings": "Konto",
@@ -475,7 +476,9 @@
       "emptyDescription": "Beginne deine Sammlung aufzubauen, indem du deine ersten Trikots hinzufügst!",
       "errorTitle": "Ladefehler",
       "errorDescription": "Beim Laden deiner Sammlung ist ein Fehler aufgetreten. Bitte lade die Seite neu oder versuche es später.",
-      "reload": "Seite neu laden"
+      "reload": "Seite neu laden",
+      "topAchievements": "Top-Erfolge",
+      "viewAllAchievements": "Alle Erfolge ansehen"
     }
   },
   "Onboarding": {
@@ -679,6 +682,16 @@
     }
   },
   "Wishlist": {
+    "cfsMatch": {
+      "badge": {
+        "discount": "Verfügbar -{percent}% bei CFS"
+      },
+      "banner": {
+        "title": "{count, plural, one {# Trikot aus deiner Wishlist ist im Angebot bei CFS} other {# Trikots aus deiner Wishlist sind im Angebot bei CFS}}",
+        "cta": "Angebote ansehen",
+        "dismiss": "Ausblenden"
+      }
+    },
     "button": {
       "loading": "Wird geladen...",
       "addToWishlist": "Zu meiner Wunschliste hinzufügen",
@@ -2532,13 +2545,15 @@
     "emptyMessage": "{name} hat noch keine Trikots zu seiner Sammlung hinzugefügt.",
     "tabs": {
       "collection": "Sammlung",
-      "wishlist": "Wunschliste"
+      "wishlist": "Wunschliste",
+      "achievements": "Erfolge"
     },
     "commonJerseysTitle": "Gemeinsam mit dir",
     "commonJerseys": "{count} gemeinsame(s) Trikot(s)",
     "wishlistTitle": "Wunschliste von {name}",
     "wishlistEmpty": "Leere Wunschliste",
-    "wishlistEmptyMessage": "{name} hat noch keine Trikots zu seiner Wunschliste hinzugefügt."
+    "wishlistEmptyMessage": "{name} hat noch keine Trikots zu seiner Wunschliste hinzugefügt.",
+    "topAchievements": "Top-Erfolge"
   },
   "ForgotPassword": {
     "title": "Passwort vergessen",
@@ -2584,5 +2599,212 @@
       "resetError": "Ein Fehler ist aufgetreten. Bitte versuche es erneut."
     },
     "backToLogin": "Anmelden"
+  },
+  "achievements": {
+    "page": {
+      "title": "Erfolge",
+      "subtitle": "Schalte Erfolge frei, während deine Sammlung wächst",
+      "nearlyUnlocked": "Fast freigeschaltet",
+      "all": "Alle",
+      "unlocked": "Freigeschaltet ({count})",
+      "inProgress": "In Bearbeitung ({count})",
+      "hidden": "{count, plural, =0 {Keine Geheimnisse} one {# geheimer Erfolg zu entdecken} other {# geheime Erfolge zu entdecken}}"
+    },
+    "categories": {
+      "COLLECTION": "Sammlung",
+      "DIVERSITY": "Vielfalt",
+      "SOCIAL": "Sozial",
+      "LEADERBOARD": "Rangliste",
+      "LOYALTY": "Loyalität",
+      "RARITY": "Seltenheit",
+      "CONTRIBUTION": "Beitrag"
+    },
+    "tiers": {
+      "BRONZE": "Bronze",
+      "SILVER": "Silber",
+      "GOLD": "Gold",
+      "PLATINUM": "Platin"
+    },
+    "toast": {
+      "unlocked": "Erfolg freigeschaltet!"
+    },
+    "sinceLastVisit": "{count, plural, one {# neuer Erfolg seit deinem letzten Besuch} other {# neue Erfolge seit deinem letzten Besuch}}",
+    "unlockedOn": "Freigeschaltet am {date}",
+    "definitions": {
+      "collection": {
+        "first": {
+          "title": "Erstes Trikot",
+          "description": "Füge dein allererstes Trikot zur Sammlung hinzu"
+        },
+        "10": {
+          "title": "Füllt sich",
+          "description": "10 Trikots in deiner Sammlung"
+        },
+        "25": {
+          "title": "Kleiner Sammler",
+          "description": "25 Trikots"
+        },
+        "50": {
+          "title": "Echter Sammler",
+          "description": "50 Trikots"
+        },
+        "100": {
+          "title": "Centurio",
+          "description": "100 Trikots"
+        },
+        "250": {
+          "title": "Persönliches Museum",
+          "description": "250 Trikots"
+        },
+        "value": {
+          "1k": {
+            "title": "1000€ investiert",
+            "description": "Gesamtwert der Sammlung erreicht 1000€"
+          },
+          "10k": {
+            "title": "Big Spender",
+            "description": "Gesamtwert der Sammlung erreicht 10 000€"
+          }
+        },
+        "same_club": {
+          "5": {
+            "title": "Treu",
+            "description": "5 Trikots desselben Vereins"
+          },
+          "15": {
+            "title": "Leidenschaftlich",
+            "description": "15 Trikots desselben Vereins"
+          },
+          "30": {
+            "title": "Fanatiker",
+            "description": "30 Trikots desselben Vereins"
+          }
+        }
+      },
+      "diversity": {
+        "clubs": {
+          "5": {
+            "title": "Fünf Vereine",
+            "description": "Trikots von 5 verschiedenen Vereinen"
+          },
+          "20": {
+            "title": "Weltoffen",
+            "description": "20 verschiedene Vereine"
+          },
+          "50": {
+            "title": "Schweizer Neutralität",
+            "description": "50 verschiedene Vereine"
+          }
+        },
+        "leagues": {
+          "3": {
+            "title": "Drei Ligen",
+            "description": "Trikots aus 3 verschiedenen Ligen"
+          },
+          "10": {
+            "title": "Weltenbummler",
+            "description": "10 verschiedene Ligen"
+          }
+        },
+        "vintage": {
+          "pre2000": {
+            "title": "Old School",
+            "description": "5 Trikots vor 2000"
+          }
+        }
+      },
+      "social": {
+        "friend": {
+          "first": {
+            "title": "Erster Freund",
+            "description": "Füge deinen ersten Freund hinzu"
+          },
+          "10": {
+            "title": "Gesellig",
+            "description": "10 Freunde auf der Plattform"
+          }
+        },
+        "rating": {
+          "first": {
+            "title": "Erste Bewertung",
+            "description": "Bewerte dein erstes Trikot"
+          },
+          "50": {
+            "title": "Kritiker",
+            "description": "50 Bewertungen abgegeben"
+          }
+        },
+        "profile": {
+          "complete": {
+            "title": "Gut präsentiert",
+            "description": "Avatar, Lieblingsverein und Bio ausgefüllt"
+          }
+        }
+      },
+      "loyalty": {
+        "1year": {
+          "title": "Ein Jahr zusammen",
+          "description": "1 Jahr seit der Kontoerstellung"
+        },
+        "2year": {
+          "title": "Zwei Jahre treu",
+          "description": "2 Jahre seit der Kontoerstellung"
+        }
+      },
+      "rarity": {
+        "pre1990": {
+          "title": "Antiquar",
+          "description": "Besitze ein Trikot von vor 1990"
+        },
+        "goalkeeper": {
+          "title": "Die Mauer",
+          "description": "Besitze ein Torwart-Trikot"
+        }
+      },
+      "contribution": {
+        "proposal": {
+          "first": {
+            "title": "Erster Beitrag",
+            "description": "Einer deiner Trikot-Vorschläge wurde angenommen"
+          },
+          "10": {
+            "title": "Regelmäßiger Beitragender",
+            "description": "10 Vorschläge angenommen"
+          }
+        },
+        "description": {
+          "first": {
+            "title": "Autor",
+            "description": "Deine erste Beschreibung wurde angenommen"
+          }
+        }
+      },
+      "special": {
+        "founder": {
+          "title": "Gründer",
+          "description": "Fondateur de Le Vestiaire Foot"
+        }
+      },
+      "leaderboard": {
+        "monthly_top3": {
+          "collection_size": {
+            "title": "Monatliches Sammlungs-Podium - {month}",
+            "description": "Top {rank} der monatlichen Neuzugänge"
+          }
+        }
+      }
+    },
+    "empty": {
+      "all": "Noch keine Erfolge in dieser Kategorie.",
+      "unlocked": "Keine freigeschalteten Erfolge in dieser Kategorie.",
+      "inProgress": "Keine Erfolge in Bearbeitung in dieser Kategorie."
+    },
+    "secret": "Geheim"
+  },
+  "PublicAchievements": {
+    "title": "Erfolge von {name}",
+    "emptyTitle": "Keine Erfolge",
+    "emptyDescription": "Dieser Benutzer hat noch keinen Erfolg freigeschaltet.",
+    "emptyCategory": "Keine Erfolge in dieser Kategorie."
   }
 }
