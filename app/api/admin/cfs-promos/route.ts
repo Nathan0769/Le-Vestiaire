@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireRole } from "@/lib/check-permission";
-import {
-  strictRateLimit,
-  getRateLimitIdentifier,
-  checkRateLimit,
-} from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
 
 const CfsPromoSchema = z.object({
@@ -21,14 +16,8 @@ const CfsPromoSchema = z.object({
 });
 
 export async function GET() {
-  const { error, session } = await requireRole(["superadmin"]);
+  const { error } = await requireRole(["superadmin"]);
   if (error) return error;
-
-  const identifier = await getRateLimitIdentifier(session!.user.id);
-  const rateLimitResult = await checkRateLimit(strictRateLimit, identifier);
-  if (!rateLimitResult.success) {
-    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
-  }
 
   try {
     const promos = await prisma.cfsPromo.findMany({
@@ -43,14 +32,8 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const { error, session } = await requireRole(["superadmin"]);
+  const { error } = await requireRole(["superadmin"]);
   if (error) return error;
-
-  const identifier = await getRateLimitIdentifier(session!.user.id);
-  const rateLimitResult = await checkRateLimit(strictRateLimit, identifier);
-  if (!rateLimitResult.success) {
-    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
-  }
 
   try {
     const body = await request.json();

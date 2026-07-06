@@ -1,11 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { requireRole } from "@/lib/check-permission";
-import {
-  strictRateLimit,
-  getRateLimitIdentifier,
-  checkRateLimit,
-} from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
 
 const CfsPromoUpdateSchema = z.object({
@@ -24,14 +19,8 @@ export async function PUT(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { error, session } = await requireRole(["superadmin"]);
+  const { error } = await requireRole(["superadmin"]);
   if (error) return error;
-
-  const identifier = await getRateLimitIdentifier(session!.user.id);
-  const rateLimitResult = await checkRateLimit(strictRateLimit, identifier);
-  if (!rateLimitResult.success) {
-    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
-  }
 
   try {
     const { id } = await params;
@@ -66,14 +55,8 @@ export async function DELETE(
   _request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { error, session } = await requireRole(["superadmin"]);
+  const { error } = await requireRole(["superadmin"]);
   if (error) return error;
-
-  const identifier = await getRateLimitIdentifier(session!.user.id);
-  const rateLimitResult = await checkRateLimit(strictRateLimit, identifier);
-  if (!rateLimitResult.success) {
-    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
-  }
 
   try {
     const { id } = await params;
