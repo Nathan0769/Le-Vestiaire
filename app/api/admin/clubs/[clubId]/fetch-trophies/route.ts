@@ -1,10 +1,5 @@
 import { NextResponse } from "next/server";
 import { requireRole } from "@/lib/check-permission";
-import {
-  strictRateLimit,
-  getRateLimitIdentifier,
-  checkRateLimit,
-} from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
 import { getLeagueStandings, getCupFinalFixtures } from "@/lib/api-football";
 
@@ -43,14 +38,8 @@ export async function POST(
   _request: Request,
   { params }: { params: Promise<{ clubId: string }> }
 ) {
-  const { error, session } = await requireRole(["superadmin"]);
+  const { error } = await requireRole(["superadmin"]);
   if (error) return error;
-
-  const identifier = await getRateLimitIdentifier(session!.user.id);
-  const rateLimitResult = await checkRateLimit(strictRateLimit, identifier);
-  if (!rateLimitResult.success) {
-    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
-  }
 
   try {
     const { clubId } = await params;
