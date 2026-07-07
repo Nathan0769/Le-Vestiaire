@@ -2113,6 +2113,20 @@
     "since": "seit",
     "ofTheClub": "des Vereins"
   },
+  "ClubPage": {
+    "hero": {
+      "jerseysNoun": "{count, plural, one {Trikot} other {Trikots}}",
+      "fansNoun": "{count, plural, one {Fan} other {Fans}}",
+      "deleteModeTitle": "Umschalt + Klick zum Aktivieren des Löschmodus",
+      "deleteModeBadge": "Löschmodus"
+    },
+    "brandTimeline": {
+      "singleTitle": "Ausrüster",
+      "multipleTitle": "Ausrüster-Chronologie",
+      "today": "heute",
+      "seasonRangeConnector": "bis"
+    }
+  },
   "JerseyDetail": {
     "tabs": {
       "description": "Beschreibung",

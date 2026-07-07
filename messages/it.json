@@ -2113,6 +2113,20 @@
     "since": "dal",
     "ofTheClub": "del club"
   },
+  "ClubPage": {
+    "hero": {
+      "jerseysNoun": "{count, plural, one {maglia} other {maglie}}",
+      "fansNoun": "{count, plural, one {tifoso} other {tifosi}}",
+      "deleteModeTitle": "Maiusc + clic per attivare la modalità eliminazione",
+      "deleteModeBadge": "Modalità eliminazione"
+    },
+    "brandTimeline": {
+      "singleTitle": "Sponsor tecnico",
+      "multipleTitle": "Cronologia degli sponsor",
+      "today": "oggi",
+      "seasonRangeConnector": "a"
+    }
+  },
   "JerseyDetail": {
     "tabs": {
       "description": "Descrizione",
