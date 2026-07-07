@@ -2113,6 +2113,20 @@
     "since": "sinds",
     "ofTheClub": "van de club"
   },
+  "ClubPage": {
+    "hero": {
+      "jerseysNoun": "{count, plural, one {shirt} other {shirts}}",
+      "fansNoun": "{count, plural, one {fan} other {fans}}",
+      "deleteModeTitle": "Shift + klik om verwijdermodus te activeren",
+      "deleteModeBadge": "Verwijdermodus"
+    },
+    "brandTimeline": {
+      "singleTitle": "Uitruster",
+      "multipleTitle": "Uitruster-geschiedenis",
+      "today": "vandaag",
+      "seasonRangeConnector": "tot"
+    }
+  },
   "JerseyDetail": {
     "tabs": {
       "description": "Beschrijving",

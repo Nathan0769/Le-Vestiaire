@@ -12,6 +12,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { cache } from "react";
+import { computeClubStats } from "@/lib/club-stats";
 
 export const revalidate = 3600;
 
@@ -104,8 +105,26 @@ export default async function ClubDetailPage(props: Props) {
     return <div className="p-6">{t("clubNotFoundText")}</div>;
   }
 
+  const [ratingAggregate, favoriteCount] = await Promise.all([
+    prisma.rating.aggregate({
+      where: { jersey: { clubId } },
+      _avg: { rating: true },
+      _count: { rating: true },
+    }),
+    prisma.user.count({ where: { favoriteClubId: clubId } }),
+  ]);
+
+  const stats = computeClubStats(
+    club.jerseys,
+    {
+      avg: ratingAggregate._avg.rating ? Number(ratingAggregate._avg.rating) : 0,
+      count: ratingAggregate._count.rating,
+    },
+    favoriteCount
+  );
+
   return (
-    <div className="p-6 space-y-8">
+    <div className="p-4 md:p-6 space-y-6">
       <BreadcrumbSchema
         items={[
           { name: "Maillots", url: "https://le-vestiaire-foot.fr/jerseys" },
@@ -139,6 +158,7 @@ export default async function ClubDetailPage(props: Props) {
         jerseys={club.jerseys}
         primaryColor={club.primaryColor}
         club={club}
+        stats={stats}
       />
     </div>
   );

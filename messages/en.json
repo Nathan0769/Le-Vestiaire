@@ -2113,6 +2113,20 @@
     "since": "since",
     "ofTheClub": "of the club"
   },
+  "ClubPage": {
+    "hero": {
+      "jerseysNoun": "{count, plural, one {jersey} other {jerseys}}",
+      "fansNoun": "{count, plural, one {fan} other {fans}}",
+      "deleteModeTitle": "Shift + click to enable delete mode",
+      "deleteModeBadge": "Delete mode"
+    },
+    "brandTimeline": {
+      "singleTitle": "Manufacturer",
+      "multipleTitle": "Manufacturer history",
+      "today": "today",
+      "seasonRangeConnector": "to"
+    }
+  },
   "JerseyDetail": {
     "tabs": {
       "description": "Description",
