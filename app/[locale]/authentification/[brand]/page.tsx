@@ -37,9 +37,12 @@ export async function generateMetadata({
 
   const description = t(`${brand}.description`);
   const ogDescription = t(`${brand}.ogDescription`);
+  const title = t.has(`${brand}.title`)
+    ? t(`${brand}.title`)
+    : t("titleTemplate", { brand: brandInfo.name });
 
   return {
-    title: t("titleTemplate", { brand: brandInfo.name }),
+    title,
     description,
 
     openGraph: {

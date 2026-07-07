@@ -1302,7 +1302,8 @@
       "ogTitleTemplate": "Guide Authentification Maillot {brand}",
       "twitterTitleTemplate": "Comment Authentifier un Maillot {brand}",
       "adidas": {
-        "description": "Guide complet pour authentifier un maillot Adidas. Vérifiez le code produit, l'étiquette boutique, le code-barres et repérez les signes de contrefaçon. Méthode détaillée avec exemples visuels.",
+        "title": "Authentifier un Maillot Adidas : Code Produit, QR Code et Étiquettes",
+        "description": "Vérifier l'authenticité d'un maillot Adidas : décodage du code produit (ex : FN8721-456, HS5184), QR code, étiquette boutique et code-barres. Guide anti-contrefaçon avec exemples visuels.",
         "ogDescription": "Apprenez à reconnaître un vrai maillot Adidas d'une contrefaçon"
       },
       "nike": {

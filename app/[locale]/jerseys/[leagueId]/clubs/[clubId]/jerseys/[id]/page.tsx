@@ -126,8 +126,20 @@ export async function generateMetadata({
       ratingText = ` - Note ${rating.averageRating.toFixed(1)}/5 ⭐`;
     }
 
-    const title = `${translatedJerseyName} ${jersey.brand}${ratingText} | Le Vestiaire`;
-    const description = `Découvrez le maillot ${typeLower} du ${jersey.club.name} pour la saison ${jersey.season}. Conçu par ${jersey.brand}, ce maillot ${jersey.club.league.name} est une pièce de collection. Ajoutez-le à votre collection et évaluez-le !`;
+    const shortSeasonMatch = jersey.season.match(/^(\d{2})(\d{2})-(\d{2})(\d{2})$/);
+    const shortSeason = shortSeasonMatch
+      ? `${shortSeasonMatch[2]}/${shortSeasonMatch[4]}`
+      : null;
+
+    const title =
+      locale === "fr"
+        ? `Maillot ${jersey.club.name} ${typeLower} ${jersey.season} - ${jersey.brand}${ratingText} | Le Vestiaire`
+        : `${translatedJerseyName} ${jersey.brand}${ratingText} | Le Vestiaire`;
+
+    const seasonDisplay = shortSeason
+      ? `saison ${jersey.season} (${shortSeason})`
+      : `saison ${jersey.season}`;
+    const description = `Maillot ${typeLower} ${jersey.club.name} ${seasonDisplay} par ${jersey.brand}. Fiche complète du maillot ${jersey.club.league.name} avec notes de la communauté, historique et détails de collection.`;
 
     const keywords = [
       `maillot ${jersey.club.name}`,
