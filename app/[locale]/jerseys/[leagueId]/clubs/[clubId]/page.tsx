@@ -58,12 +58,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const latestSeason = club.jerseys[0]?.season || "";
-  const title = `Maillots ${club.name} - Toutes les saisons | Le Vestiaire`;
-  const description = `Collection complète des maillots du ${club.name} (${
-    club.league.name
-  }). Découvrez tous les maillots domicile, extérieur et third ${
-    latestSeason ? `depuis ${latestSeason.split("-")[0]}` : "du club"
-  }. Ajoutez-les à votre collection !`;
+  const title = `Maillot ${club.name} (${club.league.name}) - Toutes saisons | Le Vestiaire`;
+  const description = `Tous les maillots du ${club.name} (${club.league.name}) : domicile, extérieur, gardien${
+    latestSeason ? `, saison ${latestSeason}` : ""
+  }. Fiches détaillées, notes de la communauté, ajout à votre collection ou wishlist.`;
 
   return {
     title,
