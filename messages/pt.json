@@ -1298,7 +1298,8 @@
       "ogTitleTemplate": "Guia de Autenticação de Camisolas {brand}",
       "twitterTitleTemplate": "Como Autenticar uma Camisola {brand}",
       "adidas": {
-        "description": "Guia completo para autenticar uma camisola Adidas. Verifique o código de produto, a etiqueta pendente, o código de barras e identifique sinais de falsificação. Método detalhado com exemplos visuais.",
+        "title": "Autenticar uma Camisola Adidas: Código de Produto, QR Code e Etiquetas",
+        "description": "Verifique a autenticidade de uma camisola Adidas: descodificação do código de produto (ex.: FN8721-456, HS5184), QR code, etiqueta pendente e código de barras. Guia antifalsificação com exemplos visuais.",
         "ogDescription": "Aprenda a reconhecer uma camisola Adidas autêntica e a distingui-la de uma falsificação"
       },
       "nike": {
@@ -2820,5 +2821,25 @@
     "emptyTitle": "Sem conquistas",
     "emptyDescription": "Este utilizador ainda não desbloqueou nenhuma conquista.",
     "emptyCategory": "Sem conquistas nesta categoria."
+  },
+  "JerseyMetadata": {
+    "notFoundTitle": "Camisola não encontrada - Le Vestiaire",
+    "notFoundDescription": "Esta camisola não existe ou já não está disponível.",
+    "fallbackTitle": "Camisola de futebol - Le Vestiaire",
+    "fallbackDescription": "Coleção de camisolas de futebol vintage e recentes",
+    "titleTemplate": "Camisola {clubName} {typeLower} {season} - {brand}{ratingSuffix} | Le Vestiaire",
+    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Le Vestiaire",
+    "ratingSuffix": " - Nota {rating}/5 ⭐",
+    "descriptionTemplate": "Camisola {typeLower} {clubName} época {season} pela {brand}. Ficha completa da camisola {leagueName} com avaliações da comunidade, história e detalhes de coleção.",
+    "descriptionTemplateWithShort": "Camisola {typeLower} {clubName} época {season} ({shortSeason}) pela {brand}. Ficha completa da camisola {leagueName} com avaliações da comunidade, história e detalhes de coleção.",
+    "ogDescription": "Camisola {typeLower} {clubName} pela {brand}. {leagueName} • Época {season}",
+    "twitterDescription": "Camisola {brand} • {leagueName}"
+  },
+  "ClubMetadata": {
+    "notFoundTitle": "Clube não encontrado - Le Vestiaire",
+    "title": "Camisolas {clubName} ({leagueName}) - Todas as épocas | Le Vestiaire",
+    "description": "Todas as camisolas do {clubName} ({leagueName}): principal, alternativo, guarda-redes, época {latestSeason}. Fichas detalhadas, avaliações da comunidade, adiciona à tua coleção ou lista de desejos.",
+    "descriptionWithoutSeason": "Todas as camisolas do {clubName} ({leagueName}): principal, alternativo, guarda-redes. Fichas detalhadas, avaliações da comunidade, adiciona à tua coleção ou lista de desejos.",
+    "ogTitle": "Todas as camisolas {clubName}"
   }
 }

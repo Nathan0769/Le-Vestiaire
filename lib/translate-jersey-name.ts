@@ -14,27 +14,31 @@ interface TranslateJerseyNameOptions {
 }
 
 /**
- * Traduit le nom d'un maillot selon la locale
- * FR : Utilise le nom de la DB (déjà en français)
- * EN : Génère "PSG Home Jersey 2024-25"
- * ES : Génère "Camiseta Local PSG 2024-25"
+ * Traduit le nom d'un maillot selon la locale.
+ * FR utilise le nom de la DB (deja en francais). Les autres locales
+ * generent un nom SEO-friendly avec la convention locale du mot maillot.
  */
 export function translateJerseyName({
   jersey,
   locale,
   typeTranslation,
 }: TranslateJerseyNameOptions): string {
-  if (locale === "fr") {
-    return jersey.name;
+  switch (locale) {
+    case "fr":
+      return jersey.name;
+    case "en":
+      return `${jersey.clubShortName} ${typeTranslation} Jersey ${jersey.season}`;
+    case "es":
+      return `Camiseta ${typeTranslation} ${jersey.clubShortName} ${jersey.season}`;
+    case "de":
+      return `${jersey.clubShortName} ${typeTranslation} Trikot ${jersey.season}`;
+    case "it":
+      return `Maglia ${typeTranslation} ${jersey.clubShortName} ${jersey.season}`;
+    case "nl":
+      return `${jersey.clubShortName} ${typeTranslation} Shirt ${jersey.season}`;
+    case "pt":
+      return `Camisola ${typeTranslation} ${jersey.clubShortName} ${jersey.season}`;
+    default:
+      return jersey.name;
   }
-
-  if (locale === "en") {
-    return `${jersey.clubShortName} ${typeTranslation} Jersey ${jersey.season}`;
-  }
-
-  if (locale === "es") {
-    return `Camiseta ${typeTranslation} ${jersey.clubShortName} ${jersey.season}`;
-  }
-
-  return jersey.name;
 }

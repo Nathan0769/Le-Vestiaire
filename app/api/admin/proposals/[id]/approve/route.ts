@@ -10,6 +10,7 @@ import {
   JERSEY_PROPOSALS_BUCKET,
 } from "@/lib/r2-storage";
 import { checkAchievements } from "@/lib/achievements/check";
+import { translateDescription } from "@/lib/deepl";
 
 export async function POST(
   request: Request,
@@ -177,6 +178,34 @@ export async function POST(
       }
     } catch (colorError) {
       console.error("Erreur extraction couleur principale:", colorError);
+    }
+
+    if (proposal.description) {
+      try {
+        const translations = await translateDescription(proposal.description);
+        await prisma.jersey.update({
+          where: { id: result.jersey.id },
+          data: { descriptionTranslations: translations },
+        });
+      } catch (err) {
+        console.error(
+          "Traduction automatique echouee pour le maillot",
+          result.jersey.id,
+          err
+        );
+        try {
+          await prisma.jersey.update({
+            where: { id: result.jersey.id },
+            data: { descriptionTranslations: { fr: proposal.description } },
+          });
+        } catch (fallbackErr) {
+          console.error(
+            "Fallback descriptionTranslations echoue pour le maillot",
+            result.jersey.id,
+            fallbackErr
+          );
+        }
+      }
     }
 
     try {

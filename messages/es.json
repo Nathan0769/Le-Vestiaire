@@ -1298,7 +1298,8 @@
       "ogTitleTemplate": "Guía de Autenticación Camiseta {brand}",
       "twitterTitleTemplate": "Cómo Autenticar una Camiseta {brand}",
       "adidas": {
-        "description": "Guía completa para autenticar una camiseta Adidas. Verifica el código de producto, etiqueta de tienda, código de barras y detecta señales de falsificación. Método detallado con ejemplos visuales.",
+        "title": "Autenticar una Camiseta Adidas: Código de Producto, QR y Etiquetas",
+        "description": "Verifica la autenticidad de una camiseta Adidas: decodifica el código de producto (ej: FN8721-456, HS5184), QR, etiqueta de tienda y código de barras. Guía anti-falsificación con ejemplos visuales.",
         "ogDescription": "Aprende a reconocer una camiseta Adidas auténtica de una falsificación"
       },
       "nike": {
@@ -2820,5 +2821,25 @@
     "emptyTitle": "Sin logros",
     "emptyDescription": "Este usuario aún no ha desbloqueado ningún logro.",
     "emptyCategory": "Sin logros en esta categoría."
+  },
+  "JerseyMetadata": {
+    "notFoundTitle": "Camiseta no encontrada - El Vestuario",
+    "notFoundDescription": "Esta camiseta no existe o ya no está disponible.",
+    "fallbackTitle": "Camiseta de fútbol - El Vestuario",
+    "fallbackDescription": "Colección de camisetas de fútbol vintage y recientes",
+    "titleTemplate": "Camiseta {clubName} {typeLower} {season} - {brand}{ratingSuffix} | El Vestuario",
+    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | El Vestuario",
+    "ratingSuffix": " - Nota {rating}/5 ⭐",
+    "descriptionTemplate": "Camiseta {typeLower} {clubName} temporada {season} por {brand}. Ficha completa de la camiseta {leagueName} con valoraciones de la comunidad, historia y detalles de colección.",
+    "descriptionTemplateWithShort": "Camiseta {typeLower} {clubName} temporada {season} ({shortSeason}) por {brand}. Ficha completa de la camiseta {leagueName} con valoraciones de la comunidad, historia y detalles de colección.",
+    "ogDescription": "Camiseta {typeLower} {clubName} por {brand}. {leagueName} • Temporada {season}",
+    "twitterDescription": "Camiseta {brand} • {leagueName}"
+  },
+  "ClubMetadata": {
+    "notFoundTitle": "Club no encontrado - El Vestuario",
+    "title": "Camisetas {clubName} ({leagueName}) - Todas las temporadas | El Vestuario",
+    "description": "Todas las camisetas del {clubName} ({leagueName}): local, visitante, portero, temporada {latestSeason}. Fichas detalladas, valoraciones de la comunidad, añade a tu colección o lista de deseos.",
+    "descriptionWithoutSeason": "Todas las camisetas del {clubName} ({leagueName}): local, visitante, portero. Fichas detalladas, valoraciones de la comunidad, añade a tu colección o lista de deseos.",
+    "ogTitle": "Todas las camisetas {clubName}"
   }
 }

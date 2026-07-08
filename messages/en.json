@@ -1298,7 +1298,8 @@
       "ogTitleTemplate": "{brand} Jersey Authentication Guide",
       "twitterTitleTemplate": "How to Authenticate a {brand} Jersey",
       "adidas": {
-        "description": "Complete guide to authenticate an Adidas jersey. Verify product code, swing tag, barcode and spot counterfeit signs. Detailed method with visual examples.",
+        "title": "Authenticate an Adidas Jersey: Product Code, QR Code and Labels",
+        "description": "Verify the authenticity of an Adidas jersey: decoding the product code (e.g. FN8721-456, HS5184), QR code, swing tag and barcode. Anti-counterfeit guide with visual examples.",
         "ogDescription": "Learn to recognize an authentic Adidas jersey from a counterfeit"
       },
       "nike": {
@@ -2820,5 +2821,25 @@
     "emptyTitle": "No achievements",
     "emptyDescription": "This user hasn't unlocked any achievement yet.",
     "emptyCategory": "No achievement in this category."
+  },
+  "JerseyMetadata": {
+    "notFoundTitle": "Jersey not found - The Locker Room",
+    "notFoundDescription": "This jersey doesn't exist or is no longer available.",
+    "fallbackTitle": "Football jersey - The Locker Room",
+    "fallbackDescription": "Vintage and recent football jersey collection",
+    "titleTemplate": "{clubName} {typeLower} jersey {season} - {brand}{ratingSuffix} | The Locker Room",
+    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | The Locker Room",
+    "ratingSuffix": " - Rated {rating}/5 ⭐",
+    "descriptionTemplate": "{clubName} {typeLower} jersey for the {season} season by {brand}. Complete fact sheet of the {leagueName} jersey with community ratings, history and collection details.",
+    "descriptionTemplateWithShort": "{clubName} {typeLower} jersey for the {season} ({shortSeason}) season by {brand}. Complete fact sheet of the {leagueName} jersey with community ratings, history and collection details.",
+    "ogDescription": "{clubName} {typeLower} jersey by {brand}. {leagueName} • {season} season",
+    "twitterDescription": "{brand} jersey • {leagueName}"
+  },
+  "ClubMetadata": {
+    "notFoundTitle": "Club not found - The Locker Room",
+    "title": "{clubName} jerseys ({leagueName}) - All seasons | The Locker Room",
+    "description": "All {clubName} jerseys ({leagueName}): home, away, goalkeeper, {latestSeason} season. Detailed fact sheets, community ratings, add to your collection or wishlist.",
+    "descriptionWithoutSeason": "All {clubName} jerseys ({leagueName}): home, away, goalkeeper. Detailed fact sheets, community ratings, add to your collection or wishlist.",
+    "ogTitle": "All {clubName} jerseys"
   }
 }
