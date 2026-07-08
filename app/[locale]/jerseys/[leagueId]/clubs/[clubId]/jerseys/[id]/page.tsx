@@ -88,22 +88,44 @@ const getCachedStats = cache(async (jerseyId: string) => {
   return { collectionCount, wishlistCount };
 });
 
+const OG_LOCALES: Record<string, string> = {
+  fr: "fr_FR",
+  en: "en_US",
+  es: "es_ES",
+  de: "de_DE",
+  pt: "pt_PT",
+  nl: "nl_NL",
+  it: "it_IT",
+};
+
+const SUPPORTED_LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"];
+
+function buildJerseyLanguageAlternates(slugOrId: string, leagueId: string, clubId: string) {
+  const base = `https://le-vestiaire-foot.fr`;
+  const path = `/jerseys/${leagueId}/clubs/${clubId}/jerseys/${slugOrId}`;
+  return SUPPORTED_LOCALES.reduce<Record<string, string>>((acc, l) => {
+    acc[l] = l === "fr" ? `${base}${path}` : `${base}/${l}${path}`;
+    return acc;
+  }, {});
+}
+
 export async function generateMetadata({
   params,
 }: JerseyPageProps): Promise<Metadata> {
   const { leagueId, clubId, id } = await params;
+  const locale = await getLocale();
+  const tMeta = await getTranslations("JerseyMetadata");
 
   try {
     const jersey = await getCachedJersey(id);
 
     if (!jersey) {
       return {
-        title: "Maillot introuvable - Le Vestiaire",
-        description: "Ce maillot n'existe pas ou n'est plus disponible.",
+        title: tMeta("notFoundTitle"),
+        description: tMeta("notFoundDescription"),
       };
     }
 
-    const locale = await getLocale();
     const tJerseyType = await getTranslations("JerseyType");
 
     const typeLabel = jerseyTypeLabel(tJerseyType(jersey.type as JerseyType), jersey.type, jersey.variant ?? 1);
@@ -120,11 +142,11 @@ export async function generateMetadata({
       typeTranslation: typeLabel,
     });
 
-    let ratingText = "";
     const rating = await getCachedRating(jersey.id);
-    if (rating.totalRatings > 0) {
-      ratingText = ` - Note ${rating.averageRating.toFixed(1)}/5 ⭐`;
-    }
+    const ratingSuffix =
+      rating.totalRatings > 0
+        ? tMeta("ratingSuffix", { rating: rating.averageRating.toFixed(1) })
+        : "";
 
     const shortSeasonMatch = jersey.season.match(/^(\d{2})(\d{2})-(\d{2})(\d{2})$/);
     const shortSeason = shortSeasonMatch
@@ -133,13 +155,35 @@ export async function generateMetadata({
 
     const title =
       locale === "fr"
-        ? `Maillot ${jersey.club.name} ${typeLower} ${jersey.season} - ${jersey.brand}${ratingText} | Le Vestiaire`
-        : `${translatedJerseyName} ${jersey.brand}${ratingText} | Le Vestiaire`;
+        ? tMeta("titleTemplate", {
+            clubName: jersey.club.name,
+            typeLower,
+            season: jersey.season,
+            brand: jersey.brand,
+            ratingSuffix,
+          })
+        : tMeta("titleTemplateGeneric", {
+            translatedName: translatedJerseyName,
+            brand: jersey.brand,
+            ratingSuffix,
+          });
 
-    const seasonDisplay = shortSeason
-      ? `saison ${jersey.season} (${shortSeason})`
-      : `saison ${jersey.season}`;
-    const description = `Maillot ${typeLower} ${jersey.club.name} ${seasonDisplay} par ${jersey.brand}. Fiche complète du maillot ${jersey.club.league.name} avec notes de la communauté, historique et détails de collection.`;
+    const description = shortSeason
+      ? tMeta("descriptionTemplateWithShort", {
+          typeLower,
+          clubName: jersey.club.name,
+          season: jersey.season,
+          shortSeason,
+          brand: jersey.brand,
+          leagueName: jersey.club.league.name,
+        })
+      : tMeta("descriptionTemplate", {
+          typeLower,
+          clubName: jersey.club.name,
+          season: jersey.season,
+          brand: jersey.brand,
+          leagueName: jersey.club.league.name,
+        });
 
     const keywords = [
       `maillot ${jersey.club.name}`,
@@ -152,9 +196,24 @@ export async function generateMetadata({
       `jersey ${jersey.club.name} ${jersey.season}`,
     ];
 
-    const canonicalUrl = `https://le-vestiaire-foot.fr/jerseys/${leagueId}/clubs/${clubId}/jerseys/${
-      jersey.slug || id
-    }`;
+    const slugOrId = jersey.slug || id;
+    const canonicalPath = `/jerseys/${leagueId}/clubs/${clubId}/jerseys/${slugOrId}`;
+    const canonicalUrl =
+      locale === "fr"
+        ? `https://le-vestiaire-foot.fr${canonicalPath}`
+        : `https://le-vestiaire-foot.fr/${locale}${canonicalPath}`;
+
+    const ogDescription = tMeta("ogDescription", {
+      typeLower,
+      clubName: jersey.club.name,
+      brand: jersey.brand,
+      leagueName: jersey.club.league.name,
+      season: jersey.season,
+    });
+    const twitterDescription = tMeta("twitterDescription", {
+      brand: jersey.brand,
+      leagueName: jersey.club.league.name,
+    });
 
     return {
       title,
@@ -163,7 +222,7 @@ export async function generateMetadata({
 
       openGraph: {
         title: translatedJerseyName,
-        description: `Maillot ${typeLower} ${jersey.club.name} par ${jersey.brand}. ${jersey.club.league.name} • Saison ${jersey.season}`,
+        description: ogDescription,
         images: [
           {
             url: jersey.imageUrl,
@@ -174,18 +233,19 @@ export async function generateMetadata({
         ],
         type: "website",
         siteName: "Le Vestiaire Foot",
-        locale: "fr_FR",
+        locale: OG_LOCALES[locale] ?? "fr_FR",
       },
 
       twitter: {
         card: "summary_large_image",
         title: translatedJerseyName,
-        description: `Maillot ${jersey.brand} • ${jersey.club.league.name}`,
+        description: twitterDescription,
         images: [jersey.imageUrl],
       },
 
       alternates: {
         canonical: canonicalUrl,
+        languages: buildJerseyLanguageAlternates(slugOrId, leagueId, clubId),
       },
 
       robots: {
@@ -202,8 +262,8 @@ export async function generateMetadata({
   } catch (error) {
     console.error("Error generating metadata:", error);
     return {
-      title: "Maillot de football - Le Vestiaire",
-      description: "Collection de maillots de football vintage et récents",
+      title: tMeta("fallbackTitle"),
+      description: tMeta("fallbackDescription"),
     };
   }
 }

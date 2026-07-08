@@ -10,9 +10,20 @@ import {
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import { cache } from "react";
 import { computeClubStats } from "@/lib/club-stats";
+
+const SUPPORTED_LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"];
+
+function buildClubLanguageAlternates(leagueId: string, clubId: string) {
+  const base = `https://le-vestiaire-foot.fr`;
+  const path = `/jerseys/${leagueId}/clubs/${clubId}`;
+  return SUPPORTED_LOCALES.reduce<Record<string, string>>((acc, l) => {
+    acc[l] = l === "fr" ? `${base}${path}` : `${base}/${l}${path}`;
+    return acc;
+  }, {});
+}
 
 export const revalidate = 3600;
 
@@ -49,20 +60,38 @@ const getCachedClub = cache(async (clubId: string) => {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { clubId } = await params;
+  const locale = await getLocale();
+  const tMeta = await getTranslations("ClubMetadata");
 
   const club = await getCachedClub(clubId);
 
   if (!club) {
     return {
-      title: "Club introuvable - Le Vestiaire",
+      title: tMeta("notFoundTitle"),
     };
   }
 
   const latestSeason = club.jerseys[0]?.season || "";
-  const title = `Maillot ${club.name} (${club.league.name}) - Toutes saisons | Le Vestiaire`;
-  const description = `Tous les maillots du ${club.name} (${club.league.name}) : domicile, extérieur, gardien${
-    latestSeason ? `, saison ${latestSeason}` : ""
-  }. Fiches détaillées, notes de la communauté, ajout à votre collection ou wishlist.`;
+  const title = tMeta("title", {
+    clubName: club.name,
+    leagueName: club.league.name,
+  });
+  const description = latestSeason
+    ? tMeta("description", {
+        clubName: club.name,
+        leagueName: club.league.name,
+        latestSeason,
+      })
+    : tMeta("descriptionWithoutSeason", {
+        clubName: club.name,
+        leagueName: club.league.name,
+      });
+
+  const canonicalPath = `/jerseys/${club.league.id}/clubs/${clubId}`;
+  const canonicalUrl =
+    locale === "fr"
+      ? `https://le-vestiaire-foot.fr${canonicalPath}`
+      : `https://le-vestiaire-foot.fr/${locale}${canonicalPath}`;
 
   return {
     title,
@@ -76,7 +105,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `collection ${club.name}`,
     ].join(", "),
     openGraph: {
-      title: `Tous les maillots ${club.name}`,
+      title: tMeta("ogTitle", { clubName: club.name }),
       description,
       images: [
         {
@@ -89,7 +118,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "website",
     },
     alternates: {
-      canonical: `https://le-vestiaire-foot.fr/jerseys/${club.league.id}/clubs/${clubId}`,
+      canonical: canonicalUrl,
+      languages: buildClubLanguageAlternates(club.league.id, clubId),
     },
   };
 }

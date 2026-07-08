@@ -1298,7 +1298,8 @@
       "ogTitleTemplate": "{brand} shirt authenticatiegids",
       "twitterTitleTemplate": "Hoe een {brand} shirt te authenticeren",
       "adidas": {
-        "description": "Volledige gids om een Adidas shirt te authenticeren. Verifieer productcode, swing tag, barcode en herken kenmerken van vervalsingen. Gedetailleerde methode met visuele voorbeelden.",
+        "title": "Een Adidas shirt authenticeren: productcode, QR-code en labels",
+        "description": "Verifieer de authenticiteit van een Adidas shirt: ontcijfering van de productcode (bv. FN8721-456, HS5184), QR-code, swing tag en barcode. Anti-vervalsingsgids met visuele voorbeelden.",
         "ogDescription": "Leer een authentiek Adidas shirt te herkennen van een vervalsing"
       },
       "nike": {
@@ -2820,5 +2821,25 @@
     "emptyTitle": "Geen prestaties",
     "emptyDescription": "Deze gebruiker heeft nog geen prestatie ontgrendeld.",
     "emptyCategory": "Geen prestaties in deze categorie."
+  },
+  "JerseyMetadata": {
+    "notFoundTitle": "Shirt niet gevonden - Le Vestiaire",
+    "notFoundDescription": "Dit shirt bestaat niet of is niet meer beschikbaar.",
+    "fallbackTitle": "Voetbalshirt - Le Vestiaire",
+    "fallbackDescription": "Collectie van vintage en recente voetbalshirts",
+    "titleTemplate": "{clubName} {typeLower} shirt {season} - {brand}{ratingSuffix} | Le Vestiaire",
+    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Le Vestiaire",
+    "ratingSuffix": " - Beoordeling {rating}/5 ⭐",
+    "descriptionTemplate": "{clubName} {typeLower} shirt seizoen {season} van {brand}. Volledige fiche van het {leagueName}-shirt met community-beoordelingen, historiek en collectiegegevens.",
+    "descriptionTemplateWithShort": "{clubName} {typeLower} shirt seizoen {season} ({shortSeason}) van {brand}. Volledige fiche van het {leagueName}-shirt met community-beoordelingen, historiek en collectiegegevens.",
+    "ogDescription": "{clubName} {typeLower} shirt van {brand}. {leagueName} • Seizoen {season}",
+    "twitterDescription": "{brand} shirt • {leagueName}"
+  },
+  "ClubMetadata": {
+    "notFoundTitle": "Club niet gevonden - Le Vestiaire",
+    "title": "{clubName} shirts ({leagueName}) - Alle seizoenen | Le Vestiaire",
+    "description": "Alle {clubName}-shirts ({leagueName}): thuis, uit, keeper, seizoen {latestSeason}. Gedetailleerde fiches, community-beoordelingen, voeg toe aan je collectie of verlanglijst.",
+    "descriptionWithoutSeason": "Alle {clubName}-shirts ({leagueName}): thuis, uit, keeper. Gedetailleerde fiches, community-beoordelingen, voeg toe aan je collectie of verlanglijst.",
+    "ogTitle": "Alle {clubName}-shirts"
   }
 }

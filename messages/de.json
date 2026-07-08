@@ -1298,7 +1298,8 @@
       "ogTitleTemplate": "Leitfaden zur Authentifizierung von {brand}-Trikots",
       "twitterTitleTemplate": "Wie man ein {brand}-Trikot authentifiziert",
       "adidas": {
-        "description": "Vollständiger Leitfaden zur Authentifizierung eines Adidas-Trikots. Überprüfe Produktcode, Anhänger, Barcode und erkenne Fälschungsmerkmale. Detaillierte Methode mit visuellen Beispielen.",
+        "title": "Ein Adidas-Trikot authentifizieren: Produktcode, QR-Code und Etiketten",
+        "description": "Die Echtheit eines Adidas-Trikots prüfen: Entschlüsselung des Produktcodes (z. B. FN8721-456, HS5184), QR-Code, Anhänger und Barcode. Anti-Fälschungs-Leitfaden mit visuellen Beispielen.",
         "ogDescription": "Lerne, ein echtes Adidas-Trikot von einer Fälschung zu unterscheiden"
       },
       "nike": {
@@ -2820,5 +2821,25 @@
     "emptyTitle": "Keine Erfolge",
     "emptyDescription": "Dieser Benutzer hat noch keinen Erfolg freigeschaltet.",
     "emptyCategory": "Keine Erfolge in dieser Kategorie."
+  },
+  "JerseyMetadata": {
+    "notFoundTitle": "Trikot nicht gefunden - Le Vestiaire",
+    "notFoundDescription": "Dieses Trikot existiert nicht oder ist nicht mehr verfügbar.",
+    "fallbackTitle": "Fußballtrikot - Le Vestiaire",
+    "fallbackDescription": "Sammlung von Vintage- und aktuellen Fußballtrikots",
+    "titleTemplate": "{clubName} {typeLower}-Trikot {season} - {brand}{ratingSuffix} | Le Vestiaire",
+    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Le Vestiaire",
+    "ratingSuffix": " - Bewertung {rating}/5 ⭐",
+    "descriptionTemplate": "{clubName} {typeLower}-Trikot Saison {season} von {brand}. Vollständige Übersicht des {leagueName}-Trikots mit Community-Bewertungen, Historie und Sammlerdetails.",
+    "descriptionTemplateWithShort": "{clubName} {typeLower}-Trikot Saison {season} ({shortSeason}) von {brand}. Vollständige Übersicht des {leagueName}-Trikots mit Community-Bewertungen, Historie und Sammlerdetails.",
+    "ogDescription": "{clubName} {typeLower}-Trikot von {brand}. {leagueName} • Saison {season}",
+    "twitterDescription": "{brand}-Trikot • {leagueName}"
+  },
+  "ClubMetadata": {
+    "notFoundTitle": "Verein nicht gefunden - Le Vestiaire",
+    "title": "{clubName}-Trikots ({leagueName}) - Alle Saisons | Le Vestiaire",
+    "description": "Alle {clubName}-Trikots ({leagueName}): Heim, Auswärts, Torwart, Saison {latestSeason}. Detaillierte Übersichten, Community-Bewertungen, in deine Sammlung oder Wunschliste aufnehmen.",
+    "descriptionWithoutSeason": "Alle {clubName}-Trikots ({leagueName}): Heim, Auswärts, Torwart. Detaillierte Übersichten, Community-Bewertungen, in deine Sammlung oder Wunschliste aufnehmen.",
+    "ogTitle": "Alle {clubName}-Trikots"
   }
 }

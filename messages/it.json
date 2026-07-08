@@ -1298,7 +1298,8 @@
       "ogTitleTemplate": "Guida all'autenticazione delle maglie {brand}",
       "twitterTitleTemplate": "Come autenticare una maglia {brand}",
       "adidas": {
-        "description": "Guida completa per autenticare una maglia Adidas. Verifica codice prodotto, swing tag, codice a barre e individua i segni di contraffazione. Metodo dettagliato con esempi visivi.",
+        "title": "Autenticare una maglia Adidas: codice prodotto, QR code ed etichette",
+        "description": "Verifica l'autenticità di una maglia Adidas: decodifica del codice prodotto (es. FN8721-456, HS5184), QR code, swing tag e codice a barre. Guida anti-contraffazione con esempi visivi.",
         "ogDescription": "Impara a riconoscere una maglia Adidas autentica da una contraffazione"
       },
       "nike": {
@@ -2820,5 +2821,25 @@
     "emptyTitle": "Nessun obiettivo",
     "emptyDescription": "Questo utente non ha ancora sbloccato nessun obiettivo.",
     "emptyCategory": "Nessun obiettivo in questa categoria."
+  },
+  "JerseyMetadata": {
+    "notFoundTitle": "Maglia non trovata - Lo Spogliatoio",
+    "notFoundDescription": "Questa maglia non esiste o non è più disponibile.",
+    "fallbackTitle": "Maglia da calcio - Lo Spogliatoio",
+    "fallbackDescription": "Collezione di maglie da calcio vintage e recenti",
+    "titleTemplate": "Maglia {clubName} {typeLower} {season} - {brand}{ratingSuffix} | Lo Spogliatoio",
+    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Lo Spogliatoio",
+    "ratingSuffix": " - Valutazione {rating}/5 ⭐",
+    "descriptionTemplate": "Maglia {typeLower} {clubName} stagione {season} di {brand}. Scheda completa della maglia {leagueName} con valutazioni della community, storia e dettagli da collezione.",
+    "descriptionTemplateWithShort": "Maglia {typeLower} {clubName} stagione {season} ({shortSeason}) di {brand}. Scheda completa della maglia {leagueName} con valutazioni della community, storia e dettagli da collezione.",
+    "ogDescription": "Maglia {typeLower} {clubName} di {brand}. {leagueName} • Stagione {season}",
+    "twitterDescription": "Maglia {brand} • {leagueName}"
+  },
+  "ClubMetadata": {
+    "notFoundTitle": "Club non trovato - Lo Spogliatoio",
+    "title": "Maglie {clubName} ({leagueName}) - Tutte le stagioni | Lo Spogliatoio",
+    "description": "Tutte le maglie del {clubName} ({leagueName}): casa, trasferta, portiere, stagione {latestSeason}. Schede dettagliate, valutazioni della community, aggiungi alla tua collezione o wishlist.",
+    "descriptionWithoutSeason": "Tutte le maglie del {clubName} ({leagueName}): casa, trasferta, portiere. Schede dettagliate, valutazioni della community, aggiungi alla tua collezione o wishlist.",
+    "ogTitle": "Tutte le maglie {clubName}"
   }
 }

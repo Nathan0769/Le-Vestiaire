@@ -89,6 +89,18 @@ export async function POST(
       translationSuccess = true;
     } catch (err) {
       console.error("Traduction automatique échouée pour le maillot", proposal.jerseyId, err);
+      try {
+        await prisma.jersey.update({
+          where: { id: proposal.jerseyId },
+          data: { descriptionTranslations: { fr: proposal.description } },
+        });
+      } catch (fallbackErr) {
+        console.error(
+          "Fallback descriptionTranslations echoue pour le maillot",
+          proposal.jerseyId,
+          fallbackErr
+        );
+      }
     }
 
     try {

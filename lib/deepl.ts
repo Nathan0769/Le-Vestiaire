@@ -1,10 +1,26 @@
-export type DescriptionTranslations = {
-  fr?: string;
-  en?: string;
-  es?: string;
-  de?: string;
-  pt?: string;
+export type DescriptionLocale = "fr" | "en" | "es" | "de" | "pt" | "it" | "nl";
+
+export type DescriptionTranslations = Partial<Record<DescriptionLocale, string>>;
+
+const LOCALE_TO_DEEPL: Record<DescriptionLocale, string> = {
+  fr: "FR",
+  en: "EN",
+  es: "ES",
+  de: "DE",
+  pt: "PT",
+  it: "IT",
+  nl: "NL",
 };
+
+export const ALL_DESCRIPTION_LOCALES: DescriptionLocale[] = [
+  "fr",
+  "en",
+  "es",
+  "de",
+  "pt",
+  "it",
+  "nl",
+];
 
 const DEEPL_API_URL = "https://api-free.deepl.com/v2/translate";
 
@@ -30,15 +46,15 @@ async function translateTo(text: string, targetLang: string): Promise<string> {
 }
 
 export async function translateDescription(
-  text: string
+  text: string,
+  targetLocales: DescriptionLocale[] = ALL_DESCRIPTION_LOCALES
 ): Promise<DescriptionTranslations> {
-  const [fr, en, es, de, pt] = await Promise.all([
-    translateTo(text, "FR"),
-    translateTo(text, "EN"),
-    translateTo(text, "ES"),
-    translateTo(text, "DE"),
-    translateTo(text, "PT"),
-  ]);
+  const entries = await Promise.all(
+    targetLocales.map(async (locale) => {
+      const translated = await translateTo(text, LOCALE_TO_DEEPL[locale]);
+      return [locale, translated] as const;
+    })
+  );
 
-  return { fr, en, es, de, pt };
+  return Object.fromEntries(entries) as DescriptionTranslations;
 }

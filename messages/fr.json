@@ -2825,5 +2825,25 @@
     "emptyTitle": "Aucun succès",
     "emptyDescription": "Cet utilisateur n'a encore débloqué aucun succès.",
     "emptyCategory": "Aucun succès dans cette catégorie."
+  },
+  "JerseyMetadata": {
+    "notFoundTitle": "Maillot introuvable - Le Vestiaire",
+    "notFoundDescription": "Ce maillot n'existe pas ou n'est plus disponible.",
+    "fallbackTitle": "Maillot de football - Le Vestiaire",
+    "fallbackDescription": "Collection de maillots de football vintage et récents",
+    "titleTemplate": "Maillot {clubName} {typeLower} {season} - {brand}{ratingSuffix} | Le Vestiaire",
+    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Le Vestiaire",
+    "ratingSuffix": " - Note {rating}/5 ⭐",
+    "descriptionTemplate": "Maillot {typeLower} {clubName} saison {season} par {brand}. Fiche complète du maillot {leagueName} avec notes de la communauté, historique et détails de collection.",
+    "descriptionTemplateWithShort": "Maillot {typeLower} {clubName} saison {season} ({shortSeason}) par {brand}. Fiche complète du maillot {leagueName} avec notes de la communauté, historique et détails de collection.",
+    "ogDescription": "Maillot {typeLower} {clubName} par {brand}. {leagueName} • Saison {season}",
+    "twitterDescription": "Maillot {brand} • {leagueName}"
+  },
+  "ClubMetadata": {
+    "notFoundTitle": "Club introuvable - Le Vestiaire",
+    "title": "Maillot {clubName} ({leagueName}) - Toutes saisons | Le Vestiaire",
+    "description": "Tous les maillots du {clubName} ({leagueName}) : domicile, extérieur, gardien, saison {latestSeason}. Fiches détaillées, notes de la communauté, ajout à votre collection ou wishlist.",
+    "descriptionWithoutSeason": "Tous les maillots du {clubName} ({leagueName}) : domicile, extérieur, gardien. Fiches détaillées, notes de la communauté, ajout à votre collection ou wishlist.",
+    "ogTitle": "Tous les maillots {clubName}"
   }
 }
