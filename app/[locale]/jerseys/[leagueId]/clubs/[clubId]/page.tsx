@@ -1,5 +1,6 @@
 import { ClubDetailClient } from "@/components/jerseys/clubs/club-detail-client";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
+import { ClubSchema } from "@/components/seo/club-schema";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -167,6 +168,14 @@ export default async function ClubDetailPage(props: Props) {
             url: `https://le-vestiaire-foot.fr/jerseys/${club.league.id}/clubs/${club.id}`,
           },
         ]}
+      />
+      <ClubSchema
+        club={club}
+        url={`https://le-vestiaire-foot.fr/jerseys/${club.league.id}/clubs/${club.id}`}
+        totalJerseys={stats.totalJerseys}
+        averageRating={stats.avgRating}
+        totalRatings={stats.totalRatings}
+        favoriteCount={stats.favoriteCount}
       />
       <Breadcrumb>
         <BreadcrumbList>
