@@ -330,8 +330,12 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     .slice(0, 8);
 
   const locale = await getLocale();
-  const tJerseyType = await getTranslations("JerseyType");
-  const t = await getTranslations("Jerseys");
+  const [tJerseyType, t, tBreadcrumb, tMeta] = await Promise.all([
+    getTranslations("JerseyType"),
+    getTranslations("Jerseys"),
+    getTranslations("BreadcrumbLabels"),
+    getTranslations("JerseyMetadata"),
+  ]);
   const getJerseyTypeLabel = (type: string) =>
     jerseyTypeLabel(tJerseyType(type as JerseyType), type, jersey.variant ?? 1);
 
@@ -347,7 +351,10 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   });
 
   const breadcrumbItems = [
-    { name: "Maillots", url: "https://le-vestiaire-foot.fr/jerseys" },
+    {
+      name: tBreadcrumb("jerseys"),
+      url: "https://le-vestiaire-foot.fr/jerseys",
+    },
     {
       name: jersey.club.league.name,
       url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}`,
@@ -363,7 +370,13 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   ];
 
   const canonicalUrl = `https://le-vestiaire-foot.fr/jerseys/${leagueId}/clubs/${clubId}/jerseys/${jersey.slug || id}`;
-  const pageDescription = `Maillot ${getJerseyTypeLabel(jersey.type).toLowerCase()} du ${jersey.club.name} pour la saison ${jersey.season}, conçu par ${jersey.brand}. ${displayLeague.name}.`;
+  const pageDescription = tMeta("pageDescription", {
+    typeLower: getJerseyTypeLabel(jersey.type).toLowerCase(),
+    clubName: jersey.club.name,
+    season: jersey.season,
+    brand: jersey.brand,
+    leagueName: displayLeague.name,
+  });
 
   return (
     <>

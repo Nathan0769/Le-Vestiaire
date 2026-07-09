@@ -2833,7 +2833,8 @@
     "descriptionTemplate": "Camisola {typeLower} {clubName} época {season} pela {brand}. Ficha completa da camisola {leagueName} com avaliações da comunidade, história e detalhes de coleção.",
     "descriptionTemplateWithShort": "Camisola {typeLower} {clubName} época {season} ({shortSeason}) pela {brand}. Ficha completa da camisola {leagueName} com avaliações da comunidade, história e detalhes de coleção.",
     "ogDescription": "Camisola {typeLower} {clubName} pela {brand}. {leagueName} • Época {season}",
-    "twitterDescription": "Camisola {brand} • {leagueName}"
+    "twitterDescription": "Camisola {brand} • {leagueName}",
+    "pageDescription": "Camisola {typeLower} do {clubName} para a época {season}, concebida por {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Clube não encontrado - Le Vestiaire",
@@ -2841,5 +2842,48 @@
     "description": "Todas as camisolas do {clubName} ({leagueName}): principal, alternativo, guarda-redes, época {latestSeason}. Fichas detalhadas, avaliações da comunidade, adiciona à tua coleção ou lista de desejos.",
     "descriptionWithoutSeason": "Todas as camisolas do {clubName} ({leagueName}): principal, alternativo, guarda-redes. Fichas detalhadas, avaliações da comunidade, adiciona à tua coleção ou lista de desejos.",
     "ogTitle": "Todas as camisolas {clubName}"
+  },
+  "CatalogueMetadata": {
+    "title": "Todas as camisolas de futebol por liga e por clube | Le Vestiaire",
+    "description": "O catálogo completo das camisolas de futebol: todas as ligas, todos os clubes, todas as épocas. Fichas detalhadas, avaliações da comunidade, lista de desejos e coleção.",
+    "ogTitle": "Camisolas de futebol por liga e por clube"
+  },
+  "LeagueMetadata": {
+    "notFoundTitle": "Liga não encontrada - Le Vestiaire",
+    "title": "Camisolas {leagueName} - Todos os clubes | Le Vestiaire",
+    "description": "Coleção completa das camisolas de {leagueName} ({country}). Descobre os {clubCount} clubes e as suas camisolas históricas. A maior base de dados de camisolas {leagueName}.",
+    "ogTitle": "Todas as camisolas {leagueName}"
+  },
+  "BreadcrumbLabels": {
+    "jerseys": "Camisolas",
+    "brand": "Marca",
+    "season": "Época"
+  },
+  "BrandPageMetadata": {
+    "notFoundTitle": "Marca não suportada - Le Vestiaire",
+    "title": "Camisolas {brand} - Todos os clubes e épocas | Le Vestiaire",
+    "description": "Todas as camisolas de futebol da {brand}: {jerseyCount} camisolas, {clubCount} clubes equipados, {seasonCount} épocas cobertas. Fichas detalhadas e avaliações da comunidade.",
+    "ogTitle": "Todas as camisolas {brand}"
+  },
+  "BrandPage": {
+    "heroSubtitle": "Toda a produção de futebol da {brand}, reunida num único sítio.",
+    "totalJerseysLabel": "Camisolas",
+    "clubsEquippedLabel": "Clubes equipados",
+    "seasonsCoveredLabel": "Épocas",
+    "seasonHeading": "Época {season}",
+    "emptyState": "Sem camisolas {brand} disponíveis por agora."
+  },
+  "SeasonPageMetadata": {
+    "notFoundTitle": "Época não encontrada - Le Vestiaire",
+    "title": "Camisolas de futebol época {season} - Todos os clubes | Le Vestiaire",
+    "description": "Todas as camisolas de futebol da época {season}: {jerseyCount} camisolas, {clubCount} clubes, {leagueCount} ligas representadas. A visão completa.",
+    "ogTitle": "Camisolas época {season}"
+  },
+  "SeasonPage": {
+    "heroSubtitle": "Visão completa das camisolas da época {season}.",
+    "totalJerseysLabel": "Camisolas",
+    "clubsCountLabel": "Clubes",
+    "leaguesCountLabel": "Ligas",
+    "emptyState": "Sem camisolas disponíveis para esta época."
   }
 }

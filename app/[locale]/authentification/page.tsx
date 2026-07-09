@@ -4,11 +4,27 @@ import { BrandGrid } from "@/components/authentification/brand-grid";
 import { AdBanner } from "@/components/authentification/ad-banner";
 import { getBrands, getSupporterVsProGuide } from "@/lib/authentication-content";
 import { Card, CardContent } from "@/components/ui/card";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import type { Metadata } from "next";
+
+const SUPPORTED_LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"];
+
+function buildAuthLanguageAlternates() {
+  const base = `https://le-vestiaire-foot.fr`;
+  return SUPPORTED_LOCALES.reduce<Record<string, string>>((acc, l) => {
+    acc[l] = l === "fr" ? `${base}/authentification` : `${base}/${l}/authentification`;
+    return acc;
+  }, {});
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Authentication");
+  const locale = await getLocale();
+
+  const canonicalUrl =
+    locale === "fr"
+      ? "https://le-vestiaire-foot.fr/authentification"
+      : `https://le-vestiaire-foot.fr/${locale}/authentification`;
 
   return {
     title: t("title"),
@@ -16,7 +32,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: t("title"),
       description: t("subtitle"),
-      url: "https://le-vestiaire-foot.fr/authentification",
+      url: canonicalUrl,
       siteName: "Le Vestiaire Foot",
       type: "website",
       images: [
@@ -34,7 +50,8 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t("subtitle"),
     },
     alternates: {
-      canonical: "https://le-vestiaire-foot.fr/authentification",
+      canonical: canonicalUrl,
+      languages: buildAuthLanguageAlternates(),
     },
   };
 }

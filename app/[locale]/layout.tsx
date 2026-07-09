@@ -101,6 +101,9 @@ export async function generateMetadata({
     other: {
       "google-adsense-account": "ca-pub-1296292175464272",
     },
+    verification: {
+      google: process.env.NEXT_PUBLIC_GSC_VERIFICATION,
+    },
   };
 }
 

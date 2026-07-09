@@ -2837,7 +2837,8 @@
     "descriptionTemplate": "Maillot {typeLower} {clubName} saison {season} par {brand}. Fiche complète du maillot {leagueName} avec notes de la communauté, historique et détails de collection.",
     "descriptionTemplateWithShort": "Maillot {typeLower} {clubName} saison {season} ({shortSeason}) par {brand}. Fiche complète du maillot {leagueName} avec notes de la communauté, historique et détails de collection.",
     "ogDescription": "Maillot {typeLower} {clubName} par {brand}. {leagueName} • Saison {season}",
-    "twitterDescription": "Maillot {brand} • {leagueName}"
+    "twitterDescription": "Maillot {brand} • {leagueName}",
+    "pageDescription": "Maillot {typeLower} du {clubName} pour la saison {season}, conçu par {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club introuvable - Le Vestiaire",
@@ -2845,5 +2846,48 @@
     "description": "Tous les maillots du {clubName} ({leagueName}) : domicile, extérieur, gardien, saison {latestSeason}. Fiches détaillées, notes de la communauté, ajout à votre collection ou wishlist.",
     "descriptionWithoutSeason": "Tous les maillots du {clubName} ({leagueName}) : domicile, extérieur, gardien. Fiches détaillées, notes de la communauté, ajout à votre collection ou wishlist.",
     "ogTitle": "Tous les maillots {clubName}"
+  },
+  "CatalogueMetadata": {
+    "title": "Tous les maillots de foot par ligue et par club | Le Vestiaire",
+    "description": "Le catalogue complet des maillots de football : toutes les ligues, tous les clubs, toutes les saisons. Fiches détaillées, notes de la communauté, wishlist et collection.",
+    "ogTitle": "Maillots de foot par ligue et par club"
+  },
+  "LeagueMetadata": {
+    "notFoundTitle": "Ligue introuvable - Le Vestiaire",
+    "title": "Maillots {leagueName} - Tous les clubs | Le Vestiaire",
+    "description": "Collection complète des maillots de {leagueName} ({country}). Découvrez les {clubCount} clubs et leurs maillots historiques. La plus grande base de données de maillots {leagueName}.",
+    "ogTitle": "Tous les maillots {leagueName}"
+  },
+  "BreadcrumbLabels": {
+    "jerseys": "Maillots",
+    "brand": "Marque",
+    "season": "Saison"
+  },
+  "BrandPageMetadata": {
+    "notFoundTitle": "Marque non supportée - Le Vestiaire",
+    "title": "Maillots {brand} - Tous les clubs et saisons | Le Vestiaire",
+    "description": "Tous les maillots de football signés {brand} : {jerseyCount} maillots, {clubCount} clubs équipés, {seasonCount} saisons couvertes. Fiches détaillées et notes de la communauté.",
+    "ogTitle": "Tous les maillots {brand}"
+  },
+  "BrandPage": {
+    "heroSubtitle": "Toute la production {brand} pour le football, réunie en un seul endroit.",
+    "totalJerseysLabel": "Maillots",
+    "clubsEquippedLabel": "Clubs équipés",
+    "seasonsCoveredLabel": "Saisons",
+    "seasonHeading": "Saison {season}",
+    "emptyState": "Aucun maillot {brand} disponible pour le moment."
+  },
+  "SeasonPageMetadata": {
+    "notFoundTitle": "Saison introuvable - Le Vestiaire",
+    "title": "Maillots de foot saison {season} - Tous les clubs | Le Vestiaire",
+    "description": "Tous les maillots de football de la saison {season} : {jerseyCount} maillots, {clubCount} clubs, {leagueCount} ligues représentées. Le panorama complet.",
+    "ogTitle": "Maillots saison {season}"
+  },
+  "SeasonPage": {
+    "heroSubtitle": "Panorama complet des maillots de la saison {season}.",
+    "totalJerseysLabel": "Maillots",
+    "clubsCountLabel": "Clubs",
+    "leaguesCountLabel": "Ligues",
+    "emptyState": "Aucun maillot disponible pour cette saison."
   }
 }

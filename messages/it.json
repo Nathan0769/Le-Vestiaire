@@ -2833,7 +2833,8 @@
     "descriptionTemplate": "Maglia {typeLower} {clubName} stagione {season} di {brand}. Scheda completa della maglia {leagueName} con valutazioni della community, storia e dettagli da collezione.",
     "descriptionTemplateWithShort": "Maglia {typeLower} {clubName} stagione {season} ({shortSeason}) di {brand}. Scheda completa della maglia {leagueName} con valutazioni della community, storia e dettagli da collezione.",
     "ogDescription": "Maglia {typeLower} {clubName} di {brand}. {leagueName} • Stagione {season}",
-    "twitterDescription": "Maglia {brand} • {leagueName}"
+    "twitterDescription": "Maglia {brand} • {leagueName}",
+    "pageDescription": "Maglia {typeLower} del {clubName} per la stagione {season}, disegnata da {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club non trovato - Lo Spogliatoio",
@@ -2841,5 +2842,48 @@
     "description": "Tutte le maglie del {clubName} ({leagueName}): casa, trasferta, portiere, stagione {latestSeason}. Schede dettagliate, valutazioni della community, aggiungi alla tua collezione o wishlist.",
     "descriptionWithoutSeason": "Tutte le maglie del {clubName} ({leagueName}): casa, trasferta, portiere. Schede dettagliate, valutazioni della community, aggiungi alla tua collezione o wishlist.",
     "ogTitle": "Tutte le maglie {clubName}"
+  },
+  "CatalogueMetadata": {
+    "title": "Tutte le maglie da calcio per lega e per club | Lo Spogliatoio",
+    "description": "Il catalogo completo delle maglie da calcio: tutte le leghe, tutti i club, tutte le stagioni. Schede dettagliate, valutazioni della community, wishlist e collezione.",
+    "ogTitle": "Maglie da calcio per lega e per club"
+  },
+  "LeagueMetadata": {
+    "notFoundTitle": "Lega non trovata - Lo Spogliatoio",
+    "title": "Maglie {leagueName} - Tutti i club | Lo Spogliatoio",
+    "description": "Collezione completa delle maglie di {leagueName} ({country}). Scopri i {clubCount} club e le loro maglie storiche. Il più grande database di maglie {leagueName}.",
+    "ogTitle": "Tutte le maglie {leagueName}"
+  },
+  "BreadcrumbLabels": {
+    "jerseys": "Maglie",
+    "brand": "Marca",
+    "season": "Stagione"
+  },
+  "BrandPageMetadata": {
+    "notFoundTitle": "Marca non supportata - Lo Spogliatoio",
+    "title": "Maglie {brand} - Tutti i club e stagioni | Lo Spogliatoio",
+    "description": "Tutte le maglie da calcio firmate {brand}: {jerseyCount} maglie, {clubCount} club equipaggiati, {seasonCount} stagioni coperte. Schede dettagliate e valutazioni della community.",
+    "ogTitle": "Tutte le maglie {brand}"
+  },
+  "BrandPage": {
+    "heroSubtitle": "Tutta la produzione calcistica {brand}, riunita in un unico posto.",
+    "totalJerseysLabel": "Maglie",
+    "clubsEquippedLabel": "Club equipaggiati",
+    "seasonsCoveredLabel": "Stagioni",
+    "seasonHeading": "Stagione {season}",
+    "emptyState": "Ancora nessuna maglia {brand} disponibile."
+  },
+  "SeasonPageMetadata": {
+    "notFoundTitle": "Stagione non trovata - Lo Spogliatoio",
+    "title": "Maglie da calcio stagione {season} - Tutti i club | Lo Spogliatoio",
+    "description": "Tutte le maglie da calcio della stagione {season}: {jerseyCount} maglie, {clubCount} club, {leagueCount} leghe rappresentate. Il panorama completo.",
+    "ogTitle": "Maglie stagione {season}"
+  },
+  "SeasonPage": {
+    "heroSubtitle": "Panorama completo delle maglie della stagione {season}.",
+    "totalJerseysLabel": "Maglie",
+    "clubsCountLabel": "Club",
+    "leaguesCountLabel": "Leghe",
+    "emptyState": "Nessuna maglia disponibile per questa stagione."
   }
 }

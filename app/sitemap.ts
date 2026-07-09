@@ -1,8 +1,10 @@
 import { MetadataRoute } from "next";
 import prisma from "@/lib/prisma";
+import { SUPPORTED_BRAND_SLUGS } from "@/lib/brand-utils";
 
 const BASE_URL = "https://le-vestiaire-foot.fr";
 const LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"] as const;
+const SEASON_URL_PATTERN = /^\d{4}(-\d{4})?$/;
 
 function staticLocalizedEntries(
   path: string,
@@ -108,11 +110,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       images: jersey.imageUrl ? [jersey.imageUrl] : undefined,
     }));
 
-    console.log(
-      `Sitemap généré : ${jerseyRoutes.length} maillots + ${leagueAndClubRoutes.length} leagues/clubs + ${staticRoutes.length} pages statiques`
+    const brandRoutes: MetadataRoute.Sitemap = SUPPORTED_BRAND_SLUGS.map(
+      (brand) => ({
+        url: `${BASE_URL}/fr/jerseys/marque/${brand}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.75,
+      })
     );
 
-    return [...staticRoutes, ...leagueAndClubRoutes, ...jerseyRoutes];
+    const distinctSeasons = await prisma.jersey.findMany({
+      distinct: ["season"],
+      select: { season: true },
+    });
+
+    const seasonRoutes: MetadataRoute.Sitemap = distinctSeasons
+      .filter((s) => SEASON_URL_PATTERN.test(s.season))
+      .map((s) => ({
+        url: `${BASE_URL}/fr/jerseys/saison/${s.season}`,
+        lastModified: new Date(),
+        changeFrequency: "weekly",
+        priority: 0.7,
+      }));
+
+    console.log(
+      `Sitemap généré : ${jerseyRoutes.length} maillots + ${leagueAndClubRoutes.length} leagues/clubs + ${brandRoutes.length} marques + ${seasonRoutes.length} saisons + ${staticRoutes.length} pages statiques`
+    );
+
+    return [
+      ...staticRoutes,
+      ...leagueAndClubRoutes,
+      ...jerseyRoutes,
+      ...brandRoutes,
+      ...seasonRoutes,
+    ];
   } catch (error) {
     console.error("Erreur génération sitemap:", error);
     return [];

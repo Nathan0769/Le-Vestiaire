@@ -2833,7 +2833,8 @@
     "descriptionTemplate": "{clubName} {typeLower} shirt seizoen {season} van {brand}. Volledige fiche van het {leagueName}-shirt met community-beoordelingen, historiek en collectiegegevens.",
     "descriptionTemplateWithShort": "{clubName} {typeLower} shirt seizoen {season} ({shortSeason}) van {brand}. Volledige fiche van het {leagueName}-shirt met community-beoordelingen, historiek en collectiegegevens.",
     "ogDescription": "{clubName} {typeLower} shirt van {brand}. {leagueName} • Seizoen {season}",
-    "twitterDescription": "{brand} shirt • {leagueName}"
+    "twitterDescription": "{brand} shirt • {leagueName}",
+    "pageDescription": "{clubName} {typeLower} shirt voor het seizoen {season}, ontworpen door {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club niet gevonden - Le Vestiaire",
@@ -2841,5 +2842,48 @@
     "description": "Alle {clubName}-shirts ({leagueName}): thuis, uit, keeper, seizoen {latestSeason}. Gedetailleerde fiches, community-beoordelingen, voeg toe aan je collectie of verlanglijst.",
     "descriptionWithoutSeason": "Alle {clubName}-shirts ({leagueName}): thuis, uit, keeper. Gedetailleerde fiches, community-beoordelingen, voeg toe aan je collectie of verlanglijst.",
     "ogTitle": "Alle {clubName}-shirts"
+  },
+  "CatalogueMetadata": {
+    "title": "Alle voetbalshirts per competitie en per club | Le Vestiaire",
+    "description": "De volledige voetbalshirt-catalogus: elke competitie, elke club, elk seizoen. Gedetailleerde fiches, community-beoordelingen, verlanglijst en collectie.",
+    "ogTitle": "Voetbalshirts per competitie en per club"
+  },
+  "LeagueMetadata": {
+    "notFoundTitle": "Competitie niet gevonden - Le Vestiaire",
+    "title": "{leagueName}-shirts - Alle clubs | Le Vestiaire",
+    "description": "Volledige collectie van {leagueName}-shirts ({country}). Ontdek de {clubCount} clubs en hun historische shirts. De grootste database van {leagueName}-shirts.",
+    "ogTitle": "Alle {leagueName}-shirts"
+  },
+  "BreadcrumbLabels": {
+    "jerseys": "Shirts",
+    "brand": "Merk",
+    "season": "Seizoen"
+  },
+  "BrandPageMetadata": {
+    "notFoundTitle": "Merk niet ondersteund - Le Vestiaire",
+    "title": "{brand} shirts - Alle clubs en seizoenen | Le Vestiaire",
+    "description": "Alle voetbalshirts van {brand}: {jerseyCount} shirts, {clubCount} uitgeruste clubs, {seasonCount} seizoenen gedekt. Gedetailleerde fiches en community-beoordelingen.",
+    "ogTitle": "Alle {brand}-shirts"
+  },
+  "BrandPage": {
+    "heroSubtitle": "Alle {brand}-voetbalproductie, op één plek verzameld.",
+    "totalJerseysLabel": "Shirts",
+    "clubsEquippedLabel": "Uitgeruste clubs",
+    "seasonsCoveredLabel": "Seizoenen",
+    "seasonHeading": "Seizoen {season}",
+    "emptyState": "Nog geen {brand}-shirts beschikbaar."
+  },
+  "SeasonPageMetadata": {
+    "notFoundTitle": "Seizoen niet gevonden - Le Vestiaire",
+    "title": "Voetbalshirts seizoen {season} - Alle clubs | Le Vestiaire",
+    "description": "Alle voetbalshirts van seizoen {season}: {jerseyCount} shirts, {clubCount} clubs, {leagueCount} vertegenwoordigde competities. Het volledige overzicht.",
+    "ogTitle": "Shirts seizoen {season}"
+  },
+  "SeasonPage": {
+    "heroSubtitle": "Volledig overzicht van de shirts van seizoen {season}.",
+    "totalJerseysLabel": "Shirts",
+    "clubsCountLabel": "Clubs",
+    "leaguesCountLabel": "Competities",
+    "emptyState": "Geen shirts beschikbaar voor dit seizoen."
   }
 }

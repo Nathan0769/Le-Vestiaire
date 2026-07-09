@@ -13,8 +13,19 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, getLocale } from "next-intl/server";
 import type { Metadata } from "next";
+
+const SUPPORTED_LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"];
+
+function buildBrandLanguageAlternates(brand: string) {
+  const base = `https://le-vestiaire-foot.fr`;
+  const path = `/authentification/${brand}`;
+  return SUPPORTED_LOCALES.reduce<Record<string, string>>((acc, l) => {
+    acc[l] = l === "fr" ? `${base}${path}` : `${base}/${l}${path}`;
+    return acc;
+  }, {});
+}
 
 interface BrandPageProps {
   params: Promise<{
@@ -28,6 +39,7 @@ export async function generateMetadata({
   const { brand } = await params;
   const brandInfo = await getBrandInfo(brand);
   const t = await getTranslations("Authentication.metadata");
+  const locale = await getLocale();
 
   if (!brandInfo) {
     return {
@@ -41,6 +53,12 @@ export async function generateMetadata({
     ? t(`${brand}.title`)
     : t("titleTemplate", { brand: brandInfo.name });
 
+  const canonicalPath = `/authentification/${brand}`;
+  const canonicalUrl =
+    locale === "fr"
+      ? `https://le-vestiaire-foot.fr${canonicalPath}`
+      : `https://le-vestiaire-foot.fr/${locale}${canonicalPath}`;
+
   return {
     title,
     description,
@@ -48,7 +66,7 @@ export async function generateMetadata({
     openGraph: {
       title: t("ogTitleTemplate", { brand: brandInfo.name }),
       description: ogDescription,
-      url: `https://le-vestiaire-foot.fr/authentification/${brand}`,
+      url: canonicalUrl,
       siteName: "Le Vestiaire Foot",
       type: "article",
       images: [
@@ -68,7 +86,8 @@ export async function generateMetadata({
     },
 
     alternates: {
-      canonical: `https://le-vestiaire-foot.fr/authentification/${brand}`,
+      canonical: canonicalUrl,
+      languages: buildBrandLanguageAlternates(brand),
     },
   };
 }

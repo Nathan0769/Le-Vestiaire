@@ -2833,7 +2833,8 @@
     "descriptionTemplate": "{clubName} {typeLower}-Trikot Saison {season} von {brand}. Vollständige Übersicht des {leagueName}-Trikots mit Community-Bewertungen, Historie und Sammlerdetails.",
     "descriptionTemplateWithShort": "{clubName} {typeLower}-Trikot Saison {season} ({shortSeason}) von {brand}. Vollständige Übersicht des {leagueName}-Trikots mit Community-Bewertungen, Historie und Sammlerdetails.",
     "ogDescription": "{clubName} {typeLower}-Trikot von {brand}. {leagueName} • Saison {season}",
-    "twitterDescription": "{brand}-Trikot • {leagueName}"
+    "twitterDescription": "{brand}-Trikot • {leagueName}",
+    "pageDescription": "{clubName} {typeLower}-Trikot für die Saison {season}, entworfen von {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Verein nicht gefunden - Le Vestiaire",
@@ -2841,5 +2842,48 @@
     "description": "Alle {clubName}-Trikots ({leagueName}): Heim, Auswärts, Torwart, Saison {latestSeason}. Detaillierte Übersichten, Community-Bewertungen, in deine Sammlung oder Wunschliste aufnehmen.",
     "descriptionWithoutSeason": "Alle {clubName}-Trikots ({leagueName}): Heim, Auswärts, Torwart. Detaillierte Übersichten, Community-Bewertungen, in deine Sammlung oder Wunschliste aufnehmen.",
     "ogTitle": "Alle {clubName}-Trikots"
+  },
+  "CatalogueMetadata": {
+    "title": "Alle Fußballtrikots nach Liga und Verein | Le Vestiaire",
+    "description": "Der komplette Fußballtrikot-Katalog: alle Ligen, alle Vereine, alle Saisons. Detaillierte Übersichten, Community-Bewertungen, Wunschliste und Sammlung.",
+    "ogTitle": "Fußballtrikots nach Liga und Verein"
+  },
+  "LeagueMetadata": {
+    "notFoundTitle": "Liga nicht gefunden - Le Vestiaire",
+    "title": "{leagueName}-Trikots - Alle Vereine | Le Vestiaire",
+    "description": "Vollständige Sammlung der {leagueName}-Trikots ({country}). Entdecke die {clubCount} Vereine und ihre historischen Trikots. Die größte Datenbank für {leagueName}-Trikots.",
+    "ogTitle": "Alle {leagueName}-Trikots"
+  },
+  "BreadcrumbLabels": {
+    "jerseys": "Trikots",
+    "brand": "Marke",
+    "season": "Saison"
+  },
+  "BrandPageMetadata": {
+    "notFoundTitle": "Marke nicht unterstützt - Le Vestiaire",
+    "title": "{brand}-Trikots - Alle Vereine und Saisons | Le Vestiaire",
+    "description": "Alle Fußballtrikots von {brand}: {jerseyCount} Trikots, {clubCount} ausgestattete Vereine, {seasonCount} abgedeckte Saisons. Detaillierte Übersichten und Community-Bewertungen.",
+    "ogTitle": "Alle {brand}-Trikots"
+  },
+  "BrandPage": {
+    "heroSubtitle": "Die gesamte Fußballproduktion von {brand}, gebündelt an einem Ort.",
+    "totalJerseysLabel": "Trikots",
+    "clubsEquippedLabel": "Ausgestattete Vereine",
+    "seasonsCoveredLabel": "Saisons",
+    "seasonHeading": "Saison {season}",
+    "emptyState": "Noch keine {brand}-Trikots verfügbar."
+  },
+  "SeasonPageMetadata": {
+    "notFoundTitle": "Saison nicht gefunden - Le Vestiaire",
+    "title": "Fußballtrikots Saison {season} - Alle Vereine | Le Vestiaire",
+    "description": "Alle Fußballtrikots der Saison {season}: {jerseyCount} Trikots, {clubCount} Vereine, {leagueCount} vertretene Ligen. Der komplette Überblick.",
+    "ogTitle": "Trikots Saison {season}"
+  },
+  "SeasonPage": {
+    "heroSubtitle": "Kompletter Überblick über die Trikots der Saison {season}.",
+    "totalJerseysLabel": "Trikots",
+    "clubsCountLabel": "Vereine",
+    "leaguesCountLabel": "Ligen",
+    "emptyState": "Keine Trikots für diese Saison verfügbar."
   }
 }

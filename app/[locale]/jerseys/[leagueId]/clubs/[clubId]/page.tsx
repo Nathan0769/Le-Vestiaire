@@ -130,7 +130,10 @@ export default async function ClubDetailPage(props: Props) {
 
   const club = await getCachedClub(clubId);
 
-  const t = await getTranslations("Jerseys");
+  const [t, tBreadcrumb] = await Promise.all([
+    getTranslations("Jerseys"),
+    getTranslations("BreadcrumbLabels"),
+  ]);
 
   if (!club) {
     return <div className="p-6">{t("clubNotFoundText")}</div>;
@@ -158,7 +161,10 @@ export default async function ClubDetailPage(props: Props) {
     <div className="p-4 md:p-6 space-y-6">
       <BreadcrumbSchema
         items={[
-          { name: "Maillots", url: "https://le-vestiaire-foot.fr/jerseys" },
+          {
+            name: tBreadcrumb("jerseys"),
+            url: "https://le-vestiaire-foot.fr/jerseys",
+          },
           {
             name: club.league.name,
             url: `https://le-vestiaire-foot.fr/jerseys/${club.league.id}`,
