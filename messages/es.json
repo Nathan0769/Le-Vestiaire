@@ -2833,7 +2833,8 @@
     "descriptionTemplate": "Camiseta {typeLower} {clubName} temporada {season} por {brand}. Ficha completa de la camiseta {leagueName} con valoraciones de la comunidad, historia y detalles de colección.",
     "descriptionTemplateWithShort": "Camiseta {typeLower} {clubName} temporada {season} ({shortSeason}) por {brand}. Ficha completa de la camiseta {leagueName} con valoraciones de la comunidad, historia y detalles de colección.",
     "ogDescription": "Camiseta {typeLower} {clubName} por {brand}. {leagueName} • Temporada {season}",
-    "twitterDescription": "Camiseta {brand} • {leagueName}"
+    "twitterDescription": "Camiseta {brand} • {leagueName}",
+    "pageDescription": "Camiseta {typeLower} del {clubName} para la temporada {season}, diseñada por {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club no encontrado - El Vestuario",
@@ -2841,5 +2842,48 @@
     "description": "Todas las camisetas del {clubName} ({leagueName}): local, visitante, portero, temporada {latestSeason}. Fichas detalladas, valoraciones de la comunidad, añade a tu colección o lista de deseos.",
     "descriptionWithoutSeason": "Todas las camisetas del {clubName} ({leagueName}): local, visitante, portero. Fichas detalladas, valoraciones de la comunidad, añade a tu colección o lista de deseos.",
     "ogTitle": "Todas las camisetas {clubName}"
+  },
+  "CatalogueMetadata": {
+    "title": "Todas las camisetas de fútbol por liga y por club | El Vestuario",
+    "description": "El catálogo completo de camisetas de fútbol: todas las ligas, todos los clubes, todas las temporadas. Fichas detalladas, valoraciones de la comunidad, lista de deseos y colección.",
+    "ogTitle": "Camisetas de fútbol por liga y por club"
+  },
+  "LeagueMetadata": {
+    "notFoundTitle": "Liga no encontrada - El Vestuario",
+    "title": "Camisetas {leagueName} - Todos los clubes | El Vestuario",
+    "description": "Colección completa de camisetas de {leagueName} ({country}). Descubre los {clubCount} clubes y sus camisetas históricas. La mayor base de datos de camisetas {leagueName}.",
+    "ogTitle": "Todas las camisetas {leagueName}"
+  },
+  "BreadcrumbLabels": {
+    "jerseys": "Camisetas",
+    "brand": "Marca",
+    "season": "Temporada"
+  },
+  "BrandPageMetadata": {
+    "notFoundTitle": "Marca no soportada - El Vestuario",
+    "title": "Camisetas {brand} - Todos los clubes y temporadas | El Vestuario",
+    "description": "Todas las camisetas de fútbol firmadas por {brand}: {jerseyCount} camisetas, {clubCount} clubes equipados, {seasonCount} temporadas cubiertas. Fichas detalladas y valoraciones de la comunidad.",
+    "ogTitle": "Todas las camisetas {brand}"
+  },
+  "BrandPage": {
+    "heroSubtitle": "Toda la producción {brand} para el fútbol, reunida en un solo lugar.",
+    "totalJerseysLabel": "Camisetas",
+    "clubsEquippedLabel": "Clubes equipados",
+    "seasonsCoveredLabel": "Temporadas",
+    "seasonHeading": "Temporada {season}",
+    "emptyState": "Aún no hay camisetas {brand} disponibles."
+  },
+  "SeasonPageMetadata": {
+    "notFoundTitle": "Temporada no encontrada - El Vestuario",
+    "title": "Camisetas de fútbol temporada {season} - Todos los clubes | El Vestuario",
+    "description": "Todas las camisetas de fútbol de la temporada {season}: {jerseyCount} camisetas, {clubCount} clubes, {leagueCount} ligas representadas. La visión completa.",
+    "ogTitle": "Camisetas temporada {season}"
+  },
+  "SeasonPage": {
+    "heroSubtitle": "Visión completa de las camisetas de la temporada {season}.",
+    "totalJerseysLabel": "Camisetas",
+    "clubsCountLabel": "Clubes",
+    "leaguesCountLabel": "Ligas",
+    "emptyState": "No hay camisetas disponibles para esta temporada."
   }
 }

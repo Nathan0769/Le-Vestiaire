@@ -2833,7 +2833,8 @@
     "descriptionTemplate": "{clubName} {typeLower} jersey for the {season} season by {brand}. Complete fact sheet of the {leagueName} jersey with community ratings, history and collection details.",
     "descriptionTemplateWithShort": "{clubName} {typeLower} jersey for the {season} ({shortSeason}) season by {brand}. Complete fact sheet of the {leagueName} jersey with community ratings, history and collection details.",
     "ogDescription": "{clubName} {typeLower} jersey by {brand}. {leagueName} • {season} season",
-    "twitterDescription": "{brand} jersey • {leagueName}"
+    "twitterDescription": "{brand} jersey • {leagueName}",
+    "pageDescription": "{clubName} {typeLower} jersey for the {season} season, designed by {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club not found - The Locker Room",
@@ -2841,5 +2842,48 @@
     "description": "All {clubName} jerseys ({leagueName}): home, away, goalkeeper, {latestSeason} season. Detailed fact sheets, community ratings, add to your collection or wishlist.",
     "descriptionWithoutSeason": "All {clubName} jerseys ({leagueName}): home, away, goalkeeper. Detailed fact sheets, community ratings, add to your collection or wishlist.",
     "ogTitle": "All {clubName} jerseys"
+  },
+  "CatalogueMetadata": {
+    "title": "All football jerseys by league and by club | The Locker Room",
+    "description": "The complete football jersey catalog: every league, every club, every season. Detailed fact sheets, community ratings, wishlist and collection.",
+    "ogTitle": "Football jerseys by league and by club"
+  },
+  "LeagueMetadata": {
+    "notFoundTitle": "League not found - The Locker Room",
+    "title": "{leagueName} jerseys - All clubs | The Locker Room",
+    "description": "Complete collection of {leagueName} jerseys ({country}). Discover the {clubCount} clubs and their historical jerseys. The largest database of {leagueName} jerseys.",
+    "ogTitle": "All {leagueName} jerseys"
+  },
+  "BreadcrumbLabels": {
+    "jerseys": "Jerseys",
+    "brand": "Brand",
+    "season": "Season"
+  },
+  "BrandPageMetadata": {
+    "notFoundTitle": "Unsupported brand - The Locker Room",
+    "title": "{brand} jerseys - All clubs and seasons | The Locker Room",
+    "description": "Every football jersey made by {brand}: {jerseyCount} jerseys, {clubCount} clubs equipped, {seasonCount} seasons covered. Detailed fact sheets and community ratings.",
+    "ogTitle": "All {brand} jerseys"
+  },
+  "BrandPage": {
+    "heroSubtitle": "The full {brand} football range, in one place.",
+    "totalJerseysLabel": "Jerseys",
+    "clubsEquippedLabel": "Clubs equipped",
+    "seasonsCoveredLabel": "Seasons",
+    "seasonHeading": "{season} season",
+    "emptyState": "No {brand} jerseys available yet."
+  },
+  "SeasonPageMetadata": {
+    "notFoundTitle": "Season not found - The Locker Room",
+    "title": "{season} football jerseys - All clubs | The Locker Room",
+    "description": "Every football jersey from the {season} season: {jerseyCount} jerseys across {clubCount} clubs and {leagueCount} leagues. The complete overview.",
+    "ogTitle": "{season} jerseys"
+  },
+  "SeasonPage": {
+    "heroSubtitle": "The complete overview of {season} jerseys.",
+    "totalJerseysLabel": "Jerseys",
+    "clubsCountLabel": "Clubs",
+    "leaguesCountLabel": "Leagues",
+    "emptyState": "No jerseys available for this season."
   }
 }

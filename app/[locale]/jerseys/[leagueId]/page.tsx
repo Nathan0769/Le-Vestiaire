@@ -4,10 +4,22 @@ import { ClubListByCountry } from "@/components/jerseys/clubs/clubs-list-by-coun
 import { notFound } from "next/navigation";
 import { LeagueBreadcrumb } from "@/components/jerseys/leagues/league-bread-crumb";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
+import { getTranslations, getLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { cache } from "react";
 
 export const revalidate = 300;
+
+const SUPPORTED_LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"];
+
+function buildLeagueLanguageAlternates(leagueId: string) {
+  const base = `https://le-vestiaire-foot.fr`;
+  const path = `/jerseys/${leagueId}`;
+  return SUPPORTED_LOCALES.reduce<Record<string, string>>((acc, l) => {
+    acc[l] = l === "fr" ? `${base}${path}` : `${base}/${l}${path}`;
+    return acc;
+  }, {});
+}
 
 type Props = {
   params: Promise<{
@@ -27,17 +39,29 @@ const getCachedLeague = cache(async (leagueId: string) => {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { leagueId } = await params;
+  const locale = await getLocale();
+  const tMeta = await getTranslations("LeagueMetadata");
 
   const league = await getCachedLeague(leagueId);
 
   if (!league) {
     return {
-      title: "Ligue introuvable - Le Vestiaire",
+      title: tMeta("notFoundTitle"),
     };
   }
 
-  const title = `Maillots ${league.name} - Tous les clubs | Le Vestiaire`;
-  const description = `Collection complète des maillots de ${league.name} (${league.country}). Découvrez les ${league._count.clubs} clubs et leurs maillots historiques. La plus grande base de données de maillots ${league.name}.`;
+  const title = tMeta("title", { leagueName: league.name });
+  const description = tMeta("description", {
+    leagueName: league.name,
+    country: league.country,
+    clubCount: league._count.clubs,
+  });
+
+  const canonicalPath = `/jerseys/${leagueId}`;
+  const canonicalUrl =
+    locale === "fr"
+      ? `https://le-vestiaire-foot.fr${canonicalPath}`
+      : `https://le-vestiaire-foot.fr/${locale}${canonicalPath}`;
 
   return {
     title,
@@ -50,7 +74,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       `histoire maillots ${league.name}`,
     ].join(", "),
     openGraph: {
-      title: `Tous les maillots ${league.name}`,
+      title: tMeta("ogTitle", { leagueName: league.name }),
       description,
       images: [
         {
@@ -63,7 +87,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: "website",
     },
     alternates: {
-      canonical: `https://le-vestiaire-foot.fr/jerseys/${leagueId}`,
+      canonical: canonicalUrl,
+      languages: buildLeagueLanguageAlternates(leagueId),
     },
   };
 }
@@ -75,13 +100,18 @@ export default async function LeagueDetailPage({ params }: Props) {
 
   if (!league) return notFound();
 
+  const tBreadcrumb = await getTranslations("BreadcrumbLabels");
+
   const isAutresBucket = league.country === "Autres";
 
   return (
     <div className="p-5 space-y-6">
       <BreadcrumbSchema
         items={[
-          { name: "Maillots", url: "https://le-vestiaire-foot.fr/jerseys" },
+          {
+            name: tBreadcrumb("jerseys"),
+            url: "https://le-vestiaire-foot.fr/jerseys",
+          },
           {
             name: league.name,
             url: `https://le-vestiaire-foot.fr/jerseys/${leagueId}`,
