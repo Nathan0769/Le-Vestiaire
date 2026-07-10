@@ -1,8 +1,8 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
-import { JerseyCard } from "@/components/jerseys/jerseys/jersey-card";
-import { Heart, Shirt, Trophy } from "lucide-react";
+import { Heart, PiggyBank, Shirt, Trophy } from "lucide-react";
 import { WishlistShareButton } from "@/components/wishlist/wishlist-share-button";
+import { WishlistJerseyCard } from "@/components/wishlist/wishlist-jersey-card";
 import WishlistLanding from "@/components/wishlist/wishlist-landing";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
@@ -37,7 +37,6 @@ export const metadata: Metadata = {
 
 export default async function WishlistPage() {
   const t = await getTranslations("Wishlist.page");
-  const tJerseyType = await getTranslations("JerseyType");
   const user = await getCurrentUser();
 
   if (!user) {
@@ -56,6 +55,14 @@ export default async function WishlistPage() {
             club: {
               include: {
                 league: true,
+              },
+            },
+            cfsAvailability: {
+              select: {
+                id: true,
+                price: true,
+                promoPrice: true,
+                affiliateUrl: true,
               },
             },
           },
@@ -92,12 +99,28 @@ export default async function WishlistPage() {
     return acc;
   }, {} as Record<string, number>);
 
-  const typeStats = wishlistItems.reduce((acc, item) => {
-    const type = item.jersey?.type;
-    if (!type) return acc;
-    acc[type] = (acc[type] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
+  const promoItems = wishlistItems.filter((item) => {
+    const av = item.jersey.cfsAvailability;
+    if (!av) return false;
+    return av.promoPrice !== null && Number(av.promoPrice) < Number(av.price);
+  });
+  const availableItems = wishlistItems.filter((item) => {
+    const av = item.jersey.cfsAvailability;
+    if (!av) return false;
+    return !(av.promoPrice !== null && Number(av.promoPrice) < Number(av.price));
+  });
+  const unavailableItems = wishlistItems.filter(
+    (item) => !item.jersey.cfsAvailability
+  );
+
+  const savingsAmount = promoItems.reduce((sum, item) => {
+    const av = item.jersey.cfsAvailability!;
+    return sum + (Number(av.price) - Number(av.promoPrice));
+  }, 0);
+  const availableCount = promoItems.length + availableItems.length;
+  const topLeague = Object.entries(leagueStats).sort(
+    ([, a], [, b]) => b - a
+  )[0]?.[0];
 
   const shareableWishlistItems = wishlistItems.map((item) => ({
     id: item.id,
@@ -156,103 +179,186 @@ export default async function WishlistPage() {
         <WishlistShareButton wishlistItems={shareableWishlistItems} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div className="bg-card border border-border rounded-lg p-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-8 h-8 bg-primary/50 rounded-full flex items-center justify-center">
-              <Heart className="w-4 h-4 text-primary" />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="bg-card border border-border rounded-xl p-4">
+          <div className="flex items-center gap-2 mb-1.5">
+            <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+              <Heart className="w-3.5 h-3.5 text-primary" />
             </div>
-            <h3 className="font-medium text-muted-foreground">
-              {t("stats.wanted")}
-            </h3>
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              {t("hero.total")}
+            </span>
           </div>
-          <p className="text-2xl font-bold ">{totalJerseys} </p>
-          <p className="text-sm text-muted-foreground mt-1">
+          <p className="text-2xl font-bold leading-tight">{totalJerseys}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
             {totalJerseys === 1
               ? t("stats.wantedSingular")
               : t("stats.wantedPlural")}
           </p>
         </div>
 
-        <div className="bg-card border border-border rounded-lg p-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-8 h-8 bg-primary/50 rounded-full flex items-center justify-center">
-              <Trophy className="w-4 h-4 text-primary" />
+        <div className="bg-card border border-border rounded-xl p-4">
+          <div className="flex items-center gap-2 mb-1.5">
+            <div className="w-7 h-7 rounded-full bg-amber-500/10 flex items-center justify-center">
+              <Shirt className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
             </div>
-            <h3 className="font-medium text-muted-foreground">
-              {t("stats.favoriteLeagues")}
-            </h3>
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              {t("hero.availableCfs")}
+            </span>
           </div>
-          <div className="space-y-2">
-            {Object.entries(leagueStats)
-              .sort(([, a], [, b]) => b - a)
-              .slice(0, 3)
-              .map(([league, count]) => (
-                <div key={league} className="flex justify-between items-center">
-                  <span className="text-sm font-medium truncate">{league}</span>
-                  <span className="text-sm text-muted-foreground">{count}</span>
+          <p className="text-2xl font-bold leading-tight">{availableCount}</p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            {t("hero.availableSubtitle", { total: totalJerseys })}
+          </p>
+        </div>
+
+        <div
+          className={`rounded-xl p-4 border ${
+            savingsAmount > 0
+              ? "bg-green-50 border-green-200 dark:bg-green-500/10 dark:border-green-500/30"
+              : "bg-card border-border"
+          }`}
+        >
+          <div className="flex items-center gap-2 mb-1.5">
+            <div
+              className={`w-7 h-7 rounded-full flex items-center justify-center ${
+                savingsAmount > 0
+                  ? "bg-green-600/20"
+                  : "bg-muted"
+              }`}
+            >
+              <PiggyBank
+                className={`w-3.5 h-3.5 ${
+                  savingsAmount > 0
+                    ? "text-green-700 dark:text-green-400"
+                    : "text-muted-foreground"
+                }`}
+              />
+            </div>
+            <span
+              className={`text-xs font-medium uppercase tracking-wide ${
+                savingsAmount > 0
+                  ? "text-green-800 dark:text-green-300"
+                  : "text-muted-foreground"
+              }`}
+            >
+              {t("hero.savings")}
+            </span>
+          </div>
+          <p
+            className={`text-2xl font-bold leading-tight ${
+              savingsAmount > 0
+                ? "text-green-700 dark:text-green-400"
+                : ""
+            }`}
+          >
+            {savingsAmount > 0 ? `-${Math.round(savingsAmount)}€` : "—"}
+          </p>
+          <p className="text-xs text-muted-foreground mt-0.5">
+            {promoItems.length > 0
+              ? t("hero.savingsSubtitle", { count: promoItems.length })
+              : t("hero.noPromo")}
+          </p>
+        </div>
+
+        <div className="bg-card border border-border rounded-xl p-4">
+          <div className="flex items-center gap-2 mb-1.5">
+            <div className="w-7 h-7 rounded-full bg-primary/10 flex items-center justify-center">
+              <Trophy className="w-3.5 h-3.5 text-primary" />
+            </div>
+            <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+              {t("hero.topLeague")}
+            </span>
+          </div>
+          <p className="text-lg font-bold leading-tight truncate">
+            {topLeague ?? "—"}
+          </p>
+          {topLeague && (
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {t("hero.topLeagueSubtitle", { count: leagueStats[topLeague] })}
+            </p>
+          )}
+        </div>
+      </div>
+
+      {(() => {
+        const renderGrid = (items: typeof wishlistItems) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {items.map((item) => {
+              const av = item.jersey.cfsAvailability;
+              return (
+                <div key={item.id} id={`wishlist-item-${item.jersey.id}`}>
+                  <WishlistJerseyCard
+                    jersey={{
+                      id: item.jersey.id,
+                      name: item.jersey.name,
+                      imageUrl: item.jersey.imageUrl,
+                      type: item.jersey.type,
+                      slug: item.jersey.slug,
+                      season: item.jersey.season,
+                      variant: item.jersey.variant ?? 1,
+                      brand: item.jersey.brand,
+                    }}
+                    club={{
+                      id: item.jersey.club.id,
+                      name: item.jersey.club.name,
+                      shortName: item.jersey.club.shortName,
+                      logoUrl: item.jersey.club.logoUrl,
+                      leagueId: item.jersey.club.league.id,
+                    }}
+                    cfsAvailability={
+                      av
+                        ? {
+                            id: av.id,
+                            price: av.price.toString(),
+                            promoPrice: av.promoPrice
+                              ? av.promoPrice.toString()
+                              : null,
+                            affiliateUrl: av.affiliateUrl,
+                          }
+                        : null
+                    }
+                  />
                 </div>
-              ))}
+              );
+            })}
           </div>
-        </div>
+        );
 
-        <div className="bg-card border border-border rounded-lg p-6">
-          <div className="flex items-center gap-3 mb-2">
-            <div className="w-8 h-8 bg-primary/50 rounded-full flex items-center justify-center">
-              <Shirt className="w-4 h-4 text-primary" />
-            </div>
-            <h3 className="font-medium text-muted-foreground">
-              {t("stats.preferredTypes")}
-            </h3>
-          </div>
-          <div className="space-y-2">
-            {Object.entries(typeStats)
-              .sort(([, a], [, b]) => b - a)
-              .slice(0, 3)
-              .map(([type, count]) => {
-                const typeLabel = tJerseyType(
-                  type as
-                    | "HOME"
-                    | "AWAY"
-                    | "THIRD"
-                    | "FOURTH"
-                    | "GOALKEEPER"
-                    | "SPECIAL"
-                );
-                return (
-                  <div key={type} className="flex justify-between items-center">
-                    <span className="text-sm font-medium">{typeLabel}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {count}
-                    </span>
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-      </div>
+        return (
+          <div className="space-y-10">
+            {promoItems.length > 0 && (
+              <section>
+                <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-green-600" />
+                  {t("sections.promo", { count: promoItems.length })}
+                </h2>
+                {renderGrid(promoItems)}
+              </section>
+            )}
 
-      <div>
-        <h2 className="text-lg font-medium mb-4">{t("jerseys")}</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
-          {wishlistItems.map((item) => (
-            <JerseyCard
-              key={item.id}
-              jersey={{
-                id: item.jersey.id,
-                name: item.jersey.name,
-                imageUrl: item.jersey.imageUrl,
-                type: item.jersey.type,
-                variant: item.jersey.variant ?? 1,
-                season: item.jersey.season,
-              }}
-              leagueId={item.jersey.club.league.id}
-              club={item.jersey.club}
-              showFullInfo={true}
-            />
-          ))}
-        </div>
-      </div>
+            {availableItems.length > 0 && (
+              <section>
+                <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-amber-400" />
+                  {t("sections.available", { count: availableItems.length })}
+                </h2>
+                {renderGrid(availableItems)}
+              </section>
+            )}
+
+            {unavailableItems.length > 0 && (
+              <section>
+                <h2 className="text-lg font-medium mb-4 flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-muted-foreground/40" />
+                  {t("sections.unavailable", { count: unavailableItems.length })}
+                </h2>
+                {renderGrid(unavailableItems)}
+              </section>
+            )}
+          </div>
+        );
+      })()}
     </div>
   );
 }

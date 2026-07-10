@@ -149,6 +149,27 @@ export default async function AdminPage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
+                <Tag className="h-5 w-5" />
+                <CardTitle>Alias CFS</CardTitle>
+              </div>
+              <CardDescription>
+                Mapper les noms de clubs CFS vers les Clubs internes pour activer le matching wishlist
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/admin/cfs-aliases">
+                <Button className="w-full cursor-pointer">
+                  Gérer les alias
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
+
+        {isSuperAdmin && (
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5" />
                 <CardTitle>Patches</CardTitle>
               </div>

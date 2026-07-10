@@ -684,12 +684,8 @@
   "Wishlist": {
     "cfsMatch": {
       "badge": {
-        "discount": "Beschikbaar -{percent}% bij CFS"
-      },
-      "banner": {
-        "title": "{count, plural, one {# shirt uit je wishlist is in de aanbieding bij CFS} other {# shirts uit je wishlist zijn in de aanbieding bij CFS}}",
-        "cta": "Bekijk aanbiedingen",
-        "dismiss": "Verbergen"
+        "discount": "Beschikbaar -{percent}% bij CFS",
+        "available": "Beschikbaar bij CFS"
       }
     },
     "button": {
@@ -945,7 +941,22 @@
         "favoriteLeagues": "Favoriete competities",
         "preferredTypes": "Voorkeurstypes"
       },
-      "jerseys": "Je shirts"
+      "jerseys": "Je shirts",
+      "sections": {
+        "promo": "{count, plural, one {In de aanbieding bij CFS (#)} other {In de aanbieding bij CFS (#)}}",
+        "available": "{count, plural, one {Beschikbaar bij CFS (#)} other {Beschikbaar bij CFS (#)}}",
+        "unavailable": "{count, plural, one {Niet beschikbaar (#)} other {Niet beschikbaar (#)}}"
+      },
+      "hero": {
+        "total": "Verlanglijst",
+        "availableCfs": "Beschikbaar bij CFS",
+        "availableSubtitle": "van {total, plural, one {# shirt} other {# shirts}}",
+        "savings": "Besparing",
+        "savingsSubtitle": "{count, plural, one {op # shirt in de aanbieding} other {op # shirts in de aanbieding}}",
+        "noPromo": "Momenteel geen aanbiedingen",
+        "topLeague": "Favoriete competitie",
+        "topLeagueSubtitle": "{count, plural, one {# shirt} other {# shirts}}"
+      }
     },
     "sharedClient": {
       "wishlist": "Verlanglijst",
