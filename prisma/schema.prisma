@@ -131,6 +131,7 @@ model Jersey {
   wishlist                Wishlist[]
   reports                 JerseyReport[]
   cfsPromos               CfsPromo[]
+  cfsAvailability         CfsAvailability?
 
   @@unique([clubId, season, type, variant])
   @@index([clubId], map: "idx_jerseys_club_id")
@@ -513,6 +514,23 @@ model CfsClubAlias {
 
   @@index([clubId])
   @@map("cfs_club_aliases")
+}
+
+model CfsAvailability {
+  id           String   @id @default(cuid())
+  jerseyId     String   @unique
+  jersey       Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  price        Decimal
+  promoPrice   Decimal?
+  productUrl   String
+  affiliateUrl String
+  imageUrl     String
+  lastSeenAt   DateTime @default(now())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([lastSeenAt])
+  @@map("cfs_availability")
 }
 
 model stripe_events {

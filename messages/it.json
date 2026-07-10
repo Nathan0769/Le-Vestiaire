@@ -684,12 +684,8 @@
   "Wishlist": {
     "cfsMatch": {
       "badge": {
-        "discount": "Disponibile -{percent}% su CFS"
-      },
-      "banner": {
-        "title": "{count, plural, one {# maglia della tua wishlist è in offerta su CFS} other {# maglie della tua wishlist sono in offerta su CFS}}",
-        "cta": "Vedi le offerte",
-        "dismiss": "Nascondi"
+        "discount": "Disponibile -{percent}% su CFS",
+        "available": "Disponibile su CFS"
       }
     },
     "button": {
@@ -945,7 +941,22 @@
         "favoriteLeagues": "Campionati preferiti",
         "preferredTypes": "Tipi preferiti"
       },
-      "jerseys": "Le tue maglie"
+      "jerseys": "Le tue maglie",
+      "sections": {
+        "promo": "{count, plural, one {In offerta su CFS (#)} other {In offerta su CFS (#)}}",
+        "available": "{count, plural, one {Disponibile su CFS (#)} other {Disponibili su CFS (#)}}",
+        "unavailable": "{count, plural, one {Non disponibile (#)} other {Non disponibili (#)}}"
+      },
+      "hero": {
+        "total": "Lista desideri",
+        "availableCfs": "Disponibile su CFS",
+        "availableSubtitle": "su {total, plural, one {# maglia} other {# maglie}}",
+        "savings": "Risparmio",
+        "savingsSubtitle": "{count, plural, one {su # maglia in offerta} other {su # maglie in offerta}}",
+        "noPromo": "Nessuna offerta al momento",
+        "topLeague": "Campionato preferito",
+        "topLeagueSubtitle": "{count, plural, one {# maglia} other {# maglie}}"
+      }
     },
     "sharedClient": {
       "wishlist": "Lista dei desideri",

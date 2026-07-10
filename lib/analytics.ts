@@ -26,6 +26,7 @@ export type AnalyticsEvent =
         season: string;
         promo_id: string;
         discount_pct: number;
+        in_promo: number;
       };
     }
   | {
@@ -36,9 +37,9 @@ export type AnalyticsEvent =
         season: string;
         promo_id: string;
         discount_pct: number;
+        in_promo: number;
       };
     }
-  | { name: "cfs_wishlist_banner_dismiss"; params: { count: number } }
   | { name: "achievement_unlocked"; params: { key: string; category: string; tier: string | null } }
   | { name: "achievements_page_viewed"; params: Record<string, never> }
   | { name: "achievement_toast_clicked"; params: { key: string } };
