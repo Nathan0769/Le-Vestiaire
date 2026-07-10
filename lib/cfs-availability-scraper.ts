@@ -4,6 +4,7 @@ import { parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
 
 const CFS_API_KEY = "key_8uhN6ajd7mHKd4K3";
 const CFS_BROWSE_URL = "https://ac.cnstrc.com/browse/group_id";
+const CFS_SEARCH_URL = "https://ac.cnstrc.com/search";
 const AFFILIATE_PARAMS =
   "ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
 const STALE_THRESHOLD_HOURS = 48;
@@ -62,6 +63,15 @@ function isAdultJerseyInStock(item: ConstructorItem): boolean {
   if (name.includes("(kids)") || name.includes("kids)")) return false;
   if (JERSEY_EXCLUDE_TERMS.some((t) => name.includes(t))) return false;
   const variations = item.variations ?? [];
+
+  // Vintage single-piece items have no variations; size is embedded in the name like "(XL)"
+  if (variations.length === 0) {
+    const sizeMatch = item.data.name.match(/\(([A-Z0-9]+)\)\s*$/);
+    if (!sizeMatch) return false;
+    const size = sizeMatch[1].toUpperCase();
+    return ADULT_SIZES.has(size);
+  }
+
   const adultVariations = variations.filter((v) =>
     ADULT_SIZES.has((v.data.size_product ?? "").toUpperCase())
   );
@@ -97,20 +107,52 @@ async function fetchClubProducts(slug: string): Promise<ConstructorItem[]> {
   return all;
 }
 
+async function fetchClubBySearch(clubName: string): Promise<ConstructorItem[]> {
+  const query = encodeURIComponent(`${clubName} shirt`);
+  const all: ConstructorItem[] = [];
+  let page = 1;
+  const namePrefix = clubName.toLowerCase();
+  while (true) {
+    // No filter: some Arsenal shirts have only `price-drops` as group_id.
+    // We rely on the name prefix filter below + isAdultJerseyInStock later.
+    const url = `${CFS_SEARCH_URL}/${query}?key=${CFS_API_KEY}&num_results_per_page=200&page=${page}`;
+    const res = await axios.get(url, { timeout: 15000 });
+    const results: ConstructorItem[] = res.data.response.results ?? [];
+    const total: number = res.data.response.total_num_results ?? 0;
+    // Only keep products whose name starts with a season followed by the club name
+    const filtered = results.filter((item) => {
+      const lower = item.data.name.toLowerCase();
+      const withoutYear = lower.replace(/^\d{4}(?:-\d{2})?\s+/, "");
+      return withoutYear.startsWith(namePrefix);
+    });
+    all.push(...filtered);
+    if (results.length === 0 || page * 200 >= total) break;
+    page++;
+    if (page > 15) break;
+  }
+  return all;
+}
+
 function buildAffiliateUrl(productUrl: string): string {
   const sep = productUrl.includes("?") ? "&" : "?";
   return `${productUrl}${sep}${AFFILIATE_PARAMS}`;
 }
 
-async function loadReverseAliasMap(): Promise<Map<string, string[]>> {
+interface ClubLookup {
+  slugs: string[];
+  searchNames: string[];
+}
+
+async function loadReverseAliasMap(): Promise<Map<string, ClubLookup>> {
   const aliases = await prisma.cfsClubAlias.findMany({
     select: { cfsName: true, clubId: true },
   });
-  const map = new Map<string, string[]>();
+  const map = new Map<string, ClubLookup>();
   for (const a of aliases) {
     const slug = a.cfsName.toLowerCase().replace(/\s+/g, "-");
-    const existing = map.get(a.clubId) ?? [];
-    if (!existing.includes(slug)) existing.push(slug);
+    const existing = map.get(a.clubId) ?? { slugs: [], searchNames: [] };
+    if (!existing.slugs.includes(slug)) existing.slugs.push(slug);
+    if (!existing.searchNames.includes(a.cfsName)) existing.searchNames.push(a.cfsName);
     map.set(a.clubId, existing);
   }
   return map;
@@ -139,7 +181,11 @@ export async function scrapeCfsAvailability(): Promise<ScrapeStats> {
   const reverseAliasMap = await loadReverseAliasMap();
 
   for (const clubId of clubIds) {
-    const slugs = reverseAliasMap.get(clubId) ?? [clubId];
+    const lookup = reverseAliasMap.get(clubId) ?? {
+      slugs: [],
+      searchNames: [],
+    };
+    const slugs = [...lookup.slugs];
     if (!slugs.includes(clubId)) slugs.push(clubId);
 
     let products: ConstructorItem[] = [];
@@ -152,6 +198,22 @@ export async function scrapeCfsAvailability(): Promise<ScrapeStats> {
         }
       } catch {
         // Try next slug
+      }
+    }
+
+    // Fallback: search when browse returned 0 (some clubs like Arsenal have no group_id on CFS)
+    if (products.length === 0) {
+      const searchNames = lookup.searchNames.length > 0 ? lookup.searchNames : [];
+      for (const name of searchNames) {
+        try {
+          const found = await fetchClubBySearch(name);
+          if (found.length > 0) {
+            products = found;
+            break;
+          }
+        } catch {
+          // Try next name
+        }
       }
     }
 
