@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
 
 interface BackButtonProps {
   href?: string;
@@ -12,18 +11,23 @@ interface BackButtonProps {
 export function BackButton({ href }: BackButtonProps) {
   const router = useRouter();
 
-  if (href) {
-    return (
-      <Button variant="ghost" size="icon" aria-label="Retour" asChild>
-        <Link href={href}>
-          <ArrowLeft className="w-5 h-5" />
-        </Link>
-      </Button>
-    );
-  }
+  const handleClick = () => {
+    // router.back() en priorité pour préserver query params de la page précédente.
+    // Fallback href si pas d'historique (URL ouverte directement).
+    if (typeof window !== "undefined" && window.history.length > 1) {
+      router.back();
+    } else if (href) {
+      router.push(href);
+    }
+  };
 
   return (
-    <Button variant="ghost" size="icon" aria-label="Retour" onClick={() => router.back()}>
+    <Button
+      variant="ghost"
+      size="icon"
+      aria-label="Retour"
+      onClick={handleClick}
+    >
       <ArrowLeft className="w-5 h-5" />
     </Button>
   );
