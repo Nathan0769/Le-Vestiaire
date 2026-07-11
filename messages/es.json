@@ -90,10 +90,10 @@
   },
   "JerseyVersion": {
     "REPLICA": "Estándar",
-    "AUTHENTIC": "Tienda - versión Jugador",
+    "AUTHENTIC": "Tienda - Versión jugador",
     "STOCK_PRO": "Stock Pro",
     "PLAYER_ISSUE": "Preparado / Player Issue",
-    "MATCH_WORN": "Usado en Partido"
+    "MATCH_WORN": "Usado en partido"
   },
   "Auth": {
     "login": "Iniciar sesión",
