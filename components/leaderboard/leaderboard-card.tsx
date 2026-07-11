@@ -5,7 +5,7 @@ import { UserAvatar } from "@/components/profiles/user-avatar";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, Medal, Heart } from "lucide-react";
 import type { LeaderboardEntry } from "@/types/leaderboard";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
@@ -21,6 +21,7 @@ export function LeaderboardCard({
   isCurrentUser = false,
 }: LeaderboardCardProps) {
   const t = useTranslations("Leaderboard.card");
+  const locale = useLocale();
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
@@ -89,8 +90,8 @@ export function LeaderboardCard({
   };
 
   const href = isCurrentUser
-    ? "/collection"
-    : `/users/${entry.userId}/collection`;
+    ? `/${locale}/collection`
+    : `/${locale}/users/${entry.userId}/collection`;
 
   return (
     <Tooltip>
