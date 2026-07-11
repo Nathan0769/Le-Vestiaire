@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useCallback, useEffect } from "react";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Flame, Crown, Loader2 } from "lucide-react";
 import { LeaderboardCard } from "./leaderboard-card";
@@ -20,46 +19,57 @@ const VALID_CATEGORIES: LeaderboardCategory[] = [
   "vintage_specialist",
 ];
 
+const readPeriodFromUrl = (): "all_time" | "month" => {
+  if (typeof window === "undefined") return "all_time";
+  const params = new URLSearchParams(window.location.search);
+  return params.get("period") === "month" ? "month" : "all_time";
+};
+
+const readCategoryFromUrl = (): LeaderboardCategory => {
+  if (typeof window === "undefined") return "collection_size";
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get("category") as LeaderboardCategory | null;
+  return raw && VALID_CATEGORIES.includes(raw) ? raw : "collection_size";
+};
+
 export function LeaderboardTabs() {
   const { user } = useAuth();
   const t = useTranslations("Leaderboard.tabs");
   const tMonths = useTranslations("Leaderboard.months");
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
 
-  const readPeriod = useCallback((): "all_time" | "month" => {
-    return searchParams.get("period") === "month" ? "month" : "all_time";
-  }, [searchParams]);
-
-  const readCategory = useCallback((): LeaderboardCategory => {
-    const raw = searchParams.get("category") as LeaderboardCategory | null;
-    return raw && VALID_CATEGORIES.includes(raw) ? raw : "collection_size";
-  }, [searchParams]);
-
-  const [period, setPeriod] = useState<"all_time" | "month">(readPeriod);
-  const [category, setCategory] = useState<LeaderboardCategory>(readCategory);
+  const [period, setPeriod] = useState<"all_time" | "month">("all_time");
+  const [category, setCategory] =
+    useState<LeaderboardCategory>("collection_size");
   const [data, setData] = useState<LeaderboardResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Resynchronise l'état si l'URL change (retour arrière navigateur)
+  // Init depuis l'URL au montage + resync sur popstate (retour navigateur)
   useEffect(() => {
-    setPeriod(readPeriod());
-    setCategory(readCategory());
-  }, [readPeriod, readCategory]);
+    const syncFromUrl = () => {
+      setPeriod(readPeriodFromUrl());
+      setCategory(readCategoryFromUrl());
+    };
+    syncFromUrl();
+    window.addEventListener("popstate", syncFromUrl);
+    return () => window.removeEventListener("popstate", syncFromUrl);
+  }, []);
 
   const updateUrl = useCallback(
     (nextPeriod: "all_time" | "month", nextCategory: LeaderboardCategory) => {
-      const params = new URLSearchParams();
+      if (typeof window === "undefined") return;
+      const params = new URLSearchParams(window.location.search);
       if (nextPeriod !== "all_time") params.set("period", nextPeriod);
+      else params.delete("period");
       if (nextCategory !== "collection_size")
         params.set("category", nextCategory);
+      else params.delete("category");
       const query = params.toString();
-      router.replace(query ? `${pathname}?${query}` : pathname, {
-        scroll: false,
-      });
+      const newUrl = query
+        ? `${window.location.pathname}?${query}`
+        : window.location.pathname;
+      window.history.replaceState(null, "", newUrl);
     },
-    [router, pathname]
+    []
   );
 
   const handlePeriodChange = (newPeriod: "all_time" | "month") => {
