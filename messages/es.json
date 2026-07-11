@@ -628,7 +628,7 @@
       "jerseysCount": "{count, plural, one {# camiseta} other {# camisetas}}",
       "labels": {
         "REPLICA": "Estándar",
-        "AUTHENTIC": "Tienda - versión Jugador",
+        "AUTHENTIC": "Tienda - Versión jugador",
         "STOCK_PRO": "Stock Pro",
         "PLAYER_ISSUE": "Player Issue",
         "MATCH_WORN": "Match Worn"
