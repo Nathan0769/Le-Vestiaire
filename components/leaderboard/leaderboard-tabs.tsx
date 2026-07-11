@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Flame, Crown, Loader2 } from "lucide-react";
 import { LeaderboardCard } from "./leaderboard-card";
@@ -12,22 +13,69 @@ import type {
 import { useAuth } from "@/hooks/useAuth";
 import { useTranslations } from "next-intl";
 
+const VALID_CATEGORIES: LeaderboardCategory[] = [
+  "collection_size",
+  "collection_diversity",
+  "league_diversity",
+  "vintage_specialist",
+];
+
 export function LeaderboardTabs() {
   const { user } = useAuth();
   const t = useTranslations("Leaderboard.tabs");
   const tMonths = useTranslations("Leaderboard.months");
-  const [period, setPeriod] = useState<"all_time" | "month">("all_time");
-  const [category, setCategory] =
-    useState<LeaderboardCategory>("collection_size");
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const readPeriod = useCallback((): "all_time" | "month" => {
+    return searchParams.get("period") === "month" ? "month" : "all_time";
+  }, [searchParams]);
+
+  const readCategory = useCallback((): LeaderboardCategory => {
+    const raw = searchParams.get("category") as LeaderboardCategory | null;
+    return raw && VALID_CATEGORIES.includes(raw) ? raw : "collection_size";
+  }, [searchParams]);
+
+  const [period, setPeriod] = useState<"all_time" | "month">(readPeriod);
+  const [category, setCategory] = useState<LeaderboardCategory>(readCategory);
   const [data, setData] = useState<LeaderboardResponse | null>(null);
   const [loading, setLoading] = useState(true);
 
+  // Resynchronise l'état si l'URL change (retour arrière navigateur)
+  useEffect(() => {
+    setPeriod(readPeriod());
+    setCategory(readCategory());
+  }, [readPeriod, readCategory]);
+
+  const updateUrl = useCallback(
+    (nextPeriod: "all_time" | "month", nextCategory: LeaderboardCategory) => {
+      const params = new URLSearchParams();
+      if (nextPeriod !== "all_time") params.set("period", nextPeriod);
+      if (nextCategory !== "collection_size")
+        params.set("category", nextCategory);
+      const query = params.toString();
+      router.replace(query ? `${pathname}?${query}` : pathname, {
+        scroll: false,
+      });
+    },
+    [router, pathname]
+  );
+
+  const handlePeriodChange = (newPeriod: "all_time" | "month") => {
+    setPeriod(newPeriod);
+    updateUrl(newPeriod, category);
+  };
+
   // Handler pour la catégorie : passe en "all_time" si on sélectionne une catégorie autre que "collection_size"
   const handleCategoryChange = (newCategory: LeaderboardCategory) => {
+    const nextPeriod =
+      newCategory !== "collection_size" && period === "month"
+        ? "all_time"
+        : period;
     setCategory(newCategory);
-    if (newCategory !== "collection_size" && period === "month") {
-      setPeriod("all_time");
-    }
+    if (nextPeriod !== period) setPeriod(nextPeriod);
+    updateUrl(nextPeriod, newCategory);
   };
 
   const fetchLeaderboard = useCallback(async () => {
@@ -76,7 +124,7 @@ export function LeaderboardTabs() {
 
       <Tabs
         value={period}
-        onValueChange={(val) => setPeriod(val as "month" | "all_time")}
+        onValueChange={(val) => handlePeriodChange(val as "month" | "all_time")}
         className="w-full"
       >
         <TabsList
