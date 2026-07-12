@@ -1,8 +1,14 @@
 import { describe, it, expect, afterAll } from "vitest";
 import prisma from "@/lib/prisma";
 import { checkAchievements } from "@/lib/achievements/check";
+import { checkDbSeeded } from "../../helpers/db-seeded";
 
 const TEST_EMAIL_PREFIX = "__test_achievements_check_";
+
+const seedCheck = await checkDbSeeded({ minJerseys: 10, minClubs: 5 });
+if (!seedCheck.seeded) {
+  console.warn(`[check.test.ts] Skip DB tests: ${seedCheck.reason}`);
+}
 
 async function createTestUser(suffix: string) {
   return prisma.user.create({
@@ -14,7 +20,7 @@ async function createTestUser(suffix: string) {
   });
 }
 
-describe("checkAchievements", () => {
+describe.skipIf(!seedCheck.seeded)("checkAchievements", () => {
   const cleanup: string[] = [];
 
   afterAll(async () => {
