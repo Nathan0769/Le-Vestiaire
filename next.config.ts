@@ -60,7 +60,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  serverExternalPackages: ["puppeteer-core", "@sparticuz/chromium"],
+  serverExternalPackages: [
+    "puppeteer-core",
+    "@sparticuz/chromium",
+    "sharp",
+    "node-vibrant",
+  ],
   async headers() {
     return [
       {
