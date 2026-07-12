@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -101,12 +102,16 @@ const positionOptions: { value: PlayerPosition; label: string }[] = [
 ];
 
 export function PlayersManagement() {
+  const searchParams = useSearchParams();
   const [clubs, setClubs] = useState<Club[]>([]);
-  const [filteredClubs, setFilteredClubs] = useState<Club[]>([]);
   const [clubSearchQuery, setClubSearchQuery] = useState("");
   const [isClubSelectOpen, setIsClubSelectOpen] = useState(false);
-  const [selectedClubId, setSelectedClubId] = useState<string>("");
-  const [season, setSeason] = useState<string>("");
+  const [selectedClubId, setSelectedClubId] = useState<string>(
+    () => searchParams.get("clubId") ?? "",
+  );
+  const [season, setSeason] = useState<string>(
+    () => searchParams.get("season") ?? "",
+  );
   const [players, setPlayers] = useState<Player[]>([]);
   const [isLoadingClubs, setIsLoadingClubs] = useState(true);
   const [isLoadingPlayers, setIsLoadingPlayers] = useState(false);
@@ -117,16 +122,6 @@ export function PlayersManagement() {
   const [formData, setFormData] = useState<PlayerFormData>(emptyForm);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Lire les paramètres de query string au chargement
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const clubIdParam = params.get("clubId");
-    const seasonParam = params.get("season");
-
-    if (clubIdParam) setSelectedClubId(clubIdParam);
-    if (seasonParam) setSeason(seasonParam);
-  }, []);
-
   // Charger la liste des clubs
   useEffect(() => {
     const fetchClubs = async () => {
@@ -135,7 +130,6 @@ export function PlayersManagement() {
         if (!response.ok) throw new Error("Erreur lors du chargement des clubs");
         const data = await response.json();
         setClubs(data);
-        setFilteredClubs(data);
       } catch (error) {
         console.error("Error fetching clubs:", error);
         toast.error("Erreur lors du chargement des clubs");
@@ -147,32 +141,17 @@ export function PlayersManagement() {
     fetchClubs();
   }, []);
 
-  // Filtrer les clubs en fonction de la recherche
-  useEffect(() => {
-    if (!clubSearchQuery.trim()) {
-      setFilteredClubs(clubs);
-      return;
-    }
-
+  const filteredClubs = useMemo(() => {
+    if (!clubSearchQuery.trim()) return clubs;
     const query = clubSearchQuery.toLowerCase();
-    const filtered = clubs.filter(
+    return clubs.filter(
       (club) =>
         club.name.toLowerCase().includes(query) ||
-        club.id.toLowerCase().includes(query)
+        club.id.toLowerCase().includes(query),
     );
-    setFilteredClubs(filtered);
-  }, [clubSearchQuery, clubs]);
+  }, [clubs, clubSearchQuery]);
 
-  // Charger les joueurs quand club et saison sont sélectionnés
-  useEffect(() => {
-    if (selectedClubId && season) {
-      loadPlayers();
-    } else {
-      setPlayers([]);
-    }
-  }, [selectedClubId, season]);
-
-  const loadPlayers = async () => {
+  const loadPlayers = useCallback(async () => {
     if (!selectedClubId || !season) return;
 
     setIsLoadingPlayers(true);
@@ -191,7 +170,16 @@ export function PlayersManagement() {
     } finally {
       setIsLoadingPlayers(false);
     }
-  };
+  }, [selectedClubId, season]);
+
+  // Charger les joueurs quand club et saison sont sélectionnés
+  useEffect(() => {
+    if (selectedClubId && season) {
+      loadPlayers();
+    } else {
+      setPlayers([]);
+    }
+  }, [selectedClubId, season, loadPlayers]);
 
   const openCreateDialog = () => {
     setEditingPlayer(null);

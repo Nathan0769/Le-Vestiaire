@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
@@ -75,7 +75,7 @@ export function DescriptionProposalsList() {
   const [actionType, setActionType] = useState<ActionType>(null);
   const [rejectionReason, setRejectionReason] = useState("");
 
-  const loadProposals = async () => {
+  const loadProposals = useCallback(async () => {
     try {
       const response = await fetch("/api/admin/description-proposals");
       if (!response.ok) {
@@ -89,11 +89,11 @@ export function DescriptionProposalsList() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [t]);
 
   useEffect(() => {
     loadProposals();
-  }, []);
+  }, [loadProposals]);
 
   const openDialog = (proposal: DescriptionProposal, type: "approve" | "reject") => {
     setSelectedProposal(proposal);

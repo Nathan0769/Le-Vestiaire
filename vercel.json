@@ -1,8 +1,7 @@
 {
   "functions": {
     "app/api/wishlist/generate-pdf/route.ts": {
-      "maxDuration": 30,
-      "memory": 1024
+      "maxDuration": 30
     },
     "app/api/cron/remind-empty-users/route.ts": {
       "maxDuration": 60
