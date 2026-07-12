@@ -38,8 +38,7 @@ export async function GET(
       return new NextResponse("Jersey not found", { status: 404 });
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { wishlist, ...jerseyWithoutWishlist } = jersey as any;
+    const { wishlist, ...jerseyWithoutWishlist } = jersey;
 
     const response = {
       ...jerseyWithoutWishlist,

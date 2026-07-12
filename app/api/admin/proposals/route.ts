@@ -7,8 +7,7 @@ import {
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function GET(request: Request) {
+export async function GET() {
   const { error, session } = await requirePermission({ proposal: ["list"] });
   if (error) return error;
 
