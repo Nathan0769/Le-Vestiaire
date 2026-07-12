@@ -216,15 +216,16 @@ export function EditProfile() {
     }
   };
 
-  useEffect(() => {
-    if (isOpen) {
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (open) {
       fetchUsername();
       fetchBio();
       fetchFavoriteClub();
       fetchClubs();
       fetchSocialLinks();
     }
-  }, [isOpen, fetchClubs]);
+  };
 
   useEffect(() => {
     const handler = () => {
@@ -244,7 +245,7 @@ export function EditProfile() {
   }, []);
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+    <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
         <Button className="cursor-pointer" disabled={!currentUser}>
           {t("editButton")}

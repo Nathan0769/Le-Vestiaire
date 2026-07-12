@@ -28,12 +28,10 @@ export function UsernameInput({
   } | null>(null);
   const debouncedUsername = useDebounce(value, 500);
 
-  useEffect(() => {
-    if (!isEditing && value) {
-      setInitialValue(value);
-    }
-  }, [value, isEditing]);
-
+  // Check de dispo debouncee : legitimement declenchee par les changements de
+  // debouncedUsername/isEditing. Le parent a besoin de la validite pour gater
+  // la sauvegarde, donc on propage via onValidationChange.
+  /* eslint-disable react-you-might-not-need-an-effect/no-event-handler, react-you-might-not-need-an-effect/no-pass-data-to-parent */
   useEffect(() => {
     if (!isEditing) {
       setAvailability(null);
@@ -76,6 +74,7 @@ export function UsernameInput({
 
     checkAvailability();
   }, [debouncedUsername, onValidationChange, isEditing, initialValue]);
+  /* eslint-enable react-you-might-not-need-an-effect/no-event-handler, react-you-might-not-need-an-effect/no-pass-data-to-parent */
 
   const getStatusIcon = () => {
     if (!isEditing) return null;
@@ -129,6 +128,7 @@ export function UsernameInput({
   };
 
   const handleEdit = () => {
+    setInitialValue(value);
     setIsEditing(true);
   };
 

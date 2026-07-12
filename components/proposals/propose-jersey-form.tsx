@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -50,7 +50,6 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
   const tJerseyType = useTranslations("JerseyType");
   const t = useTranslations("Proposals.Form");
   const [clubs, setClubs] = useState<Club[]>([]);
-  const [filteredClubs, setFilteredClubs] = useState<Club[]>([]);
   const [clubSearchQuery, setClubSearchQuery] = useState("");
   const [isLoadingClubs, setIsLoadingClubs] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -58,7 +57,6 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
   const [isClubSelectOpen, setIsClubSelectOpen] = useState(false);
 
   const [formData, setFormData] = useState<Partial<CreateProposalData>>({
-    name: "",
     clubId: "",
     season: "",
     type: undefined,
@@ -83,7 +81,6 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
         if (!response.ok) throw new Error("Erreur chargement clubs");
         const data = await response.json();
         setClubs(data);
-        setFilteredClubs(data);
       } catch (error) {
         console.error("Error loading clubs:", error);
         toast.error(t("clubNotFound"));
@@ -93,43 +90,33 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
     };
 
     loadClubs();
-  }, []);
+  }, [t]);
 
-  useEffect(() => {
-    if (!clubSearchQuery.trim()) {
-      setFilteredClubs(clubs);
-      return;
-    }
-
+  const filteredClubs = useMemo(() => {
+    if (!clubSearchQuery.trim()) return clubs;
     const query = clubSearchQuery.toLowerCase();
-    const filtered = clubs.filter(
+    return clubs.filter(
       (club) =>
         club.name.toLowerCase().includes(query) ||
-        club.id.toLowerCase().includes(query)
+        club.id.toLowerCase().includes(query),
     );
-    setFilteredClubs(filtered);
-  }, [clubSearchQuery, clubs]);
+  }, [clubs, clubSearchQuery]);
 
-  useEffect(() => {
-    if (!formData.clubId || !formData.season || !formData.type) {
-      return;
-    }
-
+  const generatedName = useMemo(() => {
+    if (!formData.clubId || !formData.season || !formData.type) return "";
     const selectedClub = clubs.find((club) => club.id === formData.clubId);
-    if (!selectedClub) return;
+    if (!selectedClub) return "";
 
     const typeLabel =
       formData.type === "SPECIAL"
         ? specialName.trim() || tJerseyType("SPECIAL")
         : tJerseyType(formData.type);
 
-    const generatedName = t("generatedJerseyName", {
+    return t("generatedJerseyName", {
       type: typeLabel,
       club: selectedClub.shortName,
       season: formData.season,
     });
-
-    setFormData((prev) => ({ ...prev, name: generatedName }));
   }, [
     formData.clubId,
     formData.season,
@@ -212,7 +199,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
     e.preventDefault();
 
     if (
-      !formData.name ||
+      !generatedName ||
       !formData.clubId ||
       !formData.season ||
       !formData.type ||
@@ -269,7 +256,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
     setIsSubmitting(true);
     try {
       const proposalData: CreateProposalData = {
-        name: formData.name!,
+        name: generatedName,
         clubId: formData.clubId!,
         season: formData.season!,
         type: formData.type!,
@@ -294,7 +281,6 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
       toast.success(t("successToast"));
 
       setFormData({
-        name: "",
         clubId: "",
         season: "",
         type: undefined,
@@ -329,7 +315,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
         <Input
           id="name"
           placeholder={t("jerseyNamePlaceholder")}
-          value={formData.name}
+          value={generatedName}
           disabled
           className="bg-muted"
         />
