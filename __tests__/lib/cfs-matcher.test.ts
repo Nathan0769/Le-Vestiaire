@@ -1,8 +1,14 @@
 import { describe, it, expect, beforeAll } from "vitest";
 import { resolveCfsMatch } from "@/lib/cfs-matcher";
 import prisma from "@/lib/prisma";
+import { checkDbSeeded } from "../helpers/db-seeded";
 
-describe("resolveCfsMatch", () => {
+const seedCheck = await checkDbSeeded({ requireHomeJersey: true });
+if (!seedCheck.seeded) {
+  console.warn(`[cfs-matcher.test.ts] Skip DB tests: ${seedCheck.reason}`);
+}
+
+describe.skipIf(!seedCheck.seeded)("resolveCfsMatch", () => {
   let sampleJerseyId: string;
   let sampleClubId: string;
   let sampleSeason: string;

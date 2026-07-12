@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll, afterAll } from "vitest";
+import { describe, it, expect, afterAll } from "vitest";
 import prisma from "@/lib/prisma";
 import {
   getUserJerseyCount,
@@ -13,8 +13,18 @@ import {
   getUserProfileComplete,
   getUserAccountAgeDays,
 } from "@/lib/achievements/compute";
+import { checkDbSeeded } from "../../helpers/db-seeded";
 
 const TEST_EMAIL_PREFIX = "__test_achievements_compute_";
+
+const seedCheck = await checkDbSeeded({
+  minJerseys: 3,
+  minClubs: 3,
+  minLeagues: 2,
+});
+if (!seedCheck.seeded) {
+  console.warn(`[compute.test.ts] Skip DB tests: ${seedCheck.reason}`);
+}
 
 async function createTestUser(suffix: string) {
   const email = `${TEST_EMAIL_PREFIX}${suffix}@test.local`;
@@ -27,7 +37,7 @@ async function createTestUser(suffix: string) {
   });
 }
 
-describe("compute helpers", () => {
+describe.skipIf(!seedCheck.seeded)("compute helpers", () => {
   const cleanup: string[] = [];
 
   afterAll(async () => {
