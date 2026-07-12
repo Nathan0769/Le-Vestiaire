@@ -1,8 +1,7 @@
 import prisma from "@/lib/prisma";
 
 export async function generateUniqueUsername(
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  _ignored?: string
+  _ignored?: string,
 ): Promise<string> {
   for (let attempt = 0; attempt < 200; attempt++) {
     const candidate = generateRandomUsername();

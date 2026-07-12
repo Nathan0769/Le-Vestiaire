@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -68,7 +68,7 @@ export function ProposalsList() {
 
   const isSuperAdmin = user?.role === "superadmin";
 
-  const loadProposals = async () => {
+  const loadProposals = useCallback(async () => {
     try {
       const response = await fetch("/api/admin/proposals");
       if (!response.ok) {
@@ -82,11 +82,11 @@ export function ProposalsList() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [t]);
 
   useEffect(() => {
     loadProposals();
-  }, [t]);
+  }, [loadProposals]);
 
   const openDialog = (proposal: Proposal, type: "approve" | "reject") => {
     setSelectedProposal(proposal);
