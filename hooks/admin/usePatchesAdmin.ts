@@ -148,6 +148,44 @@ export function useCreatePatchVersion() {
   });
 }
 
+export function useUpdatePatchVersion() {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: async ({
+      patchId,
+      versionId,
+      seasonStart,
+      seasonEnd,
+    }: {
+      patchId: string;
+      versionId: string;
+      seasonStart?: string;
+      seasonEnd?: string | null;
+    }) => {
+      const body: Record<string, unknown> = {};
+      if (seasonStart !== undefined) body.seasonStart = seasonStart;
+      if (seasonEnd !== undefined) body.seasonEnd = seasonEnd;
+
+      const res = await fetch(
+        `/api/admin/patches/${patchId}/versions/${versionId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }
+      );
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Erreur mise à jour");
+      }
+      return res.json();
+    },
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["admin", "patches"] });
+    },
+  });
+}
+
 export function useDeletePatchVersion() {
   const qc = useQueryClient();
   return useMutation({

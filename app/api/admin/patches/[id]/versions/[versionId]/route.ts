@@ -4,14 +4,14 @@ import { requirePermission } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
 import { validateImageFile } from "@/lib/file-validation";
 import { uploadToR2, deleteFromR2, getR2PublicUrl, PATCHES_BUCKET } from "@/lib/r2-storage";
+import { validatePatchVersionPeriod } from "@/lib/patches/season-format";
 import crypto from "crypto";
 
-const seasonRegex = /^\d{4}-\d{2}$/;
 const MAX_PATCH_IMAGE_SIZE = 2 * 1024 * 1024;
 
 const updateMetaSchema = z.object({
-  seasonStart: z.string().regex(seasonRegex).optional(),
-  seasonEnd: z.string().regex(seasonRegex).optional().nullable(),
+  seasonStart: z.string().optional(),
+  seasonEnd: z.string().optional().nullable(),
 });
 
 function extractR2Key(imageUrl: string | null): string | null {
@@ -33,6 +33,7 @@ export async function PATCH(
 
     const existing = await prisma.patchVersion.findUnique({
       where: { id: versionId },
+      include: { patch: true },
     });
     if (!existing || existing.patchId !== patchId) {
       return NextResponse.json({ error: "Version introuvable" }, { status: 404 });
@@ -90,6 +91,23 @@ export async function PATCH(
       }
       seasonStart = meta.data.seasonStart;
       seasonEnd = meta.data.seasonEnd;
+    }
+
+    if (seasonStart !== undefined || seasonEnd !== undefined) {
+      const effectiveStart = seasonStart ?? existing.seasonStart;
+      const effectiveEnd =
+        seasonEnd !== undefined ? seasonEnd : existing.seasonEnd;
+      const periodValidation = validatePatchVersionPeriod(
+        existing.patch.family,
+        effectiveStart,
+        effectiveEnd
+      );
+      if (!periodValidation.valid) {
+        return NextResponse.json(
+          { error: periodValidation.error },
+          { status: 400 }
+        );
+      }
     }
 
     const updated = await prisma.patchVersion.update({
