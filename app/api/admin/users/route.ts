@@ -12,8 +12,7 @@ import prisma from "@/lib/prisma";
  * Liste tous les utilisateurs avec leurs rôles
  * Réservé aux admins
  */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export async function GET(request: Request) {
+export async function GET() {
   // Vérifier que l'utilisateur est admin
   const { error, session } = await requirePermission(undefined, true);
   if (error) return error;

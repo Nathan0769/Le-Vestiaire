@@ -2,7 +2,11 @@
 
 import Script from "next/script";
 import { useEffect, useState } from "react";
-import { hasAdvertisingConsent } from "@/lib/cookie-consent";
+import {
+  hasAdvertisingConsent,
+  COOKIE_CONSENT_EVENT_NAME,
+  COOKIE_CONSENT_CHANNEL,
+} from "@/lib/cookie-consent";
 
 declare global {
   interface Window {
@@ -16,25 +20,12 @@ interface AdBannerProps {
   slot: string;
 }
 
-export function AdBanner({ slot }: AdBannerProps) {
-  const [canShow, setCanShow] = useState(false);
-
+function AdSlot({ slot }: AdBannerProps) {
   useEffect(() => {
-    setCanShow(hasAdvertisingConsent());
-    const interval = setInterval(() => {
-      setCanShow(hasAdvertisingConsent());
-    }, 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    if (!canShow) return;
     try {
       (window.adsbygoogle = window.adsbygoogle || []).push({});
     } catch {}
-  }, [canShow]);
-
-  if (!canShow) return null;
+  }, []);
 
   return (
     <>
@@ -54,4 +45,28 @@ export function AdBanner({ slot }: AdBannerProps) {
       />
     </>
   );
+}
+
+export function AdBanner({ slot }: AdBannerProps) {
+  const [canShow, setCanShow] = useState(() => hasAdvertisingConsent());
+
+  useEffect(() => {
+    const update = () => setCanShow(hasAdvertisingConsent());
+    window.addEventListener(COOKIE_CONSENT_EVENT_NAME, update);
+
+    const channel =
+      typeof BroadcastChannel !== "undefined"
+        ? new BroadcastChannel(COOKIE_CONSENT_CHANNEL)
+        : null;
+    if (channel) channel.onmessage = update;
+
+    return () => {
+      window.removeEventListener(COOKIE_CONSENT_EVENT_NAME, update);
+      if (channel) channel.close();
+    };
+  }, []);
+
+  if (!canShow) return null;
+
+  return <AdSlot slot={slot} />;
 }
