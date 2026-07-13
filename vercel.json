@@ -8,6 +8,9 @@
     },
     "app/api/cron/monthly-badges/route.ts": {
       "maxDuration": 60
+    },
+    "app/api/cron/reddit-monitor/route.ts": {
+      "maxDuration": 60
     }
   },
   "crons": [
@@ -18,6 +21,10 @@
     {
       "path": "/api/cron/monthly-badges",
       "schedule": "5 0 1 * *"
+    },
+    {
+      "path": "/api/cron/reddit-monitor",
+      "schedule": "0 6 * * *"
     }
   ]
 }
