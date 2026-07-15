@@ -1,31 +1,10 @@
-import { notFound, redirect } from "next/navigation";
-import { getCurrentUser } from "@/lib/get-current-user";
-import prisma from "@/lib/prisma";
+import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
-interface UsernameRedirectProps {
-  params: Promise<{ username: string }>;
+interface PageProps {
+  params: Promise<{ locale: string; username: string }>;
 }
 
-export default async function UsernameRedirectPage({
-  params,
-}: UsernameRedirectProps) {
-  const currentUser = await getCurrentUser();
-  if (!currentUser) {
-    redirect("/auth/login");
-  }
-
-  const { username } = await params;
-
-  const user = await prisma.user.findFirst({
-    where: { username },
-    select: { id: true },
-  });
-
-  if (!user) {
-    notFound();
-  }
-
-  redirect(`/users/${user.id}/collection`);
+export default async function UserProfileIndex({ params }: PageProps) {
+  const { locale, username } = await params;
+  redirect(`/${locale}/u/${username.toLowerCase()}/collection`);
 }

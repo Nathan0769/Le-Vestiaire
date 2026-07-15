@@ -89,7 +89,7 @@ export async function PATCH(request: Request) {
 
     await prisma.user.update({
       where: { id: user.id },
-      data: { username },
+      data: { username: username.toLowerCase(), usernameGenerated: false },
     });
 
     return NextResponse.json({ success: true, username });

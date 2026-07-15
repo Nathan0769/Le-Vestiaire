@@ -1,4 +1,23 @@
 import prisma from "@/lib/prisma";
+import { slugifyForUsername } from "@/lib/username-slug";
+
+export async function generateSlugBasedUsername(
+  name: string | null,
+): Promise<string> {
+  const base = name ? slugifyForUsername(name) : "";
+  if (base.length >= 5) {
+    let candidate = base;
+    let suffix = 2;
+    while (await usernameExists(candidate)) {
+      const suffixStr = `-${suffix}`;
+      candidate = base.slice(0, 20 - suffixStr.length) + suffixStr;
+      suffix += 1;
+      if (suffix > 99) return generateUniqueUsername();
+    }
+    return candidate;
+  }
+  return generateUniqueUsername();
+}
 
 export async function generateUniqueUsername(
   _ignored?: string,

@@ -6,29 +6,29 @@ import { Package, Gift, Award } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 interface PublicUserTabsProps {
-  userId: string;
+  username: string;
 }
 
-export function PublicUserTabs({ userId }: PublicUserTabsProps) {
+export function PublicUserTabs({ username }: PublicUserTabsProps) {
   const pathname = usePathname();
   const t = useTranslations("PublicCollection.tabs");
 
   const tabs = [
     {
       label: t("collection"),
-      href: `/users/${userId}/collection`,
+      href: `/u/${username}/collection`,
       icon: Package,
       active: pathname.endsWith("/collection"),
     },
     {
       label: t("wishlist"),
-      href: `/users/${userId}/wishlist`,
+      href: `/u/${username}/wishlist`,
       icon: Gift,
       active: pathname.endsWith("/wishlist"),
     },
     {
       label: t("achievements"),
-      href: `/users/${userId}/achievements`,
+      href: `/u/${username}/achievements`,
       icon: Award,
       active: pathname.endsWith("/achievements"),
     },

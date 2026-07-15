@@ -7,10 +7,12 @@ import type { User, League, Club, Jersey } from '@prisma/client'
 export async function createTestUser(
   overrides?: Partial<User>
 ): Promise<User> {
+  const suffix = `${Date.now()}${Math.floor(Math.random() * 1000)}`
   return prismaTest.user.create({
     data: {
-      email: overrides?.email ?? `test-${Date.now()}@example.com`,
+      email: overrides?.email ?? `test-${suffix}@example.com`,
       name: overrides?.name ?? 'Test User',
+      username: overrides?.username ?? `test-${suffix}`.slice(0, 20),
       emailVerified: overrides?.emailVerified ?? true,
       image: overrides?.image ?? null,
       favoriteClubId: overrides?.favoriteClubId ?? null,

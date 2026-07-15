@@ -479,6 +479,43 @@
       "reload": "Reload page",
       "topAchievements": "Top achievements",
       "viewAllAchievements": "View all achievements"
+    },
+    "share": {
+      "button": "Share my collection",
+      "downloadSuccess": "Card downloaded",
+      "downloadError": "Download failed",
+      "shareSuccess": "Shared",
+      "modal": {
+        "title": "Share my collection",
+        "description": "Customise your card and download it ready to post.",
+        "previewHint": "Preview",
+        "typeLabel": "Card type",
+        "formatLabel": "Format",
+        "statsLabel": "Stats to display",
+        "countLabel": "Number of jerseys",
+        "footerLabel": "Footer",
+        "showAvatar": "Show my avatar",
+        "showUsername": "Show my @username",
+        "tabs": {
+          "stats": "Stats",
+          "top": "My picks",
+          "recent": "Recent"
+        },
+        "formats": {
+          "story": "Instagram Story (9:16)",
+          "post": "Square post (1:1)",
+          "tweet": "X post (16:9)"
+        },
+        "stats": {
+          "clubs": "Clubs",
+          "leagues": "Leagues",
+          "countries": "Countries",
+          "value": "Estimated value"
+        },
+        "download": "Download",
+        "shareNative": "Share",
+        "shareUnavailable": "Native share only on mobile"
+      }
     }
   },
   "Onboarding": {
@@ -1083,6 +1120,13 @@
       "invalidHandle": "Invalid {network} handle",
       "fixInvalidBeforeSave": "Fix invalid handles before saving",
       "saveError": "Error while saving social networks"
+    },
+    "authBanner": {
+      "title": "Start your own collection on Le Vestiaire",
+      "subtitle": "Free sign-up, in 30 seconds.",
+      "signup": "Sign up",
+      "login": "I already have an account",
+      "dismiss": "Dismiss"
     }
   },
   "HomePage": {
