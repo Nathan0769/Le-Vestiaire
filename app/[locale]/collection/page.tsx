@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { CollectionStats } from "@/components/collection/collection-stats";
 import { CollectionGrid } from "@/components/collection/collection-grid";
 import CollectionLanding from "@/components/collection/collection-landing";
+import { ShareCollectionButton } from "@/components/collection/share-collection-button";
 import { Package, AlertCircle, RefreshCw, BarChart3 } from "lucide-react";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
@@ -164,15 +165,18 @@ export default async function CollectionPage() {
               {collectionItems.length > 1 ? t("jerseys") : t("jersey")}
             </span>
           </div>
-          <Link href="/collection/stats">
-            <Button
-              variant="outline"
-              className="flex items-center gap-2 cursor-pointer w-full md:w-auto"
-            >
-              <BarChart3 className="w-4 h-4" />
-              Statistiques détaillées
-            </Button>
-          </Link>
+          <div className="flex flex-col sm:flex-row gap-2 w-full md:w-auto">
+            <ShareCollectionButton />
+            <Link href="/collection/stats" className="w-full sm:w-auto">
+              <Button
+                variant="outline"
+                className="flex items-center gap-2 cursor-pointer w-full"
+              >
+                <BarChart3 className="w-4 h-4" />
+                Statistiques détaillées
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {topAchievements.length > 0 && (
