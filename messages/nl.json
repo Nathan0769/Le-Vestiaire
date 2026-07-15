@@ -479,6 +479,43 @@
       "reload": "Pagina opnieuw laden",
       "topAchievements": "Beste prestaties",
       "viewAllAchievements": "Alle prestaties bekijken"
+    },
+    "share": {
+      "button": "Mijn collectie delen",
+      "downloadSuccess": "Card gedownload",
+      "downloadError": "Downloaden mislukt",
+      "shareSuccess": "Gedeeld",
+      "modal": {
+        "title": "Mijn collectie delen",
+        "description": "Personaliseer je card en download hem klaar om te posten.",
+        "previewHint": "Voorbeeld",
+        "typeLabel": "Type card",
+        "formatLabel": "Formaat",
+        "statsLabel": "Statistieken tonen",
+        "countLabel": "Aantal shirts",
+        "footerLabel": "Voettekst",
+        "showAvatar": "Mijn avatar tonen",
+        "showUsername": "Mijn @username tonen",
+        "tabs": {
+          "stats": "Cijfers",
+          "top": "Mijn selectie",
+          "recent": "Recent"
+        },
+        "formats": {
+          "story": "Instagram Story (9:16)",
+          "post": "Vierkante post (1:1)",
+          "tweet": "X-post (16:9)"
+        },
+        "stats": {
+          "clubs": "Clubs",
+          "leagues": "Competities",
+          "countries": "Landen",
+          "value": "Geschatte waarde"
+        },
+        "download": "Downloaden",
+        "shareNative": "Delen",
+        "shareUnavailable": "Direct delen alleen op mobiel"
+      }
     }
   },
   "Onboarding": {
@@ -1083,6 +1120,13 @@
       "invalidHandle": "Ongeldige {network}-gebruikersnaam",
       "fixInvalidBeforeSave": "Corrigeer ongeldige gebruikersnamen voor het opslaan",
       "saveError": "Fout bij het opslaan van sociale netwerken"
+    },
+    "authBanner": {
+      "title": "Start je eigen collectie op Le Vestiaire",
+      "subtitle": "Gratis inschrijven, in 30 seconden.",
+      "signup": "Registreren",
+      "login": "Ik heb al een account",
+      "dismiss": "Sluiten"
     }
   },
   "HomePage": {

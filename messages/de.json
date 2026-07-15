@@ -479,6 +479,43 @@
       "reload": "Seite neu laden",
       "topAchievements": "Top-Erfolge",
       "viewAllAchievements": "Alle Erfolge ansehen"
+    },
+    "share": {
+      "button": "Meine Sammlung teilen",
+      "downloadSuccess": "Card heruntergeladen",
+      "downloadError": "Download fehlgeschlagen",
+      "shareSuccess": "Geteilt",
+      "modal": {
+        "title": "Meine Sammlung teilen",
+        "description": "Personalisiere deine Card und lade sie postbereit herunter.",
+        "previewHint": "Vorschau",
+        "typeLabel": "Kartentyp",
+        "formatLabel": "Format",
+        "statsLabel": "Statistiken anzeigen",
+        "countLabel": "Anzahl Trikots",
+        "footerLabel": "Fußzeile",
+        "showAvatar": "Mein Avatar anzeigen",
+        "showUsername": "Mein @username anzeigen",
+        "tabs": {
+          "stats": "Zahlen",
+          "top": "Meine Auswahl",
+          "recent": "Neueste"
+        },
+        "formats": {
+          "story": "Instagram Story (9:16)",
+          "post": "Quadratischer Post (1:1)",
+          "tweet": "X-Post (16:9)"
+        },
+        "stats": {
+          "clubs": "Vereine",
+          "leagues": "Ligen",
+          "countries": "Länder",
+          "value": "Geschätzter Wert"
+        },
+        "download": "Herunterladen",
+        "shareNative": "Teilen",
+        "shareUnavailable": "Direktes Teilen nur auf Mobilgeräten"
+      }
     }
   },
   "Onboarding": {
@@ -1083,6 +1120,13 @@
       "invalidHandle": "Ungültiger {network}-Nutzername",
       "fixInvalidBeforeSave": "Korrigiere ungültige Nutzernamen vor dem Speichern",
       "saveError": "Fehler beim Speichern der sozialen Netzwerke"
+    },
+    "authBanner": {
+      "title": "Starte deine eigene Sammlung auf Le Vestiaire",
+      "subtitle": "Kostenlose Anmeldung, in 30 Sekunden.",
+      "signup": "Registrieren",
+      "login": "Ich habe schon ein Konto",
+      "dismiss": "Schließen"
     }
   },
   "HomePage": {

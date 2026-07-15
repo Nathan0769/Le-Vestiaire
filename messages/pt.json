@@ -479,6 +479,43 @@
       "reload": "Recarregar página",
       "topAchievements": "Melhores conquistas",
       "viewAllAchievements": "Ver todas as conquistas"
+    },
+    "share": {
+      "button": "Partilhar a minha coleção",
+      "downloadSuccess": "Card descarregada",
+      "downloadError": "Falha ao descarregar",
+      "shareSuccess": "Partilhado",
+      "modal": {
+        "title": "Partilhar a minha coleção",
+        "description": "Personaliza a tua card e descarrega-a pronta a publicar.",
+        "previewHint": "Pré-visualização",
+        "typeLabel": "Tipo de card",
+        "formatLabel": "Formato",
+        "statsLabel": "Estatísticas a mostrar",
+        "countLabel": "Número de camisolas",
+        "footerLabel": "Rodapé",
+        "showAvatar": "Mostrar o meu avatar",
+        "showUsername": "Mostrar o meu @username",
+        "tabs": {
+          "stats": "Números",
+          "top": "A minha seleção",
+          "recent": "Recentes"
+        },
+        "formats": {
+          "story": "Story Instagram (9:16)",
+          "post": "Post quadrado (1:1)",
+          "tweet": "Post X (16:9)"
+        },
+        "stats": {
+          "clubs": "Clubes",
+          "leagues": "Campeonatos",
+          "countries": "Países",
+          "value": "Valor estimado"
+        },
+        "download": "Descarregar",
+        "shareNative": "Partilhar",
+        "shareUnavailable": "Partilha direta disponível no telemóvel"
+      }
     }
   },
   "Onboarding": {
@@ -1083,6 +1120,13 @@
       "invalidHandle": "Identificador {network} inválido",
       "fixInvalidBeforeSave": "Corrige os identificadores inválidos antes de guardar",
       "saveError": "Erro ao guardar as redes sociais"
+    },
+    "authBanner": {
+      "title": "Comece a sua coleção no Le Vestiaire",
+      "subtitle": "Registo gratuito, em 30 segundos.",
+      "signup": "Registar",
+      "login": "Já tenho conta",
+      "dismiss": "Fechar"
     }
   },
   "HomePage": {

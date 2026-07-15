@@ -483,6 +483,43 @@
       "reload": "Recharger la page",
       "topAchievements": "Meilleurs succès",
       "viewAllAchievements": "Voir tout le palmarès"
+    },
+    "share": {
+      "button": "Partager ma collection",
+      "downloadSuccess": "Card téléchargée",
+      "downloadError": "Erreur au téléchargement",
+      "shareSuccess": "Partagé",
+      "modal": {
+        "title": "Partager ma collection",
+        "description": "Personnalise ta card et télécharge-la prête à poster.",
+        "previewHint": "Aperçu",
+        "typeLabel": "Type de card",
+        "formatLabel": "Format",
+        "statsLabel": "Statistiques à afficher",
+        "countLabel": "Nombre de maillots",
+        "footerLabel": "Pied de page",
+        "showAvatar": "Afficher mon avatar",
+        "showUsername": "Afficher mon @username",
+        "tabs": {
+          "stats": "Chiffres",
+          "top": "Ma sélection",
+          "recent": "Récents"
+        },
+        "formats": {
+          "story": "Story Instagram (9:16)",
+          "post": "Post carré (1:1)",
+          "tweet": "Post X (16:9)"
+        },
+        "stats": {
+          "clubs": "Clubs",
+          "leagues": "Championnats",
+          "countries": "Pays",
+          "value": "Valeur estimée"
+        },
+        "download": "Télécharger",
+        "shareNative": "Partager",
+        "shareUnavailable": "Partage direct disponible sur mobile"
+      }
     }
   },
   "Onboarding": {
@@ -1087,6 +1124,13 @@
       "invalidHandle": "Identifiant {network} invalide",
       "fixInvalidBeforeSave": "Corrige les identifiants invalides avant d'enregistrer",
       "saveError": "Erreur lors de la sauvegarde des réseaux sociaux"
+    },
+    "authBanner": {
+      "title": "Créez votre collection sur Le Vestiaire",
+      "subtitle": "Inscription gratuite, en 30 secondes.",
+      "signup": "S'inscrire",
+      "login": "J'ai déjà un compte",
+      "dismiss": "Fermer"
     }
   },
   "HomePage": {
