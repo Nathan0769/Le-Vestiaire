@@ -813,19 +813,6 @@ export default async function HomePage({
             position: index + 1,
             name: `${jersey.name} - ${jersey.club.name} ${jersey.season}`,
             url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.id}`,
-            item: {
-              "@type": "Product",
-              name: `${jersey.name} - ${jersey.club.name}`,
-              description: `Maillot ${jersey.club.name} saison ${jersey.season} par ${jersey.brand}`,
-              ...(jersey.imageUrl && { image: jersey.imageUrl }),
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: jersey.averageRating.toFixed(1),
-                reviewCount: jersey.totalRatings,
-                bestRating: "5",
-                worstRating: "0.5",
-              },
-            },
           })),
         }
       : null;

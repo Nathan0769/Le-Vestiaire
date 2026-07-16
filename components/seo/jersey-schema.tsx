@@ -66,18 +66,6 @@ export function JerseySchema({
       jersey.club.id
     }/jerseys/${jersey.slug || jersey.id}`,
 
-    offers: {
-      "@type": "Offer",
-      availability: "https://schema.org/InStock",
-      priceCurrency: "EUR",
-      ...(jersey.retailPrice != null && jersey.retailPrice > 0
-        ? { price: jersey.retailPrice.toString() }
-        : { priceSpecification: { "@type": "PriceSpecification", priceCurrency: "EUR" } }),
-      url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}/clubs/${
-        jersey.club.id
-      }/jerseys/${jersey.slug || jersey.id}`,
-    },
-
     ...(totalRatings > 0 && {
       aggregateRating: {
         "@type": "AggregateRating",
