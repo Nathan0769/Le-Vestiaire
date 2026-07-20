@@ -17,6 +17,8 @@ type MockSessionUser = {
   banned: boolean;
   banReason: string | null;
   banExpires: Date | null;
+  username: string;
+  usernameGenerated: boolean;
 };
 
 vi.mock("@/lib/get-current-user", () => ({
