@@ -9,6 +9,17 @@ import { generateSlugBasedUsername } from "@/lib/username-generator";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
+  user: {
+    additionalFields: {
+      username: { type: "string", required: true, input: false },
+      usernameGenerated: {
+        type: "boolean",
+        required: false,
+        input: false,
+        defaultValue: false,
+      },
+    },
+  },
   databaseHooks: {
     user: {
       create: {
