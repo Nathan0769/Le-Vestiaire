@@ -91,9 +91,11 @@ export function LeaderboardCard({
 
   const href = isCurrentUser
     ? `/${locale}/collection`
-    : entry.username
-      ? `/${locale}/u/${entry.username}/collection`
-      : `/${locale}/users/${entry.userId}/collection`;
+    : entry.isAnonymous
+      ? `/${locale}/users/${entry.userId}/collection`
+      : entry.username
+        ? `/${locale}/u/${entry.username}/collection`
+        : `/${locale}/users/${entry.userId}/collection`;
 
   return (
     <Tooltip>
