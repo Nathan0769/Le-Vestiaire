@@ -5,9 +5,26 @@ import { render } from "@react-email/components";
 import prisma from "./prisma";
 import { resend, FROM_EMAIL, APP_URL } from "./email";
 import { ResetPasswordEmail } from "@/emails/reset-password";
+import { generateSlugBasedUsername } from "@/lib/username-generator";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
+  databaseHooks: {
+    user: {
+      create: {
+        before: async (user) => {
+          const username = await generateSlugBasedUsername(user.name ?? null);
+          return {
+            data: {
+              ...user,
+              username,
+              usernameGenerated: true,
+            },
+          };
+        },
+      },
+    },
+  },
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url }) => {
