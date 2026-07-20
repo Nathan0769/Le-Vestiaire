@@ -112,6 +112,7 @@ export function OnboardingFavoriteClub({ initialUsername, returnTo = "/" }: Onbo
         name: "onboarding_completed",
         params: { has_favorite_club: false },
       });
+      router.refresh();
       router.push(returnTo);
       return;
     }
@@ -133,6 +134,7 @@ export function OnboardingFavoriteClub({ initialUsername, returnTo = "/" }: Onbo
       name: "onboarding_completed",
       params: { has_favorite_club: saved },
     });
+    router.refresh();
     router.push(returnTo);
   };
 
@@ -250,6 +252,7 @@ export function OnboardingFavoriteClub({ initialUsername, returnTo = "/" }: Onbo
                     name: "onboarding_completed",
                     params: { has_favorite_club: false },
                   });
+                  router.refresh();
                   router.push(returnTo);
                 }}
                 className="text-sm text-muted-foreground hover:text-foreground transition-colors text-center cursor-pointer"
