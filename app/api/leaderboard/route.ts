@@ -104,7 +104,7 @@ async function getCollectionSizeLeaderboard(
 
   const leaderboard = users
     .map((user) => {
-      const isAnonymous = user.leaderboardAnonymous;
+      const isAnonymous = user.leaderboardAnonymous ?? false;
       return {
         userId: user.id,
         username: isAnonymous
@@ -185,7 +185,7 @@ async function getCollectionDiversityLeaderboard(): Promise<
 
   const leaderboard = result.map((r) => {
     const user = users.find((u) => u.id === r.user_id)!;
-    const isAnonymous = user.leaderboardAnonymous;
+    const isAnonymous = user.leaderboardAnonymous ?? false;
 
     return {
       userId: user.id,
@@ -259,7 +259,7 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
 
   const leaderboard = result.map((r) => {
     const user = users.find((u) => u.id === r.user_id)!;
-    const isAnonymous = user.leaderboardAnonymous;
+    const isAnonymous = user.leaderboardAnonymous ?? false;
 
     return {
       userId: user.id,
@@ -333,7 +333,7 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
 
   const leaderboard = result.map((r) => {
     const user = users.find((u) => u.id === r.user_id)!;
-    const isAnonymous = user.leaderboardAnonymous;
+    const isAnonymous = user.leaderboardAnonymous ?? false;
 
     return {
       userId: user.id,

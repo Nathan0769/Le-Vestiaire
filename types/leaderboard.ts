@@ -28,6 +28,7 @@ export interface LeaderboardEntry {
     gkCount?: number;
   };
   hasBadge?: boolean;
+  isAnonymous?: boolean;
 }
 
 export interface LeaderboardResponse {
