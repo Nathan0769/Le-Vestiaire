@@ -1,11 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import {
   BarChart3,
   Clock,
   Download,
+  Loader2,
   Share2,
   Sparkles,
 } from "lucide-react";
@@ -63,7 +64,7 @@ export function ShareCardModal({ open, onOpenChange }: ShareCardModalProps) {
 
   const cacheBuster = useMemo(() => (open ? Date.now() : 0), [open]);
 
-  const queryString = useMemo(() => {
+  const targetQueryString = useMemo(() => {
     const params = new URLSearchParams({
       type,
       format,
@@ -78,7 +79,19 @@ export function ShareCardModal({ open, onOpenChange }: ShareCardModalProps) {
     return params.toString();
   }, [type, format, count, showAvatar, showUsername, enabledStats, cacheBuster]);
 
-  const cardUrl = `/api/collection/share-card?${queryString}`;
+  // Debounce URL updates so rapid clicks (checkboxes, switches) don't hammer
+  // the server. 200ms is short enough that it still feels responsive.
+  const [debouncedQuery, setDebouncedQuery] = useState(targetQueryString);
+  const [previewLoading, setPreviewLoading] = useState(false);
+  useEffect(() => {
+    const handle = window.setTimeout(() => {
+      setDebouncedQuery(targetQueryString);
+      setPreviewLoading(true);
+    }, 200);
+    return () => window.clearTimeout(handle);
+  }, [targetQueryString]);
+
+  const cardUrl = `/api/collection/share-card?${debouncedQuery}`;
 
   async function fetchCardBlob(): Promise<Blob> {
     const res = await fetch(cardUrl);
@@ -179,13 +192,19 @@ export function ShareCardModal({ open, onOpenChange }: ShareCardModalProps) {
                 }}
               >
                 <Image
-                  key={cardUrl}
                   src={cardUrl}
                   alt="Preview"
                   fill
                   className="object-contain"
                   unoptimized
+                  onLoad={() => setPreviewLoading(false)}
+                  onError={() => setPreviewLoading(false)}
                 />
+                {previewLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm transition-opacity">
+                    <Loader2 className="w-8 h-8 text-white animate-spin" />
+                  </div>
+                )}
               </div>
             </div>
             <p className="text-xs text-muted-foreground text-center">
