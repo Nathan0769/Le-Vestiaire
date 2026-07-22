@@ -7,12 +7,14 @@ export const authClient = createAuthClient({
 });
 
 export const handleGoogleSignIn = async (returnTo?: string) => {
+  // Toujours passer par l'onboarding après OAuth Google : sans callbackURL,
+  // Better Auth redirige vers la home et saute la sélection du club favori.
   const callbackURL = returnTo
     ? `/auth/onboarding?returnTo=${encodeURIComponent(returnTo)}`
-    : undefined;
+    : "/auth/onboarding";
   const { error } = await authClient.signIn.social({
     provider: "google",
-    ...(callbackURL ? { callbackURL } : {}),
+    callbackURL,
   });
   if (error) console.error(error);
 };
