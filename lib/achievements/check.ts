@@ -1,6 +1,7 @@
 import type { Achievement } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { ACHIEVEMENTS, type AchievementTrigger, type AchievementDefinition } from "./definitions";
+import { createProgressCache } from "./progress-cache";
 
 export async function checkAchievements(
   userId: string,
@@ -55,10 +56,14 @@ async function checkEntries(
 
   const toCheck = entries.filter(([key]) => !unlockedKeys.has(key));
 
+  // Mutualise les métriques partagées entre paliers et les lance en parallèle.
+  const getProgress = createProgressCache(userId);
+  await Promise.all(toCheck.map(([, def]) => getProgress(def.computeProgress)));
+
   const newUnlocks: Achievement[] = [];
 
   for (const [key, def] of toCheck) {
-    const progress = await def.computeProgress(userId);
+    const progress = await getProgress(def.computeProgress);
     if (progress < def.threshold) continue;
 
     try {

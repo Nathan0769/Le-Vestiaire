@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
 import { checkAllAchievements } from "@/lib/achievements/check";
 import { getRarityMap } from "@/lib/achievements/rarity";
+import { createProgressCache } from "@/lib/achievements/progress-cache";
 import { AchievementsPageClient } from "@/components/achievements/achievements-page-client";
 import type { AchievementsResponse } from "@/hooks/useAchievements";
 
@@ -35,9 +36,10 @@ export default async function AchievementsPage() {
     ([key, def]) => !unlockedKeys.has(key) && !def.hidden
   );
 
+  const getProgress = createProgressCache(user.id);
   const inProgress = await Promise.all(
     inProgressEntries.map(async ([key, def]) => {
-      const currentProgress = await def.computeProgress(user.id);
+      const currentProgress = await getProgress(def.computeProgress);
       return {
         key,
         category: def.category,
