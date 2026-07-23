@@ -2821,10 +2821,25 @@
             "description": "Camisetas de 3 ligas diferentes",
             "howTo": "Añade camisetas de 3 ligas diferentes."
           },
+          "5": {
+            "title": "Explorador",
+            "description": "Camisetas de 5 ligas diferentes",
+            "howTo": "Añade camisetas de 5 ligas diferentes."
+          },
           "10": {
             "title": "Globe-trotter",
             "description": "10 ligas diferentes",
             "howTo": "Añade camisetas de 10 ligas diferentes."
+          },
+          "15": {
+            "title": "Trotamundos",
+            "description": "Camisetas de 15 ligas diferentes",
+            "howTo": "Añade camisetas de 15 ligas diferentes."
+          },
+          "100": {
+            "title": "La vuelta al mundo",
+            "description": "Camisetas de 100 ligas diferentes",
+            "howTo": "Añade camisetas de 100 ligas diferentes."
           }
         },
         "vintage": {

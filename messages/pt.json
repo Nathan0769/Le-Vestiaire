@@ -2821,10 +2821,25 @@
             "description": "Camisolas de 3 ligas diferentes",
             "howTo": "Adiciona camisolas de 3 campeonatos diferentes."
           },
+          "5": {
+            "title": "Explorador",
+            "description": "Camisolas de 5 campeonatos diferentes",
+            "howTo": "Adiciona camisolas de 5 campeonatos diferentes."
+          },
           "10": {
             "title": "Globe-trotter",
             "description": "10 ligas diferentes",
             "howTo": "Adiciona camisolas de 10 campeonatos diferentes."
+          },
+          "15": {
+            "title": "Viajante do mundo",
+            "description": "Camisolas de 15 campeonatos diferentes",
+            "howTo": "Adiciona camisolas de 15 campeonatos diferentes."
+          },
+          "100": {
+            "title": "Volta ao mundo",
+            "description": "Camisolas de 100 campeonatos diferentes",
+            "howTo": "Adiciona camisolas de 100 campeonatos diferentes."
           }
         },
         "vintage": {

@@ -9,6 +9,10 @@ const BADGE_KEYS = [
   "social.rating.50",
   "social.rating.100",
   "social.rating.200",
+  "diversity.leagues.3",
+  "diversity.leagues.5",
+  "diversity.leagues.15",
+  "diversity.leagues.100",
 ] as const;
 
 /**

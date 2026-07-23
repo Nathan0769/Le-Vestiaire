@@ -2821,10 +2821,25 @@
             "description": "Shirts uit 3 verschillende competities",
             "howTo": "Voeg shirts uit 3 verschillende competities toe."
           },
+          "5": {
+            "title": "Ontdekkingsreiziger",
+            "description": "Shirts uit 5 verschillende competities",
+            "howTo": "Voeg shirts uit 5 verschillende competities toe."
+          },
           "10": {
             "title": "Globetrotter",
             "description": "10 verschillende competities",
             "howTo": "Voeg shirts uit 10 verschillende competities toe."
+          },
+          "15": {
+            "title": "Globetrotter",
+            "description": "Shirts uit 15 verschillende competities",
+            "howTo": "Voeg shirts uit 15 verschillende competities toe."
+          },
+          "100": {
+            "title": "Reis om de wereld",
+            "description": "Shirts uit 100 verschillende competities",
+            "howTo": "Voeg shirts uit 100 verschillende competities toe."
           }
         },
         "vintage": {
