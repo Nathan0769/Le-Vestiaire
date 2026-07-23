@@ -31,7 +31,7 @@ export default async function FeedPage() {
 
   const { items: posts, nextCursor } = await getFeedForUser(user.id, {
     limit: 20,
-    scope: "friends",
+    scope: "global",
   });
   const items = await enrichPostsForFeed(posts, user.id);
   const initialData: FeedPage = { items, nextCursor };

@@ -3040,7 +3040,10 @@
     "recommendedJerseyMany": "Trikots",
     "recommendedFollow": "Folgen",
     "recommendedRequested": "Angefragt",
-    "recommendedFollowing": "Folgt"
+    "recommendedFollowing": "Folgt",
+    "aroundExit": "Zurück zum Feed",
+    "aroundLoadMoreNewer": "Neuere Beiträge anzeigen",
+    "aroundNotFound": "Beitrag nicht gefunden oder nicht mehr verfügbar."
   },
   "Notifications": {
     "title": "Benachrichtigungen",

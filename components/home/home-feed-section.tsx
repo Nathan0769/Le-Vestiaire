@@ -1,4 +1,4 @@
-import { Rss, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { PostCard } from "@/components/feed/post-card";
@@ -25,10 +25,7 @@ export async function HomeFeedSection({ userId }: HomeFeedSectionProps) {
     <section className="py-16 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <h2 className="text-3xl md:text-4xl font-bold">{t("title")}</h2>
-            <Rss className="w-6 h-6 text-primary" />
-          </div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{t("title")}</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             {t("subtitle")}
           </p>

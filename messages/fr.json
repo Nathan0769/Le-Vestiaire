@@ -3044,7 +3044,10 @@
     "recommendedJerseyMany": "maillots",
     "recommendedFollow": "Suivre",
     "recommendedRequested": "Demandé",
-    "recommendedFollowing": "Abonné"
+    "recommendedFollowing": "Abonné",
+    "aroundExit": "Retour au feed",
+    "aroundLoadMoreNewer": "Voir plus récents",
+    "aroundNotFound": "Post introuvable ou plus disponible."
   },
   "Notifications": {
     "title": "Notifications",

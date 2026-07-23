@@ -54,10 +54,10 @@ export async function getFeedForUser(
     }
     whereAuthor = { in: allowedAuthorIds };
   } else {
-    // scope === "global" : tous sauf blockés + soi-même exclu pour éviter l'auto-spam en haut
-    whereAuthor = {
-      notIn: [...blockedIds, userId],
-    };
+    // scope === "global" : tous sauf blockés (soi-même inclus pour permettre
+    // le deep-link notif sur ses propres posts et voir son activité).
+    whereAuthor =
+      blockedIds.length > 0 ? { notIn: blockedIds } : {};
   }
 
   const rows = await db.post.findMany({

@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 import { Link } from "@/i18n/routing";
-import { UsersRound, Globe, Rss } from "lucide-react";
+import { UsersRound, Globe, ChevronUp, ChevronDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PostCard } from "@/components/feed/post-card";
 import { NewPostsBadge } from "@/components/feed/new-posts-badge";
@@ -19,52 +19,243 @@ interface FeedTimelineProps {
 
 type Scope = "friends" | "global";
 
+interface AroundResponse {
+  newer: FeedPostItem[];
+  target: FeedPostItem | null;
+  older: FeedPostItem[];
+  hasMoreNewer: boolean;
+  hasMoreOlder: boolean;
+  newerCursor: string | null;
+  olderCursor: string | null;
+}
+
 export function FeedTimeline({ initialData }: FeedTimelineProps) {
   const t = useTranslations("Feed");
   const searchParams = useSearchParams();
-  // Capté une seule fois au mount : le pin dispose s'il switch d'onglet.
-  const [pinnedPostId, setPinnedPostId] = useState<string | null>(() =>
-    searchParams.get("post")
+  const router = useRouter();
+  const pathname = usePathname();
+  const targetPostId = searchParams.get("post");
+  const openComments = searchParams.get("comments") === "1";
+
+  if (targetPostId) {
+    return (
+      <AroundView
+        targetPostId={targetPostId}
+        openComments={openComments}
+        onExit={() => router.replace(pathname, { scroll: false })}
+      />
+    );
+  }
+
+  return <TimelineView initialData={initialData} />;
+}
+
+/* ------------------------------------------------------------------ */
+/* Mode "around" : vue centrée sur un post depuis une notif           */
+/* ------------------------------------------------------------------ */
+
+interface AroundViewProps {
+  targetPostId: string;
+  openComments: boolean;
+  onExit: () => void;
+}
+
+function AroundView({ targetPostId, openComments, onExit }: AroundViewProps) {
+  const t = useTranslations("Feed");
+  const targetRef = useRef<HTMLDivElement | null>(null);
+  const [olderPages, setOlderPages] = useState<FeedPostItem[][]>([]);
+  const [newerPages, setNewerPages] = useState<FeedPostItem[][]>([]);
+  const [olderCursor, setOlderCursor] = useState<string | null>(null);
+  const [newerCursor, setNewerCursor] = useState<string | null>(null);
+  const [hasMoreNewer, setHasMoreNewer] = useState(false);
+  const [hasMoreOlder, setHasMoreOlder] = useState(false);
+  const olderSentinelRef = useRef<HTMLDivElement | null>(null);
+
+  const around = useQuery({
+    queryKey: ["feed-around", targetPostId],
+    queryFn: async () => {
+      const res = await fetch(`/api/feed/around/${targetPostId}`);
+      if (!res.ok) throw new Error("around fetch error");
+      return (await res.json()) as AroundResponse;
+    },
+  });
+
+  // Init des cursors + pages quand la 1ère fetch arrive.
+  useEffect(() => {
+    if (!around.data) return;
+    setOlderPages(around.data.older.length > 0 ? [around.data.older] : []);
+    setNewerPages(around.data.newer.length > 0 ? [around.data.newer] : []);
+    setOlderCursor(around.data.olderCursor);
+    setNewerCursor(around.data.newerCursor);
+    setHasMoreOlder(around.data.hasMoreOlder);
+    setHasMoreNewer(around.data.hasMoreNewer);
+  }, [around.data]);
+
+  // Scroll vers la card target dès qu'elle est dans le DOM.
+  useEffect(() => {
+    if (around.data?.target && targetRef.current) {
+      // 2× requestAnimationFrame pour attendre le layout complet
+      // (images en cours de load peuvent décaler la position).
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          targetRef.current?.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+        });
+      });
+    }
+  }, [around.data?.target?.id]);
+
+  // Infinite scroll bas pour les posts plus vieux
+  useEffect(() => {
+    const el = olderSentinelRef.current;
+    if (!el || !hasMoreOlder) return;
+    const observer = new IntersectionObserver(async (entries) => {
+      if (!entries[0].isIntersecting || !olderCursor) return;
+      const res = await fetch(
+        `/api/feed?scope=global&cursor=${encodeURIComponent(olderCursor)}`
+      );
+      if (!res.ok) return;
+      const page = (await res.json()) as FeedPage;
+      setOlderPages((p) => [...p, page.items]);
+      setOlderCursor(page.nextCursor);
+      setHasMoreOlder(!!page.nextCursor);
+    });
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasMoreOlder, olderCursor]);
+
+  const loadMoreNewer = async () => {
+    if (!newerCursor) return;
+    // Utilise around avec un before large pour récupérer les posts entre le
+    // premier newer visible et maintenant.
+    const res = await fetch(
+      `/api/feed/around/${newerCursor}?before=20&after=0`
+    );
+    if (!res.ok) return;
+    const data = (await res.json()) as AroundResponse;
+    // Le "target" de cette 2e query = premier newer précédent, à skip pour éviter doublon
+    const fresh = data.newer;
+    if (fresh.length === 0) {
+      setHasMoreNewer(false);
+      return;
+    }
+    setNewerPages((p) => [fresh, ...p]);
+    setNewerCursor(fresh[0]?.id ?? null);
+    setHasMoreNewer(data.hasMoreNewer);
+  };
+
+  const allNewer = newerPages.flat();
+  const allOlder = olderPages.flat();
+  const target = around.data?.target;
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6 gap-3">
+        <h1 className="text-2xl font-semibold">{t("title")}</h1>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={onExit}
+          className="cursor-pointer"
+        >
+          {t("aroundExit")}
+        </Button>
+      </div>
+
+      <div className="flex gap-6 justify-center">
+        <div className="w-full max-w-lg">
+          {around.isLoading && (
+            <p className="text-sm text-muted-foreground text-center py-8">
+              {t("loading")}
+            </p>
+          )}
+
+          {around.isError && (
+            <p className="text-sm text-muted-foreground text-center py-8">
+              {t("aroundNotFound")}
+            </p>
+          )}
+
+          {target && (
+            <>
+              {hasMoreNewer && (
+                <div className="mb-4 text-center">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={loadMoreNewer}
+                    className="cursor-pointer gap-2"
+                  >
+                    <ChevronUp className="w-4 h-4" />
+                    {t("aroundLoadMoreNewer")}
+                  </Button>
+                </div>
+              )}
+
+              <div className="space-y-6 mb-6">
+                {allNewer.map((post) => (
+                  <PostCard key={post.id} post={post} />
+                ))}
+              </div>
+
+              <div
+                ref={targetRef}
+                className="mb-6 ring-2 ring-primary rounded-xl transition-all"
+              >
+                <PostCard
+                  key={target.id}
+                  post={target}
+                  defaultCommentsOpen={openComments}
+                />
+              </div>
+
+              <div className="space-y-6">
+                {allOlder.map((post) => (
+                  <PostCard key={post.id} post={post} />
+                ))}
+              </div>
+
+              {hasMoreOlder && (
+                <div
+                  ref={olderSentinelRef}
+                  className="py-4 text-center text-sm text-muted-foreground"
+                >
+                  <ChevronDown className="w-4 h-4 inline mr-1" />
+                  {t("loading")}
+                </div>
+              )}
+            </>
+          )}
+        </div>
+        <RecommendedUsers />
+      </div>
+    </div>
   );
-  const [openComments] = useState(
-    () => searchParams.get("comments") === "1"
-  );
-  const [scope, setScopeState] = useState<Scope>("friends");
+}
+
+/* ------------------------------------------------------------------ */
+/* Mode "timeline" : feed classique avec onglets Mes abonnements/Global */
+/* ------------------------------------------------------------------ */
+
+interface TimelineViewProps {
+  initialData: FeedPage;
+}
+
+function TimelineView({ initialData }: TimelineViewProps) {
+  const t = useTranslations("Feed");
+  const [scope, setScope] = useState<Scope>("global");
   const [sinceTimestamp, setSinceTimestamp] = useState(() =>
     new Date().toISOString()
   );
   const sentinelRef = useRef<HTMLDivElement | null>(null);
-  const pinnedRef = useRef<HTMLDivElement | null>(null);
-
-  // Changer d'onglet retire le pin (signal user : "je veux voir autre chose").
-  const setScope = (next: Scope) => {
-    if (next !== scope) setPinnedPostId(null);
-    setScopeState(next);
-  };
-
-  // Fetch le post pinné (venant d'une notif ?post=XXX) pour le remonter en tête.
-  const pinnedPost = useQuery({
-    queryKey: ["post", pinnedPostId],
-    enabled: !!pinnedPostId,
-    queryFn: async () => {
-      const res = await fetch(`/api/posts/${pinnedPostId}`);
-      if (!res.ok) return { post: null };
-      return (await res.json()) as { post: FeedPostItem | null };
-    },
-  });
-
-  // Scroll vers la card pinnée dès qu'elle est chargée.
-  useEffect(() => {
-    if (pinnedPost.data?.post && pinnedRef.current) {
-      pinnedRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [pinnedPost.data?.post]);
 
   const feed = useInfiniteQuery({
     queryKey: ["feed", scope],
     initialPageParam: undefined as string | undefined,
     initialData:
-      scope === "friends"
+      scope === "global"
         ? { pages: [initialData], pageParams: [undefined] }
         : undefined,
     getNextPageParam: (last: FeedPage) => last.nextCursor ?? undefined,
@@ -113,82 +304,70 @@ export function FeedTimeline({ initialData }: FeedTimelineProps) {
 
   return (
     <div>
-      <div className="flex items-center gap-3 mb-8">
-        <Rss className="w-6 h-6 text-primary" />
+      <div className="mb-8">
         <h1 className="text-2xl font-semibold">{t("title")}</h1>
       </div>
 
       <div className="flex gap-6 justify-center">
-      <div className="w-full max-w-lg">
-      <div className="grid grid-cols-2 gap-2 p-1 rounded-full bg-muted mb-6">
-        <Button
-          variant={scope === "friends" ? "default" : "ghost"}
-          size="sm"
-          onClick={() => setScope("friends")}
-          className="cursor-pointer rounded-full gap-2"
-        >
-          <UsersRound className="w-4 h-4" />
-          {t("tabs.friends")}
-        </Button>
-        <Button
-          variant={scope === "global" ? "default" : "ghost"}
-          size="sm"
-          onClick={() => setScope("global")}
-          className="cursor-pointer rounded-full gap-2"
-        >
-          <Globe className="w-4 h-4" />
-          {t("tabs.global")}
-        </Button>
-      </div>
+        <div className="w-full max-w-lg">
+          <div className="grid grid-cols-2 gap-2 p-1 rounded-full bg-muted mb-6">
+            <Button
+              variant={scope === "friends" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setScope("friends")}
+              className="cursor-pointer rounded-full gap-2"
+            >
+              <UsersRound className="w-4 h-4" />
+              {t("tabs.friends")}
+            </Button>
+            <Button
+              variant={scope === "global" ? "default" : "ghost"}
+              size="sm"
+              onClick={() => setScope("global")}
+              className="cursor-pointer rounded-full gap-2"
+            >
+              <Globe className="w-4 h-4" />
+              {t("tabs.global")}
+            </Button>
+          </div>
 
-      {scope === "friends" && (
-        <NewPostsBadge
-          count={newCount.data?.count ?? 0}
-          onClick={() => {
-            trackEvent({ name: "feed_refreshed", params: {} });
-            setSinceTimestamp(new Date().toISOString());
-            feed.refetch();
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-        />
-      )}
+          {scope === "friends" && (
+            <NewPostsBadge
+              count={newCount.data?.count ?? 0}
+              onClick={() => {
+                trackEvent({ name: "feed_refreshed", params: {} });
+                setSinceTimestamp(new Date().toISOString());
+                feed.refetch();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            />
+          )}
 
-      {feed.isLoading && (
-        <p className="text-sm text-muted-foreground text-center py-8">
-          {t("loading")}
-        </p>
-      )}
+          {feed.isLoading && (
+            <p className="text-sm text-muted-foreground text-center py-8">
+              {t("loading")}
+            </p>
+          )}
 
-      {!feed.isLoading && allItems.length === 0 && (
-        <EmptyState scope={scope} />
-      )}
+          {!feed.isLoading && allItems.length === 0 && (
+            <EmptyState scope={scope} />
+          )}
 
-      {pinnedPost.data?.post && (
-        <div ref={pinnedRef} className="mb-6">
-          <PostCard
-            post={pinnedPost.data.post}
-            defaultCommentsOpen={openComments}
-          />
-        </div>
-      )}
+          <div className="space-y-6">
+            {allItems.map((post) => (
+              <PostCard key={post.id} post={post} />
+            ))}
+          </div>
 
-      <div className="space-y-6">
-        {allItems
-          .filter((post) => post.id !== pinnedPostId)
-          .map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-      </div>
-
-      {feed.hasNextPage && (
-        <div ref={sentinelRef} className="py-4 text-center">
-          {feed.isFetchingNextPage && (
-            <p className="text-sm text-muted-foreground">{t("loading")}</p>
+          {feed.hasNextPage && (
+            <div ref={sentinelRef} className="py-4 text-center">
+              {feed.isFetchingNextPage && (
+                <p className="text-sm text-muted-foreground">{t("loading")}</p>
+              )}
+            </div>
           )}
         </div>
-      )}
-      </div>
-      <RecommendedUsers />
+        <RecommendedUsers />
       </div>
     </div>
   );

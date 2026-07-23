@@ -698,10 +698,11 @@ model Post {
   likeCount    Int       @default(0) @map("like_count")
   commentCount Int       @default(0) @map("comment_count")
 
-  author   User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  likes    PostLike[]
-  comments PostComment[]
-  reports  PostReport[]
+  author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes         PostLike[]
+  comments      PostComment[]
+  reports       PostReport[]
+  notifications Notification[]
 
   @@unique([authorId, type, referenceId, capKind])
   @@index([authorId, createdAt])
@@ -732,9 +733,10 @@ model PostComment {
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
-  post    Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
-  author  User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
-  reports PostReport[]
+  post          Post           @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  reports       PostReport[]
+  notifications Notification[]
 
   @@index([postId, createdAt])
   @@index([authorId])
@@ -802,8 +804,12 @@ model Notification {
   readAt    DateTime?        @map("read_at")
   createdAt DateTime         @default(now()) @map("created_at")
 
-  user  User  @relation("NotificationRecipient", fields: [userId], references: [id], onDelete: Cascade)
-  actor User? @relation("NotificationActor", fields: [actorId], references: [id], onDelete: SetNull)
+  user    User         @relation("NotificationRecipient", fields: [userId], references: [id], onDelete: Cascade)
+  actor   User?        @relation("NotificationActor", fields: [actorId], references: [id], onDelete: SetNull)
+  // Cascade : une notif POST_LIKED/POST_COMMENTED sans post cible n'a plus de
+  // sens (deep-link renverrait vers rien). Autant la supprimer avec le post.
+  post    Post?        @relation(fields: [postId], references: [id], onDelete: Cascade)
+  comment PostComment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   @@index([userId, readAt, createdAt])
   @@map("notifications")

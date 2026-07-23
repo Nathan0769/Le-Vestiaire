@@ -3040,7 +3040,10 @@
     "recommendedJerseyMany": "camisetas",
     "recommendedFollow": "Seguir",
     "recommendedRequested": "Solicitado",
-    "recommendedFollowing": "Siguiendo"
+    "recommendedFollowing": "Siguiendo",
+    "aroundExit": "Volver al feed",
+    "aroundLoadMoreNewer": "Ver más recientes",
+    "aroundNotFound": "Publicación no encontrada o no disponible."
   },
   "Notifications": {
     "title": "Notificaciones",
