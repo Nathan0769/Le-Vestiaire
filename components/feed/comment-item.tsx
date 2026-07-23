@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 import { fr, enUS, es, it, de, nl, pt } from "date-fns/locale";
@@ -61,13 +61,13 @@ export function CommentItem({
   const isOwnComment = currentUserId === comment.author.id;
   const canDelete = isOwnComment || currentUserId === postAuthorId;
   const canReport = Boolean(currentUserId) && !isOwnComment;
-  // Client-only : évite mismatch SSR (Date.now diverge server/client).
-  const [withinEditWindow, setWithinEditWindow] = useState(false);
-  useEffect(() => {
-    const inWindow =
-      Date.now() - new Date(comment.createdAt).getTime() < EDIT_WINDOW_MS;
-    if (inWindow) setWithinEditWindow(true);
-  }, [comment.createdAt]);
+  // State initialisé au 1er render client (useState lazy init) : évite le mismatch
+  // SSR (Date.now diverge server/client) sans passer par useEffect.
+  const [withinEditWindow] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      Date.now() - new Date(comment.createdAt).getTime() < EDIT_WINDOW_MS
+  );
   const canEdit = isOwnComment && withinEditWindow;
 
   const editMutation = useMutation({
