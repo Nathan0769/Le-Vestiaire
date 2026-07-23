@@ -2703,52 +2703,92 @@
     "unlockedOn": "Sbloccato il {date}",
     "definitions": {
       "collection": {
-        "first": {
-          "title": "Prima maglia",
-          "description": "Aggiungi la tua prima maglia alla collezione"
-        },
         "10": {
           "title": "Si riempie",
-          "description": "10 maglie nella tua collezione"
+          "description": "10 maglie nella tua collezione",
+          "howTo": "Raggiungi 10 maglie nella collezione."
         },
         "25": {
           "title": "Piccolo collezionista",
-          "description": "25 maglie"
+          "description": "25 maglie",
+          "howTo": "Raggiungi 25 maglie nella collezione."
         },
         "50": {
           "title": "Vero collezionista",
-          "description": "50 maglie"
+          "description": "50 maglie",
+          "howTo": "Raggiungi 50 maglie nella collezione."
         },
         "100": {
           "title": "Centurione",
-          "description": "100 maglie"
+          "description": "100 maglie",
+          "howTo": "Raggiungi 100 maglie nella collezione."
         },
         "250": {
           "title": "Museo personale",
-          "description": "250 maglie"
+          "description": "250 maglie",
+          "howTo": "Raggiungi 250 maglie nella collezione."
+        },
+        "500": {
+          "title": "Museo nazionale",
+          "description": "500 maglie",
+          "howTo": "Raggiungi 500 maglie nella collezione."
+        },
+        "first": {
+          "title": "Prima maglia",
+          "description": "Aggiungi la tua prima maglia alla collezione",
+          "howTo": "Aggiungi la tua prima maglia alla collezione."
         },
         "value": {
           "1k": {
             "title": "1000€ investiti",
-            "description": "Valore totale della collezione a 1000€"
+            "description": "Valore totale della collezione a 1000€",
+            "howTo": "Raggiungi 1000 € di valore totale della collezione."
           },
           "10k": {
             "title": "Big spender",
-            "description": "Valore totale della collezione a 10 000€"
+            "description": "Valore totale della collezione a 10 000€",
+            "howTo": "Raggiungi 10 000 € di valore totale della collezione."
+          },
+          "25k": {
+            "title": "Collezionista facoltoso",
+            "description": "25 000 € di valore totale della collezione",
+            "howTo": "Raggiungi 25 000 € di valore totale della collezione."
           }
         },
         "same_club": {
           "5": {
             "title": "Fedele",
-            "description": "5 maglie dello stesso club"
+            "description": "5 maglie dello stesso club",
+            "howTo": "Riunisci 5 maglie dello stesso club."
           },
           "15": {
             "title": "Appassionato",
-            "description": "15 maglie dello stesso club"
+            "description": "15 maglie dello stesso club",
+            "howTo": "Riunisci 15 maglie dello stesso club."
           },
           "30": {
             "title": "Fanatico",
-            "description": "30 maglie dello stesso club"
+            "description": "30 maglie dello stesso club",
+            "howTo": "Riunisci 30 maglie dello stesso club."
+          },
+          "50": {
+            "title": "Ultra",
+            "description": "50 maglie dello stesso club",
+            "howTo": "Riunisci 50 maglie dello stesso club."
+          }
+        },
+        "mint": {
+          "25": {
+            "title": "Impeccabile",
+            "description": "25 maglie in condizioni perfette",
+            "howTo": "Possiedi 25 maglie in condizioni perfette."
+          }
+        },
+        "flocked": {
+          "10": {
+            "title": "Con nome e numero",
+            "description": "10 maglie con nome del giocatore",
+            "howTo": "Possiedi 10 maglie con il nome del giocatore."
           }
         }
       },
@@ -2756,97 +2796,184 @@
         "clubs": {
           "5": {
             "title": "Cinque club",
-            "description": "Maglie di 5 club diversi"
+            "description": "Maglie di 5 club diversi",
+            "howTo": "Aggiungi maglie di 5 club diversi."
           },
           "20": {
             "title": "Mente aperta",
-            "description": "20 club diversi"
+            "description": "20 club diversi",
+            "howTo": "Aggiungi maglie di 20 club diversi."
           },
           "50": {
-            "title": "Neutrale svizzero",
-            "description": "50 club diversi"
+            "title": "Neutralità svizzera",
+            "description": "50 club diversi",
+            "howTo": "Aggiungi maglie di 50 club diversi."
+          },
+          "100": {
+            "title": "Senza confini",
+            "description": "100 club diversi",
+            "howTo": "Aggiungi maglie di 100 club diversi."
           }
         },
         "leagues": {
           "3": {
             "title": "Tre campionati",
-            "description": "Maglie di 3 campionati diversi"
+            "description": "Maglie di 3 campionati diversi",
+            "howTo": "Aggiungi maglie di 3 campionati diversi."
           },
           "10": {
             "title": "Globe-trotter",
-            "description": "10 campionati diversi"
+            "description": "10 campionati diversi",
+            "howTo": "Aggiungi maglie di 10 campionati diversi."
           }
         },
         "vintage": {
           "pre2000": {
             "title": "Old school",
-            "description": "5 maglie anteriori al 2000"
+            "description": "5 maglie anteriori al 2000",
+            "howTo": "Aggiungi 5 maglie precedenti al 2000."
+          }
+        },
+        "brands": {
+          "5": {
+            "title": "Multimarca",
+            "description": "Maglie di 5 marchi diversi",
+            "howTo": "Aggiungi maglie di 5 marchi diversi."
+          },
+          "10": {
+            "title": "Cacciatore di marchi",
+            "description": "Maglie di 10 marchi diversi",
+            "howTo": "Aggiungi maglie di 10 marchi diversi."
           }
         }
       },
       "social": {
         "rating": {
-          "first": {
-            "title": "Prima valutazione",
-            "description": "Valuta la tua prima maglia"
-          },
           "50": {
             "title": "Critico",
-            "description": "50 valutazioni lasciate"
+            "description": "50 valutazioni lasciate",
+            "howTo": "Lascia 50 valutazioni sulle maglie."
+          },
+          "100": {
+            "title": "Esperto",
+            "description": "100 valutazioni lasciate",
+            "howTo": "Lascia 100 valutazioni sulle maglie."
+          },
+          "first": {
+            "title": "Prima valutazione",
+            "description": "Valuta la tua prima maglia",
+            "howTo": "Valuta la tua prima maglia."
           }
         },
         "profile": {
           "complete": {
             "title": "Ben presentato",
-            "description": "Avatar, club preferito e bio completati"
+            "description": "Avatar, club preferito e bio completati",
+            "howTo": "Completa avatar, club del cuore e bio."
           }
         },
         "follower": {
-          "first": {
-            "title": "Primo amico",
-            "description": "Aggiungi il tuo primo amico"
-          },
           "10": {
             "title": "Socievole",
-            "description": "10 amici sulla piattaforma"
+            "description": "10 amici sulla piattaforma",
+            "howTo": "Raggiungi 10 amici sulla piattaforma."
+          },
+          "25": {
+            "title": "Popolare",
+            "description": "25 amici",
+            "howTo": "Raggiungi 25 amici sulla piattaforma."
+          },
+          "50": {
+            "title": "Star",
+            "description": "50 amici",
+            "howTo": "Raggiungi 50 amici sulla piattaforma."
+          },
+          "first": {
+            "title": "Primo amico",
+            "description": "Aggiungi il tuo primo amico",
+            "howTo": "Aggiungi il tuo primo amico."
           }
         }
       },
       "loyalty": {
         "1year": {
           "title": "Un anno insieme",
-          "description": "1 anno dalla creazione dell'account"
+          "description": "1 anno dalla creazione dell'account",
+          "howTo": "Mantieni il tuo account attivo per 1 anno."
         },
         "2year": {
           "title": "Due anni di fedeltà",
-          "description": "2 anni dalla creazione dell'account"
+          "description": "2 anni dalla creazione dell'account",
+          "howTo": "Mantieni il tuo account attivo per 2 anni."
         }
       },
       "rarity": {
         "pre1990": {
           "title": "Antiquario",
-          "description": "Possiedi una maglia anteriore al 1990"
+          "description": "Possiedi una maglia anteriore al 1990",
+          "howTo": "Aggiungi una maglia precedente al 1990."
         },
         "goalkeeper": {
           "title": "Il muro",
-          "description": "Possiedi una maglia da portiere"
+          "description": "Possiedi una maglia da portiere",
+          "howTo": "Aggiungi una maglia da portiere alla collezione."
+        },
+        "pre1980": {
+          "title": "Reperto",
+          "description": "Possiedi una maglia precedente al 1980",
+          "howTo": "Aggiungi una maglia precedente al 1980."
+        },
+        "signed": {
+          "title": "Autografata",
+          "description": "Possiedi una maglia autografata",
+          "howTo": "Aggiungi una maglia autografata alla collezione."
+        },
+        "certificate": {
+          "title": "Certificata",
+          "description": "Possiedi una maglia con certificato di autenticità",
+          "howTo": "Aggiungi una maglia con certificato di autenticità."
+        },
+        "authentic": {
+          "10": {
+            "title": "Versione player",
+            "description": "10 maglie non replica",
+            "howTo": "Possiedi 10 maglie in versione autentica (non replica)."
+          }
+        },
+        "match_worn": {
+          "title": "Il Graal",
+          "description": "Possiedi una maglia indossata in partita",
+          "howTo": "Aggiungi una maglia indossata in partita."
         }
       },
       "contribution": {
         "proposal": {
-          "first": {
-            "title": "Primo contributo",
-            "description": "Una delle tue proposte di maglia è stata accettata"
-          },
           "10": {
             "title": "Contributore regolare",
-            "description": "10 proposte accettate"
+            "description": "10 proposte accettate",
+            "howTo": "Fai accettare 10 delle tue proposte di maglia."
+          },
+          "25": {
+            "title": "Pilastro",
+            "description": "25 proposte accettate",
+            "howTo": "Fai accettare 25 delle tue proposte di maglia."
+          },
+          "50": {
+            "title": "Archivista capo",
+            "description": "50 proposte accettate",
+            "howTo": "Fai accettare 50 delle tue proposte di maglia."
+          },
+          "first": {
+            "title": "Primo contributo",
+            "description": "Una delle tue proposte di maglia è stata accettata",
+            "howTo": "Fai accettare una delle tue proposte di maglia."
           }
         },
         "description": {
           "first": {
             "title": "Redattore",
-            "description": "La tua prima descrizione è stata accettata"
+            "description": "La tua prima descrizione è stata accettata",
+            "howTo": "Fai accettare una delle tue descrizioni."
           }
         }
       },
@@ -2870,7 +2997,17 @@
       "unlocked": "Nessun obiettivo sbloccato in questa categoria.",
       "inProgress": "Nessun obiettivo in corso in questa categoria."
     },
-    "secret": "Segreto"
+    "secret": "Segreto",
+    "detail": {
+      "unlockedBadge": "sbloccato",
+      "lockedBadge": "Bloccato",
+      "category": "Categoria",
+      "unlockedOn": "Sbloccato il",
+      "rarity": "Rarità",
+      "rarityValue": "{percent} dei collezionisti",
+      "progress": "Progresso",
+      "howToTitle": "Come ottenerlo"
+    }
   },
   "PublicAchievements": {
     "title": "Obiettivi di {name}",

@@ -2707,52 +2707,92 @@
     "unlockedOn": "Débloqué le {date}",
     "definitions": {
       "collection": {
-        "first": {
-          "title": "Premier maillot",
-          "description": "Ajoute ton tout premier maillot à ta collection"
-        },
         "10": {
           "title": "Ça se remplit",
-          "description": "10 maillots dans ta collection"
+          "description": "10 maillots dans ta collection",
+          "howTo": "Atteins 10 maillots dans ta collection."
         },
         "25": {
           "title": "Petit collectionneur",
-          "description": "25 maillots"
+          "description": "25 maillots",
+          "howTo": "Atteins 25 maillots dans ta collection."
         },
         "50": {
           "title": "Vrai collectionneur",
-          "description": "50 maillots"
+          "description": "50 maillots",
+          "howTo": "Atteins 50 maillots dans ta collection."
         },
         "100": {
           "title": "Centurion",
-          "description": "100 maillots"
+          "description": "100 maillots",
+          "howTo": "Atteins 100 maillots dans ta collection."
         },
         "250": {
           "title": "Musée personnel",
-          "description": "250 maillots"
+          "description": "250 maillots",
+          "howTo": "Atteins 250 maillots dans ta collection."
+        },
+        "500": {
+          "title": "Musée national",
+          "description": "500 maillots",
+          "howTo": "Atteins 500 maillots dans ta collection."
+        },
+        "first": {
+          "title": "Premier maillot",
+          "description": "Ajoute ton tout premier maillot à ta collection",
+          "howTo": "Ajoute ton tout premier maillot à ta collection."
         },
         "value": {
           "1k": {
             "title": "1000€ investis",
-            "description": "Valeur totale de collection à 1000€"
+            "description": "Valeur totale de collection à 1000€",
+            "howTo": "Atteins 1000 € de valeur totale de collection."
           },
           "10k": {
             "title": "Big spender",
-            "description": "Valeur totale de collection à 10 000€"
+            "description": "Valeur totale de collection à 10 000€",
+            "howTo": "Atteins 10 000 € de valeur totale de collection."
+          },
+          "25k": {
+            "title": "Collectionneur fortuné",
+            "description": "Valeur totale de collection à 25 000€",
+            "howTo": "Atteins 25 000 € de valeur totale de collection."
           }
         },
         "same_club": {
           "5": {
             "title": "Fidèle",
-            "description": "5 maillots d'un même club"
+            "description": "5 maillots d'un même club",
+            "howTo": "Réunis 5 maillots d'un même club."
           },
           "15": {
             "title": "Passionné",
-            "description": "15 maillots d'un même club"
+            "description": "15 maillots d'un même club",
+            "howTo": "Réunis 15 maillots d'un même club."
           },
           "30": {
             "title": "Fanatique",
-            "description": "30 maillots d'un même club"
+            "description": "30 maillots d'un même club",
+            "howTo": "Réunis 30 maillots d'un même club."
+          },
+          "50": {
+            "title": "Ultra",
+            "description": "50 maillots d'un même club",
+            "howTo": "Réunis 50 maillots d'un même club."
+          }
+        },
+        "mint": {
+          "25": {
+            "title": "Impeccable",
+            "description": "25 maillots en état neuf",
+            "howTo": "Possède 25 maillots en état neuf (Mint)."
+          }
+        },
+        "flocked": {
+          "10": {
+            "title": "Floqué",
+            "description": "10 maillots floqués (nom de joueur)",
+            "howTo": "Possède 10 maillots floqués d'un nom de joueur."
           }
         }
       },
@@ -2760,97 +2800,184 @@
         "clubs": {
           "5": {
             "title": "Cinq clubs",
-            "description": "Maillots de 5 clubs différents"
+            "description": "Maillots de 5 clubs différents",
+            "howTo": "Ajoute des maillots de 5 clubs différents."
           },
           "20": {
             "title": "Ouvert d'esprit",
-            "description": "20 clubs différents"
+            "description": "20 clubs différents",
+            "howTo": "Ajoute des maillots de 20 clubs différents."
           },
           "50": {
-            "title": "Neutre suisse",
-            "description": "50 clubs différents"
+            "title": "Neutralité suisse",
+            "description": "50 clubs différents",
+            "howTo": "Ajoute des maillots de 50 clubs différents."
+          },
+          "100": {
+            "title": "Sans frontières",
+            "description": "100 clubs différents",
+            "howTo": "Ajoute des maillots de 100 clubs différents."
           }
         },
         "leagues": {
           "3": {
             "title": "Trois championnats",
-            "description": "Maillots de 3 championnats différents"
+            "description": "Maillots de 3 championnats différents",
+            "howTo": "Ajoute des maillots de 3 championnats différents."
           },
           "10": {
             "title": "Globe-trotter",
-            "description": "10 championnats différents"
+            "description": "10 championnats différents",
+            "howTo": "Ajoute des maillots de 10 championnats différents."
           }
         },
         "vintage": {
           "pre2000": {
             "title": "Old school",
-            "description": "5 maillots antérieurs à 2000"
+            "description": "5 maillots antérieurs à 2000",
+            "howTo": "Ajoute 5 maillots antérieurs à l'an 2000."
+          }
+        },
+        "brands": {
+          "5": {
+            "title": "Multimarque",
+            "description": "Maillots de 5 équipementiers différents",
+            "howTo": "Ajoute des maillots de 5 équipementiers différents."
+          },
+          "10": {
+            "title": "Chasseur de marques",
+            "description": "Maillots de 10 équipementiers différents",
+            "howTo": "Ajoute des maillots de 10 équipementiers différents."
           }
         }
       },
       "social": {
         "rating": {
-          "first": {
-            "title": "Premier avis",
-            "description": "Note ton premier maillot"
-          },
           "50": {
             "title": "Critique",
-            "description": "50 notes laissées"
+            "description": "50 notes laissées",
+            "howTo": "Laisse 50 notes sur des maillots."
+          },
+          "100": {
+            "title": "Expert",
+            "description": "100 notes laissées",
+            "howTo": "Laisse 100 notes sur des maillots."
+          },
+          "first": {
+            "title": "Premier avis",
+            "description": "Note ton premier maillot",
+            "howTo": "Note ton premier maillot."
           }
         },
         "profile": {
           "complete": {
             "title": "Bien présenté",
-            "description": "Avatar, club favori et bio renseignés"
+            "description": "Avatar, club favori et bio renseignés",
+            "howTo": "Renseigne ton avatar, ton club favori et ta bio."
           }
         },
         "follower": {
-          "first": {
-            "title": "Premier ami",
-            "description": "Ajoute ton premier ami"
-          },
           "10": {
             "title": "Sociable",
-            "description": "10 amis sur la plateforme"
+            "description": "10 amis sur la plateforme",
+            "howTo": "Atteins 10 amis sur la plateforme."
+          },
+          "25": {
+            "title": "Populaire",
+            "description": "25 amis",
+            "howTo": "Atteins 25 amis sur la plateforme."
+          },
+          "50": {
+            "title": "Star",
+            "description": "50 amis",
+            "howTo": "Atteins 50 amis sur la plateforme."
+          },
+          "first": {
+            "title": "Premier ami",
+            "description": "Ajoute ton premier ami",
+            "howTo": "Ajoute ton premier ami."
           }
         }
       },
       "loyalty": {
         "1year": {
           "title": "Un an ensemble",
-          "description": "1 an depuis la création de ton compte"
+          "description": "1 an depuis la création de ton compte",
+          "howTo": "Garde ton compte actif pendant 1 an."
         },
         "2year": {
           "title": "Fidèle depuis deux ans",
-          "description": "2 ans depuis la création de ton compte"
+          "description": "2 ans depuis la création de ton compte",
+          "howTo": "Garde ton compte actif pendant 2 ans."
         }
       },
       "rarity": {
         "pre1990": {
           "title": "Antiquaire",
-          "description": "Possède un maillot antérieur à 1990"
+          "description": "Possède un maillot antérieur à 1990",
+          "howTo": "Ajoute un maillot antérieur à 1990."
         },
         "goalkeeper": {
           "title": "Le mur",
-          "description": "Possède un maillot de gardien"
+          "description": "Possède un maillot de gardien",
+          "howTo": "Ajoute un maillot de gardien à ta collection."
+        },
+        "pre1980": {
+          "title": "Vestige",
+          "description": "Possède un maillot antérieur à 1980",
+          "howTo": "Ajoute un maillot antérieur à 1980."
+        },
+        "signed": {
+          "title": "Dédicace",
+          "description": "Possède un maillot signé",
+          "howTo": "Ajoute un maillot signé à ta collection."
+        },
+        "certificate": {
+          "title": "Authentifié",
+          "description": "Possède un maillot avec certificat d'authenticité",
+          "howTo": "Ajoute un maillot accompagné d'un certificat d'authenticité."
+        },
+        "authentic": {
+          "10": {
+            "title": "Version pro",
+            "description": "10 maillots en version non-réplique",
+            "howTo": "Possède 10 maillots en version authentique (non-réplique)."
+          }
+        },
+        "match_worn": {
+          "title": "Le Graal",
+          "description": "Possède un maillot porté en match",
+          "howTo": "Ajoute un maillot porté en match (match-worn)."
         }
       },
       "contribution": {
         "proposal": {
-          "first": {
-            "title": "Premier apport",
-            "description": "Une de tes propositions de maillot a été acceptée"
-          },
           "10": {
             "title": "Contributeur régulier",
-            "description": "10 propositions acceptées"
+            "description": "10 propositions acceptées",
+            "howTo": "Fais accepter 10 de tes propositions de maillot."
+          },
+          "25": {
+            "title": "Pilier",
+            "description": "25 propositions acceptées",
+            "howTo": "Fais accepter 25 de tes propositions de maillot."
+          },
+          "50": {
+            "title": "Archiviste en chef",
+            "description": "50 propositions acceptées",
+            "howTo": "Fais accepter 50 de tes propositions de maillot."
+          },
+          "first": {
+            "title": "Premier apport",
+            "description": "Une de tes propositions de maillot a été acceptée",
+            "howTo": "Fais accepter une de tes propositions de maillot."
           }
         },
         "description": {
           "first": {
             "title": "Rédacteur",
-            "description": "Ta première description a été acceptée"
+            "description": "Ta première description a été acceptée",
+            "howTo": "Fais accepter une de tes descriptions."
           }
         }
       },
@@ -2874,7 +3001,17 @@
       "unlocked": "Aucun succès débloqué dans cette catégorie.",
       "inProgress": "Aucun succès en cours dans cette catégorie."
     },
-    "secret": "Secret"
+    "secret": "Secret",
+    "detail": {
+      "unlockedBadge": "débloqué",
+      "lockedBadge": "Verrouillé",
+      "category": "Catégorie",
+      "unlockedOn": "Obtenu le",
+      "rarity": "Rareté",
+      "rarityValue": "{percent} des collectionneurs",
+      "progress": "Progression",
+      "howToTitle": "Comment l'obtenir"
+    }
   },
   "PublicAchievements": {
     "title": "Palmarès de {name}",

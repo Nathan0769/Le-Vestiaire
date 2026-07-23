@@ -26,6 +26,8 @@ export interface AchievementsResponse {
   unlocked: UnlockedAchievement[];
   inProgress: InProgressAchievement[];
   hiddenLocked: number;
+  /** Ratio 0..1 de collectionneurs par clé de succès (rareté). */
+  rarity: Record<string, number>;
 }
 
 export function useAchievements() {

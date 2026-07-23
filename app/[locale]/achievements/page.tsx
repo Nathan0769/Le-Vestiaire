@@ -3,6 +3,7 @@ import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
 import { checkAllAchievements } from "@/lib/achievements/check";
+import { getRarityMap } from "@/lib/achievements/rarity";
 import { AchievementsPageClient } from "@/components/achievements/achievements-page-client";
 import type { AchievementsResponse } from "@/hooks/useAchievements";
 
@@ -53,6 +54,8 @@ export default async function AchievementsPage() {
     ([key, def]) => !unlockedKeys.has(key) && def.hidden
   ).length;
 
+  const rarity = await getRarityMap();
+
   // Marquer comme vus (fire and forget)
   prisma.user
     .update({
@@ -73,6 +76,7 @@ export default async function AchievementsPage() {
     })),
     inProgress,
     hiddenLocked,
+    rarity,
   };
 
   return <AchievementsPageClient data={data} newlyUnlocked={newlyUnlocked} />;
