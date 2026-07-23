@@ -2703,52 +2703,92 @@
     "unlockedOn": "Unlocked on {date}",
     "definitions": {
       "collection": {
-        "first": {
-          "title": "First jersey",
-          "description": "Add your very first jersey to your collection"
-        },
         "10": {
           "title": "Filling up",
-          "description": "10 jerseys in your collection"
+          "description": "10 jerseys in your collection",
+          "howTo": "Reach 10 jerseys in your collection."
         },
         "25": {
           "title": "Small collector",
-          "description": "25 jerseys"
+          "description": "25 jerseys",
+          "howTo": "Reach 25 jerseys in your collection."
         },
         "50": {
           "title": "True collector",
-          "description": "50 jerseys"
+          "description": "50 jerseys",
+          "howTo": "Reach 50 jerseys in your collection."
         },
         "100": {
           "title": "Centurion",
-          "description": "100 jerseys"
+          "description": "100 jerseys",
+          "howTo": "Reach 100 jerseys in your collection."
         },
         "250": {
           "title": "Personal museum",
-          "description": "250 jerseys"
+          "description": "250 jerseys",
+          "howTo": "Reach 250 jerseys in your collection."
+        },
+        "500": {
+          "title": "National museum",
+          "description": "500 jerseys",
+          "howTo": "Reach 500 jerseys in your collection."
+        },
+        "first": {
+          "title": "First jersey",
+          "description": "Add your very first jersey to your collection",
+          "howTo": "Add your very first jersey to your collection."
         },
         "value": {
           "1k": {
             "title": "€1,000 invested",
-            "description": "Total collection value reaches €1,000"
+            "description": "Total collection value reaches €1,000",
+            "howTo": "Reach €1,000 in total collection value."
           },
           "10k": {
             "title": "Big spender",
-            "description": "Total collection value reaches €10,000"
+            "description": "Total collection value reaches €10,000",
+            "howTo": "Reach €10,000 in total collection value."
+          },
+          "25k": {
+            "title": "Wealthy collector",
+            "description": "€25,000 in total collection value",
+            "howTo": "Reach €25,000 in total collection value."
           }
         },
         "same_club": {
           "5": {
             "title": "Loyal",
-            "description": "5 jerseys from the same club"
+            "description": "5 jerseys from the same club",
+            "howTo": "Gather 5 jerseys from the same club."
           },
           "15": {
             "title": "Devoted",
-            "description": "15 jerseys from the same club"
+            "description": "15 jerseys from the same club",
+            "howTo": "Gather 15 jerseys from the same club."
           },
           "30": {
             "title": "Ultra",
-            "description": "30 jerseys from the same club"
+            "description": "30 jerseys from the same club",
+            "howTo": "Gather 30 jerseys from the same club."
+          },
+          "50": {
+            "title": "Ultra",
+            "description": "50 jerseys from the same club",
+            "howTo": "Gather 50 jerseys from the same club."
+          }
+        },
+        "mint": {
+          "25": {
+            "title": "Pristine",
+            "description": "25 jerseys in mint condition",
+            "howTo": "Own 25 jerseys in mint condition."
+          }
+        },
+        "flocked": {
+          "10": {
+            "title": "Nameset",
+            "description": "10 jerseys with a player name",
+            "howTo": "Own 10 jerseys with a player name."
           }
         }
       },
@@ -2756,97 +2796,184 @@
         "clubs": {
           "5": {
             "title": "Five clubs",
-            "description": "Jerseys from 5 different clubs"
+            "description": "Jerseys from 5 different clubs",
+            "howTo": "Add jerseys from 5 different clubs."
           },
           "20": {
             "title": "Open-minded",
-            "description": "20 different clubs"
+            "description": "20 different clubs",
+            "howTo": "Add jerseys from 20 different clubs."
           },
           "50": {
-            "title": "Swiss neutral",
-            "description": "50 different clubs"
+            "title": "Swiss neutrality",
+            "description": "50 different clubs",
+            "howTo": "Add jerseys from 50 different clubs."
+          },
+          "100": {
+            "title": "No borders",
+            "description": "100 different clubs",
+            "howTo": "Add jerseys from 100 different clubs."
           }
         },
         "leagues": {
           "3": {
             "title": "Three leagues",
-            "description": "Jerseys from 3 different leagues"
+            "description": "Jerseys from 3 different leagues",
+            "howTo": "Add jerseys from 3 different leagues."
           },
           "10": {
             "title": "Globe-trotter",
-            "description": "10 different leagues"
+            "description": "10 different leagues",
+            "howTo": "Add jerseys from 10 different leagues."
           }
         },
         "vintage": {
           "pre2000": {
             "title": "Old school",
-            "description": "5 jerseys from before 2000"
+            "description": "5 jerseys from before 2000",
+            "howTo": "Add 5 jerseys from before the year 2000."
+          }
+        },
+        "brands": {
+          "5": {
+            "title": "Multi-brand",
+            "description": "Jerseys from 5 different brands",
+            "howTo": "Add jerseys from 5 different brands."
+          },
+          "10": {
+            "title": "Brand hunter",
+            "description": "Jerseys from 10 different brands",
+            "howTo": "Add jerseys from 10 different brands."
           }
         }
       },
       "social": {
         "rating": {
-          "first": {
-            "title": "First rating",
-            "description": "Rate your first jersey"
-          },
           "50": {
             "title": "Critic",
-            "description": "50 ratings left"
+            "description": "50 ratings left",
+            "howTo": "Leave 50 ratings on jerseys."
+          },
+          "100": {
+            "title": "Expert",
+            "description": "100 ratings left",
+            "howTo": "Leave 100 ratings on jerseys."
+          },
+          "first": {
+            "title": "First rating",
+            "description": "Rate your first jersey",
+            "howTo": "Rate your first jersey."
           }
         },
         "profile": {
           "complete": {
             "title": "Well presented",
-            "description": "Avatar, favorite club and bio all set"
+            "description": "Avatar, favorite club and bio all set",
+            "howTo": "Fill in your avatar, favorite club and bio."
           }
         },
         "follower": {
-          "first": {
-            "title": "First friend",
-            "description": "Add your first friend"
-          },
           "10": {
             "title": "Sociable",
-            "description": "10 friends on the platform"
+            "description": "10 friends on the platform",
+            "howTo": "Reach 10 friends on the platform."
+          },
+          "25": {
+            "title": "Popular",
+            "description": "25 friends",
+            "howTo": "Reach 25 friends on the platform."
+          },
+          "50": {
+            "title": "Star",
+            "description": "50 friends",
+            "howTo": "Reach 50 friends on the platform."
+          },
+          "first": {
+            "title": "First friend",
+            "description": "Add your first friend",
+            "howTo": "Add your first friend."
           }
         }
       },
       "loyalty": {
         "1year": {
           "title": "One year together",
-          "description": "1 year since account creation"
+          "description": "1 year since account creation",
+          "howTo": "Keep your account active for 1 year."
         },
         "2year": {
           "title": "Two-year loyal",
-          "description": "2 years since account creation"
+          "description": "2 years since account creation",
+          "howTo": "Keep your account active for 2 years."
         }
       },
       "rarity": {
         "pre1990": {
           "title": "Antiquarian",
-          "description": "Own a jersey from before 1990"
+          "description": "Own a jersey from before 1990",
+          "howTo": "Add a jersey from before 1990."
         },
         "goalkeeper": {
           "title": "The wall",
-          "description": "Own a goalkeeper jersey"
+          "description": "Own a goalkeeper jersey",
+          "howTo": "Add a goalkeeper jersey to your collection."
+        },
+        "pre1980": {
+          "title": "Relic",
+          "description": "Own a jersey from before 1980",
+          "howTo": "Add a jersey from before 1980."
+        },
+        "signed": {
+          "title": "Signed",
+          "description": "Own a signed jersey",
+          "howTo": "Add a signed jersey to your collection."
+        },
+        "certificate": {
+          "title": "Certified",
+          "description": "Own a jersey with a certificate of authenticity",
+          "howTo": "Add a jersey with a certificate of authenticity."
+        },
+        "authentic": {
+          "10": {
+            "title": "Player version",
+            "description": "10 non-replica jerseys",
+            "howTo": "Own 10 jerseys in an authentic (non-replica) version."
+          }
+        },
+        "match_worn": {
+          "title": "The Grail",
+          "description": "Own a match-worn jersey",
+          "howTo": "Add a match-worn jersey."
         }
       },
       "contribution": {
         "proposal": {
-          "first": {
-            "title": "First contribution",
-            "description": "One of your jersey proposals was accepted"
-          },
           "10": {
             "title": "Regular contributor",
-            "description": "10 proposals accepted"
+            "description": "10 proposals accepted",
+            "howTo": "Get 10 of your jersey proposals accepted."
+          },
+          "25": {
+            "title": "Pillar",
+            "description": "25 accepted proposals",
+            "howTo": "Get 25 of your jersey proposals accepted."
+          },
+          "50": {
+            "title": "Chief archivist",
+            "description": "50 accepted proposals",
+            "howTo": "Get 50 of your jersey proposals accepted."
+          },
+          "first": {
+            "title": "First contribution",
+            "description": "One of your jersey proposals was accepted",
+            "howTo": "Get one of your jersey proposals accepted."
           }
         },
         "description": {
           "first": {
             "title": "Writer",
-            "description": "Your first description was accepted"
+            "description": "Your first description was accepted",
+            "howTo": "Get one of your descriptions accepted."
           }
         }
       },
@@ -2870,7 +2997,17 @@
       "unlocked": "No achievement unlocked in this category.",
       "inProgress": "No achievement in progress in this category."
     },
-    "secret": "Secret"
+    "secret": "Secret",
+    "detail": {
+      "unlockedBadge": "unlocked",
+      "lockedBadge": "Locked",
+      "category": "Category",
+      "unlockedOn": "Unlocked on",
+      "rarity": "Rarity",
+      "rarityValue": "{percent} of collectors",
+      "progress": "Progress",
+      "howToTitle": "How to unlock"
+    }
   },
   "PublicAchievements": {
     "title": "Achievements of {name}",

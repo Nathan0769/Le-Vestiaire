@@ -5,6 +5,7 @@ import { Award } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
 import { maybeCheckAllAchievements } from "@/lib/achievements/check";
+import { getRarityMap } from "@/lib/achievements/rarity";
 import { PublicUserTabs } from "@/components/users/public-user-tabs";
 import { AuthGateBanner } from "@/components/auth/auth-gate-banner";
 import { BackButton } from "@/components/ui/back-button";
@@ -57,6 +58,8 @@ export async function PublicAchievementsScreen({
     orderBy: { unlockedAt: "desc" },
   });
 
+  const rarity = await getRarityMap();
+
   const totalCatalog = Object.keys(ACHIEVEMENTS).length;
   const displayName = isAnonymous
     ? tPublic("anonymous")
@@ -88,7 +91,9 @@ export async function PublicAchievementsScreen({
           category: u.category,
           tier: u.tier,
           unlockedAt: u.unlockedAt.toISOString(),
+          metadata: u.metadata as Record<string, unknown> | null,
         }))}
+        rarity={rarity}
       />
     </div>
   );

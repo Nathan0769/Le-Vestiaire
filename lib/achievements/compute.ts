@@ -50,6 +50,58 @@ export async function getUserPre1990Count(userId: string): Promise<number> {
   }).length;
 }
 
+export async function getUserPre1980Count(userId: string): Promise<number> {
+  const rows = await prisma.userJersey.findMany({
+    where: { userId },
+    select: { jersey: { select: { season: true } } },
+  });
+  return rows.filter((r) => {
+    const year = parseInt(r.jersey.season.slice(0, 4), 10);
+    return !Number.isNaN(year) && year < 1980;
+  }).length;
+}
+
+export async function getUserMintCount(userId: string): Promise<number> {
+  return prisma.userJersey.count({ where: { userId, condition: "MINT" } });
+}
+
+export async function getUserFlockedCount(userId: string): Promise<number> {
+  return prisma.userJersey.count({
+    where: { userId, playerName: { not: null } },
+  });
+}
+
+export async function getUserSignedCount(userId: string): Promise<number> {
+  return prisma.userJersey.count({ where: { userId, isSigned: true } });
+}
+
+export async function getUserMatchWornCount(userId: string): Promise<number> {
+  return prisma.userJersey.count({
+    where: { userId, version: "MATCH_WORN" },
+  });
+}
+
+/** Maillots dont la version n'est pas une simple réplique. */
+export async function getUserAuthenticCount(userId: string): Promise<number> {
+  return prisma.userJersey.count({
+    where: { userId, version: { not: "REPLICA" } },
+  });
+}
+
+export async function getUserCertificateCount(userId: string): Promise<number> {
+  return prisma.userJersey.count({
+    where: { userId, hasAuthCertificate: true },
+  });
+}
+
+export async function getUserUniqueBrands(userId: string): Promise<number> {
+  const rows = await prisma.userJersey.findMany({
+    where: { userId },
+    select: { jersey: { select: { brand: true } } },
+  });
+  return new Set(rows.map((r) => r.jersey.brand)).size;
+}
+
 export async function getUserFollowerCount(userId: string): Promise<number> {
   return prisma.follow.count({
     where: { followingId: userId },

@@ -7,6 +7,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
+import { getRarityMap } from "@/lib/achievements/rarity";
 
 export async function GET() {
   const user = await getCurrentUser();
@@ -49,5 +50,7 @@ export async function GET() {
     ([key, def]) => !unlockedKeys.has(key) && def.hidden
   ).length;
 
-  return NextResponse.json({ unlocked, inProgress, hiddenLocked });
+  const rarity = await getRarityMap();
+
+  return NextResponse.json({ unlocked, inProgress, hiddenLocked, rarity });
 }

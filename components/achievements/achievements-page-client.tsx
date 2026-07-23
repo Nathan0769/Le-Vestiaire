@@ -1,25 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
-import { handleNewAchievements } from "@/lib/achievements/handle-response";
-import {
-  Award,
-  Shirt,
-  Layers,
-  Users,
-  Trophy,
-  Calendar,
-  Gem,
-  PenLine,
-  LayoutGrid,
-  type LucideIcon,
-} from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { AchievementCard } from "./achievement-card";
-import { AchievementProgressBar } from "./achievement-progress-bar";
+import { Award } from "lucide-react";
 import { cn } from "@/lib/utils";
-import type { AchievementsResponse, InProgressAchievement } from "@/hooks/useAchievements";
+import { handleNewAchievements } from "@/lib/achievements/handle-response";
+import { resolveAchievementI18n } from "@/lib/achievements/render";
+import {
+  ACHIEVEMENT_CATEGORIES,
+  CATEGORY_ICONS,
+  tierWeight,
+} from "./achievement-visuals";
+import { MedalButton, type MedalItem } from "./medal-button";
+import {
+  AchievementDetailModal,
+  type AchievementDetail,
+} from "./achievement-detail-modal";
+import { FeaturedTrophy } from "./featured-trophy";
+import type { AchievementsResponse } from "@/hooks/useAchievements";
 
 type StatusFilter = "ALL" | "UNLOCKED" | "IN_PROGRESS";
 
@@ -34,42 +32,72 @@ interface Props {
   newlyUnlocked?: NewlyUnlocked[];
 }
 
-const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  COLLECTION: Shirt,
-  DIVERSITY: Layers,
-  SOCIAL: Users,
-  LEADERBOARD: Trophy,
-  LOYALTY: Calendar,
-  RARITY: Gem,
-  CONTRIBUTION: PenLine,
-};
-
-const CATEGORIES = [
-  "COLLECTION",
-  "DIVERSITY",
-  "SOCIAL",
-  "LEADERBOARD",
-  "LOYALTY",
-  "RARITY",
-  "CONTRIBUTION",
-] as const;
-
-const NEARLY_UNLOCKED_COUNT = 4;
-
 export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
   const t = useTranslations();
+  const { unlocked, inProgress, hiddenLocked, rarity } = data;
+  const [selected, setSelected] = useState<AchievementDetail | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
-  const { unlocked, inProgress, hiddenLocked } = data;
 
   useEffect(() => {
     if (!newlyUnlocked || newlyUnlocked.length === 0) return;
     handleNewAchievements({ newAchievements: newlyUnlocked }, t);
   }, [newlyUnlocked, t]);
 
-  const nearlyUnlocked = [...inProgress]
-    .filter((a) => a.currentProgress > 0 && a.percentage < 100)
-    .sort((a, b) => b.percentage - a.percentage)
-    .slice(0, NEARLY_UNLOCKED_COUNT);
+  const items = useMemo<MedalItem[]>(() => {
+    const unlockedItems: MedalItem[] = unlocked.map((u) => {
+      const { i18nKey, params } = resolveAchievementI18n(u.key, u.metadata);
+      return {
+        key: u.key,
+        i18nKey,
+        category: u.category,
+        tier: u.tier,
+        unlocked: true,
+        unlockedAt: u.unlockedAt,
+        params,
+      };
+    });
+
+    const inProgressItems: MedalItem[] = inProgress.map((p) => ({
+      key: p.key,
+      i18nKey: p.i18nKey,
+      category: p.category,
+      tier: p.tier,
+      unlocked: false,
+      currentProgress: p.currentProgress,
+      threshold: p.threshold,
+      percentage: p.percentage,
+    }));
+
+    return [...unlockedItems, ...inProgressItems];
+  }, [unlocked, inProgress]);
+
+  const featured = useMemo(() => pickFeatured(items), [items]);
+
+  const byCategory = useMemo(() => {
+    return ACHIEVEMENT_CATEGORIES.map((cat) => {
+      const all = items.filter((i) => i.category === cat);
+      const shown = all
+        .filter((i) => matchesFilter(i, statusFilter))
+        .sort(sortMedals);
+      return {
+        cat,
+        items: shown,
+        unlockedCount: all.filter((i) => i.unlocked).length,
+        total: all.length,
+      };
+    }).filter((c) => c.items.length > 0);
+  }, [items, statusFilter]);
+
+  function toggleFilter(value: Exclude<StatusFilter, "ALL">) {
+    setStatusFilter((s) => (s === value ? "ALL" : value));
+  }
+
+  function openDetail(item: MedalItem) {
+    setSelected({
+      ...item,
+      rarity: item.unlocked ? rarity[item.key] : undefined,
+    });
+  }
 
   return (
     <div className="p-6 space-y-8">
@@ -82,216 +110,90 @@ export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
         {t("achievements.page.subtitle")}
       </p>
 
-      {nearlyUnlocked.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="text-lg font-semibold">
-            {t("achievements.page.nearlyUnlocked")} :
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {nearlyUnlocked.map((a) => (
-              <NearlyUnlockedCard key={a.key} achievement={a} />
-            ))}
-          </div>
-        </section>
-      )}
-
-      <div className="flex flex-wrap gap-2">
-        <FilterButton
+      <div className="flex flex-wrap gap-2 text-sm">
+        <FilterChip
           active={statusFilter === "UNLOCKED"}
-          onClick={() =>
-            setStatusFilter((s) => (s === "UNLOCKED" ? "ALL" : "UNLOCKED"))
-          }
+          onClick={() => toggleFilter("UNLOCKED")}
         >
           {t("achievements.page.unlocked", { count: unlocked.length })}
-        </FilterButton>
-        <FilterButton
+        </FilterChip>
+        <FilterChip
           active={statusFilter === "IN_PROGRESS"}
-          onClick={() =>
-            setStatusFilter((s) => (s === "IN_PROGRESS" ? "ALL" : "IN_PROGRESS"))
-          }
+          onClick={() => toggleFilter("IN_PROGRESS")}
         >
           {t("achievements.page.inProgress", { count: inProgress.length })}
-        </FilterButton>
+        </FilterChip>
         {hiddenLocked > 0 && (
-          <span className="inline-flex items-center px-3 py-1.5 rounded-full text-sm text-muted-foreground bg-muted/40">
+          <span className="inline-flex items-center rounded-full bg-muted/40 px-3 py-1.5 text-muted-foreground">
             {t("achievements.page.hidden", { count: hiddenLocked })}
           </span>
         )}
       </div>
 
-      <Tabs defaultValue="ALL" className="w-full">
-        <TabsList className="flex flex-wrap h-auto w-full gap-1 bg-muted/40 p-1.5 rounded-xl">
-          <TabsTrigger
-            value="ALL"
-            className="gap-2 px-4 py-2 rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md data-[state=active]:border-primary/20 border border-transparent"
-          >
-            <LayoutGrid className="w-4 h-4" />
-            {t("achievements.page.all")}
-          </TabsTrigger>
-          {CATEGORIES.map((cat) => {
-            const Icon = CATEGORY_ICONS[cat];
-            return (
-              <TabsTrigger
-                key={cat}
-                value={cat}
-                className="gap-2 px-4 py-2 rounded-lg text-sm font-medium data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-md data-[state=active]:border-primary/20 border border-transparent"
-              >
-                <Icon className="w-4 h-4" />
-                {t(`achievements.categories.${cat}`)}
-              </TabsTrigger>
-            );
-          })}
-        </TabsList>
-
-        <TabsContent value="ALL" className="mt-6">
-          <AchievementsGrid
-            unlocked={unlocked}
-            inProgress={inProgress}
-            statusFilter={statusFilter}
-          />
-        </TabsContent>
-
-        {CATEGORIES.map((cat) => (
-          <TabsContent key={cat} value={cat} className="mt-6">
-            <AchievementsGrid
-              unlocked={unlocked.filter((a) => a.category === cat)}
-              inProgress={inProgress.filter((a) => a.category === cat)}
-              statusFilter={statusFilter}
-            />
-          </TabsContent>
-        ))}
-      </Tabs>
-    </div>
-  );
-}
-
-const TIER_ACCENT: Record<string, string> = {
-  BRONZE: "from-amber-700/20 to-amber-700/5 border-amber-700/40",
-  SILVER: "from-slate-400/20 to-slate-400/5 border-slate-400/40",
-  GOLD: "from-yellow-400/20 to-yellow-400/5 border-yellow-400/40",
-  PLATINUM: "from-indigo-400/25 to-indigo-400/5 border-indigo-400/50",
-};
-
-function NearlyUnlockedCard({ achievement }: { achievement: InProgressAchievement }) {
-  const t = useTranslations();
-  const accent =
-    achievement.tier && TIER_ACCENT[achievement.tier]
-      ? TIER_ACCENT[achievement.tier]
-      : "from-primary/15 to-primary/5 border-primary/30";
-
-  return (
-    <div
-      className={cn(
-        "relative rounded-xl border-2 bg-gradient-to-br p-4 space-y-3 shadow-sm",
-        accent
-      )}
-    >
-      <div className="flex items-start justify-between gap-2">
-        <h3 className="font-semibold text-sm">{t(`${achievement.i18nKey}.title`)}</h3>
-        <span className="text-xs font-semibold text-primary">
-          {achievement.percentage}%
-        </span>
-      </div>
-      <p className="text-xs text-muted-foreground line-clamp-2">
-        {t(`${achievement.i18nKey}.description`)}
-      </p>
-      <div className="space-y-1">
-        <AchievementProgressBar
-          value={achievement.currentProgress}
-          max={achievement.threshold}
+      {featured && statusFilter !== "IN_PROGRESS" && (
+        <FeaturedTrophy
+          item={featured}
+          rarity={rarity[featured.key]}
+          onSelect={openDetail}
         />
-        <p className="text-xs text-muted-foreground text-right">
-          {achievement.currentProgress} / {achievement.threshold}
-        </p>
+      )}
+
+      {byCategory.length === 0 && (
+        <div className="flex flex-col items-center justify-center py-12 text-center">
+          <Award className="mb-4 h-12 w-12 text-muted-foreground/30" />
+          <p className="text-sm text-muted-foreground">
+            {t(
+              statusFilter === "UNLOCKED"
+                ? "achievements.empty.unlocked"
+                : "achievements.empty.inProgress",
+            )}
+          </p>
+        </div>
+      )}
+
+      <div className="space-y-10">
+        {byCategory.map(({ cat, items: catItems, unlockedCount, total }) => {
+          const Icon = CATEGORY_ICONS[cat] ?? Award;
+          return (
+            <section key={cat}>
+              <h2 className="mb-5 flex items-center gap-2.5 text-[13px] font-bold uppercase tracking-wider text-muted-foreground">
+                <Icon className="h-4 w-4" />
+                {t(`achievements.categories.${cat}`)}
+                <span className="ml-auto text-xs font-semibold tabular-nums text-muted-foreground/70">
+                  {unlockedCount} / {total}
+                </span>
+              </h2>
+              <div className="grid grid-cols-3 gap-x-2 gap-y-5 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6">
+                {catItems.map((item) => (
+                  <MedalButton
+                    key={item.key}
+                    item={item}
+                    onSelect={openDetail}
+                  />
+                ))}
+              </div>
+            </section>
+          );
+        })}
       </div>
+
+      <AchievementDetailModal
+        achievement={selected}
+        onOpenChange={(open) => {
+          if (!open) setSelected(null);
+        }}
+      />
     </div>
   );
 }
 
-const TIER_WEIGHT: Record<string, number> = {
-  PLATINUM: 4,
-  GOLD: 3,
-  SILVER: 2,
-  BRONZE: 1,
-};
-
-function tierWeight(tier: string | null): number {
-  return tier ? TIER_WEIGHT[tier] ?? 0 : 0;
+function matchesFilter(item: MedalItem, filter: StatusFilter): boolean {
+  if (filter === "UNLOCKED") return item.unlocked;
+  if (filter === "IN_PROGRESS") return !item.unlocked;
+  return true;
 }
 
-function AchievementsGrid({
-  unlocked,
-  inProgress,
-  statusFilter,
-}: {
-  unlocked: AchievementsResponse["unlocked"];
-  inProgress: AchievementsResponse["inProgress"];
-  statusFilter: StatusFilter;
-}) {
-  const sortedUnlocked = [...unlocked].sort(
-    (a, b) => tierWeight(b.tier) - tierWeight(a.tier)
-  );
-  const sortedInProgress = [...inProgress].sort(
-    (a, b) => b.percentage - a.percentage
-  );
-
-  const unlockedItems = sortedUnlocked.map((u) => ({
-    key: u.key,
-    variant: "unlocked" as const,
-    tier: u.tier,
-    unlockedAt: u.unlockedAt,
-    i18nKey: `achievements.definitions.${u.key}`,
-    threshold: (u.metadata as { progress?: number } | null)?.progress ?? 1,
-    isSecret: u.isSecret ?? false,
-    metadata: u.metadata,
-  }));
-
-  const inProgressItems = sortedInProgress.map((p) => ({
-    key: p.key,
-    variant: "in-progress" as const,
-    tier: p.tier,
-    i18nKey: p.i18nKey,
-    currentProgress: p.currentProgress,
-    threshold: p.threshold,
-  }));
-
-  const items =
-    statusFilter === "UNLOCKED"
-      ? unlockedItems
-      : statusFilter === "IN_PROGRESS"
-      ? inProgressItems
-      : [...unlockedItems, ...inProgressItems];
-
-  if (items.length === 0) {
-    return <EmptyState statusFilter={statusFilter} />;
-  }
-
-  return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {items.map(({ key, ...cardProps }) => (
-        <AchievementCard key={key} {...cardProps} />
-      ))}
-    </div>
-  );
-}
-
-function EmptyState({ statusFilter }: { statusFilter: StatusFilter }) {
-  const t = useTranslations();
-  const messageKey =
-    statusFilter === "UNLOCKED"
-      ? "achievements.empty.unlocked"
-      : statusFilter === "IN_PROGRESS"
-      ? "achievements.empty.inProgress"
-      : "achievements.empty.all";
-  return (
-    <div className="flex flex-col items-center justify-center py-12 text-center">
-      <Award className="w-12 h-12 text-muted-foreground/30 mb-4" />
-      <p className="text-sm text-muted-foreground">{t(messageKey)}</p>
-    </div>
-  );
-}
-
-function FilterButton({
+function FilterChip({
   active,
   onClick,
   children,
@@ -304,14 +206,35 @@ function FilterButton({
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={active}
       className={cn(
-        "inline-flex items-center px-3 py-1.5 rounded-full text-sm font-medium border-2 transition-all cursor-pointer",
+        "inline-flex items-center rounded-full border px-3 py-1.5 font-medium transition-colors cursor-pointer",
         active
-          ? "bg-primary text-primary-foreground border-primary shadow-sm"
-          : "bg-background text-muted-foreground border-border hover:border-primary/40 hover:text-foreground"
+          ? "border-primary bg-primary text-primary-foreground"
+          : "border-border bg-background text-muted-foreground hover:border-primary/40 hover:text-foreground",
       )}
     >
       {children}
     </button>
   );
+}
+
+/** Trie : débloqués d'abord (palier décroissant), puis en cours (progression décroissante). */
+function sortMedals(a: MedalItem, b: MedalItem): number {
+  if (a.unlocked !== b.unlocked) return a.unlocked ? -1 : 1;
+  if (a.unlocked) return tierWeight(b.tier) - tierWeight(a.tier);
+  return (b.percentage ?? 0) - (a.percentage ?? 0);
+}
+
+/** Sélectionne le succès débloqué le plus prestigieux comme mise en avant. */
+function pickFeatured(items: MedalItem[]): MedalItem | null {
+  const unlocked = items.filter((i) => i.unlocked && i.tier);
+  if (unlocked.length === 0) return null;
+  return [...unlocked].sort((a, b) => {
+    const w = tierWeight(b.tier) - tierWeight(a.tier);
+    if (w !== 0) return w;
+    const da = a.unlockedAt ? Date.parse(a.unlockedAt) : 0;
+    const db = b.unlockedAt ? Date.parse(b.unlockedAt) : 0;
+    return db - da;
+  })[0];
 }

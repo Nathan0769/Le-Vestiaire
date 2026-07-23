@@ -2703,52 +2703,92 @@
     "unlockedOn": "Ontgrendeld op {date}",
     "definitions": {
       "collection": {
-        "first": {
-          "title": "Eerste shirt",
-          "description": "Voeg je allereerste shirt toe aan je collectie"
-        },
         "10": {
           "title": "Vult zich",
-          "description": "10 shirts in je collectie"
+          "description": "10 shirts in je collectie",
+          "howTo": "Bereik 10 shirts in je collectie."
         },
         "25": {
           "title": "Kleine verzamelaar",
-          "description": "25 shirts"
+          "description": "25 shirts",
+          "howTo": "Bereik 25 shirts in je collectie."
         },
         "50": {
           "title": "Echte verzamelaar",
-          "description": "50 shirts"
+          "description": "50 shirts",
+          "howTo": "Bereik 50 shirts in je collectie."
         },
         "100": {
           "title": "Centurion",
-          "description": "100 shirts"
+          "description": "100 shirts",
+          "howTo": "Bereik 100 shirts in je collectie."
         },
         "250": {
           "title": "Persoonlijk museum",
-          "description": "250 shirts"
+          "description": "250 shirts",
+          "howTo": "Bereik 250 shirts in je collectie."
+        },
+        "500": {
+          "title": "Nationaal museum",
+          "description": "500 shirts",
+          "howTo": "Bereik 500 shirts in je collectie."
+        },
+        "first": {
+          "title": "Eerste shirt",
+          "description": "Voeg je allereerste shirt toe aan je collectie",
+          "howTo": "Voeg je allereerste shirt toe aan je collectie."
         },
         "value": {
           "1k": {
             "title": "1000€ geïnvesteerd",
-            "description": "Totale collectiewaarde bereikt 1000€"
+            "description": "Totale collectiewaarde bereikt 1000€",
+            "howTo": "Bereik € 1.000 aan totale collectiewaarde."
           },
           "10k": {
             "title": "Big spender",
-            "description": "Totale collectiewaarde bereikt 10 000€"
+            "description": "Totale collectiewaarde bereikt 10 000€",
+            "howTo": "Bereik € 10.000 aan totale collectiewaarde."
+          },
+          "25k": {
+            "title": "Vermogende verzamelaar",
+            "description": "€ 25.000 aan totale collectiewaarde",
+            "howTo": "Bereik € 25.000 aan totale collectiewaarde."
           }
         },
         "same_club": {
           "5": {
             "title": "Trouw",
-            "description": "5 shirts van dezelfde club"
+            "description": "5 shirts van dezelfde club",
+            "howTo": "Verzamel 5 shirts van dezelfde club."
           },
           "15": {
             "title": "Toegewijd",
-            "description": "15 shirts van dezelfde club"
+            "description": "15 shirts van dezelfde club",
+            "howTo": "Verzamel 15 shirts van dezelfde club."
           },
           "30": {
             "title": "Ultra",
-            "description": "30 shirts van dezelfde club"
+            "description": "30 shirts van dezelfde club",
+            "howTo": "Verzamel 30 shirts van dezelfde club."
+          },
+          "50": {
+            "title": "Ultra",
+            "description": "50 shirts van dezelfde club",
+            "howTo": "Verzamel 50 shirts van dezelfde club."
+          }
+        },
+        "mint": {
+          "25": {
+            "title": "Onberispelijk",
+            "description": "25 shirts in nieuwstaat",
+            "howTo": "Bezit 25 shirts in nieuwstaat."
+          }
+        },
+        "flocked": {
+          "10": {
+            "title": "Bedrukt shirt",
+            "description": "10 shirts met spelersnaam",
+            "howTo": "Bezit 10 shirts met een spelersnaam."
           }
         }
       },
@@ -2756,97 +2796,184 @@
         "clubs": {
           "5": {
             "title": "Vijf clubs",
-            "description": "Shirts van 5 verschillende clubs"
+            "description": "Shirts van 5 verschillende clubs",
+            "howTo": "Voeg shirts van 5 verschillende clubs toe."
           },
           "20": {
             "title": "Ruimdenkend",
-            "description": "20 verschillende clubs"
+            "description": "20 verschillende clubs",
+            "howTo": "Voeg shirts van 20 verschillende clubs toe."
           },
           "50": {
-            "title": "Zwitserse neutraal",
-            "description": "50 verschillende clubs"
+            "title": "Zwitserse neutraliteit",
+            "description": "50 verschillende clubs",
+            "howTo": "Voeg shirts van 50 verschillende clubs toe."
+          },
+          "100": {
+            "title": "Zonder grenzen",
+            "description": "100 verschillende clubs",
+            "howTo": "Voeg shirts van 100 verschillende clubs toe."
           }
         },
         "leagues": {
           "3": {
             "title": "Drie competities",
-            "description": "Shirts uit 3 verschillende competities"
+            "description": "Shirts uit 3 verschillende competities",
+            "howTo": "Voeg shirts uit 3 verschillende competities toe."
           },
           "10": {
             "title": "Globetrotter",
-            "description": "10 verschillende competities"
+            "description": "10 verschillende competities",
+            "howTo": "Voeg shirts uit 10 verschillende competities toe."
           }
         },
         "vintage": {
           "pre2000": {
             "title": "Old school",
-            "description": "5 shirts van vóór 2000"
+            "description": "5 shirts van vóór 2000",
+            "howTo": "Voeg 5 shirts van voor het jaar 2000 toe."
+          }
+        },
+        "brands": {
+          "5": {
+            "title": "Meerdere merken",
+            "description": "Shirts van 5 verschillende merken",
+            "howTo": "Voeg shirts van 5 verschillende merken toe."
+          },
+          "10": {
+            "title": "Merkenjager",
+            "description": "Shirts van 10 verschillende merken",
+            "howTo": "Voeg shirts van 10 verschillende merken toe."
           }
         }
       },
       "social": {
         "rating": {
-          "first": {
-            "title": "Eerste beoordeling",
-            "description": "Beoordeel je eerste shirt"
-          },
           "50": {
             "title": "Criticus",
-            "description": "50 beoordelingen achtergelaten"
+            "description": "50 beoordelingen achtergelaten",
+            "howTo": "Geef 50 beoordelingen op shirts."
+          },
+          "100": {
+            "title": "Expert",
+            "description": "100 beoordelingen achtergelaten",
+            "howTo": "Geef 100 beoordelingen op shirts."
+          },
+          "first": {
+            "title": "Eerste beoordeling",
+            "description": "Beoordeel je eerste shirt",
+            "howTo": "Beoordeel je eerste shirt."
           }
         },
         "profile": {
           "complete": {
             "title": "Goed gepresenteerd",
-            "description": "Avatar, favoriete club en bio ingesteld"
+            "description": "Avatar, favoriete club en bio ingesteld",
+            "howTo": "Vul je avatar, favoriete club en bio in."
           }
         },
         "follower": {
-          "first": {
-            "title": "Eerste vriend",
-            "description": "Voeg je eerste vriend toe"
-          },
           "10": {
             "title": "Sociaal",
-            "description": "10 vrienden op het platform"
+            "description": "10 vrienden op het platform",
+            "howTo": "Bereik 10 vrienden op het platform."
+          },
+          "25": {
+            "title": "Populair",
+            "description": "25 vrienden",
+            "howTo": "Bereik 25 vrienden op het platform."
+          },
+          "50": {
+            "title": "Ster",
+            "description": "50 vrienden",
+            "howTo": "Bereik 50 vrienden op het platform."
+          },
+          "first": {
+            "title": "Eerste vriend",
+            "description": "Voeg je eerste vriend toe",
+            "howTo": "Voeg je eerste vriend toe."
           }
         }
       },
       "loyalty": {
         "1year": {
           "title": "Een jaar samen",
-          "description": "1 jaar sinds accountaanmaak"
+          "description": "1 jaar sinds accountaanmaak",
+          "howTo": "Houd je account 1 jaar actief."
         },
         "2year": {
           "title": "Twee jaar trouw",
-          "description": "2 jaar sinds accountaanmaak"
+          "description": "2 jaar sinds accountaanmaak",
+          "howTo": "Houd je account 2 jaar actief."
         }
       },
       "rarity": {
         "pre1990": {
           "title": "Antiquair",
-          "description": "Bezit een shirt van vóór 1990"
+          "description": "Bezit een shirt van vóór 1990",
+          "howTo": "Voeg een shirt van voor 1990 toe."
         },
         "goalkeeper": {
           "title": "De muur",
-          "description": "Bezit een keepersshirt"
+          "description": "Bezit een keepersshirt",
+          "howTo": "Voeg een keepersshirt toe aan je collectie."
+        },
+        "pre1980": {
+          "title": "Relikwie",
+          "description": "Bezit een shirt van voor 1980",
+          "howTo": "Voeg een shirt van voor 1980 toe."
+        },
+        "signed": {
+          "title": "Gesigneerd",
+          "description": "Bezit een gesigneerd shirt",
+          "howTo": "Voeg een gesigneerd shirt toe aan je collectie."
+        },
+        "certificate": {
+          "title": "Gecertificeerd",
+          "description": "Bezit een shirt met echtheidscertificaat",
+          "howTo": "Voeg een shirt met echtheidscertificaat toe."
+        },
+        "authentic": {
+          "10": {
+            "title": "Spelersversie",
+            "description": "10 non-replica shirts",
+            "howTo": "Bezit 10 shirts in een authentieke (non-replica) versie."
+          }
+        },
+        "match_worn": {
+          "title": "De Graal",
+          "description": "Bezit een matchgedragen shirt",
+          "howTo": "Voeg een matchgedragen shirt toe."
         }
       },
       "contribution": {
         "proposal": {
-          "first": {
-            "title": "Eerste bijdrage",
-            "description": "Een van je shirt-voorstellen werd geaccepteerd"
-          },
           "10": {
             "title": "Vaste bijdrager",
-            "description": "10 voorstellen geaccepteerd"
+            "description": "10 voorstellen geaccepteerd",
+            "howTo": "Laat 10 van je shirtvoorstellen accepteren."
+          },
+          "25": {
+            "title": "Steunpilaar",
+            "description": "25 geaccepteerde voorstellen",
+            "howTo": "Laat 25 van je shirtvoorstellen accepteren."
+          },
+          "50": {
+            "title": "Hoofdarchivaris",
+            "description": "50 geaccepteerde voorstellen",
+            "howTo": "Laat 50 van je shirtvoorstellen accepteren."
+          },
+          "first": {
+            "title": "Eerste bijdrage",
+            "description": "Een van je shirt-voorstellen werd geaccepteerd",
+            "howTo": "Laat een van je shirtvoorstellen accepteren."
           }
         },
         "description": {
           "first": {
             "title": "Schrijver",
-            "description": "Je eerste beschrijving werd geaccepteerd"
+            "description": "Je eerste beschrijving werd geaccepteerd",
+            "howTo": "Laat een van je beschrijvingen accepteren."
           }
         }
       },
@@ -2870,7 +2997,17 @@
       "unlocked": "Geen ontgrendelde prestaties in deze categorie.",
       "inProgress": "Geen prestaties in uitvoering in deze categorie."
     },
-    "secret": "Geheim"
+    "secret": "Geheim",
+    "detail": {
+      "unlockedBadge": "vrijgespeeld",
+      "lockedBadge": "Vergrendeld",
+      "category": "Categorie",
+      "unlockedOn": "Vrijgespeeld op",
+      "rarity": "Zeldzaamheid",
+      "rarityValue": "{percent} van de verzamelaars",
+      "progress": "Voortgang",
+      "howToTitle": "Zo speel je het vrij"
+    }
   },
   "PublicAchievements": {
     "title": "Prestaties van {name}",

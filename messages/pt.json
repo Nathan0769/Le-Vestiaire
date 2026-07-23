@@ -2703,52 +2703,92 @@
     "unlockedOn": "Desbloqueada em {date}",
     "definitions": {
       "collection": {
-        "first": {
-          "title": "Primeira camisola",
-          "description": "Adiciona a tua primeira camisola à colecção"
-        },
         "10": {
           "title": "Começa a encher",
-          "description": "10 camisolas na tua colecção"
+          "description": "10 camisolas na tua colecção",
+          "howTo": "Alcança 10 camisolas na coleção."
         },
         "25": {
           "title": "Pequeno colecionador",
-          "description": "25 camisolas"
+          "description": "25 camisolas",
+          "howTo": "Alcança 25 camisolas na coleção."
         },
         "50": {
           "title": "Verdadeiro colecionador",
-          "description": "50 camisolas"
+          "description": "50 camisolas",
+          "howTo": "Alcança 50 camisolas na coleção."
         },
         "100": {
           "title": "Centurião",
-          "description": "100 camisolas"
+          "description": "100 camisolas",
+          "howTo": "Alcança 100 camisolas na coleção."
         },
         "250": {
           "title": "Museu pessoal",
-          "description": "250 camisolas"
+          "description": "250 camisolas",
+          "howTo": "Alcança 250 camisolas na coleção."
+        },
+        "500": {
+          "title": "Museu nacional",
+          "description": "500 camisolas",
+          "howTo": "Alcança 500 camisolas na coleção."
+        },
+        "first": {
+          "title": "Primeira camisola",
+          "description": "Adiciona a tua primeira camisola à colecção",
+          "howTo": "Adiciona a tua primeira camisola à coleção."
         },
         "value": {
           "1k": {
             "title": "1000€ investidos",
-            "description": "Valor total da colecção atinge 1000€"
+            "description": "Valor total da colecção atinge 1000€",
+            "howTo": "Alcança 1000 € de valor total da coleção."
           },
           "10k": {
             "title": "Big spender",
-            "description": "Valor total da colecção atinge 10 000€"
+            "description": "Valor total da colecção atinge 10 000€",
+            "howTo": "Alcança 10 000 € de valor total da coleção."
+          },
+          "25k": {
+            "title": "Colecionador abastado",
+            "description": "25 000 € de valor total da coleção",
+            "howTo": "Alcança 25 000 € de valor total da coleção."
           }
         },
         "same_club": {
           "5": {
             "title": "Fiel",
-            "description": "5 camisolas do mesmo clube"
+            "description": "5 camisolas do mesmo clube",
+            "howTo": "Reúne 5 camisolas do mesmo clube."
           },
           "15": {
             "title": "Apaixonado",
-            "description": "15 camisolas do mesmo clube"
+            "description": "15 camisolas do mesmo clube",
+            "howTo": "Reúne 15 camisolas do mesmo clube."
           },
           "30": {
             "title": "Fanático",
-            "description": "30 camisolas do mesmo clube"
+            "description": "30 camisolas do mesmo clube",
+            "howTo": "Reúne 30 camisolas do mesmo clube."
+          },
+          "50": {
+            "title": "Ultra",
+            "description": "50 camisolas do mesmo clube",
+            "howTo": "Reúne 50 camisolas do mesmo clube."
+          }
+        },
+        "mint": {
+          "25": {
+            "title": "Impecável",
+            "description": "25 camisolas em estado impecável",
+            "howTo": "Tem 25 camisolas em estado impecável."
+          }
+        },
+        "flocked": {
+          "10": {
+            "title": "Personalizada",
+            "description": "10 camisolas com nome de jogador",
+            "howTo": "Tem 10 camisolas com nome de jogador."
           }
         }
       },
@@ -2756,97 +2796,184 @@
         "clubs": {
           "5": {
             "title": "Cinco clubes",
-            "description": "Camisolas de 5 clubes diferentes"
+            "description": "Camisolas de 5 clubes diferentes",
+            "howTo": "Adiciona camisolas de 5 clubes diferentes."
           },
           "20": {
             "title": "Mente aberta",
-            "description": "20 clubes diferentes"
+            "description": "20 clubes diferentes",
+            "howTo": "Adiciona camisolas de 20 clubes diferentes."
           },
           "50": {
-            "title": "Neutro suíço",
-            "description": "50 clubes diferentes"
+            "title": "Neutralidade suíça",
+            "description": "50 clubes diferentes",
+            "howTo": "Adiciona camisolas de 50 clubes diferentes."
+          },
+          "100": {
+            "title": "Sem fronteiras",
+            "description": "100 clubes diferentes",
+            "howTo": "Adiciona camisolas de 100 clubes diferentes."
           }
         },
         "leagues": {
           "3": {
             "title": "Três ligas",
-            "description": "Camisolas de 3 ligas diferentes"
+            "description": "Camisolas de 3 ligas diferentes",
+            "howTo": "Adiciona camisolas de 3 campeonatos diferentes."
           },
           "10": {
             "title": "Globe-trotter",
-            "description": "10 ligas diferentes"
+            "description": "10 ligas diferentes",
+            "howTo": "Adiciona camisolas de 10 campeonatos diferentes."
           }
         },
         "vintage": {
           "pre2000": {
             "title": "Old school",
-            "description": "5 camisolas anteriores a 2000"
+            "description": "5 camisolas anteriores a 2000",
+            "howTo": "Adiciona 5 camisolas anteriores ao ano 2000."
+          }
+        },
+        "brands": {
+          "5": {
+            "title": "Multimarca",
+            "description": "Camisolas de 5 marcas diferentes",
+            "howTo": "Adiciona camisolas de 5 marcas diferentes."
+          },
+          "10": {
+            "title": "Caçador de marcas",
+            "description": "Camisolas de 10 marcas diferentes",
+            "howTo": "Adiciona camisolas de 10 marcas diferentes."
           }
         }
       },
       "social": {
         "rating": {
-          "first": {
-            "title": "Primeira avaliação",
-            "description": "Avalia a tua primeira camisola"
-          },
           "50": {
             "title": "Crítico",
-            "description": "50 avaliações deixadas"
+            "description": "50 avaliações deixadas",
+            "howTo": "Deixa 50 avaliações em camisolas."
+          },
+          "100": {
+            "title": "Especialista",
+            "description": "100 avaliações deixadas",
+            "howTo": "Deixa 100 avaliações em camisolas."
+          },
+          "first": {
+            "title": "Primeira avaliação",
+            "description": "Avalia a tua primeira camisola",
+            "howTo": "Avalia a tua primeira camisola."
           }
         },
         "profile": {
           "complete": {
             "title": "Bem apresentado",
-            "description": "Avatar, clube favorito e bio preenchidos"
+            "description": "Avatar, clube favorito e bio preenchidos",
+            "howTo": "Preenche o teu avatar, clube favorito e bio."
           }
         },
         "follower": {
-          "first": {
-            "title": "Primeiro amigo",
-            "description": "Adiciona o teu primeiro amigo"
-          },
           "10": {
             "title": "Sociável",
-            "description": "10 amigos na plataforma"
+            "description": "10 amigos na plataforma",
+            "howTo": "Alcança 10 amigos na plataforma."
+          },
+          "25": {
+            "title": "Popular",
+            "description": "25 amigos",
+            "howTo": "Alcança 25 amigos na plataforma."
+          },
+          "50": {
+            "title": "Estrela",
+            "description": "50 amigos",
+            "howTo": "Alcança 50 amigos na plataforma."
+          },
+          "first": {
+            "title": "Primeiro amigo",
+            "description": "Adiciona o teu primeiro amigo",
+            "howTo": "Adiciona o teu primeiro amigo."
           }
         }
       },
       "loyalty": {
         "1year": {
           "title": "Um ano juntos",
-          "description": "1 ano desde a criação da conta"
+          "description": "1 ano desde a criação da conta",
+          "howTo": "Mantém a tua conta ativa durante 1 ano."
         },
         "2year": {
           "title": "Dois anos fiel",
-          "description": "2 anos desde a criação da conta"
+          "description": "2 anos desde a criação da conta",
+          "howTo": "Mantém a tua conta ativa durante 2 anos."
         }
       },
       "rarity": {
         "pre1990": {
           "title": "Antiquário",
-          "description": "Possui uma camisola anterior a 1990"
+          "description": "Possui uma camisola anterior a 1990",
+          "howTo": "Adiciona uma camisola anterior a 1990."
         },
         "goalkeeper": {
           "title": "O muro",
-          "description": "Possui uma camisola de guarda-redes"
+          "description": "Possui uma camisola de guarda-redes",
+          "howTo": "Adiciona uma camisola de guarda-redes à coleção."
+        },
+        "pre1980": {
+          "title": "Relíquia",
+          "description": "Tem uma camisola anterior a 1980",
+          "howTo": "Adiciona uma camisola anterior a 1980."
+        },
+        "signed": {
+          "title": "Autografada",
+          "description": "Tem uma camisola autografada",
+          "howTo": "Adiciona uma camisola autografada à coleção."
+        },
+        "certificate": {
+          "title": "Certificada",
+          "description": "Tem uma camisola com certificado de autenticidade",
+          "howTo": "Adiciona uma camisola com certificado de autenticidade."
+        },
+        "authentic": {
+          "10": {
+            "title": "Versão jogador",
+            "description": "10 camisolas que não são réplica",
+            "howTo": "Tem 10 camisolas em versão autêntica (não réplica)."
+          }
+        },
+        "match_worn": {
+          "title": "O Graal",
+          "description": "Tem uma camisola usada em jogo",
+          "howTo": "Adiciona uma camisola usada em jogo."
         }
       },
       "contribution": {
         "proposal": {
-          "first": {
-            "title": "Primeira contribuição",
-            "description": "Uma das tuas propostas de camisola foi aceite"
-          },
           "10": {
             "title": "Contribuidor regular",
-            "description": "10 propostas aceites"
+            "description": "10 propostas aceites",
+            "howTo": "Consegue que 10 das tuas propostas de camisola sejam aceites."
+          },
+          "25": {
+            "title": "Pilar",
+            "description": "25 propostas aceites",
+            "howTo": "Consegue que 25 das tuas propostas de camisola sejam aceites."
+          },
+          "50": {
+            "title": "Arquivista-chefe",
+            "description": "50 propostas aceites",
+            "howTo": "Consegue que 50 das tuas propostas de camisola sejam aceites."
+          },
+          "first": {
+            "title": "Primeira contribuição",
+            "description": "Uma das tuas propostas de camisola foi aceite",
+            "howTo": "Consegue que uma das tuas propostas de camisola seja aceite."
           }
         },
         "description": {
           "first": {
             "title": "Redator",
-            "description": "A tua primeira descrição foi aceite"
+            "description": "A tua primeira descrição foi aceite",
+            "howTo": "Consegue que uma das tuas descrições seja aceite."
           }
         }
       },
@@ -2870,7 +2997,17 @@
       "unlocked": "Sem conquistas desbloqueadas nesta categoria.",
       "inProgress": "Sem conquistas em progresso nesta categoria."
     },
-    "secret": "Secreto"
+    "secret": "Secreto",
+    "detail": {
+      "unlockedBadge": "desbloqueado",
+      "lockedBadge": "Bloqueado",
+      "category": "Categoria",
+      "unlockedOn": "Desbloqueado a",
+      "rarity": "Raridade",
+      "rarityValue": "{percent} dos colecionadores",
+      "progress": "Progresso",
+      "howToTitle": "Como obter"
+    }
   },
   "PublicAchievements": {
     "title": "Conquistas de {name}",
