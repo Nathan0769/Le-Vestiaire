@@ -22,14 +22,25 @@ type Scope = "friends" | "global";
 export function FeedTimeline({ initialData }: FeedTimelineProps) {
   const t = useTranslations("Feed");
   const searchParams = useSearchParams();
-  const pinnedPostId = searchParams.get("post");
-  const openComments = searchParams.get("comments") === "1";
-  const [scope, setScope] = useState<Scope>("friends");
+  // Capté une seule fois au mount : le pin dispose s'il switch d'onglet.
+  const [pinnedPostId, setPinnedPostId] = useState<string | null>(() =>
+    searchParams.get("post")
+  );
+  const [openComments] = useState(
+    () => searchParams.get("comments") === "1"
+  );
+  const [scope, setScopeState] = useState<Scope>("friends");
   const [sinceTimestamp, setSinceTimestamp] = useState(() =>
     new Date().toISOString()
   );
   const sentinelRef = useRef<HTMLDivElement | null>(null);
   const pinnedRef = useRef<HTMLDivElement | null>(null);
+
+  // Changer d'onglet retire le pin (signal user : "je veux voir autre chose").
+  const setScope = (next: Scope) => {
+    if (next !== scope) setPinnedPostId(null);
+    setScopeState(next);
+  };
 
   // Fetch le post pinné (venant d'une notif ?post=XXX) pour le remonter en tête.
   const pinnedPost = useQuery({
