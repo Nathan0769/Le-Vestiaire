@@ -64,12 +64,13 @@ export function NotificationItem({ notification, onClick }: Props) {
     ? t("types.FOLLOW_REQUEST_RECEIVED")
     : t(`types.${notification.type}` as never);
 
-  const href =
-    notification.postId
-      ? `/feed?post=${notification.postId}`
-      : actor
-      ? `/u/${actor.username}`
-      : "/notifications";
+  const href = notification.postId
+    ? notification.type === "POST_COMMENTED"
+      ? `/feed?post=${notification.postId}&comments=1`
+      : `/feed?post=${notification.postId}`
+    : actor
+    ? `/u/${actor.username}`
+    : "/notifications";
 
   const timeAgo = formatDistanceToNow(new Date(notification.createdAt), {
     addSuffix: true,
