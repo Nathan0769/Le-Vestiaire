@@ -14,7 +14,7 @@ export function useFollowing({ username, enabled = true }: UseFollowingParams) {
     enabled,
     queryFn: async () => {
       const res = await fetch(
-        `/api/users/${encodeURIComponent(username)}/following?limit=50`
+        `/api/users/${encodeURIComponent(username)}/following?limit=50`,
       );
       if (!res.ok) throw new Error("Erreur chargement following");
       const data = (await res.json()) as {

@@ -8,6 +8,7 @@ import {
 } from "@/lib/rate-limit";
 import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
 import { getRarityMap } from "@/lib/achievements/rarity";
+import { createProgressCache } from "@/lib/achievements/progress-cache";
 
 export async function GET() {
   const user = await getCurrentUser();
@@ -31,9 +32,10 @@ export async function GET() {
     ([key, def]) => !unlockedKeys.has(key) && !def.hidden
   );
 
+  const getProgress = createProgressCache(user.id);
   const inProgress = await Promise.all(
     inProgressEntries.map(async ([key, def]) => {
-      const currentProgress = await def.computeProgress(user.id);
+      const currentProgress = await getProgress(def.computeProgress);
       return {
         key,
         category: def.category,
