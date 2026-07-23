@@ -34,7 +34,7 @@ interface Props {
 
 export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
   const t = useTranslations();
-  const { unlocked, inProgress, hiddenLocked, rarity } = data;
+  const { unlocked, inProgress, hiddenLocked, rarity, badges } = data;
   const [selected, setSelected] = useState<AchievementDetail | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
 
@@ -54,6 +54,7 @@ export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
         unlocked: true,
         unlockedAt: u.unlockedAt,
         params,
+        imageUrl: badges[u.key] ?? null,
       };
     });
 
@@ -66,10 +67,11 @@ export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
       currentProgress: p.currentProgress,
       threshold: p.threshold,
       percentage: p.percentage,
+      imageUrl: badges[p.key] ?? null,
     }));
 
     return [...unlockedItems, ...inProgressItems];
-  }, [unlocked, inProgress]);
+  }, [unlocked, inProgress, badges]);
 
   const featured = useMemo(() => pickFeatured(items), [items]);
 
@@ -96,6 +98,7 @@ export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
     setSelected({
       ...item,
       rarity: item.unlocked ? rarity[item.key] : undefined,
+      imageUrl: item.imageUrl,
     });
   }
 

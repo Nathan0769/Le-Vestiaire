@@ -41,6 +41,7 @@ export const AVATARS_BUCKET = process.env.CLOUDFLARE_R2_AVATARS_BUCKET;
 export const USER_JERSEY_PHOTOS_BUCKET = process.env.CLOUDFLARE_R2_USER_JERSEY_PHOTOS_BUCKET;
 export const JERSEY_PROPOSALS_BUCKET = process.env.CLOUDFLARE_R2_JERSEY_PROPOSALS_BUCKET;
 export const PATCHES_BUCKET = process.env.CLOUDFLARE_R2_PATCHES_BUCKET ?? "";
+export const STATIC_BUCKET = process.env.CLOUDFLARE_R2_STATIC_BUCKET ?? "";
 
 const JERSEY_PROPOSALS_PUBLIC_URL = process.env.CLOUDFLARE_R2_JERSEY_PROPOSALS_PUBLIC_URL;
 
@@ -56,6 +57,10 @@ const R2_PUBLIC_URLS: Record<string, string> = {
   ...(process.env.CLOUDFLARE_R2_GUIDES_PUBLIC_URL && {
     guides: process.env.CLOUDFLARE_R2_GUIDES_PUBLIC_URL,
   }),
+  ...(process.env.CLOUDFLARE_R2_STATIC_BUCKET &&
+    process.env.CLOUDFLARE_R2_STATIC_PUBLIC_URL && {
+      [process.env.CLOUDFLARE_R2_STATIC_BUCKET]: process.env.CLOUDFLARE_R2_STATIC_PUBLIC_URL,
+    }),
 };
 
 const r2Client = new S3Client({

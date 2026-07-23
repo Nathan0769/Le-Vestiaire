@@ -4,6 +4,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
 import { checkAllAchievements } from "@/lib/achievements/check";
 import { getRarityMap } from "@/lib/achievements/rarity";
+import { getAchievementBadges } from "@/lib/achievements/badges";
 import { createProgressCache } from "@/lib/achievements/progress-cache";
 import { AchievementsPageClient } from "@/components/achievements/achievements-page-client";
 import type { AchievementsResponse } from "@/hooks/useAchievements";
@@ -79,6 +80,7 @@ export default async function AchievementsPage() {
     inProgress,
     hiddenLocked,
     rarity,
+    badges: getAchievementBadges(),
   };
 
   return <AchievementsPageClient data={data} newlyUnlocked={newlyUnlocked} />;

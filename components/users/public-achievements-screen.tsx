@@ -6,6 +6,7 @@ import prisma from "@/lib/prisma";
 import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
 import { maybeCheckAllAchievements } from "@/lib/achievements/check";
 import { getRarityMap } from "@/lib/achievements/rarity";
+import { getAchievementBadges } from "@/lib/achievements/badges";
 import { PublicUserTabs } from "@/components/users/public-user-tabs";
 import { AuthGateBanner } from "@/components/auth/auth-gate-banner";
 import { BackButton } from "@/components/ui/back-button";
@@ -94,6 +95,7 @@ export async function PublicAchievementsScreen({
           metadata: u.metadata as Record<string, unknown> | null,
         }))}
         rarity={rarity}
+        badges={getAchievementBadges()}
       />
     </div>
   );

@@ -2849,6 +2849,11 @@
       },
       "social": {
         "rating": {
+          "20": {
+            "title": "Recensent",
+            "description": "20 beoordelingen achtergelaten",
+            "howTo": "Geef 20 beoordelingen op shirts."
+          },
           "50": {
             "title": "Criticus",
             "description": "50 beoordelingen achtergelaten",
@@ -2858,6 +2863,11 @@
             "title": "Expert",
             "description": "100 beoordelingen achtergelaten",
             "howTo": "Geef 100 beoordelingen op shirts."
+          },
+          "200": {
+            "title": "Opperrechter",
+            "description": "200 beoordelingen achtergelaten",
+            "howTo": "Geef 200 beoordelingen op shirts."
           },
           "first": {
             "title": "Eerste beoordeling",

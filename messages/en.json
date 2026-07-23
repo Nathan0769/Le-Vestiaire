@@ -2849,6 +2849,11 @@
       },
       "social": {
         "rating": {
+          "20": {
+            "title": "Reviewer",
+            "description": "20 ratings left",
+            "howTo": "Leave 20 ratings on jerseys."
+          },
           "50": {
             "title": "Critic",
             "description": "50 ratings left",
@@ -2858,6 +2863,11 @@
             "title": "Expert",
             "description": "100 ratings left",
             "howTo": "Leave 100 ratings on jerseys."
+          },
+          "200": {
+            "title": "Supreme judge",
+            "description": "200 ratings left",
+            "howTo": "Leave 200 ratings on jerseys."
           },
           "first": {
             "title": "First rating",

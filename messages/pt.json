@@ -2849,6 +2849,11 @@
       },
       "social": {
         "rating": {
+          "20": {
+            "title": "Cronista",
+            "description": "20 avaliações deixadas",
+            "howTo": "Deixa 20 avaliações em camisolas."
+          },
           "50": {
             "title": "Crítico",
             "description": "50 avaliações deixadas",
@@ -2858,6 +2863,11 @@
             "title": "Especialista",
             "description": "100 avaliações deixadas",
             "howTo": "Deixa 100 avaliações em camisolas."
+          },
+          "200": {
+            "title": "Juiz supremo",
+            "description": "200 avaliações deixadas",
+            "howTo": "Deixa 200 avaliações em camisolas."
           },
           "first": {
             "title": "Primeira avaliação",

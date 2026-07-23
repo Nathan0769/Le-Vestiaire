@@ -26,6 +26,7 @@ export interface AchievementDetail {
   /** Ratio 0..1 de collectionneurs ayant le succès. */
   rarity?: number;
   params?: Record<string, string | number>;
+  imageUrl?: string | null;
 }
 
 const TIER_PILL: Record<string, string> = {
@@ -106,6 +107,7 @@ function ModalBody({
           tier={tier}
           unlocked={unlocked}
           percentage={percentage}
+          imageUrl={achievement.imageUrl}
           size={92}
         />
         <span
