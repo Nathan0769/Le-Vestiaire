@@ -59,7 +59,7 @@ export async function DELETE() {
     }
 
     // Supprimer l'utilisateur - les cascade Prisma gèrent le reste
-    // (UserJersey, Wishlist, Rating, Friendship, Session, Account, etc.)
+    // (UserJersey, Wishlist, Rating, Follow, Block, Post, Session, Account, etc.)
     await prisma.user.delete({ where: { id: user.id } });
 
     return NextResponse.json({ success: true });

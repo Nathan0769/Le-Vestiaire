@@ -22,10 +22,17 @@ export const prismaTest = new PrismaClient({
  * Supprime les données dans le bon ordre pour respecter les contraintes FK
  */
 export async function cleanDatabase() {
+  await prismaTest.notification.deleteMany();
+  await prismaTest.postReport.deleteMany();
+  await prismaTest.postComment.deleteMany();
+  await prismaTest.postLike.deleteMany();
+  await prismaTest.post.deleteMany();
+  await prismaTest.block.deleteMany();
+  await prismaTest.followRequest.deleteMany();
+  await prismaTest.follow.deleteMany();
   await prismaTest.rating.deleteMany();
   await prismaTest.wishlist.deleteMany();
   await prismaTest.userJersey.deleteMany();
-  await prismaTest.friendship.deleteMany();
   await prismaTest.achievement.deleteMany();
   await prismaTest.session.deleteMany();
   await prismaTest.account.deleteMany();

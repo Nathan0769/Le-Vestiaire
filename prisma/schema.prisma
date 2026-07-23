@@ -36,6 +36,7 @@ model User {
   emailMarketing              Boolean               @default(true) @map("email_marketing")
   reminderStep                Int                   @default(0) @map("reminder_step")
   notificationsEnabled        Boolean               @default(true) @map("notifications_enabled")
+  isPrivate                   Boolean               @default(false) @map("is_private")
   lastAchievementsSeenAt      DateTime?             @map("last_achievements_seen_at") @db.Timestamp(6)
   lastAchievementsFullCheckAt DateTime?             @map("last_achievements_full_check_at") @db.Timestamp(6)
   instagramHandle             String?
@@ -48,8 +49,6 @@ model User {
   contributionHistory         ContributionHistory[]
   reviewedDescriptions        DescriptionProposal[] @relation("ReviewedDescriptions")
   descriptionProposals        DescriptionProposal[]
-  receivedFriendships         Friendship[]          @relation("ReceivedFriendships")
-  sentFriendships             Friendship[]          @relation("SentFriendships")
   jerseyProposals             JerseyProposal[]
   pushTokens                  PushToken[]
   ratings                     Rating[]
@@ -59,6 +58,19 @@ model User {
   wishlist                    Wishlist[]
   reportedJerseys             JerseyReport[]        @relation("ReportedBy")
   resolvedReports             JerseyReport[]        @relation("ReportResolver")
+  followers                   Follow[]              @relation("Following")
+  following                   Follow[]              @relation("Follower")
+  followRequestsSent          FollowRequest[]       @relation("FollowRequestRequester")
+  followRequestsReceived      FollowRequest[]       @relation("FollowRequestTarget")
+  blocksSent                  Block[]               @relation("Blocker")
+  blocksReceived              Block[]               @relation("Blocked")
+  posts                       Post[]
+  postLikes                   PostLike[]
+  postComments                PostComment[]
+  postReportsSent             PostReport[]          @relation("PostReportReporter")
+  postReportsReviewed         PostReport[]          @relation("PostReportReviewer")
+  notifications               Notification[]        @relation("NotificationRecipient")
+  notificationsActedOn        Notification[]        @relation("NotificationActor")
 
   @@map("user")
 }
@@ -355,20 +367,6 @@ model Wishlist {
   @@map("wishlist")
 }
 
-model Friendship {
-  id         String           @id @default(cuid())
-  senderId   String
-  receiverId String
-  status     FriendshipStatus @default(PENDING)
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
-  receiver   User             @relation("ReceivedFriendships", fields: [receiverId], references: [id], onDelete: Cascade)
-  sender     User             @relation("SentFriendships", fields: [senderId], references: [id], onDelete: Cascade)
-
-  @@unique([senderId, receiverId])
-  @@map("friendships")
-}
-
 enum AchievementCategory {
   COLLECTION
   DIVERSITY
@@ -562,13 +560,6 @@ enum JerseyVersion {
   MATCH_WORN
 }
 
-enum FriendshipStatus {
-  PENDING
-  ACCEPTED
-  REJECTED
-  BLOCKED
-}
-
 enum JerseyType {
   HOME
   AWAY
@@ -632,4 +623,188 @@ enum PatchFamily {
   DOMESTIC_SUPERCUP
   NATIONAL_TEAM_COMPETITION
   CUSTOM
+}
+
+// ============================================================================
+// Feed communautaire (Follow, Block, Post, Interactions, Reports, Notifications)
+// ============================================================================
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String   @map("follower_id")
+  followingId String   @map("following_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  follower    User     @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+  @@index([followingId, createdAt])
+  @@index([followerId, createdAt])
+  @@map("follows")
+}
+
+model FollowRequest {
+  id          String   @id @default(cuid())
+  requesterId String   @map("requester_id")
+  targetId    String   @map("target_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  requester   User     @relation("FollowRequestRequester", fields: [requesterId], references: [id], onDelete: Cascade)
+  target      User     @relation("FollowRequestTarget", fields: [targetId], references: [id], onDelete: Cascade)
+
+  @@unique([requesterId, targetId])
+  @@index([targetId, createdAt])
+  @@map("follow_requests")
+}
+
+model Block {
+  id        String   @id @default(cuid())
+  blockerId String   @map("blocker_id")
+  blockedId String   @map("blocked_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  blocker   User     @relation("Blocker", fields: [blockerId], references: [id], onDelete: Cascade)
+  blocked   User     @relation("Blocked", fields: [blockedId], references: [id], onDelete: Cascade)
+
+  @@unique([blockerId, blockedId])
+  @@index([blockedId])
+  @@map("blocks")
+}
+
+enum PostType {
+  JERSEY_ADD
+  ACHIEVEMENT_UNLOCK
+  CAP_REACHED
+}
+
+enum CapKind {
+  COLLECTION_50
+  COLLECTION_100
+  COLLECTION_500
+  COLLECTION_1000
+  VALUE_1K
+  VALUE_5K
+  VALUE_25K
+}
+
+model Post {
+  id           String    @id @default(cuid())
+  authorId     String    @map("author_id")
+  type         PostType
+  referenceId  String?   @map("reference_id")
+  capKind      CapKind?  @map("cap_kind")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+  deletedAt    DateTime? @map("deleted_at")
+  boost        Int       @default(0)
+  likeCount    Int       @default(0) @map("like_count")
+  commentCount Int       @default(0) @map("comment_count")
+
+  author   User          @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  likes    PostLike[]
+  comments PostComment[]
+  reports  PostReport[]
+
+  @@unique([authorId, type, referenceId, capKind])
+  @@index([authorId, createdAt])
+  @@index([createdAt, boost])
+  @@index([type, createdAt])
+  @@map("posts")
+}
+
+model PostLike {
+  id        String   @id @default(cuid())
+  postId    String   @map("post_id")
+  userId    String   @map("user_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  post      Post     @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([postId, userId])
+  @@index([userId])
+  @@map("post_likes")
+}
+
+model PostComment {
+  id        String    @id @default(cuid())
+  postId    String    @map("post_id")
+  authorId  String    @map("author_id")
+  content   String    @db.VarChar(500)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  deletedAt DateTime? @map("deleted_at")
+
+  post    Post         @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author  User         @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  reports PostReport[]
+
+  @@index([postId, createdAt])
+  @@index([authorId])
+  @@map("post_comments")
+}
+
+enum PostReportTargetType {
+  POST
+  COMMENT
+}
+
+enum PostReportStatus {
+  PENDING
+  REVIEWED_KEPT
+  REVIEWED_REMOVED
+}
+
+enum PostReportReason {
+  SPAM
+  HARASSMENT
+  HATE_SPEECH
+  INAPPROPRIATE
+  OTHER
+}
+
+model PostReport {
+  id           String               @id @default(cuid())
+  reporterId   String               @map("reporter_id")
+  targetType   PostReportTargetType @map("target_type")
+  postId       String?              @map("post_id")
+  commentId    String?              @map("comment_id")
+  reason       PostReportReason
+  details      String?              @db.VarChar(500)
+  status       PostReportStatus     @default(PENDING)
+  reviewedById String?              @map("reviewed_by_id")
+  reviewedAt   DateTime?            @map("reviewed_at")
+  createdAt    DateTime             @default(now()) @map("created_at")
+
+  reporter   User         @relation("PostReportReporter", fields: [reporterId], references: [id], onDelete: Cascade)
+  reviewedBy User?        @relation("PostReportReviewer", fields: [reviewedById], references: [id], onDelete: SetNull)
+  // SetNull volontaire : préserve l'audit trail du signalement même si le post/comment
+  // est supprimé (par l'auteur ou la modération). reason/details/reporter restent traçables.
+  post       Post?        @relation(fields: [postId], references: [id], onDelete: SetNull)
+  comment    PostComment? @relation(fields: [commentId], references: [id], onDelete: SetNull)
+
+  @@index([status, createdAt])
+  @@index([reporterId])
+  @@map("post_reports")
+}
+
+enum NotificationType {
+  NEW_FOLLOWER
+  POST_LIKED
+  POST_COMMENTED
+  FOLLOW_REQUEST_APPROVED
+}
+
+model Notification {
+  id        String           @id @default(cuid())
+  userId    String           @map("user_id")
+  type      NotificationType
+  actorId   String?          @map("actor_id")
+  postId    String?          @map("post_id")
+  commentId String?          @map("comment_id")
+  readAt    DateTime?        @map("read_at")
+  createdAt DateTime         @default(now()) @map("created_at")
+
+  user  User  @relation("NotificationRecipient", fields: [userId], references: [id], onDelete: Cascade)
+  actor User? @relation("NotificationActor", fields: [actorId], references: [id], onDelete: SetNull)
+
+  @@index([userId, readAt, createdAt])
+  @@map("notifications")
 }

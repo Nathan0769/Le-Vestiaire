@@ -21,7 +21,8 @@
     "cfsSalesLink": "Camisolas em Saldo CFS",
     "supportSectionLabel": "Apoiar",
     "buyMeACoffee": "Buy Me a Coffee",
-    "tipeee": "Tipeee"
+    "tipeee": "Tipeee",
+    "feed": "Feed"
   },
   "Common": {
     "loading": "A carregar...",
@@ -2784,16 +2785,6 @@
         }
       },
       "social": {
-        "friend": {
-          "first": {
-            "title": "Primeiro amigo",
-            "description": "Adiciona o teu primeiro amigo"
-          },
-          "10": {
-            "title": "Sociável",
-            "description": "10 amigos na plataforma"
-          }
-        },
         "rating": {
           "first": {
             "title": "Primeira avaliação",
@@ -2808,6 +2799,16 @@
           "complete": {
             "title": "Bem apresentado",
             "description": "Avatar, clube favorito e bio preenchidos"
+          }
+        },
+        "follower": {
+          "first": {
+            "title": "Primeiro amigo",
+            "description": "Adiciona o teu primeiro amigo"
+          },
+          "10": {
+            "title": "Sociável",
+            "description": "10 amigos na plataforma"
           }
         }
       },
@@ -2940,5 +2941,195 @@
     "clubsCountLabel": "Clubes",
     "leaguesCountLabel": "Ligas",
     "emptyState": "Sem camisolas disponíveis para esta época."
+  },
+  "Follow": {
+    "follow": "Seguir",
+    "following": "Seguindo",
+    "unfollow": "Deixar de seguir",
+    "requested": "Solicitado",
+    "searchPlaceholder": "Buscar por usuário...",
+    "searchLoading": "Buscando...",
+    "searchEmpty": "Sem resultados",
+    "networkTitle": "Minha rede",
+    "networkLoading": "Carregando...",
+    "networkTabFollowing": "Seguindo ({count})",
+    "networkTabFollowers": "Seguidores ({count})",
+    "networkTabRequests": "Solicitações",
+    "networkEmptyFollowing": "Você ainda não segue ninguém. Use a busca acima para encontrar colecionadores.",
+    "networkEmptyFollowers": "Nenhum seguidor ainda.",
+    "networkEmptyRequests": "Nenhuma solicitação pendente.",
+    "requestAccept": "Aceitar",
+    "requestReject": "Recusar",
+    "metadataNetworkTitle": "Minha rede - Le Vestiaire Foot",
+    "metadataNetworkDescription": "Gerencie seus seguidos, seguidores e solicitações no Le Vestiaire.",
+    "metadataFeedTitle": "Feed - Le Vestiaire Foot",
+    "metadataFeedDescription": "Descubra a atividade dos colecionadores que você segue no Le Vestiaire."
+  },
+  "Feed": {
+    "title": "Feed",
+    "tabs": {
+      "friends": "Seguindo",
+      "global": "Global"
+    },
+    "empty": {
+      "friendsTitle": "Seu feed está vazio",
+      "friendsDescription": "Siga colecionadores para ver suas adições e conquistas recentes.",
+      "friendsCta": "Encontrar colecionadores",
+      "globalTitle": "Nada para mostrar",
+      "globalDescription": "Nenhuma atividade recente na plataforma."
+    },
+    "newPostsSingle": "1 nova publicação",
+    "newPostsMany": "{count} novas publicações",
+    "loading": "Carregando...",
+    "post": {
+      "delete": "Excluir",
+      "report": "Denunciar",
+      "options": "Opções",
+      "commentSingle": "1 comentário",
+      "commentMany": "{count} comentários",
+      "jerseyTitleTemplate": "Camisa {type} {club} {season}",
+      "patchSingle": "1 patch",
+      "patchMany": "{count} patches",
+      "size": "Tamanho {size}",
+      "types": {
+        "HOME": "Casa",
+        "AWAY": "Fora",
+        "THIRD": "Third",
+        "FOURTH": "Fourth",
+        "GOALKEEPER": "Goleiro",
+        "SPECIAL": "Especial"
+      },
+      "versions": {
+        "REPLICA": "Padrão",
+        "AUTHENTIC": "Versão jogador",
+        "STOCK_PRO": "Stock Pro",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      },
+      "conditions": {
+        "MINT": "Nova",
+        "EXCELLENT": "Excelente",
+        "GOOD": "Boa",
+        "FAIR": "Razoável",
+        "POOR": "Desgastada"
+      },
+      "achievementTiers": {
+        "BRONZE": "Bronze",
+        "SILVER": "Prata",
+        "GOLD": "Ouro",
+        "PLATINUM": "Platina"
+      },
+      "achievementUnlocked": "Conquista {tier}",
+      "capCollectionLabel": "camisas na coleção",
+      "capValueLabel": "investidos na coleção"
+    },
+    "likers": {
+      "single": "{name} curtiu isto",
+      "withOthersSingle": "{name} e mais {count}",
+      "withOthersPlural": "{name} e mais {count}"
+    },
+    "comments": {
+      "title": "Comentários",
+      "placeholder": "Adicionar um comentário...",
+      "publish": "Publicar",
+      "loading": "Carregando...",
+      "empty": "Nenhum comentário ainda.",
+      "showMore": "Ver mais",
+      "showMoreLoading": "Carregando...",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "report": "Denunciar",
+      "save": "Salvar",
+      "cancel": "Cancelar",
+      "counter": "{count} / 500"
+    },
+    "recommendedTitle": "Sugestões",
+    "recommendedJerseySingle": "camisa",
+    "recommendedJerseyMany": "camisas",
+    "recommendedFollow": "Seguir",
+    "recommendedRequested": "Solicitado",
+    "recommendedFollowing": "Seguindo"
+  },
+  "Notifications": {
+    "title": "Notificações",
+    "markAllRead": "Marcar tudo como lido",
+    "loading": "Carregando...",
+    "empty": "Sem notificações",
+    "seeAll": "Ver todas as notificações",
+    "tabAll": "Todas",
+    "tabUnread": "Não lidas",
+    "types": {
+      "NEW_FOLLOWER": "começou a seguir você",
+      "POST_LIKED": "curtiu sua publicação",
+      "POST_COMMENTED": "comentou sua publicação",
+      "FOLLOW_REQUEST_APPROVED": "aceitou sua solicitação",
+      "FOLLOW_REQUEST_RECEIVED": "quer te seguir"
+    },
+    "someone": "Alguém",
+    "metadataTitle": "Notificações - Le Vestiaire Foot",
+    "accept": "Aceitar",
+    "reject": "Recusar",
+    "accepted": "Aceito",
+    "rejected": "Recusado"
+  },
+  "Moderation": {
+    "reportPost": "Denunciar esta publicação",
+    "reportComment": "Denunciar este comentário",
+    "reason": "Motivo",
+    "reasons": {
+      "SPAM": "Spam",
+      "HARASSMENT": "Assédio",
+      "HATE_SPEECH": "Discurso de ódio",
+      "INAPPROPRIATE": "Conteúdo inapropriado",
+      "OTHER": "Outro"
+    },
+    "details": "Detalhes (opcional, máx. 500 caracteres)",
+    "cancel": "Cancelar",
+    "submit": "Denunciar",
+    "submitting": "Enviando...",
+    "success": "Denúncia enviada, obrigado.",
+    "genericError": "Erro",
+    "admin": {
+      "pageTitle": "Denúncias da comunidade",
+      "pageSubtitle": "Publicações e comentários denunciados por usuários.",
+      "cardTitle": "Moderação comunidade",
+      "cardDescription": "Publicações e comentários denunciados",
+      "cardCta": "Ver moderação",
+      "filterStatusPending": "Pendentes",
+      "filterStatusKept": "Mantidos",
+      "filterStatusRemoved": "Removidos",
+      "filterTargetAll": "Todos",
+      "filterTargetPost": "Publicações",
+      "filterTargetComment": "Comentários",
+      "loading": "Carregando...",
+      "empty": "Nenhuma denúncia nesta categoria.",
+      "reportedBy": "Denunciado por",
+      "target": "alvo",
+      "details": "Detalhes",
+      "totalReports": "{count} denúncias",
+      "alreadyDeleted": "Já excluído",
+      "actionRemove": "Remover",
+      "actionKeep": "Manter",
+      "toastRemoved": "Conteúdo removido",
+      "toastKept": "Denúncia fechada sem ação",
+      "toastError": "Erro na revisão",
+      "metadataTitle": "Moderação comunidade - Le Vestiaire Foot"
+    }
+  },
+  "Privacy": {
+    "title": "Privacidade",
+    "privateLabel": "Conta privada",
+    "privateDescription": "Se ativada, novos seguidores precisarão de sua aprovação. Seus seguidores atuais permanecem inalterados. Seu perfil, coleção e lista de desejos só serão visíveis aos seguidores aprovados.",
+    "blockedLabel": "Usuários bloqueados",
+    "blockedLoading": "Carregando...",
+    "blockedEmpty": "Você não bloqueou ninguém.",
+    "unblock": "Desbloquear",
+    "metadataTitle": "Privacidade - Le Vestiaire Foot",
+    "metadataDescription": "Gerencie sua conta privada e usuários bloqueados."
+  },
+  "HomeFeed": {
+    "title": "Destaques da comunidade",
+    "subtitle": "As publicações mais curtidas das últimas duas semanas.",
+    "cta": "Ver feed completo"
   }
 }

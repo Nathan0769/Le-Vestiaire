@@ -100,8 +100,8 @@ describe.skipIf(!seedCheck.seeded)("checkAchievements", () => {
 
     const otherUser = await createTestUser("ignore_friend");
     cleanup.push(otherUser.id);
-    await prisma.friendship.create({
-      data: { senderId: user.id, receiverId: otherUser.id, status: "ACCEPTED" },
+    await prisma.follow.create({
+      data: { followerId: otherUser.id, followingId: user.id },
     });
 
     const newUnlocks = await checkAchievements(user.id, "collection.add");

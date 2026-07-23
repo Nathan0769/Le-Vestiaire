@@ -9,9 +9,103 @@ import {
 } from "@/lib/r2-storage";
 import {
   moderateRateLimit,
+  standardRateLimit,
   getRateLimitIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit";
+import { isBlocked } from "@/lib/follow";
+
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params;
+  const currentUser = await getCurrentUser();
+
+  const identifier = await getRateLimitIdentifier(currentUser?.id);
+  const rateLimitResult = await checkRateLimit(standardRateLimit, identifier);
+  if (!rateLimitResult.success) {
+    return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
+  }
+
+  const item = await prisma.userJersey.findUnique({
+    where: { id },
+    include: {
+      jersey: {
+        include: {
+          club: { include: { league: true } },
+        },
+      },
+      patches: {
+        include: {
+          patch: { include: { versions: true } },
+        },
+      },
+    },
+  });
+
+  if (!item) {
+    return NextResponse.json(
+      { error: "Maillot introuvable" },
+      { status: 404 }
+    );
+  }
+
+  const owner = await prisma.user.findUnique({
+    where: { id: item.userId },
+    select: { id: true, isPrivate: true },
+  });
+
+  if (!owner) {
+    return NextResponse.json(
+      { error: "Utilisateur introuvable" },
+      { status: 404 }
+    );
+  }
+
+  // Gate privacy : profil privé accessible uniquement au owner et à ses followers
+  if (owner.isPrivate && currentUser?.id !== owner.id) {
+    const follow = currentUser
+      ? await prisma.follow.findUnique({
+          where: {
+            followerId_followingId: {
+              followerId: currentUser.id,
+              followingId: owner.id,
+            },
+          },
+          select: { id: true },
+        })
+      : null;
+    if (!follow) {
+      return NextResponse.json({ error: "Profil privé" }, { status: 403 });
+    }
+  }
+
+  // Gate block
+  if (currentUser && (await isBlocked(currentUser.id, item.userId))) {
+    return NextResponse.json({ error: "Accès bloqué" }, { status: 403 });
+  }
+
+  const userPhotoUrl = item.userPhotoUrl
+    ? await getR2PresignedUrl(
+        USER_JERSEY_PHOTOS_BUCKET,
+        item.userPhotoUrl,
+        60 * 60
+      )
+    : null;
+
+  return NextResponse.json({
+    ...item,
+    userPhotoUrl,
+    purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
+    jersey: {
+      ...item.jersey,
+      retailPrice: item.jersey.retailPrice
+        ? Number(item.jersey.retailPrice)
+        : null,
+    },
+  });
+}
 
 const VALID_VERSIONS = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"] as const;
 
@@ -347,7 +441,19 @@ export async function DELETE(
       }
     }
 
-    await prisma.userJersey.delete({ where: { id } });
+    // Soft-delete du Post JERSEY_ADD associé pour ne pas garder une card
+    // orpheline dans les feeds (référence brisée, pas de FK).
+    await prisma.$transaction(async (tx) => {
+      await tx.post.updateMany({
+        where: {
+          type: "JERSEY_ADD",
+          referenceId: id,
+          deletedAt: null,
+        },
+        data: { deletedAt: new Date() },
+      });
+      await tx.userJersey.delete({ where: { id } });
+    });
 
     return NextResponse.json({
       success: true,

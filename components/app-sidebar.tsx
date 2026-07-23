@@ -3,7 +3,6 @@
 import {
   ListTodo,
   Home,
-  Settings,
   Shirt,
   UsersRound,
   Heart,
@@ -36,7 +35,6 @@ import {
 } from "@/components/ui/collapsible";
 import { ChevronDown } from "lucide-react";
 import React from "react";
-import { usePendingRequestsCount } from "@/hooks/usePendingRequestsCount";
 import { useAchievementsUnreadCount } from "@/hooks/useAchievementsUnreadCount";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { isHotkeyPressed } from "react-hotkeys-hook";
@@ -48,7 +46,6 @@ import { CFS_CLEARANCE_URL } from "@/lib/cfs-affiliate";
 export function AppSidebar() {
   const t = useTranslations("Sidebar");
   const [openCommunaute, setOpenCommunaute] = React.useState(true);
-  const { count: pendingCount } = usePendingRequestsCount();
   const { data: achievementsUnread } = useAchievementsUnreadCount();
   const currentUser = useCurrentUser();
   const router = useRouter();
@@ -108,11 +105,6 @@ export function AppSidebar() {
       title: t("authentication"),
       url: "/authentification",
       icon: Shield,
-    },
-    {
-      title: t("settings"),
-      url: "/settings",
-      icon: Settings,
     },
   ];
 
@@ -175,16 +167,11 @@ export function AppSidebar() {
                           <SidebarMenuSub>
                             <SidebarMenuSubItem>
                               <SidebarMenuSubButton
-                                href="/friends"
+                                href="/feed"
                                 isActive={false}
-                                className="hover:bg-primary/20 flex items-center justify-between"
+                                className="hover:bg-primary/20"
                               >
-                                <span>{t("friends")}</span>
-                                {pendingCount > 0 && (
-                                  <span className="px-2 py-0.5 bg-red-500 text-white rounded-full text-xs font-medium">
-                                    {pendingCount}
-                                  </span>
-                                )}
+                                <span>{t("feed")}</span>
                               </SidebarMenuSubButton>
                             </SidebarMenuSubItem>
                             <SidebarMenuSubItem>

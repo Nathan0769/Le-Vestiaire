@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import type { SearchUserResult } from "@/types/friendship";
+import { useState, useEffect } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
-import { useEffect } from "react";
+import type { SearchUserResult } from "@/types/follow";
 
 export function useSearchUsers() {
   const [query, setQuery] = useState("");
@@ -25,12 +24,9 @@ export function useSearchUsers() {
         setError(null);
 
         const res = await fetch(
-          `/api/friends/search?q=${encodeURIComponent(debouncedQuery.trim())}`
+          `/api/users/search?q=${encodeURIComponent(debouncedQuery.trim())}`
         );
-
-        if (!res.ok) {
-          throw new Error("Erreur lors de la recherche");
-        }
+        if (!res.ok) throw new Error("Erreur lors de la recherche");
 
         const data = await res.json();
         setResults(data.users || []);
@@ -45,60 +41,13 @@ export function useSearchUsers() {
     searchUsers();
   }, [debouncedQuery]);
 
-  const sendFriendRequest = async (userId: string) => {
-    try {
-      const res = await fetch("/api/friends", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ receiverId: userId }),
-      });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.error || "Erreur lors de l'envoi");
-      }
-
-      const data = await res.json();
-
-      setResults((prev) =>
-        prev.map((user) =>
-          user.id === userId ? { ...user, friendshipStatus: "PENDING" } : user
-        )
-      );
-
-      return { success: true, data };
-    } catch (err) {
-      return {
-        success: false,
-        error: err instanceof Error ? err.message : "Erreur inconnue",
-      };
-    }
-  };
-
-  const blockUser = async (userId: string) => {
-    try {
-      const res = await fetch(`/api/friends/${userId}/block`, {
-        method: "POST",
-      });
-
-      if (!res.ok) {
-        throw new Error("Erreur lors du blocage");
-      }
-
-      setResults((prev) => prev.filter((user) => user.id !== userId));
-      return { success: true };
-    } catch (err) {
-      return {
-        success: false,
-        error: err instanceof Error ? err.message : "Erreur inconnue",
-      };
-    }
-  };
-
-  const reset = () => {
-    setQuery("");
-    setResults([]);
-    setError(null);
+  const updateFollowState = (
+    userId: string,
+    newState: "none" | "following" | "requested"
+  ) => {
+    setResults((prev) =>
+      prev.map((u) => (u.id === userId ? { ...u, followState: newState } : u))
+    );
   };
 
   return {
@@ -107,8 +56,6 @@ export function useSearchUsers() {
     results,
     loading,
     error,
-    sendFriendRequest,
-    blockUser,
-    reset,
+    updateFollowState,
   };
 }

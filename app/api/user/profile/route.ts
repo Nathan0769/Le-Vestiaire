@@ -10,7 +10,7 @@ export async function GET() {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    const [user, collectionClubs, friendsCount, accountProviders] = await Promise.all([
+    const [user, collectionClubs, followingCount, followersCount, accountProviders] = await Promise.all([
       prisma.user.findUnique({
         where: { id: sessionUser.id },
         select: {
@@ -55,12 +55,8 @@ export async function GET() {
         where: { userId: sessionUser.id },
         select: { jersey: { select: { clubId: true } } },
       }),
-      prisma.friendship.count({
-        where: {
-          status: "ACCEPTED",
-          OR: [{ senderId: sessionUser.id }, { receiverId: sessionUser.id }],
-        },
-      }),
+      prisma.follow.count({ where: { followerId: sessionUser.id } }),
+      prisma.follow.count({ where: { followingId: sessionUser.id } }),
       prisma.account.findMany({
         where: { userId: sessionUser.id },
         select: { providerId: true },
@@ -97,7 +93,8 @@ export async function GET() {
         wishlistCount: user._count.wishlist,
         ratingsCount: user._count.ratings,
         clubsCount,
-        friendsCount,
+        followingCount,
+        followersCount,
       },
     });
   } catch (error) {
