@@ -33,16 +33,18 @@ import type {
 
 interface PostCardProps {
   post: FeedPostItem;
+  /** Ouvre le drawer commentaires au mount (utilisé par le deep-link notif). */
+  defaultCommentsOpen?: boolean;
 }
 
 const DATE_LOCALES: Record<string, typeof fr> = {
   fr, en: enUS, es, it, de, nl, pt,
 };
 
-export function PostCard({ post }: PostCardProps) {
+export function PostCard({ post, defaultCommentsOpen = false }: PostCardProps) {
   const t = useTranslations("Feed.post");
   const locale = useLocale();
-  const [commentsOpen, setCommentsOpen] = useState(false);
+  const [commentsOpen, setCommentsOpen] = useState(defaultCommentsOpen);
   const [reportOpen, setReportOpen] = useState(false);
   const currentUser = useCurrentUser();
   const queryClient = useQueryClient();
