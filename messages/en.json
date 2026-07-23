@@ -2821,10 +2821,25 @@
             "description": "Jerseys from 3 different leagues",
             "howTo": "Add jerseys from 3 different leagues."
           },
+          "5": {
+            "title": "Explorer",
+            "description": "Jerseys from 5 different leagues",
+            "howTo": "Add jerseys from 5 different leagues."
+          },
           "10": {
             "title": "Globe-trotter",
             "description": "10 different leagues",
             "howTo": "Add jerseys from 10 different leagues."
+          },
+          "15": {
+            "title": "Globetrotter",
+            "description": "Jerseys from 15 different leagues",
+            "howTo": "Add jerseys from 15 different leagues."
+          },
+          "100": {
+            "title": "Around the world",
+            "description": "Jerseys from 100 different leagues",
+            "howTo": "Add jerseys from 100 different leagues."
           }
         },
         "vintage": {

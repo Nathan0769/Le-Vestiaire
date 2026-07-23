@@ -72,17 +72,14 @@ export function MedalTrophy({
         </svg>
       )}
 
-      {imageUrl ? (
+      {imageUrl && unlocked ? (
         <Image
           src={imageUrl}
           alt=""
           width={size}
           height={size}
           unoptimized
-          className={cn(
-            "object-contain",
-            !unlocked && "opacity-50 grayscale",
-          )}
+          className="object-contain"
           style={{ width: size, height: size }}
         />
       ) : (

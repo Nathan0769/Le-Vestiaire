@@ -2825,10 +2825,25 @@
             "description": "Maillots de 3 championnats différents",
             "howTo": "Ajoute des maillots de 3 championnats différents."
           },
+          "5": {
+            "title": "Explorateur",
+            "description": "Maillots de 5 championnats différents",
+            "howTo": "Ajoute des maillots de 5 championnats différents."
+          },
           "10": {
             "title": "Globe-trotter",
             "description": "10 championnats différents",
             "howTo": "Ajoute des maillots de 10 championnats différents."
+          },
+          "15": {
+            "title": "Globe-trotter",
+            "description": "Maillots de 15 championnats différents",
+            "howTo": "Ajoute des maillots de 15 championnats différents."
+          },
+          "100": {
+            "title": "Tour du monde",
+            "description": "Maillots de 100 championnats différents",
+            "howTo": "Ajoute des maillots de 100 championnats différents."
           }
         },
         "vintage": {

@@ -2821,10 +2821,25 @@
             "description": "Trikots aus 3 verschiedenen Ligen",
             "howTo": "Füge Trikots aus 3 verschiedenen Ligen hinzu."
           },
+          "5": {
+            "title": "Entdecker",
+            "description": "Trikots aus 5 verschiedenen Ligen",
+            "howTo": "Füge Trikots aus 5 verschiedenen Ligen hinzu."
+          },
           "10": {
             "title": "Weltenbummler",
             "description": "10 verschiedene Ligen",
             "howTo": "Füge Trikots aus 10 verschiedenen Ligen hinzu."
+          },
+          "15": {
+            "title": "Globetrotter",
+            "description": "Trikots aus 15 verschiedenen Ligen",
+            "howTo": "Füge Trikots aus 15 verschiedenen Ligen hinzu."
+          },
+          "100": {
+            "title": "Weltreise",
+            "description": "Trikots aus 100 verschiedenen Ligen",
+            "howTo": "Füge Trikots aus 100 verschiedenen Ligen hinzu."
           }
         },
         "vintage": {

@@ -2821,10 +2821,25 @@
             "description": "Maglie di 3 campionati diversi",
             "howTo": "Aggiungi maglie di 3 campionati diversi."
           },
+          "5": {
+            "title": "Esploratore",
+            "description": "Maglie di 5 campionati diversi",
+            "howTo": "Aggiungi maglie di 5 campionati diversi."
+          },
           "10": {
             "title": "Globe-trotter",
             "description": "10 campionati diversi",
             "howTo": "Aggiungi maglie di 10 campionati diversi."
+          },
+          "15": {
+            "title": "Giramondo",
+            "description": "Maglie di 15 campionati diversi",
+            "howTo": "Aggiungi maglie di 15 campionati diversi."
+          },
+          "100": {
+            "title": "Giro del mondo",
+            "description": "Maglie di 100 campionati diversi",
+            "howTo": "Aggiungi maglie di 100 campionati diversi."
           }
         },
         "vintage": {

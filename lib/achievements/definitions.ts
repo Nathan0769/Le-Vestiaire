@@ -191,12 +191,28 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     i18nKey: "achievements.definitions.diversity.leagues.3",
     computeProgress: compute.getUserUniqueLeagues,
   },
-  "diversity.leagues.10": {
+  "diversity.leagues.5": {
+    category: "DIVERSITY",
+    tier: "SILVER",
+    threshold: 5,
+    triggers: ["collection.add"],
+    i18nKey: "achievements.definitions.diversity.leagues.5",
+    computeProgress: compute.getUserUniqueLeagues,
+  },
+  "diversity.leagues.15": {
     category: "DIVERSITY",
     tier: "GOLD",
-    threshold: 10,
+    threshold: 15,
     triggers: ["collection.add"],
-    i18nKey: "achievements.definitions.diversity.leagues.10",
+    i18nKey: "achievements.definitions.diversity.leagues.15",
+    computeProgress: compute.getUserUniqueLeagues,
+  },
+  "diversity.leagues.100": {
+    category: "DIVERSITY",
+    tier: "PLATINUM",
+    threshold: 100,
+    triggers: ["collection.add"],
+    i18nKey: "achievements.definitions.diversity.leagues.100",
     computeProgress: compute.getUserUniqueLeagues,
   },
   "diversity.vintage.pre2000": {
