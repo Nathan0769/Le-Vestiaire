@@ -2991,14 +2991,6 @@
       "patchSingle": "1 patch",
       "patchMany": "{count} patches",
       "size": "Maat {size}",
-      "types": {
-        "HOME": "Thuis",
-        "AWAY": "Uit",
-        "THIRD": "Third",
-        "FOURTH": "Fourth",
-        "GOALKEEPER": "Keeper",
-        "SPECIAL": "Speciaal"
-      },
       "versions": {
         "REPLICA": "Standaard",
         "AUTHENTIC": "Speler versie",

@@ -2991,14 +2991,6 @@
       "patchSingle": "1 patch",
       "patchMany": "{count} patches",
       "size": "Size {size}",
-      "types": {
-        "HOME": "Home",
-        "AWAY": "Away",
-        "THIRD": "Third",
-        "FOURTH": "Fourth",
-        "GOALKEEPER": "Goalkeeper",
-        "SPECIAL": "Special"
-      },
       "versions": {
         "REPLICA": "Standard",
         "AUTHENTIC": "Player version",

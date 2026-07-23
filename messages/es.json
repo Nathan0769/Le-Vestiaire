@@ -2991,14 +2991,6 @@
       "patchSingle": "1 parche",
       "patchMany": "{count} parches",
       "size": "Talla {size}",
-      "types": {
-        "HOME": "Local",
-        "AWAY": "Visitante",
-        "THIRD": "Tercera",
-        "FOURTH": "Cuarta",
-        "GOALKEEPER": "Portero",
-        "SPECIAL": "Especial"
-      },
       "versions": {
         "REPLICA": "Estándar",
         "AUTHENTIC": "Boutique jugador",

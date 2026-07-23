@@ -2991,14 +2991,6 @@
       "patchSingle": "1 patch",
       "patchMany": "{count} patch",
       "size": "Taglia {size}",
-      "types": {
-        "HOME": "Casa",
-        "AWAY": "Trasferta",
-        "THIRD": "Third",
-        "FOURTH": "Fourth",
-        "GOALKEEPER": "Portiere",
-        "SPECIAL": "Speciale"
-      },
       "versions": {
         "REPLICA": "Standard",
         "AUTHENTIC": "Boutique giocatore",

@@ -23,11 +23,12 @@ const CONDITION_DOT: Record<string, string> = {
 
 export function PostCardJersey({ payload }: Props) {
   const t = useTranslations("Feed.post");
+  const tType = useTranslations("JerseyType");
   const [modalOpen, setModalOpen] = useState(false);
   const displayImage = payload.customPhotoUrl ?? payload.jersey.imageUrl;
   const conditionDot = CONDITION_DOT[payload.condition] ?? "bg-muted-foreground";
   const conditionLabel = t(`conditions.${payload.condition}` as never);
-  const typeLabel = t(`types.${payload.jersey.type}` as never);
+  const typeLabel = tType(payload.jersey.type as never);
   const versionLabel = t(`versions.${payload.version}` as never);
   const title = t("jerseyTitleTemplate", {
     type: typeLabel,
