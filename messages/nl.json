@@ -3040,7 +3040,10 @@
     "recommendedJerseyMany": "shirts",
     "recommendedFollow": "Volgen",
     "recommendedRequested": "Aangevraagd",
-    "recommendedFollowing": "Volgend"
+    "recommendedFollowing": "Volgend",
+    "aroundExit": "Terug naar feed",
+    "aroundLoadMoreNewer": "Nieuwere posts tonen",
+    "aroundNotFound": "Post niet gevonden of niet meer beschikbaar."
   },
   "Notifications": {
     "title": "Meldingen",

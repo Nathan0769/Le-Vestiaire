@@ -3040,7 +3040,10 @@
     "recommendedJerseyMany": "maglie",
     "recommendedFollow": "Segui",
     "recommendedRequested": "Richiesto",
-    "recommendedFollowing": "Seguito"
+    "recommendedFollowing": "Seguito",
+    "aroundExit": "Torna al feed",
+    "aroundLoadMoreNewer": "Mostra più recenti",
+    "aroundNotFound": "Post non trovato o non più disponibile."
   },
   "Notifications": {
     "title": "Notifiche",
