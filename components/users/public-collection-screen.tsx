@@ -1,12 +1,12 @@
 import { notFound, redirect } from "next/navigation";
 import Image from "next/image";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { FriendCollectionStats } from "@/components/friends/friend-collection-stats";
-import { FriendCollectionGrid } from "@/components/friends/friend-collection-grid";
+import { UserCollectionStats } from "@/components/users/public-collection/user-collection-stats";
+import { UserCollectionGrid } from "@/components/users/public-collection/user-collection-grid";
 import { UserAvatar } from "@/components/profiles/user-avatar";
 import { SocialLinksRow } from "@/components/profiles/social-links-row";
 import { PublicUserTabs } from "@/components/users/public-user-tabs";
-import { FriendshipButton } from "@/components/users/friendship-button";
+import { FollowButton } from "@/components/follow/follow-button";
 import { AuthGateBanner } from "@/components/auth/auth-gate-banner";
 import { TopAchievementsBadges } from "@/components/achievements/top-achievements-badges";
 import { maybeCheckAllAchievements } from "@/lib/achievements/check";
@@ -20,7 +20,7 @@ import {
   USER_JERSEY_PHOTOS_BUCKET,
 } from "@/lib/r2-storage";
 import { getTranslations } from "next-intl/server";
-import type { FriendshipStatus } from "@/types/friendship";
+import type { FollowState } from "@/types/follow";
 
 interface PublicCollectionScreenProps {
   userId: string;
@@ -64,18 +64,33 @@ export async function PublicCollectionScreen({
     console.error("maybeCheckAllAchievements failed for target user:", error);
   }
 
-  const [friendshipRaw, myJerseyIds, topAchievementsRaw] = await Promise.all([
+  const [followState, myJerseyIds, topAchievementsRaw] = await Promise.all([
     currentUser
-      ? prisma.friendship.findFirst({
-          where: {
-            OR: [
-              { senderId: currentUser.id, receiverId: targetUser.id },
-              { senderId: targetUser.id, receiverId: currentUser.id },
-            ],
-          },
-          select: { id: true, status: true, senderId: true },
+      ? Promise.all([
+          prisma.follow.findUnique({
+            where: {
+              followerId_followingId: {
+                followerId: currentUser.id,
+                followingId: targetUser.id,
+              },
+            },
+            select: { id: true },
+          }),
+          prisma.followRequest.findUnique({
+            where: {
+              requesterId_targetId: {
+                requesterId: currentUser.id,
+                targetId: targetUser.id,
+              },
+            },
+            select: { id: true },
+          }),
+        ]).then(([follow, request]) => {
+          if (follow) return "following" as FollowState;
+          if (request) return "requested" as FollowState;
+          return "none" as FollowState;
         })
-      : Promise.resolve(null),
+      : Promise.resolve("none" as FollowState),
     currentUser
       ? prisma.userJersey.findMany({
           where: { userId: currentUser.id },
@@ -235,14 +250,6 @@ export async function PublicCollectionScreen({
     },
   };
 
-  const friendship =
-    friendshipRaw && currentUser
-      ? {
-          id: friendshipRaw.id,
-          status: friendshipRaw.status as FriendshipStatus,
-          isSender: friendshipRaw.senderId === currentUser.id,
-        }
-      : null;
 
   return (
     <div className="p-6 space-y-6 overflow-x-hidden">
@@ -281,14 +288,12 @@ export async function PublicCollectionScreen({
               <h2 className="text-xl font-semibold truncate min-w-0">
                 {displayName}
               </h2>
-              {currentUser && (
+              {currentUser && !isAnonymous && (
                 <div className="hidden md:block shrink-0">
-                  <FriendshipButton
+                  <FollowButton
                     targetUserId={targetUser.id}
-                    friendshipId={friendship?.id}
-                    status={friendship?.status ?? null}
-                    isSender={friendship?.isSender}
-                    isAnonymous={isAnonymous}
+                    initialState={followState}
+                    source="profile"
                   />
                 </div>
               )}
@@ -321,14 +326,12 @@ export async function PublicCollectionScreen({
                 {t("anonymousMessage")}
               </p>
             )}
-            {currentUser && (
+            {currentUser && !isAnonymous && (
               <div className="mt-3 md:hidden">
-                <FriendshipButton
+                <FollowButton
                   targetUserId={targetUser.id}
-                  friendshipId={friendship?.id}
-                  status={friendship?.status ?? null}
-                  isSender={friendship?.isSender}
-                  isAnonymous={isAnonymous}
+                  initialState={followState}
+                  source="profile"
                 />
               </div>
             )}
@@ -376,7 +379,7 @@ export async function PublicCollectionScreen({
         </div>
       </div>
 
-      <FriendCollectionStats stats={stats} />
+      <UserCollectionStats stats={stats} />
 
       {formattedCollection.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -389,7 +392,7 @@ export async function PublicCollectionScreen({
           </p>
         </div>
       ) : (
-        <FriendCollectionGrid
+        <UserCollectionGrid
           collectionItems={formattedCollection}
           showPriceSortOptions={false}
         />

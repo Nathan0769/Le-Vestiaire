@@ -7,6 +7,11 @@ import { QueryProvider } from "@/providers/QueryProvider";
 import { ApplyThemeColor } from "@/providers/themes-provider";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { NotificationBell } from "@/components/notifications/notification-bell";
+import { EditProfile } from "@/components/profiles/editProfile";
+import { Button } from "@/components/ui/button";
+import { Settings } from "lucide-react";
+import Link from "next/link";
 import { Toaster } from "sonner";
 import { CookieConsent } from "@/components/ui/cookie-consent";
 import { AnalyticsWrapper } from "@/components/analytics-wrapper";
@@ -39,6 +44,21 @@ export default function ClientWrapper({
             <AppSidebar />
             <main id="main-content" className="flex-1 min-w-0 overflow-x-hidden">
               <SidebarTrigger />
+              <div className="fixed top-2 right-2 z-40 flex items-center gap-1 bg-card border border-border rounded-full shadow-md px-1">
+                <EditProfile iconOnly />
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  asChild
+                  className="cursor-pointer rounded-full"
+                  aria-label="Réglages"
+                >
+                  <Link href="/settings">
+                    <Settings className="w-5 h-5" />
+                  </Link>
+                </Button>
+                <NotificationBell />
+              </div>
               <FavoriteClubBanner />
               {children}
               <AnalyticsWrapper />

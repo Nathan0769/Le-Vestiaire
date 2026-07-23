@@ -8,6 +8,8 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import { checkAchievements } from "@/lib/achievements/check";
+import { createFeedPost } from "@/lib/feed/create-post";
+import { detectCollectionCap, detectValueCap } from "@/lib/feed/cap-detector";
 
 const VALID_VERSIONS = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"] as const;
 
@@ -298,6 +300,56 @@ export async function POST(
       newAchievements = await checkAchievements(user.id, "collection.add");
     } catch (achievementError) {
       console.error("checkAchievements failed on collection.add:", achievementError);
+    }
+
+    try {
+      await createFeedPost({
+        authorId: user.id,
+        type: "JERSEY_ADD",
+        referenceId: userJersey.id,
+      });
+
+      // Cap collection (count = existingUserJerseyCount + 1)
+      const newCount = existingUserJerseyCount + 1;
+      const collectionCap = detectCollectionCap(existingUserJerseyCount, newCount);
+      if (collectionCap) {
+        await createFeedPost({
+          authorId: user.id,
+          type: "CAP_REACHED",
+          capKind: collectionCap,
+        });
+      }
+
+      // Cap valeur cumulée d'achat
+      if (parsedPurchasePrice && parsedPurchasePrice > 0) {
+        const valueAgg = await prisma.userJersey.aggregate({
+          where: { userId: user.id, purchasePrice: { not: null } },
+          _sum: { purchasePrice: true },
+        });
+        const totalAfter = Number(valueAgg._sum.purchasePrice ?? 0);
+        const totalBefore = totalAfter - parsedPurchasePrice;
+        const valueCap = detectValueCap(totalBefore, totalAfter);
+        if (valueCap) {
+          await createFeedPost({
+            authorId: user.id,
+            type: "CAP_REACHED",
+            capKind: valueCap,
+          });
+        }
+      }
+
+      // Feed post pour succès PLATINUM débloqué à cet ajout
+      for (const achievement of newAchievements) {
+        if (achievement.tier === "PLATINUM") {
+          await createFeedPost({
+            authorId: user.id,
+            type: "ACHIEVEMENT_UNLOCK",
+            referenceId: achievement.id,
+          });
+        }
+      }
+    } catch (feedError) {
+      console.error("createFeedPost failed on collection.add:", feedError);
     }
 
     return NextResponse.json({

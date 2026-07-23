@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
@@ -29,9 +30,12 @@ export default async function AdminPage() {
 
   const isSuperAdmin = user.role === "superadmin";
 
-  const pendingReportsCount = await prisma.jerseyReport.count({
-    where: { status: "PENDING" },
-  });
+  const [pendingReportsCount, pendingCommunityReportsCount] = await Promise.all([
+    prisma.jerseyReport.count({ where: { status: "PENDING" } }),
+    prisma.postReport.count({ where: { status: "PENDING" } }),
+  ]);
+
+  const tMod = await getTranslations("Moderation.admin");
 
   return (
     <div className="space-y-6">
@@ -100,6 +104,28 @@ export default async function AdminPage() {
             <Link href="/admin/reports">
               <Button className="w-full cursor-pointer">
                 Voir les signalements
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Flag className="h-5 w-5" />
+              <CardTitle className="flex-1">{tMod("cardTitle")}</CardTitle>
+              {pendingCommunityReportsCount > 0 && (
+                <span className="inline-flex items-center justify-center min-w-6 h-6 px-2 rounded-full bg-destructive text-destructive-foreground text-xs font-bold">
+                  {pendingCommunityReportsCount}
+                </span>
+              )}
+            </div>
+            <CardDescription>{tMod("cardDescription")}</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/admin/community-reports">
+              <Button className="w-full cursor-pointer">
+                {tMod("cardCta")}
               </Button>
             </Link>
           </CardContent>

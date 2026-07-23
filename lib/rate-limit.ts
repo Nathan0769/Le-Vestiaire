@@ -72,6 +72,18 @@ export const proposalsRateLimit = new Ratelimit({
 });
 
 /**
+ * SOCIAL : Pour les actions feed (like, follow, commentaire).
+ * 60 requêtes par minute. Volume typique Insta-like, doit rester fluide
+ * pour un user actif qui parcourt son feed.
+ */
+export const socialActionRateLimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(60, "1 m"),
+  analytics: true,
+  prefix: "@upstash/ratelimit/social",
+});
+
+/**
  * Récupère l'identifiant pour le rate limiting
  * Utilise userId si disponible, sinon l'IP
  */

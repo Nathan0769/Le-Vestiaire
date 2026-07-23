@@ -19,6 +19,21 @@ export type AnalyticsEvent =
   | { name: "friend_request_sent"; params: { target_user_id: string } }
   | { name: "friend_request_accepted"; params: { requester_id: string } }
   | {
+      name: "user_followed";
+      params: {
+        target_user_id: string;
+        source: "feed" | "profile" | "search" | "network";
+        state: "following" | "requested";
+      };
+    }
+  | { name: "user_blocked"; params: { target_user_id: string } }
+  | { name: "privacy_toggled"; params: { new_state: "private" | "public" } }
+  | { name: "feed_viewed"; params: Record<string, never> }
+  | { name: "feed_refreshed"; params: Record<string, never> }
+  | { name: "post_liked"; params: { post_type: string } }
+  | { name: "post_commented"; params: { post_type: string; content_length: number } }
+  | { name: "post_reported"; params: { target_type: "POST" | "COMMENT"; reason: string } }
+  | {
       name: "cfs_wishlist_match_view";
       params: {
         jersey_id: string;

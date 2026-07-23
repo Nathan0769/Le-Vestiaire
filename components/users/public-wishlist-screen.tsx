@@ -1,18 +1,18 @@
 import { notFound, redirect } from "next/navigation";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { FriendWishlistStats } from "@/components/friends/friend-wishlist-stats";
-import { FriendWishlistGrid } from "@/components/friends/friend-wishlist-grid";
+import { UserWishlistStats } from "@/components/users/public-wishlist/user-wishlist-stats";
+import { UserWishlistGrid } from "@/components/users/public-wishlist/user-wishlist-grid";
 import { UserAvatar } from "@/components/profiles/user-avatar";
 import { SocialLinksRow } from "@/components/profiles/social-links-row";
 import { PublicUserTabs } from "@/components/users/public-user-tabs";
-import { FriendshipButton } from "@/components/users/friendship-button";
+import { FollowButton } from "@/components/follow/follow-button";
 import { AuthGateBanner } from "@/components/auth/auth-gate-banner";
 import { BackButton } from "@/components/ui/back-button";
 import { Gift, Heart, EyeOff } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 import { getTranslations } from "next-intl/server";
-import type { FriendshipStatus } from "@/types/friendship";
+import type { FollowState } from "@/types/follow";
 
 interface PublicWishlistScreenProps {
   userId: string;
@@ -50,17 +50,31 @@ export async function PublicWishlistScreen({
     redirect("/wishlist");
   }
 
-  const friendshipRaw = currentUser
-    ? await prisma.friendship.findFirst({
+  let followState: FollowState = "none";
+  if (currentUser) {
+    const [follow, request] = await Promise.all([
+      prisma.follow.findUnique({
         where: {
-          OR: [
-            { senderId: currentUser.id, receiverId: targetUser.id },
-            { senderId: targetUser.id, receiverId: currentUser.id },
-          ],
+          followerId_followingId: {
+            followerId: currentUser.id,
+            followingId: targetUser.id,
+          },
         },
-        select: { id: true, status: true, senderId: true },
-      })
-    : null;
+        select: { id: true },
+      }),
+      prisma.followRequest.findUnique({
+        where: {
+          requesterId_targetId: {
+            requesterId: currentUser.id,
+            targetId: targetUser.id,
+          },
+        },
+        select: { id: true },
+      }),
+    ]);
+    if (follow) followState = "following";
+    else if (request) followState = "requested";
+  }
 
   const isAnonymous = targetUser.leaderboardAnonymous ?? false;
   const displayName = isAnonymous
@@ -134,14 +148,6 @@ export async function PublicWishlistScreen({
     priorityStats,
   };
 
-  const friendship =
-    friendshipRaw && currentUser
-      ? {
-          id: friendshipRaw.id,
-          status: friendshipRaw.status as FriendshipStatus,
-          isSender: friendshipRaw.senderId === currentUser.id,
-        }
-      : null;
 
   return (
     <div className="p-6 space-y-6 overflow-x-hidden">
@@ -180,13 +186,11 @@ export async function PublicWishlistScreen({
               <h2 className="text-xl font-semibold truncate flex-1 min-w-0">
                 {displayName}
               </h2>
-              {currentUser && (
-                <FriendshipButton
+              {currentUser && !isAnonymous && (
+                <FollowButton
                   targetUserId={targetUser.id}
-                  friendshipId={friendship?.id}
-                  status={friendship?.status ?? null}
-                  isSender={friendship?.isSender}
-                  isAnonymous={isAnonymous}
+                  initialState={followState}
+                  source="profile"
                 />
               )}
             </div>
@@ -222,7 +226,7 @@ export async function PublicWishlistScreen({
         </div>
       </div>
 
-      <FriendWishlistStats stats={stats} />
+      <UserWishlistStats stats={stats} />
 
       {formattedWishlist.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 text-center">
@@ -235,7 +239,7 @@ export async function PublicWishlistScreen({
           </p>
         </div>
       ) : (
-        <FriendWishlistGrid wishlistItems={formattedWishlist} />
+        <UserWishlistGrid wishlistItems={formattedWishlist} />
       )}
     </div>
   );

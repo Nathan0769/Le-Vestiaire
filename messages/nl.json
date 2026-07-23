@@ -21,7 +21,8 @@
     "cfsSalesLink": "CFS Shirts in de aanbieding",
     "supportSectionLabel": "Steun",
     "buyMeACoffee": "Buy Me a Coffee",
-    "tipeee": "Tipeee"
+    "tipeee": "Tipeee",
+    "feed": "Feed"
   },
   "Common": {
     "loading": "Laden...",
@@ -2784,16 +2785,6 @@
         }
       },
       "social": {
-        "friend": {
-          "first": {
-            "title": "Eerste vriend",
-            "description": "Voeg je eerste vriend toe"
-          },
-          "10": {
-            "title": "Sociaal",
-            "description": "10 vrienden op het platform"
-          }
-        },
         "rating": {
           "first": {
             "title": "Eerste beoordeling",
@@ -2808,6 +2799,16 @@
           "complete": {
             "title": "Goed gepresenteerd",
             "description": "Avatar, favoriete club en bio ingesteld"
+          }
+        },
+        "follower": {
+          "first": {
+            "title": "Eerste vriend",
+            "description": "Voeg je eerste vriend toe"
+          },
+          "10": {
+            "title": "Sociaal",
+            "description": "10 vrienden op het platform"
           }
         }
       },
@@ -2940,5 +2941,195 @@
     "clubsCountLabel": "Clubs",
     "leaguesCountLabel": "Competities",
     "emptyState": "Geen shirts beschikbaar voor dit seizoen."
+  },
+  "Follow": {
+    "follow": "Volgen",
+    "following": "Volgend",
+    "unfollow": "Ontvolgen",
+    "requested": "Aangevraagd",
+    "searchPlaceholder": "Zoek op gebruikersnaam...",
+    "searchLoading": "Zoeken...",
+    "searchEmpty": "Geen resultaten",
+    "networkTitle": "Mijn netwerk",
+    "networkLoading": "Laden...",
+    "networkTabFollowing": "Volgend ({count})",
+    "networkTabFollowers": "Volgers ({count})",
+    "networkTabRequests": "Verzoeken",
+    "networkEmptyFollowing": "Je volgt nog niemand. Gebruik de zoekbalk om verzamelaars te vinden.",
+    "networkEmptyFollowers": "Nog geen volgers.",
+    "networkEmptyRequests": "Geen openstaande verzoeken.",
+    "requestAccept": "Accepteren",
+    "requestReject": "Weigeren",
+    "metadataNetworkTitle": "Mijn netwerk - Le Vestiaire Foot",
+    "metadataNetworkDescription": "Beheer je volgend, volgers en verzoeken op Le Vestiaire.",
+    "metadataFeedTitle": "Feed - Le Vestiaire Foot",
+    "metadataFeedDescription": "Ontdek de activiteit van verzamelaars die je volgt op Le Vestiaire."
+  },
+  "Feed": {
+    "title": "Feed",
+    "tabs": {
+      "friends": "Volgend",
+      "global": "Globaal"
+    },
+    "empty": {
+      "friendsTitle": "Je feed is leeg",
+      "friendsDescription": "Volg verzamelaars om hun laatste toevoegingen en prestaties te zien.",
+      "friendsCta": "Verzamelaars vinden",
+      "globalTitle": "Niets te tonen",
+      "globalDescription": "Geen recente activiteit op het platform."
+    },
+    "newPostsSingle": "1 nieuwe post",
+    "newPostsMany": "{count} nieuwe posts",
+    "loading": "Laden...",
+    "post": {
+      "delete": "Verwijderen",
+      "report": "Melden",
+      "options": "Opties",
+      "commentSingle": "1 reactie",
+      "commentMany": "{count} reacties",
+      "jerseyTitleTemplate": "{type}shirt {club} {season}",
+      "patchSingle": "1 patch",
+      "patchMany": "{count} patches",
+      "size": "Maat {size}",
+      "types": {
+        "HOME": "Thuis",
+        "AWAY": "Uit",
+        "THIRD": "Third",
+        "FOURTH": "Fourth",
+        "GOALKEEPER": "Keeper",
+        "SPECIAL": "Speciaal"
+      },
+      "versions": {
+        "REPLICA": "Standaard",
+        "AUTHENTIC": "Speler versie",
+        "STOCK_PRO": "Stock Pro",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      },
+      "conditions": {
+        "MINT": "Nieuw",
+        "EXCELLENT": "Uitstekend",
+        "GOOD": "Goed",
+        "FAIR": "Redelijk",
+        "POOR": "Versleten"
+      },
+      "achievementTiers": {
+        "BRONZE": "Brons",
+        "SILVER": "Zilver",
+        "GOLD": "Goud",
+        "PLATINUM": "Platina"
+      },
+      "achievementUnlocked": "{tier} prestatie",
+      "capCollectionLabel": "shirts in de collectie",
+      "capValueLabel": "geïnvesteerd in de collectie"
+    },
+    "likers": {
+      "single": "{name} vindt dit leuk",
+      "withOthersSingle": "{name} en {count} ander",
+      "withOthersPlural": "{name} en {count} anderen"
+    },
+    "comments": {
+      "title": "Reacties",
+      "placeholder": "Reactie toevoegen...",
+      "publish": "Plaatsen",
+      "loading": "Laden...",
+      "empty": "Nog geen reacties.",
+      "showMore": "Meer tonen",
+      "showMoreLoading": "Laden...",
+      "edit": "Bewerken",
+      "delete": "Verwijderen",
+      "report": "Melden",
+      "save": "Opslaan",
+      "cancel": "Annuleren",
+      "counter": "{count} / 500"
+    },
+    "recommendedTitle": "Suggesties",
+    "recommendedJerseySingle": "shirt",
+    "recommendedJerseyMany": "shirts",
+    "recommendedFollow": "Volgen",
+    "recommendedRequested": "Aangevraagd",
+    "recommendedFollowing": "Volgend"
+  },
+  "Notifications": {
+    "title": "Meldingen",
+    "markAllRead": "Alles als gelezen markeren",
+    "loading": "Laden...",
+    "empty": "Geen meldingen",
+    "seeAll": "Alle meldingen bekijken",
+    "tabAll": "Alle",
+    "tabUnread": "Ongelezen",
+    "types": {
+      "NEW_FOLLOWER": "is je gaan volgen",
+      "POST_LIKED": "vindt je post leuk",
+      "POST_COMMENTED": "reageerde op je post",
+      "FOLLOW_REQUEST_APPROVED": "heeft je volgverzoek geaccepteerd",
+      "FOLLOW_REQUEST_RECEIVED": "wil je volgen"
+    },
+    "someone": "Iemand",
+    "metadataTitle": "Meldingen - Le Vestiaire Foot",
+    "accept": "Accepteren",
+    "reject": "Weigeren",
+    "accepted": "Geaccepteerd",
+    "rejected": "Geweigerd"
+  },
+  "Moderation": {
+    "reportPost": "Deze post melden",
+    "reportComment": "Deze reactie melden",
+    "reason": "Reden",
+    "reasons": {
+      "SPAM": "Spam",
+      "HARASSMENT": "Intimidatie",
+      "HATE_SPEECH": "Haatzaaiende taal",
+      "INAPPROPRIATE": "Ongepaste inhoud",
+      "OTHER": "Overig"
+    },
+    "details": "Details (optioneel, max 500 tekens)",
+    "cancel": "Annuleren",
+    "submit": "Melden",
+    "submitting": "Versturen...",
+    "success": "Melding verzonden, bedankt.",
+    "genericError": "Fout",
+    "admin": {
+      "pageTitle": "Community-meldingen",
+      "pageSubtitle": "Posts en reacties gemeld door gebruikers.",
+      "cardTitle": "Community-moderatie",
+      "cardDescription": "Gemelde posts en reacties",
+      "cardCta": "Moderatie bekijken",
+      "filterStatusPending": "In behandeling",
+      "filterStatusKept": "Behouden",
+      "filterStatusRemoved": "Verwijderd",
+      "filterTargetAll": "Alle",
+      "filterTargetPost": "Posts",
+      "filterTargetComment": "Reacties",
+      "loading": "Laden...",
+      "empty": "Geen meldingen in deze categorie.",
+      "reportedBy": "Gemeld door",
+      "target": "doel",
+      "details": "Details",
+      "totalReports": "{count} meldingen",
+      "alreadyDeleted": "Al verwijderd",
+      "actionRemove": "Verwijderen",
+      "actionKeep": "Behouden",
+      "toastRemoved": "Inhoud verwijderd",
+      "toastKept": "Melding gesloten zonder actie",
+      "toastError": "Fout bij beoordeling",
+      "metadataTitle": "Community-moderatie - Le Vestiaire Foot"
+    }
+  },
+  "Privacy": {
+    "title": "Privacy",
+    "privateLabel": "Privéaccount",
+    "privateDescription": "Indien ingeschakeld moeten nieuwe volgers je goedkeuring vragen. Je bestaande volgers blijven ongewijzigd. Je profiel, collectie en wenslijst zijn alleen zichtbaar voor goedgekeurde volgers.",
+    "blockedLabel": "Geblokkeerde gebruikers",
+    "blockedLoading": "Laden...",
+    "blockedEmpty": "Je hebt niemand geblokkeerd.",
+    "unblock": "Deblokkeren",
+    "metadataTitle": "Privacy - Le Vestiaire Foot",
+    "metadataDescription": "Beheer je privéaccount en geblokkeerde gebruikers."
+  },
+  "HomeFeed": {
+    "title": "Uitgelicht door de community",
+    "subtitle": "De meest gelikete posts van de afgelopen twee weken.",
+    "cta": "Volledige feed bekijken"
   }
 }

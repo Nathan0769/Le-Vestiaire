@@ -4,7 +4,7 @@ export const ACHIEVEMENT_TRIGGERS = [
   "collection.add",
   "collection.remove",
   "wishlist.add",
-  "social.friend",
+  "social.follower",
   "social.rating",
   "profile.update",
   "contribution.proposal_accepted",
@@ -179,21 +179,21 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
   },
 
   // ---------- SOCIAL ----------
-  "social.friend.first": {
+  "social.follower.first": {
     category: "SOCIAL",
     tier: "BRONZE",
     threshold: 1,
-    triggers: ["social.friend"],
-    i18nKey: "achievements.definitions.social.friend.first",
-    computeProgress: compute.getUserFriendCount,
+    triggers: ["social.follower"],
+    i18nKey: "achievements.definitions.social.follower.first",
+    computeProgress: compute.getUserFollowerCount,
   },
-  "social.friend.10": {
+  "social.follower.10": {
     category: "SOCIAL",
     tier: "SILVER",
     threshold: 10,
-    triggers: ["social.friend"],
-    i18nKey: "achievements.definitions.social.friend.10",
-    computeProgress: compute.getUserFriendCount,
+    triggers: ["social.follower"],
+    i18nKey: "achievements.definitions.social.follower.10",
+    computeProgress: compute.getUserFollowerCount,
   },
   "social.rating.first": {
     category: "SOCIAL",

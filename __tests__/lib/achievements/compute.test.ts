@@ -6,7 +6,7 @@ import {
   getUserUniqueClubs,
   getUserUniqueLeagues,
   getUserVintageCount,
-  getUserFriendCount,
+  getUserFollowerCount,
   getUserRatingCount,
   getUserAcceptedProposalCount,
   getUserAcceptedDescriptionCount,
@@ -142,24 +142,26 @@ describe.skipIf(!seedCheck.seeded)("compute helpers", () => {
     expect(await getUserVintageCount(user.id)).toBe(vintageJerseys.length);
   });
 
-  it("getUserFriendCount compte uniquement les amitiés ACCEPTED", async () => {
-    const user = await createTestUser("friend_self");
-    const friend1 = await createTestUser("friend1");
-    const friend2 = await createTestUser("friend2");
-    const friend3 = await createTestUser("friend3");
-    cleanup.push(user.id, friend1.id, friend2.id, friend3.id);
+  it("getUserFollowerCount compte les followers (modèle follow unilatéral)", async () => {
+    const user = await createTestUser("follower_self");
+    const follower1 = await createTestUser("follower1");
+    const follower2 = await createTestUser("follower2");
+    const notFollower = await createTestUser("not_follower");
+    cleanup.push(user.id, follower1.id, follower2.id, notFollower.id);
 
-    await prisma.friendship.create({
-      data: { senderId: user.id, receiverId: friend1.id, status: "ACCEPTED" },
+    // follower1 et follower2 suivent user
+    await prisma.follow.create({
+      data: { followerId: follower1.id, followingId: user.id },
     });
-    await prisma.friendship.create({
-      data: { senderId: friend2.id, receiverId: user.id, status: "ACCEPTED" },
+    await prisma.follow.create({
+      data: { followerId: follower2.id, followingId: user.id },
     });
-    await prisma.friendship.create({
-      data: { senderId: friend3.id, receiverId: user.id, status: "PENDING" },
+    // user suit notFollower : ne compte pas (on compte les followers reçus)
+    await prisma.follow.create({
+      data: { followerId: user.id, followingId: notFollower.id },
     });
 
-    expect(await getUserFriendCount(user.id)).toBe(2);
+    expect(await getUserFollowerCount(user.id)).toBe(2);
   });
 
   it("getUserRatingCount compte les ratings", async () => {

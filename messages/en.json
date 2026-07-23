@@ -21,7 +21,8 @@
     "cfsSalesLink": "CFS Sale Jerseys",
     "supportSectionLabel": "Support",
     "buyMeACoffee": "Buy Me a Coffee",
-    "tipeee": "Tipeee"
+    "tipeee": "Tipeee",
+    "feed": "Feed"
   },
   "Common": {
     "loading": "Loading...",
@@ -2784,16 +2785,6 @@
         }
       },
       "social": {
-        "friend": {
-          "first": {
-            "title": "First friend",
-            "description": "Add your first friend"
-          },
-          "10": {
-            "title": "Sociable",
-            "description": "10 friends on the platform"
-          }
-        },
         "rating": {
           "first": {
             "title": "First rating",
@@ -2808,6 +2799,16 @@
           "complete": {
             "title": "Well presented",
             "description": "Avatar, favorite club and bio all set"
+          }
+        },
+        "follower": {
+          "first": {
+            "title": "First friend",
+            "description": "Add your first friend"
+          },
+          "10": {
+            "title": "Sociable",
+            "description": "10 friends on the platform"
           }
         }
       },
@@ -2940,5 +2941,195 @@
     "clubsCountLabel": "Clubs",
     "leaguesCountLabel": "Leagues",
     "emptyState": "No jerseys available for this season."
+  },
+  "Follow": {
+    "follow": "Follow",
+    "following": "Following",
+    "unfollow": "Unfollow",
+    "requested": "Requested",
+    "searchPlaceholder": "Search by username...",
+    "searchLoading": "Searching...",
+    "searchEmpty": "No results",
+    "networkTitle": "My network",
+    "networkLoading": "Loading...",
+    "networkTabFollowing": "Following ({count})",
+    "networkTabFollowers": "Followers ({count})",
+    "networkTabRequests": "Requests",
+    "networkEmptyFollowing": "You're not following anyone yet. Use the search above to find collectors.",
+    "networkEmptyFollowers": "No followers yet.",
+    "networkEmptyRequests": "No pending requests.",
+    "requestAccept": "Accept",
+    "requestReject": "Reject",
+    "metadataNetworkTitle": "My network - Le Vestiaire Foot",
+    "metadataNetworkDescription": "Manage your following, followers and follow requests on Le Vestiaire.",
+    "metadataFeedTitle": "Feed - Le Vestiaire Foot",
+    "metadataFeedDescription": "Discover the activity of collectors you follow on Le Vestiaire."
+  },
+  "Feed": {
+    "title": "Feed",
+    "tabs": {
+      "friends": "Following",
+      "global": "Global"
+    },
+    "empty": {
+      "friendsTitle": "Your feed is empty",
+      "friendsDescription": "Follow collectors to see their latest additions and achievements.",
+      "friendsCta": "Find collectors",
+      "globalTitle": "Nothing to show",
+      "globalDescription": "No recent activity on the platform."
+    },
+    "newPostsSingle": "1 new post",
+    "newPostsMany": "{count} new posts",
+    "loading": "Loading...",
+    "post": {
+      "delete": "Delete",
+      "report": "Report",
+      "options": "Options",
+      "commentSingle": "1 comment",
+      "commentMany": "{count} comments",
+      "jerseyTitleTemplate": "{club} {type} {season} shirt",
+      "patchSingle": "1 patch",
+      "patchMany": "{count} patches",
+      "size": "Size {size}",
+      "types": {
+        "HOME": "Home",
+        "AWAY": "Away",
+        "THIRD": "Third",
+        "FOURTH": "Fourth",
+        "GOALKEEPER": "Goalkeeper",
+        "SPECIAL": "Special"
+      },
+      "versions": {
+        "REPLICA": "Standard",
+        "AUTHENTIC": "Player version",
+        "STOCK_PRO": "Pro Stock",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      },
+      "conditions": {
+        "MINT": "Mint",
+        "EXCELLENT": "Excellent",
+        "GOOD": "Good",
+        "FAIR": "Fair",
+        "POOR": "Poor"
+      },
+      "achievementTiers": {
+        "BRONZE": "Bronze",
+        "SILVER": "Silver",
+        "GOLD": "Gold",
+        "PLATINUM": "Platinum"
+      },
+      "achievementUnlocked": "{tier} achievement",
+      "capCollectionLabel": "shirts in the collection",
+      "capValueLabel": "invested in the collection"
+    },
+    "likers": {
+      "single": "{name} likes this",
+      "withOthersSingle": "{name} and {count} other",
+      "withOthersPlural": "{name} and {count} others"
+    },
+    "comments": {
+      "title": "Comments",
+      "placeholder": "Add a comment...",
+      "publish": "Post",
+      "loading": "Loading...",
+      "empty": "No comments yet.",
+      "showMore": "Show more",
+      "showMoreLoading": "Loading...",
+      "edit": "Edit",
+      "delete": "Delete",
+      "report": "Report",
+      "save": "Save",
+      "cancel": "Cancel",
+      "counter": "{count} / 500"
+    },
+    "recommendedTitle": "Suggestions",
+    "recommendedJerseySingle": "shirt",
+    "recommendedJerseyMany": "shirts",
+    "recommendedFollow": "Follow",
+    "recommendedRequested": "Requested",
+    "recommendedFollowing": "Following"
+  },
+  "Notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "loading": "Loading...",
+    "empty": "No notifications",
+    "seeAll": "See all notifications",
+    "tabAll": "All",
+    "tabUnread": "Unread",
+    "types": {
+      "NEW_FOLLOWER": "started following you",
+      "POST_LIKED": "liked your post",
+      "POST_COMMENTED": "commented on your post",
+      "FOLLOW_REQUEST_APPROVED": "accepted your follow request",
+      "FOLLOW_REQUEST_RECEIVED": "wants to follow you"
+    },
+    "someone": "Someone",
+    "metadataTitle": "Notifications - Le Vestiaire Foot",
+    "accept": "Accept",
+    "reject": "Decline",
+    "accepted": "Accepted",
+    "rejected": "Declined"
+  },
+  "Moderation": {
+    "reportPost": "Report this post",
+    "reportComment": "Report this comment",
+    "reason": "Reason",
+    "reasons": {
+      "SPAM": "Spam",
+      "HARASSMENT": "Harassment",
+      "HATE_SPEECH": "Hate speech",
+      "INAPPROPRIATE": "Inappropriate content",
+      "OTHER": "Other"
+    },
+    "details": "Details (optional, 500 chars max)",
+    "cancel": "Cancel",
+    "submit": "Report",
+    "submitting": "Submitting...",
+    "success": "Report sent, thank you.",
+    "genericError": "Error",
+    "admin": {
+      "pageTitle": "Community reports",
+      "pageSubtitle": "Posts and comments reported by users.",
+      "cardTitle": "Community moderation",
+      "cardDescription": "Posts and comments reported by users",
+      "cardCta": "View moderation",
+      "filterStatusPending": "Pending",
+      "filterStatusKept": "Kept",
+      "filterStatusRemoved": "Removed",
+      "filterTargetAll": "All",
+      "filterTargetPost": "Posts",
+      "filterTargetComment": "Comments",
+      "loading": "Loading...",
+      "empty": "No reports in this category.",
+      "reportedBy": "Reported by",
+      "target": "target",
+      "details": "Details",
+      "totalReports": "{count} reports",
+      "alreadyDeleted": "Already deleted",
+      "actionRemove": "Remove",
+      "actionKeep": "Keep",
+      "toastRemoved": "Content removed",
+      "toastKept": "Report closed without action",
+      "toastError": "Review error",
+      "metadataTitle": "Community moderation - Le Vestiaire Foot"
+    }
+  },
+  "Privacy": {
+    "title": "Privacy",
+    "privateLabel": "Private account",
+    "privateDescription": "If enabled, new followers must request your approval. Your existing followers stay unchanged. Your profile, collection and wishlist will only be visible to approved followers.",
+    "blockedLabel": "Blocked users",
+    "blockedLoading": "Loading...",
+    "blockedEmpty": "You haven't blocked anyone.",
+    "unblock": "Unblock",
+    "metadataTitle": "Privacy - Le Vestiaire Foot",
+    "metadataDescription": "Manage your private account and blocked users."
+  },
+  "HomeFeed": {
+    "title": "Community highlights",
+    "subtitle": "The most liked posts from the past two weeks.",
+    "cta": "See full feed"
   }
 }

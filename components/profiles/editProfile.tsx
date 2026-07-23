@@ -24,15 +24,20 @@ import {
 } from "@/components/profiles/social-links-section";
 import { SOCIAL_NETWORKS } from "@/lib/social-links";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
-import { useFriendsCount } from "@/hooks/useFriendsCount";
-import { Users } from "lucide-react";
+import { useNetworkCounts } from "@/hooks/useNetworkCounts";
+import { Users, User } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
-export function EditProfile() {
+interface EditProfileProps {
+  iconOnly?: boolean;
+}
+
+export function EditProfile({ iconOnly }: EditProfileProps = {}) {
   const t = useTranslations("Profile");
   const currentUser = useCurrentUser();
-  const { count: friendsCount, loading: loadingFriends } = useFriendsCount();
+  const { data: networkCounts, isLoading: loadingFriends } = useNetworkCounts();
+  const friendsCount = networkCounts?.following ?? 0;
   const [isOpen, setIsOpen] = useState(false);
   const [avatarUrl, setAvatarUrl] = useState("");
   const [username, setUsername] = useState("");
@@ -247,9 +252,21 @@ export function EditProfile() {
   return (
     <Sheet open={isOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
-        <Button className="cursor-pointer" disabled={!currentUser}>
-          {t("editButton")}
-        </Button>
+        {iconOnly ? (
+          <Button
+            variant="ghost"
+            size="icon"
+            className="cursor-pointer rounded-full"
+            disabled={!currentUser}
+            aria-label={t("editButton")}
+          >
+            <User className="w-5 h-5" />
+          </Button>
+        ) : (
+          <Button className="cursor-pointer" disabled={!currentUser}>
+            {t("editButton")}
+          </Button>
+        )}
       </SheetTrigger>
       <SheetContent className="flex flex-col h-[100dvh] overflow-hidden">
         <SheetHeader className="flex-shrink-0 px-4 pt-6">

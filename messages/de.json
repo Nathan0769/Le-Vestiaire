@@ -21,7 +21,8 @@
     "cfsSalesLink": "CFS Sale-Trikots",
     "supportSectionLabel": "Unterstützen",
     "buyMeACoffee": "Buy Me a Coffee",
-    "tipeee": "Tipeee"
+    "tipeee": "Tipeee",
+    "feed": "Feed"
   },
   "Common": {
     "loading": "Laden...",
@@ -2784,16 +2785,6 @@
         }
       },
       "social": {
-        "friend": {
-          "first": {
-            "title": "Erster Freund",
-            "description": "Füge deinen ersten Freund hinzu"
-          },
-          "10": {
-            "title": "Gesellig",
-            "description": "10 Freunde auf der Plattform"
-          }
-        },
         "rating": {
           "first": {
             "title": "Erste Bewertung",
@@ -2808,6 +2799,16 @@
           "complete": {
             "title": "Gut präsentiert",
             "description": "Avatar, Lieblingsverein und Bio ausgefüllt"
+          }
+        },
+        "follower": {
+          "first": {
+            "title": "Erster Freund",
+            "description": "Füge deinen ersten Freund hinzu"
+          },
+          "10": {
+            "title": "Gesellig",
+            "description": "10 Freunde auf der Plattform"
           }
         }
       },
@@ -2940,5 +2941,195 @@
     "clubsCountLabel": "Vereine",
     "leaguesCountLabel": "Ligen",
     "emptyState": "Keine Trikots für diese Saison verfügbar."
+  },
+  "Follow": {
+    "follow": "Folgen",
+    "following": "Folgt",
+    "unfollow": "Nicht mehr folgen",
+    "requested": "Angefragt",
+    "searchPlaceholder": "Nach Benutzername suchen...",
+    "searchLoading": "Suche...",
+    "searchEmpty": "Keine Ergebnisse",
+    "networkTitle": "Mein Netzwerk",
+    "networkLoading": "Wird geladen...",
+    "networkTabFollowing": "Abonnements ({count})",
+    "networkTabFollowers": "Follower ({count})",
+    "networkTabRequests": "Anfragen",
+    "networkEmptyFollowing": "Du folgst noch niemandem. Nutze die Suche oben, um Sammler zu finden.",
+    "networkEmptyFollowers": "Noch keine Follower.",
+    "networkEmptyRequests": "Keine ausstehenden Anfragen.",
+    "requestAccept": "Annehmen",
+    "requestReject": "Ablehnen",
+    "metadataNetworkTitle": "Mein Netzwerk - Le Vestiaire Foot",
+    "metadataNetworkDescription": "Verwalte deine Abonnements, Follower und Anfragen auf Le Vestiaire.",
+    "metadataFeedTitle": "Feed - Le Vestiaire Foot",
+    "metadataFeedDescription": "Entdecke die Aktivität der Sammler, denen du auf Le Vestiaire folgst."
+  },
+  "Feed": {
+    "title": "Feed",
+    "tabs": {
+      "friends": "Abonnements",
+      "global": "Global"
+    },
+    "empty": {
+      "friendsTitle": "Dein Feed ist leer",
+      "friendsDescription": "Folge Sammlern, um ihre neuesten Ergänzungen und Erfolge zu sehen.",
+      "friendsCta": "Sammler finden",
+      "globalTitle": "Nichts anzuzeigen",
+      "globalDescription": "Keine kürzliche Aktivität auf der Plattform."
+    },
+    "newPostsSingle": "1 neuer Beitrag",
+    "newPostsMany": "{count} neue Beiträge",
+    "loading": "Wird geladen...",
+    "post": {
+      "delete": "Löschen",
+      "report": "Melden",
+      "options": "Optionen",
+      "commentSingle": "1 Kommentar",
+      "commentMany": "{count} Kommentare",
+      "jerseyTitleTemplate": "{type}trikot {club} {season}",
+      "patchSingle": "1 Patch",
+      "patchMany": "{count} Patches",
+      "size": "Größe {size}",
+      "types": {
+        "HOME": "Heim",
+        "AWAY": "Auswärts",
+        "THIRD": "Third",
+        "FOURTH": "Fourth",
+        "GOALKEEPER": "Torwart",
+        "SPECIAL": "Spezial"
+      },
+      "versions": {
+        "REPLICA": "Standard",
+        "AUTHENTIC": "Spielerversion",
+        "STOCK_PRO": "Stock Pro",
+        "PLAYER_ISSUE": "Player Issue",
+        "MATCH_WORN": "Match Worn"
+      },
+      "conditions": {
+        "MINT": "Neu",
+        "EXCELLENT": "Sehr gut",
+        "GOOD": "Gut",
+        "FAIR": "Akzeptabel",
+        "POOR": "Abgenutzt"
+      },
+      "achievementTiers": {
+        "BRONZE": "Bronze",
+        "SILVER": "Silber",
+        "GOLD": "Gold",
+        "PLATINUM": "Platin"
+      },
+      "achievementUnlocked": "{tier}-Erfolg",
+      "capCollectionLabel": "Trikots in der Sammlung",
+      "capValueLabel": "in die Sammlung investiert"
+    },
+    "likers": {
+      "single": "{name} gefällt das",
+      "withOthersSingle": "{name} und {count} weitere Person",
+      "withOthersPlural": "{name} und {count} weitere Personen"
+    },
+    "comments": {
+      "title": "Kommentare",
+      "placeholder": "Kommentar hinzufügen...",
+      "publish": "Veröffentlichen",
+      "loading": "Wird geladen...",
+      "empty": "Noch keine Kommentare.",
+      "showMore": "Mehr anzeigen",
+      "showMoreLoading": "Wird geladen...",
+      "edit": "Bearbeiten",
+      "delete": "Löschen",
+      "report": "Melden",
+      "save": "Speichern",
+      "cancel": "Abbrechen",
+      "counter": "{count} / 500"
+    },
+    "recommendedTitle": "Vorschläge",
+    "recommendedJerseySingle": "Trikot",
+    "recommendedJerseyMany": "Trikots",
+    "recommendedFollow": "Folgen",
+    "recommendedRequested": "Angefragt",
+    "recommendedFollowing": "Folgt"
+  },
+  "Notifications": {
+    "title": "Benachrichtigungen",
+    "markAllRead": "Alle als gelesen markieren",
+    "loading": "Wird geladen...",
+    "empty": "Keine Benachrichtigungen",
+    "seeAll": "Alle Benachrichtigungen anzeigen",
+    "tabAll": "Alle",
+    "tabUnread": "Ungelesen",
+    "types": {
+      "NEW_FOLLOWER": "folgt dir jetzt",
+      "POST_LIKED": "gefällt dein Beitrag",
+      "POST_COMMENTED": "hat deinen Beitrag kommentiert",
+      "FOLLOW_REQUEST_APPROVED": "hat deine Folgeanfrage akzeptiert",
+      "FOLLOW_REQUEST_RECEIVED": "möchte dir folgen"
+    },
+    "someone": "Jemand",
+    "metadataTitle": "Benachrichtigungen - Le Vestiaire Foot",
+    "accept": "Annehmen",
+    "reject": "Ablehnen",
+    "accepted": "Angenommen",
+    "rejected": "Abgelehnt"
+  },
+  "Moderation": {
+    "reportPost": "Diesen Beitrag melden",
+    "reportComment": "Diesen Kommentar melden",
+    "reason": "Grund",
+    "reasons": {
+      "SPAM": "Spam",
+      "HARASSMENT": "Belästigung",
+      "HATE_SPEECH": "Hassrede",
+      "INAPPROPRIATE": "Unangemessener Inhalt",
+      "OTHER": "Sonstiges"
+    },
+    "details": "Details (optional, max. 500 Zeichen)",
+    "cancel": "Abbrechen",
+    "submit": "Melden",
+    "submitting": "Wird gesendet...",
+    "success": "Meldung gesendet, danke.",
+    "genericError": "Fehler",
+    "admin": {
+      "pageTitle": "Community-Meldungen",
+      "pageSubtitle": "Von Benutzern gemeldete Beiträge und Kommentare.",
+      "cardTitle": "Community-Moderation",
+      "cardDescription": "Gemeldete Beiträge und Kommentare",
+      "cardCta": "Moderation ansehen",
+      "filterStatusPending": "Ausstehend",
+      "filterStatusKept": "Behalten",
+      "filterStatusRemoved": "Entfernt",
+      "filterTargetAll": "Alle",
+      "filterTargetPost": "Beiträge",
+      "filterTargetComment": "Kommentare",
+      "loading": "Wird geladen...",
+      "empty": "Keine Meldungen in dieser Kategorie.",
+      "reportedBy": "Gemeldet von",
+      "target": "Ziel",
+      "details": "Details",
+      "totalReports": "{count} Meldungen",
+      "alreadyDeleted": "Bereits gelöscht",
+      "actionRemove": "Entfernen",
+      "actionKeep": "Behalten",
+      "toastRemoved": "Inhalt entfernt",
+      "toastKept": "Meldung ohne Aktion geschlossen",
+      "toastError": "Fehler bei der Prüfung",
+      "metadataTitle": "Community-Moderation - Le Vestiaire Foot"
+    }
+  },
+  "Privacy": {
+    "title": "Datenschutz",
+    "privateLabel": "Privates Konto",
+    "privateDescription": "Wenn aktiviert, müssen neue Follower deine Zustimmung anfordern. Deine bestehenden Follower bleiben unverändert. Dein Profil, deine Sammlung und deine Wunschliste sind nur für genehmigte Follower sichtbar.",
+    "blockedLabel": "Gesperrte Nutzer",
+    "blockedLoading": "Wird geladen...",
+    "blockedEmpty": "Du hast niemanden gesperrt.",
+    "unblock": "Entsperren",
+    "metadataTitle": "Datenschutz - Le Vestiaire Foot",
+    "metadataDescription": "Verwalte dein privates Konto und gesperrte Nutzer."
+  },
+  "HomeFeed": {
+    "title": "Community-Highlights",
+    "subtitle": "Die meistgelikten Beiträge der letzten zwei Wochen.",
+    "cta": "Ganzen Feed ansehen"
   }
 }

@@ -17,12 +17,16 @@ const ROLE_PERMISSIONS: Record<string, Record<string, string[]>> = {
     jersey: ["propose"],
     proposal: ["list", "view", "approve", "reject"],
     report: ["list", "manage"],
+    postReport: ["list", "manage"],
+    post: ["moderate"],
     user: ["manageRoles"],
   },
   superadmin: {
     jersey: ["propose"],
     proposal: ["list", "view", "approve", "reject"],
     report: ["list", "manage"],
+    postReport: ["list", "manage"],
+    post: ["moderate"],
     user: ["manageRoles"],
   },
 };
@@ -48,6 +52,17 @@ function checkUserPermissions(
   }
 
   return true;
+}
+
+/**
+ * Version pure (sans DB) : vérifie si un rôle donné a des permissions.
+ * Utile quand on a déjà l'user en main via getCurrentUser().
+ */
+export function hasPermission(
+  role: string | null | undefined,
+  requiredPermissions: Record<string, string[]>
+): boolean {
+  return checkUserPermissions(role ?? "user", requiredPermissions);
 }
 
 /**

@@ -50,12 +50,9 @@ export async function getUserPre1990Count(userId: string): Promise<number> {
   }).length;
 }
 
-export async function getUserFriendCount(userId: string): Promise<number> {
-  return prisma.friendship.count({
-    where: {
-      status: "ACCEPTED",
-      OR: [{ senderId: userId }, { receiverId: userId }],
-    },
+export async function getUserFollowerCount(userId: string): Promise<number> {
+  return prisma.follow.count({
+    where: { followingId: userId },
   });
 }
 
