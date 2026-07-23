@@ -275,12 +275,12 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     i18nKey: "achievements.definitions.social.follower.50",
     computeProgress: compute.getUserFollowerCount,
   },
-  "social.rating.first": {
+  "social.rating.20": {
     category: "SOCIAL",
     tier: "BRONZE",
-    threshold: 1,
+    threshold: 20,
     triggers: ["social.rating"],
-    i18nKey: "achievements.definitions.social.rating.first",
+    i18nKey: "achievements.definitions.social.rating.20",
     computeProgress: compute.getUserRatingCount,
   },
   "social.rating.50": {
@@ -297,6 +297,14 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     threshold: 100,
     triggers: ["social.rating"],
     i18nKey: "achievements.definitions.social.rating.100",
+    computeProgress: compute.getUserRatingCount,
+  },
+  "social.rating.200": {
+    category: "SOCIAL",
+    tier: "PLATINUM",
+    threshold: 200,
+    triggers: ["social.rating"],
+    i18nKey: "achievements.definitions.social.rating.200",
     computeProgress: compute.getUserRatingCount,
   },
   "social.profile.complete": {

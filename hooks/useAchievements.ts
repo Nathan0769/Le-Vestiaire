@@ -28,6 +28,8 @@ export interface AchievementsResponse {
   hiddenLocked: number;
   /** Ratio 0..1 de collectionneurs par clé de succès (rareté). */
   rarity: Record<string, number>;
+  /** URL du badge illustré par clé de succès (sinon médaille CSS). */
+  badges: Record<string, string>;
 }
 
 export function useAchievements() {

@@ -16,6 +16,7 @@ export interface MedalItem {
   threshold?: number;
   percentage?: number;
   params?: Record<string, string | number>;
+  imageUrl?: string | null;
 }
 
 interface Props {
@@ -46,6 +47,7 @@ export function MedalButton({ item, onSelect }: Props) {
         tier={tier}
         unlocked={unlocked}
         percentage={percentage}
+        imageUrl={item.imageUrl}
         size={76}
         className="transition-transform group-hover:scale-105"
       />

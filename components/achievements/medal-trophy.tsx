@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Lock, Trophy } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CATEGORY_ICONS, TIER_DISC } from "./achievement-visuals";
@@ -10,6 +11,8 @@ interface MedalTrophyProps {
   percentage?: number;
   /** Diamètre du disque en pixels. */
   size?: number;
+  /** Badge illustré (R2). Si présent, remplace la médaille CSS. */
+  imageUrl?: string | null;
   className?: string;
 }
 
@@ -22,6 +25,7 @@ export function MedalTrophy({
   unlocked,
   percentage = 0,
   size = 80,
+  imageUrl,
   className,
 }: MedalTrophyProps) {
   const Icon = unlocked ? CATEGORY_ICONS[category] ?? Trophy : Lock;
@@ -68,26 +72,41 @@ export function MedalTrophy({
         </svg>
       )}
 
-      <div
-        className={cn(
-          "relative rounded-full grid place-items-center",
-          discClass,
-        )}
-        style={{ width: size, height: size }}
-      >
-        {unlocked && (
-          <span
-            className="pointer-events-none absolute rounded-full border border-white/35"
-            style={{ inset: size * 0.075 }}
-            aria-hidden="true"
-          />
-        )}
-        <Icon
-          style={{ width: iconSize, height: iconSize }}
-          strokeWidth={1.8}
-          className={cn(unlocked && "drop-shadow-sm")}
+      {imageUrl ? (
+        <Image
+          src={imageUrl}
+          alt=""
+          width={size}
+          height={size}
+          unoptimized
+          className={cn(
+            "object-contain",
+            !unlocked && "opacity-50 grayscale",
+          )}
+          style={{ width: size, height: size }}
         />
-      </div>
+      ) : (
+        <div
+          className={cn(
+            "relative rounded-full grid place-items-center",
+            discClass,
+          )}
+          style={{ width: size, height: size }}
+        >
+          {unlocked && (
+            <span
+              className="pointer-events-none absolute rounded-full border border-white/35"
+              style={{ inset: size * 0.075 }}
+              aria-hidden="true"
+            />
+          )}
+          <Icon
+            style={{ width: iconSize, height: iconSize }}
+            strokeWidth={1.8}
+            className={cn(unlocked && "drop-shadow-sm")}
+          />
+        </div>
+      )}
     </div>
   );
 }

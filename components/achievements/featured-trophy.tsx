@@ -37,6 +37,7 @@ export function FeaturedTrophy({ item, rarity, onSelect }: Props) {
         category={item.category}
         tier={item.tier}
         unlocked
+        imageUrl={item.imageUrl}
         size={88}
         className="shrink-0"
       />

@@ -8,6 +8,7 @@ import {
 } from "@/lib/rate-limit";
 import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
 import { getRarityMap } from "@/lib/achievements/rarity";
+import { getAchievementBadges } from "@/lib/achievements/badges";
 import { createProgressCache } from "@/lib/achievements/progress-cache";
 
 export async function GET() {
@@ -54,5 +55,11 @@ export async function GET() {
 
   const rarity = await getRarityMap();
 
-  return NextResponse.json({ unlocked, inProgress, hiddenLocked, rarity });
+  return NextResponse.json({
+    unlocked,
+    inProgress,
+    hiddenLocked,
+    rarity,
+    badges: getAchievementBadges(),
+  });
 }

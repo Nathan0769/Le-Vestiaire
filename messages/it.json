@@ -2849,6 +2849,11 @@
       },
       "social": {
         "rating": {
+          "20": {
+            "title": "Recensore",
+            "description": "20 valutazioni lasciate",
+            "howTo": "Lascia 20 valutazioni sulle maglie."
+          },
           "50": {
             "title": "Critico",
             "description": "50 valutazioni lasciate",
@@ -2858,6 +2863,11 @@
             "title": "Esperto",
             "description": "100 valutazioni lasciate",
             "howTo": "Lascia 100 valutazioni sulle maglie."
+          },
+          "200": {
+            "title": "Giudice supremo",
+            "description": "200 valutazioni lasciate",
+            "howTo": "Lascia 200 valutazioni sulle maglie."
           },
           "first": {
             "title": "Prima valutazione",

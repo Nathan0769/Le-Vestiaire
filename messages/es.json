@@ -2849,6 +2849,11 @@
       },
       "social": {
         "rating": {
+          "20": {
+            "title": "Cronista",
+            "description": "20 valoraciones dejadas",
+            "howTo": "Deja 20 valoraciones en camisetas."
+          },
           "50": {
             "title": "Crítico",
             "description": "50 valoraciones dejadas",
@@ -2858,6 +2863,11 @@
             "title": "Experto",
             "description": "100 valoraciones dejadas",
             "howTo": "Deja 100 valoraciones en camisetas."
+          },
+          "200": {
+            "title": "Juez supremo",
+            "description": "200 valoraciones dejadas",
+            "howTo": "Deja 200 valoraciones en camisetas."
           },
           "first": {
             "title": "Primera valoración",

@@ -27,9 +27,10 @@ interface UnlockedAchievement {
 interface Props {
   unlocked: UnlockedAchievement[];
   rarity: Record<string, number>;
+  badges: Record<string, string>;
 }
 
-export function PublicAchievementsView({ unlocked, rarity }: Props) {
+export function PublicAchievementsView({ unlocked, rarity, badges }: Props) {
   const t = useTranslations();
   const [selected, setSelected] = useState<AchievementDetail | null>(null);
 
@@ -45,9 +46,10 @@ export function PublicAchievementsView({ unlocked, rarity }: Props) {
           unlocked: true,
           unlockedAt: u.unlockedAt,
           params,
+          imageUrl: badges[u.key] ?? null,
         };
       }),
-    [unlocked],
+    [unlocked, badges],
   );
 
   const byCategory = useMemo(() => {
@@ -60,7 +62,7 @@ export function PublicAchievementsView({ unlocked, rarity }: Props) {
   }, [items]);
 
   function openDetail(item: MedalItem) {
-    setSelected({ ...item, rarity: rarity[item.key] });
+    setSelected({ ...item, rarity: rarity[item.key], imageUrl: item.imageUrl });
   }
 
   if (unlocked.length === 0) {

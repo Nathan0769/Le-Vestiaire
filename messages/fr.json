@@ -2853,6 +2853,11 @@
       },
       "social": {
         "rating": {
+          "20": {
+            "title": "Chroniqueur",
+            "description": "20 notes laissées",
+            "howTo": "Laisse 20 notes sur des maillots."
+          },
           "50": {
             "title": "Critique",
             "description": "50 notes laissées",
@@ -2862,6 +2867,11 @@
             "title": "Expert",
             "description": "100 notes laissées",
             "howTo": "Laisse 100 notes sur des maillots."
+          },
+          "200": {
+            "title": "Juge suprême",
+            "description": "200 notes laissées",
+            "howTo": "Laisse 200 notes sur des maillots."
           },
           "first": {
             "title": "Premier avis",

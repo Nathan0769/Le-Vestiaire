@@ -2849,6 +2849,11 @@
       },
       "social": {
         "rating": {
+          "20": {
+            "title": "Rezensent",
+            "description": "20 abgegebene Bewertungen",
+            "howTo": "Hinterlasse 20 Bewertungen zu Trikots."
+          },
           "50": {
             "title": "Kritiker",
             "description": "50 Bewertungen abgegeben",
@@ -2858,6 +2863,11 @@
             "title": "Experte",
             "description": "100 abgegebene Bewertungen",
             "howTo": "Hinterlasse 100 Bewertungen zu Trikots."
+          },
+          "200": {
+            "title": "Oberster Richter",
+            "description": "200 abgegebene Bewertungen",
+            "howTo": "Hinterlasse 200 Bewertungen zu Trikots."
           },
           "first": {
             "title": "Erste Bewertung",
