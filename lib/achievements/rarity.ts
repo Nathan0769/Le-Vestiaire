@@ -11,7 +11,7 @@ export interface AchievementOwnerCount {
 export type RarityMap = Record<string, number>;
 
 // Bump la version pour invalider le cache après ajout/retrait de succès.
-const RARITY_CACHE_KEY = "achievements:rarity:v2";
+const RARITY_CACHE_KEY = "achievements:rarity:v3";
 const RARITY_CACHE_TTL_SECONDS = 6 * 60 * 60; // 6h
 
 /**

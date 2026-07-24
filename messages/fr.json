@@ -2707,10 +2707,20 @@
     "unlockedOn": "Débloqué le {date}",
     "definitions": {
       "collection": {
+        "3": {
+          "title": "Les débuts",
+          "description": "3 maillots",
+          "howTo": "Atteins 3 maillots dans ta collection."
+        },
         "10": {
           "title": "Ça se remplit",
           "description": "10 maillots dans ta collection",
           "howTo": "Atteins 10 maillots dans ta collection."
+        },
+        "15": {
+          "title": "Ça se remplit",
+          "description": "15 maillots",
+          "howTo": "Atteins 15 maillots dans ta collection."
         },
         "25": {
           "title": "Petit collectionneur",

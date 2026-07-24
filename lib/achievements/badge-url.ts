@@ -11,6 +11,10 @@ export const BADGE_KEYS = new Set<string>([
   "diversity.leagues.5",
   "diversity.leagues.15",
   "diversity.leagues.100",
+  "collection.3",
+  "collection.15",
+  "collection.50",
+  "collection.100",
 ]);
 
 const BASE = process.env.NEXT_PUBLIC_R2_STATIC_PUBLIC_URL?.replace(/\/$/, "");

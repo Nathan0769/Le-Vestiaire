@@ -2703,10 +2703,20 @@
     "unlockedOn": "Freigeschaltet am {date}",
     "definitions": {
       "collection": {
+        "3": {
+          "title": "Der Anfang",
+          "description": "3 Trikots",
+          "howTo": "Erreiche 3 Trikots in deiner Sammlung."
+        },
         "10": {
           "title": "Füllt sich",
           "description": "10 Trikots in deiner Sammlung",
           "howTo": "Erreiche 10 Trikots in deiner Sammlung."
+        },
+        "15": {
+          "title": "Es füllt sich",
+          "description": "15 Trikots",
+          "howTo": "Erreiche 15 Trikots in deiner Sammlung."
         },
         "25": {
           "title": "Kleiner Sammler",
