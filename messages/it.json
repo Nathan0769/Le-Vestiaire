@@ -2703,10 +2703,20 @@
     "unlockedOn": "Sbloccato il {date}",
     "definitions": {
       "collection": {
+        "3": {
+          "title": "Gli inizi",
+          "description": "3 maglie",
+          "howTo": "Raggiungi 3 maglie nella collezione."
+        },
         "10": {
           "title": "Si riempie",
           "description": "10 maglie nella tua collezione",
           "howTo": "Raggiungi 10 maglie nella collezione."
+        },
+        "15": {
+          "title": "Si riempie",
+          "description": "15 maglie",
+          "howTo": "Raggiungi 15 maglie nella collezione."
         },
         "25": {
           "title": "Piccolo collezionista",

@@ -2703,10 +2703,20 @@
     "unlockedOn": "Unlocked on {date}",
     "definitions": {
       "collection": {
+        "3": {
+          "title": "The beginning",
+          "description": "3 jerseys",
+          "howTo": "Reach 3 jerseys in your collection."
+        },
         "10": {
           "title": "Filling up",
           "description": "10 jerseys in your collection",
           "howTo": "Reach 10 jerseys in your collection."
+        },
+        "15": {
+          "title": "Filling up",
+          "description": "15 jerseys",
+          "howTo": "Reach 15 jerseys in your collection."
         },
         "25": {
           "title": "Small collector",

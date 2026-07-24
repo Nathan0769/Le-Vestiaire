@@ -2703,10 +2703,20 @@
     "unlockedOn": "Desbloqueado el {date}",
     "definitions": {
       "collection": {
+        "3": {
+          "title": "Los inicios",
+          "description": "3 camisetas",
+          "howTo": "Alcanza 3 camisetas en tu colección."
+        },
         "10": {
           "title": "Empieza a llenarse",
           "description": "10 camisetas en tu colección",
           "howTo": "Alcanza 10 camisetas en tu colección."
+        },
+        "15": {
+          "title": "Se va llenando",
+          "description": "15 camisetas",
+          "howTo": "Alcanza 15 camisetas en tu colección."
         },
         "25": {
           "title": "Pequeño coleccionista",

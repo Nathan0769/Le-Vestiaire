@@ -2703,10 +2703,20 @@
     "unlockedOn": "Ontgrendeld op {date}",
     "definitions": {
       "collection": {
+        "3": {
+          "title": "Het begin",
+          "description": "3 shirts",
+          "howTo": "Bereik 3 shirts in je collectie."
+        },
         "10": {
           "title": "Vult zich",
           "description": "10 shirts in je collectie",
           "howTo": "Bereik 10 shirts in je collectie."
+        },
+        "15": {
+          "title": "Het vult zich",
+          "description": "15 shirts",
+          "howTo": "Bereik 15 shirts in je collectie."
         },
         "25": {
           "title": "Kleine verzamelaar",

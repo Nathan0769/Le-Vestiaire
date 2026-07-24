@@ -37,33 +37,25 @@ export interface AchievementDefinition {
 
 export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
   // ---------- COLLECTION ----------
-  "collection.first": {
+  "collection.3": {
     category: "COLLECTION",
     tier: "BRONZE",
-    threshold: 1,
+    threshold: 3,
     triggers: ["collection.add"],
-    i18nKey: "achievements.definitions.collection.first",
+    i18nKey: "achievements.definitions.collection.3",
     computeProgress: compute.getUserJerseyCount,
   },
-  "collection.10": {
-    category: "COLLECTION",
-    tier: "BRONZE",
-    threshold: 10,
-    triggers: ["collection.add"],
-    i18nKey: "achievements.definitions.collection.10",
-    computeProgress: compute.getUserJerseyCount,
-  },
-  "collection.25": {
+  "collection.15": {
     category: "COLLECTION",
     tier: "SILVER",
-    threshold: 25,
+    threshold: 15,
     triggers: ["collection.add"],
-    i18nKey: "achievements.definitions.collection.25",
+    i18nKey: "achievements.definitions.collection.15",
     computeProgress: compute.getUserJerseyCount,
   },
   "collection.50": {
     category: "COLLECTION",
-    tier: "SILVER",
+    tier: "GOLD",
     threshold: 50,
     triggers: ["collection.add"],
     i18nKey: "achievements.definitions.collection.50",
@@ -71,7 +63,7 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
   },
   "collection.100": {
     category: "COLLECTION",
-    tier: "GOLD",
+    tier: "PLATINUM",
     threshold: 100,
     triggers: ["collection.add"],
     i18nKey: "achievements.definitions.collection.100",

@@ -2703,10 +2703,20 @@
     "unlockedOn": "Desbloqueada em {date}",
     "definitions": {
       "collection": {
+        "3": {
+          "title": "Os começos",
+          "description": "3 camisolas",
+          "howTo": "Alcança 3 camisolas na coleção."
+        },
         "10": {
           "title": "Começa a encher",
           "description": "10 camisolas na tua colecção",
           "howTo": "Alcança 10 camisolas na coleção."
+        },
+        "15": {
+          "title": "A encher",
+          "description": "15 camisolas",
+          "howTo": "Alcança 15 camisolas na coleção."
         },
         "25": {
           "title": "Pequeno colecionador",
