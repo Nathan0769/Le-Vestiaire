@@ -51,6 +51,11 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  env: {
+    // Expose l'URL publique du bucket R2 static au client (badges de succès).
+    NEXT_PUBLIC_R2_STATIC_PUBLIC_URL:
+      process.env.CLOUDFLARE_R2_STATIC_PUBLIC_URL ?? "",
+  },
   images: {
     unoptimized: true,
     remotePatterns: [

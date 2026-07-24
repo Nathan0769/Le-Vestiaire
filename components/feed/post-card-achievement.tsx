@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { Trophy, Sparkles } from "lucide-react";
 import type { AchievementUnlockPayload } from "@/types/feed";
 import { useTranslations } from "next-intl";
+import { getBadgeUrl } from "@/lib/achievements/badge-url";
 
 interface Props {
   payload: AchievementUnlockPayload;
@@ -20,6 +22,7 @@ export function PostCardAchievement({ payload }: Props) {
   const tPost = useTranslations("Feed.post");
   const gradient =
     TIER_GRADIENT[payload.tier ?? "PLATINUM"] ?? TIER_GRADIENT.PLATINUM;
+  const badgeUrl = getBadgeUrl(payload.key);
   const tierKey = payload.tier ?? "PLATINUM";
   const tierLabel = tPost(`achievementTiers.${tierKey}` as never);
 
@@ -49,9 +52,20 @@ export function PostCardAchievement({ payload }: Props) {
         <Sparkles className="w-24 h-24" strokeWidth={1} />
       </div>
       <div className="relative flex items-start gap-3">
-        <div className="bg-white/20 backdrop-blur-sm p-2 rounded-lg flex-shrink-0">
-          <Trophy className="w-6 h-6" strokeWidth={2.5} />
-        </div>
+        {badgeUrl ? (
+          <Image
+            src={badgeUrl}
+            alt=""
+            width={48}
+            height={48}
+            unoptimized
+            className="w-12 h-12 object-contain flex-shrink-0 drop-shadow"
+          />
+        ) : (
+          <div className="bg-white/20 backdrop-blur-sm p-2 rounded-lg flex-shrink-0">
+            <Trophy className="w-6 h-6" strokeWidth={2.5} />
+          </div>
+        )}
         <div className="min-w-0 flex-1">
           <p className="text-[10px] uppercase tracking-widest opacity-80 font-semibold">
             {tPost("achievementUnlocked", { tier: tierLabel })}

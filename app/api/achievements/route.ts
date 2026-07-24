@@ -6,9 +6,8 @@ import {
   getRateLimitIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit";
-import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
+import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definitions";
 import { getRarityMap } from "@/lib/achievements/rarity";
-import { getAchievementBadges } from "@/lib/achievements/badges";
 import { createProgressCache } from "@/lib/achievements/progress-cache";
 
 export async function GET() {
@@ -23,10 +22,12 @@ export async function GET() {
     return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
   }
 
-  const unlocked = await prisma.achievement.findMany({
-    where: { userId: user.id },
-    orderBy: { unlockedAt: "desc" },
-  });
+  const unlocked = (
+    await prisma.achievement.findMany({
+      where: { userId: user.id },
+      orderBy: { unlockedAt: "desc" },
+    })
+  ).filter((a) => isKnownAchievementKey(a.key));
   const unlockedKeys = new Set(unlocked.map((a) => a.key));
 
   const inProgressEntries = Object.entries(ACHIEVEMENTS).filter(
@@ -60,6 +61,5 @@ export async function GET() {
     inProgress,
     hiddenLocked,
     rarity,
-    badges: getAchievementBadges(),
   });
 }

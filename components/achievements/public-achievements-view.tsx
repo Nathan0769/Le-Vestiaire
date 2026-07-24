@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Award, Lock } from "lucide-react";
 import { resolveAchievementI18n } from "@/lib/achievements/render";
+import { getBadgeUrl } from "@/lib/achievements/badge-url";
 import {
   ACHIEVEMENT_CATEGORIES,
   CATEGORY_ICONS,
@@ -27,10 +28,9 @@ interface UnlockedAchievement {
 interface Props {
   unlocked: UnlockedAchievement[];
   rarity: Record<string, number>;
-  badges: Record<string, string>;
 }
 
-export function PublicAchievementsView({ unlocked, rarity, badges }: Props) {
+export function PublicAchievementsView({ unlocked, rarity }: Props) {
   const t = useTranslations();
   const [selected, setSelected] = useState<AchievementDetail | null>(null);
 
@@ -46,10 +46,10 @@ export function PublicAchievementsView({ unlocked, rarity, badges }: Props) {
           unlocked: true,
           unlockedAt: u.unlockedAt,
           params,
-          imageUrl: badges[u.key] ?? null,
+          imageUrl: getBadgeUrl(u.key),
         };
       }),
-    [unlocked, badges],
+    [unlocked],
   );
 
   const byCategory = useMemo(() => {

@@ -6,6 +6,7 @@ import { Award } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { handleNewAchievements } from "@/lib/achievements/handle-response";
 import { resolveAchievementI18n } from "@/lib/achievements/render";
+import { getBadgeUrl } from "@/lib/achievements/badge-url";
 import {
   ACHIEVEMENT_CATEGORIES,
   CATEGORY_ICONS,
@@ -34,7 +35,7 @@ interface Props {
 
 export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
   const t = useTranslations();
-  const { unlocked, inProgress, hiddenLocked, rarity, badges } = data;
+  const { unlocked, inProgress, hiddenLocked, rarity } = data;
   const [selected, setSelected] = useState<AchievementDetail | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
 
@@ -54,7 +55,7 @@ export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
         unlocked: true,
         unlockedAt: u.unlockedAt,
         params,
-        imageUrl: badges[u.key] ?? null,
+        imageUrl: getBadgeUrl(u.key),
       };
     });
 
@@ -67,11 +68,11 @@ export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
       currentProgress: p.currentProgress,
       threshold: p.threshold,
       percentage: p.percentage,
-      imageUrl: badges[p.key] ?? null,
+      imageUrl: getBadgeUrl(p.key),
     }));
 
     return [...unlockedItems, ...inProgressItems];
-  }, [unlocked, inProgress, badges]);
+  }, [unlocked, inProgress]);
 
   const featured = useMemo(() => pickFeatured(items), [items]);
 

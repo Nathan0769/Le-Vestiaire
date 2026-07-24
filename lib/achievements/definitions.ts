@@ -461,3 +461,12 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     computeProgress: compute.getUserIsFounder,
   },
 };
+
+/**
+ * Vrai si la clé correspond à un succès encore valide.
+ * Filtre les succès débloqués devenus orphelins (définition supprimée),
+ * tout en gardant les badges mensuels dynamiques (non listés dans ACHIEVEMENTS).
+ */
+export function isKnownAchievementKey(key: string): boolean {
+  return key in ACHIEVEMENTS || key.startsWith("leaderboard.monthly");
+}
