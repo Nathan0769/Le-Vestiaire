@@ -1,10 +1,9 @@
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
+import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definitions";
 import { checkAllAchievements } from "@/lib/achievements/check";
 import { getRarityMap } from "@/lib/achievements/rarity";
-import { getAchievementBadges } from "@/lib/achievements/badges";
 import { createProgressCache } from "@/lib/achievements/progress-cache";
 import { AchievementsPageClient } from "@/components/achievements/achievements-page-client";
 import type { AchievementsResponse } from "@/hooks/useAchievements";
@@ -27,10 +26,12 @@ export default async function AchievementsPage() {
     console.error("checkAllAchievements failed on page load:", error);
   }
 
-  const unlocked = await prisma.achievement.findMany({
-    where: { userId: user.id },
-    orderBy: { unlockedAt: "desc" },
-  });
+  const unlocked = (
+    await prisma.achievement.findMany({
+      where: { userId: user.id },
+      orderBy: { unlockedAt: "desc" },
+    })
+  ).filter((a) => isKnownAchievementKey(a.key));
   const unlockedKeys = new Set(unlocked.map((a) => a.key));
 
   const inProgressEntries = Object.entries(ACHIEVEMENTS).filter(
@@ -80,7 +81,6 @@ export default async function AchievementsPage() {
     inProgress,
     hiddenLocked,
     rarity,
-    badges: getAchievementBadges(),
   };
 
   return <AchievementsPageClient data={data} newlyUnlocked={newlyUnlocked} />;

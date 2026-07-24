@@ -3,10 +3,9 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { getTranslations } from "next-intl/server";
 import { Award } from "lucide-react";
 import prisma from "@/lib/prisma";
-import { ACHIEVEMENTS } from "@/lib/achievements/definitions";
+import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definitions";
 import { maybeCheckAllAchievements } from "@/lib/achievements/check";
 import { getRarityMap } from "@/lib/achievements/rarity";
-import { getAchievementBadges } from "@/lib/achievements/badges";
 import { PublicUserTabs } from "@/components/users/public-user-tabs";
 import { AuthGateBanner } from "@/components/auth/auth-gate-banner";
 import { BackButton } from "@/components/ui/back-button";
@@ -54,10 +53,12 @@ export async function PublicAchievementsScreen({
     console.error("maybeCheckAllAchievements failed for target user:", error);
   }
 
-  const unlocked = await prisma.achievement.findMany({
-    where: { userId: targetUser.id },
-    orderBy: { unlockedAt: "desc" },
-  });
+  const unlocked = (
+    await prisma.achievement.findMany({
+      where: { userId: targetUser.id },
+      orderBy: { unlockedAt: "desc" },
+    })
+  ).filter((a) => isKnownAchievementKey(a.key));
 
   const rarity = await getRarityMap();
 
@@ -95,7 +96,6 @@ export async function PublicAchievementsScreen({
           metadata: u.metadata as Record<string, unknown> | null,
         }))}
         rarity={rarity}
-        badges={getAchievementBadges()}
       />
     </div>
   );

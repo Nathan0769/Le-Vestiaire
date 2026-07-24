@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Trophy } from "lucide-react";
 import {
@@ -9,6 +10,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { resolveAchievementI18n } from "@/lib/achievements/render";
+import { getBadgeUrl } from "@/lib/achievements/badge-url";
 
 interface TopAchievement {
   key: string;
@@ -40,19 +42,36 @@ export function TopAchievementsBadges({ achievements }: Props) {
       {achievements.map((a) => {
         const tierClass = a.tier ? TIER_BG[a.tier] ?? DEFAULT_BG : DEFAULT_BG;
         const { i18nKey, params } = resolveAchievementI18n(a.key, a.metadata);
+        const badgeUrl = getBadgeUrl(a.key);
+        const label = t(`${i18nKey}.title`, params);
 
         return (
           <Tooltip key={a.key}>
             <TooltipTrigger asChild>
-              <div
-                className={cn(
-                  "w-10 h-10 rounded-full border-2 flex items-center justify-center cursor-help transition-transform hover:scale-110",
-                  tierClass,
-                )}
-                aria-label={t(`${i18nKey}.title`, params)}
+              <span
+                className="inline-flex cursor-help transition-transform hover:scale-110"
+                aria-label={label}
               >
-                <Trophy className="w-5 h-5" />
-              </div>
+                {badgeUrl ? (
+                  <Image
+                    src={badgeUrl}
+                    alt={label}
+                    width={40}
+                    height={40}
+                    unoptimized
+                    className="h-10 w-10 object-contain"
+                  />
+                ) : (
+                  <span
+                    className={cn(
+                      "w-10 h-10 rounded-full border-2 flex items-center justify-center",
+                      tierClass,
+                    )}
+                  >
+                    <Trophy className="w-5 h-5" />
+                  </span>
+                )}
+              </span>
             </TooltipTrigger>
             <TooltipContent side="top" className="max-w-xs">
               <p className="font-semibold text-sm">

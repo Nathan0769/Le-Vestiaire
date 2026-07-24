@@ -10,7 +10,8 @@ export interface AchievementOwnerCount {
 /** Map clé de succès -> ratio de collectionneurs l'ayant débloqué (0..1). */
 export type RarityMap = Record<string, number>;
 
-const RARITY_CACHE_KEY = "achievements:rarity:v1";
+// Bump la version pour invalider le cache après ajout/retrait de succès.
+const RARITY_CACHE_KEY = "achievements:rarity:v2";
 const RARITY_CACHE_TTL_SECONDS = 6 * 60 * 60; // 6h
 
 /**
