@@ -69,6 +69,7 @@ export async function enrichPostsForFeed(
                   club: {
                     select: {
                       id: true,
+                      leagueId: true,
                       name: true,
                       shortName: true,
                       logoUrl: true,

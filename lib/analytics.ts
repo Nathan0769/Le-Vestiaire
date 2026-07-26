@@ -31,6 +31,7 @@ export type AnalyticsEvent =
   | { name: "feed_viewed"; params: Record<string, never> }
   | { name: "feed_refreshed"; params: Record<string, never> }
   | { name: "post_liked"; params: { post_type: string } }
+  | { name: "post_shared"; params: { post_type: string; method: "native" | "clipboard" } }
   | { name: "post_commented"; params: { post_type: string; content_length: number } }
   | { name: "post_reported"; params: { target_type: "POST" | "COMMENT"; reason: string } }
   | {

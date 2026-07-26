@@ -5,7 +5,8 @@ import { Heart, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { trackEvent } from "@/lib/analytics";
-import type { FeedPostItem } from "@/types/feed";
+import { PostShareButton } from "@/components/feed/post-share-button";
+import type { FeedPostItem, JerseyAddPayload } from "@/types/feed";
 
 interface PostActionsProps {
   post: FeedPostItem;
@@ -73,6 +74,12 @@ export function PostActions({ post, onCommentClick }: PostActionsProps) {
         <MessageCircle className="w-5 h-5" />
         <span className="text-sm">{post.commentCount}</span>
       </Button>
+      {post.type === "JERSEY_ADD" && post.payload && (
+        <PostShareButton
+          payload={post.payload as JerseyAddPayload}
+          postType={post.type}
+        />
+      )}
     </div>
   );
 }

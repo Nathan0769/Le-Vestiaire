@@ -27,6 +27,7 @@ export interface JerseyAddPayload {
     mainColor: string | null;
     club: {
       id: string;
+      leagueId: string;
       name: string;
       shortName: string;
       logoUrl: string;
