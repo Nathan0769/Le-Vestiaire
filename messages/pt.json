@@ -2940,6 +2940,16 @@
           "title": "Dois anos fiel",
           "description": "2 anos desde a criação da conta",
           "howTo": "Mantém a tua conta ativa durante 2 anos."
+        },
+        "3year": {
+          "title": "3 anos juntos",
+          "description": "3 anos desde o teu registo",
+          "howTo": "Mantém a tua conta ativa durante 3 anos."
+        },
+        "5year": {
+          "title": "Veterano",
+          "description": "5 anos desde o teu registo",
+          "howTo": "Mantém a tua conta ativa durante 5 anos."
         }
       },
       "rarity": {
@@ -2979,6 +2989,16 @@
           "title": "O Graal",
           "description": "Tem uma camisola usada em jogo",
           "howTo": "Adiciona uma camisola usada em jogo."
+        },
+        "pre2010": {
+          "title": "Nostálgico",
+          "description": "Tem uma camisola anterior a 2010",
+          "howTo": "Adiciona uma camisola anterior a 2010."
+        },
+        "pre2000": {
+          "title": "Old school",
+          "description": "Tem uma camisola anterior a 2000",
+          "howTo": "Adiciona uma camisola anterior a 2000."
         }
       },
       "contribution": {
@@ -3024,6 +3044,13 @@
             "title": "Pódio mensal Coleção - {month}",
             "description": "Top {rank} de adições do mês"
           }
+        }
+      },
+      "wishlist": {
+        "50": {
+          "title": "Lista de sonhos",
+          "description": "50 camisolas na tua lista de desejos",
+          "howTo": "Adiciona 50 camisolas à tua lista de desejos."
         }
       }
     },

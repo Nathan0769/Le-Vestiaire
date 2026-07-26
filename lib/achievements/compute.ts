@@ -61,6 +61,17 @@ export async function getUserPre1980Count(userId: string): Promise<number> {
   }).length;
 }
 
+export async function getUserPre2010Count(userId: string): Promise<number> {
+  const rows = await prisma.userJersey.findMany({
+    where: { userId },
+    select: { jersey: { select: { season: true } } },
+  });
+  return rows.filter((r) => {
+    const year = parseInt(r.jersey.season.slice(0, 4), 10);
+    return !Number.isNaN(year) && year < 2010;
+  }).length;
+}
+
 export async function getUserMintCount(userId: string): Promise<number> {
   return prisma.userJersey.count({ where: { userId, condition: "MINT" } });
 }

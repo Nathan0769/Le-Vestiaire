@@ -85,6 +85,14 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     i18nKey: "achievements.definitions.collection.500",
     computeProgress: compute.getUserJerseyCount,
   },
+  "wishlist.50": {
+    category: "COLLECTION",
+    tier: "PLATINUM",
+    threshold: 50,
+    triggers: ["wishlist.add"],
+    i18nKey: "achievements.definitions.wishlist.50",
+    computeProgress: compute.getUserWishlistCount,
+  },
   "collection.value.1k": {
     category: "COLLECTION",
     tier: "SILVER",
@@ -206,14 +214,6 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     triggers: ["collection.add"],
     i18nKey: "achievements.definitions.diversity.leagues.100",
     computeProgress: compute.getUserUniqueLeagues,
-  },
-  "diversity.vintage.pre2000": {
-    category: "DIVERSITY",
-    tier: "SILVER",
-    threshold: 5,
-    triggers: ["collection.add"],
-    i18nKey: "achievements.definitions.diversity.vintage.pre2000",
-    computeProgress: compute.getUserVintageCount,
   },
 
   // ---------- FANDOM (same club, tiered) ----------
@@ -341,23 +341,48 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     i18nKey: "achievements.definitions.loyalty.2year",
     computeProgress: compute.getUserAccountAgeDays,
   },
+  "loyalty.3year": {
+    category: "LOYALTY",
+    tier: "PLATINUM",
+    threshold: 1095,
+    triggers: ["auth.login", "collection.add"],
+    i18nKey: "achievements.definitions.loyalty.3year",
+    computeProgress: compute.getUserAccountAgeDays,
+  },
+  "loyalty.5year": {
+    category: "LOYALTY",
+    tier: "PLATINUM",
+    threshold: 1825,
+    triggers: ["auth.login", "collection.add"],
+    i18nKey: "achievements.definitions.loyalty.5year",
+    computeProgress: compute.getUserAccountAgeDays,
+  },
 
   // ---------- RARITY ----------
-  "rarity.pre1990": {
-    category: "RARITY",
-    tier: "SILVER",
-    threshold: 1,
-    triggers: ["collection.add"],
-    i18nKey: "achievements.definitions.rarity.pre1990",
-    computeProgress: compute.getUserPre1990Count,
-  },
-  "rarity.goalkeeper": {
+  // Échelle "époque" : posséder un maillot antérieur à une année (seuil 1).
+  "rarity.pre2010": {
     category: "RARITY",
     tier: "BRONZE",
     threshold: 1,
     triggers: ["collection.add"],
-    i18nKey: "achievements.definitions.rarity.goalkeeper",
-    computeProgress: compute.getUserGoalkeeperCount,
+    i18nKey: "achievements.definitions.rarity.pre2010",
+    computeProgress: compute.getUserPre2010Count,
+  },
+  "rarity.pre2000": {
+    category: "RARITY",
+    tier: "SILVER",
+    threshold: 1,
+    triggers: ["collection.add"],
+    i18nKey: "achievements.definitions.rarity.pre2000",
+    computeProgress: compute.getUserVintageCount,
+  },
+  "rarity.pre1990": {
+    category: "RARITY",
+    tier: "GOLD",
+    threshold: 1,
+    triggers: ["collection.add"],
+    i18nKey: "achievements.definitions.rarity.pre1990",
+    computeProgress: compute.getUserPre1990Count,
   },
   "rarity.pre1980": {
     category: "RARITY",
@@ -366,6 +391,14 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
     triggers: ["collection.add"],
     i18nKey: "achievements.definitions.rarity.pre1980",
     computeProgress: compute.getUserPre1980Count,
+  },
+  "rarity.goalkeeper": {
+    category: "RARITY",
+    tier: "BRONZE",
+    threshold: 1,
+    triggers: ["collection.add"],
+    i18nKey: "achievements.definitions.rarity.goalkeeper",
+    computeProgress: compute.getUserGoalkeeperCount,
   },
   "rarity.signed": {
     category: "RARITY",

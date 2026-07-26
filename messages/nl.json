@@ -2940,6 +2940,16 @@
           "title": "Twee jaar trouw",
           "description": "2 jaar sinds accountaanmaak",
           "howTo": "Houd je account 2 jaar actief."
+        },
+        "3year": {
+          "title": "3 jaar samen",
+          "description": "3 jaar sinds je aanmelding",
+          "howTo": "Houd je account 3 jaar actief."
+        },
+        "5year": {
+          "title": "Veteraan",
+          "description": "5 jaar sinds je aanmelding",
+          "howTo": "Houd je account 5 jaar actief."
         }
       },
       "rarity": {
@@ -2979,6 +2989,16 @@
           "title": "De Graal",
           "description": "Bezit een matchgedragen shirt",
           "howTo": "Voeg een matchgedragen shirt toe."
+        },
+        "pre2010": {
+          "title": "Nostalgisch",
+          "description": "Bezit een shirt van voor 2010",
+          "howTo": "Voeg een shirt van voor 2010 toe."
+        },
+        "pre2000": {
+          "title": "Old school",
+          "description": "Bezit een shirt van voor 2000",
+          "howTo": "Voeg een shirt van voor 2000 toe."
         }
       },
       "contribution": {
@@ -3024,6 +3044,13 @@
             "title": "Maandelijks Collectie-podium - {month}",
             "description": "Top {rank} toevoegingen van de maand"
           }
+        }
+      },
+      "wishlist": {
+        "50": {
+          "title": "Droomlijst",
+          "description": "50 shirts op je verlanglijst",
+          "howTo": "Voeg 50 shirts toe aan je verlanglijst."
         }
       }
     },
