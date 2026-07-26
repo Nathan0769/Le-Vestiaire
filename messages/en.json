@@ -2940,6 +2940,16 @@
           "title": "Two-year loyal",
           "description": "2 years since account creation",
           "howTo": "Keep your account active for 2 years."
+        },
+        "3year": {
+          "title": "3 years together",
+          "description": "3 years since you joined",
+          "howTo": "Keep your account active for 3 years."
+        },
+        "5year": {
+          "title": "Veteran",
+          "description": "5 years since you joined",
+          "howTo": "Keep your account active for 5 years."
         }
       },
       "rarity": {
@@ -2979,6 +2989,16 @@
           "title": "The Grail",
           "description": "Own a match-worn jersey",
           "howTo": "Add a match-worn jersey."
+        },
+        "pre2010": {
+          "title": "Throwback",
+          "description": "Own a jersey from before 2010",
+          "howTo": "Add a jersey from before 2010."
+        },
+        "pre2000": {
+          "title": "Old school",
+          "description": "Own a jersey from before 2000",
+          "howTo": "Add a jersey from before 2000."
         }
       },
       "contribution": {
@@ -3024,6 +3044,13 @@
             "title": "Monthly Collection podium - {month}",
             "description": "Top {rank} additions of the month"
           }
+        }
+      },
+      "wishlist": {
+        "50": {
+          "title": "Dream list",
+          "description": "50 jerseys in your wishlist",
+          "howTo": "Add 50 jerseys to your wishlist."
         }
       }
     },

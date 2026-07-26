@@ -2940,6 +2940,16 @@
           "title": "Fiel dos años",
           "description": "2 años desde la creación de tu cuenta",
           "howTo": "Mantén tu cuenta activa durante 2 años."
+        },
+        "3year": {
+          "title": "3 años juntos",
+          "description": "3 años desde tu registro",
+          "howTo": "Mantén tu cuenta activa durante 3 años."
+        },
+        "5year": {
+          "title": "Veterano",
+          "description": "5 años desde tu registro",
+          "howTo": "Mantén tu cuenta activa durante 5 años."
         }
       },
       "rarity": {
@@ -2979,6 +2989,16 @@
           "title": "El Grial",
           "description": "Ten una camiseta usada en partido",
           "howTo": "Añade una camiseta usada en partido."
+        },
+        "pre2010": {
+          "title": "Nostálgico",
+          "description": "Ten una camiseta anterior a 2010",
+          "howTo": "Añade una camiseta anterior a 2010."
+        },
+        "pre2000": {
+          "title": "Old school",
+          "description": "Ten una camiseta anterior a 2000",
+          "howTo": "Añade una camiseta anterior a 2000."
         }
       },
       "contribution": {
@@ -3024,6 +3044,13 @@
             "title": "Podio mensual Colección - {month}",
             "description": "Top {rank} de adiciones del mes"
           }
+        }
+      },
+      "wishlist": {
+        "50": {
+          "title": "Lista de sueños",
+          "description": "50 camisetas en tu lista de deseos",
+          "howTo": "Añade 50 camisetas a tu lista de deseos."
         }
       }
     },

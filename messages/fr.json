@@ -2944,6 +2944,16 @@
           "title": "Fidèle depuis deux ans",
           "description": "2 ans depuis la création de ton compte",
           "howTo": "Garde ton compte actif pendant 2 ans."
+        },
+        "3year": {
+          "title": "Fidèle depuis 3 ans",
+          "description": "3 ans depuis la création de ton compte",
+          "howTo": "Garde ton compte actif pendant 3 ans."
+        },
+        "5year": {
+          "title": "Vétéran",
+          "description": "5 ans depuis la création de ton compte",
+          "howTo": "Garde ton compte actif pendant 5 ans."
         }
       },
       "rarity": {
@@ -2983,6 +2993,16 @@
           "title": "Le Graal",
           "description": "Possède un maillot porté en match",
           "howTo": "Ajoute un maillot porté en match (match-worn)."
+        },
+        "pre2010": {
+          "title": "Nostalgique",
+          "description": "Possède un maillot antérieur à 2010",
+          "howTo": "Ajoute un maillot antérieur à 2010."
+        },
+        "pre2000": {
+          "title": "Old school",
+          "description": "Possède un maillot antérieur à 2000",
+          "howTo": "Ajoute un maillot antérieur à 2000."
         }
       },
       "contribution": {
@@ -3028,6 +3048,13 @@
             "title": "Podium mensuel Collection - {month}",
             "description": "Top {rank} des ajouts du mois"
           }
+        }
+      },
+      "wishlist": {
+        "50": {
+          "title": "Liste de rêves",
+          "description": "50 maillots dans ta liste de souhaits",
+          "howTo": "Ajoute 50 maillots à ta liste de souhaits."
         }
       }
     },

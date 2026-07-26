@@ -2940,6 +2940,16 @@
           "title": "Zwei Jahre treu",
           "description": "2 Jahre seit der Kontoerstellung",
           "howTo": "Halte dein Konto 2 Jahre lang aktiv."
+        },
+        "3year": {
+          "title": "3 Jahre dabei",
+          "description": "3 Jahre seit deiner Anmeldung",
+          "howTo": "Halte dein Konto 3 Jahre lang aktiv."
+        },
+        "5year": {
+          "title": "Veteran",
+          "description": "5 Jahre seit deiner Anmeldung",
+          "howTo": "Halte dein Konto 5 Jahre lang aktiv."
         }
       },
       "rarity": {
@@ -2979,6 +2989,16 @@
           "title": "Der Gral",
           "description": "Besitze ein im Spiel getragenes Trikot",
           "howTo": "Füge ein im Spiel getragenes Trikot hinzu."
+        },
+        "pre2010": {
+          "title": "Nostalgiker",
+          "description": "Besitze ein Trikot von vor 2010",
+          "howTo": "Füge ein Trikot von vor 2010 hinzu."
+        },
+        "pre2000": {
+          "title": "Old School",
+          "description": "Besitze ein Trikot von vor 2000",
+          "howTo": "Füge ein Trikot von vor 2000 hinzu."
         }
       },
       "contribution": {
@@ -3024,6 +3044,13 @@
             "title": "Monatliches Sammlungs-Podium - {month}",
             "description": "Top {rank} der monatlichen Neuzugänge"
           }
+        }
+      },
+      "wishlist": {
+        "50": {
+          "title": "Wunschliste",
+          "description": "50 Trikots auf deiner Wunschliste",
+          "howTo": "Füge 50 Trikots zu deiner Wunschliste hinzu."
         }
       }
     },

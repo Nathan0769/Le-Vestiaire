@@ -2940,6 +2940,16 @@
           "title": "Due anni di fedeltà",
           "description": "2 anni dalla creazione dell'account",
           "howTo": "Mantieni il tuo account attivo per 2 anni."
+        },
+        "3year": {
+          "title": "3 anni insieme",
+          "description": "3 anni dalla registrazione",
+          "howTo": "Mantieni il tuo account attivo per 3 anni."
+        },
+        "5year": {
+          "title": "Veterano",
+          "description": "5 anni dalla registrazione",
+          "howTo": "Mantieni il tuo account attivo per 5 anni."
         }
       },
       "rarity": {
@@ -2979,6 +2989,16 @@
           "title": "Il Graal",
           "description": "Possiedi una maglia indossata in partita",
           "howTo": "Aggiungi una maglia indossata in partita."
+        },
+        "pre2010": {
+          "title": "Nostalgico",
+          "description": "Possiedi una maglia precedente al 2010",
+          "howTo": "Aggiungi una maglia precedente al 2010."
+        },
+        "pre2000": {
+          "title": "Old school",
+          "description": "Possiedi una maglia precedente al 2000",
+          "howTo": "Aggiungi una maglia precedente al 2000."
         }
       },
       "contribution": {
@@ -3024,6 +3044,13 @@
             "title": "Podio mensile Collezione - {month}",
             "description": "Top {rank} aggiunte del mese"
           }
+        }
+      },
+      "wishlist": {
+        "50": {
+          "title": "Lista dei sogni",
+          "description": "50 maglie nella tua lista dei desideri",
+          "howTo": "Aggiungi 50 maglie alla tua lista dei desideri."
         }
       }
     },
