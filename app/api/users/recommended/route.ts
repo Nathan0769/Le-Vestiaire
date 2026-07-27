@@ -5,6 +5,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
+import { isSupporter } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 import {
   getFollowingIds,
@@ -46,6 +47,8 @@ export async function GET() {
       username: true,
       avatar: true,
       image: true,
+      plan: true,
+      avatarFrame: true,
       favoriteClub: { select: { name: true } },
       _count: { select: { collection: true } },
     },
@@ -73,6 +76,8 @@ export async function GET() {
         avatarUrl: avatarUrl ?? u.image,
         jerseyCount: u._count.collection,
         favoriteClubName: u.favoriteClub?.name ?? null,
+        isSupporter: isSupporter(u),
+        avatarFrame: u.avatarFrame,
       };
     })
   );

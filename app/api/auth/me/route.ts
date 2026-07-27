@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
+import { isSupporter } from "@/lib/subscription";
 
 export async function GET() {
   const sessionUser = await getCurrentUser();
@@ -18,6 +19,9 @@ export async function GET() {
       createdAt: true,
       username: true,
       role: true,
+      plan: true,
+      avatarFrame: true,
+      profileBanner: true,
       accounts: {
         select: {
           providerId: true,
@@ -50,6 +54,9 @@ export async function GET() {
     createdAt: user.createdAt.toISOString(),
     username: user.username,
     role: user.role,
+    isSupporter: isSupporter(user),
+    avatarFrame: user.avatarFrame,
+    profileBanner: user.profileBanner,
     authProvider: {
       hasGoogle: hasGoogleAccount,
       hasPassword: hasPasswordAccount,

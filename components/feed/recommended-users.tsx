@@ -5,6 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { SupporterName } from "@/components/supporter/supporter-name";
 import { useFollow } from "@/hooks/useFollow";
 
 interface RecommendedUser {
@@ -13,6 +14,8 @@ interface RecommendedUser {
   avatarUrl: string | null;
   jerseyCount: number;
   favoriteClubName: string | null;
+  isSupporter?: boolean;
+  avatarFrame?: string | null;
 }
 
 export function RecommendedUsers() {
@@ -61,6 +64,8 @@ export function RecommendedUsers() {
                     src={u.avatarUrl ?? undefined}
                     name={u.username}
                     size="sm"
+                    frame={u.avatarFrame}
+                    isSupporter={u.isSupporter}
                   />
                 </Link>
                 <div className="min-w-0 flex-1">
@@ -68,7 +73,7 @@ export function RecommendedUsers() {
                     href={`/u/${u.username}`}
                     className="block text-sm font-semibold truncate cursor-pointer hover:opacity-70"
                   >
-                    {u.username}
+                    <SupporterName name={u.username} isSupporter={u.isSupporter} />
                   </Link>
                   <p className="text-xs text-muted-foreground truncate">
                     {u.jerseyCount}{" "}

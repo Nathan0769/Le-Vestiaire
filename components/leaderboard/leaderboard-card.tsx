@@ -3,6 +3,8 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { UserAvatar } from "@/components/profiles/user-avatar";
 import { Badge } from "@/components/ui/badge";
+import { SupporterBadge } from "@/components/supporter/supporter-badge";
+import { cn } from "@/lib/utils";
 import { Trophy, Medal, Heart } from "lucide-react";
 import type { LeaderboardEntry } from "@/types/leaderboard";
 import { useTranslations, useLocale } from "next-intl";
@@ -89,6 +91,8 @@ export function LeaderboardCard({
     }
   };
 
+  const sup = entry.isSupporter ?? false;
+
   const href = isCurrentUser
     ? `/${locale}/collection`
     : entry.isAnonymous
@@ -102,9 +106,12 @@ export function LeaderboardCard({
     <TooltipTrigger asChild>
     <Link href={href} className="block">
     <Card
-      className={`hover:shadow-md transition-all overflow-hidden cursor-pointer ${
-        isCurrentUser ? "ring-2 ring-primary" : ""
-      } ${getPodiumBorderClass(entry.rank)}`}
+      className={cn(
+        "hover:shadow-md transition-all overflow-hidden cursor-pointer",
+        isCurrentUser && "ring-2 ring-primary",
+        getPodiumBorderClass(entry.rank),
+        sup && "cos-row-carbon"
+      )}
     >
       <CardContent className="py-1 px-1.5 sm:py-0.5 sm:px-3">
         <div className="flex items-center gap-2 sm:gap-4 min-w-0">
@@ -122,7 +129,12 @@ export function LeaderboardCard({
                 </Badge>
               </>
             ) : (
-              <div className="text-xl sm:text-2xl font-bold text-muted-foreground">
+              <div
+                className={cn(
+                  "text-xl sm:text-2xl font-bold",
+                  sup ? "cos-name-gold" : "text-muted-foreground"
+                )}
+              >
                 #{entry.rank}
               </div>
             )}
@@ -133,6 +145,8 @@ export function LeaderboardCard({
               src={entry.avatarUrl || undefined}
               name={entry.name}
               size="sm"
+              frame={entry.avatarFrame}
+              isSupporter={sup}
               className="w-9 h-9 sm:w-10 sm:h-10 flex-shrink-0"
             />
             <div
@@ -141,9 +155,15 @@ export function LeaderboardCard({
               }`}
             >
               <div className="flex items-center gap-1.5 leading-tight">
-                <p className="font-semibold text-sm sm:text-base truncate">
+                <p
+                  className={cn(
+                    "font-semibold text-sm sm:text-base truncate",
+                    sup && "cos-name-gold"
+                  )}
+                >
                   {entry.username ?? t("defaultUsername")}
                 </p>
+                {sup && <SupporterBadge size="sm" iconOnly className="flex-shrink-0" />}
                 {isCurrentUser && (
                   <span className="text-[10px] sm:text-xs text-primary flex-shrink-0 font-medium">
                     {t("currentUser")}
@@ -154,7 +174,12 @@ export function LeaderboardCard({
               {entry.favoriteClub && (
                 <div className="flex items-center gap-1 h-[18px]">
                   <Heart className="w-3 h-3 text-red-500 flex-shrink-0" />
-                  <p className="text-xs text-muted-foreground truncate">
+                  <p
+                    className={cn(
+                      "text-xs truncate",
+                      sup ? "text-[#EDE7D6]/65" : "text-muted-foreground"
+                    )}
+                  >
                     {entry.favoriteClub.name}
                   </p>
                 </div>
@@ -164,9 +189,10 @@ export function LeaderboardCard({
 
           <div className="flex flex-col items-end flex-shrink-0">
             <div
-              className={`text-sm sm:text-lg font-bold whitespace-nowrap ${getScoreColorClass(
-                entry.rank
-              )}`}
+              className={cn(
+                "text-sm sm:text-lg font-bold whitespace-nowrap",
+                sup ? "cos-gold-bright" : getScoreColorClass(entry.rank)
+              )}
             >
               {getScoreLabel()}
             </div>

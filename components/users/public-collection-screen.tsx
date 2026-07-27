@@ -20,6 +20,10 @@ import {
   USER_JERSEY_PHOTOS_BUCKET,
 } from "@/lib/r2-storage";
 import { getTranslations } from "next-intl/server";
+import { SupporterBadge } from "@/components/supporter/supporter-badge";
+import { isSupporter } from "@/lib/subscription";
+import { getBannerClass } from "@/lib/cosmetics";
+import { cn } from "@/lib/utils";
 import type { FollowState } from "@/types/follow";
 
 interface PublicCollectionScreenProps {
@@ -42,6 +46,9 @@ export async function PublicCollectionScreen({
       name: true,
       avatar: true,
       bio: true,
+      plan: true,
+      avatarFrame: true,
+      profileBanner: true,
       leaderboardAnonymous: true,
       favoriteClub: { select: { id: true, name: true } },
       instagramHandle: true,
@@ -106,6 +113,8 @@ export async function PublicCollectionScreen({
   const topAchievements = pickTopAchievements(topAchievementsRaw, 5);
 
   const isAnonymous = targetUser.leaderboardAnonymous ?? false;
+  const targetIsSupporter = !isAnonymous && isSupporter(targetUser);
+  const bannerClass = getBannerClass(targetUser.profileBanner, targetIsSupporter);
   const displayName = isAnonymous
     ? t("anonymous")
     : targetUser.username ?? targetUser.name;
@@ -270,23 +279,38 @@ export async function PublicCollectionScreen({
 
       <PublicUserTabs basePath={basePath} />
 
-      <div className="bg-card border border-border rounded-lg p-6">
+      <div className="bg-card border border-border rounded-lg p-6 overflow-hidden">
+        {bannerClass && (
+          <div
+            className={cn(
+              "cos-banner block h-24 -mx-6 -mt-6 mb-5 rounded-t-lg",
+              bannerClass
+            )}
+          />
+        )}
         <div className="flex items-start gap-4">
-          {isAnonymous ? (
-            <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center shrink-0">
-              <EyeOff className="w-7 h-7 text-muted-foreground" />
-            </div>
-          ) : (
-            <UserAvatar
-              src={avatarUrl || undefined}
-              name={targetUser.name}
-              size="lg"
-            />
-          )}
+          <div className="shrink-0">
+            {isAnonymous ? (
+              <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center">
+                <EyeOff className="w-7 h-7 text-muted-foreground" />
+              </div>
+            ) : (
+              <UserAvatar
+                src={avatarUrl || undefined}
+                name={targetUser.name}
+                size="lg"
+                frame={targetUser.avatarFrame}
+                isSupporter={targetIsSupporter}
+              />
+            )}
+          </div>
           <div className="flex-1 min-w-0">
             <div className="flex items-start justify-between gap-3">
-              <h2 className="text-xl font-semibold truncate min-w-0">
-                {displayName}
+              <h2 className="text-xl font-semibold truncate min-w-0 flex items-center gap-2">
+                <span className={cn("truncate", targetIsSupporter && "cos-name-gold")}>
+                  {displayName}
+                </span>
+                {targetIsSupporter && <SupporterBadge size="sm" />}
               </h2>
               {currentUser && !isAnonymous && (
                 <div className="hidden md:block shrink-0">

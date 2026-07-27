@@ -60,7 +60,7 @@ describe("GET /api/user/profile", () => {
     expect(data.stats.wishlistCount).toBe(0);
   });
 
-  it("retourne isPro: false pour un utilisateur sans plan PRO", async () => {
+  it("retourne isSupporter: false pour un utilisateur sans plan PRO", async () => {
     const { getCurrentUser } = await import("@/lib/get-current-user");
     const user = await createTestUser();
     vi.mocked(getCurrentUser).mockResolvedValue({ id: user.id } as never);
@@ -68,7 +68,7 @@ describe("GET /api/user/profile", () => {
     const response = await GET();
     const data = await response.json();
 
-    expect(data.isPro).toBe(false);
+    expect(data.isSupporter).toBe(false);
   });
 
   it("retourne avatarUrl via signed URL si l'utilisateur a un avatar", async () => {

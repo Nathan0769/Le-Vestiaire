@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { isSupporter } from "@/lib/subscription";
 import { getCurrentUser } from "@/lib/get-current-user";
 import {
   standardRateLimit,
@@ -54,6 +55,8 @@ export async function GET(request: NextRequest) {
         avatar: true,
         bio: true,
         isPrivate: true,
+        plan: true,
+        avatarFrame: true,
         favoriteClub: {
           select: {
             id: true,
@@ -109,6 +112,8 @@ export async function GET(request: NextRequest) {
           avatarUrl,
           bio: foundUser.bio,
           isPrivate: foundUser.isPrivate,
+          isSupporter: isSupporter(foundUser),
+          avatarFrame: foundUser.avatarFrame,
           favoriteClub: foundUser.favoriteClub || undefined,
           followState,
         };

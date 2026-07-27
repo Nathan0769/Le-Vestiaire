@@ -9,6 +9,8 @@ export interface PublicUser {
   image?: string | null;
   bio?: string | null;
   isPrivate?: boolean;
+  isSupporter?: boolean;
+  avatarFrame?: string | null;
   favoriteClub?: {
     id: string;
     name: string;

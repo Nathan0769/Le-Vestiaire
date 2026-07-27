@@ -5,6 +5,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
+import { isSupporter } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
@@ -65,6 +66,8 @@ export async function GET(request: Request) {
           name: true,
           avatar: true,
           image: true,
+          plan: true,
+          avatarFrame: true,
         },
       },
     },
@@ -122,6 +125,8 @@ export async function GET(request: Request) {
               username: n.actor.username,
               name: n.actor.username,
               avatarUrl: avatarUrl ?? n.actor.image,
+              isSupporter: isSupporter(n.actor),
+              avatarFrame: n.actor.avatarFrame,
             }
           : null,
       };

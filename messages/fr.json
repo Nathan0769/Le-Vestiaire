@@ -8,6 +8,7 @@
     "community": "La Communauté",
     "leaderboard": "Classement",
     "achievements": "Palmarès",
+    "supporter": "Supporter",
     "authentication": "Authentification",
     "pricing": "Abonnement",
     "settings": "Compte",
@@ -2072,32 +2073,25 @@
     },
     "subscription": {
       "title": "Abonnement",
-      "description": "Gérez votre abonnement et vos fonctionnalités premium",
-      "currentPlan": "Abonnement actuel",
-      "upgradeToPremium": "Passer à Premium",
-      "manageSubscription": "Gérer l'abonnement",
-      "loading": "Chargement...",
-      "features": "Fonctionnalités incluses",
-      "price": "Prix",
-      "or": "ou",
-      "free": {
-        "feature1": "Jusqu'à 50 maillots dans la collection",
-        "feature2": "Jusqu'à 20 maillots en wishlist",
-        "feature3": "Statistiques de base",
-        "feature4": "Système d'amis et partage"
-      },
-      "premium": {
-        "feature1": "Collection illimitée de maillots",
-        "feature2": "Wishlist illimitée",
-        "feature3": "Statistiques avancées complètes",
-        "feature4": "Jusqu'à 5 photos par maillot",
-        "feature5": "Badge Premium sur votre profil"
-      },
-      "freeInfo": "Passez à Premium pour débloquer toutes les fonctionnalités et gérer une collection illimitée.",
-      "premiumInfo": {
-        "title": "Merci d'être Premium !",
-        "description": "Vous profitez de toutes les fonctionnalités premium. Gérez votre abonnement via le portail Stripe."
+      "description": "Gère ton soutien et tes cosmétiques Supporter.",
+      "currentPlan": "Statut actuel",
+      "freePlanName": "Gratuit",
+      "freeInfo": "Deviens Supporter pour soutenir le projet et débloquer les cosmétiques.",
+      "becomeSupporter": "Devenir Supporter",
+      "manage": "Gérer l'abonnement",
+      "thanks": {
+        "title": "Merci pour ton soutien !",
+        "description": "Tu profites de tous les cosmétiques Supporter. Gère ton abonnement via le portail sécurisé."
       }
+    },
+    "cosmetics": {
+      "title": "Cosmétiques",
+      "description": "Personnalise ton apparence Supporter : carte, contour, bannière.",
+      "locked": "Les cosmétiques sont réservés aux membres Supporter.",
+      "unlock": "Devenir Supporter",
+      "frameLabel": "Contour d'avatar",
+      "bannerLabel": "Bannière de profil",
+      "none": "Aucun"
     }
   },
   "CookieConsent": {
@@ -2569,45 +2563,69 @@
     }
   },
   "Pricing": {
-    "title": "Choisissez votre abonnement",
-    "subtitle": "Gérez votre collection de maillots comme un pro",
+    "metaTitle": "Soutenir Le Vestiaire",
+    "metaDescription": "Le Vestiaire est un projet indépendant. Deviens Supporter pour soutenir le projet et débloquer des cosmétiques exclusifs.",
+    "title": "Soutiens Le Vestiaire",
+    "subtitle": "Un projet indépendant, propulsé par sa communauté.",
+    "cardTeaser": "Ta future carte de membre",
+    "independent": {
+      "title": "Un projet indépendant",
+      "description": "Le Vestiaire est conçu et développé par une seule personne. Ton soutien finance directement l'hébergement et les prochaines fonctionnalités."
+    },
+    "unlock": {
+      "title": "Ce que débloque le statut Supporter"
+    },
+    "features": {
+      "card": {
+        "title": "Carte de membre",
+        "description": "Ta carte du Cercle Supporter, or gravé et métal."
+      },
+      "banner": {
+        "title": "Bannière de profil",
+        "description": "Un header travaillé derrière ton avatar."
+      },
+      "frame": {
+        "title": "Contour d'avatar",
+        "description": "Un anneau or ou nocturne autour de ta photo."
+      },
+      "badge": {
+        "title": "Emblème Supporter",
+        "description": "Un marqueur or discret, porté partout."
+      },
+      "export": {
+        "title": "Export de ta collection",
+        "description": "Télécharge ta collection complète en un clic."
+      },
+      "marketValue": {
+        "title": "Valeur marché des maillots",
+        "description": "Estime la cote réelle de tes maillots."
+      }
+    },
+    "comingSoon": "À venir",
     "toggle": {
       "monthly": "Mensuel",
       "yearly": "Annuel"
     },
-    "free": {
-      "name": "Gratuit",
-      "description": "Pour commencer votre collection",
-      "period": "gratuit",
-      "features": {
-        "jerseys": "Jusqu'à 50 maillots",
-        "wishlist": "Jusqu'à 20 maillots en wishlist",
-        "basicStats": "Statistiques de base",
-        "friends": "Système d'amis",
-        "ratings": "Notes et commentaires"
-      },
-      "button": "Gratuit"
-    },
     "premium": {
-      "name": "Premium",
       "monthly": {
-        "description": "Pour les collectionneurs passionnés",
+        "description": "Soutiens mois par mois",
         "period": "mois",
-        "button": "Passer à Premium"
+        "button": "Devenir Supporter"
       },
       "yearly": {
-        "description": "Pour les collectionneurs passionnés",
+        "description": "Le meilleur tarif pour soutenir",
         "period": "an",
-        "button": "Passer à Premium Annuel",
+        "button": "Devenir Supporter",
         "savings": "2 mois offerts"
-      },
-      "features": {
-        "unlimitedJerseys": "Collection illimitée",
-        "unlimitedWishlist": "Wishlist illimitée",
-        "advancedStats": "Statistiques avancées complètes",
-        "multiplePhotos": "Jusqu'à 5 photos par maillot",
-        "badge": "Badge Premium sur votre profil"
       }
+    },
+    "cancelAnytime": "Sans engagement, résiliable à tout moment.",
+    "freeReminder": "Le gratuit reste complet : collection, wishlist, stats et social sans limite. Supporter n'ajoute que du bonus.",
+    "member": {
+      "title": "Bienvenue dans le Cercle",
+      "subtitle": "Merci pour ton soutien. Voici ta carte de membre.",
+      "manage": "Gérer l'abonnement",
+      "cosmetics": "Mes cosmétiques"
     }
   },
   "PublicCollection": {
@@ -3222,9 +3240,9 @@
       "capValueLabel": "investis dans la collection"
     },
     "likers": {
-      "single": "{name} aime ça",
-      "withOthersSingle": "{name} et {count} autre",
-      "withOthersPlural": "{name} et {count} autres"
+      "single": "<n>{name}</n> aime ça",
+      "withOthersSingle": "<n>{name}</n> et {count} autre",
+      "withOthersPlural": "<n>{name}</n> et {count} autres"
     },
     "comments": {
       "title": "Commentaires",

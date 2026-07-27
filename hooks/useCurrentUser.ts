@@ -12,6 +12,9 @@ export type CurrentUser = {
   avatarUrl?: string;
   username: string;
   role?: string;
+  isSupporter?: boolean;
+  avatarFrame?: string | null;
+  profileBanner?: string | null;
   authProvider?: {
     hasGoogle: boolean;
     hasPassword: boolean;

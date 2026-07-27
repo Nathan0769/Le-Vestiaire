@@ -7,6 +7,7 @@ import {
   USER_JERSEY_PHOTOS_BUCKET,
 } from "@/lib/r2-storage";
 import { getFollowingIds } from "@/lib/follow";
+import { isSupporter } from "@/lib/subscription";
 import type { FeedPostItem, FeedLikerPreview } from "@/types/feed";
 
 const MAX_LIKERS_PREVIEW = 3;
@@ -47,6 +48,8 @@ export async function enrichPostsForFeed(
           name: true,
           avatar: true,
           image: true,
+          plan: true,
+          avatarFrame: true,
           favoriteClub: {
             select: { id: true, name: true, primaryColor: true },
           },
@@ -105,9 +108,9 @@ export async function enrichPostsForFeed(
       // 3 derniers likers par post (via raw SQL pour éviter N queries)
       // Prisma.join + Prisma.sql : paramétrage sûr, pas d'interpolation string directe.
       prisma.$queryRaw<
-        { post_id: string; user_id: string; username: string; avatar: string | null; created_at: Date }[]
+        { post_id: string; user_id: string; username: string; avatar: string | null; plan: string; created_at: Date }[]
       >(Prisma.sql`
-        SELECT pl.post_id, pl.user_id, u.username, u.avatar, pl.created_at
+        SELECT pl.post_id, pl.user_id, u.username, u.avatar, u.plan, pl.created_at
         FROM (
           SELECT post_id, user_id, created_at,
             ROW_NUMBER() OVER (PARTITION BY post_id ORDER BY created_at DESC) AS rn
@@ -183,6 +186,7 @@ export async function enrichPostsForFeed(
       userId: l.user_id,
       name: l.username,
       avatarUrl,
+      isSupporter: l.plan === "PRO",
     });
     likersByPost.set(l.post_id, list);
   }
@@ -274,6 +278,8 @@ export async function enrichPostsForFeed(
               avatarUrl: avatarUrl ?? author.image,
               favoriteClubColor: author.favoriteClub?.primaryColor ?? null,
               favoriteClubName: author.favoriteClub?.name ?? null,
+              isSupporter: isSupporter(author),
+              avatarFrame: author.avatarFrame,
             }
           : null,
         payload,

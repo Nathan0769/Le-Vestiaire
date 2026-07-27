@@ -7,12 +7,15 @@ export interface FeedAuthor {
   avatarUrl: string | null;
   favoriteClubColor: string | null;
   favoriteClubName: string | null;
+  isSupporter: boolean;
+  avatarFrame: string | null;
 }
 
 export interface FeedLikerPreview {
   userId: string;
   name: string;
   avatarUrl: string | null;
+  isSupporter: boolean;
 }
 
 export interface JerseyAddPayload {

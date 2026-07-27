@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { cn } from "@/lib/utils";
 import type { FeedLikerPreview } from "@/types/feed";
 
 interface LikersPreviewProps {
@@ -14,15 +15,25 @@ export function LikersPreview({ likers, totalCount }: LikersPreviewProps) {
   if (totalCount === 0 || likers.length === 0) return null;
 
   const firstName = likers[0]?.name;
-  let label = "";
+  const firstIsSupporter = likers[0]?.isSupporter ?? false;
+  const nameTag = {
+    n: (chunks: React.ReactNode) => (
+      <span className={cn(firstIsSupporter && "cos-name-gold font-semibold")}>
+        {chunks}
+      </span>
+    ),
+  };
+
+  let label: React.ReactNode = "";
   if (totalCount === 1) {
-    label = t("single", { name: firstName });
+    label = t.rich("single", { name: firstName, ...nameTag });
   } else {
     const remaining = totalCount - 1;
-    label =
-      remaining === 1
-        ? t("withOthersSingle", { name: firstName, count: remaining })
-        : t("withOthersPlural", { name: firstName, count: remaining });
+    label = t.rich(remaining === 1 ? "withOthersSingle" : "withOthersPlural", {
+      name: firstName,
+      count: remaining,
+      ...nameTag,
+    });
   }
 
   return (
@@ -31,7 +42,10 @@ export function LikersPreview({ likers, totalCount }: LikersPreviewProps) {
         {likers.slice(0, 3).map((liker) => (
           <div
             key={liker.userId}
-            className="relative w-6 h-6 rounded-full ring-2 ring-card overflow-hidden bg-muted"
+            className={cn(
+              "relative w-6 h-6 rounded-full ring-2 overflow-hidden bg-muted",
+              liker.isSupporter ? "ring-[#c9a84c]" : "ring-card"
+            )}
           >
             {liker.avatarUrl ? (
               <Image

@@ -9,6 +9,8 @@ export type VirtualNotificationType = "FOLLOW_REQUEST_RECEIVED";
 export type FeedNotificationType = NotificationType | VirtualNotificationType;
 
 export interface NotificationActor {
+  isSupporter?: boolean;
+  avatarFrame?: string | null;
   id: string;
   username: string;
   name: string;

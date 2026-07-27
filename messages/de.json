@@ -8,6 +8,7 @@
     "community": "Community",
     "leaderboard": "Rangliste",
     "achievements": "Erfolge",
+    "supporter": "Supporter",
     "authentication": "Authentifizierung",
     "pricing": "Abonnement",
     "settings": "Konto",
@@ -2068,32 +2069,25 @@
     },
     "subscription": {
       "title": "Abonnement",
-      "description": "Verwalte dein Abonnement und Premium-Funktionen",
-      "currentPlan": "Aktueller Plan",
-      "upgradeToPremium": "Auf Premium upgraden",
-      "manageSubscription": "Abonnement verwalten",
-      "loading": "Wird geladen...",
-      "features": "Enthaltene Funktionen",
-      "price": "Preis",
-      "or": "oder",
-      "free": {
-        "feature1": "Bis zu 50 Trikots in der Sammlung",
-        "feature2": "Bis zu 20 Trikots auf der Wunschliste",
-        "feature3": "Grundlegende Statistiken",
-        "feature4": "Freundessystem und Teilen"
-      },
-      "premium": {
-        "feature1": "Unbegrenzte Trikot-Sammlung",
-        "feature2": "Unbegrenzte Wunschliste",
-        "feature3": "Vollständige erweiterte Statistiken",
-        "feature4": "Bis zu 5 Fotos pro Trikot",
-        "feature5": "Premium-Abzeichen auf deinem Profil"
-      },
-      "freeInfo": "Upgrade auf Premium, um alle Funktionen freizuschalten und eine unbegrenzte Sammlung zu verwalten.",
-      "premiumInfo": {
-        "title": "Danke, dass du Premium-Mitglied bist!",
-        "description": "Du geniesst alle Premium-Funktionen. Verwalte dein Abonnement über das Stripe-Portal."
+      "description": "Gère ton soutien et tes cosmétiques Supporter.",
+      "currentPlan": "Statut actuel",
+      "freePlanName": "Gratuit",
+      "freeInfo": "Deviens Supporter pour soutenir le projet et débloquer les cosmétiques.",
+      "becomeSupporter": "Devenir Supporter",
+      "manage": "Gérer l'abonnement",
+      "thanks": {
+        "title": "Merci pour ton soutien !",
+        "description": "Tu profites de tous les cosmétiques Supporter. Gère ton abonnement via le portail sécurisé."
       }
+    },
+    "cosmetics": {
+      "title": "Cosmétiques",
+      "description": "Personnalise ton apparence Supporter : carte, contour, bannière.",
+      "locked": "Les cosmétiques sont réservés aux membres Supporter.",
+      "unlock": "Devenir Supporter",
+      "frameLabel": "Contour d'avatar",
+      "bannerLabel": "Bannière de profil",
+      "none": "Aucun"
     }
   },
   "CookieConsent": {
@@ -2565,45 +2559,69 @@
     }
   },
   "Pricing": {
-    "title": "Wähle deinen Plan",
-    "subtitle": "Verwalte deine Trikotsammlung wie ein Profi",
-    "toggle": {
-      "monthly": "Monatlich",
-      "yearly": "Jährlich"
+    "metaTitle": "Soutenir Le Vestiaire",
+    "metaDescription": "Le Vestiaire est un projet indépendant. Deviens Supporter pour soutenir le projet et débloquer des cosmétiques exclusifs.",
+    "title": "Soutiens Le Vestiaire",
+    "subtitle": "Un projet indépendant, propulsé par sa communauté.",
+    "cardTeaser": "Ta future carte de membre",
+    "independent": {
+      "title": "Un projet indépendant",
+      "description": "Le Vestiaire est conçu et développé par une seule personne. Ton soutien finance directement l'hébergement et les prochaines fonctionnalités."
     },
-    "free": {
-      "name": "Kostenlos",
-      "description": "Um deine Sammlung zu starten",
-      "period": "kostenlos",
-      "features": {
-        "jerseys": "Bis zu 50 Trikots",
-        "wishlist": "Bis zu 20 Trikots auf der Wunschliste",
-        "basicStats": "Grundlegende Statistiken",
-        "friends": "Freundessystem",
-        "ratings": "Bewertungen und Kommentare"
+    "unlock": {
+      "title": "Ce que débloque le statut Supporter"
+    },
+    "features": {
+      "card": {
+        "title": "Carte de membre",
+        "description": "Ta carte du Cercle Supporter, or gravé et métal."
       },
-      "button": "Kostenlos"
+      "banner": {
+        "title": "Bannière de profil",
+        "description": "Un header travaillé derrière ton avatar."
+      },
+      "frame": {
+        "title": "Contour d'avatar",
+        "description": "Un anneau or ou nocturne autour de ta photo."
+      },
+      "badge": {
+        "title": "Emblème Supporter",
+        "description": "Un marqueur or discret, porté partout."
+      },
+      "export": {
+        "title": "Export de ta collection",
+        "description": "Télécharge ta collection complète en un clic."
+      },
+      "marketValue": {
+        "title": "Valeur marché des maillots",
+        "description": "Estime la cote réelle de tes maillots."
+      }
+    },
+    "comingSoon": "À venir",
+    "toggle": {
+      "monthly": "Mensuel",
+      "yearly": "Annuel"
     },
     "premium": {
-      "name": "Premium",
       "monthly": {
-        "description": "Für leidenschaftliche Sammler",
-        "period": "Monat",
-        "button": "Auf Premium upgraden"
+        "description": "Soutiens mois par mois",
+        "period": "mois",
+        "button": "Devenir Supporter"
       },
       "yearly": {
-        "description": "Für leidenschaftliche Sammler",
-        "period": "Jahr",
-        "button": "Auf Premium Jahresabo upgraden",
-        "savings": "2 Monate gratis"
-      },
-      "features": {
-        "unlimitedJerseys": "Unbegrenzte Sammlung",
-        "unlimitedWishlist": "Unbegrenzte Wunschliste",
-        "advancedStats": "Vollständige erweiterte Statistiken",
-        "multiplePhotos": "Bis zu 5 Fotos pro Trikot",
-        "badge": "Premium-Abzeichen auf deinem Profil"
+        "description": "Le meilleur tarif pour soutenir",
+        "period": "an",
+        "button": "Devenir Supporter",
+        "savings": "2 mois offerts"
       }
+    },
+    "cancelAnytime": "Sans engagement, résiliable à tout moment.",
+    "freeReminder": "Le gratuit reste complet : collection, wishlist, stats et social sans limite. Supporter n'ajoute que du bonus.",
+    "member": {
+      "title": "Bienvenue dans le Cercle",
+      "subtitle": "Merci pour ton soutien. Voici ta carte de membre.",
+      "manage": "Gérer l'abonnement",
+      "cosmetics": "Mes cosmétiques"
     }
   },
   "PublicCollection": {
@@ -3218,9 +3236,9 @@
       "capValueLabel": "in die Sammlung investiert"
     },
     "likers": {
-      "single": "{name} gefällt das",
-      "withOthersSingle": "{name} und {count} weitere Person",
-      "withOthersPlural": "{name} und {count} weitere Personen"
+      "single": "<n>{name}</n> gefällt das",
+      "withOthersSingle": "<n>{name}</n> und {count} weitere Person",
+      "withOthersPlural": "<n>{name}</n> und {count} weitere Personen"
     },
     "comments": {
       "title": "Kommentare",
