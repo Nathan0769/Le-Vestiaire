@@ -5,6 +5,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
+import { isSupporter } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 
 const LIMIT = 50;
@@ -37,6 +38,8 @@ export async function GET(request: Request) {
           name: true,
           avatar: true,
           image: true,
+          plan: true,
+          avatarFrame: true,
         },
       },
     },
@@ -49,7 +52,11 @@ export async function GET(request: Request) {
   const sliced = hasMore ? requests.slice(0, LIMIT) : requests;
   const items = sliced.map((r) => ({
     ...r,
-    requester: { ...r.requester, name: r.requester.username },
+    requester: {
+      ...r.requester,
+      name: r.requester.username,
+      isSupporter: isSupporter(r.requester),
+    },
   }));
   const nextCursor = hasMore ? items[items.length - 1].id : null;
 

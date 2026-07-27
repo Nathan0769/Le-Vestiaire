@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
+import { isSupporter } from "@/lib/subscription";
 import type {
   LeaderboardCategory,
   LeaderboardPeriod,
@@ -85,6 +86,8 @@ async function getCollectionSizeLeaderboard(
       username: true,
       name: true,
       avatar: true,
+      plan: true,
+      avatarFrame: true,
       leaderboardAnonymous: true,
       favoriteClub: {
         select: { id: true, name: true },
@@ -113,6 +116,8 @@ async function getCollectionSizeLeaderboard(
         name: isAnonymous ? "Anonymous" : user.name,
         avatar: isAnonymous ? null : user.avatar,
         favoriteClub: isAnonymous ? null : user.favoriteClub,
+        isSupporter: isAnonymous ? false : isSupporter(user),
+        avatarFrame: isAnonymous ? null : user.avatarFrame,
         score: user.collection.length,
         metadata: {
           totalValue: user.collection.reduce(
@@ -176,6 +181,8 @@ async function getCollectionDiversityLeaderboard(): Promise<
       username: true,
       name: true,
       avatar: true,
+      plan: true,
+      avatarFrame: true,
       leaderboardAnonymous: true,
       favoriteClub: {
         select: { id: true, name: true },
@@ -195,6 +202,8 @@ async function getCollectionDiversityLeaderboard(): Promise<
       name: isAnonymous ? "Anonymous" : user.name,
       avatar: isAnonymous ? null : user.avatar,
       favoriteClub: isAnonymous ? null : user.favoriteClub,
+      isSupporter: isAnonymous ? false : isSupporter(user),
+      avatarFrame: isAnonymous ? null : user.avatarFrame,
       score: Number(r.unique_clubs),
       metadata: {
         uniqueClubs: Number(r.unique_clubs),
@@ -250,6 +259,8 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
       username: true,
       name: true,
       avatar: true,
+      plan: true,
+      avatarFrame: true,
       leaderboardAnonymous: true,
       favoriteClub: {
         select: { id: true, name: true },
@@ -269,6 +280,8 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
       name: isAnonymous ? "Anonymous" : user.name,
       avatar: isAnonymous ? null : user.avatar,
       favoriteClub: isAnonymous ? null : user.favoriteClub,
+      isSupporter: isAnonymous ? false : isSupporter(user),
+      avatarFrame: isAnonymous ? null : user.avatarFrame,
       score: Number(r.unique_leagues),
       metadata: {
         uniqueLeagues: Number(r.unique_leagues),
@@ -324,6 +337,8 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
       username: true,
       name: true,
       avatar: true,
+      plan: true,
+      avatarFrame: true,
       leaderboardAnonymous: true,
       favoriteClub: {
         select: { id: true, name: true },
@@ -343,6 +358,8 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
       name: isAnonymous ? "Anonymous" : user.name,
       avatar: isAnonymous ? null : user.avatar,
       favoriteClub: isAnonymous ? null : user.favoriteClub,
+      isSupporter: isAnonymous ? false : isSupporter(user),
+      avatarFrame: isAnonymous ? null : user.avatarFrame,
       score: Number(r.vintage_count),
       metadata: {
         vintageCount: Number(r.vintage_count),

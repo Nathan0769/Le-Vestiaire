@@ -9,6 +9,7 @@ import { PasswordSettings } from "./password-settings";
 import { SessionSettings } from "./session-settings";
 import { LeaderboardPrivacySettings } from "./leaderboard-privacy-settings";
 import { CookieSettings } from "./cookie-settings";
+import { SubscriptionSettings } from "./subscription-settings";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
@@ -35,6 +36,7 @@ export function SettingsClient() {
 
       <div className="grid gap-6">
         <AccountInfo user={currentUser} />
+        <SubscriptionSettings />
         <LeaderboardPrivacySettings userId={currentUser.id} />
 
         <EmailSettings

@@ -5,6 +5,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
+import { isSupporter } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 import { getBlockedIdsBothWays } from "@/lib/follow";
 
@@ -76,6 +77,8 @@ export async function GET(
           name: true,
           avatar: true,
           image: true,
+          plan: true,
+          avatarFrame: true,
         },
       },
     },
@@ -89,6 +92,7 @@ export async function GET(
   const items = sliced.map((r) => ({
     ...r.following,
     name: r.following.username,
+    isSupporter: isSupporter(r.following),
   }));
   const nextCursor = hasMore ? sliced[sliced.length - 1].id : null;
 

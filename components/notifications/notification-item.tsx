@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { cn } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 import { fr, enUS, es, it, de, nl, pt } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
@@ -84,13 +85,17 @@ export function NotificationItem({ notification, onClick }: Props) {
           src={actor.avatarUrl ?? undefined}
           name={actor.name}
           size="sm"
+          frame={actor.avatarFrame}
+          isSupporter={actor.isSupporter}
         />
       ) : (
         <div className="w-8 h-8 rounded-full bg-muted flex-shrink-0" />
       )}
       <div className="flex-1 min-w-0 text-sm">
         <p className="truncate">
-          <span className="font-medium">{actor?.name ?? t("someone")}</span>{" "}
+          <span className={cn("font-medium", actor?.isSupporter && "cos-name-gold")}>
+            {actor?.name ?? t("someone")}
+          </span>{" "}
           <span className="text-muted-foreground">{label}</span>
         </p>
         <p className="text-xs text-muted-foreground mt-0.5">{timeAgo}</p>

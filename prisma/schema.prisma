@@ -32,6 +32,8 @@ model User {
   approvedContributionsCount  Int                   @default(0)
   plan                        UserPlan              @default(FREE)
   stripeCustomerId            String?
+  avatarFrame                 String?               @map("avatar_frame")
+  profileBanner               String?               @map("profile_accent")
   lastLoginMethod             String?
   emailMarketing              Boolean               @default(true) @map("email_marketing")
   reminderStep                Int                   @default(0) @map("reminder_step")

@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useSearchUsers } from "@/hooks/useSearchUsers";
 import { useFollow } from "@/hooks/useFollow";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { SupporterName } from "@/components/supporter/supporter-name";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Search, UserPlus, Clock, UserCheck } from "lucide-react";
@@ -59,9 +60,13 @@ export function SearchUsers() {
                   src={user.avatarUrl || undefined}
                   name={user.name}
                   size="md"
+                  frame={user.avatarFrame}
+                  isSupporter={user.isSupporter}
                 />
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium truncate">{user.name}</p>
+                  <p className="font-medium min-w-0">
+                    <SupporterName name={user.name} isSupporter={user.isSupporter} />
+                  </p>
                   <p className="text-sm text-muted-foreground truncate">
                     @{user.username}
                   </p>

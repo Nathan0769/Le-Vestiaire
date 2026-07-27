@@ -4,6 +4,7 @@ import * as React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { CameraIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { getAvatarFrameClass } from "@/lib/cosmetics";
 
 type UserAvatarProps = {
   src?: string;
@@ -12,6 +13,10 @@ type UserAvatarProps = {
   editable?: boolean;
   onChange?: (file: File) => void;
   className?: string;
+  /** Clé de contour cosmétique (rendu uniquement si isSupporter). */
+  frame?: string | null;
+  /** Statut supporter du propriétaire de l'avatar. */
+  isSupporter?: boolean;
 };
 
 function getInitials(name: string): string {
@@ -30,8 +35,11 @@ export function UserAvatar({
   editable = false,
   onChange,
   className,
+  frame,
+  isSupporter = false,
 }: UserAvatarProps) {
   const inputRef = React.useRef<HTMLInputElement>(null);
+  const frameClass = getAvatarFrameClass(frame, isSupporter);
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -44,12 +52,20 @@ export function UserAvatar({
     lg: "h-20 w-20",
   };
 
+  const avatar = (
+    <Avatar className="rounded-full h-full w-full">
+      <AvatarImage src={src} />
+      <AvatarFallback>{getInitials(name)}</AvatarFallback>
+    </Avatar>
+  );
+
   return (
     <div className={cn("relative", sizeClasses[size], className)}>
-      <Avatar className={cn("rounded-full", sizeClasses[size])}>
-        <AvatarImage src={src} />
-        <AvatarFallback>{getInitials(name)}</AvatarFallback>
-      </Avatar>
+      {frameClass ? (
+        <span className={cn("cos-ring h-full w-full", frameClass)}>{avatar}</span>
+      ) : (
+        avatar
+      )}
 
       {editable && (
         <>

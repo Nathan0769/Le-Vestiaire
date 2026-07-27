@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { SupporterName } from "@/components/supporter/supporter-name";
 import { FollowButton } from "@/components/follow/follow-button";
 import type { PublicUser, FollowState } from "@/types/follow";
 
@@ -26,9 +27,13 @@ export function NetworkUserCard({
           src={user.avatarUrl || user.image || undefined}
           name={user.name}
           size="md"
+          frame={user.avatarFrame}
+          isSupporter={user.isSupporter}
         />
         <div className="min-w-0 flex-1">
-          <p className="font-medium truncate">{user.name}</p>
+          <p className="font-medium min-w-0">
+            <SupporterName name={user.name} isSupporter={user.isSupporter} />
+          </p>
           <p className="text-sm text-muted-foreground truncate">
             @{user.username}
           </p>

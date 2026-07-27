@@ -11,6 +11,7 @@ import {
   Award,
   Tag,
   BarChart3,
+  Crown,
 } from "lucide-react";
 import {
   Sidebar,
@@ -100,6 +101,11 @@ export function AppSidebar() {
       url: "/achievements",
       icon: Award,
       badgeCount: achievementsUnread?.count ?? 0,
+    },
+    {
+      title: t("supporter"),
+      url: "/soutien",
+      icon: Crown,
     },
     {
       title: t("authentication"),

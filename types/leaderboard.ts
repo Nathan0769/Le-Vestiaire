@@ -29,6 +29,8 @@ export interface LeaderboardEntry {
   };
   hasBadge?: boolean;
   isAnonymous?: boolean;
+  isSupporter?: boolean;
+  avatarFrame?: string | null;
 }
 
 export interface LeaderboardResponse {

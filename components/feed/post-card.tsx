@@ -7,6 +7,8 @@ import { fr, enUS, es, it, de, nl, pt } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
 import { MoreVertical, Flag, Trash2 } from "lucide-react";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { SupporterBadge } from "@/components/supporter/supporter-badge";
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -82,10 +84,19 @@ export function PostCard({ post, defaultCommentsOpen = false }: PostCardProps) {
             src={post.author.avatarUrl ?? undefined}
             name={post.author.name}
             size="sm"
+            frame={post.author.avatarFrame}
+            isSupporter={post.author.isSupporter}
           />
           <div className="min-w-0 flex-1">
-            <p className="font-semibold text-sm truncate group-hover:underline">
-              @{post.author.username}
+            <p className="flex items-center gap-1.5 font-semibold text-sm truncate group-hover:underline">
+              <span
+                className={cn("truncate", post.author.isSupporter && "cos-name-gold")}
+              >
+                @{post.author.username}
+              </span>
+              {post.author.isSupporter && (
+                <SupporterBadge size="sm" iconOnly className="flex-shrink-0" />
+              )}
             </p>
             {post.author.favoriteClubName && (
               <p className="text-xs text-muted-foreground truncate">

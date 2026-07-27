@@ -6,6 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { fr, enUS, es, it, de, nl, pt } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { SupporterName } from "@/components/supporter/supporter-name";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { MoreVertical, Pencil, Trash2, Flag } from "lucide-react";
@@ -28,6 +29,8 @@ export interface CommentAuthor {
   username: string;
   name: string;
   avatarUrl: string | null;
+  isSupporter?: boolean;
+  avatarFrame?: string | null;
 }
 
 export interface CommentEntity {
@@ -112,6 +115,8 @@ export function CommentItem({
           src={comment.author.avatarUrl ?? undefined}
           name={comment.author.name}
           size="sm"
+          frame={comment.author.avatarFrame}
+          isSupporter={comment.author.isSupporter}
         />
       </Link>
       <div className="flex-1 min-w-0">
@@ -120,7 +125,10 @@ export function CommentItem({
             href={`/u/${comment.author.username}`}
             className="font-medium text-sm cursor-pointer hover:underline"
           >
-            {comment.author.name}
+            <SupporterName
+              name={comment.author.name}
+              isSupporter={comment.author.isSupporter}
+            />
           </Link>
           <span className="text-xs text-muted-foreground">
             {formatDistanceToNow(new Date(comment.createdAt), {

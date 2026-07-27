@@ -6,6 +6,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
+import { isSupporter } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { canInteract } from "@/lib/follow";
@@ -52,6 +53,8 @@ export async function GET(
           name: true,
           avatar: true,
           image: true,
+          plan: true,
+          avatarFrame: true,
         },
       },
     },
@@ -78,6 +81,8 @@ export async function GET(
           username: c.author.username,
           name: c.author.username,
           avatarUrl: avatarUrl ?? c.author.image,
+          isSupporter: isSupporter(c.author),
+          avatarFrame: c.author.avatarFrame,
         },
       };
     })
@@ -141,6 +146,8 @@ export async function POST(
             name: true,
             avatar: true,
             image: true,
+            plan: true,
+            avatarFrame: true,
           },
         },
       },
@@ -180,6 +187,8 @@ export async function POST(
       username: comment.author.username,
       name: comment.author.username,
       avatarUrl: avatarUrl ?? comment.author.image,
+      isSupporter: isSupporter(comment.author),
+      avatarFrame: comment.author.avatarFrame,
     },
   });
 }

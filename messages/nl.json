@@ -8,6 +8,7 @@
     "community": "Community",
     "leaderboard": "Ranglijst",
     "achievements": "Prestaties",
+    "supporter": "Supporter",
     "authentication": "Authenticatie",
     "pricing": "Abonnement",
     "settings": "Account",
@@ -2068,32 +2069,25 @@
     },
     "subscription": {
       "title": "Abonnement",
-      "description": "Beheer je abonnement en premium functies",
-      "currentPlan": "Huidig abonnement",
-      "upgradeToPremium": "Upgraden naar Premium",
-      "manageSubscription": "Abonnement beheren",
-      "loading": "Laden...",
-      "features": "Inbegrepen functies",
-      "price": "Prijs",
-      "or": "of",
-      "free": {
-        "feature1": "Tot 50 shirts in collectie",
-        "feature2": "Tot 20 shirts op verlanglijst",
-        "feature3": "Basisstatistieken",
-        "feature4": "Vriendensysteem en delen"
-      },
-      "premium": {
-        "feature1": "Onbeperkte shirtcollectie",
-        "feature2": "Onbeperkte verlanglijst",
-        "feature3": "Volledige geavanceerde statistieken",
-        "feature4": "Tot 5 foto's per shirt",
-        "feature5": "Premium badge op je profiel"
-      },
-      "freeInfo": "Upgrade naar Premium om alle functies te ontgrendelen en een onbeperkte collectie te beheren.",
-      "premiumInfo": {
-        "title": "Bedankt dat je Premium bent!",
-        "description": "Je geniet van alle premium functies. Beheer je abonnement via het Stripe-portaal."
+      "description": "Gère ton soutien et tes cosmétiques Supporter.",
+      "currentPlan": "Statut actuel",
+      "freePlanName": "Gratuit",
+      "freeInfo": "Deviens Supporter pour soutenir le projet et débloquer les cosmétiques.",
+      "becomeSupporter": "Devenir Supporter",
+      "manage": "Gérer l'abonnement",
+      "thanks": {
+        "title": "Merci pour ton soutien !",
+        "description": "Tu profites de tous les cosmétiques Supporter. Gère ton abonnement via le portail sécurisé."
       }
+    },
+    "cosmetics": {
+      "title": "Cosmétiques",
+      "description": "Personnalise ton apparence Supporter : carte, contour, bannière.",
+      "locked": "Les cosmétiques sont réservés aux membres Supporter.",
+      "unlock": "Devenir Supporter",
+      "frameLabel": "Contour d'avatar",
+      "bannerLabel": "Bannière de profil",
+      "none": "Aucun"
     }
   },
   "CookieConsent": {
@@ -2565,45 +2559,69 @@
     }
   },
   "Pricing": {
-    "title": "Kies je abonnement",
-    "subtitle": "Beheer je shirtcollectie als een pro",
-    "toggle": {
-      "monthly": "Maandelijks",
-      "yearly": "Jaarlijks"
+    "metaTitle": "Soutenir Le Vestiaire",
+    "metaDescription": "Le Vestiaire est un projet indépendant. Deviens Supporter pour soutenir le projet et débloquer des cosmétiques exclusifs.",
+    "title": "Soutiens Le Vestiaire",
+    "subtitle": "Un projet indépendant, propulsé par sa communauté.",
+    "cardTeaser": "Ta future carte de membre",
+    "independent": {
+      "title": "Un projet indépendant",
+      "description": "Le Vestiaire est conçu et développé par une seule personne. Ton soutien finance directement l'hébergement et les prochaines fonctionnalités."
     },
-    "free": {
-      "name": "Gratis",
-      "description": "Om je collectie te starten",
-      "period": "gratis",
-      "features": {
-        "jerseys": "Tot 50 shirts",
-        "wishlist": "Tot 20 shirts op verlanglijst",
-        "basicStats": "Basisstatistieken",
-        "friends": "Vriendensysteem",
-        "ratings": "Beoordelingen en commentaren"
+    "unlock": {
+      "title": "Ce que débloque le statut Supporter"
+    },
+    "features": {
+      "card": {
+        "title": "Carte de membre",
+        "description": "Ta carte du Cercle Supporter, or gravé et métal."
       },
-      "button": "Gratis"
+      "banner": {
+        "title": "Bannière de profil",
+        "description": "Un header travaillé derrière ton avatar."
+      },
+      "frame": {
+        "title": "Contour d'avatar",
+        "description": "Un anneau or ou nocturne autour de ta photo."
+      },
+      "badge": {
+        "title": "Emblème Supporter",
+        "description": "Un marqueur or discret, porté partout."
+      },
+      "export": {
+        "title": "Export de ta collection",
+        "description": "Télécharge ta collection complète en un clic."
+      },
+      "marketValue": {
+        "title": "Valeur marché des maillots",
+        "description": "Estime la cote réelle de tes maillots."
+      }
+    },
+    "comingSoon": "À venir",
+    "toggle": {
+      "monthly": "Mensuel",
+      "yearly": "Annuel"
     },
     "premium": {
-      "name": "Premium",
       "monthly": {
-        "description": "Voor gepassioneerde verzamelaars",
-        "period": "maand",
-        "button": "Upgraden naar Premium"
+        "description": "Soutiens mois par mois",
+        "period": "mois",
+        "button": "Devenir Supporter"
       },
       "yearly": {
-        "description": "Voor gepassioneerde verzamelaars",
-        "period": "jaar",
-        "button": "Upgraden naar Premium Jaarlijks",
-        "savings": "2 maanden gratis"
-      },
-      "features": {
-        "unlimitedJerseys": "Onbeperkte collectie",
-        "unlimitedWishlist": "Onbeperkte verlanglijst",
-        "advancedStats": "Volledige geavanceerde statistieken",
-        "multiplePhotos": "Tot 5 foto's per shirt",
-        "badge": "Premium badge op je profiel"
+        "description": "Le meilleur tarif pour soutenir",
+        "period": "an",
+        "button": "Devenir Supporter",
+        "savings": "2 mois offerts"
       }
+    },
+    "cancelAnytime": "Sans engagement, résiliable à tout moment.",
+    "freeReminder": "Le gratuit reste complet : collection, wishlist, stats et social sans limite. Supporter n'ajoute que du bonus.",
+    "member": {
+      "title": "Bienvenue dans le Cercle",
+      "subtitle": "Merci pour ton soutien. Voici ta carte de membre.",
+      "manage": "Gérer l'abonnement",
+      "cosmetics": "Mes cosmétiques"
     }
   },
   "PublicCollection": {
@@ -3218,9 +3236,9 @@
       "capValueLabel": "geïnvesteerd in de collectie"
     },
     "likers": {
-      "single": "{name} vindt dit leuk",
-      "withOthersSingle": "{name} en {count} ander",
-      "withOthersPlural": "{name} en {count} anderen"
+      "single": "<n>{name}</n> vindt dit leuk",
+      "withOthersSingle": "<n>{name}</n> en {count} ander",
+      "withOthersPlural": "<n>{name}</n> en {count} anderen"
     },
     "comments": {
       "title": "Reacties",

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { UserAvatar } from "@/components/profiles/user-avatar";
+import { SupporterName } from "@/components/supporter/supporter-name";
 import { Button } from "@/components/ui/button";
 import type { FollowRequestItem } from "@/types/follow";
 
@@ -30,9 +31,16 @@ export function FollowRequestCard({
           src={request.requester.avatarUrl || request.requester.image || undefined}
           name={request.requester.name}
           size="md"
+          frame={request.requester.avatarFrame}
+          isSupporter={request.requester.isSupporter}
         />
         <div className="min-w-0 flex-1">
-          <p className="font-medium truncate">{request.requester.name}</p>
+          <p className="font-medium min-w-0">
+            <SupporterName
+              name={request.requester.name}
+              isSupporter={request.requester.isSupporter}
+            />
+          </p>
           <p className="text-sm text-muted-foreground truncate">
             @{request.requester.username}
           </p>
