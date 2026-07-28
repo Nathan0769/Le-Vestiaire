@@ -16,6 +16,7 @@ import { Toaster } from "sonner";
 import { CookieConsent } from "@/components/ui/cookie-consent";
 import { AnalyticsWrapper } from "@/components/analytics-wrapper";
 import { FavoriteClubBanner } from "@/components/home/favorite-club-banner";
+import { MotionConfig } from "motion/react";
 
 export default function ClientWrapper({
   children,
@@ -25,6 +26,7 @@ export default function ClientWrapper({
   const defaultOpen = true;
 
   return (
+    <MotionConfig reducedMotion="user">
     <ThemeProvider
       attribute="class"
       defaultTheme="system"
@@ -72,5 +74,6 @@ export default function ClientWrapper({
         learnMoreHref="/politique-cookies"
       />
     </ThemeProvider>
+    </MotionConfig>
   );
 }
