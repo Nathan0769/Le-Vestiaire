@@ -10,6 +10,7 @@ import {
 import { checkAchievements } from "@/lib/achievements/check";
 import { createFeedPost } from "@/lib/feed/create-post";
 import { detectCollectionCap, detectValueCap } from "@/lib/feed/cap-detector";
+import { normalizeUserPhotoPaths } from "@/lib/user-jersey-photos";
 
 const VALID_VERSIONS = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"] as const;
 
@@ -32,10 +33,12 @@ export async function GET(
 
     const withSignedUrls = await Promise.all(
       userJerseys.map(async (uj) => {
-        const userPhotoUrl = uj.userPhotoUrl
-          ? await getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, uj.userPhotoUrl, 60 * 60)
-          : null;
-        return { ...uj, userPhotoUrl };
+        const userPhotoUrls = await Promise.all(
+          uj.userPhotoUrls.map((path) =>
+            getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, path, 60 * 60)
+          )
+        );
+        return { ...uj, userPhotoUrl: userPhotoUrls[0] ?? null, userPhotoUrls };
       })
     );
 
@@ -91,6 +94,7 @@ export async function POST(
       isGift,
       isFromMysteryBox,
       userPhotoUrl,
+      userPhotoUrls,
       isSigned = false,
       signedBy,
       hasAuthCertificate = false,
@@ -107,6 +111,19 @@ export async function POST(
         { status: 400 }
       );
     }
+
+    // Photos perso : accepte le tableau userPhotoUrls, avec fallback sur l'ancien
+    // champ userPhotoUrl (string unique) pour compat client.
+    const photosResult = normalizeUserPhotoPaths(
+      userPhotoUrls !== undefined ? userPhotoUrls : userPhotoUrl
+    );
+    if (!photosResult.ok) {
+      return NextResponse.json(
+        { success: false, error: photosResult.error },
+        { status: 400 }
+      );
+    }
+    const photoPaths = photosResult.paths;
 
     if (!condition) {
       return NextResponse.json(
@@ -272,7 +289,8 @@ export async function POST(
           notes: notes || null,
           isGift: isGift || false,
           isFromMysteryBox: isFromMysteryBox || false,
-          userPhotoUrl: userPhotoUrl || null,
+          userPhotoUrls: photoPaths,
+          userPhotoUrl: photoPaths[0] ?? null,
           isSigned,
           signedBy: isSigned ? signedBy || null : null,
           hasAuthCertificate,

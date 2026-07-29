@@ -33,6 +33,9 @@ export type CollectionItemWithJersey = {
   isGift: boolean;
   isFromMysteryBox: boolean;
   userPhotoUrl?: string | null;
+  userPhotoUrls?: string[] | null;
+  /** Paths R2 bruts (proprietaire uniquement) pour reconstruire le tableau a l'edition. */
+  userPhotoPaths?: string[] | null;
   isSigned: boolean;
   signedBy?: string | null;
   hasAuthCertificate: boolean;

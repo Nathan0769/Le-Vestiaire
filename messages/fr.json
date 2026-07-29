@@ -349,7 +349,8 @@
           "fileTooLarge": "La photo ne doit pas dépasser 5MB",
           "sizeRequired": "La taille est obligatoire",
           "conditionRequired": "L'état est obligatoire",
-          "uploadError": "Erreur lors de l'upload de la photo"
+          "uploadError": "Erreur lors de l'upload de la photo",
+          "photoLimit": "Vous ne pouvez pas ajouter plus de {max} photos"
         }
       },
       "view": {
@@ -422,12 +423,14 @@
         "matchDate": "Date du match",
         "notesPlaceholder": "Ajoutez vos commentaires sur ce maillot...",
         "photoFormats": "PNG, JPG, WEBP, AVIF (Max 5MB)",
+        "photoYourPhoto": "votre photo",
         "purchasePricePlaceholder": "Ex: 90.50",
         "toast": {
           "fileNotImage": "Le fichier doit être une image",
           "fileTooLarge": "La photo ne doit pas dépasser 5MB",
           "sizeConditionRequired": "La taille et l'état sont obligatoires",
           "uploadError": "Erreur lors de l'upload de la photo",
+          "photoLimit": "Vous ne pouvez pas ajouter plus de {max} photos",
           "updated": "Maillot mis à jour avec succès",
           "error": "Une erreur est survenue",
           "connectionError": "Erreur de connexion. Veuillez réessayer.",

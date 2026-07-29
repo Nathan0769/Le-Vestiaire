@@ -30,7 +30,7 @@ export async function DELETE() {
       select: {
         id: true,
         avatar: true,
-        collection: { select: { userPhotoUrl: true } },
+        collection: { select: { userPhotoUrl: true, userPhotoUrls: true } },
       },
     });
 
@@ -46,13 +46,18 @@ export async function DELETE() {
       } catch {}
     }
 
-    // Supprimer les photos de maillots R2
+    // Supprimer les photos de maillots R2 (paths complets stockes en base)
     if (USER_JERSEY_PHOTOS_BUCKET) {
       for (const jersey of user.collection) {
-        if (jersey.userPhotoUrl) {
+        const paths =
+          jersey.userPhotoUrls.length > 0
+            ? jersey.userPhotoUrls
+            : jersey.userPhotoUrl
+              ? [jersey.userPhotoUrl]
+              : [];
+        for (const path of paths) {
           try {
-            const key = jersey.userPhotoUrl.split("/").pop();
-            if (key) await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, key);
+            await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, path);
           } catch {}
         }
       }
