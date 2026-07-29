@@ -10,7 +10,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   AlertDialog,
@@ -23,13 +22,11 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import {
-  Camera,
   Edit3,
   FileText,
   Package,
   Save,
   Trash2,
-  Upload,
   X,
 } from "lucide-react";
 import type {
@@ -41,6 +38,11 @@ import type {
 import { toast } from "sonner";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { ImageCarousel } from "./image-carousel";
+import {
+  PhotoSlots,
+  uploadPhotoSlots,
+  type PhotoSlot,
+} from "./jersey-modal/photo-slots";
 import { BadgesSummary } from "./jersey-modal/badges-summary";
 import { JerseyHeader } from "./jersey-modal/jersey-header";
 import { MyJerseyCard } from "./jersey-modal/my-jersey-card";
@@ -69,6 +71,18 @@ function shouldShowAuthCard(item: CollectionItemWithJersey): boolean {
   return false;
 }
 
+/** Slots d'edition initiaux : photos deja stockees (path brut + URL signee). */
+function buildInitialPhotoSlots(item: CollectionItemWithJersey): PhotoSlot[] {
+  const urls =
+    item.userPhotoUrls ?? (item.userPhotoUrl ? [item.userPhotoUrl] : []);
+  const paths = item.userPhotoPaths ?? [];
+  return paths.map((path, i) => ({
+    kind: "existing" as const,
+    path,
+    url: urls[i] ?? path,
+  }));
+}
+
 export function CollectionJerseyModal({
   isOpen,
   onClose,
@@ -83,10 +97,10 @@ export function CollectionJerseyModal({
   const [isLoading, setIsLoading] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoSlots, setPhotoSlots] = useState<PhotoSlot[]>(() =>
+    buildInitialPhotoSlots(collectionItem)
+  );
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
-  const [photoDeleted, setPhotoDeleted] = useState(false);
 
   const buildInitialFormData = (): UpdateCollectionData => ({
     version: (collectionItem.version || "REPLICA") as JerseyVersion,
@@ -100,7 +114,6 @@ export function CollectionJerseyModal({
     notes: collectionItem.notes || "",
     isGift: collectionItem.isGift || false,
     isFromMysteryBox: collectionItem.isFromMysteryBox || false,
-    userPhotoUrl: collectionItem.userPhotoUrl || undefined,
     isSigned: collectionItem.isSigned || false,
     signedBy: collectionItem.signedBy || "",
     hasAuthCertificate: collectionItem.hasAuthCertificate || false,
@@ -120,9 +133,7 @@ export function CollectionJerseyModal({
 
   const resetForm = () => {
     setFormData(buildInitialFormData());
-    setPhotoFile(null);
-    setPhotoPreview(null);
-    setPhotoDeleted(false);
+    setPhotoSlots(buildInitialPhotoSlots(collectionItem));
   };
 
   const handleEdit = () => {
@@ -135,37 +146,6 @@ export function CollectionJerseyModal({
     resetForm();
   };
 
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      toast.error(t("toast.fileNotImage"));
-      return;
-    }
-
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error(t("toast.fileTooLarge"));
-      return;
-    }
-
-    setPhotoFile(file);
-    setPhotoDeleted(false);
-
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPhotoPreview(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleRemovePhoto = () => {
-    setPhotoFile(null);
-    setPhotoPreview(null);
-    setPhotoDeleted(true);
-    setFormData({ ...formData, userPhotoUrl: undefined });
-  };
-
   const handleSave = async () => {
     if (!formData.size || !formData.condition) {
       toast.error(t("toast.sizeConditionRequired"));
@@ -176,34 +156,18 @@ export function CollectionJerseyModal({
 
     const dataToSave = { ...formData };
 
-    if (photoFile) {
-      setIsUploadingPhoto(true);
-      try {
-        const uploadFormData = new FormData();
-        uploadFormData.append("file", photoFile);
-        uploadFormData.append("userJerseyId", collectionItem.id);
-
-        const response = await fetch("/api/user/jersey-photo/upload", {
-          method: "POST",
-          body: uploadFormData,
-        });
-
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || "Erreur lors de l'upload");
-        }
-
-        const { path } = await response.json();
-        dataToSave.userPhotoUrl = path;
-      } catch (error) {
-        console.error("Erreur upload photo:", error);
-        toast.error(t("toast.uploadError"));
-        setIsUploadingPhoto(false);
-        setIsLoading(false);
-        return;
-      } finally {
-        setIsUploadingPhoto(false);
-      }
+    let photoUrls: string[];
+    setIsUploadingPhoto(true);
+    try {
+      photoUrls = await uploadPhotoSlots(photoSlots, collectionItem.id);
+    } catch (error) {
+      console.error("Erreur upload photo:", error);
+      toast.error(t("toast.uploadError"));
+      setIsUploadingPhoto(false);
+      setIsLoading(false);
+      return;
+    } finally {
+      setIsUploadingPhoto(false);
     }
 
     try {
@@ -226,16 +190,8 @@ export function CollectionJerseyModal({
         matchDate: dataToSave.matchDate || null,
         hasLongSleeves: dataToSave.hasLongSleeves ?? false,
         patches: dataToSave.patches ?? [],
+        userPhotoUrls: photoUrls,
       };
-
-      if (photoFile) {
-        payload.userPhotoUrl = dataToSave.userPhotoUrl;
-      } else if (
-        dataToSave.userPhotoUrl === undefined &&
-        collectionItem.userPhotoUrl
-      ) {
-        payload.userPhotoUrl = null;
-      }
 
       const response = await fetch(`/api/user-jerseys/${collectionItem.id}`, {
         method: "PATCH",
@@ -291,15 +247,16 @@ export function CollectionJerseyModal({
 
   const carouselImages: { src: string; alt: string; label: string }[] = [];
 
-  if (photoPreview) {
+  const userPhotos = isEditing
+    ? photoSlots.map((slot) =>
+        slot.kind === "new" ? slot.preview : slot.url
+      )
+    : collectionItem.userPhotoUrls ??
+      (collectionItem.userPhotoUrl ? [collectionItem.userPhotoUrl] : []);
+
+  for (const src of userPhotos) {
     carouselImages.push({
-      src: photoPreview,
-      alt: t("yourPhoto"),
-      label: t("yourPhoto"),
-    });
-  } else if (collectionItem.userPhotoUrl && !photoDeleted) {
-    carouselImages.push({
-      src: collectionItem.userPhotoUrl,
+      src,
       alt: t("yourPhoto"),
       label: t("yourPhoto"),
     });
@@ -313,8 +270,6 @@ export function CollectionJerseyModal({
 
   const showAuthCard = isEditing || shouldShowAuthCard(collectionItem);
   const showNotes = isEditing || !!collectionItem.notes;
-  const hasUserPhoto =
-    (collectionItem.userPhotoUrl && !photoDeleted) || photoPreview;
 
   return (
     <>
@@ -344,46 +299,11 @@ export function CollectionJerseyModal({
                 </div>
 
                 {isEditing && (
-                  <div className="space-y-2">
-                    <Label className="flex items-center gap-2 text-sm">
-                      <Camera className="w-4 h-4" />
-                      {hasUserPhoto ? t("modifyPhoto") : t("addPhoto")}
-                    </Label>
-                    <div className="flex gap-2">
-                      <label className="flex-1">
-                        <Button
-                          type="button"
-                          variant="outline"
-                          className="w-full cursor-pointer"
-                          asChild
-                        >
-                          <span>
-                            <Upload className="w-4 h-4 mr-2" />
-                            {t("choosePhoto")}
-                          </span>
-                        </Button>
-                        <input
-                          type="file"
-                          className="hidden"
-                          accept="image/*"
-                          onChange={handlePhotoChange}
-                        />
-                      </label>
-                      {hasUserPhoto && (
-                        <Button
-                          type="button"
-                          variant="destructive"
-                          onClick={handleRemovePhoto}
-                          className="cursor-pointer"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      )}
-                    </div>
-                    <p className="text-xs text-muted-foreground">
-                      {t("photoFormats")}
-                    </p>
-                  </div>
+                  <PhotoSlots
+                    slots={photoSlots}
+                    onChange={setPhotoSlots}
+                    namespace="Collection.modal.view"
+                  />
                 )}
               </div>
 

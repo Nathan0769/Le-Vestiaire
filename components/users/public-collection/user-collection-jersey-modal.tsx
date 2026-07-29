@@ -50,9 +50,13 @@ export function UserCollectionJerseyModal({
 
   const carouselImages: { src: string; alt: string; label: string }[] = [];
 
-  if (collectionItem.userPhotoUrl) {
+  const userPhotos =
+    collectionItem.userPhotoUrls ??
+    (collectionItem.userPhotoUrl ? [collectionItem.userPhotoUrl] : []);
+
+  for (const src of userPhotos) {
     carouselImages.push({
-      src: collectionItem.userPhotoUrl,
+      src,
       alt: t("yourPhoto"),
       label: t("yourPhoto"),
     });

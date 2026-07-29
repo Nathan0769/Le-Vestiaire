@@ -11,17 +11,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   BadgeCheck,
-  Camera,
   FileText,
   ShoppingBag,
-  Trash2,
-  Upload,
   User,
 } from "lucide-react";
+import { PhotoSlots, uploadPhotoSlots, type PhotoSlot } from "./jersey-modal/photo-slots";
 import { toast } from "sonner";
 import type {
   AddToCollectionData,
@@ -96,35 +93,8 @@ export function AddToCollectionModal({
   const tView = useTranslations("Collection.modal.view");
 
   const [formData, setFormData] = useState<UpdateCollectionData>(INITIAL_FORM);
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [photoSlots, setPhotoSlots] = useState<PhotoSlot[]>([]);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
-
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      toast.error(t("toast.fileNotImage"));
-      return;
-    }
-
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error(t("toast.fileTooLarge"));
-      return;
-    }
-
-    setPhotoFile(file);
-    const reader = new FileReader();
-    reader.onloadend = () => setPhotoPreview(reader.result as string);
-    reader.readAsDataURL(file);
-  };
-
-  const handleRemovePhoto = () => {
-    setPhotoFile(null);
-    setPhotoPreview(null);
-    setFormData({ ...formData, userPhotoUrl: undefined });
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -142,25 +112,13 @@ export function AddToCollectionModal({
       isFromMysteryBox: formData.isFromMysteryBox,
     };
 
-    if (photoFile) {
+    if (photoSlots.length > 0) {
       setIsUploadingPhoto(true);
       try {
-        const uploadFormData = new FormData();
-        uploadFormData.append("file", photoFile);
-        uploadFormData.append("userJerseyId", "temp-" + Date.now());
-
-        const response = await fetch("/api/user/jersey-photo/upload", {
-          method: "POST",
-          body: uploadFormData,
-        });
-
-        if (!response.ok) {
-          const error = await response.json();
-          throw new Error(error.error || "Erreur lors de l'upload");
-        }
-
-        const { path } = await response.json();
-        dataToSubmit.userPhotoUrl = path;
+        dataToSubmit.userPhotoUrls = await uploadPhotoSlots(
+          photoSlots,
+          "temp-" + Date.now()
+        );
       } catch (error) {
         console.error("Erreur upload photo:", error);
         toast.error(t("toast.uploadError"));
@@ -176,8 +134,7 @@ export function AddToCollectionModal({
 
   const handleReset = () => {
     setFormData(INITIAL_FORM);
-    setPhotoFile(null);
-    setPhotoPreview(null);
+    setPhotoSlots([]);
   };
 
   const handleOpenChange = (newOpen: boolean) => {
@@ -186,7 +143,6 @@ export function AddToCollectionModal({
   };
 
   const showAuthCard = shouldShowAuthCard(formData);
-  const hasUserPhoto = !!photoPreview;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -215,57 +171,11 @@ export function AddToCollectionModal({
                 </div>
               </div>
 
-              <div className="space-y-2">
-                <Label className="flex items-center gap-2 text-sm">
-                  <Camera className="w-4 h-4" />
-                  {hasUserPhoto ? t("modifyPhoto") : t("addPhoto")}
-                </Label>
-                <div className="flex gap-2">
-                  <label className="flex-1">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="w-full cursor-pointer"
-                      asChild
-                    >
-                      <span>
-                        <Upload className="w-4 h-4 mr-2" />
-                        {t("choosePhoto")}
-                      </span>
-                    </Button>
-                    <input
-                      type="file"
-                      className="hidden"
-                      accept="image/*"
-                      onChange={handlePhotoChange}
-                    />
-                  </label>
-                  {hasUserPhoto && (
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      onClick={handleRemovePhoto}
-                      className="cursor-pointer"
-                    >
-                      <Trash2 className="w-4 h-4" />
-                    </Button>
-                  )}
-                </div>
-                {photoPreview && (
-                  <div className="relative w-full aspect-square rounded-lg overflow-hidden bg-muted border">
-                    <Image
-                      src={photoPreview}
-                      alt={t("photoYourPhoto")}
-                      fill
-                      className="object-contain"
-                      unoptimized
-                    />
-                  </div>
-                )}
-                <p className="text-xs text-muted-foreground">
-                  {t("photoFormats")}
-                </p>
-              </div>
+              <PhotoSlots
+                slots={photoSlots}
+                onChange={setPhotoSlots}
+                namespace="Collection.modal.add"
+              />
             </div>
 
             {/* Colonne droite : header + cards */}

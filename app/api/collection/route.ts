@@ -27,6 +27,7 @@ export async function GET() {
         isGift: true,
         isFromMysteryBox: true,
         userPhotoUrl: true,
+        userPhotoUrls: true,
         isSigned: true,
         signedBy: true,
         hasAuthCertificate: true,
@@ -51,14 +52,17 @@ export async function GET() {
 
     const formatted = await Promise.all(
       collectionItems.map(async (item) => {
-        let userPhotoSignedUrl = null;
-        if (item.userPhotoUrl) {
-          userPhotoSignedUrl = await getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, item.userPhotoUrl, 60 * 60);
-        }
+        const userPhotoUrls = await Promise.all(
+          item.userPhotoUrls.map((path) =>
+            getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, path, 60 * 60)
+          )
+        );
 
         return {
           ...item,
-          userPhotoUrl: userPhotoSignedUrl,
+          userPhotoUrl: userPhotoUrls[0] ?? null,
+          userPhotoUrls,
+          userPhotoPaths: item.userPhotoUrls,
           purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
           jersey: {
             ...item.jersey,
