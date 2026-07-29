@@ -45,14 +45,20 @@ export async function POST(
 
     let variant = 1;
     if (isGoalkeeper) {
-      const existingCount = await prisma.jersey.count({
+      // On prend le plus petit variant libre (pas count + 1 ni max + 1) : après
+      // une suppression, ça évite la collision de slug/clé unique ET garde une
+      // numérotation contiguë depuis 1, pour qu'il reste toujours un "Gardien"
+      // sans numéro (variant 1) affiché à l'utilisateur (cf. jerseyTypeLabel).
+      const existingGoalkeepers = await prisma.jersey.findMany({
         where: {
           clubId: proposal.clubId,
           season: proposal.season,
           type: "GOALKEEPER",
         },
+        select: { variant: true },
       });
-      variant = existingCount + 1;
+      const usedVariants = new Set(existingGoalkeepers.map((j) => j.variant));
+      while (usedVariants.has(variant)) variant++;
     } else {
       const existingJersey = await prisma.jersey.findUnique({
         where: {
