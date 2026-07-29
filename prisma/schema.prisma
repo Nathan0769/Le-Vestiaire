@@ -213,7 +213,6 @@ model UserJersey {
   purchasePrice      Decimal?
   purchaseDate       DateTime?
   notes              String?
-  userPhotoUrl       String?
   userPhotoUrls      String[]          @default([])
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
