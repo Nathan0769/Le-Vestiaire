@@ -269,7 +269,7 @@ export async function GET(request: Request) {
       pinnedAt: true,
       createdAt: true,
       jerseyId: true,
-      userPhotoUrl: true,
+      userPhotoUrls: true,
       jersey: {
         select: {
           imageUrl: true,
@@ -312,10 +312,10 @@ export async function GET(request: Request) {
 
   const withResolvedImages = await Promise.all(
     selected.map(async (item) => {
-      const remoteUrl = item.userPhotoUrl
+      const remoteUrl = item.userPhotoUrls[0]
         ? await getR2PresignedUrl(
             USER_JERSEY_PHOTOS_BUCKET,
-            item.userPhotoUrl,
+            item.userPhotoUrls[0],
             PRESIGNED_URL_TTL_S,
           )
         : item.jersey.imageUrl;

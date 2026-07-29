@@ -353,7 +353,6 @@ export async function PATCH(
       updatedAt: new Date(),
       ...(nextPhotoPaths !== null && {
         userPhotoUrls: nextPhotoPaths,
-        userPhotoUrl: nextPhotoPaths[0] ?? null,
       }),
     };
 
@@ -454,13 +453,7 @@ export async function DELETE(
       );
     }
 
-    const photosToDelete =
-      existing.userPhotoUrls.length > 0
-        ? existing.userPhotoUrls
-        : existing.userPhotoUrl
-          ? [existing.userPhotoUrl]
-          : [];
-    for (const path of photosToDelete) {
+    for (const path of existing.userPhotoUrls) {
       try {
         await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, path);
       } catch (err) {

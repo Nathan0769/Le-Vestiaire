@@ -260,7 +260,7 @@ export async function GET() {
       (item) => item.playerName || item.playerNumber
     ).length;
     const withCustomPhoto = collection.filter(
-      (item) => item.userPhotoUrl
+      (item) => item.userPhotoUrls.length > 0
     ).length;
     const withSigned = collection.filter((item) => item.isSigned).length;
     const withAuthCertificate = collection.filter((item) => item.hasAuthCertificate).length;

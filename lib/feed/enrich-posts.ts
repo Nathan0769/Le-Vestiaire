@@ -204,10 +204,10 @@ export async function enrichPostsForFeed(
       if (post.type === "JERSEY_ADD" && post.referenceId) {
         const uj = jerseyMap.get(post.referenceId);
         if (uj) {
-          const customPhotoUrl = uj.userPhotoUrl
+          const customPhotoUrl = uj.userPhotoUrls[0]
             ? await getR2PresignedUrl(
                 USER_JERSEY_PHOTOS_BUCKET,
-                uj.userPhotoUrl,
+                uj.userPhotoUrls[0],
                 60 * 60
               )
             : null;
