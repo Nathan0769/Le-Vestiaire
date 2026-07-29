@@ -394,7 +394,7 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
   },
   "rarity.goalkeeper": {
     category: "RARITY",
-    tier: "BRONZE",
+    tier: "PLATINUM",
     threshold: 1,
     triggers: ["collection.add"],
     i18nKey: "achievements.definitions.rarity.goalkeeper",
