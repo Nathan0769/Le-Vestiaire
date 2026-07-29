@@ -290,7 +290,6 @@ export async function POST(
           isGift: isGift || false,
           isFromMysteryBox: isFromMysteryBox || false,
           userPhotoUrls: photoPaths,
-          userPhotoUrl: photoPaths[0] ?? null,
           isSigned,
           signedBy: isSigned ? signedBy || null : null,
           hasAuthCertificate,

@@ -132,7 +132,6 @@ export async function PublicCollectionScreen({
       notes: true,
       isGift: true,
       isFromMysteryBox: true,
-      userPhotoUrl: true,
       userPhotoUrls: true,
       isSigned: true,
       signedBy: true,

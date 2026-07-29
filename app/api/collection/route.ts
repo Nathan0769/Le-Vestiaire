@@ -26,7 +26,6 @@ export async function GET() {
         notes: true,
         isGift: true,
         isFromMysteryBox: true,
-        userPhotoUrl: true,
         userPhotoUrls: true,
         isSigned: true,
         signedBy: true,
