@@ -7,6 +7,8 @@ import {
   USER_JERSEY_PHOTOS_BUCKET,
 } from "@/lib/r2-storage";
 import { getFollowingIds } from "@/lib/follow";
+import { computeClubRanks } from "@/lib/feed/club-rank";
+import { computeCapMosaics } from "@/lib/feed/cap-mosaic";
 import type { FeedPostItem, FeedLikerPreview } from "@/types/feed";
 
 const MAX_LIKERS_PREVIEW = 3;
@@ -119,18 +121,16 @@ export async function enrichPostsForFeed(
       `),
     ]);
 
-  // Position du maillot dans la collection de son propriétaire (pour "Xe du RC Lens")
-  const clubRanksByUserJersey = new Map<string, number>();
-  for (const uj of userJerseys) {
-    const rank = await prisma.userJersey.count({
-      where: {
-        userId: uj.userId,
-        jersey: { clubId: uj.jersey.clubId },
-        createdAt: { lte: uj.createdAt },
-      },
-    });
-    clubRanksByUserJersey.set(uj.id, rank);
-  }
+  // Position du maillot dans la collection de son propriétaire (pour "Xe du RC Lens").
+  // Batch en une requête (cf computeClubRanks) au lieu d'un count() par maillot.
+  const clubRanksByUserJersey = await computeClubRanks(
+    userJerseys.map((uj) => ({
+      id: uj.id,
+      userId: uj.userId,
+      clubId: uj.jersey.clubId,
+      createdAt: uj.createdAt,
+    }))
+  );
 
   // Ratings donnés par l'auteur pour son propre maillot
   const ratingsMap = new Map<string, number>();
@@ -149,22 +149,11 @@ export async function enrichPostsForFeed(
     }
   }
 
-  // Mosaïques caps
-  const capMosaics = new Map<string, { imageUrl: string | null }[]>();
-  for (const authorId of new Set(capAuthorIds)) {
-    const latest = await prisma.userJersey.findMany({
-      where: { userId: authorId },
-      take: 4,
-      orderBy: { createdAt: "desc" },
-      include: {
-        jersey: { select: { imageUrl: true } },
-      },
-    });
-    capMosaics.set(
-      authorId,
-      latest.map((uj) => ({ imageUrl: uj.jersey.imageUrl ?? null }))
-    );
-  }
+  // Mosaïques caps : 4 derniers maillots par auteur, batché en une requête.
+  const capMosaics = await computeCapMosaics(
+    Array.from(new Set(capAuthorIds)),
+    4
+  );
 
   const authorMap = new Map(authors.map((a) => [a.id, a]));
   const jerseyMap = new Map(userJerseys.map((uj) => [uj.id, uj]));
