@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { createTestUser } from "@/__tests__/helpers/fixtures";
+import { createTestUser, createTestSetup } from "@/__tests__/helpers/fixtures";
 import { cleanDatabase, prismaTest } from "@/__tests__/helpers/db";
 import "@/__tests__/setup.integration";
 import { createFeedPost } from "./create-post";
@@ -11,8 +11,7 @@ describe("createFeedPost", () => {
 
   it("crée un Post de type JERSEY_ADD avec referenceId", async () => {
     const user = await createTestUser();
-    const jersey = await prismaTest.jersey.findFirst({ select: { id: true } });
-    if (!jersey) throw new Error("DB dev doit avoir au moins un jersey");
+    const { jersey } = await createTestSetup();
     const userJersey = await prismaTest.userJersey.create({
       data: { userId: user.id, jerseyId: jersey.id, condition: "GOOD" },
     });
@@ -68,8 +67,7 @@ describe("createFeedPost", () => {
 
   it("est idempotent : deux appels avec même (authorId + type + referenceId) ne créent qu'un post", async () => {
     const user = await createTestUser();
-    const jersey = await prismaTest.jersey.findFirst({ select: { id: true } });
-    if (!jersey) throw new Error("DB dev doit avoir au moins un jersey");
+    const { jersey } = await createTestSetup();
     const userJersey = await prismaTest.userJersey.create({
       data: { userId: user.id, jerseyId: jersey.id, condition: "GOOD" },
     });
@@ -121,8 +119,7 @@ describe("createFeedPost", () => {
 
   it("accepte un createdAtOverride pour le backfill", async () => {
     const user = await createTestUser();
-    const jersey = await prismaTest.jersey.findFirst({ select: { id: true } });
-    if (!jersey) throw new Error("DB dev doit avoir au moins un jersey");
+    const { jersey } = await createTestSetup();
     const userJersey = await prismaTest.userJersey.create({
       data: { userId: user.id, jerseyId: jersey.id, condition: "GOOD" },
     });
