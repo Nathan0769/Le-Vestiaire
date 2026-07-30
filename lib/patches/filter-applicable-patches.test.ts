@@ -35,6 +35,7 @@ function makeVersion(overrides: Partial<PatchVersion> = {}): PatchVersion {
     seasonStart: "2020-21",
     seasonEnd: null,
     imageUrl: "https://r2.example.com/v1.png",
+    eligibleClubIds: [],
     createdAt: new Date(),
     updatedAt: new Date(),
     ...overrides,
@@ -282,6 +283,55 @@ describe("filterApplicablePatches", () => {
     });
     const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
+  });
+
+  it("17j. version.eligibleClubIds override le patch.eligibleClubIds (inclut le club)", () => {
+    const jersey = makeJersey("uefa", "2024");
+    const v1 = makeVersion({ seasonStart: "2024", seasonEnd: "2024", eligibleClubIds: ["c1"] });
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      eligibleClubIds: ["c-other"],
+      versions: [v1],
+    });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(1);
+  });
+
+  it("17k. version.eligibleClubIds override le patch.eligibleClubIds (exclut le club)", () => {
+    const jersey = makeJersey("uefa", "2024");
+    const v1 = makeVersion({ seasonStart: "2024", seasonEnd: "2024", eligibleClubIds: ["c-other"] });
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      eligibleClubIds: ["c1"],
+      versions: [v1],
+    });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(0);
+  });
+
+  it("17l. version.eligibleClubIds vide retombe sur patch.eligibleClubIds", () => {
+    const jersey = makeJersey("uefa", "2024");
+    const v1 = makeVersion({ seasonStart: "2024", seasonEnd: "2024", eligibleClubIds: [] });
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      eligibleClubIds: ["c1"],
+      versions: [v1],
+    });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(1);
+  });
+
+  it("17m. version.eligibleClubIds ignore si pas de version active (fallback patch)", () => {
+    const jersey = makeJersey("uefa", "2019");
+    const v1 = makeVersion({ seasonStart: "2024", seasonEnd: "2024", eligibleClubIds: ["c-other"] });
+    const patch = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      eligibleClubIds: ["c1"],
+      versions: [v1],
+    });
+    const result = filterWithCurrentLeague([patch], jersey);
+    expect(result).toHaveLength(1);
+    expect(result[0].activeVersion).toBeNull();
   });
 
   it("18. resolvedLeagueId force la ligue historique pour DOMESTIC_LEAGUE_BADGE", () => {
