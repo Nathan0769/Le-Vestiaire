@@ -1,5 +1,5 @@
 import type { Patch, PatchVersion, Jersey, Club, League } from "@prisma/client";
-import type { ApplicablePatch, Confederation, PatchVersionData } from "@/types/patch";
+import type { ApplicablePatch, Confederation } from "@/types/patch";
 import {
   CONFEDERATION_BY_LEAGUE_ID,
   isNationalTeamLeague,
@@ -25,16 +25,31 @@ export function filterApplicablePatches(
     .filter((p) =>
       isPatchEligible(p, resolvedLeagueId, isNational, clubConfederation)
     )
-    .filter((p) => isClubEligible(p, jersey.clubId))
     .map((p) => ({
+      patch: p,
+      activeVersion: p.versions.find((v) =>
+        isJerseySeasonInPatchPeriod(jersey.season, v.seasonStart, v.seasonEnd)
+      ) ?? null,
+    }))
+    .filter(({ patch, activeVersion }) =>
+      isClubEligible(patch, activeVersion, jersey.clubId)
+    )
+    .map(({ patch, activeVersion }) => ({
       patch: {
-        id: p.id,
-        name: p.name,
-        family: p.family,
-        leagueId: p.leagueId,
-        isActive: p.isActive,
+        id: patch.id,
+        name: patch.name,
+        family: patch.family,
+        leagueId: patch.leagueId,
+        isActive: patch.isActive,
       },
-      activeVersion: pickActiveVersion(p.versions, jersey.season),
+      activeVersion: activeVersion
+        ? {
+            id: activeVersion.id,
+            seasonStart: activeVersion.seasonStart,
+            seasonEnd: activeVersion.seasonEnd,
+            imageUrl: activeVersion.imageUrl,
+          }
+        : null,
     }));
 }
 
@@ -73,25 +88,15 @@ function isPatchEligible(
   }
 }
 
-function isClubEligible(patch: PatchWithVersions, clubId: string): boolean {
-  if (patch.eligibleClubIds.length === 0) return true;
-  return patch.eligibleClubIds.includes(clubId);
-}
-
-function pickActiveVersion(
-  versions: PatchVersion[],
-  season: string
-): PatchVersionData | null {
-  const match = versions.find((v) =>
-    isJerseySeasonInPatchPeriod(season, v.seasonStart, v.seasonEnd)
-  );
-
-  if (!match) return null;
-
-  return {
-    id: match.id,
-    seasonStart: match.seasonStart,
-    seasonEnd: match.seasonEnd,
-    imageUrl: match.imageUrl,
-  };
+function isClubEligible(
+  patch: PatchWithVersions,
+  activeVersion: PatchVersion | null,
+  clubId: string
+): boolean {
+  const effective =
+    activeVersion && activeVersion.eligibleClubIds.length > 0
+      ? activeVersion.eligibleClubIds
+      : patch.eligibleClubIds;
+  if (effective.length === 0) return true;
+  return effective.includes(clubId);
 }

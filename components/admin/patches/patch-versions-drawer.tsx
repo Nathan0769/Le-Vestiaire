@@ -21,6 +21,8 @@ import {
   type AdminPatch,
 } from "@/hooks/admin/usePatchesAdmin";
 import { isYearFormat } from "@/lib/patches/season-format";
+import { NATIONAL_TEAM_LEAGUE_IDS } from "@/lib/patches/confederation-by-league";
+import { ClubsMultiSelect } from "./clubs-multi-select";
 
 interface PatchVersionsDrawerProps {
   open: boolean;
@@ -38,10 +40,17 @@ export function PatchVersionsDrawer({
   const remove = useDeletePatchVersion();
   const [seasonStart, setSeasonStart] = useState("");
   const [seasonEnd, setSeasonEnd] = useState("");
+  const [newClubIds, setNewClubIds] = useState<string[]>([]);
   const [file, setFile] = useState<File | null>(null);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editStart, setEditStart] = useState("");
   const [editEnd, setEditEnd] = useState("");
+  const [editClubIds, setEditClubIds] = useState<string[]>([]);
+
+  const clubLeagueFilter =
+    patch?.family === "NATIONAL_TEAM_COMPETITION"
+      ? [...NATIONAL_TEAM_LEAGUE_IDS]
+      : undefined;
 
   const useYear = patch ? isYearFormat(patch.family) : false;
   const formatRegex = useYear ? /^\d{4}$/ : /^\d{4}-\d{2}$/;
@@ -75,11 +84,13 @@ export function PatchVersionsDrawer({
         patchId: patch.id,
         seasonStart,
         seasonEnd: seasonEnd || null,
+        eligibleClubIds: newClubIds,
         file,
       });
       toast.success("Version créée");
       setSeasonStart("");
       setSeasonEnd("");
+      setNewClubIds([]);
       setFile(null);
     } catch (err) {
       toast.error(err instanceof Error ? err.message : "Erreur");
@@ -90,16 +101,19 @@ export function PatchVersionsDrawer({
     id: string;
     seasonStart: string;
     seasonEnd: string | null;
+    eligibleClubIds: string[];
   }) => {
     setEditingId(version.id);
     setEditStart(version.seasonStart);
     setEditEnd(version.seasonEnd ?? "");
+    setEditClubIds(version.eligibleClubIds);
   };
 
   const cancelEdit = () => {
     setEditingId(null);
     setEditStart("");
     setEditEnd("");
+    setEditClubIds([]);
   };
 
   const handleSaveEdit = async (versionId: string) => {
@@ -124,6 +138,7 @@ export function PatchVersionsDrawer({
         versionId,
         seasonStart: editStart,
         seasonEnd: editEnd || null,
+        eligibleClubIds: editClubIds,
       });
       toast.success("Version mise à jour");
       cancelEdit();
@@ -186,6 +201,17 @@ export function PatchVersionsDrawer({
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
               />
             </div>
+            <div className="space-y-1">
+              <Label>Clubs éligibles (optionnel)</Label>
+              <ClubsMultiSelect
+                value={newClubIds}
+                onChange={setNewClubIds}
+                leagueIds={clubLeagueFilter}
+              />
+              <p className="text-xs text-muted-foreground">
+                Vide = hérite des clubs du patch.
+              </p>
+            </div>
             <Button
               type="submit"
               disabled={create.isPending}
@@ -202,6 +228,83 @@ export function PatchVersionsDrawer({
             )}
             {patch?.versions.map((v) => {
               const isEditing = editingId === v.id;
+
+              if (isEditing) {
+                return (
+                  <div
+                    key={v.id}
+                    className="border rounded-md p-3 space-y-3"
+                  >
+                    <div className="flex items-center gap-3">
+                      {v.imageUrl ? (
+                        <div className="relative w-10 h-10 shrink-0">
+                          <Image
+                            src={v.imageUrl}
+                            alt={v.seasonStart}
+                            fill
+                            className="object-contain"
+                            unoptimized
+                          />
+                        </div>
+                      ) : (
+                        <div className="w-10 h-10 rounded bg-muted shrink-0" />
+                      )}
+                      <div className="flex-1 grid grid-cols-2 gap-2">
+                        <Input
+                          value={editStart}
+                          onChange={(e) => setEditStart(e.target.value)}
+                          placeholder={startPlaceholder}
+                          className="h-8 text-sm"
+                          aria-label={startLabel}
+                        />
+                        <Input
+                          value={editEnd}
+                          onChange={(e) => setEditEnd(e.target.value)}
+                          placeholder={endPlaceholder}
+                          className="h-8 text-sm"
+                          aria-label={endLabel}
+                        />
+                      </div>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs">Clubs éligibles</Label>
+                      <ClubsMultiSelect
+                        value={editClubIds}
+                        onChange={setEditClubIds}
+                        leagueIds={clubLeagueFilter}
+                      />
+                      <p className="text-xs text-muted-foreground">
+                        Vide = hérite des clubs du patch.
+                      </p>
+                    </div>
+                    <div className="flex justify-end gap-1">
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="cursor-pointer"
+                        onClick={cancelEdit}
+                        disabled={update.isPending}
+                        aria-label="Annuler"
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        type="button"
+                        variant="default"
+                        size="icon"
+                        className="cursor-pointer"
+                        onClick={() => handleSaveEdit(v.id)}
+                        disabled={update.isPending}
+                        aria-label="Enregistrer"
+                      >
+                        <Check className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                );
+              }
+
               return (
                 <div
                   key={v.id}
@@ -220,79 +323,38 @@ export function PatchVersionsDrawer({
                   ) : (
                     <div className="w-10 h-10 rounded bg-muted shrink-0" />
                   )}
-                  {isEditing ? (
-                    <div className="flex-1 grid grid-cols-2 gap-2">
-                      <Input
-                        value={editStart}
-                        onChange={(e) => setEditStart(e.target.value)}
-                        placeholder={startPlaceholder}
-                        className="h-8 text-sm"
-                        aria-label={startLabel}
-                      />
-                      <Input
-                        value={editEnd}
-                        onChange={(e) => setEditEnd(e.target.value)}
-                        placeholder={endPlaceholder}
-                        className="h-8 text-sm"
-                        aria-label={endLabel}
-                      />
-                    </div>
-                  ) : (
-                    <div className="flex-1 text-sm">
-                      <div>{v.seasonStart} → {v.seasonEnd ?? "actif"}</div>
-                    </div>
-                  )}
-                  {isEditing ? (
-                    <>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="cursor-pointer"
-                        onClick={() => handleSaveEdit(v.id)}
-                        disabled={update.isPending}
-                        aria-label="Enregistrer"
-                      >
-                        <Check className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="cursor-pointer"
-                        onClick={cancelEdit}
-                        disabled={update.isPending}
-                        aria-label="Annuler"
-                      >
-                        <X className="w-4 h-4" />
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="cursor-pointer"
-                        onClick={() => startEdit(v)}
-                        disabled={editingId !== null}
-                        aria-label="Modifier les dates"
-                      >
-                        <Pencil className="w-4 h-4" />
-                      </Button>
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="icon"
-                        className="cursor-pointer"
-                        onClick={() => handleDelete(v.id)}
-                        disabled={remove.isPending || editingId !== null}
-                        aria-label="Supprimer la version"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </>
-                  )}
+                  <div className="flex-1 text-sm min-w-0">
+                    <div>{v.seasonStart} → {v.seasonEnd ?? "actif"}</div>
+                    {v.eligibleClubIds.length > 0 && (
+                      <div className="text-xs text-muted-foreground truncate">
+                        {v.eligibleClubIds.length} club
+                        {v.eligibleClubIds.length > 1 ? "s" : ""} éligible
+                        {v.eligibleClubIds.length > 1 ? "s" : ""}
+                      </div>
+                    )}
+                  </div>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="cursor-pointer"
+                    onClick={() => startEdit(v)}
+                    disabled={editingId !== null}
+                    aria-label="Modifier la version"
+                  >
+                    <Pencil className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon"
+                    className="cursor-pointer"
+                    onClick={() => handleDelete(v.id)}
+                    disabled={remove.isPending || editingId !== null}
+                    aria-label="Supprimer la version"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </Button>
                 </div>
               );
             })}
