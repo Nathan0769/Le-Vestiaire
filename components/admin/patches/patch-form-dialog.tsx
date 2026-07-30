@@ -32,6 +32,7 @@ import {
   useUpdatePatch,
   type AdminPatch,
 } from "@/hooks/admin/usePatchesAdmin";
+import { NATIONAL_TEAM_LEAGUE_IDS } from "@/lib/patches/confederation-by-league";
 import { ClubsMultiSelect } from "./clubs-multi-select";
 
 interface PatchFormDialogProps {
@@ -151,7 +152,11 @@ function PatchFormBody({ patch, onOpenChange }: PatchFormBodyProps) {
           <ClubsMultiSelect
             value={eligibleClubIds}
             onChange={setEligibleClubIds}
-            leagueIds={family === "NATIONAL_TEAM_COMPETITION" ? ["national", "national-2"] : undefined}
+            leagueIds={
+              family === "NATIONAL_TEAM_COMPETITION"
+                ? [...NATIONAL_TEAM_LEAGUE_IDS]
+                : undefined
+            }
           />
           <p className="text-xs text-muted-foreground">
             Vide = applicable à tous les clubs qui passent les autres filtres.
