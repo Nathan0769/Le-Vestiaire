@@ -1,5 +1,55 @@
 import { describe, it, expect } from "vitest";
-import { parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
+import { parseCfsSeason, parseCfsType, parseCfsClub } from "@/lib/cfs-name-parser";
+
+describe("parseCfsClub", () => {
+  it("extrait le club entre l'annee et le type", () => {
+    expect(parseCfsClub("2024-25 Arsenal Third Shirt")).toBe("Arsenal");
+  });
+
+  it("gere les clubs a plusieurs mots", () => {
+    expect(parseCfsClub("2024-25 Preston North End Home Shirt")).toBe(
+      "Preston North End"
+    );
+    expect(parseCfsClub("2024-25 Manchester City Away Shirt")).toBe(
+      "Manchester City"
+    );
+  });
+
+  it("preserve la casse d'origine (pas de Title Case slug)", () => {
+    expect(parseCfsClub("2022-23 AC Milan Authentic Away Shirt")).toBe(
+      "AC Milan"
+    );
+  });
+
+  it("coupe au premier descripteur, y compris une marque", () => {
+    expect(parseCfsClub("2023-24 Borussia Dortmund Puma ftblNrgy Shirt")).toBe(
+      "Borussia Dortmund"
+    );
+    expect(parseCfsClub("2024-25 Fiorentina Kappa Pre-Match Shirt")).toBe(
+      "Fiorentina"
+    );
+  });
+
+  it("coupe sur un qualificatif Authentic", () => {
+    expect(
+      parseCfsClub("2022-23 Germany Authentic Home Shirt Gundogan #21")
+    ).toBe("Germany");
+  });
+
+  it("coupe sur un ordinal (edition anniversaire)", () => {
+    expect(
+      parseCfsClub("2025-26 Germany 125th Anniversary Shirt Kimmich #6")
+    ).toBe("Germany");
+  });
+
+  it("ne coupe pas sur un nombre non-ordinal dans le nom du club", () => {
+    expect(parseCfsClub("2024-25 Schalke 04 Home Shirt")).toBe("Schalke 04");
+  });
+
+  it("retourne null si aucun descripteur n'est trouve", () => {
+    expect(parseCfsClub("2024-25 Barcelona")).toBeNull();
+  });
+});
 
 describe("parseCfsSeason", () => {
   it("extrait une saison au format YYYY-YY au début", () => {
