@@ -29,7 +29,8 @@ export interface CfsScrapedPromo {
 }
 
 interface ConstructorVariation {
-  data: { size_product?: string };
+  // CFS Constructor API returns size_product as an array (e.g. ["M"])
+  data: { size_product?: string[] };
 }
 
 interface ConstructorItem {
@@ -132,7 +133,7 @@ function isAdultJersey(item: ConstructorItem): boolean {
   if (name.includes("(kids)") || name.includes("kids)")) return false;
   if (JERSEY_EXCLUDE_TERMS.some((t) => name.includes(t))) return false;
   return (item.variations ?? []).some((v) =>
-    ADULT_SIZES.has(v.data.size_product ?? "")
+    (v.data.size_product ?? []).some((s) => ADULT_SIZES.has(s))
   );
 }
 
@@ -205,77 +206,144 @@ function toCandidate(item: ConstructorItem, source: "clearance" | "cfs-weekly-de
 // ─── Puppeteer size checking ───────────────────────────────────────────────
 
 export function parseInStockSizes(html: string): string[] {
-  // Primary: "options" array directly lists available (in-stock) size labels.
-  // Format: "label":"S","products":["variantId"]
-  // CFS sets yShowOutOfStockStatus:false so options only contains in-stock variants.
   const sizes: string[] = [];
-  for (const [, label] of html.matchAll(/"label":"([^"]+)","products":\[/g)) {
-    const size = label.toUpperCase();
-    if (ADULT_SIZES.has(size) && !sizes.includes(size)) sizes.push(size);
-  }
-  if (sizes.length > 0) return sizes;
 
-  // Fallback: quantities (varId→qty) + sku (varId→"CODE-SIZE"), filter qty > 0
+  // Source of truth: quantities (varId→qty) + sku (varId→"CODE-SIZE"), keep qty > 0.
+  // The "options" array is a display list that keeps sold-out sizes, so it over-reports
+  // stock. Whenever quantities is present it wins; options is only a last-resort fallback.
   const qMatch = html.match(/"quantities":\{([^}]+)\}/);
   const sMatch = html.match(/"sku":\{([^}]+)\}/);
-  if (!qMatch || !sMatch) return [];
+  if (qMatch && sMatch) {
+    const inStockIds = new Set(
+      [...qMatch[1].matchAll(/"(\d+)":(\d+)/g)]
+        .filter(([, , qty]) => parseInt(qty) > 0)
+        .map(([, id]) => id)
+    );
 
-  const inStockIds = new Set(
-    [...qMatch[1].matchAll(/"(\d+)":(\d+)/g)]
-      .filter(([, , qty]) => parseInt(qty) > 0)
-      .map(([, id]) => id)
-  );
+    for (const [, id, sku] of sMatch[1].matchAll(/"(\d+)":"([^"]+)"/g)) {
+      if (!inStockIds.has(id)) continue;
+      const parts = sku.split("-");
+      const size = parts[parts.length - 1].toUpperCase();
+      if (ADULT_SIZES.has(size) && !sizes.includes(size)) sizes.push(size);
+    }
+    return sizes;
+  }
 
-  for (const [, id, sku] of sMatch[1].matchAll(/"(\d+)":"([^"]+)"/g)) {
-    if (!inStockIds.has(id)) continue;
-    const parts = sku.split("-");
-    const size = parts[parts.length - 1].toUpperCase();
+  // Fallback (no quantities blob): "options" array lists size labels.
+  // Format: "label":"S","products":["variantId"]
+  for (const [, label] of html.matchAll(/"label":"([^"]+)","products":\[/g)) {
+    const size = label.toUpperCase();
     if (ADULT_SIZES.has(size) && !sizes.includes(size)) sizes.push(size);
   }
   return sizes;
 }
 
-async function checkSizesInBatch(
+async function checkCandidateSizes(
+  candidate: Candidate,
+  browser: Browser
+): Promise<Candidate & { sizes: string[] }> {
+  const page = await browser.newPage();
+  try {
+    await page.setUserAgent(
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    );
+    await page.goto(candidate.productUrl, {
+      waitUntil: "domcontentloaded",
+      timeout: 20000,
+    });
+    // Wait for product config to be injected
+    await page
+      .waitForFunction(
+        () => document.documentElement.innerHTML.includes('"quantities"'),
+        { timeout: 10000 }
+      )
+      .catch(() => {});
+
+    const html = await page.content();
+    return { ...candidate, sizes: parseInStockSizes(html) };
+  } catch {
+    return { ...candidate, sizes: [] };
+  } finally {
+    await page.close();
+  }
+}
+
+// Team key used to cap how many jerseys of the same team we surface.
+// Cut at the first jersey descriptor, then keep max 2 words. Max-2-words handles
+// collaboration names like "KidSuper CWC" inserted before the descriptor.
+function extractTeamKey(name: string, club: string | null): string {
+  const nameWithoutYear = name.replace(/^\d{4}(?:-\d{2})?\s+/, "");
+  const cutAt = nameWithoutYear.search(
+    /\b(?:\d+(?:st|nd|rd|th)|Authentic|Home|Away|Third|Fourth|Goalkeeper|GK|Player Issue|L\/S|In Box|Shirt|Kit|Puma|Nike|Adidas|Umbro|New Balance|Kappa|Castore|Hummel|Macron)\b/i
+  );
+  const raw = (cutAt > 0 ? nameWithoutYear.slice(0, cutAt) : nameWithoutYear)
+    .trim()
+    .toLowerCase();
+  return raw.split(/\s+/).slice(0, 2).join(" ") || club?.toLowerCase() || "unknown";
+}
+
+// Verify real stock page-by-page in batches, accepting promos as we go and stopping
+// as soon as we have `maxResults`. Candidates are pre-sorted by popularity, so the
+// best ones are checked first — this bounds the (slow) Puppeteer work far below the
+// full candidate list, keeping the whole run within the serverless time budget.
+async function selectAvailablePromos(
   candidates: Candidate[],
   browser: Browser,
+  maxResults: number,
   concurrency = 4
-): Promise<Array<Candidate & { sizes: string[] }>> {
-  const results: Array<Candidate & { sizes: string[] }> = [];
+): Promise<CfsScrapedPromo[]> {
+  const MAX_PER_TEAM = 2;
+  // Hard ceiling on pages checked, so a run where few candidates pass still terminates.
+  const maxPagesToCheck = maxResults * CANDIDATES_MULTIPLIER;
 
-  for (let i = 0; i < candidates.length; i += concurrency) {
+  const teamCounts = new Map<string, number>();
+  const promos: CfsScrapedPromo[] = [];
+  let checked = 0;
+
+  for (
+    let i = 0;
+    i < candidates.length &&
+    promos.length < maxResults &&
+    checked < maxPagesToCheck;
+    i += concurrency
+  ) {
     const batch = candidates.slice(i, i + concurrency);
     const batchResults = await Promise.all(
-      batch.map(async (candidate) => {
-        const page = await browser.newPage();
-        try {
-          await page.setUserAgent(
-            "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-          );
-          await page.goto(candidate.productUrl, {
-            waitUntil: "domcontentloaded",
-            timeout: 20000,
-          });
-          // Wait for product config to be injected
-          await page.waitForFunction(
-            () => document.documentElement.innerHTML.includes('"quantities"'),
-            { timeout: 10000 }
-          ).catch(() => {});
-
-          const html = await page.content();
-          const sizes = parseInStockSizes(html);
-          return { ...candidate, sizes };
-        } catch {
-          return { ...candidate, sizes: [] };
-        } finally {
-          await page.close();
-        }
-      })
+      batch.map((c) => checkCandidateSizes(c, browser))
     );
-    results.push(...batchResults);
-    process.stdout.write(`  Checked ${Math.min(i + concurrency, candidates.length)}/${candidates.length} products\r`);
+    checked += batch.length;
+
+    for (const c of batchResults) {
+      if (promos.length >= maxResults) break;
+
+      const targetCount = c.sizes.filter((s) => TARGET_SIZES.has(s)).length;
+      if (targetCount < MIN_TARGET_SIZES) continue;
+
+      const teamKey = extractTeamKey(c.name, c.club);
+      const count = teamCounts.get(teamKey) ?? 0;
+      if (count >= MAX_PER_TEAM) continue;
+      teamCounts.set(teamKey, count + 1);
+
+      promos.push({
+        name: c.name,
+        imageUrl: c.imageUrl,
+        price: c.price,
+        promoPrice: c.promoPrice,
+        affiliateUrl: buildAffiliateUrl(c.productUrl),
+        club: c.club,
+        brand: c.brand,
+        source: c.source,
+        sizes: c.sizes,
+        discountPct: c.discountPct,
+        popularityScore: c.popularityScore,
+      });
+    }
+    process.stdout.write(
+      `  Checked ${checked} pages, ${promos.length}/${maxResults} promos\r`
+    );
   }
   console.log();
-  return results;
+  return promos;
 }
 
 // ─── Main export ───────────────────────────────────────────────────────────
@@ -284,7 +352,6 @@ export async function scrapeCfsPromos(opts?: {
   maxResults?: number;
 }): Promise<CfsScrapedPromo[]> {
   const maxResults = opts?.maxResults ?? 20;
-  const candidatesNeeded = maxResults * CANDIDATES_MULTIPLIER;
 
   console.log("Fetching clearance products...");
   const clearanceItems = await fetchAllPages("clearance");
@@ -319,9 +386,8 @@ export async function scrapeCfsPromos(opts?: {
       : b.discountPct - a.discountPct
   );
 
-  const topCandidates = candidates.slice(0, candidatesNeeded);
   console.log(`  ${candidates.length} candidates after API filter`);
-  console.log(`  Checking real stock for top ${topCandidates.length}...`);
+  console.log(`  Checking real stock (early-exit at ${maxResults} promos)...`);
 
   const isDev = process.env.NODE_ENV !== "production";
   let browser: Browser;
@@ -341,48 +407,11 @@ export async function scrapeCfsPromos(opts?: {
     });
   }
 
-  let verified: Array<Candidate & { sizes: string[] }> = [];
+  let promos: CfsScrapedPromo[] = [];
   try {
-    verified = await checkSizesInBatch(topCandidates, browser);
+    promos = await selectAvailablePromos(candidates, browser, maxResults);
   } finally {
     await browser.close();
-  }
-
-  const MAX_PER_TEAM = 2;
-  const teamCounts = new Map<string, number>();
-  const promos: CfsScrapedPromo[] = [];
-
-  for (const c of verified) {
-    if (promos.length >= maxResults) break;
-    const targetCount = c.sizes.filter((s) => TARGET_SIZES.has(s)).length;
-    if (targetCount < MIN_TARGET_SIZES) continue;
-
-    // Extract team by cutting at the first jersey descriptor, then keep max 2 words.
-    // Max-2-words handles collaboration names like "KidSuper CWC" inserted before the descriptor.
-    const nameWithoutYear = c.name.replace(/^\d{4}(?:-\d{2})?\s+/, "");
-    const cutAt = nameWithoutYear.search(
-      /\b(?:\d+(?:st|nd|rd|th)|Authentic|Home|Away|Third|Fourth|Goalkeeper|GK|Player Issue|L\/S|In Box|Shirt|Kit|Puma|Nike|Adidas|Umbro|New Balance|Kappa|Castore|Hummel|Macron)\b/i
-    );
-    const raw = (cutAt > 0 ? nameWithoutYear.slice(0, cutAt) : nameWithoutYear).trim().toLowerCase();
-    const teamKey = raw.split(/\s+/).slice(0, 2).join(" ") || c.club?.toLowerCase() || "unknown";
-
-    const count = teamCounts.get(teamKey) ?? 0;
-    if (count >= MAX_PER_TEAM) continue;
-    teamCounts.set(teamKey, count + 1);
-
-    promos.push({
-      name: c.name,
-      imageUrl: c.imageUrl,
-      price: c.price,
-      promoPrice: c.promoPrice,
-      affiliateUrl: buildAffiliateUrl(c.productUrl),
-      club: c.club,
-      brand: c.brand,
-      source: c.source,
-      sizes: c.sizes,
-      discountPct: c.discountPct,
-      popularityScore: c.popularityScore,
-    });
   }
 
   console.log(`  ${promos.length} promos pass real stock check`);
