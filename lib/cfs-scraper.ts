@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { Browser } from "puppeteer-core";
+import { parseCfsClub } from "@/lib/cfs-name-parser";
 
 const CFS_API_KEY = "key_8uhN6ajd7mHKd4K3";
 const CFS_BROWSE_URL = "https://ac.cnstrc.com/browse/group_id";
@@ -142,17 +143,38 @@ function buildAffiliateUrl(productUrl: string): string {
   return `${productUrl}${sep}${AFFILIATE_PARAMS}`;
 }
 
-function extractClub(groupIds: string[] | undefined): string | null {
-  if (!groupIds?.length) return null;
-  const excluded = new Set([
-    "clearance", "cfs-weekly-deals", "price-drops", "kids",
-    "new-products", "all-football-shirts", "warehouse-clearance",
-    "new-clearance", "limited-warehouse-clearance", "best-sellers",
-    "trending", "winter-sale", "hold", "social-spotlight",
-  ]);
-  const club = groupIds.find((id) => !excluded.has(id));
-  if (!club) return null;
-  return club.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+// Non-club group_ids: marketing, categories, brands, seasons. Only used as a
+// last-resort fallback when the product name yields no club.
+const NON_CLUB_GROUP_IDS = new Set([
+  "clearance", "new-clearance", "warehouse-clearance", "limited-warehouse-clearance",
+  "price-drops", "cfs-weekly-deals", "weekly-deals", "winter-sale", "summer-sale",
+  "best-sellers", "trending", "social-spotlight", "hold",
+  "football-shirts", "all-football-shirts", "training-shirts", "pre-match-shirts",
+  "full-kits", "kids", "legends", "other-world-clubs", "retro-shirts",
+  "adidas", "adidas-originals", "nike", "puma", "umbro", "kappa", "castore",
+  "hummel", "macron", "charly", "joma", "new-balance", "newbalance", "lotto",
+  "errea", "six5six", "le-coq-sportif", "lecoqsportif", "diadora", "kelme",
+  "cfs-apparel", "meyba", "legea", "icarus", "fbt", "admiral", "jako", "robey",
+]);
+
+function isNonClubGroup(id: string): boolean {
+  if (NON_CLUB_GROUP_IDS.has(id)) return true;
+  if (/^\d{4}(?:-\d{2})?$/.test(id)) return true; // season, e.g. 2024-25 / 2025
+  if (/^new-products\d*$/.test(id)) return true; // new-products, new-products1…
+  if (id.includes("collection")) return true; // adidas-2024-trefoil-collection
+  return false;
+}
+
+function extractClub(name: string, groupIds: string[] | undefined): string | null {
+  // Primary: the product name always carries the club with correct casing.
+  const fromName = parseCfsClub(name);
+  if (fromName) return fromName;
+
+  // Fallback (rare — name had no descriptor): first group_id that isn't a
+  // marketing/brand/category/season group.
+  const slug = groupIds?.find((id) => !isNonClubGroup(id));
+  if (!slug) return null;
+  return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
 async function fetchPage(groupId: string, page: number): Promise<{ results: ConstructorItem[]; total: number }> {
@@ -195,7 +217,7 @@ function toCandidate(item: ConstructorItem, source: "clearance" | "cfs-weekly-de
     price,
     promoPrice,
     productUrl: item.data.url,
-    club: extractClub(item.data.group_ids),
+    club: extractClub(item.data.name, item.data.group_ids),
     brand: item.data.brand ?? null,
     source,
     discountPct,
@@ -269,17 +291,11 @@ async function checkCandidateSizes(
 }
 
 // Team key used to cap how many jerseys of the same team we surface.
-// Cut at the first jersey descriptor, then keep max 2 words. Max-2-words handles
-// collaboration names like "KidSuper CWC" inserted before the descriptor.
+// Keep max 2 words of the club name, which handles collaboration names like
+// "KidSuper CWC" inserted before the descriptor.
 function extractTeamKey(name: string, club: string | null): string {
-  const nameWithoutYear = name.replace(/^\d{4}(?:-\d{2})?\s+/, "");
-  const cutAt = nameWithoutYear.search(
-    /\b(?:\d+(?:st|nd|rd|th)|Authentic|Home|Away|Third|Fourth|Goalkeeper|GK|Player Issue|L\/S|In Box|Shirt|Kit|Puma|Nike|Adidas|Umbro|New Balance|Kappa|Castore|Hummel|Macron)\b/i
-  );
-  const raw = (cutAt > 0 ? nameWithoutYear.slice(0, cutAt) : nameWithoutYear)
-    .trim()
-    .toLowerCase();
-  return raw.split(/\s+/).slice(0, 2).join(" ") || club?.toLowerCase() || "unknown";
+  const raw = (parseCfsClub(name) ?? club ?? "").toLowerCase();
+  return raw.split(/\s+/).filter(Boolean).slice(0, 2).join(" ") || "unknown";
 }
 
 // Verify real stock page-by-page in batches, accepting promos as we go and stopping
