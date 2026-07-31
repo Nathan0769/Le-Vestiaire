@@ -299,17 +299,30 @@ async function selectAvailablePromos(
   const teamCounts = new Map<string, number>();
   const promos: CfsScrapedPromo[] = [];
   let checked = 0;
+  let cursor = 0;
 
-  for (
-    let i = 0;
-    i < candidates.length &&
+  while (
+    cursor < candidates.length &&
     promos.length < maxResults &&
-    checked < maxPagesToCheck;
-    i += concurrency
+    checked < maxPagesToCheck
   ) {
-    const batch = candidates.slice(i, i + concurrency);
+    // Build the next batch, skipping candidates whose team is already full BEFORE
+    // loading their page. Clearance has many jerseys per popular team; without this,
+    // once a team hits its cap we'd still Puppeteer-check (slowly, behind Cloudflare)
+    // every remaining jersey of that team only to reject it.
+    const batch: Array<{ candidate: Candidate; teamKey: string }> = [];
+    while (batch.length < concurrency && cursor < candidates.length) {
+      const candidate = candidates[cursor++];
+      const teamKey = extractTeamKey(candidate.name, candidate.club);
+      if ((teamCounts.get(teamKey) ?? 0) >= MAX_PER_TEAM) continue;
+      batch.push({ candidate, teamKey });
+    }
+    if (batch.length === 0) break;
+
     const batchResults = await Promise.all(
-      batch.map((c) => checkCandidateSizes(c, browser))
+      batch.map(({ candidate, teamKey }) =>
+        checkCandidateSizes(candidate, browser).then((r) => ({ ...r, teamKey }))
+      )
     );
     checked += batch.length;
 
@@ -319,10 +332,10 @@ async function selectAvailablePromos(
       const targetCount = c.sizes.filter((s) => TARGET_SIZES.has(s)).length;
       if (targetCount < MIN_TARGET_SIZES) continue;
 
-      const teamKey = extractTeamKey(c.name, c.club);
-      const count = teamCounts.get(teamKey) ?? 0;
+      // Re-check the cap: two same-team candidates can share a concurrent batch.
+      const count = teamCounts.get(c.teamKey) ?? 0;
       if (count >= MAX_PER_TEAM) continue;
-      teamCounts.set(teamKey, count + 1);
+      teamCounts.set(c.teamKey, count + 1);
 
       promos.push({
         name: c.name,
