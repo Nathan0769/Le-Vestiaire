@@ -12,6 +12,7 @@ const MAX_PATCH_IMAGE_SIZE = 2 * 1024 * 1024;
 const updateMetaSchema = z.object({
   seasonStart: z.string().optional(),
   seasonEnd: z.string().optional().nullable(),
+  eligibleClubIds: z.array(z.string()).optional(),
 });
 
 function extractR2Key(imageUrl: string | null): string | null {
@@ -42,6 +43,7 @@ export async function PATCH(
     const contentType = request.headers.get("content-type") ?? "";
     let seasonStart: string | undefined;
     let seasonEnd: string | null | undefined;
+    let eligibleClubIds: string[] | undefined;
     let newImageUrl: string | undefined;
     let oldImageKey: string | null = null;
 
@@ -49,11 +51,35 @@ export async function PATCH(
       const formData = await request.formData();
       const ss = formData.get("seasonStart");
       const se = formData.get("seasonEnd");
+      const ec = formData.get("eligibleClubIds");
       const file = formData.get("file");
+
+      let parsedClubIds: string[] | undefined;
+      if (typeof ec === "string" && ec.length > 0) {
+        try {
+          const parsed = JSON.parse(ec);
+          if (
+            !Array.isArray(parsed) ||
+            !parsed.every((v) => typeof v === "string")
+          ) {
+            return NextResponse.json(
+              { error: "eligibleClubIds doit etre un tableau de strings" },
+              { status: 400 }
+            );
+          }
+          parsedClubIds = parsed;
+        } catch {
+          return NextResponse.json(
+            { error: "eligibleClubIds JSON invalide" },
+            { status: 400 }
+          );
+        }
+      }
 
       const meta = updateMetaSchema.safeParse({
         seasonStart: typeof ss === "string" && ss ? ss : undefined,
         seasonEnd: se === null || se === "" ? null : typeof se === "string" ? se : undefined,
+        eligibleClubIds: parsedClubIds,
       });
       if (!meta.success) {
         return NextResponse.json(
@@ -63,6 +89,7 @@ export async function PATCH(
       }
       seasonStart = meta.data.seasonStart;
       seasonEnd = meta.data.seasonEnd;
+      eligibleClubIds = meta.data.eligibleClubIds;
 
       if (file && file instanceof File && file.size > 0) {
         const validation = await validateImageFile(file, MAX_PATCH_IMAGE_SIZE);
@@ -91,6 +118,7 @@ export async function PATCH(
       }
       seasonStart = meta.data.seasonStart;
       seasonEnd = meta.data.seasonEnd;
+      eligibleClubIds = meta.data.eligibleClubIds;
     }
 
     if (seasonStart !== undefined || seasonEnd !== undefined) {
@@ -115,6 +143,7 @@ export async function PATCH(
       data: {
         ...(seasonStart !== undefined && { seasonStart }),
         ...(seasonEnd !== undefined && { seasonEnd }),
+        ...(eligibleClubIds !== undefined && { eligibleClubIds }),
         ...(newImageUrl !== undefined && { imageUrl: newImageUrl }),
       },
     });

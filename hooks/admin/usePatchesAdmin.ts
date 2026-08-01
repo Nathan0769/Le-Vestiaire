@@ -18,6 +18,7 @@ export interface AdminPatch {
     seasonStart: string;
     seasonEnd: string | null;
     imageUrl: string | null;
+    eligibleClubIds: string[];
     createdAt: string;
     updatedAt: string;
   }[];
@@ -120,16 +121,21 @@ export function useCreatePatchVersion() {
       patchId,
       seasonStart,
       seasonEnd,
+      eligibleClubIds,
       file,
     }: {
       patchId: string;
       seasonStart: string;
       seasonEnd?: string | null;
+      eligibleClubIds?: string[];
       file?: File | null;
     }) => {
       const fd = new FormData();
       fd.append("seasonStart", seasonStart);
       if (seasonEnd) fd.append("seasonEnd", seasonEnd);
+      if (eligibleClubIds && eligibleClubIds.length > 0) {
+        fd.append("eligibleClubIds", JSON.stringify(eligibleClubIds));
+      }
       if (file) fd.append("file", file);
 
       const res = await fetch(`/api/admin/patches/${patchId}/versions`, {
@@ -156,15 +162,18 @@ export function useUpdatePatchVersion() {
       versionId,
       seasonStart,
       seasonEnd,
+      eligibleClubIds,
     }: {
       patchId: string;
       versionId: string;
       seasonStart?: string;
       seasonEnd?: string | null;
+      eligibleClubIds?: string[];
     }) => {
       const body: Record<string, unknown> = {};
       if (seasonStart !== undefined) body.seasonStart = seasonStart;
       if (seasonEnd !== undefined) body.seasonEnd = seasonEnd;
+      if (eligibleClubIds !== undefined) body.eligibleClubIds = eligibleClubIds;
 
       const res = await fetch(
         `/api/admin/patches/${patchId}/versions/${versionId}`,

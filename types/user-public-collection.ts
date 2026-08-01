@@ -44,6 +44,7 @@ export interface UserCollectionItem {
   isGift: boolean;
   isFromMysteryBox: boolean;
   userPhotoUrl: string | null;
+  userPhotoUrls?: string[] | null;
   isSigned: boolean;
   signedBy?: string | null;
   hasAuthCertificate: boolean;

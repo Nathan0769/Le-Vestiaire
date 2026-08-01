@@ -3,8 +3,9 @@
 import Image from "next/image";
 import { Trophy, Sparkles } from "lucide-react";
 import type { AchievementUnlockPayload } from "@/types/feed";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { getBadgeUrl } from "@/lib/achievements/badge-url";
+import { resolveAchievementI18n } from "@/lib/achievements/render";
 
 interface Props {
   payload: AchievementUnlockPayload;
@@ -20,28 +21,23 @@ const TIER_GRADIENT: Record<string, string> = {
 export function PostCardAchievement({ payload }: Props) {
   const t = useTranslations();
   const tPost = useTranslations("Feed.post");
+  const locale = useLocale();
   const gradient =
     TIER_GRADIENT[payload.tier ?? "PLATINUM"] ?? TIER_GRADIENT.PLATINUM;
   const badgeUrl = getBadgeUrl(payload.key);
   const tierKey = payload.tier ?? "PLATINUM";
   const tierLabel = tPost(`achievementTiers.${tierKey}` as never);
 
+  const { i18nKey, params } = resolveAchievementI18n(
+    payload.key,
+    payload.metadata,
+    locale,
+  );
   let title = payload.key;
   let description = "";
-  try {
-    const parts = payload.key.split(".");
-    const category = parts[0];
-    const subKey = parts.slice(1).join(".");
-    const titleI18n = t(`achievements.definitions.${category}.${subKey}.title`);
-    const descriptionI18n = t(
-      `achievements.definitions.${category}.${subKey}.description`
-    );
-    if (titleI18n && !titleI18n.startsWith("achievements."))
-      title = titleI18n;
-    if (descriptionI18n && !descriptionI18n.startsWith("achievements."))
-      description = descriptionI18n;
-  } catch {
-    // key manquante en i18n
+  if (t.has(`${i18nKey}.title`)) title = t(`${i18nKey}.title`, params);
+  if (t.has(`${i18nKey}.description`)) {
+    description = t(`${i18nKey}.description`, params);
   }
 
   return (

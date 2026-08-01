@@ -370,3 +370,31 @@
   -webkit-mask: radial-gradient(circle at 78% 26%, #000 0 42%, transparent 60%);
   mask: radial-gradient(circle at 78% 26%, #000 0 42%, transparent 60%);
 }
+
+/* Respecte le reglage systeme "reduire les animations" : coupe les mouvements
+   de position/zoom, garde les fondus/couleurs pour la comprehension. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .hover\:scale-105:hover,
+  .hover\:scale-110:hover,
+  .hover\:scale-\[1\.02\]:hover {
+    transform: none !important;
+  }
+}
+
+/* Les zooms au survol ne s'appliquent qu'aux vrais pointeurs. Sur tactile, un
+   tap laisse un :hover "colle" qui fige la carte zoomee. */
+@media not all and (hover: hover) and (pointer: fine) {
+  .hover\:scale-105:hover,
+  .hover\:scale-110:hover,
+  .hover\:scale-\[1\.02\]:hover {
+    transform: none;
+  }
+}

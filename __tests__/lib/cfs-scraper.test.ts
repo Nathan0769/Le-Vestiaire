@@ -36,7 +36,7 @@ function makeHtml(opts: {
 }
 
 describe("parseInStockSizes", () => {
-  describe("méthode primaire (options labels)", () => {
+  describe("fallback options labels (quantities absent)", () => {
     it("extrait les tailles depuis le champ options", () => {
       const html = makeHtml({
         options: [
@@ -90,6 +90,37 @@ describe("parseInStockSizes", () => {
       expect(parseInStockSizes(html).sort()).toEqual(
         ["XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL"].sort()
       );
+    });
+  });
+
+  describe("source de vérité (quantities prime sur options)", () => {
+    it("exclut une taille listée dans options mais absente de quantities (vendue)", () => {
+      // Bug réel CFS : l'array options est une liste d'affichage qui conserve
+      // les tailles vendues. Seul quantities/sku reflète le stock réel.
+      const html = makeHtml({
+        options: [
+          { label: "S", variantId: "1" },
+          { label: "M", variantId: "2" },
+          { label: "L", variantId: "3" },
+        ],
+        quantities: { "1": 4, "2": 2 },
+        sku: { "1": "AB123-S", "2": "AB123-M", "3": "AB123-L" },
+      });
+      const sizes = parseInStockSizes(html);
+      expect(sizes.sort()).toEqual(["M", "S"]);
+      expect(sizes).not.toContain("L");
+    });
+
+    it("exclut une taille en options dont qty = 0", () => {
+      const html = makeHtml({
+        options: [
+          { label: "S", variantId: "1" },
+          { label: "M", variantId: "2" },
+        ],
+        quantities: { "1": 0, "2": 3 },
+        sku: { "1": "AB123-S", "2": "AB123-M" },
+      });
+      expect(parseInStockSizes(html)).toEqual(["M"]);
     });
   });
 

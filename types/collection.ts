@@ -50,6 +50,8 @@ export interface UserJersey {
   isGift: boolean;
   isFromMysteryBox: boolean;
   userPhotoUrl?: string;
+  userPhotoUrls?: string[];
+  userPhotoPaths?: string[];
   isSigned: boolean;
   signedBy?: string;
   hasAuthCertificate: boolean;
@@ -73,6 +75,8 @@ export interface AddToCollectionData {
   isGift: boolean;
   isFromMysteryBox: boolean;
   userPhotoUrl?: string;
+  userPhotoUrls?: string[];
+  userPhotoPaths?: string[];
   isSigned?: boolean;
   signedBy?: string;
   hasAuthCertificate?: boolean;
@@ -96,6 +100,8 @@ export interface UpdateCollectionData {
   isGift: boolean;
   isFromMysteryBox: boolean;
   userPhotoUrl?: string;
+  userPhotoUrls?: string[];
+  userPhotoPaths?: string[];
   isSigned?: boolean;
   signedBy?: string;
   hasAuthCertificate?: boolean;

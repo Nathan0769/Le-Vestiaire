@@ -215,7 +215,7 @@ model UserJersey {
   purchasePrice      Decimal?
   purchaseDate       DateTime?
   notes              String?
-  userPhotoUrl       String?
+  userPhotoUrls      String[]          @default([])
   createdAt          DateTime          @default(now())
   updatedAt          DateTime          @updatedAt
   isFromMysteryBox   Boolean           @default(false)
@@ -262,14 +262,15 @@ model Patch {
 }
 
 model PatchVersion {
-  id          String   @id @default(cuid())
-  patchId     String
-  seasonStart String
-  seasonEnd   String?
-  imageUrl    String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  patch       Patch    @relation(fields: [patchId], references: [id], onDelete: Cascade)
+  id              String   @id @default(cuid())
+  patchId         String
+  seasonStart     String
+  seasonEnd       String?
+  imageUrl        String?
+  eligibleClubIds String[] @default([])
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  patch           Patch    @relation(fields: [patchId], references: [id], onDelete: Cascade)
 
   @@index([patchId])
   @@map("patch_versions")
