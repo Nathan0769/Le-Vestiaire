@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Award, Lock } from "lucide-react";
 import { resolveAchievementI18n } from "@/lib/achievements/render";
 import { getBadgeUrl } from "@/lib/achievements/badge-url";
@@ -32,12 +32,17 @@ interface Props {
 
 export function PublicAchievementsView({ unlocked, rarity }: Props) {
   const t = useTranslations();
+  const locale = useLocale();
   const [selected, setSelected] = useState<AchievementDetail | null>(null);
 
   const items = useMemo<MedalItem[]>(
     () =>
       unlocked.map((u) => {
-        const { i18nKey, params } = resolveAchievementI18n(u.key, u.metadata);
+        const { i18nKey, params } = resolveAchievementI18n(
+          u.key,
+          u.metadata,
+          locale,
+        );
         return {
           key: u.key,
           i18nKey,
@@ -49,7 +54,7 @@ export function PublicAchievementsView({ unlocked, rarity }: Props) {
           imageUrl: getBadgeUrl(u.key),
         };
       }),
-    [unlocked],
+    [unlocked, locale],
   );
 
   const byCategory = useMemo(() => {

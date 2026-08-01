@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Trophy } from "lucide-react";
 import {
   Tooltip,
@@ -34,6 +34,7 @@ const DEFAULT_BG = "bg-primary/10 border-primary/40 text-primary";
 
 export function TopAchievementsBadges({ achievements }: Props) {
   const t = useTranslations();
+  const locale = useLocale();
 
   if (achievements.length === 0) return null;
 
@@ -41,7 +42,11 @@ export function TopAchievementsBadges({ achievements }: Props) {
     <div className="flex flex-wrap gap-2">
       {achievements.map((a) => {
         const tierClass = a.tier ? TIER_BG[a.tier] ?? DEFAULT_BG : DEFAULT_BG;
-        const { i18nKey, params } = resolveAchievementI18n(a.key, a.metadata);
+        const { i18nKey, params } = resolveAchievementI18n(
+          a.key,
+          a.metadata,
+          locale,
+        );
         const badgeUrl = getBadgeUrl(a.key);
         const label = t(`${i18nKey}.title`, params);
 
