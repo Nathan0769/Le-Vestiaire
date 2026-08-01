@@ -3041,7 +3041,7 @@
       "leaderboard": {
         "monthly_top3": {
           "collection_size": {
-            "title": "Monatliches Sammlungs-Podium - {month}",
+            "title": "Sammler des Monats · {month}",
             "description": "Top {rank} der monatlichen Neuzugänge"
           }
         }

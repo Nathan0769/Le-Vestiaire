@@ -3041,7 +3041,7 @@
       "leaderboard": {
         "monthly_top3": {
           "collection_size": {
-            "title": "Maandelijks Collectie-podium - {month}",
+            "title": "Verzamelaar van de maand · {month}",
             "description": "Top {rank} toevoegingen van de maand"
           }
         }
