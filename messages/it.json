@@ -3059,7 +3059,7 @@
       "leaderboard": {
         "monthly_top3": {
           "collection_size": {
-            "title": "Podio mensile Collezione - {month}",
+            "title": "Collezionista del mese · {month}",
             "description": "Top {rank} aggiunte del mese"
           }
         }

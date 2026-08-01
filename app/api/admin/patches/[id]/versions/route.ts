@@ -26,6 +26,7 @@ export async function POST(
     const formData = await request.formData();
     const seasonStartRaw = formData.get("seasonStart");
     const seasonEndRaw = formData.get("seasonEnd");
+    const eligibleClubIdsRaw = formData.get("eligibleClubIds");
     const file = formData.get("file");
 
     if (typeof seasonStartRaw !== "string" || seasonStartRaw.length === 0) {
@@ -51,6 +52,28 @@ export async function POST(
         { error: periodValidation.error },
         { status: 400 }
       );
+    }
+
+    let eligibleClubIds: string[] = [];
+    if (typeof eligibleClubIdsRaw === "string" && eligibleClubIdsRaw.length > 0) {
+      try {
+        const parsed = JSON.parse(eligibleClubIdsRaw);
+        if (
+          !Array.isArray(parsed) ||
+          !parsed.every((v) => typeof v === "string")
+        ) {
+          return NextResponse.json(
+            { error: "eligibleClubIds doit etre un tableau de strings" },
+            { status: 400 }
+          );
+        }
+        eligibleClubIds = parsed;
+      } catch {
+        return NextResponse.json(
+          { error: "eligibleClubIds JSON invalide" },
+          { status: 400 }
+        );
+      }
     }
 
     let imageUrl: string | null = null;
@@ -79,6 +102,7 @@ export async function POST(
         seasonStart,
         seasonEnd,
         imageUrl,
+        eligibleClubIds,
       },
     });
 

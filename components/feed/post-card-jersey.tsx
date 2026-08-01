@@ -6,7 +6,16 @@ import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import type { JerseyAddPayload } from "@/types/feed";
 import type { UserCollectionItem } from "@/types/user-public-collection";
-import { UserCollectionJerseyModal } from "@/components/users/public-collection/user-collection-jersey-modal";
+import dynamic from "next/dynamic";
+
+// Modal lourde chargee a la demande (au clic), pas dans le bundle initial.
+const UserCollectionJerseyModal = dynamic(
+  () =>
+    import(
+      "@/components/users/public-collection/user-collection-jersey-modal"
+    ).then((m) => m.UserCollectionJerseyModal),
+  { ssr: false }
+);
 import { isLightColor } from "@/lib/color-contrast";
 
 interface Props {

@@ -14,6 +14,10 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import { isBlocked } from "@/lib/follow";
+import {
+  normalizeUserPhotoPaths,
+  getRemovedPhotoPaths,
+} from "@/lib/user-jersey-photos";
 
 export async function GET(
   _request: Request,
@@ -86,17 +90,16 @@ export async function GET(
     return NextResponse.json({ error: "Accès bloqué" }, { status: 403 });
   }
 
-  const userPhotoUrl = item.userPhotoUrl
-    ? await getR2PresignedUrl(
-        USER_JERSEY_PHOTOS_BUCKET,
-        item.userPhotoUrl,
-        60 * 60
-      )
-    : null;
+  const userPhotoUrls = await Promise.all(
+    item.userPhotoUrls.map((path) =>
+      getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, path, 60 * 60)
+    )
+  );
 
   return NextResponse.json({
     ...item,
-    userPhotoUrl,
+    userPhotoUrl: userPhotoUrls[0] ?? null,
+    userPhotoUrls,
     purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
     jersey: {
       ...item.jersey,
@@ -152,6 +155,7 @@ export async function PATCH(
       isGift,
       isFromMysteryBox,
       userPhotoUrl,
+      userPhotoUrls,
       isSigned = false,
       signedBy,
       hasAuthCertificate = false,
@@ -297,11 +301,26 @@ export async function PATCH(
       }
     }
 
-    if (userPhotoUrl === null && existing.userPhotoUrl) {
-      try {
-        await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, existing.userPhotoUrl);
-      } catch (err) {
-        console.error("Erreur suppression ancienne photo:", err);
+    // Photos perso : ne toucher au champ que si le client l'a envoye (array ou legacy).
+    const photosProvided =
+      userPhotoUrls !== undefined || userPhotoUrl !== undefined;
+    let nextPhotoPaths: string[] | null = null;
+    if (photosProvided) {
+      const photosResult = normalizeUserPhotoPaths(
+        userPhotoUrls !== undefined ? userPhotoUrls : userPhotoUrl
+      );
+      if (!photosResult.ok) {
+        return NextResponse.json({ error: photosResult.error }, { status: 400 });
+      }
+      nextPhotoPaths = photosResult.paths;
+
+      const removed = getRemovedPhotoPaths(existing.userPhotoUrls, nextPhotoPaths);
+      for (const path of removed) {
+        try {
+          await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, path);
+        } catch (err) {
+          console.error("Erreur suppression ancienne photo:", err);
+        }
       }
     }
 
@@ -332,7 +351,9 @@ export async function PATCH(
       matchDate: matchDate ? new Date(matchDate) : null,
       ...(hasLongSleeves !== undefined && { hasLongSleeves: Boolean(hasLongSleeves) }),
       updatedAt: new Date(),
-      ...(userPhotoUrl !== undefined && { userPhotoUrl: userPhotoUrl || null }),
+      ...(nextPhotoPaths !== null && {
+        userPhotoUrls: nextPhotoPaths,
+      }),
     };
 
     const updated = await prisma.$transaction(async (tx) => {
@@ -368,14 +389,11 @@ export async function PATCH(
       });
     });
 
-    let signedPhotoUrl = null;
-    if (updated.userPhotoUrl) {
-      signedPhotoUrl = await getR2PresignedUrl(
-        USER_JERSEY_PHOTOS_BUCKET,
-        updated.userPhotoUrl,
-        60 * 60
-      );
-    }
+    const signedPhotoUrls = await Promise.all(
+      updated.userPhotoUrls.map((path) =>
+        getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, path, 60 * 60)
+      )
+    );
 
     return NextResponse.json({
       success: true,
@@ -385,7 +403,9 @@ export async function PATCH(
         purchasePrice: updated.purchasePrice
           ? Number(updated.purchasePrice)
           : null,
-        userPhotoUrl: signedPhotoUrl,
+        userPhotoUrl: signedPhotoUrls[0] ?? null,
+        userPhotoUrls: signedPhotoUrls,
+        userPhotoPaths: updated.userPhotoUrls,
         jersey: {
           ...updated.jersey,
           retailPrice: updated.jersey.retailPrice
@@ -433,9 +453,9 @@ export async function DELETE(
       );
     }
 
-    if (existing.userPhotoUrl) {
+    for (const path of existing.userPhotoUrls) {
       try {
-        await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, existing.userPhotoUrl);
+        await deleteFromR2(USER_JERSEY_PHOTOS_BUCKET, path);
       } catch (err) {
         console.error("Erreur suppression photo:", err);
       }

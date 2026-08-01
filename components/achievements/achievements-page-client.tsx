@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState, useEffect } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Award } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { handleNewAchievements } from "@/lib/achievements/handle-response";
@@ -35,6 +35,7 @@ interface Props {
 
 export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
   const t = useTranslations();
+  const locale = useLocale();
   const { unlocked, inProgress, hiddenLocked, rarity } = data;
   const [selected, setSelected] = useState<AchievementDetail | null>(null);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("ALL");
@@ -46,7 +47,11 @@ export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
 
   const items = useMemo<MedalItem[]>(() => {
     const unlockedItems: MedalItem[] = unlocked.map((u) => {
-      const { i18nKey, params } = resolveAchievementI18n(u.key, u.metadata);
+      const { i18nKey, params } = resolveAchievementI18n(
+        u.key,
+        u.metadata,
+        locale,
+      );
       return {
         key: u.key,
         i18nKey,
@@ -72,7 +77,7 @@ export function AchievementsPageClient({ data, newlyUnlocked }: Props) {
     }));
 
     return [...unlockedItems, ...inProgressItems];
-  }, [unlocked, inProgress]);
+  }, [unlocked, inProgress, locale]);
 
   const featured = useMemo(() => pickFeatured(items), [items]);
 

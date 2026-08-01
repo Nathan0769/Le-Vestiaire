@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
-import { PostCard } from "@/components/feed/post-card";
+import { HomeFeedPreviewCard } from "@/components/home/home-feed-preview-card";
 import { getTopPosts } from "@/lib/feed/get-top-posts";
 import { enrichPostsForFeed } from "@/lib/feed/enrich-posts";
 import { getTranslations } from "next-intl/server";
@@ -33,7 +33,7 @@ export async function HomeFeedSection({ userId }: HomeFeedSectionProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           {posts.map((p) => (
-            <PostCard key={p.id} post={p} />
+            <HomeFeedPreviewCard key={p.id} post={p} />
           ))}
         </div>
 

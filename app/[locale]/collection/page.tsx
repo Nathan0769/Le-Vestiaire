@@ -103,14 +103,16 @@ export default async function CollectionPage() {
 
     const collectionItems: CollectionItemWithJersey[] = await Promise.all(
       collectionItemsRaw.map(async (item) => {
-        let userPhotoUrl = null;
+        let userPhotoUrls: string[] = [];
 
-        if (item.userPhotoUrl) {
-          try {
-            userPhotoUrl = await getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, item.userPhotoUrl, 60 * 60);
-          } catch (error) {
-            console.error("Erreur génération URL presignée:", error);
-          }
+        try {
+          userPhotoUrls = await Promise.all(
+            item.userPhotoUrls.map((path) =>
+              getR2PresignedUrl(USER_JERSEY_PHOTOS_BUCKET, path, 60 * 60)
+            )
+          );
+        } catch (error) {
+          console.error("Erreur génération URL presignée:", error);
         }
 
         return {
@@ -118,7 +120,9 @@ export default async function CollectionPage() {
           purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
           isGift: item.isGift,
           isFromMysteryBox: item.isFromMysteryBox,
-          userPhotoUrl,
+          userPhotoUrl: userPhotoUrls[0] ?? null,
+          userPhotoUrls,
+          userPhotoPaths: item.userPhotoUrls,
           jersey: {
             ...item.jersey,
             variant: item.jersey.variant,
