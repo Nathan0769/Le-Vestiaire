@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { MembershipCard } from "@/components/supporter/membership-card";
+import { ShareableCard } from "@/components/supporter/shareable-card";
 import { SupporterBadge } from "@/components/supporter/supporter-badge";
 import { CosmeticsSettings } from "@/components/settings/cosmetics-settings";
 import { ExternalLink, Loader2 } from "lucide-react";
@@ -47,14 +47,12 @@ export function MemberArea({ name, userId, jerseyCount, since }: MemberAreaProps
         <p className="text-muted-foreground">{t("subtitle")}</p>
       </header>
 
-      <div className="flex justify-center">
-        <MembershipCard
-          name={name}
-          userId={userId}
-          jerseyCount={jerseyCount}
-          since={since}
-        />
-      </div>
+      <ShareableCard
+        name={name}
+        userId={userId}
+        jerseyCount={jerseyCount}
+        since={since}
+      />
 
       <div className="flex justify-center">
         <Button
