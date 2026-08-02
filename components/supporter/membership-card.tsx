@@ -33,7 +33,7 @@ export function MembershipCard({
       <div className="cos-card flex flex-col justify-between p-6">
         <div className="relative z-[2] flex items-start justify-between">
           <span className="cos-gold-text font-serif text-[19px] font-semibold tracking-tight">
-            Le Vestiaire
+            Le Vestiaire Foot
           </span>
           <div className="text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.24em] text-[#F4E6B0]">
             Membre

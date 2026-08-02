@@ -2087,7 +2087,9 @@
       "unlock": "Devenir Supporter",
       "frameLabel": "Contour d'avatar",
       "bannerLabel": "Bannière de profil",
-      "none": "Aucun"
+      "none": "Aucun",
+      "saved": "Modification enregistrée",
+      "saveError": "Échec de l'enregistrement"
     }
   },
   "CookieConsent": {
@@ -2628,7 +2630,25 @@
       "manage": "Gérer l'abonnement",
       "cosmetics": "Mes cosmétiques",
       "share": "Partager ma carte",
-      "shareTitle": "Ma carte Cercle Supporter"
+      "shareTitle": "Ma carte Cercle Supporter",
+      "eyebrow": "Cercle Supporter",
+      "membership": "Ton adhésion",
+      "statusLabel": "Statut",
+      "active": "Actif",
+      "plan": "Formule",
+      "yearly": "Annuelle",
+      "monthly": "Mensuelle",
+      "comp": "Offert",
+      "renewal": "Prochain renouvellement",
+      "ends": "Se termine le",
+      "since": "Membre depuis",
+      "perksTitle": "Tes avantages actifs",
+      "perksHint": "Appliqués automatiquement partout où tu apparais.",
+      "cancelNote": "Sans engagement, résiliable à tout moment. Tes cosmétiques restent visibles tant que ton adhésion est active.",
+      "shareDownloaded": "Carte téléchargée",
+      "shareError": "Le partage a échoué, réessaie.",
+      "customize": "Personnalise ton profil",
+      "customizeHint": "Choisis le cadre et la bannière affichés sur ton profil public."
     }
   },
   "PublicCollection": {

@@ -370,6 +370,11 @@
   -webkit-mask: radial-gradient(circle at 78% 26%, #000 0 42%, transparent 60%);
   mask: radial-gradient(circle at 78% 26%, #000 0 42%, transparent 60%);
 }
+/* Capture PNG (partage) : html-to-image rend mal le mask via foreignObject,
+   on masque la trame guilloche le temps de la capture. */
+.cos-capturing .cos-card::before {
+  display: none;
+}
 
 /* Respecte le reglage systeme "reduire les animations" : coupe les mouvements
    de position/zoom, garde les fondus/couleurs pour la comprehension. */
