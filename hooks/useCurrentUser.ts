@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 
 export type CurrentUser = {
@@ -19,31 +19,27 @@ export type CurrentUser = {
   };
 };
 
-export function useCurrentUser() {
-  const [user, setUser] = useState<CurrentUser | null>(null);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [loading, setLoading] = useState(true);
+export function useCurrentUser(): CurrentUser | null {
   const { data: session, isPending: sessionLoading } = authClient.useSession();
+  const userId = session?.user?.id ?? null;
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const res = await fetch("/api/auth/me", { cache: "no-store" });
-        if (res.ok) {
-          const data = await res.json();
-          setUser(data);
-        }
-      } catch (err) {
-        console.error("Erreur chargement utilisateur:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const { data } = useQuery<CurrentUser | null>({
+    // Cle indexee par userId : chaque compte a sa propre entree de cache,
+    // impossible de servir les donnees d'un autre utilisateur apres switch.
+    queryKey: ["current-user", userId],
+    // Pas de fetch pour les visiteurs anonymes (catalogue browse-first) :
+    // on n'appelle /api/auth/me que si une session existe.
+    enabled: !sessionLoading && !!userId,
+    // Rafraichit role + URL avatar presignee au retour sur l'onglet. Un seul
+    // refetch partage par session (deduplique), pas par composant : cout
+    // negligeable, evite l'UI de role perime et l'avatar presigne expire.
+    refetchOnWindowFocus: true,
+    queryFn: async () => {
+      const res = await fetch("/api/auth/me");
+      if (!res.ok) return null;
+      return (await res.json()) as CurrentUser | null;
+    },
+  });
 
-    if (!sessionLoading) {
-      void fetchUser();
-    }
-  }, [sessionLoading, session?.user?.id]);
-
-  return user;
+  return data ?? null;
 }

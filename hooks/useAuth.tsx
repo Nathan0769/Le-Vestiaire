@@ -8,6 +8,7 @@ import {
   useRef,
 } from "react";
 import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { authClient } from "@/lib/auth-client";
 import { AuthUser, AuthContextValue } from "@/types/auth";
 import { useAnalyticsUser } from "@/hooks/useAnalyticsUser";
@@ -39,6 +40,7 @@ function resolveProvider(): "google" | "email" {
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { data: session, isPending: sessionLoading } = authClient.useSession();
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
@@ -201,6 +203,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     await authClient.signOut();
     setUser(null);
+    // Vider le cache utilisateur pour ne pas exposer les donnees du compte
+    // precedent (nom, avatar) sur un appareil partage.
+    queryClient.removeQueries({ queryKey: ["current-user"] });
     router.push("/auth/login");
   };
 
