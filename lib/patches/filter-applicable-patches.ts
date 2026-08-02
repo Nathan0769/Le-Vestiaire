@@ -9,6 +9,14 @@ import { isJerseySeasonInPatchPeriod } from "./season-format";
 type PatchWithVersions = Patch & { versions: PatchVersion[] };
 type JerseyContext = Jersey & { club: Club & { league: League } };
 
+// Ligues où le badge "champion en titre" remplace le badge de ligue normal.
+// Restreint volontairement à ces trois ligues pour l'instant.
+const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
+  "ligue-1",
+  "bundesliga",
+  "premier-league",
+]);
+
 export function filterApplicablePatches(
   allPatches: PatchWithVersions[],
   jersey: JerseyContext,
@@ -19,7 +27,7 @@ export function filterApplicablePatches(
     ? null
     : CONFEDERATION_BY_LEAGUE_ID[resolvedLeagueId] ?? null;
 
-  return allPatches
+  const applicable = allPatches
     .filter((p) => p.isActive)
     .filter((p) => p.family !== "CUSTOM")
     .filter((p) =>
@@ -33,24 +41,39 @@ export function filterApplicablePatches(
     }))
     .filter(({ patch, activeVersion }) =>
       isClubEligible(patch, activeVersion, jersey.clubId)
-    )
-    .map(({ patch, activeVersion }) => ({
-      patch: {
-        id: patch.id,
-        name: patch.name,
-        family: patch.family,
-        leagueId: patch.leagueId,
-        isActive: patch.isActive,
-      },
-      activeVersion: activeVersion
-        ? {
-            id: activeVersion.id,
-            seasonStart: activeVersion.seasonStart,
-            seasonEnd: activeVersion.seasonEnd,
-            imageUrl: activeVersion.imageUrl,
-          }
-        : null,
-    }));
+    );
+
+  // Si le club est champion en titre sur la saison du maillot (patch
+  // DOMESTIC_CHAMPION applicable avec une version couvrant la saison), le badge
+  // champion remplace le badge de ligue normal de la même ligue.
+  const isChampionOnSeason =
+    CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS.has(resolvedLeagueId) &&
+    applicable.some(
+      ({ patch, activeVersion }) =>
+        patch.family === "DOMESTIC_CHAMPION" && activeVersion !== null
+    );
+
+  const filtered = isChampionOnSeason
+    ? applicable.filter(({ patch }) => patch.family !== "DOMESTIC_LEAGUE_BADGE")
+    : applicable;
+
+  return filtered.map(({ patch, activeVersion }) => ({
+    patch: {
+      id: patch.id,
+      name: patch.name,
+      family: patch.family,
+      leagueId: patch.leagueId,
+      isActive: patch.isActive,
+    },
+    activeVersion: activeVersion
+      ? {
+          id: activeVersion.id,
+          seasonStart: activeVersion.seasonStart,
+          seasonEnd: activeVersion.seasonEnd,
+          imageUrl: activeVersion.imageUrl,
+        }
+      : null,
+  }));
 }
 
 function isPatchEligible(
