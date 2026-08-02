@@ -2633,7 +2633,9 @@
       "title": "Bienvenue dans le Cercle",
       "subtitle": "Merci pour ton soutien. Voici ta carte de membre.",
       "manage": "Gérer l'abonnement",
-      "cosmetics": "Mes cosmétiques"
+      "cosmetics": "Mes cosmétiques",
+      "share": "Partager ma carte",
+      "shareTitle": "Ma carte Cercle Supporter"
     }
   },
   "PublicCollection": {
