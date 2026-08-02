@@ -8,6 +8,12 @@
  */
 
 export const MAX_USER_JERSEY_PHOTOS = 2;
+export const MAX_USER_JERSEY_PHOTOS_SUPPORTER = 4;
+
+/** Plafond de photos perso selon le tier (Supporter = plus de photos). */
+export function maxUserJerseyPhotos(isSupporter: boolean): number {
+  return isSupporter ? MAX_USER_JERSEY_PHOTOS_SUPPORTER : MAX_USER_JERSEY_PHOTOS;
+}
 
 export type NormalizeResult =
   | { ok: true; paths: string[] }
@@ -18,7 +24,10 @@ export type NormalizeResult =
  * Accepte un tableau, une string unique (compat ancien champ `userPhotoUrl`),
  * ou null/undefined (= aucune photo). Filtre les vides, dedupe, plafonne a MAX.
  */
-export function normalizeUserPhotoPaths(input: unknown): NormalizeResult {
+export function normalizeUserPhotoPaths(
+  input: unknown,
+  max: number = MAX_USER_JERSEY_PHOTOS
+): NormalizeResult {
   if (input === null || input === undefined) {
     return { ok: true, paths: [] };
   }
@@ -44,10 +53,10 @@ export function normalizeUserPhotoPaths(input: unknown): NormalizeResult {
     }
   }
 
-  if (paths.length > MAX_USER_JERSEY_PHOTOS) {
+  if (paths.length > max) {
     return {
       ok: false,
-      error: `Vous ne pouvez pas ajouter plus de ${MAX_USER_JERSEY_PHOTOS} photos`,
+      error: `Vous ne pouvez pas ajouter plus de ${max} photos`,
     };
   }
 

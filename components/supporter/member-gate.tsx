@@ -16,6 +16,7 @@ export function MemberGate({ children }: { children: React.ReactNode }) {
       <MemberArea
         name={user.username ?? user.name ?? "Membre"}
         userId={user.id}
+        jerseyCount={user.jerseyCount}
         since={new Date(user.createdAt).getFullYear()}
       />
     );

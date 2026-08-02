@@ -32,33 +32,9 @@ export function MembershipCard({
     <div className={cn("w-full max-w-[420px]", className)}>
       <div className="cos-card flex flex-col justify-between p-6">
         <div className="relative z-[2] flex items-start justify-between">
-          <svg
-            className="h-11 w-11"
-            viewBox="0 0 48 48"
-            fill="none"
-            aria-hidden
-          >
-            <defs>
-              <linearGradient id="mc-crest" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stopColor="#7A5F22" />
-                <stop offset=".5" stopColor="#F4E6B0" />
-                <stop offset="1" stopColor="#C9A84C" />
-              </linearGradient>
-            </defs>
-            <path
-              d="M24 3l16 5v11c0 11-7 18-16 23-9-5-16-12-16-23V8l16-5z"
-              fill="none"
-              stroke="url(#mc-crest)"
-              strokeWidth="1.5"
-            />
-            <path
-              d="M24 12v20M15 19l9 5 9-5"
-              stroke="url(#mc-crest)"
-              strokeWidth="1.6"
-              strokeLinecap="round"
-            />
-            <circle cx="24" cy="24" r="2.4" fill="url(#mc-crest)" />
-          </svg>
+          <span className="cos-gold-text font-serif text-[19px] font-semibold tracking-tight">
+            Le Vestiaire
+          </span>
           <div className="text-right font-mono text-[10px] uppercase leading-relaxed tracking-[0.24em] text-[#F4E6B0]">
             Membre
             <br />

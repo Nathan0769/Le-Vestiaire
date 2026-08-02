@@ -10,7 +10,11 @@ import {
 import { checkAchievements } from "@/lib/achievements/check";
 import { createFeedPost } from "@/lib/feed/create-post";
 import { detectCollectionCap, detectValueCap } from "@/lib/feed/cap-detector";
-import { normalizeUserPhotoPaths } from "@/lib/user-jersey-photos";
+import {
+  normalizeUserPhotoPaths,
+  maxUserJerseyPhotos,
+} from "@/lib/user-jersey-photos";
+import { isSupporter } from "@/lib/subscription";
 
 const VALID_VERSIONS = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"] as const;
 
@@ -114,8 +118,13 @@ export async function POST(
 
     // Photos perso : accepte le tableau userPhotoUrls, avec fallback sur l'ancien
     // champ userPhotoUrl (string unique) pour compat client.
+    const dbUser = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { plan: true },
+    });
     const photosResult = normalizeUserPhotoPaths(
-      userPhotoUrls !== undefined ? userPhotoUrls : userPhotoUrl
+      userPhotoUrls !== undefined ? userPhotoUrls : userPhotoUrl,
+      maxUserJerseyPhotos(isSupporter(dbUser))
     );
     if (!photosResult.ok) {
       return NextResponse.json(

@@ -27,6 +27,7 @@ export async function GET() {
           providerId: true,
         },
       },
+      _count: { select: { collection: true } },
     },
   });
 
@@ -57,6 +58,7 @@ export async function GET() {
     isSupporter: isSupporter(user),
     avatarFrame: user.avatarFrame,
     profileBanner: user.profileBanner,
+    jerseyCount: user._count.collection,
     authProvider: {
       hasGoogle: hasGoogleAccount,
       hasPassword: hasPasswordAccount,

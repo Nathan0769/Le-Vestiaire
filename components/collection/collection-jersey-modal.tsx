@@ -43,6 +43,8 @@ import {
   uploadPhotoSlots,
   type PhotoSlot,
 } from "./jersey-modal/photo-slots";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { maxUserJerseyPhotos } from "@/lib/user-jersey-photos";
 import { BadgesSummary } from "./jersey-modal/badges-summary";
 import { JerseyHeader } from "./jersey-modal/jersey-header";
 import { MyJerseyCard } from "./jersey-modal/my-jersey-card";
@@ -91,6 +93,8 @@ export function CollectionJerseyModal({
   onDelete,
 }: CollectionJerseyModalProps) {
   const t = useTranslations("Collection.modal.view");
+  const currentUser = useCurrentUser();
+  const maxPhotos = maxUserJerseyPhotos(currentUser?.isSupporter ?? false);
   const tDelete = useTranslations("Collection.modal.delete");
 
   const [isEditing, setIsEditing] = useState(false);
@@ -303,6 +307,7 @@ export function CollectionJerseyModal({
                     slots={photoSlots}
                     onChange={setPhotoSlots}
                     namespace="Collection.modal.view"
+                    max={maxPhotos}
                   />
                 )}
               </div>

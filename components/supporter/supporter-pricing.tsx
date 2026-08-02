@@ -50,14 +50,14 @@ export function SupporterPricing() {
             <div
               key={interval}
               className={cn(
-                "relative flex flex-col rounded-xl bg-card p-6 text-center",
+                "relative flex flex-col rounded-2xl p-6 text-center",
                 highlighted
-                  ? "border-2 border-[#c9a84c]/60 shadow-[0_10px_40px_-12px_rgba(201,168,76,0.45)]"
-                  : "border border-border"
+                  ? "bg-[#e6c766] text-[#2a2008] shadow-[0_14px_44px_-16px_rgba(201,168,76,0.65)]"
+                  : "border border-border bg-card shadow-sm"
               )}
             >
               {highlighted && (
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#c9a84c] px-3 py-0.5 text-[11px] font-semibold text-[#2a2008]">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#2a2008] px-3 py-1 text-[11px] font-semibold text-[#f4e6b0] shadow">
                   {t("premium.yearly.savings")}
                 </span>
               )}
@@ -66,11 +66,20 @@ export function SupporterPricing() {
                 <span className="text-4xl font-bold tracking-tight">
                   {PRICES[interval]}
                 </span>
-                <span className="text-muted-foreground">
+                <span
+                  className={
+                    highlighted ? "text-[#6b551d]" : "text-muted-foreground"
+                  }
+                >
                   /{t(`premium.${interval}.period`)}
                 </span>
               </div>
-              <p className="mt-2 min-h-[40px] text-sm text-muted-foreground">
+              <p
+                className={cn(
+                  "mt-2 min-h-[40px] text-sm",
+                  highlighted ? "text-[#6b551d]" : "text-muted-foreground"
+                )}
+              >
                 {t(`premium.${interval}.description`)}
               </p>
 
@@ -78,12 +87,11 @@ export function SupporterPricing() {
                 onClick={() => handleCheckout(interval)}
                 disabled={loading !== null}
                 size="lg"
-                variant={highlighted ? "default" : "outline"}
                 className={cn(
-                  "mt-5 h-11 w-full cursor-pointer",
+                  "mt-6 h-11 w-full cursor-pointer border-0",
                   highlighted
-                    ? "border-0 bg-gradient-to-r from-[#e6c34d] to-[#c9a84c] font-semibold text-[#2a2008] shadow-md hover:from-[#f0d066] hover:to-[#d4af37]"
-                    : "border-[#c9a84c]/50 hover:bg-[#c9a84c]/10"
+                    ? "bg-[#2a2008] font-semibold text-[#f4e6b0] shadow-md hover:bg-[#3a2c0a]"
+                    : "bg-foreground text-background hover:bg-foreground/90"
                 )}
               >
                 {loading === interval ? (

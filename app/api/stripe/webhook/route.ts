@@ -3,6 +3,7 @@ import Stripe from "stripe";
 import { getStripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
 import { planActionForEvent } from "@/lib/stripe-webhook";
+import { checkAchievements } from "@/lib/achievements/check";
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -55,6 +56,9 @@ export async function POST(request: Request) {
               stripeCustomerId: session.customer as string,
             },
           });
+          if (action.plan === "PRO") {
+            await checkAchievements(userId, "supporter.subscribed");
+          }
         }
       } else {
         const subscription = event.data.object as Stripe.Subscription;
@@ -68,6 +72,9 @@ export async function POST(request: Request) {
             where: { id: user.id },
             data: { plan: action.plan },
           });
+          if (action.plan === "PRO") {
+            await checkAchievements(user.id, "supporter.subscribed");
+          }
         }
       }
     }

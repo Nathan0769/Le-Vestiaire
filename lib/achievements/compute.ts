@@ -4,6 +4,15 @@ export async function getUserJerseyCount(userId: string): Promise<number> {
   return prisma.userJersey.count({ where: { userId } });
 }
 
+/** 1 si l'utilisateur est supporter actif (plan PRO), 0 sinon. */
+export async function getSupporterProgress(userId: string): Promise<number> {
+  const user = await prisma.user.findUnique({
+    where: { id: userId },
+    select: { plan: true },
+  });
+  return user?.plan === "PRO" ? 1 : 0;
+}
+
 export async function getUserCollectionValue(userId: string): Promise<number> {
   const result = await prisma.userJersey.aggregate({
     where: { userId, purchasePrice: { not: null } },
