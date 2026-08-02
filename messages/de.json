@@ -2561,12 +2561,17 @@
   "Pricing": {
     "metaTitle": "Soutenir Le Vestiaire",
     "metaDescription": "Le Vestiaire est un projet indépendant. Deviens Supporter pour soutenir le projet et débloquer des cosmétiques exclusifs.",
-    "title": "Soutiens Le Vestiaire",
+    "title": "Rejoins le Cercle.",
     "subtitle": "Un projet indépendant, propulsé par sa communauté.",
+    "eyebrow": "Le Vestiaire · Cercle Supporter",
+    "heroPitch": "Soutiens un projet fait <b>par passion du maillot</b>, et porte les couleurs du Cercle : ta <b>carte de membre</b>, ton <b>contour or</b>, ton <b>emblème vérifié</b>, partout où tu apparais.",
+    "heroCta": "Devenir Supporter",
+    "heroCtaSub": "À partir de 1,99 € / mois · sans engagement.",
+    "pricingTitle": "Choisis ton soutien",
     "cardTeaser": "Ta future carte de membre",
     "independent": {
-      "title": "Un projet indépendant",
-      "description": "Le Vestiaire est conçu et développé par une seule personne. Ton soutien finance directement l'hébergement et les prochaines fonctionnalités."
+      "title": "Un projet fait par passion",
+      "description": "Le Vestiaire, c'est une seule personne, par amour du maillot. Pas d'investisseurs, pas de pub qui gâche tout. Juste des collectionneurs comme toi. Ton soutien, c'est ce qui garde le projet en vie et le fait grandir."
     },
     "unlock": {
       "title": "Ce que débloque le statut Supporter"
@@ -2574,27 +2579,27 @@
     "features": {
       "card": {
         "title": "Carte de membre",
-        "description": "Ta carte du Cercle Supporter, or gravé et métal."
+        "description": "Ta carte du Cercle Supporter, <b>or gravé et métal</b>."
       },
       "banner": {
         "title": "Bannière de profil",
-        "description": "Un header travaillé derrière ton avatar."
+        "description": "Un <b>header travaillé</b> derrière ton avatar."
       },
       "frame": {
         "title": "Contour d'avatar",
-        "description": "Un anneau or ou nocturne autour de ta photo."
+        "description": "Un <b>anneau or ou nocturne</b> autour de ta photo."
       },
       "badge": {
         "title": "Emblème Supporter",
-        "description": "Un marqueur or discret, porté partout."
+        "description": "Un marqueur or <b>discret, porté partout</b>."
       },
-      "export": {
-        "title": "Export de ta collection",
-        "description": "Télécharge ta collection complète en un clic."
+      "photos": {
+        "title": "Plus de photos par maillot",
+        "description": "<b>Jusqu'à 4 photos</b> par maillot (au lieu de 2) : face, dos, étiquettes, détails."
       },
       "marketValue": {
         "title": "Valeur marché des maillots",
-        "description": "Estime la cote réelle de tes maillots."
+        "description": "Estime la <b>cote réelle</b> de tes maillots."
       }
     },
     "comingSoon": "À venir",
@@ -2949,6 +2954,11 @@
         }
       },
       "loyalty": {
+        "supporter": {
+          "title": "Membre du Cercle",
+          "description": "Tu soutiens Le Vestiaire en tant que Supporter",
+          "howTo": "Rejoins le Cercle Supporter."
+        },
         "1year": {
           "title": "Ein Jahr zusammen",
           "description": "1 Jahr seit der Kontoerstellung",

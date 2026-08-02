@@ -10,6 +10,7 @@ export const ACHIEVEMENT_TRIGGERS = [
   "contribution.proposal_accepted",
   "contribution.description_accepted",
   "auth.login",
+  "supporter.subscribed",
 ] as const;
 
 export type AchievementTrigger = (typeof ACHIEVEMENT_TRIGGERS)[number];
@@ -325,6 +326,15 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
   },
 
   // ---------- LOYALTY ----------
+  // Succès exclusif Supporter : débloqué dès que le plan passe PRO.
+  "loyalty.supporter": {
+    category: "LOYALTY",
+    tier: "PLATINUM",
+    threshold: 1,
+    triggers: ["supporter.subscribed", "auth.login"],
+    i18nKey: "achievements.definitions.loyalty.supporter",
+    computeProgress: compute.getSupporterProgress,
+  },
   "loyalty.1year": {
     category: "LOYALTY",
     tier: "SILVER",

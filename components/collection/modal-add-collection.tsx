@@ -19,6 +19,8 @@ import {
   User,
 } from "lucide-react";
 import { PhotoSlots, uploadPhotoSlots, type PhotoSlot } from "./jersey-modal/photo-slots";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { maxUserJerseyPhotos } from "@/lib/user-jersey-photos";
 import { toast } from "sonner";
 import type {
   AddToCollectionData,
@@ -90,6 +92,8 @@ export function AddToCollectionModal({
   jersey,
 }: AddToCollectionModalProps) {
   const t = useTranslations("Collection.modal.add");
+  const currentUser = useCurrentUser();
+  const maxPhotos = maxUserJerseyPhotos(currentUser?.isSupporter ?? false);
   const tView = useTranslations("Collection.modal.view");
 
   const [formData, setFormData] = useState<UpdateCollectionData>(INITIAL_FORM);
@@ -175,6 +179,7 @@ export function AddToCollectionModal({
                 slots={photoSlots}
                 onChange={setPhotoSlots}
                 namespace="Collection.modal.add"
+                max={maxPhotos}
               />
             </div>
 

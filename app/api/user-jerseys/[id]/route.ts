@@ -17,7 +17,9 @@ import { isBlocked } from "@/lib/follow";
 import {
   normalizeUserPhotoPaths,
   getRemovedPhotoPaths,
+  maxUserJerseyPhotos,
 } from "@/lib/user-jersey-photos";
+import { isSupporter } from "@/lib/subscription";
 
 export async function GET(
   _request: Request,
@@ -306,8 +308,13 @@ export async function PATCH(
       userPhotoUrls !== undefined || userPhotoUrl !== undefined;
     let nextPhotoPaths: string[] | null = null;
     if (photosProvided) {
+      const dbUser = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { plan: true },
+      });
       const photosResult = normalizeUserPhotoPaths(
-        userPhotoUrls !== undefined ? userPhotoUrls : userPhotoUrl
+        userPhotoUrls !== undefined ? userPhotoUrls : userPhotoUrl,
+        maxUserJerseyPhotos(isSupporter(dbUser))
       );
       if (!photosResult.ok) {
         return NextResponse.json({ error: photosResult.error }, { status: 400 });

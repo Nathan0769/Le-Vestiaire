@@ -15,6 +15,7 @@ export type CurrentUser = {
   isSupporter?: boolean;
   avatarFrame?: string | null;
   profileBanner?: string | null;
+  jerseyCount?: number;
   authProvider?: {
     hasGoogle: boolean;
     hasPassword: boolean;

@@ -24,13 +24,20 @@ type PhotoSlotsProps = {
   onChange: (slots: PhotoSlot[]) => void;
   /** Namespace i18n fournissant addPhoto, choosePhoto, photoFormats, photoYourPhoto, toast.* */
   namespace: "Collection.modal.add" | "Collection.modal.view";
+  /** Plafond de photos (dépend du tier Supporter). */
+  max?: number;
 };
 
-export function PhotoSlots({ slots, onChange, namespace }: PhotoSlotsProps) {
+export function PhotoSlots({
+  slots,
+  onChange,
+  namespace,
+  max = MAX_USER_JERSEY_PHOTOS,
+}: PhotoSlotsProps) {
   const t = useTranslations(namespace);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const canAdd = slots.length < MAX_USER_JERSEY_PHOTOS;
+  const canAdd = slots.length < max;
 
   const handleAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -46,8 +53,8 @@ export function PhotoSlots({ slots, onChange, namespace }: PhotoSlotsProps) {
       toast.error(t("toast.fileTooLarge"));
       return;
     }
-    if (slots.length >= MAX_USER_JERSEY_PHOTOS) {
-      toast.error(t("toast.photoLimit", { max: MAX_USER_JERSEY_PHOTOS }));
+    if (slots.length >= max) {
+      toast.error(t("toast.photoLimit", { max }));
       return;
     }
 
@@ -71,7 +78,7 @@ export function PhotoSlots({ slots, onChange, namespace }: PhotoSlotsProps) {
         <Camera className="w-4 h-4" />
         {t("addPhoto")}
         <span className="text-xs text-muted-foreground font-normal">
-          {slots.length}/{MAX_USER_JERSEY_PHOTOS}
+          {slots.length}/{max}
         </span>
       </Label>
 
