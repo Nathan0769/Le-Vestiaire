@@ -6,4 +6,15 @@ Disallow: /settings
 Disallow: /api/
 Disallow: /friends
 
+# Crawlers voraces sans valeur (IA training + espions SEO). Bloques aussi
+# en 403 via middleware.ts au cas ou ils ignoreraient robots.txt.
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
 Sitemap: https://le-vestiaire-foot.fr/sitemap.xml
