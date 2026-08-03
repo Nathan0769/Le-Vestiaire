@@ -4,9 +4,17 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 import { isSupporter } from "@/lib/subscription";
 
+// Reponse liee a la session (email, role, avatar presigne) : ne doit jamais
+// etre mise en cache par le navigateur ou un proxy intermediaire, sinon risque
+// de servir les donnees d'un compte a un autre sur un appareil partage.
+export const dynamic = "force-dynamic";
+
+const NO_STORE_HEADERS = { "Cache-Control": "private, no-store" } as const;
+
 export async function GET() {
   const sessionUser = await getCurrentUser();
-  if (!sessionUser) return NextResponse.json(null, { status: 200 });
+  if (!sessionUser)
+    return NextResponse.json(null, { status: 200, headers: NO_STORE_HEADERS });
 
   const user = await prisma.user.findUnique({
     where: { id: sessionUser.id },
@@ -31,11 +39,14 @@ export async function GET() {
     },
   });
 
-  if (!user) return NextResponse.json(null, { status: 200 });
+  if (!user)
+    return NextResponse.json(null, { status: 200, headers: NO_STORE_HEADERS });
 
   let avatarUrl = null;
   if (user.avatar) {
-    avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, user.avatar, 60 * 60);
+    // TTL 4h : couvre un onglet laisse ouvert longtemps sans refetch, evite un
+    // avatar casse. Faible sensibilite (image de l'utilisateur lui-meme).
+    avatarUrl = await getR2PresignedUrl(AVATARS_BUCKET, user.avatar, 60 * 60 * 4);
   }
 
   const hasGoogleAccount = user.accounts.some(
@@ -64,5 +75,5 @@ export async function GET() {
       hasPassword: hasPasswordAccount,
       isGoogleOnly: hasGoogleAccount && !hasPasswordAccount,
     },
-  });
+  }, { headers: NO_STORE_HEADERS });
 }
