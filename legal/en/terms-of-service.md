@@ -93,11 +93,20 @@ The service is provided "as is". We do not guarantee:
 
 The processing of your personal data is governed by our Privacy Policy, which you accept by using the service.
 
-## 11. Applicable Law
+## 11. Voluntary Support (Donations)
+
+Le Vestiaire offers the possibility to support the project through a **voluntary donation**, via third-party platforms (Tipeee, Buy Me a Coffee). By making a donation, you acknowledge that:
+
+- the donation is **entirely voluntary** and gives no right to **any counterpart**, feature, benefit or cosmetic;
+- it is **unrelated** to the Supporter subscription, a separate paid offer governed by the [Terms of Sale](/cgv);
+- payments are processed by the relevant third-party platform, whose terms apply; any refund request must be addressed directly to it;
+- the donation creates no obligation on the part of Le Vestiaire towards the donor.
+
+## 12. Applicable Law
 
 These terms are governed by French law. Any dispute will be submitted to the competent French courts.
 
-## 12. Contact
+## 13. Contact
 
 **For any questions regarding these terms:**
 

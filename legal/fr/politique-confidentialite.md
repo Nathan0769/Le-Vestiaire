@@ -22,6 +22,11 @@ Le Vestiaire (accessible via le-vestiaire-foot.fr) est une application web de co
 - Évaluations publiques des maillots (notes moyennes)
 - Données de navigation via Vercel Analytics
 
+### Données de paiement (abonnés Supporter)
+
+- Statut d'abonnement et historique de paiement, via notre prestataire Stripe
+- Aucune donnée de carte bancaire n'est collectée ni stockée par Le Vestiaire : elle est traitée directement par Stripe
+
 ## 3. Base légale du traitement
 
 Nous traitons vos données sur la base de :
@@ -54,6 +59,7 @@ Nous partageons certaines données avec nos prestataires :
 - **Vercel** : Hébergement et analytics (données de navigation)
 - **Neon** : Base de données PostgreSQL (toutes données utilisateur)
 - **Cloudflare R2** : Stockage des images (photos de profil, photos de maillots)
+- **Stripe** : Traitement des paiements de l'abonnement Supporter (nom, e-mail, historique de transaction). Les données de carte bancaire sont traitées directement par Stripe et ne sont jamais collectées ni stockées par Le Vestiaire
 
 ### Publicité - Google AdSense
 

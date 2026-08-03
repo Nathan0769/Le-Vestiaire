@@ -56,6 +56,14 @@ export function SettingsClient() {
             {t("footer.terms")}
           </Link>
           ,{" "}
+          <Link href="/cgv" className="underline">
+            {t("footer.sales")}
+          </Link>
+          ,{" "}
+          <Link href="/mentions-legales" className="underline">
+            {t("footer.legal")}
+          </Link>
+          ,{" "}
           <Link href="/politique-confidentialite" className="underline">
             {t("footer.privacy")}
           </Link>{" "}

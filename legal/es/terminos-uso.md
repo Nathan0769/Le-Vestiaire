@@ -93,11 +93,20 @@ El servicio se proporciona "tal cual". No garantizamos:
 
 El tratamiento de sus datos personales se rige por nuestra Política de Privacidad, que acepta al utilizar el servicio.
 
-## 11. Ley Aplicable
+## 11. Apoyo voluntario (donaciones)
+
+Le Vestiaire ofrece la posibilidad de apoyar el proyecto mediante una **donación voluntaria**, a través de plataformas de terceros (Tipeee, Buy Me a Coffee). Al realizar una donación, usted reconoce que:
+
+- la donación es **totalmente voluntaria** y no da derecho a **ninguna contraprestación**, funcionalidad, ventaja ni cosmético;
+- no tiene **ninguna relación** con la suscripción Supporter, oferta de pago distinta regida por las [Condiciones Generales de Venta](/cgv);
+- los pagos son procesados por la plataforma de terceros correspondiente, cuyas condiciones se aplican; cualquier solicitud de reembolso debe dirigirse directamente a ella;
+- la donación no crea ninguna obligación por parte de Le Vestiaire hacia el donante.
+
+## 12. Ley Aplicable
 
 Estos términos se rigen por la ley francesa. Cualquier disputa se someterá a los tribunales franceses competentes.
 
-## 12. Contacto
+## 13. Contacto
 
 **Para cualquier pregunta sobre estos términos:**
 

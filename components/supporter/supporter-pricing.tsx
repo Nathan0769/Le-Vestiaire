@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Heart, Loader2 } from "lucide-react";
-import { useRouter } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
 type Interval = "monthly" | "yearly";
@@ -106,9 +106,29 @@ export function SupporterPricing() {
         })}
       </div>
 
-      <p className="text-center text-xs text-muted-foreground">
-        {t("cancelAnytime")}
-      </p>
+      <div className="space-y-1.5 text-center">
+        <p className="text-xs text-muted-foreground">{t("billingInfo")}</p>
+        <p className="text-[11px] leading-relaxed text-muted-foreground/80">
+          {t("consent")}
+        </p>
+        <p className="text-[11px] text-muted-foreground/80">
+          <Link
+            href="/cgv"
+            target="_blank"
+            className="underline hover:text-foreground"
+          >
+            {t("cgvLink")}
+          </Link>
+          {" · "}
+          <Link
+            href="/politique-confidentialite"
+            target="_blank"
+            className="underline hover:text-foreground"
+          >
+            {t("privacyLink")}
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }

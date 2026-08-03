@@ -22,6 +22,11 @@ Le Vestiaire (accessible via le-vestiaire-foot.fr) is a web application for coll
 - Public jersey ratings (average ratings)
 - Browsing data via Vercel Analytics
 
+### Payment data (Supporter subscribers)
+
+- Subscription status and payment history, via our provider Stripe
+- No bank card data is collected or stored by Le Vestiaire: it is processed directly by Stripe
+
 ## 3. Legal Basis for Processing
 
 We process your data based on:
@@ -53,6 +58,7 @@ We share certain data with our service providers:
 - **Google**: OAuth authentication (email, name, photo)
 - **Vercel**: Hosting and analytics (browsing data)
 - **Neon**: PostgreSQL database (all user data)
+- **Stripe**: Processing of Supporter subscription payments (name, email, transaction history). Bank card data is processed directly by Stripe and is never collected or stored by Le Vestiaire
 - **Supabase**: Profile image storage
 
 ## 6. International Transfers
