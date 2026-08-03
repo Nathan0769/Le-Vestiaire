@@ -71,6 +71,7 @@ export async function POST(request: Request) {
       mode: "subscription",
       payment_method_types: ["card"],
       line_items: [{ price: priceId, quantity: 1 }],
+      allow_promotion_codes: true,
       success_url: `${process.env.NEXT_PUBLIC_BASE_URL}/settings?success=true`,
       cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/soutien?canceled=true`,
       metadata: { userId: user.id },
