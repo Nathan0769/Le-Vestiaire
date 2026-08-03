@@ -334,6 +334,123 @@ describe("filterApplicablePatches", () => {
     expect(result[0].activeVersion).toBeNull();
   });
 
+  it("19a. Ligue 1: champion en titre sur la saison retire le badge de ligue normal", () => {
+    const jersey = makeJersey("ligue-1", "2024-25");
+    const champion = makePatch({
+      id: "p-champ",
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "ligue-1",
+      versions: [
+        makeVersion({
+          id: "cv",
+          seasonStart: "2024-25",
+          seasonEnd: "2024-25",
+          eligibleClubIds: ["c1"],
+        }),
+      ],
+    });
+    const badge = makePatch({
+      id: "p-badge",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "ligue-1",
+    });
+    const result = filterWithCurrentLeague([champion, badge], jersey);
+    expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+
+  it("19b. Bundesliga et Premier League: même substitution champion → badge", () => {
+    for (const leagueId of ["bundesliga", "premier-league"]) {
+      const jersey = makeJersey(leagueId, "2024-25");
+      const champion = makePatch({
+        id: "p-champ",
+        family: "DOMESTIC_CHAMPION",
+        leagueId,
+        versions: [
+          makeVersion({
+            id: "cv",
+            seasonStart: "2024-25",
+            seasonEnd: "2024-25",
+            eligibleClubIds: ["c1"],
+          }),
+        ],
+      });
+      const badge = makePatch({
+        id: "p-badge",
+        family: "DOMESTIC_LEAGUE_BADGE",
+        leagueId,
+      });
+      const result = filterWithCurrentLeague([champion, badge], jersey);
+      expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+    }
+  });
+
+  it("19c. Ligue 1: club non champion (version l'exclut) garde le badge de ligue", () => {
+    const jersey = makeJersey("ligue-1", "2024-25");
+    const champion = makePatch({
+      id: "p-champ",
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "ligue-1",
+      versions: [
+        makeVersion({
+          id: "cv",
+          seasonStart: "2024-25",
+          seasonEnd: "2024-25",
+          eligibleClubIds: ["c-other"],
+        }),
+      ],
+    });
+    const badge = makePatch({
+      id: "p-badge",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "ligue-1",
+    });
+    const result = filterWithCurrentLeague([champion, badge], jersey);
+    expect(result.map((r) => r.patch.id)).toEqual(["p-badge"]);
+  });
+
+  it("19d. Ligue 1: champion sans version couvrant la saison garde le badge de ligue", () => {
+    const jersey = makeJersey("ligue-1", "2024-25");
+    const champion = makePatch({
+      id: "p-champ",
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "ligue-1",
+      versions: [
+        makeVersion({ id: "cv", seasonStart: "2022-23", seasonEnd: "2022-23" }),
+      ],
+    });
+    const badge = makePatch({
+      id: "p-badge",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "ligue-1",
+    });
+    const result = filterWithCurrentLeague([champion, badge], jersey);
+    expect(result.map((r) => r.patch.id).sort()).toEqual(["p-badge", "p-champ"]);
+  });
+
+  it("19e. Serie A (hors périmètre): champion et badge de ligue coexistent", () => {
+    const jersey = makeJersey("serie-a", "2024-25");
+    const champion = makePatch({
+      id: "p-champ",
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "serie-a",
+      versions: [
+        makeVersion({
+          id: "cv",
+          seasonStart: "2024-25",
+          seasonEnd: "2024-25",
+          eligibleClubIds: ["c1"],
+        }),
+      ],
+    });
+    const badge = makePatch({
+      id: "p-badge",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "serie-a",
+    });
+    const result = filterWithCurrentLeague([champion, badge], jersey);
+    expect(result.map((r) => r.patch.id).sort()).toEqual(["p-badge", "p-champ"]);
+  });
+
   it("18. resolvedLeagueId force la ligue historique pour DOMESTIC_LEAGUE_BADGE", () => {
     const jersey = makeJersey("ligue-1", "2010-11");
     const patchL1 = makePatch({
