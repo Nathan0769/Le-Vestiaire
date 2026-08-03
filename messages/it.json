@@ -2006,7 +2006,9 @@
       "terms": "Termini di servizio",
       "privacy": "Informativa sulla privacy",
       "and": "e",
-      "cookies": "Politica sui cookie"
+      "cookies": "Politica sui cookie",
+      "legal": "Mentions légales",
+      "sales": "CGV"
     },
     "accountInfo": {
       "title": "Informazioni account",
@@ -2081,15 +2083,15 @@
       }
     },
     "cosmetics": {
-      "title": "Cosmétiques",
-      "description": "Personnalise ton apparence Supporter : carte, contour, bannière.",
-      "locked": "Les cosmétiques sont réservés aux membres Supporter.",
-      "unlock": "Devenir Supporter",
-      "frameLabel": "Contour d'avatar",
-      "bannerLabel": "Bannière de profil",
-      "none": "Aucun",
-      "saved": "Modification enregistrée",
-      "saveError": "Échec de l'enregistrement"
+      "title": "Cosmetici",
+      "description": "Personalizza il tuo aspetto Supporter: tessera, contorno, banner.",
+      "locked": "I cosmetici sono riservati ai membri Supporter.",
+      "unlock": "Diventa Supporter",
+      "frameLabel": "Contorno avatar",
+      "bannerLabel": "Banner del profilo",
+      "none": "Nessuno",
+      "saved": "Modifica salvata",
+      "saveError": "Salvataggio non riuscito"
     }
   },
   "CookieConsent": {
@@ -2561,95 +2563,99 @@
     }
   },
   "Pricing": {
-    "metaTitle": "Soutenir Le Vestiaire",
-    "metaDescription": "Le Vestiaire est un projet indépendant. Deviens Supporter pour soutenir le projet et débloquer des cosmétiques exclusifs.",
-    "title": "Rejoins le Cercle.",
-    "subtitle": "Un projet indépendant, propulsé par sa communauté.",
-    "eyebrow": "Le Vestiaire · Cercle Supporter",
-    "heroPitch": "Soutiens un projet fait <b>par passion du maillot</b>, et porte les couleurs du Cercle : ta <b>carte de membre</b>, ton <b>contour or</b>, ton <b>emblème vérifié</b>, partout où tu apparais.",
-    "heroCta": "Devenir Supporter",
-    "heroCtaSub": "À partir de 1,99 € / mois · sans engagement.",
-    "pricingTitle": "Choisis ton soutien",
-    "cardTeaser": "Ta future carte de membre",
+    "metaTitle": "Sostieni Le Vestiaire",
+    "metaDescription": "Le Vestiaire è un progetto indipendente. Diventa Supporter per sostenere il progetto e sbloccare cosmetici esclusivi.",
+    "title": "Unisciti al Cerchio.",
+    "subtitle": "Un progetto indipendente, sostenuto dalla sua community.",
+    "eyebrow": "Le Vestiaire · Cerchio Supporter",
+    "heroPitch": "Sostieni un progetto nato <b>per passione della maglia</b>, e porta i colori del Cerchio: la tua <b>tessera da membro</b>, il tuo <b>contorno oro</b>, il tuo <b>emblema verificato</b>, ovunque tu appaia.",
+    "heroCta": "Diventa Supporter",
+    "heroCtaSub": "Da 1,99 € / mese · senza vincoli.",
+    "pricingTitle": "Scegli il tuo sostegno",
+    "cardTeaser": "La tua futura tessera da membro",
     "independent": {
-      "title": "Un projet fait par passion",
-      "description": "Le Vestiaire, c'est une seule personne, par amour du maillot. Pas d'investisseurs, pas de pub qui gâche tout. Juste des collectionneurs comme toi. Ton soutien, c'est ce qui garde le projet en vie et le fait grandir."
+      "title": "Un progetto nato per passione",
+      "description": "Le Vestiaire è una sola persona, per amore della maglia. Nessun investitore, nessuna pubblicità che rovina tutto. Solo collezionisti come te. Il tuo sostegno è ciò che mantiene vivo il progetto e lo fa crescere."
     },
     "unlock": {
-      "title": "Ce que débloque le statut Supporter"
+      "title": "Cosa sblocca lo status Supporter"
     },
     "features": {
       "card": {
-        "title": "Carte de membre",
-        "description": "Ta carte du Cercle Supporter, <b>or gravé et métal</b>."
+        "title": "Tessera da membro",
+        "description": "La tua tessera del Cerchio Supporter, <b>oro inciso e metallo</b>."
       },
       "banner": {
-        "title": "Bannière de profil",
-        "description": "Un <b>header travaillé</b> derrière ton avatar."
+        "title": "Banner del profilo",
+        "description": "Un <b>header curato</b> dietro il tuo avatar."
       },
       "frame": {
-        "title": "Contour d'avatar",
-        "description": "Un <b>anneau or ou nocturne</b> autour de ta photo."
+        "title": "Contorno avatar",
+        "description": "Un <b>anello oro o notturno</b> attorno alla tua foto."
       },
       "badge": {
-        "title": "Emblème Supporter",
-        "description": "Un marqueur or <b>discret, porté partout</b>."
+        "title": "Emblema Supporter",
+        "description": "Un <b>discreto marcatore oro, presente ovunque</b>."
       },
       "photos": {
-        "title": "Plus de photos par maillot",
-        "description": "<b>Jusqu'à 4 photos</b> par maillot (au lieu de 2) : face, dos, étiquettes, détails."
+        "title": "Più foto per maglia",
+        "description": "<b>Fino a 4 foto</b> per maglia (invece di 2): fronte, retro, etichette, dettagli."
       },
       "marketValue": {
-        "title": "Valeur marché des maillots",
-        "description": "Estime la <b>cote réelle</b> de tes maillots."
+        "title": "Valore di mercato delle maglie",
+        "description": "Stima il <b>valore reale</b> delle tue maglie."
       }
     },
-    "comingSoon": "À venir",
+    "comingSoon": "Prossimamente",
     "toggle": {
-      "monthly": "Mensuel",
-      "yearly": "Annuel"
+      "monthly": "Mensile",
+      "yearly": "Annuale"
     },
     "premium": {
       "monthly": {
-        "description": "Soutiens mois par mois",
-        "period": "mois",
-        "button": "Devenir Supporter"
+        "description": "Sostieni mese per mese",
+        "period": "mese",
+        "button": "Diventa Supporter"
       },
       "yearly": {
-        "description": "Le meilleur tarif pour soutenir",
-        "period": "an",
-        "button": "Devenir Supporter",
-        "savings": "2 mois offerts"
+        "description": "La tariffa migliore per sostenere",
+        "period": "anno",
+        "button": "Diventa Supporter",
+        "savings": "2 mesi gratis"
       }
     },
-    "cancelAnytime": "Sans engagement, résiliable à tout moment.",
-    "freeReminder": "Le gratuit reste complet : collection, wishlist, stats et social sans limite. Supporter n'ajoute que du bonus.",
+    "cancelAnytime": "Senza vincoli, disdici quando vuoi.",
+    "freeReminder": "La versione gratuita resta completa: collezione, wishlist, statistiche e social senza limiti. Supporter aggiunge solo extra.",
     "member": {
-      "title": "Bienvenue dans le Cercle",
-      "subtitle": "Merci pour ton soutien. Voici ta carte de membre.",
-      "manage": "Gérer l'abonnement",
-      "cosmetics": "Mes cosmétiques",
-      "share": "Partager ma carte",
-      "shareTitle": "Ma carte Cercle Supporter",
-      "eyebrow": "Cercle Supporter",
-      "membership": "Ton adhésion",
-      "statusLabel": "Statut",
-      "active": "Actif",
-      "plan": "Formule",
-      "yearly": "Annuelle",
-      "monthly": "Mensuelle",
-      "comp": "Offert",
-      "renewal": "Prochain renouvellement",
-      "ends": "Se termine le",
-      "since": "Membre depuis",
-      "perksTitle": "Tes avantages actifs",
-      "perksHint": "Appliqués automatiquement partout où tu apparais.",
-      "cancelNote": "Sans engagement, résiliable à tout moment. Tes cosmétiques restent visibles tant que ton adhésion est active.",
-      "shareDownloaded": "Carte téléchargée",
-      "shareError": "Le partage a échoué, réessaie.",
-      "customize": "Personnalise ton profil",
-      "customizeHint": "Choisis le cadre et la bannière affichés sur ton profil public."
-    }
+      "title": "Benvenuto nel Cerchio",
+      "subtitle": "Grazie per il tuo sostegno. Ecco la tua tessera da membro.",
+      "manage": "Gestisci abbonamento",
+      "cosmetics": "I miei cosmetici",
+      "share": "Condividi la mia tessera",
+      "shareTitle": "La mia tessera Cerchio Supporter",
+      "eyebrow": "Cerchio Supporter",
+      "membership": "Il tuo abbonamento",
+      "statusLabel": "Stato",
+      "active": "Attivo",
+      "plan": "Piano",
+      "yearly": "Annuale",
+      "monthly": "Mensile",
+      "comp": "Omaggio",
+      "renewal": "Prossimo rinnovo",
+      "ends": "Termina il",
+      "since": "Membro dal",
+      "perksTitle": "I tuoi vantaggi attivi",
+      "perksHint": "Applicati automaticamente ovunque tu appaia.",
+      "cancelNote": "Senza vincoli, disdici quando vuoi. I tuoi cosmetici restano visibili finché il tuo abbonamento è attivo.",
+      "shareDownloaded": "Tessera scaricata",
+      "shareError": "Condivisione non riuscita, riprova.",
+      "customize": "Personalizza il tuo profilo",
+      "customizeHint": "Scegli il contorno e il banner mostrati sul tuo profilo pubblico."
+    },
+    "consent": "Sottoscrivendo, accetti le condizioni generali di vendita e richiedi l'esecuzione immediata, rinunciando al tuo diritto di recesso.",
+    "billingInfo": "Pagamento addebitato alla conferma. Rinnovo automatico, disdici quando vuoi dalla tua area.",
+    "cgvLink": "Condizioni di vendita",
+    "privacyLink": "Privacy"
   },
   "PublicCollection": {
     "title": "Collezione di {name}",

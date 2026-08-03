@@ -2013,7 +2013,9 @@
       "terms": "Conditions d'utilisation",
       "privacy": "Politique de confidentialité",
       "and": "et",
-      "cookies": "Politique de cookies"
+      "cookies": "Politique de cookies",
+      "legal": "Mentions légales",
+      "sales": "CGV"
     },
     "accountInfo": {
       "title": "Informations du compte",
@@ -2656,7 +2658,11 @@
       "shareError": "Le partage a échoué, réessaie.",
       "customize": "Personnalise ton profil",
       "customizeHint": "Choisis le cadre et la bannière affichés sur ton profil public."
-    }
+    },
+    "consent": "En souscrivant, tu acceptes les conditions générales de vente et demandes l'exécution immédiate, en renonçant à ton droit de rétractation.",
+    "billingInfo": "Paiement débité à la confirmation. Renouvellement automatique, résiliable à tout moment depuis ton espace.",
+    "cgvLink": "CGV",
+    "privacyLink": "Confidentialité"
   },
   "PublicCollection": {
     "title": "Collection de {name}",

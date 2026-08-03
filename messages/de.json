@@ -2006,7 +2006,9 @@
       "terms": "Nutzungsbedingungen",
       "privacy": "Datenschutzrichtlinien",
       "and": "und",
-      "cookies": "Cookie-Richtlinie"
+      "cookies": "Cookie-Richtlinie",
+      "legal": "Mentions légales",
+      "sales": "CGV"
     },
     "accountInfo": {
       "title": "Kontoinformationen",
@@ -2081,15 +2083,15 @@
       }
     },
     "cosmetics": {
-      "title": "Cosmétiques",
-      "description": "Personnalise ton apparence Supporter : carte, contour, bannière.",
-      "locked": "Les cosmétiques sont réservés aux membres Supporter.",
-      "unlock": "Devenir Supporter",
-      "frameLabel": "Contour d'avatar",
-      "bannerLabel": "Bannière de profil",
-      "none": "Aucun",
-      "saved": "Modification enregistrée",
-      "saveError": "Échec de l'enregistrement"
+      "title": "Kosmetik",
+      "description": "Personalisiere dein Supporter-Aussehen: Karte, Rahmen, Banner.",
+      "locked": "Kosmetik ist Supporter-Mitgliedern vorbehalten.",
+      "unlock": "Supporter werden",
+      "frameLabel": "Avatar-Rahmen",
+      "bannerLabel": "Profil-Banner",
+      "none": "Keine",
+      "saved": "Änderung gespeichert",
+      "saveError": "Speichern fehlgeschlagen"
     }
   },
   "CookieConsent": {
@@ -2561,95 +2563,99 @@
     }
   },
   "Pricing": {
-    "metaTitle": "Soutenir Le Vestiaire",
-    "metaDescription": "Le Vestiaire est un projet indépendant. Deviens Supporter pour soutenir le projet et débloquer des cosmétiques exclusifs.",
-    "title": "Rejoins le Cercle.",
-    "subtitle": "Un projet indépendant, propulsé par sa communauté.",
-    "eyebrow": "Le Vestiaire · Cercle Supporter",
-    "heroPitch": "Soutiens un projet fait <b>par passion du maillot</b>, et porte les couleurs du Cercle : ta <b>carte de membre</b>, ton <b>contour or</b>, ton <b>emblème vérifié</b>, partout où tu apparais.",
-    "heroCta": "Devenir Supporter",
-    "heroCtaSub": "À partir de 1,99 € / mois · sans engagement.",
-    "pricingTitle": "Choisis ton soutien",
-    "cardTeaser": "Ta future carte de membre",
+    "metaTitle": "Le Vestiaire unterstützen",
+    "metaDescription": "Le Vestiaire ist ein unabhängiges Projekt. Werde Supporter, um das Projekt zu unterstützen und exklusive Kosmetik freizuschalten.",
+    "title": "Tritt dem Kreis bei.",
+    "subtitle": "Ein unabhängiges Projekt, getragen von seiner Community.",
+    "eyebrow": "Le Vestiaire · Supporter-Kreis",
+    "heroPitch": "Unterstütze ein Projekt, das <b>aus Leidenschaft für das Trikot</b> entstanden ist, und trage die Farben des Kreises: deine <b>Mitgliedskarte</b>, deinen <b>goldenen Rahmen</b>, dein <b>verifiziertes Emblem</b>, überall wo du erscheinst.",
+    "heroCta": "Supporter werden",
+    "heroCtaSub": "Ab 1,99 € / Monat · ohne Bindung.",
+    "pricingTitle": "Wähle deine Unterstützung",
+    "cardTeaser": "Deine zukünftige Mitgliedskarte",
     "independent": {
-      "title": "Un projet fait par passion",
-      "description": "Le Vestiaire, c'est une seule personne, par amour du maillot. Pas d'investisseurs, pas de pub qui gâche tout. Juste des collectionneurs comme toi. Ton soutien, c'est ce qui garde le projet en vie et le fait grandir."
+      "title": "Ein Projekt aus Leidenschaft",
+      "description": "Le Vestiaire ist eine einzige Person, aus Liebe zum Trikot. Keine Investoren, keine störende Werbung. Nur Sammler wie du. Deine Unterstützung hält das Projekt am Leben und lässt es wachsen."
     },
     "unlock": {
-      "title": "Ce que débloque le statut Supporter"
+      "title": "Was der Supporter-Status freischaltet"
     },
     "features": {
       "card": {
-        "title": "Carte de membre",
-        "description": "Ta carte du Cercle Supporter, <b>or gravé et métal</b>."
+        "title": "Mitgliedskarte",
+        "description": "Deine Karte des Supporter-Kreises, <b>graviertes Gold und Metall</b>."
       },
       "banner": {
-        "title": "Bannière de profil",
-        "description": "Un <b>header travaillé</b> derrière ton avatar."
+        "title": "Profil-Banner",
+        "description": "Ein <b>aufwendiger Header</b> hinter deinem Avatar."
       },
       "frame": {
-        "title": "Contour d'avatar",
-        "description": "Un <b>anneau or ou nocturne</b> autour de ta photo."
+        "title": "Avatar-Rahmen",
+        "description": "Ein <b>goldener oder nächtlicher Ring</b> um dein Foto."
       },
       "badge": {
-        "title": "Emblème Supporter",
-        "description": "Un marqueur or <b>discret, porté partout</b>."
+        "title": "Supporter-Emblem",
+        "description": "Ein <b>dezentes goldenes Zeichen, überall getragen</b>."
       },
       "photos": {
-        "title": "Plus de photos par maillot",
-        "description": "<b>Jusqu'à 4 photos</b> par maillot (au lieu de 2) : face, dos, étiquettes, détails."
+        "title": "Mehr Fotos pro Trikot",
+        "description": "<b>Bis zu 4 Fotos</b> pro Trikot (statt 2): Vorderseite, Rückseite, Etiketten, Details."
       },
       "marketValue": {
-        "title": "Valeur marché des maillots",
-        "description": "Estime la <b>cote réelle</b> de tes maillots."
+        "title": "Marktwert der Trikots",
+        "description": "Schätze den <b>echten Wert</b> deiner Trikots."
       }
     },
-    "comingSoon": "À venir",
+    "comingSoon": "Demnächst",
     "toggle": {
-      "monthly": "Mensuel",
-      "yearly": "Annuel"
+      "monthly": "Monatlich",
+      "yearly": "Jährlich"
     },
     "premium": {
       "monthly": {
-        "description": "Soutiens mois par mois",
-        "period": "mois",
-        "button": "Devenir Supporter"
+        "description": "Monat für Monat unterstützen",
+        "period": "Monat",
+        "button": "Supporter werden"
       },
       "yearly": {
-        "description": "Le meilleur tarif pour soutenir",
-        "period": "an",
-        "button": "Devenir Supporter",
-        "savings": "2 mois offerts"
+        "description": "Der beste Tarif zum Unterstützen",
+        "period": "Jahr",
+        "button": "Supporter werden",
+        "savings": "2 Monate gratis"
       }
     },
-    "cancelAnytime": "Sans engagement, résiliable à tout moment.",
-    "freeReminder": "Le gratuit reste complet : collection, wishlist, stats et social sans limite. Supporter n'ajoute que du bonus.",
+    "cancelAnytime": "Ohne Bindung, jederzeit kündbar.",
+    "freeReminder": "Die kostenlose Version bleibt vollständig: Sammlung, Wunschliste, Statistiken und Social ohne Limit. Supporter fügt nur Extras hinzu.",
     "member": {
-      "title": "Bienvenue dans le Cercle",
-      "subtitle": "Merci pour ton soutien. Voici ta carte de membre.",
-      "manage": "Gérer l'abonnement",
-      "cosmetics": "Mes cosmétiques",
-      "share": "Partager ma carte",
-      "shareTitle": "Ma carte Cercle Supporter",
-      "eyebrow": "Cercle Supporter",
-      "membership": "Ton adhésion",
-      "statusLabel": "Statut",
-      "active": "Actif",
-      "plan": "Formule",
-      "yearly": "Annuelle",
-      "monthly": "Mensuelle",
-      "comp": "Offert",
-      "renewal": "Prochain renouvellement",
-      "ends": "Se termine le",
-      "since": "Membre depuis",
-      "perksTitle": "Tes avantages actifs",
-      "perksHint": "Appliqués automatiquement partout où tu apparais.",
-      "cancelNote": "Sans engagement, résiliable à tout moment. Tes cosmétiques restent visibles tant que ton adhésion est active.",
-      "shareDownloaded": "Carte téléchargée",
-      "shareError": "Le partage a échoué, réessaie.",
-      "customize": "Personnalise ton profil",
-      "customizeHint": "Choisis le cadre et la bannière affichés sur ton profil public."
-    }
+      "title": "Willkommen im Kreis",
+      "subtitle": "Danke für deine Unterstützung. Hier ist deine Mitgliedskarte.",
+      "manage": "Abo verwalten",
+      "cosmetics": "Meine Kosmetik",
+      "share": "Meine Karte teilen",
+      "shareTitle": "Meine Supporter-Kreis-Karte",
+      "eyebrow": "Supporter-Kreis",
+      "membership": "Deine Mitgliedschaft",
+      "statusLabel": "Status",
+      "active": "Aktiv",
+      "plan": "Tarif",
+      "yearly": "Jährlich",
+      "monthly": "Monatlich",
+      "comp": "Geschenkt",
+      "renewal": "Nächste Verlängerung",
+      "ends": "Endet am",
+      "since": "Mitglied seit",
+      "perksTitle": "Deine aktiven Vorteile",
+      "perksHint": "Automatisch überall angewendet, wo du erscheinst.",
+      "cancelNote": "Ohne Bindung, jederzeit kündbar. Deine Kosmetik bleibt sichtbar, solange deine Mitgliedschaft aktiv ist.",
+      "shareDownloaded": "Karte heruntergeladen",
+      "shareError": "Teilen fehlgeschlagen, versuche es erneut.",
+      "customize": "Personalisiere dein Profil",
+      "customizeHint": "Wähle den Rahmen und das Banner für dein öffentliches Profil."
+    },
+    "consent": "Mit dem Abschluss akzeptierst du die Verkaufsbedingungen und verlangst die sofortige Ausführung, wobei du auf dein Widerrufsrecht verzichtest.",
+    "billingInfo": "Zahlung bei Bestätigung abgebucht. Automatische Verlängerung, jederzeit in deinem Bereich kündbar.",
+    "cgvLink": "Verkaufsbedingungen",
+    "privacyLink": "Datenschutz"
   },
   "PublicCollection": {
     "title": "Sammlung von {name}",
