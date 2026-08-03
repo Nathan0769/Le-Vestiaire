@@ -93,11 +93,20 @@ Le service est fourni "en l'état". Nous ne garantissons pas :
 
 Le traitement de vos données personnelles est régi par notre Politique de Confidentialité, que vous acceptez en utilisant le service.
 
-## 11. Droit applicable
+## 11. Soutien volontaire (dons)
+
+Le Vestiaire propose la possibilité de soutenir le projet par un **don volontaire**, via des plateformes tierces (Tipeee, Buy Me a Coffee). En effectuant un don, vous reconnaissez que :
+
+- le don est **entièrement volontaire** et ne donne droit à **aucune contrepartie**, fonctionnalité, avantage ni cosmétique ;
+- il est **sans lien** avec l'abonnement Supporter, offre payante distincte régie par les [Conditions Générales de Vente](/cgv) ;
+- les paiements sont traités par la plateforme tierce concernée, dont les conditions s'appliquent ; toute demande de remboursement doit lui être adressée directement ;
+- le don ne crée aucune obligation de la part de Le Vestiaire envers le donateur.
+
+## 12. Droit applicable
 
 Ces conditions sont régies par le droit français. Tout litige sera soumis aux tribunaux compétents français.
 
-## 12. Contact
+## 13. Contact
 
 **Pour toute question relative à ces conditions :**
 
