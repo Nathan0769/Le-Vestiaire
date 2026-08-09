@@ -357,48 +357,48 @@ export async function PublicCollectionScreen({
                 />
               </div>
             )}
-
-            {!isAnonymous && topAchievements.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-border">
-                <p className="text-sm font-medium mb-2">
-                  {t("topAchievements")}
-                </p>
-                <TopAchievementsBadges achievements={topAchievements} />
-              </div>
-            )}
-
-            {commonItems.length > 0 && (
-              <div className="mt-4 pt-4 border-t border-border">
-                <p className="text-sm font-medium text-primary mb-2">
-                  {t("commonJerseysTitle")} —{" "}
-                  {t("commonJerseys", { count: commonItems.length })}
-                </p>
-                <div className="flex gap-2 flex-wrap">
-                  {commonItems.slice(0, 5).map((item) => (
-                    <div
-                      key={item.id}
-                      className="w-12 h-12 relative rounded-md overflow-hidden border border-border bg-muted"
-                    >
-                      <Image
-                        src={item.jersey.imageUrl}
-                        alt={item.jersey.name}
-                        fill
-                        className="object-contain p-1"
-                      />
-                    </div>
-                  ))}
-                  {commonItems.length > 5 && (
-                    <div className="w-12 h-12 rounded-md border border-border bg-muted flex items-center justify-center">
-                      <span className="text-xs font-medium text-muted-foreground">
-                        +{commonItems.length - 5}
-                      </span>
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         </div>
+
+        {!isAnonymous && topAchievements.length > 0 && (
+          <div className="mt-4 pt-4 border-t border-border">
+            <p className="text-sm font-medium mb-2">
+              {t("topAchievements")}
+            </p>
+            <TopAchievementsBadges achievements={topAchievements} />
+          </div>
+        )}
+
+        {commonItems.length > 0 && (
+          <div className="mt-4 pt-4 border-t border-border">
+            <p className="text-sm font-medium text-primary mb-2">
+              {t("commonJerseysTitle")} —{" "}
+              {t("commonJerseys", { count: commonItems.length })}
+            </p>
+            <div className="flex gap-2 flex-wrap">
+              {commonItems.slice(0, 5).map((item) => (
+                <div
+                  key={item.id}
+                  className="w-12 h-12 relative rounded-md overflow-hidden border border-border bg-muted"
+                >
+                  <Image
+                    src={item.jersey.imageUrl}
+                    alt={item.jersey.name}
+                    fill
+                    className="object-contain p-1"
+                  />
+                </div>
+              ))}
+              {commonItems.length > 5 && (
+                <div className="w-12 h-12 rounded-md border border-border bg-muted flex items-center justify-center">
+                  <span className="text-xs font-medium text-muted-foreground">
+                    +{commonItems.length - 5}
+                  </span>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
       </div>
 
       <UserCollectionStats stats={stats} />
