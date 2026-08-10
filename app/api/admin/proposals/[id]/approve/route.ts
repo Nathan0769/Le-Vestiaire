@@ -118,6 +118,18 @@ export async function POST(
 
     const newImageUrl = getR2PublicUrl("jerseys", newImagePath);
 
+    // Deux clubs peuvent partager le même shortName (ex: "Sparta" pour
+    // Rotterdam et Prague) : le slug généré à partir du shortName peut alors
+    // entrer en collision alors que clubId_season_type_variant est distinct.
+    let slug = generateJerseySlug(proposal.club.shortName, proposal.type, proposal.season, variant);
+    const slugTaken = await prisma.jersey.findUnique({
+      where: { slug },
+      select: { id: true },
+    });
+    if (slugTaken) {
+      slug = `${slug}-${proposal.clubId}`;
+    }
+
     const result = await prisma.$transaction(async (tx) => {
       const jersey = await tx.jersey.create({
         data: {
@@ -130,7 +142,7 @@ export async function POST(
           description: proposal.description,
           retailPrice: null,
           variant,
-          slug: generateJerseySlug(proposal.club.shortName, proposal.type, proposal.season, variant),
+          slug,
         },
       });
 
@@ -220,14 +232,21 @@ export async function POST(
       jersey: result.jersey,
     });
   } catch (err) {
-    // Deux approbations simultanées pour le même gardien club/saison
+    // Deux approbations simultanées pour le même club/saison/type, ou
+    // collision de slug malgré la vérification préalable (race condition)
     if (
       err instanceof Error &&
       "code" in err &&
       (err as { code: string }).code === "P2002"
     ) {
+      const target = (err as { meta?: { target?: string[] } }).meta?.target ?? [];
+      const isSlugConflict = target.includes("slug");
       return NextResponse.json(
-        { error: "Un maillot gardien avec ce variant existe déjà, rechargez la page et réessayez" },
+        {
+          error: isSlugConflict
+            ? "Un maillot avec un slug identique existe déjà, rechargez la page et réessayez"
+            : "Un maillot avec ces caractéristiques existe déjà, rechargez la page et réessayez",
+        },
         { status: 409 }
       );
     }
