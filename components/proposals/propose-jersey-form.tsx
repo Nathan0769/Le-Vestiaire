@@ -429,7 +429,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
             {t("typeLabel")}
           </Label>
           <Select
-            value={formData.type}
+            value={formData.type ?? ""}
             onValueChange={(value: JerseyType) =>
               setFormData({ ...formData, type: value })
             }
