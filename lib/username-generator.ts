@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { slugifyForUsername } from "@/lib/username-slug";
+import { containsProfanity } from "@/lib/username-blocklist";
 
 export async function generateSlugBasedUsername(
   name: string | null,
@@ -113,6 +114,13 @@ export function validateUsername(username: string): {
     return {
       valid: false,
       error: "Le pseudo doit commencer par une lettre ou un chiffre",
+    };
+  }
+
+  if (containsProfanity(username)) {
+    return {
+      valid: false,
+      error: "Ce pseudo contient un terme non autorisé",
     };
   }
 
