@@ -121,6 +121,25 @@ describe('username-generator', () => {
       })
     })
 
+    describe('contenu interdit', () => {
+      it('refuse un pseudo contenant une insulte', () => {
+        const result = validateUsername('connard99')
+        expect(result.valid).toBe(false)
+        expect(result.error).toBe('Ce pseudo contient un terme non autorisé')
+      })
+
+      it('refuse un pseudo scatologique masqué en leetspeak', () => {
+        const result = validateUsername('c4ca_boy')
+        expect(result.valid).toBe(false)
+        expect(result.error).toBe('Ce pseudo contient un terme non autorisé')
+      })
+
+      it('accepte un pseudo légitime proche d\'une racine interdite', () => {
+        const result = validateUsername('bacon_lover')
+        expect(result.valid).toBe(true)
+      })
+    })
+
     describe('cas réels', () => {
       it('accepte un pseudo typique avec chiffres', () => {
         const result = validateUsername('player123')
