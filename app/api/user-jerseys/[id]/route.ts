@@ -20,6 +20,7 @@ import {
   maxUserJerseyPhotos,
 } from "@/lib/user-jersey-photos";
 import { isSupporter } from "@/lib/subscription";
+import { hasExclusivityConflict } from "@/lib/patches/patch-exclusivity";
 
 export async function GET(
   _request: Request,
@@ -291,12 +292,22 @@ export async function PATCH(
         .map((p) => p.patchId)
         .filter((v): v is string => typeof v === "string");
       if (refIds.length > 0) {
-        const existsCount = await prisma.patch.count({
+        const referenced = await prisma.patch.findMany({
           where: { id: { in: refIds } },
+          select: { family: true },
         });
-        if (existsCount !== refIds.length) {
+        if (referenced.length !== refIds.length) {
           return NextResponse.json(
             { error: "Un ou plusieurs patches sont introuvables" },
+            { status: 400 }
+          );
+        }
+        if (hasExclusivityConflict(referenced.map((p) => p.family))) {
+          return NextResponse.json(
+            {
+              error:
+                "Un maillot ne peut pas porter à la fois un badge de championnat et un badge de compétition continentale",
+            },
             { status: 400 }
           );
         }
