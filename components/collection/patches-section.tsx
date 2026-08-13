@@ -115,8 +115,18 @@ export function PatchesSection({
       )}
 
       {PATCH_FAMILY_ORDER.filter((f) => f !== "CUSTOM").map((family) => {
-        const items = patchesByFamily.get(family);
-        if (!items || items.length === 0) return null;
+        const allItems = patchesByFamily.get(family);
+        if (!allItems || allItems.length === 0) return null;
+        // Masque les patchs du groupe verrouille oppose (un maillot est soit
+        // version championnat, soit version continentale). Les patchs deja
+        // coches restent visibles pour pouvoir les decocher.
+        const items = allItems.filter((item) => {
+          if (lockedGroup === null) return true;
+          if (selectedPatchIds.has(item.patch.id)) return true;
+          const itemGroup = getExclusivityGroup(item.patch.family);
+          return itemGroup === null || itemGroup === lockedGroup;
+        });
+        if (items.length === 0) return null;
         return (
           <div key={family} className="space-y-2">
             <h4 className="text-xs font-semibold uppercase text-muted-foreground">
@@ -125,24 +135,13 @@ export function PatchesSection({
             <div className="space-y-2">
               {items.map((item) => {
                 const checked = selectedPatchIds.has(item.patch.id);
-                const itemGroup = getExclusivityGroup(item.patch.family);
-                const disabled =
-                  !checked &&
-                  lockedGroup !== null &&
-                  itemGroup !== null &&
-                  itemGroup !== lockedGroup;
                 return (
                   <label
                     key={item.patch.id}
-                    className={`flex items-center gap-3 rounded-md border p-2 ${
-                      disabled
-                        ? "cursor-not-allowed opacity-50"
-                        : "cursor-pointer hover:bg-muted/40"
-                    }`}
+                    className="flex items-center gap-3 cursor-pointer rounded-md border p-2 hover:bg-muted/40"
                   >
                     <Checkbox
                       checked={checked}
-                      disabled={disabled}
                       onCheckedChange={() => togglePatch(item.patch.id)}
                     />
                     {item.activeVersion?.imageUrl ? (
