@@ -15,6 +15,10 @@ import {
   type PatchFamily,
   type UserJerseyPatchInput,
 } from "@/types/patch";
+import {
+  getExclusivityGroup,
+  getLockedGroup,
+} from "@/lib/patches/patch-exclusivity";
 
 interface PatchesSectionProps {
   jerseyId: string;
@@ -44,6 +48,25 @@ export function PatchesSection({
     () => new Set(selectedPatches.map((p) => p.patchId).filter(Boolean) as string[]),
     [selectedPatches]
   );
+
+  const familyByPatchId = useMemo(() => {
+    const map = new Map<string, PatchFamily>();
+    for (const item of data ?? []) {
+      map.set(item.patch.id, item.patch.family);
+    }
+    return map;
+  }, [data]);
+
+  // Un maillot est soit "version championnat" soit "version continentale" :
+  // dès qu'un groupe est coché, on verrouille l'autre.
+  const lockedGroup = useMemo(() => {
+    const selectedFamilies: PatchFamily[] = [];
+    for (const patchId of selectedPatchIds) {
+      const family = familyByPatchId.get(patchId);
+      if (family) selectedFamilies.push(family);
+    }
+    return getLockedGroup(selectedFamilies);
+  }, [selectedPatchIds, familyByPatchId]);
 
   const customPatches = selectedPatches.filter((p) => !p.patchId && p.customLabel);
 
@@ -102,13 +125,24 @@ export function PatchesSection({
             <div className="space-y-2">
               {items.map((item) => {
                 const checked = selectedPatchIds.has(item.patch.id);
+                const itemGroup = getExclusivityGroup(item.patch.family);
+                const disabled =
+                  !checked &&
+                  lockedGroup !== null &&
+                  itemGroup !== null &&
+                  itemGroup !== lockedGroup;
                 return (
                   <label
                     key={item.patch.id}
-                    className="flex items-center gap-3 cursor-pointer rounded-md border p-2 hover:bg-muted/40"
+                    className={`flex items-center gap-3 rounded-md border p-2 ${
+                      disabled
+                        ? "cursor-not-allowed opacity-50"
+                        : "cursor-pointer hover:bg-muted/40"
+                    }`}
                   >
                     <Checkbox
                       checked={checked}
+                      disabled={disabled}
                       onCheckedChange={() => togglePatch(item.patch.id)}
                     />
                     {item.activeVersion?.imageUrl ? (

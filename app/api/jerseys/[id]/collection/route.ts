@@ -15,6 +15,7 @@ import {
   maxUserJerseyPhotos,
 } from "@/lib/user-jersey-photos";
 import { isSupporter } from "@/lib/subscription";
+import { hasExclusivityConflict } from "@/lib/patches/patch-exclusivity";
 
 const VALID_VERSIONS = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"] as const;
 
@@ -252,11 +253,21 @@ export async function POST(
       if (referencedIds.length > 0) {
         const existing = await prisma.patch.findMany({
           where: { id: { in: referencedIds } },
-          select: { id: true },
+          select: { family: true },
         });
         if (existing.length !== referencedIds.length) {
           return NextResponse.json(
             { success: false, error: "Un ou plusieurs patches sont introuvables" },
+            { status: 400 }
+          );
+        }
+        if (hasExclusivityConflict(existing.map((p) => p.family))) {
+          return NextResponse.json(
+            {
+              success: false,
+              error:
+                "Un maillot ne peut pas porter à la fois un badge de championnat et un badge de compétition continentale",
+            },
             { status: 400 }
           );
         }
