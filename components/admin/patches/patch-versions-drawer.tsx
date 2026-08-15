@@ -197,7 +197,7 @@ export function PatchVersionsDrawer({
               <Input
                 id="file"
                 type="file"
-                accept="image/png,image/webp,image/jpeg,image/avif,image/jxl"
+                accept="image/png,image/webp,image/jpeg,image/avif"
                 onChange={(e) => setFile(e.target.files?.[0] ?? null)}
               />
             </div>
