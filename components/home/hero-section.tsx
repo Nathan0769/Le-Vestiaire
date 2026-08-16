@@ -21,27 +21,8 @@ interface HeroSectionProps {
 export function HeroSection({ user, userStats }: HeroSectionProps) {
   const t = useTranslations("HomePage.hero");
 
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Le Vestiaire Foot - Votre Collection de Maillots de Football",
-    description:
-      "Découvrez, collectionnez et partagez votre passion pour les maillots de football. Créez votre collection personnelle et partagez la avec la communauté",
-    url: "https://le-vestiaire-foot.fr",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: "https://le-vestiaire-foot.fr/search?q={search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-
       <section
         className="relative min-h-[70vh] flex items-center justify-center"
         role="banner"
