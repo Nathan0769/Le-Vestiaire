@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
+import { getOrganizationSchema, getWebSiteSchema } from "@/lib/site-entity";
 
 type Props = {
   children: React.ReactNode;
@@ -123,32 +124,11 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Le Vestiaire Foot",
-    url: "https://le-vestiaire-foot.fr",
-    logo: "https://le-vestiaire-foot.fr/icon.png",
-    sameAs: [],
-    description:
-      "Application gratuite pour gérer et partager votre collection de maillots de football.",
-  };
+  const organizationSchema = getOrganizationSchema(
+    "Application gratuite pour gérer et partager votre collection de maillots de football."
+  );
 
-  const websiteSchema = {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    name: "Le Vestiaire Foot",
-    url: "https://le-vestiaire-foot.fr",
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate:
-          "https://le-vestiaire-foot.fr/jerseys?q={search_term_string}",
-      },
-      "query-input": "required name=search_term_string",
-    },
-  };
+  const websiteSchema = getWebSiteSchema();
 
   return (
     <html lang={locale} suppressHydrationWarning>

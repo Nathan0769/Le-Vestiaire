@@ -5,6 +5,7 @@ import { UserStatsSection } from "@/components/home/user-stats-section";
 import { TopRatedSection } from "@/components/home/top-rated-section";
 import { RecentSection } from "@/components/home/recent-section";
 import prisma from "@/lib/prisma";
+import { ORG_ID, LOGO_URL } from "@/lib/site-entity";
 import type {
   TopRatedJersey,
   RecentJersey,
@@ -517,6 +518,10 @@ const schemaContent: Record<
       "Plateforme communautaire gratuite dédiée aux collectionneurs de maillots de football, permettant de cataloguer, noter, authentifier et partager des collections de maillots.",
     faq: [
       {
+        q: "Existe-t-il une application pour gérer sa collection de maillots de football ?",
+        a: "Oui, Le Vestiaire Foot est une application web gratuite conçue pour les collectionneurs de maillots de football. Elle permet de cataloguer chaque maillot avec sa taille, son état et son prix, de créer une wishlist partageable, d'authentifier ses maillots et de suivre la valeur de sa collection au sein d'une communauté de passionnés.",
+      },
+      {
         q: "Comment ajouter un maillot à ma collection ?",
         a: "Pour ajouter un maillot à votre collection sur Le Vestiaire Foot, créez un compte gratuit, accédez à la section « Ma Collection » et sélectionnez le maillot dans le catalogue. Vous pouvez renseigner la taille, l'état, le prix d'achat et la personnalisation pour chaque maillot afin de suivre précisément la valeur de votre collection.",
       },
@@ -551,6 +556,10 @@ const schemaContent: Record<
     orgDescription:
       "Free community platform dedicated to football jersey collectors, enabling cataloging, rating, authenticating and sharing jersey collections.",
     faq: [
+      {
+        q: "Is there an app to manage a football shirt collection?",
+        a: "Yes, Le Vestiaire Foot is a free web app built for football shirt collectors. It lets you catalogue each shirt with its size, condition and price, create a shareable wishlist, authenticate your shirts and track the value of your collection within a community of enthusiasts.",
+      },
       {
         q: "How do I add a jersey to my collection?",
         a: "To add a jersey to your collection on Le Vestiaire Foot, create a free account, go to the 'My Collection' section and select the jersey from the catalog. You can enter the size, condition, purchase price and customization for each jersey to precisely track the value of your collection.",
@@ -587,6 +596,10 @@ const schemaContent: Record<
       "Plataforma comunitaria gratuita dedicada a los coleccionistas de camisetas de fútbol, que permite catalogar, valorar, autenticar y compartir colecciones de camisetas.",
     faq: [
       {
+        q: "¿Existe una aplicación para gestionar una colección de camisetas de fútbol?",
+        a: "Sí, Le Vestiaire Foot es una aplicación web gratuita creada para coleccionistas de camisetas de fútbol. Permite catalogar cada camiseta con su talla, estado y precio, crear una lista de deseos compartible, autenticar tus camisetas y seguir el valor de tu colección dentro de una comunidad de aficionados.",
+      },
+      {
         q: "¿Cómo añado una camiseta a mi colección?",
         a: "Para añadir una camiseta a tu colección en Le Vestiaire Foot, crea una cuenta gratuita, accede a la sección 'Mi Colección' y selecciona la camiseta del catálogo. Puedes introducir la talla, el estado, el precio de compra y la personalización de cada camiseta para seguir con precisión el valor de tu colección.",
       },
@@ -621,6 +634,10 @@ const schemaContent: Record<
     orgDescription:
       "Kostenlose Community-Plattform für Fußballtrikot-Sammler, die das Katalogisieren, Bewerten, Authentifizieren und Teilen von Trikotsammlungen ermöglicht.",
     faq: [
+      {
+        q: "Gibt es eine App zur Verwaltung einer Fußballtrikot-Sammlung?",
+        a: "Ja, Le Vestiaire Foot ist eine kostenlose Web-App für Sammler von Fußballtrikots. Damit kannst du jedes Trikot mit Größe, Zustand und Preis katalogisieren, eine teilbare Wunschliste erstellen, deine Trikots authentifizieren und den Wert deiner Sammlung in einer Community von Enthusiasten verfolgen.",
+      },
       {
         q: "Wie füge ich ein Trikot zu meiner Sammlung hinzu?",
         a: "Um ein Trikot zu deiner Sammlung bei Le Vestiaire Foot hinzuzufügen, erstelle ein kostenloses Konto, gehe zum Bereich 'Meine Sammlung' und wähle das Trikot aus dem Katalog. Du kannst Größe, Zustand, Kaufpreis und Personalisierung für jedes Trikot eingeben, um den Wert deiner Sammlung genau zu verfolgen.",
@@ -657,6 +674,10 @@ const schemaContent: Record<
       "Plataforma comunitária gratuita dedicada aos colecionadores de camisolas de futebol, que permite catalogar, avaliar, autenticar e partilhar coleções de camisolas.",
     faq: [
       {
+        q: "Existe uma aplicação para gerir uma coleção de camisolas de futebol?",
+        a: "Sim, o Le Vestiaire Foot é uma aplicação web gratuita criada para colecionadores de camisolas de futebol. Permite catalogar cada camisola com o tamanho, o estado e o preço, criar uma lista de desejos partilhável, autenticar as tuas camisolas e acompanhar o valor da tua coleção numa comunidade de apaixonados.",
+      },
+      {
         q: "Como adiciono uma camisola à minha coleção?",
         a: "Para adicionar uma camisola à tua coleção no Le Vestiaire Foot, cria uma conta gratuita, acede à secção 'A Minha Coleção' e seleciona a camisola no catálogo. Podes introduzir o tamanho, o estado, o preço de compra e a personalização de cada camisola para acompanhar com precisão o valor da tua coleção.",
       },
@@ -692,6 +713,10 @@ const schemaContent: Record<
       "Gratis communityplatform voor voetbalshirts-verzamelaars, waarmee je shirtcollecties kunt catalogiseren, beoordelen, authentiseren en delen.",
     faq: [
       {
+        q: "Bestaat er een app om een voetbalshirtcollectie te beheren?",
+        a: "Ja, Le Vestiaire Foot is een gratis webapp voor verzamelaars van voetbalshirts. Je kunt elk shirt catalogiseren met maat, staat en prijs, een deelbare verlanglijst maken, je shirts authenticeren en de waarde van je collectie volgen binnen een community van liefhebbers.",
+      },
+      {
         q: "Hoe voeg ik een shirt toe aan mijn collectie?",
         a: "Om een shirt toe te voegen aan je collectie op Le Vestiaire Foot, maak je een gratis account aan, ga je naar het gedeelte 'Mijn Collectie' en selecteer je het shirt uit de catalogus. Je kunt de maat, staat, aankoopprijs en personalisatie voor elk shirt invullen om de waarde van je collectie nauwkeurig bij te houden.",
       },
@@ -726,6 +751,10 @@ const schemaContent: Record<
     orgDescription:
       "Piattaforma community gratuita per collezionisti di maglie da calcio, che permette di catalogare, valutare, autenticare e condividere collezioni di maglie.",
     faq: [
+      {
+        q: "Esiste un'applicazione per gestire una collezione di maglie da calcio?",
+        a: "Sì, Le Vestiaire Foot è un'applicazione web gratuita pensata per i collezionisti di maglie da calcio. Permette di catalogare ogni maglia con taglia, condizione e prezzo, creare una wishlist condivisibile, autenticare le tue maglie e monitorare il valore della tua collezione in una community di appassionati.",
+      },
       {
         q: "Come aggiungo una maglia alla mia collezione?",
         a: "Per aggiungere una maglia alla tua collezione su Le Vestiaire Foot, crea un account gratuito, vai alla sezione 'La mia collezione' e seleziona la maglia dal catalogo. Puoi indicare la taglia, la condizione, il prezzo d'acquisto e la personalizzazione di ogni maglia per tenere traccia con precisione del valore della tua collezione.",
@@ -779,15 +808,10 @@ export default async function HomePage({
     description: content.appDescription,
     featureList: content.featureList,
     inLanguage: locale,
-  };
-
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Le Vestiaire Foot",
-    url: pageUrl,
-    description: content.orgDescription,
-    inLanguage: locale,
+    image: LOGO_URL,
+    datePublished: "2025-09",
+    // Rattache l'app à l'entité Organization autoritaire (définie dans le layout).
+    publisher: { "@id": ORG_ID },
   };
 
   const faqSchema = {
@@ -823,10 +847,6 @@ export default async function HomePage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
       <script
         type="application/ld+json"
