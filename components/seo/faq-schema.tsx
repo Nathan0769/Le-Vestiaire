@@ -7,6 +7,7 @@ interface FaqSchemaProps {
   collectionCount?: number;
   totalRatings?: number;
   averageRating?: number;
+  cfsPrice?: number;
 }
 
 export function FaqSchema({
@@ -16,6 +17,7 @@ export function FaqSchema({
   collectionCount = 0,
   totalRatings = 0,
   averageRating,
+  cfsPrice,
 }: FaqSchemaProps) {
   const typeLower = translatedType.toLowerCase();
   const { club, season, brand } = jersey;
@@ -74,7 +76,11 @@ export function FaqSchema({
       name: `Où acheter le maillot ${translatedJerseyName} ?`,
       acceptedAnswer: {
         "@type": "Answer",
-        text: `Le maillot ${translatedJerseyName} est disponible sur Classic Football Shirts, spécialiste en maillots de football vintage et de collection.`,
+        text: cfsPrice
+          ? `Le maillot ${translatedJerseyName} est disponible à partir de ${cfsPrice.toFixed(
+              2
+            )}€ sur Classic Football Shirts, spécialiste en maillots de football vintage et de collection.`
+          : `Le maillot ${translatedJerseyName} est disponible sur Classic Football Shirts, spécialiste en maillots de football vintage et de collection.`,
       },
     },
   ];

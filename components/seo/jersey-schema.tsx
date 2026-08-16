@@ -7,6 +7,11 @@ interface JerseySchemaProps {
   totalRatings?: number;
   collectionCount?: number;
   wishlistCount?: number;
+  cfsAvailability?: {
+    price: number;
+    promoPrice: number | null;
+    affiliateUrl: string;
+  } | null;
 }
 
 export function JerseySchema({
@@ -16,8 +21,26 @@ export function JerseySchema({
   totalRatings = 0,
   collectionCount = 0,
   wishlistCount = 0,
+  cfsAvailability = null,
 }: JerseySchemaProps) {
   const displayName = translatedJerseyName || jersey.name;
+
+  // Offer réel basé sur la disponibilité CFS (prix EUR, dispo en stock, lien affilié).
+  // Signal commercial fort pour les moteurs IA + rend le Product valide même sans notes.
+  const cfsOffer = cfsAvailability
+    ? {
+        "@type": "Offer",
+        price: (cfsAvailability.promoPrice ?? cfsAvailability.price).toFixed(2),
+        priceCurrency: "EUR",
+        availability: "https://schema.org/InStock",
+        itemCondition: "https://schema.org/UsedCondition",
+        url: cfsAvailability.affiliateUrl,
+        seller: {
+          "@type": "Organization",
+          name: "Classic Football Shirts",
+        },
+      }
+    : null;
 
   const schema = {
     "@context": "https://schema.org",
@@ -65,6 +88,8 @@ export function JerseySchema({
     url: `https://le-vestiaire-foot.fr/jerseys/${jersey.club.league.id}/clubs/${
       jersey.club.id
     }/jerseys/${jersey.slug || jersey.id}`,
+
+    ...(cfsOffer && { offers: cfsOffer }),
 
     ...(totalRatings > 0 && {
       aggregateRating: {

@@ -88,6 +88,20 @@ const getCachedStats = cache(async (jerseyId: string) => {
   return { collectionCount, wishlistCount };
 });
 
+const getCachedCfsAvailability = cache(async (jerseyId: string) => {
+  const av = await prisma.cfsAvailability.findUnique({
+    where: { jerseyId },
+    select: { price: true, promoPrice: true, affiliateUrl: true },
+  });
+  if (!av) return null;
+  // Decimal -> number pour la sérialisation JSON-LD (schema.org offers)
+  return {
+    price: Number(av.price),
+    promoPrice: av.promoPrice == null ? null : Number(av.promoPrice),
+    affiliateUrl: av.affiliateUrl,
+  };
+});
+
 const OG_LOCALES: Record<string, string> = {
   fr: "fr_FR",
   en: "en_US",
@@ -285,9 +299,10 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     redirect(`/jerseys/${leagueId}/clubs/${clubId}/jerseys/${jersey.slug}`);
   }
 
-  const [ratingData, statsData] = await Promise.all([
+  const [ratingData, statsData, cfsAvailability] = await Promise.all([
     getCachedRating(jersey.id),
     getCachedStats(jersey.id),
+    getCachedCfsAvailability(jersey.id),
   ]);
 
   const typeOrder: Record<string, number> = {
@@ -387,6 +402,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
         totalRatings={ratingData?.totalRatings}
         collectionCount={statsData?.collectionCount}
         wishlistCount={statsData?.wishlistCount}
+        cfsAvailability={cfsAvailability}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
       <WebPageSchema
@@ -402,6 +418,11 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
         collectionCount={statsData?.collectionCount}
         totalRatings={ratingData?.totalRatings}
         averageRating={ratingData?.averageRating}
+        cfsPrice={
+          cfsAvailability
+            ? (cfsAvailability.promoPrice ?? cfsAvailability.price)
+            : undefined
+        }
       />
 
       <div className="p-6 space-y-8 overflow-x-hidden">
