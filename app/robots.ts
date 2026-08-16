@@ -12,7 +12,6 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: [
           "GPTBot",
-          "Google-Extended",
           "CCBot",
           "anthropic-ai",
           "ClaudeBot",
@@ -22,8 +21,14 @@ export default function robots(): MetadataRoute.Robots {
         disallow: "/",
       },
 
+      // Google-Extended autorisé : éligibilité aux AI Overviews / Gemini grounding (objectif GEO)
       {
-        userAgent: ["Claude-SearchBot", "OAI-SearchBot", "PerplexityBot"],
+        userAgent: [
+          "Google-Extended",
+          "Claude-SearchBot",
+          "OAI-SearchBot",
+          "PerplexityBot",
+        ],
         allow: "/",
         disallow: ["/api/", "/admin/", "/auth/"],
       },
