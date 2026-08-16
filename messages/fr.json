@@ -3148,8 +3148,10 @@
     "titleTemplate": "Maillot {clubName} {typeLower} {season} - {brand}{ratingSuffix} | Le Vestiaire",
     "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Le Vestiaire",
     "ratingSuffix": " - Note {rating}/5 ⭐",
-    "descriptionTemplate": "Maillot {typeLower} {clubName} saison {season} par {brand}. Fiche complète du maillot {leagueName} avec notes de la communauté, historique et détails de collection.",
-    "descriptionTemplateWithShort": "Maillot {typeLower} {clubName} saison {season} ({shortSeason}) par {brand}. Fiche complète du maillot {leagueName} avec notes de la communauté, historique et détails de collection.",
+    "descriptionTemplate": "Maillot {typeLower} {clubName} {season} par {brand}. Ajoute ce maillot {leagueName} à ta collection, note-le et rejoins la communauté de collectionneurs sur Le Vestiaire.",
+    "descriptionTemplateWithShort": "Maillot {typeLower} {clubName} {season} ({shortSeason}) par {brand}. Ajoute ce maillot {leagueName} à ta collection, note-le et rejoins la communauté sur Le Vestiaire.",
+    "descriptionCollectors": "Maillot {typeLower} {clubName} {season} par {brand}. {count} collectionneurs l'ont déjà sur Le Vestiaire. Ajoute-le à ta collection, note-le et compare-toi à la communauté.",
+    "descriptionCollectorsWithShort": "Maillot {typeLower} {clubName} {season} ({shortSeason}) par {brand}. {count} collectionneurs l'ont déjà. Ajoute-le à ta collection, note-le et compare-toi à la communauté.",
     "ogDescription": "Maillot {typeLower} {clubName} par {brand}. {leagueName} • Saison {season}",
     "twitterDescription": "Maillot {brand} • {leagueName}",
     "pageDescription": "Maillot {typeLower} du {clubName} pour la saison {season}, conçu par {brand}. {leagueName}."

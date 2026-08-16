@@ -3143,6 +3143,8 @@
     "ratingSuffix": " - Valutazione {rating}/5 ⭐",
     "descriptionTemplate": "Maglia {typeLower} {clubName} stagione {season} di {brand}. Scheda completa della maglia {leagueName} con valutazioni della community, storia e dettagli da collezione.",
     "descriptionTemplateWithShort": "Maglia {typeLower} {clubName} stagione {season} ({shortSeason}) di {brand}. Scheda completa della maglia {leagueName} con valutazioni della community, storia e dettagli da collezione.",
+    "descriptionCollectors": "Maglia {typeLower} {clubName} {season} di {brand}. {count} collezionisti la possiedono già su Le Vestiaire. Aggiungila alla tua collezione, valutala e confrontati con la community.",
+    "descriptionCollectorsWithShort": "Maglia {typeLower} {clubName} {season} ({shortSeason}) di {brand}. {count} collezionisti la possiedono già. Aggiungila alla tua collezione, valutala e confrontati con la community.",
     "ogDescription": "Maglia {typeLower} {clubName} di {brand}. {leagueName} • Stagione {season}",
     "twitterDescription": "Maglia {brand} • {leagueName}",
     "pageDescription": "Maglia {typeLower} del {clubName} per la stagione {season}, disegnata da {brand}. {leagueName}."

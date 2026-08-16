@@ -3141,8 +3141,10 @@
     "titleTemplate": "{clubName} {typeLower}-Trikot {season} - {brand}{ratingSuffix} | Le Vestiaire",
     "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Le Vestiaire",
     "ratingSuffix": " - Bewertung {rating}/5 ⭐",
-    "descriptionTemplate": "{clubName} {typeLower}-Trikot Saison {season} von {brand}. Vollständige Übersicht des {leagueName}-Trikots mit Community-Bewertungen, Historie und Sammlerdetails.",
-    "descriptionTemplateWithShort": "{clubName} {typeLower}-Trikot Saison {season} ({shortSeason}) von {brand}. Vollständige Übersicht des {leagueName}-Trikots mit Community-Bewertungen, Historie und Sammlerdetails.",
+    "descriptionTemplate": "{clubName} {typeLower}-Trikot {season} von {brand}. Füge dieses {leagueName}-Trikot deiner Sammlung hinzu, bewerte es und tritt der Sammler-Community auf Le Vestiaire bei.",
+    "descriptionTemplateWithShort": "{clubName} {typeLower}-Trikot {season} ({shortSeason}) von {brand}. Füge dieses {leagueName}-Trikot deiner Sammlung hinzu, bewerte es und tritt der Community bei.",
+    "descriptionCollectors": "{clubName} {typeLower}-Trikot {season} von {brand}. {count} Sammler besitzen es bereits auf Le Vestiaire. Füge es deiner Sammlung hinzu, bewerte es und vergleiche dich mit der Community.",
+    "descriptionCollectorsWithShort": "{clubName} {typeLower}-Trikot {season} ({shortSeason}) von {brand}. {count} Sammler besitzen es bereits. Füge es deiner Sammlung hinzu, bewerte es und vergleiche dich mit der Community.",
     "ogDescription": "{clubName} {typeLower}-Trikot von {brand}. {leagueName} • Saison {season}",
     "twitterDescription": "{brand}-Trikot • {leagueName}",
     "pageDescription": "{clubName} {typeLower}-Trikot für die Saison {season}, entworfen von {brand}. {leagueName}."
