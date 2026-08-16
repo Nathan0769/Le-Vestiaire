@@ -3141,8 +3141,10 @@
     "titleTemplate": "{clubName} {typeLower} jersey {season} - {brand}{ratingSuffix} | The Locker Room",
     "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | The Locker Room",
     "ratingSuffix": " - Rated {rating}/5 ⭐",
-    "descriptionTemplate": "{clubName} {typeLower} jersey for the {season} season by {brand}. Complete fact sheet of the {leagueName} jersey with community ratings, history and collection details.",
-    "descriptionTemplateWithShort": "{clubName} {typeLower} jersey for the {season} ({shortSeason}) season by {brand}. Complete fact sheet of the {leagueName} jersey with community ratings, history and collection details.",
+    "descriptionTemplate": "{clubName} {typeLower} jersey {season} by {brand}. Add this {leagueName} jersey to your collection, rate it and join the collectors' community on Le Vestiaire.",
+    "descriptionTemplateWithShort": "{clubName} {typeLower} jersey {season} ({shortSeason}) by {brand}. Add this {leagueName} jersey to your collection, rate it and join the community on Le Vestiaire.",
+    "descriptionCollectors": "{clubName} {typeLower} jersey {season} by {brand}. {count} collectors already own it on Le Vestiaire. Add it to your collection, rate it and compare with the community.",
+    "descriptionCollectorsWithShort": "{clubName} {typeLower} jersey {season} ({shortSeason}) by {brand}. {count} collectors already own it. Add it to your collection, rate it and compare with the community.",
     "ogDescription": "{clubName} {typeLower} jersey by {brand}. {leagueName} • {season} season",
     "twitterDescription": "{brand} jersey • {leagueName}",
     "pageDescription": "{clubName} {typeLower} jersey for the {season} season, designed by {brand}. {leagueName}."

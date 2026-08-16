@@ -3143,6 +3143,8 @@
     "ratingSuffix": " - Beoordeling {rating}/5 ⭐",
     "descriptionTemplate": "{clubName} {typeLower} shirt seizoen {season} van {brand}. Volledige fiche van het {leagueName}-shirt met community-beoordelingen, historiek en collectiegegevens.",
     "descriptionTemplateWithShort": "{clubName} {typeLower} shirt seizoen {season} ({shortSeason}) van {brand}. Volledige fiche van het {leagueName}-shirt met community-beoordelingen, historiek en collectiegegevens.",
+    "descriptionCollectors": "{clubName} {typeLower} shirt {season} van {brand}. {count} verzamelaars hebben het al op Le Vestiaire. Voeg het toe aan je collectie, beoordeel het en vergelijk met de community.",
+    "descriptionCollectorsWithShort": "{clubName} {typeLower} shirt {season} ({shortSeason}) van {brand}. {count} verzamelaars hebben het al. Voeg het toe aan je collectie, beoordeel het en vergelijk met de community.",
     "ogDescription": "{clubName} {typeLower} shirt van {brand}. {leagueName} • Seizoen {season}",
     "twitterDescription": "{brand} shirt • {leagueName}",
     "pageDescription": "{clubName} {typeLower} shirt voor het seizoen {season}, ontworpen door {brand}. {leagueName}."

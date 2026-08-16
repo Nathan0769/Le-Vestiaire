@@ -3143,6 +3143,8 @@
     "ratingSuffix": " - Nota {rating}/5 ⭐",
     "descriptionTemplate": "Camisola {typeLower} {clubName} época {season} pela {brand}. Ficha completa da camisola {leagueName} com avaliações da comunidade, história e detalhes de coleção.",
     "descriptionTemplateWithShort": "Camisola {typeLower} {clubName} época {season} ({shortSeason}) pela {brand}. Ficha completa da camisola {leagueName} com avaliações da comunidade, história e detalhes de coleção.",
+    "descriptionCollectors": "Camisola {typeLower} {clubName} {season} pela {brand}. {count} colecionadores já a têm no Le Vestiaire. Adiciona-a à tua coleção, avalia-a e compara-te com a comunidade.",
+    "descriptionCollectorsWithShort": "Camisola {typeLower} {clubName} {season} ({shortSeason}) pela {brand}. {count} colecionadores já a têm. Adiciona-a à tua coleção, avalia-a e compara-te com a comunidade.",
     "ogDescription": "Camisola {typeLower} {clubName} pela {brand}. {leagueName} • Época {season}",
     "twitterDescription": "Camisola {brand} • {leagueName}",
     "pageDescription": "Camisola {typeLower} do {clubName} para a época {season}, concebida por {brand}. {leagueName}."

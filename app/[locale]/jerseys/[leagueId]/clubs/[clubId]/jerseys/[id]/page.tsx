@@ -156,7 +156,10 @@ export async function generateMetadata({
       typeTranslation: typeLabel,
     });
 
-    const rating = await getCachedRating(jersey.id);
+    const [rating, stats] = await Promise.all([
+      getCachedRating(jersey.id),
+      getCachedStats(jersey.id),
+    ]);
     const ratingSuffix =
       rating.totalRatings > 0
         ? tMeta("ratingSuffix", { rating: rating.averageRating.toFixed(1) })
@@ -182,22 +185,26 @@ export async function generateMetadata({
             ratingSuffix,
           });
 
-    const description = shortSeason
-      ? tMeta("descriptionTemplateWithShort", {
-          typeLower,
-          clubName: jersey.club.name,
-          season: jersey.season,
-          shortSeason,
-          brand: jersey.brand,
-          leagueName: jersey.club.league.name,
-        })
-      : tMeta("descriptionTemplate", {
-          typeLower,
-          clubName: jersey.club.name,
-          season: jersey.season,
-          brand: jersey.brand,
-          leagueName: jersey.club.league.name,
-        });
+    // Description orientée collectionneur : preuve sociale (nombre de collectionneurs)
+    // quand elle existe, sinon CTA d'inscription. Objectif : recruter, pas juste informer.
+    const hasCollectors = stats.collectionCount > 0;
+    const descriptionKey = hasCollectors
+      ? shortSeason
+        ? "descriptionCollectorsWithShort"
+        : "descriptionCollectors"
+      : shortSeason
+      ? "descriptionTemplateWithShort"
+      : "descriptionTemplate";
+
+    const description = tMeta(descriptionKey, {
+      typeLower,
+      clubName: jersey.club.name,
+      season: jersey.season,
+      shortSeason: shortSeason ?? "",
+      brand: jersey.brand,
+      leagueName: jersey.club.league.name,
+      count: stats.collectionCount,
+    });
 
     const keywords = [
       `maillot ${jersey.club.name}`,

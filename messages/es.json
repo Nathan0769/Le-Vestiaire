@@ -3143,6 +3143,8 @@
     "ratingSuffix": " - Nota {rating}/5 ⭐",
     "descriptionTemplate": "Camiseta {typeLower} {clubName} temporada {season} por {brand}. Ficha completa de la camiseta {leagueName} con valoraciones de la comunidad, historia y detalles de colección.",
     "descriptionTemplateWithShort": "Camiseta {typeLower} {clubName} temporada {season} ({shortSeason}) por {brand}. Ficha completa de la camiseta {leagueName} con valoraciones de la comunidad, historia y detalles de colección.",
+    "descriptionCollectors": "Camiseta {typeLower} {clubName} {season} por {brand}. {count} coleccionistas ya la tienen en Le Vestiaire. Añádela a tu colección, puntúala y compárate con la comunidad.",
+    "descriptionCollectorsWithShort": "Camiseta {typeLower} {clubName} {season} ({shortSeason}) por {brand}. {count} coleccionistas ya la tienen. Añádela a tu colección, puntúala y compárate con la comunidad.",
     "ogDescription": "Camiseta {typeLower} {clubName} por {brand}. {leagueName} • Temporada {season}",
     "twitterDescription": "Camiseta {brand} • {leagueName}",
     "pageDescription": "Camiseta {typeLower} del {clubName} para la temporada {season}, diseñada por {brand}. {leagueName}."
