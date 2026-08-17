@@ -40,6 +40,21 @@ export const BADGE_KEYS = new Set<string>([
   "loyalty.2year",
   "loyalty.3year",
   "loyalty.5year",
+  // Statut & profil (planche couronne/personnage/machine/noeud pap)
+  "loyalty.supporter",
+  "social.profile.complete",
+  "contribution.description.first",
+  "special.founder",
+  // Maillots du même club (planche blason 5/15/30/50)
+  "collection.same_club.5",
+  "collection.same_club.15",
+  "collection.same_club.30",
+  "collection.same_club.50",
+  // Marques (étiquettes 5/10), floqué et neuf (planche étiquettes/maillots)
+  "diversity.brands.5",
+  "diversity.brands.10",
+  "collection.flocked.10",
+  "collection.mint.25",
 ]);
 
 const BASE = process.env.NEXT_PUBLIC_R2_STATIC_PUBLIC_URL?.replace(/\/$/, "");
