@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/breadcrumb";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
+import { permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { getTranslations, getLocale } from "next-intl/server";
 import { cache } from "react";
@@ -126,7 +127,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ClubDetailPage(props: Props) {
-  const { clubId } = await props.params;
+  const { leagueId, clubId } = await props.params;
 
   const club = await getCachedClub(clubId);
 
@@ -137,6 +138,13 @@ export default async function ClubDetailPage(props: Props) {
 
   if (!club) {
     return <div className="p-6">{t("clubNotFoundText")}</div>;
+  }
+
+  // Le leagueId de l'URL est décoratif : on ne s'en sert pas pour fetch le club.
+  // Un club qui change de division garde des URLs de son ancienne ligue indexées
+  // (contenu dupliqué). On redirige en 301 vers la ligue réelle du club.
+  if (club.league.id !== leagueId) {
+    permanentRedirect(`/jerseys/${club.league.id}/clubs/${clubId}`);
   }
 
   const [ratingAggregate, favoriteCount] = await Promise.all([
