@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { cache } from "react";
 import { isSlug } from "@/lib/slug-generator";
 import type {
@@ -292,8 +292,6 @@ export async function generateMetadata({
 export default async function JerseyPage({ params }: JerseyPageProps) {
   const { leagueId, clubId, id } = await params;
 
-  const isSlugParam = isSlug(id);
-
   const currentUser = await getCachedUser();
   const isAdmin =
     currentUser?.role === "admin" || currentUser?.role === "superadmin";
@@ -302,8 +300,18 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
   const jersey = await getCachedJersey(id);
   if (!jersey) notFound();
 
-  if (!isSlugParam && jersey.slug) {
-    redirect(`/jerseys/${leagueId}/clubs/${clubId}/jerseys/${jersey.slug}`);
+  // Garde-fou canonique : leagueId/clubId de l'URL sont décoratifs (fetch par id/slug).
+  // On redirige en 308 vers l'URL réelle du maillot dès qu'un segment diffère
+  // (mauvaise ligue, mauvais club, ou accès par id alors qu'un slug existe).
+  const canonicalIdPart = jersey.slug ?? jersey.id;
+  if (
+    leagueId !== jersey.club.league.id ||
+    clubId !== jersey.club.id ||
+    id !== canonicalIdPart
+  ) {
+    permanentRedirect(
+      `/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${canonicalIdPart}`
+    );
   }
 
   const [ratingData, statsData, cfsAvailability] = await Promise.all([
