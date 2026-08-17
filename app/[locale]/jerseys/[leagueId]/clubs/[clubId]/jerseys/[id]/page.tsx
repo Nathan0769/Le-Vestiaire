@@ -404,6 +404,8 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     <>
       <JerseySchema
         jersey={jersey}
+        locale={locale}
+        translatedType={getJerseyTypeLabel(jersey.type)}
         translatedJerseyName={translatedJerseyName}
         averageRating={ratingData?.averageRating}
         totalRatings={ratingData?.totalRatings}
@@ -420,6 +422,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
       />
       <FaqSchema
         jersey={jersey}
+        locale={locale}
         translatedJerseyName={translatedJerseyName}
         translatedType={getJerseyTypeLabel(jersey.type)}
         collectionCount={statsData?.collectionCount}

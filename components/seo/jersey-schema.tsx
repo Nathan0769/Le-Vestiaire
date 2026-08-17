@@ -1,7 +1,15 @@
 import type { JerseyWithWishlistAndCollection } from "@/types/jersey";
+import {
+  buildJerseyProductDescription,
+  buildJerseyKeywords,
+  localizedCategory,
+  localizedJerseyWord,
+} from "@/lib/seo-jersey-i18n";
 
 interface JerseySchemaProps {
   jersey: JerseyWithWishlistAndCollection;
+  locale: string;
+  translatedType: string;
   translatedJerseyName?: string;
   averageRating?: number;
   totalRatings?: number;
@@ -16,6 +24,8 @@ interface JerseySchemaProps {
 
 export function JerseySchema({
   jersey,
+  locale,
+  translatedType,
   translatedJerseyName,
   averageRating = 0,
   totalRatings = 0,
@@ -24,6 +34,7 @@ export function JerseySchema({
   cfsAvailability = null,
 }: JerseySchemaProps) {
   const displayName = translatedJerseyName || jersey.name;
+  const typeLower = translatedType.toLowerCase();
 
   // Offer réel basé sur la disponibilité CFS (prix EUR, dispo en stock, lien affilié).
   // Signal commercial fort pour les moteurs IA + rend le Product valide même sans notes.
@@ -46,13 +57,13 @@ export function JerseySchema({
     "@context": "https://schema.org",
     "@type": "Product",
     name: `${displayName} - ${jersey.club.name}`,
-    description: `Maillot ${jersey.type.toLowerCase()} du ${
-      jersey.club.name
-    } pour la saison ${jersey.season}, conçu par ${jersey.brand}. ${
-      collectionCount > 0
-        ? `${collectionCount} collectionneurs possèdent ce maillot.`
-        : "Maillot de collection recherché par les passionnés."
-    }`,
+    description: buildJerseyProductDescription(locale, {
+      typeLower,
+      clubName: jersey.club.name,
+      season: jersey.season,
+      brand: jersey.brand,
+      collectionCount,
+    }),
     image: {
       "@type": "ImageObject",
       url: jersey.imageUrl,
@@ -60,7 +71,7 @@ export function JerseySchema({
       width: 800,
       height: 800,
       name: displayName,
-      description: `Maillot ${jersey.type.toLowerCase()} ${jersey.club.name} ${jersey.season} ${jersey.brand}`,
+      description: `${localizedJerseyWord(locale)} ${typeLower} ${jersey.club.name} ${jersey.season} ${jersey.brand}`,
     },
     brand: {
       "@type": "Brand",
@@ -70,7 +81,7 @@ export function JerseySchema({
       "@type": "Organization",
       name: jersey.brand,
     },
-    category: "Maillot de football",
+    category: localizedCategory(locale),
     creator: {
       "@type": "Brand",
       name: jersey.brand,
@@ -124,14 +135,12 @@ export function JerseySchema({
         : []),
     ],
 
-    keywords: [
-      `maillot ${jersey.club.name}`,
-      `${jersey.club.name} ${jersey.season}`,
-      `${jersey.brand}`,
-      jersey.club.league.name,
-      "collection maillot football",
-      "football vintage",
-    ].join(", "),
+    keywords: buildJerseyKeywords(locale, {
+      clubName: jersey.club.name,
+      season: jersey.season,
+      brand: jersey.brand,
+      leagueName: jersey.club.league.name,
+    }),
   };
 
   return (
