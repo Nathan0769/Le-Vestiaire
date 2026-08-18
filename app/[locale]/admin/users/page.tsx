@@ -51,6 +51,16 @@ const ROLE_COLORS: Record<string, string> = {
   superadmin: "bg-red-500 text-white",
 };
 
+function formatDateTime(value: string) {
+  return new Date(value).toLocaleString("fr-FR", {
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
@@ -104,6 +114,40 @@ export default function AdminUsersPage() {
     }
   }
 
+  function RoleSelect({ user }: { user: User }) {
+    return (
+      <Select
+        value={user.role}
+        onValueChange={(newRole) => handleRoleChange(user.id, newRole)}
+        disabled={changingRole === user.id}
+      >
+        <SelectTrigger className="w-[160px]">
+          <SelectValue>
+            {changingRole === user.id ? (
+              <span className="flex items-center gap-2">
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Modification...
+              </span>
+            ) : (
+              <Badge className={ROLE_COLORS[user.role]}>
+                {ROLE_LABELS[user.role]}
+              </Badge>
+            )}
+          </SelectValue>
+        </SelectTrigger>
+        <SelectContent>
+          {(["user", "contributor", "admin", "superadmin"] as const).map(
+            (role) => (
+              <SelectItem key={role} value={role}>
+                <Badge className={ROLE_COLORS[role]}>{ROLE_LABELS[role]}</Badge>
+              </SelectItem>
+            )
+          )}
+        </SelectContent>
+      </Select>
+    );
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -114,7 +158,7 @@ export default function AdminUsersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-4">
         <div>
           <h2 className="text-2xl font-bold">Gestion des utilisateurs</h2>
           <p className="text-muted-foreground">
@@ -126,7 +170,58 @@ export default function AdminUsersPage() {
         </Button>
       </div>
 
-      <div className="rounded-md border">
+      {/* Mobile : cartes */}
+      <div className="space-y-3 md:hidden">
+        {users.map((user) => (
+          <div
+            key={user.id}
+            className="rounded-lg border bg-card p-4 space-y-3"
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="flex items-center gap-2 flex-wrap">
+                  <span className="font-medium truncate">{user.name}</span>
+                  {user.banned && (
+                    <Badge variant="destructive">Banni</Badge>
+                  )}
+                </div>
+                <p className="text-sm text-muted-foreground truncate">
+                  {user.email}
+                </p>
+              </div>
+              <RoleSelect user={user} />
+            </div>
+
+            <div className="grid grid-cols-3 gap-2 text-center">
+              <div className="rounded-md bg-muted/50 py-2">
+                <p className="text-base font-semibold">
+                  {user._count.collection}
+                </p>
+                <p className="text-xs text-muted-foreground">Collection</p>
+              </div>
+              <div className="rounded-md bg-muted/50 py-2">
+                <p className="text-base font-semibold">
+                  {user._count.wishlist}
+                </p>
+                <p className="text-xs text-muted-foreground">Wishlist</p>
+              </div>
+              <div className="rounded-md bg-muted/50 py-2">
+                <p className="text-base font-semibold">
+                  {user._count.ratings}
+                </p>
+                <p className="text-xs text-muted-foreground">Notes</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-muted-foreground">
+              Inscrit le {formatDateTime(user.createdAt)}
+            </p>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop : tableau */}
+      <div className="hidden rounded-md border md:block">
         <Table>
           <TableHeader>
             <TableRow>
@@ -154,50 +249,7 @@ export default function AdminUsersPage() {
                   {user.email}
                 </TableCell>
                 <TableCell>
-                  <Select
-                    value={user.role}
-                    onValueChange={(newRole) =>
-                      handleRoleChange(user.id, newRole)
-                    }
-                    disabled={changingRole === user.id}
-                  >
-                    <SelectTrigger className="w-[160px]">
-                      <SelectValue>
-                        {changingRole === user.id ? (
-                          <span className="flex items-center gap-2">
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            Modification...
-                          </span>
-                        ) : (
-                          <Badge className={ROLE_COLORS[user.role]}>
-                            {ROLE_LABELS[user.role]}
-                          </Badge>
-                        )}
-                      </SelectValue>
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="user">
-                        <Badge className={ROLE_COLORS.user}>
-                          {ROLE_LABELS.user}
-                        </Badge>
-                      </SelectItem>
-                      <SelectItem value="contributor">
-                        <Badge className={ROLE_COLORS.contributor}>
-                          {ROLE_LABELS.contributor}
-                        </Badge>
-                      </SelectItem>
-                      <SelectItem value="admin">
-                        <Badge className={ROLE_COLORS.admin}>
-                          {ROLE_LABELS.admin}
-                        </Badge>
-                      </SelectItem>
-                      <SelectItem value="superadmin">
-                        <Badge className={ROLE_COLORS.superadmin}>
-                          {ROLE_LABELS.superadmin}
-                        </Badge>
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <RoleSelect user={user} />
                 </TableCell>
                 <TableCell className="text-center">
                   {user._count.collection}
@@ -209,7 +261,7 @@ export default function AdminUsersPage() {
                   {user._count.ratings}
                 </TableCell>
                 <TableCell className="text-sm text-muted-foreground">
-                  {new Date(user.createdAt).toLocaleDateString("fr-FR")}
+                  {formatDateTime(user.createdAt)}
                 </TableCell>
               </TableRow>
             ))}
