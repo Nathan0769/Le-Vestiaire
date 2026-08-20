@@ -1,4 +1,5 @@
 import { SimpleJersey, ClubWithLeague } from "@/types/jersey";
+import { JERSEY_TYPE_ORDER } from "@/lib/jersey-utils";
 import { JerseyCard } from "./jersey-card";
 
 type Props = {
@@ -6,29 +7,6 @@ type Props = {
   primaryColor: string;
   club: ClubWithLeague;
   isAdmin?: boolean;
-};
-
-const typeOrder: Record<string, number> = {
-  HOME: 1,
-  AWAY: 2,
-  THIRD: 3,
-  FOURTH: 4,
-  SPECIAL: 5,
-  HALLOWEEN: 6,
-  ANNIVERSARY: 7,
-  CENTENAIRE: 8,
-  OKTOBERFEST: 9,
-  HUMANRACE: 10,
-  ONE_PLANET: 11,
-  OCTOBRE_ROSE: 12,
-  ANTI_RACISME: 13,
-  HOMMAGE: 14,
-  RETRO: 15,
-  NOUVEL_AN_CHINOIS: 16,
-  OFF_WHITE: 17,
-  KOCHE: 18,
-  CHAMPION: 19,
-  GOALKEEPER: 20,
 };
 
 export function JerseysBySeason({ jerseys, primaryColor, club, isAdmin }: Props) {
@@ -49,7 +27,8 @@ export function JerseysBySeason({ jerseys, primaryColor, club, isAdmin }: Props)
         const seasonJerseys = grouped[season];
 
         const sortedJerseys = seasonJerseys.sort((a, b) => {
-          const typeDiff = typeOrder[a.type] - typeOrder[b.type];
+          const typeDiff =
+            (JERSEY_TYPE_ORDER[a.type] ?? 99) - (JERSEY_TYPE_ORDER[b.type] ?? 99);
           if (typeDiff !== 0) return typeDiff;
           return (a.variant ?? 1) - (b.variant ?? 1);
         });
