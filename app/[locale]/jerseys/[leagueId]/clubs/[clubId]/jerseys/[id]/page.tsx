@@ -19,7 +19,7 @@ import { FaqSchema } from "@/components/seo/faq-schema";
 import { JerseyTabs } from "@/components/jerseys/jersey-tabs";
 import { getTranslations, getLocale } from "next-intl/server";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
-import { jerseyTypeLabel } from "@/lib/jersey-utils";
+import { jerseyTypeLabel, JERSEY_TYPE_ORDER } from "@/lib/jersey-utils";
 import { EditableBrand } from "@/components/jerseys/editable-brand";
 import { EditableMainColor } from "@/components/jerseys/editable-main-color";
 import { JerseyReportButton } from "@/components/jerseys/jersey-report-button";
@@ -320,15 +320,6 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     getCachedCfsAvailability(jersey.id),
   ]);
 
-  const typeOrder: Record<string, number> = {
-    HOME: 1,
-    AWAY: 2,
-    THIRD: 3,
-    FOURTH: 4,
-    SPECIAL: 5,
-    GOALKEEPER: 20,
-  };
-
   const [clubJerseys, seasonLeagueEntry] = await Promise.all([
     prisma.jersey.findMany({
       where: { clubId: jersey.clubId },
@@ -345,7 +336,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
 
   const sortedJerseys = [...clubJerseys].sort((a, b) => {
     if (b.season !== a.season) return b.season.localeCompare(a.season);
-    return (typeOrder[a.type] ?? 99) - (typeOrder[b.type] ?? 99);
+    return (JERSEY_TYPE_ORDER[a.type] ?? 99) - (JERSEY_TYPE_ORDER[b.type] ?? 99);
   });
 
   const currentIndex = sortedJerseys.findIndex((j) => j.id === jersey.id);
