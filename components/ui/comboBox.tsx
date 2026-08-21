@@ -43,6 +43,18 @@ export function AutocompleteSelect({
   disabled = false,
 }: AutocompleteSelectProps) {
   const [open, setOpen] = React.useState(false);
+  const listRef = React.useRef<HTMLDivElement>(null);
+
+  // cmdk trie le meilleur match en tete du DOM et le pre-selectionne, mais
+  // son scroll-into-view interne subit une race avec le re-render de
+  // `aria-selected` : apres filtrage la liste reste en bas et le 1er
+  // resultat surligne est hors champ. On force le retour en haut a chaque
+  // frappe pour que l'item actif soit toujours visible.
+  const scrollListToTop = React.useCallback(() => {
+    requestAnimationFrame(() => {
+      listRef.current?.scrollTo({ top: 0 });
+    });
+  }, []);
 
   return (
     <div className="w-full">
@@ -64,8 +76,11 @@ export function AutocompleteSelect({
         </PopoverTrigger>
         <PopoverContent className="w-[300px] p-0" align="start">
           <Command>
-            <CommandInput placeholder="Rechercher..." />
-            <CommandList>
+            <CommandInput
+              placeholder="Rechercher..."
+              onValueChange={scrollListToTop}
+            />
+            <CommandList ref={listRef}>
               <CommandEmpty>Aucune option trouvée.</CommandEmpty>
               <CommandGroup>
                 {options.map((option) => (
