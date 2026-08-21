@@ -17,70 +17,81 @@ const redis = new Redis({
  */
 
 /**
- * STRICT : Pour les opérations critiques (auth, login)
- * 5 requêtes par minute
+ * Philosophie : le rate limiting sert UNIQUEMENT de garde-fou anti-bot /
+ * anti-boucle automatisée. Aucun plafond ne doit jamais gêner un usage
+ * humain, même très intensif (un humain qui clique vite fait ~2-3 actions/s).
+ * Tous les tiers ci-dessous sont volontairement très larges : ils ne coupent
+ * qu'un trafic scripté à haut débit soutenu.
+ *
+ * STRICT : Pour les opérations critiques (auth, login).
+ * 60 requêtes par minute. Seul tier à visée sécurité (anti-brute-force),
+ * mais assez large pour ne jamais bloquer des retries de login légitimes.
  */
 export const strictRateLimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(5, "1 m"),
+  limiter: Ratelimit.slidingWindow(60, "1 m"),
   analytics: true,
-  prefix: "@upstash/ratelimit/strict",
+  prefix: "@upstash/ratelimit/strict-v2",
 });
 
 /**
- * MODERATE : Pour les uploads et opérations coûteuses
- * 10 requêtes par heure
+ * MODERATE : Pour les uploads et mutations d'un user authentifié
+ * (ajout collection, édition, upload photo, commentaires, etc.)
+ * 600 requêtes par minute.
+ *
+ * L'ancienne fenêtre 10/heure bloquait un user légitime dès ~10 ajouts
+ * (incident prod). Plafond volontairement très haut : seul un bot y touche.
  */
 export const moderateRateLimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(10, "1 h"),
+  limiter: Ratelimit.slidingWindow(600, "1 m"),
   analytics: true,
-  prefix: "@upstash/ratelimit/moderate",
+  prefix: "@upstash/ratelimit/moderate-v3",
 });
 
 /**
  * STANDARD : Pour les recherches et lectures
- * 20 requêtes par minute
+ * 600 requêtes par minute
  */
 export const standardRateLimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(20, "1 m"),
+  limiter: Ratelimit.slidingWindow(600, "1 m"),
   analytics: true,
-  prefix: "@upstash/ratelimit/standard",
+  prefix: "@upstash/ratelimit/standard-v2",
 });
 
 /**
  * GENEROUS : Pour les endpoints publics (leaderboard, stats)
- * 60 requêtes par minute
+ * 1000 requêtes par minute
  */
 export const generousRateLimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(60, "1 m"),
+  limiter: Ratelimit.slidingWindow(1000, "1 m"),
   analytics: true,
-  prefix: "@upstash/ratelimit/generous",
+  prefix: "@upstash/ratelimit/generous-v2",
 });
 
 /**
  * PROPOSALS : Pour les propositions de maillots
- * 200 requêtes par heure
+ * 600 requêtes par minute
  */
 export const proposalsRateLimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(200, "1 h"),
+  limiter: Ratelimit.slidingWindow(600, "1 m"),
   analytics: true,
-  prefix: "@upstash/ratelimit/proposals",
+  prefix: "@upstash/ratelimit/proposals-v2",
 });
 
 /**
  * SOCIAL : Pour les actions feed (like, follow, commentaire).
- * 60 requêtes par minute. Volume typique Insta-like, doit rester fluide
+ * 600 requêtes par minute. Volume typique Insta-like, doit rester fluide
  * pour un user actif qui parcourt son feed.
  */
 export const socialActionRateLimit = new Ratelimit({
   redis,
-  limiter: Ratelimit.slidingWindow(60, "1 m"),
+  limiter: Ratelimit.slidingWindow(600, "1 m"),
   analytics: true,
-  prefix: "@upstash/ratelimit/social",
+  prefix: "@upstash/ratelimit/social-v2",
 });
 
 /**
