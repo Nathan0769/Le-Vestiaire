@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseInStockSizes } from "@/lib/cfs-scraper";
+import { parseInStockSizes, parseCollectionIdFromUrl } from "@/lib/cfs-scraper";
 
 function makeHtml(opts: {
   options?: Array<{ label: string; variantId: string }>;
@@ -170,5 +170,31 @@ describe("parseInStockSizes", () => {
     it("retourne [] si quantities et sku sont absents et options aussi", () => {
       expect(parseInStockSizes('{"price":99}')).toEqual([]);
     });
+  });
+});
+
+describe("parseCollectionIdFromUrl", () => {
+  it("extrait le collection_id d'une requête browse Constructor", () => {
+    const url =
+      "https://ac.cnstrc.com/browse/collection_id/cfs-weekly-deals-aug?key=key_x&num_results_per_page=24&page=1";
+    expect(parseCollectionIdFromUrl(url)).toBe("cfs-weekly-deals-aug");
+  });
+
+  it("décode un id url-encodé", () => {
+    const url =
+      "https://ac.cnstrc.com/browse/collection_id/weekly%20deals?key=key_x&page=1";
+    expect(parseCollectionIdFromUrl(url)).toBe("weekly deals");
+  });
+
+  it("retourne null pour un browse par facette (department)", () => {
+    const url =
+      "https://ac.cnstrc.com/browse/department/Clearance?key=key_x&page=1";
+    expect(parseCollectionIdFromUrl(url)).toBeNull();
+  });
+
+  it("retourne null pour une URL sans collection_id", () => {
+    expect(
+      parseCollectionIdFromUrl("https://www.classicfootballshirts.com/theme/x.html")
+    ).toBeNull();
   });
 });

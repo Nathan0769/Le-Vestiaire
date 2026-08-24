@@ -2,8 +2,15 @@ import axios from "axios";
 import type { Browser } from "puppeteer-core";
 import { parseCfsClub } from "@/lib/cfs-name-parser";
 
-const CFS_API_KEY = "key_8uhN6ajd7mHKd4K3";
-const CFS_BROWSE_URL = "https://ac.cnstrc.com/browse/group_id";
+const CFS_API_KEY = "key_gafGDajYFUpadvrp";
+const CFS_BROWSE_BASE = "https://ac.cnstrc.com/browse";
+// CFS migrated its Constructor index (2026): "clearance" is no longer a browsable
+// group_id but a value of the `department` facet, so we browse it by filter.
+const CFS_CLEARANCE_PATH = "department/Clearance";
+// Weekly deals is a curated theme page backed by a Constructor collection whose id
+// CFS renames periodically. We discover it at runtime rather than hardcode a slug.
+const CFS_WEEKLY_DEALS_URL =
+  "https://www.classicfootballshirts.com/theme/cfs-weekly-deals.html";
 const AFFILIATE_PARAMS =
   "ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
 
@@ -177,20 +184,22 @@ function extractClub(name: string, groupIds: string[] | undefined): string | nul
   return slug.split("-").map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
 }
 
-async function fetchPage(groupId: string, page: number): Promise<{ results: ConstructorItem[]; total: number }> {
-  const url = `${CFS_BROWSE_URL}/${groupId}?key=${CFS_API_KEY}&num_results_per_page=100&page=${page}`;
+// `browsePath` is the Constructor browse selector, e.g. "department/Clearance"
+// (facet filter) or "collection_id/<id>" (curated collection).
+async function fetchPage(browsePath: string, page: number): Promise<{ results: ConstructorItem[]; total: number }> {
+  const url = `${CFS_BROWSE_BASE}/${browsePath}?key=${CFS_API_KEY}&num_results_per_page=100&page=${page}`;
   const res = await axios.get(url, { timeout: 15000 });
   return { results: res.data.response.results ?? [], total: res.data.response.total_num_results ?? 0 };
 }
 
-async function fetchAllPages(groupId: string): Promise<ConstructorItem[]> {
-  const first = await fetchPage(groupId, 1);
+async function fetchAllPages(browsePath: string): Promise<ConstructorItem[]> {
+  const first = await fetchPage(browsePath, 1);
   const totalPages = Math.ceil(first.total / 100);
   const remaining = Array.from({ length: totalPages - 1 }, (_, i) => i + 2);
   const all = [...first.results];
   for (let i = 0; i < remaining.length; i += 5) {
     const batch = remaining.slice(i, i + 5);
-    const results = await Promise.all(batch.map((p) => fetchPage(groupId, p)));
+    const results = await Promise.all(batch.map((p) => fetchPage(browsePath, p)));
     results.forEach((r) => all.push(...r.results));
   }
   return all;
@@ -375,6 +384,60 @@ async function selectAvailablePromos(
   return promos;
 }
 
+// ─── Weekly deals collection discovery ───────────────────────────────────────
+
+// Constructor browse requests for a collection look like
+// `.../browse/collection_id/<id>?...`. Extract that id (empty for facet/search URLs).
+export function parseCollectionIdFromUrl(url: string): string | null {
+  const m = url.match(/\/browse\/collection_id\/([^/?]+)/);
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+async function launchBrowser(): Promise<Browser> {
+  const isDev = process.env.NODE_ENV !== "production";
+  if (isDev) {
+    const puppeteer = await import("puppeteer");
+    return puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-dev-shm-usage"],
+    });
+  }
+  const puppeteerCore = await import("puppeteer-core");
+  const chromium = await import("@sparticuz/chromium");
+  return puppeteerCore.launch({
+    args: chromium.default.args,
+    executablePath: await chromium.default.executablePath(),
+    headless: true,
+  });
+}
+
+// The theme page is behind Cloudflare, so plain HTTP fetches are blocked. Real
+// Chrome clears the challenge; we load the page and read the collection_id from
+// the Constructor browse request it fires, avoiding a hardcoded (and drifting) slug.
+async function discoverWeeklyDealsCollectionId(browser: Browser): Promise<string | null> {
+  const page = await browser.newPage();
+  let collectionId: string | null = null;
+  page.on("request", (req) => {
+    if (collectionId) return;
+    const id = parseCollectionIdFromUrl(req.url());
+    if (id) collectionId = id;
+  });
+  try {
+    await page.setUserAgent(
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    );
+    await page.goto(CFS_WEEKLY_DEALS_URL, {
+      waitUntil: "networkidle2",
+      timeout: 30000,
+    });
+    return collectionId;
+  } catch {
+    return collectionId;
+  } finally {
+    await page.close();
+  }
+}
+
 // ─── Main export ───────────────────────────────────────────────────────────
 
 export async function scrapeCfsPromos(opts?: {
@@ -382,67 +445,59 @@ export async function scrapeCfsPromos(opts?: {
 }): Promise<CfsScrapedPromo[]> {
   const maxResults = opts?.maxResults ?? 20;
 
-  console.log("Fetching clearance products...");
-  const clearanceItems = await fetchAllPages("clearance");
-  console.log(`  Fetched ${clearanceItems.length} clearance items`);
-
-  console.log("Fetching weekly deals...");
-  const weeklyItems = await fetchAllPages("cfs-weekly-deals");
-  console.log(`  Fetched ${weeklyItems.length} weekly deal items`);
-
-  // Weekly deals first so they win deduplication
-  const allItems = [
-    ...weeklyItems.map((item) => ({ item, source: "cfs-weekly-deals" as const })),
-    ...clearanceItems.map((item) => ({ item, source: "clearance" as const })),
-  ];
-
-  const candidates: Candidate[] = [];
-  const seenNames = new Set<string>();
-
-  for (const { item, source } of allItems) {
-    const candidate = toCandidate(item, source);
-    if (!candidate) continue;
-    const normalized = candidate.name.replace(/\s*-\s*\d+\/10$/, "").trim();
-    if (seenNames.has(normalized)) continue;
-    seenNames.add(normalized);
-    candidates.push(candidate);
-  }
-
-  // Sort and take top candidates for size checking
-  candidates.sort((a, b) =>
-    b.popularityScore !== a.popularityScore
-      ? b.popularityScore - a.popularityScore
-      : b.discountPct - a.discountPct
-  );
-
-  console.log(`  ${candidates.length} candidates after API filter`);
-  console.log(`  Checking real stock (early-exit at ${maxResults} promos)...`);
-
-  const isDev = process.env.NODE_ENV !== "production";
-  let browser: Browser;
-  if (isDev) {
-    const puppeteer = await import("puppeteer");
-    browser = await puppeteer.launch({
-      headless: true,
-      args: ["--no-sandbox", "--disable-dev-shm-usage"],
-    });
-  } else {
-    const puppeteerCore = await import("puppeteer-core");
-    const chromium = await import("@sparticuz/chromium");
-    browser = await puppeteerCore.launch({
-      args: chromium.default.args,
-      executablePath: await chromium.default.executablePath(),
-      headless: true,
-    });
-  }
-
-  let promos: CfsScrapedPromo[] = [];
+  const browser = await launchBrowser();
   try {
-    promos = await selectAvailablePromos(candidates, browser, maxResults);
+    console.log("Discovering weekly deals collection...");
+    const weeklyCollectionId = await discoverWeeklyDealsCollectionId(browser);
+    console.log(
+      weeklyCollectionId
+        ? `  Weekly deals collection: ${weeklyCollectionId}`
+        : "  Weekly deals collection not found, using clearance only"
+    );
+
+    console.log("Fetching clearance products...");
+    const clearanceItems = await fetchAllPages(CFS_CLEARANCE_PATH);
+    console.log(`  Fetched ${clearanceItems.length} clearance items`);
+
+    let weeklyItems: ConstructorItem[] = [];
+    if (weeklyCollectionId) {
+      console.log("Fetching weekly deals...");
+      weeklyItems = await fetchAllPages(`collection_id/${weeklyCollectionId}`);
+      console.log(`  Fetched ${weeklyItems.length} weekly deal items`);
+    }
+
+    // Weekly deals first so they win deduplication
+    const allItems = [
+      ...weeklyItems.map((item) => ({ item, source: "cfs-weekly-deals" as const })),
+      ...clearanceItems.map((item) => ({ item, source: "clearance" as const })),
+    ];
+
+    const candidates: Candidate[] = [];
+    const seenNames = new Set<string>();
+
+    for (const { item, source } of allItems) {
+      const candidate = toCandidate(item, source);
+      if (!candidate) continue;
+      const normalized = candidate.name.replace(/\s*-\s*\d+\/10$/, "").trim();
+      if (seenNames.has(normalized)) continue;
+      seenNames.add(normalized);
+      candidates.push(candidate);
+    }
+
+    // Sort and take top candidates for size checking
+    candidates.sort((a, b) =>
+      b.popularityScore !== a.popularityScore
+        ? b.popularityScore - a.popularityScore
+        : b.discountPct - a.discountPct
+    );
+
+    console.log(`  ${candidates.length} candidates after API filter`);
+    console.log(`  Checking real stock (early-exit at ${maxResults} promos)...`);
+
+    const promos = await selectAvailablePromos(candidates, browser, maxResults);
+    console.log(`  ${promos.length} promos pass real stock check`);
+    return promos;
   } finally {
     await browser.close();
   }
-
-  console.log(`  ${promos.length} promos pass real stock check`);
-  return promos;
 }
