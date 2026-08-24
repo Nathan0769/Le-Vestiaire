@@ -19,6 +19,7 @@ import { FeaturesSection } from "@/components/home/features-section";
 import { StatsSection } from "@/components/home/stats-section";
 import { CommunityHighlights } from "@/components/home/community-highlights";
 import { CfsPromoSection } from "@/components/home/cfs-promo-section";
+import { selectFeaturedCfsPromos } from "@/lib/cfs-affiliate";
 import { HomeFeedSection } from "@/components/home/home-feed-section";
 
 export const dynamic = "force-dynamic";
@@ -875,7 +876,7 @@ export default async function HomePage({
       {user && <HomeFeedSection userId={user.id} />}
       <TopRatedSection jerseys={topRatedJerseys} />
       <RecentSection jerseys={recentJerseys} />
-      <CfsPromoSection promos={cfsPromos.map((p) => ({
+      <CfsPromoSection promos={selectFeaturedCfsPromos(cfsPromos).map((p) => ({
         ...p,
         price: p.price.toString(),
         promoPrice: p.promoPrice.toString(),
