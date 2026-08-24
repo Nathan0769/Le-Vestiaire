@@ -19,6 +19,7 @@ import { FaqSchema } from "@/components/seo/faq-schema";
 import { JerseyTabs } from "@/components/jerseys/jersey-tabs";
 import { getTranslations, getLocale } from "next-intl/server";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
+import { autoJerseyDescription } from "@/lib/auto-jersey-description";
 import { jerseyTypeLabel, JERSEY_TYPE_ORDER } from "@/lib/jersey-utils";
 import { EditableBrand } from "@/components/jerseys/editable-brand";
 import { EditableMainColor } from "@/components/jerseys/editable-main-color";
@@ -320,17 +321,33 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     getCachedCfsAvailability(jersey.id),
   ]);
 
-  const [clubJerseys, seasonLeagueEntry] = await Promise.all([
-    prisma.jersey.findMany({
-      where: { clubId: jersey.clubId },
-      select: { id: true, slug: true, season: true, type: true, imageUrl: true },
-      orderBy: { season: "desc" },
-    }),
-    prisma.clubSeasonLeague.findUnique({
-      where: { clubId_season: { clubId: jersey.clubId, season: jersey.season } },
-      select: { league: { select: { id: true, name: true, logoUrl: true } } },
-    }),
-  ]);
+  const [clubJerseys, seasonLeagueEntry, seasonTrophies, seasonSquad] =
+    await Promise.all([
+      prisma.jersey.findMany({
+        where: { clubId: jersey.clubId },
+        select: { id: true, slug: true, season: true, type: true, imageUrl: true },
+        orderBy: { season: "desc" },
+      }),
+      prisma.clubSeasonLeague.findUnique({
+        where: { clubId_season: { clubId: jersey.clubId, season: jersey.season } },
+        select: { league: { select: { id: true, name: true, logoUrl: true } } },
+      }),
+      // Faits reels injectes dans la description auto (fallback SSR).
+      prisma.clubTrophy.findMany({
+        where: { clubId: jersey.clubId, season: jersey.season },
+        select: { competition: true, place: true },
+      }),
+      // Trie par temps de jeu pour surfacer les titulaires, pas les remplacants.
+      prisma.seasonPlayer.findMany({
+        where: { clubId: jersey.clubId, season: jersey.season },
+        orderBy: [
+          { matches: { sort: "desc", nulls: "last" } },
+          { goals: { sort: "desc", nulls: "last" } },
+        ],
+        select: { name: true },
+        take: 3,
+      }),
+    ]);
 
   const displayLeague = seasonLeagueEntry?.league ?? jersey.club.league;
 
@@ -397,6 +414,26 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     season: jersey.season,
     brand: jersey.brand,
     leagueName: displayLeague.name,
+  });
+
+  // Fallback editorial rendu cote serveur (SSR) quand aucune description
+  // manuelle/communautaire n'existe. Ne stocke rien, ne remplace jamais le
+  // champ manuel. Objectif : densite de contenu pour l'eligibilite AdSense.
+  const autoDescription = autoJerseyDescription({
+    id: jersey.id,
+    clubName: jersey.club.name,
+    clubShortName: jersey.club.shortName,
+    season: jersey.season,
+    type: jersey.type as JerseyType,
+    variant: jersey.variant ?? 1,
+    brand: jersey.brand,
+    leagueName: displayLeague.name,
+    trophies: seasonTrophies,
+    players: seasonSquad,
+    collectionCount: statsData?.collectionCount ?? 0,
+    averageRating: ratingData?.averageRating ?? 0,
+    totalRatings: ratingData?.totalRatings ?? 0,
+    locale,
   });
 
   return (
@@ -583,6 +620,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
             jerseyName={translatedJerseyName}
             description={jersey.description}
             descriptionTranslations={jersey.descriptionTranslations}
+            autoDescription={autoDescription}
             clubId={jersey.club.id}
             season={jersey.season}
           />

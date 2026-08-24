@@ -16,6 +16,8 @@ interface JerseyTabsProps {
   jerseyName: string;
   description?: string | null;
   descriptionTranslations?: Record<string, string> | null;
+  /** Fallback editorial genere au rendu (SSR), utilise uniquement en l'absence de description manuelle. */
+  autoDescription?: string | null;
   clubId: string;
   season: string;
 }
@@ -25,6 +27,7 @@ export function JerseyTabs({
   jerseyName,
   description,
   descriptionTranslations,
+  autoDescription,
   clubId,
   season,
 }: JerseyTabsProps) {
@@ -105,6 +108,33 @@ export function JerseyTabs({
                   <div className="prose prose-sm max-w-none dark:prose-invert min-w-0">
                     <p className="text-foreground/90 leading-relaxed whitespace-pre-wrap text-base break-words overflow-wrap-anywhere">
                       {localizedDescription}
+                    </p>
+                  </div>
+                </>
+              ) : autoDescription ? (
+                <>
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-6 pb-4 border-b border-border">
+                    <div className="flex items-center gap-2">
+                      <BookOpen className="w-5 h-5 text-primary" />
+                      <h3 className="text-xl font-semibold text-foreground">
+                        {t("description")}
+                      </h3>
+                    </div>
+                    <Button
+                      onClick={() => setIsModalOpen(true)}
+                      className="cursor-pointer gap-2"
+                      variant="outline"
+                      size="sm"
+                    >
+                      <Plus className="w-4 h-4" />
+                      <span className="hidden sm:inline">
+                        {t("proposeDescription")}
+                      </span>
+                    </Button>
+                  </div>
+                  <div className="prose prose-sm max-w-none dark:prose-invert min-w-0">
+                    <p className="text-foreground/90 leading-relaxed whitespace-pre-wrap text-base break-words overflow-wrap-anywhere">
+                      {autoDescription}
                     </p>
                   </div>
                 </>
