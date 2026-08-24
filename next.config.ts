@@ -37,7 +37,7 @@ const securityHeaders = [
       "style-src 'self' 'unsafe-inline'",
       "font-src 'self' data:",
       // Images : R2 (public *.r2.dev + presigned *.r2.cloudflarestorage.com), pixels GA/GTM, blobs locaux, médias clubs externes
-      "img-src 'self' data: blob: https://*.r2.dev https://*.r2.cloudflarestorage.com https://www.google-analytics.com https://www.googletagmanager.com https://media.ol.fr https://classicfootballshirts.co.uk https://*.classicfootballshirts.co.uk",
+      "img-src 'self' data: blob: https://*.r2.dev https://*.r2.cloudflarestorage.com https://www.google-analytics.com https://www.googletagmanager.com https://media.ol.fr https://classicfootballshirts.co.uk https://*.classicfootballshirts.co.uk https://classicfootballshirts.com https://*.classicfootballshirts.com",
       // Fetch/XHR : R2, GA4 (deux endpoints selon région)
       "connect-src 'self' https://*.r2.dev https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com",
       "media-src 'none'",
