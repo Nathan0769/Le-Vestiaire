@@ -178,7 +178,7 @@ export function CommentItem({
         )}
       </div>
       {(canEdit || canDelete || canReport) && !editing && (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
           <DropdownMenuTrigger asChild>
             <Button
               size="sm"

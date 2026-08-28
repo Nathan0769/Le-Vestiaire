@@ -109,7 +109,7 @@ export function PostCard({ post, defaultCommentsOpen = false }: PostCardProps) {
           {timeAgo}
         </span>
         {currentUser && (
-          <DropdownMenu>
+          <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
               <Button
                 size="sm"
