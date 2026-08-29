@@ -23,6 +23,14 @@ export async function GET() {
                 league: true,
               },
             },
+            cfsAvailability: {
+              select: {
+                id: true,
+                price: true,
+                promoPrice: true,
+                affiliateUrl: true,
+              },
+            },
           },
         },
       },
@@ -35,6 +43,16 @@ export async function GET() {
         ...item.jersey,
         retailPrice: item.jersey.retailPrice
           ? Number(item.jersey.retailPrice)
+          : null,
+        cfsAvailability: item.jersey.cfsAvailability
+          ? {
+              ...item.jersey.cfsAvailability,
+              price: Number(item.jersey.cfsAvailability.price),
+              promoPrice:
+                item.jersey.cfsAvailability.promoPrice !== null
+                  ? Number(item.jersey.cfsAvailability.promoPrice)
+                  : null,
+            }
           : null,
       },
     }));
