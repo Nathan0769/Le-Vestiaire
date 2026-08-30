@@ -76,13 +76,35 @@ export async function GET(request: NextRequest) {
               league: true,
             },
           },
+          cfsAvailability: {
+            select: {
+              id: true,
+              price: true,
+              promoPrice: true,
+              affiliateUrl: true,
+            },
+          },
         },
       }),
       prisma.jersey.count({ where }),
     ]);
 
+    const formattedJerseys = jerseys.map((j) => ({
+      ...j,
+      cfsAvailability: j.cfsAvailability
+        ? {
+            ...j.cfsAvailability,
+            price: Number(j.cfsAvailability.price),
+            promoPrice:
+              j.cfsAvailability.promoPrice !== null
+                ? Number(j.cfsAvailability.promoPrice)
+                : null,
+          }
+        : null,
+    }));
+
     return NextResponse.json({
-      jerseys,
+      jerseys: formattedJerseys,
       pagination: {
         total,
         page,
