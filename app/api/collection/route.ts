@@ -49,6 +49,34 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
 
+    // Posts JERSEY_ADD associés (likes affichés/cliquables côté app mobile).
+    const itemIds = collectionItems.map((i) => i.id);
+    const posts = itemIds.length
+      ? await prisma.post.findMany({
+          where: {
+            authorId: currentUser.id,
+            type: "JERSEY_ADD",
+            referenceId: { in: itemIds },
+            deletedAt: null,
+          },
+          select: { id: true, referenceId: true, likeCount: true },
+        })
+      : [];
+    const postByRef = new Map(posts.map((p) => [p.referenceId, p]));
+    const likedPostIds = posts.length
+      ? new Set(
+          (
+            await prisma.postLike.findMany({
+              where: {
+                userId: currentUser.id,
+                postId: { in: posts.map((p) => p.id) },
+              },
+              select: { postId: true },
+            })
+          ).map((l) => l.postId)
+        )
+      : new Set<string>();
+
     const formatted = await Promise.all(
       collectionItems.map(async (item) => {
         const userPhotoUrls = await Promise.all(
@@ -57,12 +85,17 @@ export async function GET() {
           )
         );
 
+        const post = postByRef.get(item.id);
+
         return {
           ...item,
           userPhotoUrl: userPhotoUrls[0] ?? null,
           userPhotoUrls,
           userPhotoPaths: item.userPhotoUrls,
           purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
+          postId: post?.id ?? null,
+          likeCount: post?.likeCount ?? 0,
+          hasLiked: post ? likedPostIds.has(post.id) : false,
           jersey: {
             ...item.jersey,
             retailPrice: item.jersey.retailPrice
