@@ -80,6 +80,7 @@ export async function GET(
           image: true,
           plan: true,
           avatarFrame: true,
+          isPrivate: true,
         },
       },
     },
@@ -90,6 +91,26 @@ export async function GET(
 
   const hasMore = rows.length > LIMIT;
   const sliced = hasMore ? rows.slice(0, LIMIT) : rows;
+
+  // followState du viewer sur chaque ligne : 2 requêtes batch (pas de N+1).
+  const listedIds = sliced.map((r) => r.following.id);
+  const followingSet = new Set<string>();
+  const requestedSet = new Set<string>();
+  if (currentUser && listedIds.length > 0) {
+    const [follows, requests] = await Promise.all([
+      prisma.follow.findMany({
+        where: { followerId: currentUser.id, followingId: { in: listedIds } },
+        select: { followingId: true },
+      }),
+      prisma.followRequest.findMany({
+        where: { requesterId: currentUser.id, targetId: { in: listedIds } },
+        select: { targetId: true },
+      }),
+    ]);
+    follows.forEach((f) => followingSet.add(f.followingId));
+    requests.forEach((r) => requestedSet.add(r.targetId));
+  }
+
   const items = await Promise.all(
     sliced.map(async (r) => {
       const u = r.following;
@@ -97,11 +118,20 @@ export async function GET(
       const avatarUrl = u.avatar
         ? await getR2PresignedUrl(AVATARS_BUCKET, u.avatar, 60 * 60)
         : (u.image ?? null);
+      const followState: "none" | "following" | "requested" | "self" =
+        currentUser?.id === u.id
+          ? "self"
+          : followingSet.has(u.id)
+            ? "following"
+            : requestedSet.has(u.id)
+              ? "requested"
+              : "none";
       return {
         ...u,
         name: u.username,
         avatarUrl,
         isSupporter: isSupporter(u),
+        followState,
       };
     })
   );
