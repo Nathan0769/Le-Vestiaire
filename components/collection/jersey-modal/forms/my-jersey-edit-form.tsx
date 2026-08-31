@@ -186,7 +186,7 @@ export function MyJerseyEditForm({
         </div>
       </div>
 
-      <Popover>
+      <Popover modal>
         <PopoverTrigger className="flex w-full items-center justify-between rounded-lg border px-3 py-2 text-sm font-medium cursor-pointer hover:bg-muted/40 [&[data-state=open]>svg]:rotate-180">
           <span className="flex items-center gap-2">
             {t("cards.patchesTitle")}
