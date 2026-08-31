@@ -13,10 +13,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { PatchesSection } from "@/components/collection/patches-section";
 import { SIZE_LABELS } from "@/types/collection";
 import type {
@@ -49,6 +49,8 @@ export function MyJerseyEditForm({
   const t = useTranslations("Collection.modal.view");
   const tCondition = useTranslations("Condition");
   const tVersion = useTranslations("JerseyVersion");
+
+  const patchCount = formData.patches?.length ?? 0;
 
   return (
     <div className="space-y-3">
@@ -184,12 +186,22 @@ export function MyJerseyEditForm({
         </div>
       </div>
 
-      <Collapsible className="rounded-lg border">
-        <CollapsibleTrigger className="flex w-full items-center justify-between px-3 py-2 text-sm font-medium cursor-pointer hover:bg-muted/40 [&[data-state=open]>svg]:rotate-180">
-          <span>{t("cards.patchesTitle")}</span>
+      <Popover>
+        <PopoverTrigger className="flex w-full items-center justify-between rounded-lg border px-3 py-2 text-sm font-medium cursor-pointer hover:bg-muted/40 [&[data-state=open]>svg]:rotate-180">
+          <span className="flex items-center gap-2">
+            {t("cards.patchesTitle")}
+            {patchCount > 0 && (
+              <span className="inline-flex h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-xs font-semibold text-primary-foreground">
+                {patchCount}
+              </span>
+            )}
+          </span>
           <ChevronDown className="h-4 w-4 transition-transform" />
-        </CollapsibleTrigger>
-        <CollapsibleContent className="px-3 pb-3">
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="w-[min(92vw,22rem)] max-h-[min(60vh,28rem)] overflow-y-auto"
+        >
           <PatchesSection
             jerseyId={jerseyId}
             selectedPatches={formData.patches ?? []}
@@ -197,8 +209,8 @@ export function MyJerseyEditForm({
               setFormData({ ...formData, patches })
             }
           />
-        </CollapsibleContent>
-      </Collapsible>
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
