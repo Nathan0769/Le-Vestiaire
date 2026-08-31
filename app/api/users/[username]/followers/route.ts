@@ -8,6 +8,7 @@ import prisma from "@/lib/prisma";
 import { isSupporter } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 import { getBlockedIdsBothWays } from "@/lib/follow";
+import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
 const LIMIT = 50;
 
@@ -87,11 +88,21 @@ export async function GET(
 
   const hasMore = rows.length > LIMIT;
   const sliced = hasMore ? rows.slice(0, LIMIT) : rows;
-  const items = sliced.map((r) => ({
-    ...r.follower,
-    name: r.follower.username,
-    isSupporter: isSupporter(r.follower),
-  }));
+  const items = await Promise.all(
+    sliced.map(async (r) => {
+      const u = r.follower;
+      // avatarUrl résolu pour le mobile : presigned R2, fallback image Google.
+      const avatarUrl = u.avatar
+        ? await getR2PresignedUrl(AVATARS_BUCKET, u.avatar, 60 * 60)
+        : (u.image ?? null);
+      return {
+        ...u,
+        name: u.username,
+        avatarUrl,
+        isSupporter: isSupporter(u),
+      };
+    })
+  );
   const nextCursor = hasMore ? sliced[sliced.length - 1].id : null;
 
   return NextResponse.json({ items, nextCursor });
