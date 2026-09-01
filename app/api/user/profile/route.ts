@@ -22,6 +22,7 @@ export async function GET() {
           avatar: true,
           bio: true,
           plan: true,
+          isPrivate: true,
           notificationsEnabled: true,
           createdAt: true,
           favoriteClub: {
@@ -84,6 +85,7 @@ export async function GET() {
       image: avatarUrl ?? user.image ?? null,
       bio: user.bio,
       isSupporter: user.plan === "PRO",
+      isPrivate: user.isPrivate,
       notificationsEnabled: user.notificationsEnabled,
       hasPassword,
       favoriteClub: user.favoriteClub ?? null,
