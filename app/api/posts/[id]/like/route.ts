@@ -8,6 +8,7 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { canInteract } from "@/lib/follow";
 import { createNotification } from "@/lib/notifications/create";
+import { pushForNotification } from "@/lib/push/notify";
 
 export async function POST(
   _request: Request,
@@ -86,6 +87,15 @@ export async function POST(
     },
     { isolationLevel: "Serializable" }
   );
+
+  if (result.hasLiked) {
+    await pushForNotification({
+      recipientId: post.authorId,
+      actorId: user.id,
+      type: "POST_LIKED",
+      postId: post.id,
+    });
+  }
 
   return NextResponse.json(result);
 }

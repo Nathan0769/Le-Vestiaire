@@ -8,6 +8,7 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { checkAchievements } from "@/lib/achievements/check";
 import { createNotification } from "@/lib/notifications/create";
+import { pushForNotification } from "@/lib/push/notify";
 
 export async function POST(
   _request: Request,
@@ -75,6 +76,12 @@ export async function POST(
   } catch (err) {
     console.error("checkAchievements social.follower failed:", err);
   }
+
+  await pushForNotification({
+    recipientId: request.requesterId,
+    actorId: request.targetId,
+    type: "FOLLOW_REQUEST_APPROVED",
+  });
 
   return NextResponse.json({ status: "accepted" });
 }

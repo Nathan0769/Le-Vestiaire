@@ -9,6 +9,7 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { isBlocked } from "@/lib/follow";
 import { createNotification } from "@/lib/notifications/create";
+import { pushForNotification } from "@/lib/push/notify";
 import { checkAchievements } from "@/lib/achievements/check";
 
 export async function POST(
@@ -61,6 +62,11 @@ export async function POST(
       create: { requesterId: user.id, targetId: target.id },
       update: {},
     });
+    await pushForNotification({
+      recipientId: target.id,
+      actorId: user.id,
+      type: "FOLLOW_REQUEST_RECEIVED",
+    });
     return NextResponse.json({ status: "requested" });
   }
 
@@ -93,6 +99,11 @@ export async function POST(
     } catch (err) {
       console.error("checkAchievements social.follower failed:", err);
     }
+    await pushForNotification({
+      recipientId: target.id,
+      actorId: user.id,
+      type: "NEW_FOLLOWER",
+    });
   }
 
   return NextResponse.json({ status: "following" });

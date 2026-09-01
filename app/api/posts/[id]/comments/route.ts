@@ -11,6 +11,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { canInteract } from "@/lib/follow";
 import { createNotification } from "@/lib/notifications/create";
+import { pushForNotification } from "@/lib/push/notify";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
 const LIMIT = 20;
@@ -167,6 +168,13 @@ export async function POST(
       tx
     );
     return created;
+  });
+
+  await pushForNotification({
+    recipientId: post.authorId,
+    actorId: user.id,
+    type: "POST_COMMENTED",
+    postId: post.id,
   });
 
   const avatarUrl = comment.author.avatar
