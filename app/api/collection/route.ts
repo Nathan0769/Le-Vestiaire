@@ -36,6 +36,28 @@ export async function GET() {
         pinnedAt: true,
         createdAt: true,
         updatedAt: true,
+        patches: {
+          select: {
+            id: true,
+            patchId: true,
+            customLabel: true,
+            patch: {
+              select: {
+                id: true,
+                name: true,
+                family: true,
+                versions: {
+                  select: {
+                    id: true,
+                    seasonStart: true,
+                    seasonEnd: true,
+                    imageUrl: true,
+                  },
+                },
+              },
+            },
+          },
+        },
         jersey: {
           include: {
             club: {
