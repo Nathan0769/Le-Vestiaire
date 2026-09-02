@@ -64,6 +64,15 @@ export const auth = betterAuth({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
+    // Sign in with Apple — flux NATIF uniquement (app iOS).
+    // L'idToken renvoyé par ASAuthorization est vérifié contre les clés
+    // publiques Apple avec audience = appBundleIdentifier. Pas de flux web,
+    // donc clientSecret inutile (jamais appelé côté createAuthorizationURL).
+    apple: {
+      clientId: "fr.levestiaire.app",
+      clientSecret: "",
+      appBundleIdentifier: "fr.levestiaire.app",
+    },
   },
   plugins: [
     adminPlugin({
