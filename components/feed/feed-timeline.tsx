@@ -80,15 +80,18 @@ function AroundView({ targetPostId, openComments, onExit }: AroundViewProps) {
     },
   });
 
-  // Init des cursors + pages quand la 1ère fetch arrive.
+  // Init des cursors + pages quand la 1ère fetch arrive (sync react-query → état
+  // paginé local, ensuite étendu par le scroll infini : setState en effet assumé).
   useEffect(() => {
     if (!around.data) return;
+    /* eslint-disable react-hooks/set-state-in-effect */
     setOlderPages(around.data.older.length > 0 ? [around.data.older] : []);
     setNewerPages(around.data.newer.length > 0 ? [around.data.newer] : []);
     setOlderCursor(around.data.olderCursor);
     setNewerCursor(around.data.newerCursor);
     setHasMoreOlder(around.data.hasMoreOlder);
     setHasMoreNewer(around.data.hasMoreNewer);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [around.data]);
 
   // Scroll vers la card target dès qu'elle est dans le DOM.
