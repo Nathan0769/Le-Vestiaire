@@ -38,6 +38,7 @@ model User {
   emailMarketing              Boolean               @default(true) @map("email_marketing")
   reminderStep                Int                   @default(0) @map("reminder_step")
   notificationsEnabled        Boolean               @default(true) @map("notifications_enabled")
+  disabledPushTypes           NotificationType[]    @default([]) @map("disabled_push_types")
   isPrivate                   Boolean               @default(false) @map("is_private")
   lastAchievementsSeenAt      DateTime?             @map("last_achievements_seen_at") @db.Timestamp(6)
   lastAchievementsFullCheckAt DateTime?             @map("last_achievements_full_check_at") @db.Timestamp(6)

@@ -56,3 +56,6 @@ MOBILE_PLAN.md
 /docs
 preview-jersey-colors.html
 /plans
+
+# Cles APNs (secret)
+*.p8

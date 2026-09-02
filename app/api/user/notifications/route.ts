@@ -2,9 +2,19 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { standardRateLimit, getRateLimitIdentifier, checkRateLimit } from "@/lib/rate-limit";
+import { NotificationType } from "@prisma/client";
 import { z } from "zod";
 
-const schema = z.object({ enabled: z.boolean() });
+// Le toggle global (`enabled`) et l'opt-out push par type (`disabledTypes`)
+// peuvent être envoyés seuls ou ensemble. Au moins un des deux est requis.
+const schema = z
+  .object({
+    enabled: z.boolean().optional(),
+    disabledTypes: z.array(z.nativeEnum(NotificationType)).optional(),
+  })
+  .refine((d) => d.enabled !== undefined || d.disabledTypes !== undefined, {
+    message: "Aucun champ à mettre à jour",
+  });
 
 export async function PATCH(request: Request) {
   try {
@@ -25,12 +35,21 @@ export async function PATCH(request: Request) {
       return NextResponse.json({ error: "Données invalides" }, { status: 400 });
     }
 
-    await prisma.user.update({
+    const updated = await prisma.user.update({
       where: { id: user.id },
-      data: { notificationsEnabled: parsed.data.enabled },
+      data: {
+        ...(parsed.data.enabled !== undefined
+          ? { notificationsEnabled: parsed.data.enabled }
+          : {}),
+        // Dédup : on ne stocke que des types uniques.
+        ...(parsed.data.disabledTypes !== undefined
+          ? { disabledPushTypes: [...new Set(parsed.data.disabledTypes)] }
+          : {}),
+      },
+      select: { notificationsEnabled: true, disabledPushTypes: true },
     });
 
-    return NextResponse.json({ notificationsEnabled: parsed.data.enabled });
+    return NextResponse.json(updated);
   } catch (error) {
     console.error("Erreur PATCH /api/user/notifications:", error);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });

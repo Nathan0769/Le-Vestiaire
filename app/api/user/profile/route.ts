@@ -24,6 +24,7 @@ export async function GET() {
           plan: true,
           isPrivate: true,
           notificationsEnabled: true,
+          disabledPushTypes: true,
           createdAt: true,
           favoriteClub: {
             select: {
@@ -87,6 +88,7 @@ export async function GET() {
       isSupporter: user.plan === "PRO",
       isPrivate: user.isPrivate,
       notificationsEnabled: user.notificationsEnabled,
+      disabledPushTypes: user.disabledPushTypes,
       hasPassword,
       favoriteClub: user.favoriteClub ?? null,
       createdAt: user.createdAt.toISOString(),

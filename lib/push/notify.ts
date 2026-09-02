@@ -52,6 +52,7 @@ export async function pushForNotification(input: PushInput): Promise<void> {
       where: { id: input.recipientId },
       select: {
         notificationsEnabled: true,
+        disabledPushTypes: true,
         pushTokens: { where: { platform: "ios" }, select: { token: true } },
       },
     });
@@ -60,6 +61,13 @@ export async function pushForNotification(input: PushInput): Promise<void> {
       !recipient.notificationsEnabled ||
       recipient.pushTokens.length === 0
     ) {
+      return;
+    }
+
+    // Opt-out par type (push seulement : l'inbox in-app reste créée en amont).
+    // Les types virtuels (ex. FOLLOW_REQUEST_RECEIVED) ne sont pas dans l'enum,
+    // donc jamais filtrés ici.
+    if (recipient.disabledPushTypes.includes(input.type as NotificationType)) {
       return;
     }
 
