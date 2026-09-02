@@ -2,9 +2,15 @@ import prisma from "@/lib/prisma";
 import type { NotificationType } from "@prisma/client";
 import { sendApns, apnsConfigured } from "./apns";
 
+/**
+ * Type de push : les NotificationType stockés + FOLLOW_REQUEST_RECEIVED, qui est
+ * un type virtuel (non stocké en base, synthétisé depuis les demandes en attente).
+ */
+type PushType = NotificationType | "FOLLOW_REQUEST_RECEIVED";
+
 /** Construit le titre/corps FR du push selon le type de notification. */
 function buildMessage(
-  type: NotificationType,
+  type: PushType,
   actor: string
 ): { title: string; body: string } {
   switch (type) {
@@ -26,7 +32,7 @@ function buildMessage(
 interface PushInput {
   recipientId: string;
   actorId?: string | null;
-  type: NotificationType;
+  type: PushType;
   postId?: string | null;
   followRequestId?: string | null;
 }
