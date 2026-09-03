@@ -73,7 +73,7 @@ export async function GET() {
       return {
         id: u.id,
         username: u.username,
-        avatarUrl: avatarUrl ?? u.image,
+        avatarUrl: avatarUrl,
         jerseyCount: u._count.collection,
         favoriteClubName: u.favoriteClub?.name ?? null,
         isSupporter: isSupporter(u),

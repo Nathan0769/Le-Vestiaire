@@ -83,7 +83,7 @@ export async function GET() {
       email: user.email,
       name: user.name,
       username: user.username,
-      image: avatarUrl ?? user.image ?? null,
+      image: avatarUrl,
       bio: user.bio,
       isSupporter: user.plan === "PRO",
       isPrivate: user.isPrivate,

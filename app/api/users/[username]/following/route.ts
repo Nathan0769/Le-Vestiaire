@@ -114,10 +114,10 @@ export async function GET(
   const items = await Promise.all(
     sliced.map(async (r) => {
       const u = r.following;
-      // avatarUrl résolu pour le mobile : presigned R2, fallback image Google.
+      // avatarUrl : uniquement l'avatar R2 uploadé (pas la photo Google).
       const avatarUrl = u.avatar
         ? await getR2PresignedUrl(AVATARS_BUCKET, u.avatar, 60 * 60)
-        : (u.image ?? null);
+        : null;
       const followState: "none" | "following" | "requested" | "self" =
         currentUser?.id === u.id
           ? "self"

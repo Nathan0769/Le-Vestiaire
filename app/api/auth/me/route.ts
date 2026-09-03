@@ -60,7 +60,7 @@ export async function GET() {
     id: user.id,
     email: user.email,
     name: user.name,
-    image: avatarUrl ?? user.image ?? null,
+    image: avatarUrl,
     avatar: user.avatar,
     avatarUrl,
     createdAt: user.createdAt.toISOString(),

@@ -45,7 +45,7 @@ export async function GET() {
       username: r.blocked.username,
       name: r.blocked.username,
       avatar: r.blocked.avatar,
-      image: r.blocked.image,
+      image: null,
       avatarUrl: r.blocked.avatar
         ? await getR2PresignedUrl(AVATARS_BUCKET, r.blocked.avatar, 60 * 60)
         : null,

@@ -96,7 +96,7 @@ export async function GET(request: Request) {
           id: r.requester.id,
           username: r.requester.username,
           name: r.requester.username,
-          avatarUrl: avatarUrl ?? r.requester.image,
+          avatarUrl: avatarUrl,
         },
       };
     })
@@ -124,7 +124,7 @@ export async function GET(request: Request) {
               id: n.actor.id,
               username: n.actor.username,
               name: n.actor.username,
-              avatarUrl: avatarUrl ?? n.actor.image,
+              avatarUrl: avatarUrl,
               isSupporter: isSupporter(n.actor),
               avatarFrame: n.actor.avatarFrame,
             }

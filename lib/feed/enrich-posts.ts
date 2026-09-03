@@ -272,7 +272,7 @@ export async function enrichPostsForFeed(
               id: author.id,
               username: author.username,
               name: author.username,
-              avatarUrl: avatarUrl ?? author.image,
+              avatarUrl: avatarUrl,
               favoriteClubColor: author.favoriteClub?.primaryColor ?? null,
               favoriteClubName: author.favoriteClub?.name ?? null,
               isSupporter: isSupporter(author),

@@ -111,7 +111,7 @@ export async function GET(
     id: target.id,
     username: target.username,
     name: isAnonymous ? "Utilisateur" : target.username ?? target.name,
-    avatarUrl: avatarUrl ?? (isAnonymous ? null : target.image),
+    avatarUrl: avatarUrl,
     bio: isAnonymous ? null : target.bio,
     isPrivate: target.isPrivate,
     isAnonymous,
