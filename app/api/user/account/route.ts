@@ -11,6 +11,7 @@ import {
   AVATARS_BUCKET,
   USER_JERSEY_PHOTOS_BUCKET,
 } from "@/lib/r2-storage";
+import { revokeAppleToken } from "@/lib/apple/revoke";
 
 export async function DELETE() {
   try {
@@ -55,6 +56,17 @@ export async function DELETE() {
           } catch {}
         }
       }
+    }
+
+    // Révoquer le token Sign in with Apple avant suppression (requis Apple 5.1.1(v) / TN3194).
+    const appleAccount = await prisma.account.findFirst({
+      where: { userId: user.id, providerId: "apple" },
+      select: { refreshToken: true },
+    });
+    if (appleAccount?.refreshToken) {
+      try {
+        await revokeAppleToken(appleAccount.refreshToken);
+      } catch {}
     }
 
     // Supprimer l'utilisateur - les cascade Prisma gèrent le reste
