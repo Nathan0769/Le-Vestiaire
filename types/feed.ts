@@ -55,6 +55,10 @@ export interface AchievementUnlockPayload {
   category: string;
   unlockedAt: string;
   metadata: Record<string, unknown> | null;
+  // Résolus server-side (FR) pour l'app mobile ; le web garde sa résolution i18n client.
+  title?: string;
+  description?: string;
+  badgeUrl?: string | null;
 }
 
 export interface CapReachedPayload {

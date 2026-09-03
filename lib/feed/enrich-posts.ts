@@ -10,6 +10,7 @@ import { getFollowingIds } from "@/lib/follow";
 import { isSupporter } from "@/lib/subscription";
 import { computeClubRanks } from "@/lib/feed/club-rank";
 import { computeCapMosaics } from "@/lib/feed/cap-mosaic";
+import { resolveAchievementText } from "@/lib/achievements/resolve-text";
 import type { FeedPostItem, FeedLikerPreview } from "@/types/feed";
 
 const MAX_LIKERS_PREVIEW = 3;
@@ -233,12 +234,19 @@ export async function enrichPostsForFeed(
       if (post.type === "ACHIEVEMENT_UNLOCK" && post.referenceId) {
         const ach = achievementMap.get(post.referenceId);
         if (ach) {
+          const meta = (ach.metadata as Record<string, unknown> | null) ?? null;
+          // Titre/description FR + badge résolus server-side (consommés par l'app
+          // mobile ; le web garde sa résolution client-side par locale).
+          const resolved = resolveAchievementText(ach.key, meta);
           payload = {
             key: ach.key,
             tier: ach.tier,
             category: ach.category,
             unlockedAt: ach.unlockedAt.toISOString(),
-            metadata: (ach.metadata as Record<string, unknown> | null) ?? null,
+            metadata: meta,
+            title: resolved.title,
+            description: resolved.description,
+            badgeUrl: resolved.badgeUrl,
           };
         }
       }
