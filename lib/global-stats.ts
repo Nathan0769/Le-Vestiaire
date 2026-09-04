@@ -49,7 +49,7 @@ async function getTopLeagues(): Promise<TopLeagueEntry[]> {
     JOIN leagues l ON l.id = c."leagueId"
     GROUP BY l.id, l.name, l."logoUrl", l."logoDarkUrl"
     ORDER BY count DESC
-    LIMIT 10
+    LIMIT 15
   `;
   return rows.map((r) => ({
     id: r.id,
@@ -67,7 +67,7 @@ async function getTopBrands(): Promise<TopBrandEntry[]> {
     JOIN jerseys j ON j.id = uj."jerseyId"
     GROUP BY INITCAP(LOWER(j.brand))
     ORDER BY count DESC
-    LIMIT 5
+    LIMIT 10
   `;
   return rows.map((r) => ({ name: r.brand, count: Number(r.count) }));
 }
@@ -229,7 +229,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
 
 export const getGlobalStatsCached = unstable_cache(
   getGlobalStats,
-  ["global-stats-v5"],
+  ["global-stats-v6"],
   { revalidate: 21600, tags: ["global-stats"] }
 );
 
