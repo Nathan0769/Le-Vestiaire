@@ -51,6 +51,7 @@ export type GlobalStats = {
   mostOwnedJersey: MostOwnedJersey | null;
   topRatedJersey: TopRatedJersey | null;
   topSeason: TopSeason | null;
+  topSeasons: TopSeason[];
   acquisitionsThisMonth: number;
   catalogCoverage: number;
   totalCollectedJerseys: number;

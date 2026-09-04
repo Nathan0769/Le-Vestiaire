@@ -22,7 +22,7 @@ async function getTopClubs(): Promise<TopClubEntry[]> {
     JOIN clubs c ON c.id = j."clubId"
     GROUP BY c.id, c.name, c."logoUrl"
     ORDER BY count DESC
-    LIMIT 5
+    LIMIT 15
   `;
   return rows.map((r) => ({
     id: r.id,
@@ -49,7 +49,7 @@ async function getTopLeagues(): Promise<TopLeagueEntry[]> {
     JOIN leagues l ON l.id = c."leagueId"
     GROUP BY l.id, l.name, l."logoUrl", l."logoDarkUrl"
     ORDER BY count DESC
-    LIMIT 5
+    LIMIT 10
   `;
   return rows.map((r) => ({
     id: r.id,
@@ -143,17 +143,16 @@ async function getTopRatedJersey(): Promise<TopRatedJersey | null> {
   };
 }
 
-async function getTopSeason(): Promise<TopSeason | null> {
+async function getTopSeasons(): Promise<TopSeason[]> {
   const rows = await prisma.$queryRaw<{ season: string; count: bigint }[]>`
     SELECT j.season, COUNT(*)::bigint as count
     FROM user_jerseys uj
     JOIN jerseys j ON j.id = uj."jerseyId"
     GROUP BY j.season
     ORDER BY count DESC
-    LIMIT 1
+    LIMIT 5
   `;
-  if (rows.length === 0) return null;
-  return { season: rows[0].season, count: Number(rows[0].count) };
+  return rows.map((r) => ({ season: r.season, count: Number(r.count) }));
 }
 
 async function getAcquisitionsThisMonth(): Promise<number> {
@@ -195,7 +194,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
     topBrands,
     mostOwnedJersey,
     topRatedJersey,
-    topSeason,
+    topSeasons,
     acquisitionsThisMonth,
     catalogCoverage,
     totalCollectedJerseys,
@@ -206,7 +205,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
     getTopBrands(),
     getMostOwnedJersey(),
     getTopRatedJersey(),
-    getTopSeason(),
+    getTopSeasons(),
     getAcquisitionsThisMonth(),
     getCatalogCoverage(),
     getTotalCollectedJerseys(),
@@ -219,7 +218,8 @@ async function getGlobalStats(): Promise<GlobalStats> {
     topBrands,
     mostOwnedJersey,
     topRatedJersey,
-    topSeason,
+    topSeason: topSeasons[0] ?? null,
+    topSeasons,
     acquisitionsThisMonth,
     catalogCoverage,
     totalCollectedJerseys,
@@ -229,7 +229,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
 
 export const getGlobalStatsCached = unstable_cache(
   getGlobalStats,
-  ["global-stats-v4"],
+  ["global-stats-v5"],
   { revalidate: 21600, tags: ["global-stats"] }
 );
 
