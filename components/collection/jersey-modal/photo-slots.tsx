@@ -1,13 +1,14 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Camera, Upload, Trash2 } from "lucide-react";
+import { Camera, Upload, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { MAX_USER_JERSEY_PHOTOS } from "@/lib/user-jersey-photos";
+import { convertHeicToJpeg } from "@/lib/heic-to-jpeg";
 
 const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
 
@@ -36,16 +37,20 @@ export function PhotoSlots({
 }: PhotoSlotsProps) {
   const t = useTranslations(namespace);
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isConverting, setIsConverting] = useState(false);
 
   const canAdd = slots.length < max;
 
-  const handleAdd = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleAdd = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     // Reset pour pouvoir re-selectionner le meme fichier apres suppression.
     e.target.value = "";
     if (!file) return;
 
-    if (!file.type.startsWith("image/")) {
+    // Le HEIC (photos iOS) a souvent un file.type vide : on tolere aussi
+    // l'extension, la conversion le transformera en JPEG juste apres.
+    const isHeicByName = /\.(heic|heif)$/i.test(file.name);
+    if (!file.type.startsWith("image/") && !isHeicByName) {
       toast.error(t("toast.fileNotImage"));
       return;
     }
@@ -58,14 +63,26 @@ export function PhotoSlots({
       return;
     }
 
+    let workingFile: File;
+    try {
+      setIsConverting(true);
+      workingFile = await convertHeicToJpeg(file);
+    } catch (err) {
+      console.error("Erreur conversion HEIC:", err);
+      toast.error(t("toast.conversionError"));
+      return;
+    } finally {
+      setIsConverting(false);
+    }
+
     const reader = new FileReader();
     reader.onloadend = () => {
       onChange([
         ...slots,
-        { kind: "new", file, preview: reader.result as string },
+        { kind: "new", file: workingFile, preview: reader.result as string },
       ]);
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(workingFile);
   };
 
   const handleRemove = (index: number) => {
@@ -88,18 +105,24 @@ export function PhotoSlots({
             type="button"
             variant="outline"
             className="w-full cursor-pointer"
+            disabled={isConverting}
             asChild
           >
             <span>
-              <Upload className="w-4 h-4 mr-2" />
-              {t("choosePhoto")}
+              {isConverting ? (
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+              ) : (
+                <Upload className="w-4 h-4 mr-2" />
+              )}
+              {isConverting ? t("photoConverting") : t("choosePhoto")}
             </span>
           </Button>
           <input
             ref={inputRef}
             type="file"
             className="hidden"
-            accept="image/*"
+            accept="image/*,.heic,.heif"
+            disabled={isConverting}
             onChange={handleAdd}
           />
         </label>
@@ -139,6 +162,18 @@ export function PhotoSlots({
 }
 
 /**
+ * Erreur d'upload portant un message serveur fiable (deja en francais).
+ * Permet aux appelants de distinguer une erreur metier (a afficher tel quel)
+ * d'une erreur reseau/inconnue (fallback generique).
+ */
+export class PhotoUploadError extends Error {
+  constructor(message: string, readonly status?: number) {
+    super(message);
+    this.name = "PhotoUploadError";
+  }
+}
+
+/**
  * Upload les nouveaux fichiers dans l'ordre des slots et retourne les paths R2
  * ordonnes (les slots existants conservent leur path). A soumettre en userPhotoUrls.
  */
@@ -161,8 +196,11 @@ export async function uploadPhotoSlots(
       body: formData,
     });
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || "Erreur lors de l'upload");
+      const data = await response.json().catch(() => null);
+      throw new PhotoUploadError(
+        data?.error || "Erreur lors de l'upload de la photo",
+        response.status
+      );
     }
     const { path } = await response.json();
     paths.push(path);

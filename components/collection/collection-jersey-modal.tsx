@@ -41,6 +41,7 @@ import { ImageCarousel } from "./image-carousel";
 import {
   PhotoSlots,
   uploadPhotoSlots,
+  PhotoUploadError,
   type PhotoSlot,
 } from "./jersey-modal/photo-slots";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
@@ -166,7 +167,13 @@ export function CollectionJerseyModal({
       photoUrls = await uploadPhotoSlots(photoSlots, collectionItem.id);
     } catch (error) {
       console.error("Erreur upload photo:", error);
-      toast.error(t("toast.uploadError"));
+      // Message serveur explicite (type non autorise, quota, taille...) si
+      // disponible ; sinon fallback generique pour reseau/erreur inconnue.
+      toast.error(
+        error instanceof PhotoUploadError
+          ? error.message
+          : t("toast.uploadError")
+      );
       setIsUploadingPhoto(false);
       setIsLoading(false);
       return;

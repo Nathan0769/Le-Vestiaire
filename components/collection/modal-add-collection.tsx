@@ -18,7 +18,12 @@ import {
   ShoppingBag,
   User,
 } from "lucide-react";
-import { PhotoSlots, uploadPhotoSlots, type PhotoSlot } from "./jersey-modal/photo-slots";
+import {
+  PhotoSlots,
+  uploadPhotoSlots,
+  PhotoUploadError,
+  type PhotoSlot,
+} from "./jersey-modal/photo-slots";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { maxUserJerseyPhotos } from "@/lib/user-jersey-photos";
 import { toast } from "sonner";
@@ -125,7 +130,13 @@ export function AddToCollectionModal({
         );
       } catch (error) {
         console.error("Erreur upload photo:", error);
-        toast.error(t("toast.uploadError"));
+        // Message serveur explicite (type non autorise, quota, taille...) si
+        // disponible ; sinon fallback generique pour reseau/erreur inconnue.
+        toast.error(
+          error instanceof PhotoUploadError
+            ? error.message
+            : t("toast.uploadError")
+        );
         setIsUploadingPhoto(false);
         return;
       } finally {

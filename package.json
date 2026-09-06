@@ -59,6 +59,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "file-type": "^21.0.0",
+    "heic-to": "^1.5.2",
     "html-to-image": "^1.11.13",
     "jsonwebtoken": "^9.0.2",
     "jspdf": "^4.2.0",

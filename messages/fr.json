@@ -341,6 +341,7 @@
         "modifyPhoto": "Modifier votre photo",
         "addPhoto": "Ajouter votre photo",
         "choosePhoto": "Choisir une photo",
+        "photoConverting": "Conversion en cours...",
         "cancel": "Annuler",
         "uploadPhoto": "Upload photo...",
         "adding": "Ajout...",
@@ -351,6 +352,7 @@
           "sizeRequired": "La taille est obligatoire",
           "conditionRequired": "L'état est obligatoire",
           "uploadError": "Erreur lors de l'upload de la photo",
+          "conversionError": "Impossible de convertir cette photo. Réessayez avec une autre image.",
           "photoLimit": "Vous ne pouvez pas ajouter plus de {max} photos"
         }
       },
@@ -362,6 +364,7 @@
         "modifyPhoto": "Modifier votre photo",
         "addPhoto": "Ajouter votre photo",
         "choosePhoto": "Choisir une photo",
+        "photoConverting": "Conversion en cours...",
         "withTags": "Avec étiquettes",
         "gift": "Cadeau",
         "mysteryBox": "Box mystère",
@@ -431,6 +434,7 @@
           "fileTooLarge": "La photo ne doit pas dépasser 5MB",
           "sizeConditionRequired": "La taille et l'état sont obligatoires",
           "uploadError": "Erreur lors de l'upload de la photo",
+          "conversionError": "Impossible de convertir cette photo. Réessayez avec une autre image.",
           "photoLimit": "Vous ne pouvez pas ajouter plus de {max} photos",
           "updated": "Maillot mis à jour avec succès",
           "error": "Une erreur est survenue",
