@@ -54,6 +54,10 @@ export interface UserCollectionItem {
   hasLongSleeves?: boolean;
   patches?: UserCollectionItemPatch[];
   pinnedAt?: Date | string | null;
+  // Like via le post JERSEY_ADD lié à l'item (source de vérité serveur).
+  postId?: string | null;
+  likeCount?: number;
+  hasLiked?: boolean;
   createdAt: Date;
   updatedAt: Date;
   jersey: {

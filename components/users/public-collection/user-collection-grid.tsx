@@ -30,11 +30,13 @@ import { useTranslations } from "next-intl";
 interface UserCollectionGridProps {
   collectionItems: UserCollectionItem[];
   showPriceSortOptions?: boolean;
+  isAuthenticated?: boolean;
 }
 
 export function UserCollectionGrid({
   collectionItems,
   showPriceSortOptions = true,
+  isAuthenticated = false,
 }: UserCollectionGridProps) {
   const t = useTranslations("Friends");
   const tFilters = useTranslations("Collection.filters");
@@ -239,6 +241,7 @@ export function UserCollectionGrid({
               key={item.id}
               collectionItem={item}
               compact={viewMode === "compact"}
+              isAuthenticated={isAuthenticated}
             />
           ))}
         </div>

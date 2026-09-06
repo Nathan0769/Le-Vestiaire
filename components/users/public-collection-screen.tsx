@@ -184,6 +184,36 @@ export async function PublicCollectionScreen({
 
   const myJerseyIdSet = new Set(myJerseyIds.map((j) => j.jerseyId));
 
+  // Like via le post JERSEY_ADD lié à chaque item (même mapping que l'API mobile) :
+  // le compteur vient du post, hasLiked du like de l'utilisateur courant.
+  const itemIds = collectionItems.map((i) => i.id);
+  const likePosts = itemIds.length
+    ? await prisma.post.findMany({
+        where: {
+          authorId: targetUser.id,
+          type: "JERSEY_ADD",
+          referenceId: { in: itemIds },
+          deletedAt: null,
+        },
+        select: { id: true, referenceId: true, likeCount: true },
+      })
+    : [];
+  const postByRef = new Map(likePosts.map((p) => [p.referenceId, p]));
+  const likedPostIds =
+    currentUser && likePosts.length
+      ? new Set(
+          (
+            await prisma.postLike.findMany({
+              where: {
+                userId: currentUser.id,
+                postId: { in: likePosts.map((p) => p.id) },
+              },
+              select: { postId: true },
+            })
+          ).map((l) => l.postId),
+        )
+      : new Set<string>();
+
   const formattedCollection = await Promise.all(
     collectionItems.map(async (item) => {
       const userPhotoUrls = await Promise.all(
@@ -192,11 +222,16 @@ export async function PublicCollectionScreen({
         ),
       );
 
+      const post = postByRef.get(item.id);
+
       return {
         ...item,
         userPhotoUrl: userPhotoUrls[0] ?? null,
         userPhotoUrls,
         purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
+        postId: post?.id ?? null,
+        likeCount: post?.likeCount ?? 0,
+        hasLiked: post ? likedPostIds.has(post.id) : false,
         jersey: {
           ...item.jersey,
           retailPrice: item.jersey.retailPrice
@@ -417,6 +452,7 @@ export async function PublicCollectionScreen({
         <UserCollectionGrid
           collectionItems={formattedCollection}
           showPriceSortOptions={false}
+          isAuthenticated={!!currentUser}
         />
       )}
     </div>

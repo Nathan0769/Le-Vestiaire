@@ -1,13 +1,16 @@
 "use client";
 import { useState } from "react";
 import Image from "next/image";
-import { Star, BadgeCheck, Pin } from "lucide-react";
+import { useRouter, usePathname } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { Star, BadgeCheck, Pin, Heart } from "lucide-react";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { UserCollectionJerseyModal } from "./user-collection-jersey-modal";
+import { buildAuthUrl } from "@/lib/auth-gate";
 import type { UserCollectionItem } from "@/types/user-public-collection";
 import { useTranslations, useLocale } from "next-intl";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
@@ -43,17 +46,61 @@ const CONDITION_DOT_CLASSES: Record<ConditionKey, string> = {
 interface UserCollectionJerseyCardProps {
   collectionItem: UserCollectionItem;
   compact?: boolean;
+  isAuthenticated?: boolean;
 }
 
 export function UserCollectionJerseyCard({
   collectionItem,
   compact = false,
+  isAuthenticated = false,
 }: UserCollectionJerseyCardProps) {
   const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
   const tJerseyType = useTranslations("JerseyType");
   const tVersion = useTranslations("JerseyVersion");
   const tCondition = useTranslations("Condition");
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const postId = collectionItem.postId ?? null;
+  const [hasLiked, setHasLiked] = useState(!!collectionItem.hasLiked);
+  const [likeCount, setLikeCount] = useState(collectionItem.likeCount ?? 0);
+
+  // Toggle optimiste du like (même endpoint que le feed) : le serveur reste la
+  // source de vérité sur likeCount, rollback en cas d'erreur.
+  const likeMutation = useMutation({
+    mutationFn: async () => {
+      const res = await fetch(`/api/posts/${postId}/like`, { method: "POST" });
+      if (!res.ok) throw new Error("Erreur like");
+      return (await res.json()) as { hasLiked: boolean; likeCount: number };
+    },
+    onMutate: () => {
+      const previous = { hasLiked, likeCount };
+      setHasLiked(!hasLiked);
+      setLikeCount(likeCount + (hasLiked ? -1 : 1));
+      return previous;
+    },
+    onError: (_err, _vars, ctx) => {
+      if (ctx) {
+        setHasLiked(ctx.hasLiked);
+        setLikeCount(ctx.likeCount);
+      }
+    },
+    onSuccess: (data) => {
+      setHasLiked(data.hasLiked);
+      setLikeCount(data.likeCount);
+    },
+  });
+
+  const handleLikeClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!isAuthenticated) {
+      router.push(buildAuthUrl("login", pathname));
+      return;
+    }
+    if (!postId || likeMutation.isPending) return;
+    likeMutation.mutate();
+  };
 
   const typeLabel = jerseyTypeLabel(
     tJerseyType(collectionItem.jersey.type as JerseyType),
@@ -150,14 +197,26 @@ export function UserCollectionJerseyCard({
                 />
               </span>
             )}
-            {collectionItem.size && (
-              <span
-                className={`bg-white/90 text-zinc-900 font-semibold rounded-md backdrop-blur-sm shadow-sm ${
-                  compact ? "text-[10px] px-1.5 py-0.5" : "text-xs px-2 py-1"
+            {postId && (
+              <button
+                type="button"
+                onClick={handleLikeClick}
+                aria-label={hasLiked ? "Retirer le like" : "Liker"}
+                aria-pressed={hasLiked}
+                className={`pointer-events-auto flex items-center rounded-full bg-zinc-900/60 backdrop-blur-sm text-white font-semibold shadow-sm transition-colors hover:bg-zinc-900/75 cursor-pointer disabled:opacity-70 ${
+                  compact
+                    ? "gap-1 px-1.5 py-0.5 text-[10px]"
+                    : "gap-1 px-2 py-1 text-[11px]"
                 }`}
+                disabled={likeMutation.isPending}
               >
-                {collectionItem.size}
-              </span>
+                <Heart
+                  className={`${compact ? "w-3 h-3" : "w-3.5 h-3.5"} ${
+                    hasLiked ? "fill-red-500 text-red-500" : "text-white"
+                  }`}
+                />
+                {likeCount}
+              </button>
             )}
           </div>
 
