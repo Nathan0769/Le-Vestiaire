@@ -9,8 +9,9 @@ import { Camera, Upload, Trash2, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { MAX_USER_JERSEY_PHOTOS } from "@/lib/user-jersey-photos";
 import { convertHeicToJpeg } from "@/lib/heic-to-jpeg";
+import { compressImage } from "@/lib/compress-image";
 
-const MAX_UPLOAD_BYTES = 10 * 1024 * 1024;
+const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
 
 /**
  * Une photo perso en cours d'edition : soit deja stockee (path R2 connu + URL
@@ -66,9 +67,12 @@ export function PhotoSlots({
     let workingFile: File;
     try {
       setIsConverting(true);
-      workingFile = await convertHeicToJpeg(file);
+      // HEIC (iOS) -> JPEG, puis compression/downscale pour rester sous la
+      // limite Vercel (~4.5MB de corps de requete serverless).
+      const jpeg = await convertHeicToJpeg(file);
+      workingFile = await compressImage(jpeg);
     } catch (err) {
-      console.error("Erreur conversion HEIC:", err);
+      console.error("Erreur preparation photo:", err);
       toast.error(t("toast.conversionError"));
       return;
     } finally {
