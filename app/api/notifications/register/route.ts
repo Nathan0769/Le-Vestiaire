@@ -7,6 +7,8 @@ import prisma from "@/lib/prisma";
 const registerSchema = z.object({
   token: z.string().min(1),
   platform: z.enum(["ios", "android"]),
+  // Environnement APNs du token (le client iOS l'envoie selon son build).
+  environment: z.enum(["sandbox", "production"]).optional(),
 });
 
 export async function POST(request: Request) {
@@ -28,13 +30,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Données invalides" }, { status: 400 });
     }
 
-    const { token, platform } = parsed.data;
+    const { token, platform, environment } = parsed.data;
 
     // Upsert : un token donné ne peut appartenir qu'à un seul utilisateur
     await prisma.pushToken.upsert({
       where: { token },
-      update: { userId: user.id, platform },
-      create: { id: crypto.randomUUID(), userId: user.id, token, platform },
+      update: { userId: user.id, platform, environment },
+      create: {
+        id: crypto.randomUUID(),
+        userId: user.id,
+        token,
+        platform,
+        environment,
+      },
     });
 
     return NextResponse.json({ success: true });

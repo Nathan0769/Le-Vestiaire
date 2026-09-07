@@ -53,7 +53,10 @@ export async function pushForNotification(input: PushInput): Promise<void> {
       select: {
         notificationsEnabled: true,
         disabledPushTypes: true,
-        pushTokens: { where: { platform: "ios" }, select: { token: true } },
+        pushTokens: {
+          where: { platform: "ios" },
+          select: { token: true, environment: true },
+        },
       },
     });
     if (
@@ -88,12 +91,14 @@ export async function pushForNotification(input: PushInput): Promise<void> {
       followRequestId: input.followRequestId ?? "",
     };
 
-    const tokens = recipient.pushTokens.map((t) => t.token);
+    const tokens = recipient.pushTokens;
     const results = await Promise.all(
-      tokens.map((token) => sendApns(token, { title, body, data }))
+      tokens.map((t) => sendApns(t.token, { title, body, data }, t.environment))
     );
 
-    const invalidTokens = tokens.filter((_, i) => results[i]?.invalid);
+    const invalidTokens = tokens
+      .filter((_, i) => results[i]?.invalid)
+      .map((t) => t.token);
     if (invalidTokens.length > 0) {
       await prisma.pushToken.deleteMany({
         where: { token: { in: invalidTokens } },

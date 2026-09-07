@@ -13,10 +13,19 @@ const TEAM_ID = process.env.APNS_TEAM_ID;
 // La clé peut être stockée avec des \n littéraux dans l'env var.
 const P8 = process.env.APNS_P8?.replace(/\\n/g, "\n");
 const BUNDLE_ID = process.env.APNS_BUNDLE_ID ?? "fr.levestiaire.app";
-const HOST =
-  process.env.APNS_PRODUCTION === "true"
-    ? "https://api.push.apple.com"
-    : "https://api.sandbox.push.apple.com";
+
+const PROD_HOST = "https://api.push.apple.com";
+const SANDBOX_HOST = "https://api.sandbox.push.apple.com";
+// Fallback pour les anciens tokens sans environnement connu (avant migration).
+const FALLBACK_HOST =
+  process.env.APNS_PRODUCTION === "true" ? PROD_HOST : SANDBOX_HOST;
+
+/** Choisit la passerelle APNs selon l'environnement du token. */
+function hostFor(environment?: string | null): string {
+  if (environment === "production") return PROD_HOST;
+  if (environment === "sandbox") return SANDBOX_HOST;
+  return FALLBACK_HOST;
+}
 
 export function apnsConfigured(): boolean {
   return Boolean(KEY_ID && TEAM_ID && P8);
@@ -51,7 +60,8 @@ export interface ApnsResult {
 
 export async function sendApns(
   deviceToken: string,
-  payload: ApnsPayload
+  payload: ApnsPayload,
+  environment?: string | null
 ): Promise<ApnsResult> {
   if (!apnsConfigured()) return { ok: false, status: 0, invalid: false };
 
@@ -72,7 +82,7 @@ export async function sendApns(
       resolve(r);
     };
 
-    const client = http2.connect(HOST);
+    const client = http2.connect(hostFor(environment));
     client.on("error", () => done({ ok: false, status: 0, invalid: false }));
 
     const req = client.request({
