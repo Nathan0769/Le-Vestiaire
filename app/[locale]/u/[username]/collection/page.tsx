@@ -10,7 +10,7 @@ interface PageProps {
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
-  const { username: raw } = await params;
+  const { locale, username: raw } = await params;
   const username = raw.toLowerCase();
 
   const user = await prisma.user.findUnique({
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     : user.name ?? user.username;
   const title = `@${user.username} sur Le Vestiaire`;
   const description = `Découvrez la collection de maillots de ${displayName} sur Le Vestiaire.`;
-  const url = `https://levestiaire.app/u/${user.username}/collection`;
+  const url = `https://le-vestiaire-foot.fr/${locale}/u/${user.username}/collection`;
 
   return {
     title,

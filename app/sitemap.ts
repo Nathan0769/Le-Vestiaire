@@ -133,8 +133,29 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
       }));
 
+    // Profils publics : uniquement les collectionneurs qui ont explicitement
+    // rendu leur profil visible (leaderboardAnonymous=false) avec un pseudo
+    // choisi (usernameGenerated=false) et une collection non vide. Ce filtre
+    // reflète exactement la logique noindex de la page profil : ne jamais
+    // exposer dans le sitemap une URL que la page elle-même désindexe.
+    const publicProfiles = await prisma.user.findMany({
+      where: {
+        leaderboardAnonymous: false,
+        usernameGenerated: false,
+        collection: { some: {} },
+      },
+      select: { username: true, updatedAt: true },
+    });
+
+    const profileRoutes: MetadataRoute.Sitemap = publicProfiles.map((user) => ({
+      url: `${BASE_URL}/fr/u/${user.username}/collection`,
+      lastModified: user.updatedAt,
+      changeFrequency: "weekly",
+      priority: 0.5,
+    }));
+
     console.log(
-      `Sitemap généré : ${jerseyRoutes.length} maillots + ${leagueAndClubRoutes.length} leagues/clubs + ${brandRoutes.length} marques + ${seasonRoutes.length} saisons + ${staticRoutes.length} pages statiques`
+      `Sitemap généré : ${jerseyRoutes.length} maillots + ${leagueAndClubRoutes.length} leagues/clubs + ${brandRoutes.length} marques + ${seasonRoutes.length} saisons + ${profileRoutes.length} profils + ${staticRoutes.length} pages statiques`
     );
 
     return [
@@ -143,6 +164,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...jerseyRoutes,
       ...brandRoutes,
       ...seasonRoutes,
+      ...profileRoutes,
     ];
   } catch (error) {
     console.error("Erreur génération sitemap:", error);
