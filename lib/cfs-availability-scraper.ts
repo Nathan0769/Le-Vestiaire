@@ -43,7 +43,8 @@ const JERSEY_EXCLUDE_TERMS = [
 ];
 
 interface ConstructorVariation {
-  data: { size_product?: string };
+  // Constructor.io returns numeric sizes (e.g. 10, 12) as JS numbers, not strings
+  data: { size_product?: string | number };
 }
 
 interface ConstructorItem {
@@ -73,11 +74,11 @@ function isAdultJerseyInStock(item: ConstructorItem): boolean {
   }
 
   const adultVariations = variations.filter((v) =>
-    ADULT_SIZES.has((v.data.size_product ?? "").toUpperCase())
+    ADULT_SIZES.has(String(v.data.size_product ?? "").toUpperCase())
   );
   if (adultVariations.length === 0) return false;
   const targetCount = adultVariations.filter((v) =>
-    TARGET_SIZES.has((v.data.size_product ?? "").toUpperCase())
+    TARGET_SIZES.has(String(v.data.size_product ?? "").toUpperCase())
   ).length;
   return targetCount >= MIN_TARGET_SIZES;
 }
