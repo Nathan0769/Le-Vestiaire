@@ -1242,6 +1242,11 @@
       "jerseys": "Geregistreerde shirts",
       "clubs": "Clubs"
     },
+    "featuredCollectors": {
+      "title": "Verzamelaars ontdekken",
+      "subtitle": "Ontdek de collecties van de community",
+      "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}"
+    },
     "communityHighlights": {
       "title": "De community in cijfers",
       "subtitle": "Trends en records van de verzamelaars",

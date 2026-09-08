@@ -1242,6 +1242,11 @@
       "jerseys": "Listed jerseys",
       "clubs": "Clubs"
     },
+    "featuredCollectors": {
+      "title": "Collectors to discover",
+      "subtitle": "Explore the community's collections",
+      "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}"
+    },
     "communityHighlights": {
       "title": "The community in numbers",
       "subtitle": "Trends and records from collectors",

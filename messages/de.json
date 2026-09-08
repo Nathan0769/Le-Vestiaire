@@ -1242,6 +1242,11 @@
       "jerseys": "Gelistete Trikots",
       "clubs": "Clubs"
     },
+    "featuredCollectors": {
+      "title": "Sammler entdecken",
+      "subtitle": "Entdecke die Sammlungen der Community",
+      "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}"
+    },
     "communityHighlights": {
       "title": "Die Community in Zahlen",
       "subtitle": "Trends und Rekorde der Sammler",

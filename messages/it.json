@@ -1242,6 +1242,11 @@
       "jerseys": "Maglie catalogate",
       "clubs": "Club"
     },
+    "featuredCollectors": {
+      "title": "Collezionisti da scoprire",
+      "subtitle": "Esplora le collezioni della community",
+      "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}"
+    },
     "communityHighlights": {
       "title": "La community in numeri",
       "subtitle": "Le tendenze e i record dei collezionisti",

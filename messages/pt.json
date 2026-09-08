@@ -1242,6 +1242,11 @@
       "jerseys": "Camisolas listadas",
       "clubs": "Clubes"
     },
+    "featuredCollectors": {
+      "title": "Colecionadores a descobrir",
+      "subtitle": "Explora as coleções da comunidade",
+      "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}"
+    },
     "communityHighlights": {
       "title": "A comunidade em números",
       "subtitle": "As tendências e recordes dos colecionadores",

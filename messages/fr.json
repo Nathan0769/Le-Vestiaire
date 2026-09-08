@@ -1253,6 +1253,11 @@
       "jerseys": "Maillots répertoriés",
       "clubs": "Clubs"
     },
+    "featuredCollectors": {
+      "title": "Collectionneurs à découvrir",
+      "subtitle": "Explorez les collections de la communauté",
+      "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}"
+    },
     "communityHighlights": {
       "title": "La communauté en chiffres",
       "subtitle": "Les tendances et records des collectionneurs",

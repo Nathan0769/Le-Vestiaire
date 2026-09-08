@@ -18,6 +18,7 @@ import { SupportSection } from "@/components/home/support-section";
 import { FeaturesSection } from "@/components/home/features-section";
 import { StatsSection } from "@/components/home/stats-section";
 import { CommunityHighlights } from "@/components/home/community-highlights";
+import { FeaturedCollectors } from "@/components/home/featured-collectors";
 import { CfsPromoSection } from "@/components/home/cfs-promo-section";
 import { selectFeaturedCfsPromos } from "@/lib/cfs-affiliate";
 import { HomeFeedSection } from "@/components/home/home-feed-section";
@@ -890,6 +891,7 @@ export default async function HomePage({
         clubCount={globalStats.clubCount}
       />
       <CommunityHighlights />
+      <FeaturedCollectors />
       <FeaturesSection />
       <FAQSection />
       <SupportSection />
