@@ -179,6 +179,15 @@ async function getTotalCollectedJerseys(): Promise<number> {
   return prisma.userJersey.count();
 }
 
+/** Nombre de collectionneurs = utilisateurs distincts possédant au moins 1 maillot. */
+async function getTotalCollectors(): Promise<number> {
+  const rows = await prisma.userJersey.findMany({
+    select: { userId: true },
+    distinct: ["userId"],
+  });
+  return rows.length;
+}
+
 async function getAverageRating(): Promise<number | null> {
   const result = await prisma.rating.aggregate({
     _avg: { rating: true },
@@ -198,6 +207,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
     acquisitionsThisMonth,
     catalogCoverage,
     totalCollectedJerseys,
+    totalCollectors,
     averageRating,
   ] = await Promise.all([
     getTopClubs(),
@@ -209,6 +219,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
     getAcquisitionsThisMonth(),
     getCatalogCoverage(),
     getTotalCollectedJerseys(),
+    getTotalCollectors(),
     getAverageRating(),
   ]);
 
@@ -223,13 +234,14 @@ async function getGlobalStats(): Promise<GlobalStats> {
     acquisitionsThisMonth,
     catalogCoverage,
     totalCollectedJerseys,
+    totalCollectors,
     averageRating,
   };
 }
 
 export const getGlobalStatsCached = unstable_cache(
   getGlobalStats,
-  ["global-stats-v6"],
+  ["global-stats-v7"],
   { revalidate: 21600, tags: ["global-stats"] }
 );
 

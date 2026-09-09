@@ -55,6 +55,7 @@ export type GlobalStats = {
   acquisitionsThisMonth: number;
   catalogCoverage: number;
   totalCollectedJerseys: number;
+  totalCollectors: number;
   averageRating: number | null;
 };
 
