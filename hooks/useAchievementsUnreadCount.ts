@@ -15,6 +15,5 @@ export function useAchievementsUnreadCount() {
       return res.json();
     },
     staleTime: 60 * 1000,
-    refetchOnWindowFocus: true,
   });
 }

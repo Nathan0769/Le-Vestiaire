@@ -30,7 +30,6 @@ export function useSubscription() {
     queryKey: ["subscription", userId],
     // Endpoint authentifie : rien a demander tant qu'aucune session.
     enabled: !sessionLoading && !!userId,
-    refetchOnWindowFocus: true,
     queryFn: async () => {
       const res = await fetch("/api/stripe/subscription");
       if (!res.ok) return null;

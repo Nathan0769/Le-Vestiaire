@@ -13,7 +13,6 @@ export function useNetworkCounts() {
   return useQuery({
     queryKey: ["network-counts"],
     enabled: !!user?.id,
-    refetchOnWindowFocus: true,
     queryFn: async () => {
       const res = await fetch("/api/user/network-counts");
       if (!res.ok) return { followers: 0, following: 0 };
