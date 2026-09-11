@@ -50,14 +50,13 @@ export function ClubRankingsCard({ data }: { data: ClubRanking[] }) {
             )}
             <div className="min-w-0 flex-1">
               <p className="truncate font-semibold">{r.clubName}</p>
-              <p className="text-sm text-muted-foreground">
-                {r.userCount} maillots différents · sur {r.totalCollectors}{" "}
+              <p className="truncate text-sm font-semibold text-primary">
+                {ordinal(r.rank)} plus gros collectionneur
+              </p>
+              <p className="truncate text-xs text-muted-foreground">
+                {r.userCount} maillots différents · {r.totalCollectors}{" "}
                 collectionneurs
               </p>
-            </div>
-            <div className="shrink-0 text-right">
-              <p className="text-lg font-bold text-primary">{ordinal(r.rank)}</p>
-              <p className="text-xs text-muted-foreground">collectionneur</p>
             </div>
           </div>
         ))}
