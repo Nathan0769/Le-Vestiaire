@@ -1,5 +1,6 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
 import {
   standardRateLimit,
   getRateLimitIdentifier,
@@ -135,6 +136,69 @@ export async function GET() {
       }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 10);
+
+    // Classements par club : rang de l'utilisateur parmi les collectionneurs d'un
+    // club. Seulement pour les clubs où il a >= 5 maillots DIFFÉRENTS (jerseyId
+    // distinct) ET qui comptent >= 5 collectionneurs (sinon aucun intérêt).
+    const clubMeta = new Map<
+      string,
+      { name: string; logoUrl: string | null; jerseyIds: Set<string> }
+    >();
+    for (const item of collection) {
+      const c = item.jersey.club;
+      const entry =
+        clubMeta.get(c.id) ??
+        { name: c.name, logoUrl: c.logoUrl, jerseyIds: new Set<string>() };
+      entry.jerseyIds.add(item.jerseyId);
+      clubMeta.set(c.id, entry);
+    }
+    const candidateClubIds = [...clubMeta.entries()]
+      .filter(([, m]) => m.jerseyIds.size >= 5)
+      .map(([id]) => id);
+
+    let clubRankings: {
+      clubId: string;
+      clubName: string;
+      clubLogoUrl: string | null;
+      userCount: number;
+      rank: number;
+      totalCollectors: number;
+    }[] = [];
+
+    if (candidateClubIds.length > 0) {
+      const rows = await prisma.$queryRaw<
+        { clubId: string; cnt: bigint; rnk: bigint; collectors: bigint }[]
+      >`
+        WITH per_user_club AS (
+          SELECT uj."userId" AS uid, j."clubId" AS cid,
+                 COUNT(DISTINCT uj."jerseyId") AS cnt
+          FROM user_jerseys uj
+          JOIN jerseys j ON j.id = uj."jerseyId"
+          WHERE j."clubId" IN (${Prisma.join(candidateClubIds)})
+          GROUP BY uj."userId", j."clubId"
+        ),
+        ranked AS (
+          SELECT uid, cid, cnt,
+                 RANK() OVER (PARTITION BY cid ORDER BY cnt DESC) AS rnk,
+                 COUNT(*) OVER (PARTITION BY cid) AS collectors
+          FROM per_user_club
+        )
+        SELECT cid AS "clubId", cnt, rnk, collectors
+        FROM ranked
+        WHERE uid = ${user.id}
+      `;
+      clubRankings = rows
+        .map((r) => ({
+          clubId: r.clubId,
+          clubName: clubMeta.get(r.clubId)?.name ?? "",
+          clubLogoUrl: clubMeta.get(r.clubId)?.logoUrl ?? null,
+          userCount: Number(r.cnt),
+          rank: Number(r.rnk),
+          totalCollectors: Number(r.collectors),
+        }))
+        .filter((r) => r.totalCollectors >= 5)
+        .sort((a, b) => b.userCount - a.userCount);
+    }
 
     const itemsWithPrice = collection.filter(
       (item) => item.purchasePrice && !item.isGift
@@ -336,6 +400,7 @@ export async function GET() {
         seasonDistribution,
         leagueDistribution,
         clubDistribution,
+        clubRankings,
         financial: {
           totalSpent: Math.round(totalSpent * 100) / 100,
           averagePrice: Math.round(averagePrice * 100) / 100,
