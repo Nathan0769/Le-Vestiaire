@@ -47,13 +47,20 @@ interface CollectionStats {
       estimatedMarketValue: number;
       marketValueCoverage: number;
       marketValueItems: number;
-      marketValueBreakdown: {
-        jerseyName: string;
-        clubName: string;
-        season: string;
-        value: number;
-        confidence: string;
-      }[];
+      marketValueDetail: {
+        invested: number;
+        estimatedOnPriced: number;
+        confidence: { high: number; medium: number; low: number };
+        topJerseys: {
+          clubName: string;
+          jerseyName: string;
+          season: string;
+          value: number;
+          confidence: string;
+        }[];
+        byClub: { clubName: string; value: number }[];
+        byClubOther: number;
+      };
       mostExpensive: {
         jerseyName: string;
         clubName: string;

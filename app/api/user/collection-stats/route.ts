@@ -233,35 +233,60 @@ export async function GET() {
     });
     const baseByJersey = new Map(marketRows.map((m) => [m.jerseyId, m.baseValue]));
     const confByJersey = new Map(marketRows.map((m) => [m.jerseyId, m.confidence]));
+
     let estimatedMarketValue = 0;
     let estimatedItems = 0;
-    const marketValueBreakdown: {
-      jerseyName: string;
+    let mvInvested = 0; // payé pour les maillots cotés qui ont un prix (hors cadeau)
+    let mvEstimatedOnPriced = 0; // estimé pour ces mêmes maillots (plus-value like-for-like)
+    const mvConfidence = { high: 0, medium: 0, low: 0 };
+    const mvByClub = new Map<string, number>();
+    const mvTop: {
       clubName: string;
+      jerseyName: string;
       season: string;
       value: number;
       confidence: string;
     }[] = [];
+
     for (const item of collection) {
       const base = baseByJersey.get(item.jerseyId);
-      if (base != null) {
-        const value = valueForCondition(base, item.condition as unknown as Condition);
-        estimatedMarketValue += value;
-        estimatedItems += 1;
-        marketValueBreakdown.push({
-          jerseyName: item.jersey.name,
-          clubName: item.jersey.club.name,
-          season: item.jersey.season,
-          value,
-          confidence: confByJersey.get(item.jerseyId) ?? "low",
-        });
+      if (base == null) continue;
+      const value = valueForCondition(base, item.condition as unknown as Condition);
+      const conf = confByJersey.get(item.jerseyId) ?? "low";
+      estimatedMarketValue += value;
+      estimatedItems += 1;
+      if (conf === "high" || conf === "medium" || conf === "low") mvConfidence[conf] += 1;
+      mvByClub.set(item.jersey.club.name, (mvByClub.get(item.jersey.club.name) ?? 0) + value);
+      mvTop.push({
+        clubName: item.jersey.club.name,
+        jerseyName: item.jersey.name,
+        season: item.jersey.season,
+        value,
+        confidence: conf,
+      });
+      if (!item.isGift && item.purchasePrice && Number(item.purchasePrice) > 0) {
+        mvInvested += Number(item.purchasePrice);
+        mvEstimatedOnPriced += value;
       }
     }
-    marketValueBreakdown.sort((a, b) => b.value - a.value);
+    mvTop.sort((a, b) => b.value - a.value);
+    const byClubSorted = [...mvByClub.entries()].sort((a, b) => b[1] - a[1]);
     const marketValueCoverage =
       collection.length > 0
         ? Math.round((estimatedItems / collection.length) * 100)
         : 0;
+
+    const marketValueDetail = {
+      invested: Math.round(mvInvested * 100) / 100,
+      estimatedOnPriced: Math.round(mvEstimatedOnPriced * 100) / 100,
+      confidence: mvConfidence,
+      topJerseys: mvTop.slice(0, 10),
+      byClub: byClubSorted
+        .slice(0, 4)
+        .map(([clubName, value]) => ({ clubName, value: Math.round(value * 100) / 100 })),
+      byClubOther:
+        Math.round(byClubSorted.slice(4).reduce((s, [, v]) => s + v, 0) * 100) / 100,
+    };
 
     const mostExpensive = itemsWithPrice.sort(
       (a, b) => Number(b.purchasePrice || 0) - Number(a.purchasePrice || 0)
@@ -450,7 +475,7 @@ export async function GET() {
           estimatedMarketValue: Math.round(estimatedMarketValue * 100) / 100,
           marketValueCoverage,
           marketValueItems: estimatedItems,
-          marketValueBreakdown: marketValueBreakdown.slice(0, 50),
+          marketValueDetail,
           mostExpensive: mostExpensive
             ? {
                 jerseyName: mostExpensive.jersey.name,
