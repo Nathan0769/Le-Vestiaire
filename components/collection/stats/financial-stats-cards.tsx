@@ -11,6 +11,8 @@ interface FinancialStatsCardsProps {
     averagePrice: number;
     totalRetailValue: number;
     totalCollectionValue: number;
+    estimatedMarketValue: number;
+    marketValueCoverage: number;
     mostExpensive: {
       jerseyName: string;
       clubName: string;
@@ -81,23 +83,44 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
           </CardContent>
         </Card>
 
-        <Card className="opacity-60">
+        <Card className={financial.estimatedMarketValue > 0 ? undefined : "opacity-60"}>
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium flex items-center justify-between gap-2">
               <span className="flex items-center gap-2">
-                <BarChart2 className="w-4 h-4 text-muted-foreground" />
+                <BarChart2
+                  className={`w-4 h-4 ${
+                    financial.estimatedMarketValue > 0
+                      ? "text-primary"
+                      : "text-muted-foreground"
+                  }`}
+                />
                 {t("marketValue")}
               </span>
-              <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-                {t("comingSoon")}
-              </Badge>
+              {financial.estimatedMarketValue <= 0 && (
+                <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
+                  {t("comingSoon")}
+                </Badge>
+              )}
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold text-muted-foreground">—</p>
-            <p className="text-xs text-muted-foreground mt-1">
-              {t("marketValueDescription")}
-            </p>
+            {financial.estimatedMarketValue > 0 ? (
+              <>
+                <p className="text-2xl font-bold">
+                  {financial.estimatedMarketValue.toFixed(2)}€
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Estimation · {financial.marketValueCoverage}% des maillots
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="text-2xl font-bold text-muted-foreground">—</p>
+                <p className="text-xs text-muted-foreground mt-1">
+                  {t("marketValueDescription")}
+                </p>
+              </>
+            )}
           </CardContent>
         </Card>
       </div>
