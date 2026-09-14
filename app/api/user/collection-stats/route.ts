@@ -229,18 +229,35 @@ export async function GET() {
     const jerseyIds = [...new Set(collection.map((i) => i.jerseyId))];
     const marketRows = await prisma.jerseyMarketValue.findMany({
       where: { jerseyId: { in: jerseyIds } },
-      select: { jerseyId: true, baseValue: true },
+      select: { jerseyId: true, baseValue: true, confidence: true },
     });
     const baseByJersey = new Map(marketRows.map((m) => [m.jerseyId, m.baseValue]));
+    const confByJersey = new Map(marketRows.map((m) => [m.jerseyId, m.confidence]));
     let estimatedMarketValue = 0;
     let estimatedItems = 0;
+    const marketValueBreakdown: {
+      jerseyName: string;
+      clubName: string;
+      season: string;
+      value: number;
+      confidence: string;
+    }[] = [];
     for (const item of collection) {
       const base = baseByJersey.get(item.jerseyId);
       if (base != null) {
-        estimatedMarketValue += valueForCondition(base, item.condition as unknown as Condition);
+        const value = valueForCondition(base, item.condition as unknown as Condition);
+        estimatedMarketValue += value;
         estimatedItems += 1;
+        marketValueBreakdown.push({
+          jerseyName: item.jersey.name,
+          clubName: item.jersey.club.name,
+          season: item.jersey.season,
+          value,
+          confidence: confByJersey.get(item.jerseyId) ?? "low",
+        });
       }
     }
+    marketValueBreakdown.sort((a, b) => b.value - a.value);
     const marketValueCoverage =
       collection.length > 0
         ? Math.round((estimatedItems / collection.length) * 100)
@@ -433,6 +450,7 @@ export async function GET() {
           estimatedMarketValue: Math.round(estimatedMarketValue * 100) / 100,
           marketValueCoverage,
           marketValueItems: estimatedItems,
+          marketValueBreakdown: marketValueBreakdown.slice(0, 50),
           mostExpensive: mostExpensive
             ? {
                 jerseyName: mostExpensive.jersey.name,

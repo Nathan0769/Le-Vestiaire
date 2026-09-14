@@ -4,6 +4,20 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
 import { Wallet, TrendingUp, TrendingDown, DollarSign, BarChart2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+
+const CONFIDENCE_LABEL: Record<string, string> = {
+  high: "fiable",
+  medium: "indicative",
+  low: "faible",
+};
 
 interface FinancialStatsCardsProps {
   financial: {
@@ -13,6 +27,14 @@ interface FinancialStatsCardsProps {
     totalCollectionValue: number;
     estimatedMarketValue: number;
     marketValueCoverage: number;
+    marketValueItems: number;
+    marketValueBreakdown: {
+      jerseyName: string;
+      clubName: string;
+      season: string;
+      value: number;
+      confidence: string;
+    }[];
     mostExpensive: {
       jerseyName: string;
       clubName: string;
@@ -83,46 +105,88 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
           </CardContent>
         </Card>
 
-        <Card className={financial.estimatedMarketValue > 0 ? undefined : "opacity-60"}>
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center justify-between gap-2">
-              <span className="flex items-center gap-2">
-                <BarChart2
-                  className={`w-4 h-4 ${
-                    financial.estimatedMarketValue > 0
-                      ? "text-primary"
-                      : "text-muted-foreground"
-                  }`}
-                />
-                {t("marketValue")}
-              </span>
-              {financial.estimatedMarketValue <= 0 && (
+        {financial.estimatedMarketValue > 0 ? (
+          <Dialog>
+            <DialogTrigger asChild>
+              <Card className="cursor-pointer transition hover:border-primary/50">
+                <CardHeader className="pb-3">
+                  <CardTitle className="text-sm font-medium flex items-center gap-2">
+                    <BarChart2 className="w-4 h-4 text-primary" />
+                    {t("marketValue")}
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-2xl font-bold">
+                    {financial.estimatedMarketValue.toFixed(2)}€
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Estimation · {financial.marketValueCoverage}% des maillots ·
+                    voir le détail
+                  </p>
+                </CardContent>
+              </Card>
+            </DialogTrigger>
+            <DialogContent className="max-w-lg">
+              <DialogHeader>
+                <DialogTitle>Valeur estimée de ta collection</DialogTitle>
+                <DialogDescription>
+                  Estimation d&apos;après les prix d&apos;achat de nos
+                  collectionneurs et Classic Football Shirts.{" "}
+                  {financial.marketValueCoverage}% de tes maillots ont une cote (
+                  {financial.marketValueItems} maillots). La cote s&apos;affine
+                  avec le temps.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex items-baseline gap-2">
+                <span className="text-3xl font-bold text-primary">
+                  {financial.estimatedMarketValue.toFixed(2)}€
+                </span>
+                <span className="text-sm text-muted-foreground">estimés</span>
+              </div>
+              <div className="max-h-80 divide-y overflow-y-auto">
+                {financial.marketValueBreakdown.map((b, i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between gap-3 py-2"
+                  >
+                    <div className="min-w-0">
+                      <p className="truncate text-sm font-medium">{b.clubName}</p>
+                      <p className="truncate text-xs text-muted-foreground">
+                        {b.jerseyName} · {b.season}
+                      </p>
+                    </div>
+                    <div className="flex shrink-0 items-center gap-2">
+                      <Badge variant="secondary" className="text-[10px]">
+                        {CONFIDENCE_LABEL[b.confidence] ?? b.confidence}
+                      </Badge>
+                      <span className="font-semibold">{b.value.toFixed(2)}€</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </DialogContent>
+          </Dialog>
+        ) : (
+          <Card className="opacity-60">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-sm font-medium flex items-center justify-between gap-2">
+                <span className="flex items-center gap-2">
+                  <BarChart2 className="w-4 h-4 text-muted-foreground" />
+                  {t("marketValue")}
+                </span>
                 <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
                   {t("comingSoon")}
                 </Badge>
-              )}
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {financial.estimatedMarketValue > 0 ? (
-              <>
-                <p className="text-2xl font-bold">
-                  {financial.estimatedMarketValue.toFixed(2)}€
-                </p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Estimation · {financial.marketValueCoverage}% des maillots
-                </p>
-              </>
-            ) : (
-              <>
-                <p className="text-2xl font-bold text-muted-foreground">—</p>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {t("marketValueDescription")}
-                </p>
-              </>
-            )}
-          </CardContent>
-        </Card>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-2xl font-bold text-muted-foreground">—</p>
+              <p className="text-xs text-muted-foreground mt-1">
+                {t("marketValueDescription")}
+              </p>
+            </CardContent>
+          </Card>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
