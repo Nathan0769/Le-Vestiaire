@@ -1,6 +1,8 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
+import { valueForCondition } from "@/lib/market-value/aggregate";
+import type { Condition } from "@/lib/market-value/types";
 import {
   standardRateLimit,
   getRateLimitIdentifier,
@@ -222,6 +224,28 @@ export async function GET() {
       return sum + (item.purchasePrice ? Number(item.purchasePrice) : 0);
     }, 0);
 
+    // Valeur marché estimée : cotes stockées (base état de référence) × multiplicateur
+    // d'état de chaque item. Couverture = part des maillots ayant une cote.
+    const jerseyIds = [...new Set(collection.map((i) => i.jerseyId))];
+    const marketRows = await prisma.jerseyMarketValue.findMany({
+      where: { jerseyId: { in: jerseyIds } },
+      select: { jerseyId: true, baseValue: true },
+    });
+    const baseByJersey = new Map(marketRows.map((m) => [m.jerseyId, m.baseValue]));
+    let estimatedMarketValue = 0;
+    let estimatedItems = 0;
+    for (const item of collection) {
+      const base = baseByJersey.get(item.jerseyId);
+      if (base != null) {
+        estimatedMarketValue += valueForCondition(base, item.condition as unknown as Condition);
+        estimatedItems += 1;
+      }
+    }
+    const marketValueCoverage =
+      collection.length > 0
+        ? Math.round((estimatedItems / collection.length) * 100)
+        : 0;
+
     const mostExpensive = itemsWithPrice.sort(
       (a, b) => Number(b.purchasePrice || 0) - Number(a.purchasePrice || 0)
     )[0];
@@ -406,6 +430,9 @@ export async function GET() {
           averagePrice: Math.round(averagePrice * 100) / 100,
           totalRetailValue: Math.round(totalRetailValue * 100) / 100,
           totalCollectionValue: Math.round(totalCollectionValue * 100) / 100,
+          estimatedMarketValue: Math.round(estimatedMarketValue * 100) / 100,
+          marketValueCoverage,
+          marketValueItems: estimatedItems,
           mostExpensive: mostExpensive
             ? {
                 jerseyName: mostExpensive.jersey.name,
