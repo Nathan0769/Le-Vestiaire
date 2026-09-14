@@ -15,7 +15,7 @@ export async function purchasePriceSignals(jerseyId: string): Promise<PriceSigna
   const items = await prisma.userJersey.findMany({
     where: {
       jerseyId,
-      purchasePrice: { not: null },
+      purchasePrice: { gt: 0 },
       isGift: false,
       isFromMysteryBox: false,
       isSigned: false,

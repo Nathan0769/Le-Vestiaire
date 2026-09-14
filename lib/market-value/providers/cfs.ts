@@ -10,7 +10,7 @@ export async function cfsSignals(jerseyId: string): Promise<PriceSignal[]> {
     where: { jerseyId },
     select: { price: true, lastSeenAt: true },
   });
-  if (!cfs) return [];
+  if (!cfs || Number(cfs.price) <= 0) return [];
 
   return [
     {
