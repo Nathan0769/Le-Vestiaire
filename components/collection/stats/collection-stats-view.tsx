@@ -16,6 +16,7 @@ import { SpendingTimelineChart } from "./spending-timeline-chart";
 import { FinancialStatsCards } from "./financial-stats-cards";
 import { DiversityStatsCards } from "./diversity-stats-cards";
 import { RecordsCards } from "./records-cards";
+import { Card, CardContent } from "@/components/ui/card";
 import { ActivityHeatmap } from "./activity-heatmap";
 import { DecadeDistributionChart } from "./decade-distribution-chart";
 import { CommunityTab } from "./community-tab";
@@ -44,6 +45,9 @@ interface CollectionStats {
       averagePrice: number;
       totalRetailValue: number;
       totalCollectionValue: number;
+      estimatedMarketValue: number;
+      marketValueCoverage: number;
+      marketValueItems: number;
       mostExpensive: {
         jerseyName: string;
         clubName: string;
@@ -195,6 +199,26 @@ export function CollectionStatsView() {
       </TabsContent>
 
       <TabsContent value="financial" className="space-y-6">
+        {data.stats.financial.estimatedMarketValue > 0 && (
+          <Card className="border-primary/30">
+            <CardContent className="pt-6">
+              <p className="text-sm text-muted-foreground">
+                Valeur estimée de la collection
+              </p>
+              <p className="text-3xl font-bold text-primary">
+                {Math.round(
+                  data.stats.financial.estimatedMarketValue
+                ).toLocaleString("fr-FR")}{" "}
+                €
+              </p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Estimation d&apos;après nos données de collectionneurs + CFS ·{" "}
+                {data.stats.financial.marketValueCoverage}% des maillots. La cote
+                s&apos;affine avec le temps.
+              </p>
+            </CardContent>
+          </Card>
+        )}
         <FinancialStatsCards financial={data.stats.financial} />
         <div className="w-full">
           <SpendingTimelineChart data={data.stats.financial.spendingTimeline} />
