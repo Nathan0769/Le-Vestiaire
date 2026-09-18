@@ -148,6 +148,7 @@ model Jersey {
   reports                 JerseyReport[]
   cfsPromos               CfsPromo[]
   cfsAvailability         CfsAvailability?
+  ebayMarketData          EbayMarketData?
   marketValue             JerseyMarketValue?
   marketValueSnapshots    JerseyMarketValueSnapshot[]
 
@@ -171,6 +172,26 @@ model JerseyMarketValue {
   updatedAt  DateTime @updatedAt
 
   @@map("jersey_market_values")
+}
+
+/// Données marché eBay agrégées par maillot (annonces actives via Browse API).
+/// IMPORTANT : PRIX AGRÉGÉS UNIQUEMENT — aucune donnée de vendeur/acheteur ni PII
+/// eBay n'est stockée (engagement d'exemption "Marketplace Account Deletion").
+model EbayMarketData {
+  id          String   @id @default(cuid())
+  jerseyId    String   @unique
+  jersey      Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  medianPrice Float // médiane des annonces retenues, convertie en EUR
+  sampleSize  Int // nb d'annonces retenues après filtrage
+  currency    String // devise source du marché (ex: GBP) avant conversion
+  marketId    String // marketplace eBay interrogé (ex: EBAY_GB)
+  query       String // requête utilisée (tuning/debug)
+  lastSeenAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([lastSeenAt])
+  @@map("ebay_market_data")
 }
 
 /// Historique de la cote (pour la tendance).

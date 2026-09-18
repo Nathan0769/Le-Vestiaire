@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
-import { valueForCondition } from "@/lib/market-value/aggregate";
+import { valueForItem } from "@/lib/market-value/aggregate";
 import type { Condition } from "@/lib/market-value/types";
 import {
   standardRateLimit,
@@ -251,7 +251,12 @@ export async function GET() {
     for (const item of collection) {
       const base = baseByJersey.get(item.jerseyId);
       if (base == null) continue;
-      const value = valueForCondition(base, item.condition as unknown as Condition);
+      const value = valueForItem(base, {
+        condition: item.condition as unknown as Condition,
+        version: item.version,
+        hasLongSleeves: item.hasLongSleeves,
+        isSigned: item.isSigned,
+      });
       const conf = confByJersey.get(item.jerseyId) ?? "low";
       estimatedMarketValue += value;
       estimatedItems += 1;

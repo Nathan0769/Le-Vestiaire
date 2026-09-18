@@ -1,19 +1,16 @@
 import prisma from "@/lib/prisma";
-import { JerseyVersion } from "@prisma/client";
 import { aggregate } from "./aggregate";
 import { cfsSignals } from "./providers/cfs";
 import { ebaySignals } from "./providers/ebay";
-import { purchasePriceSignals } from "./providers/purchase-price";
-import type { Condition, MarketEstimate, PriceSignal } from "./types";
+import type { MarketEstimate, PriceSignal } from "./types";
 
 /** Rassemble les signaux de toutes les sources pour un maillot. */
 export async function collectSignals(jerseyId: string): Promise<PriceSignal[]> {
-  const [purchase, cfs, ebay] = await Promise.all([
-    purchasePriceSignals(jerseyId),
+  const [cfs, ebay] = await Promise.all([
     cfsSignals(jerseyId),
     ebaySignals(jerseyId),
   ]);
-  return [...purchase, ...cfs, ...ebay];
+  return [...cfs, ...ebay];
 }
 
 /**
@@ -57,39 +54,24 @@ export async function computeJerseyMarketValue(
 }
 
 /**
- * Recalcule la cote de TOUS les maillots ayant un signal, en batch (2 lectures
+ * Recalcule la cote de TOUS les maillots ayant un signal, en batch (lectures
  * groupées + écritures groupées) — pour le cron, sans timeout serverless.
  * Stratégie "full refresh" : on remplace toute la table + un snapshot par cote.
- * Filtres purchasePrice = miroir de providers/purchase-price.ts (comparables propres).
+ * Sources : CFS (asking, tout le catalogue) + eBay (asking agrégé, maillots
+ * possédés — alimenté par le cron refreshEbayMarketData).
  */
 export async function recomputeAllMarketValues(): Promise<{
   computed: number;
   cleared: number;
 }> {
-  const [purchases, cfs] = await Promise.all([
-    prisma.userJersey.findMany({
-      where: {
-        purchasePrice: { gt: 0 },
-        isGift: false,
-        isFromMysteryBox: false,
-        isSigned: false,
-        hasAuthCertificate: false,
-        playerName: null,
-        playerNumber: null,
-        version: { notIn: [JerseyVersion.MATCH_WORN, JerseyVersion.PLAYER_ISSUE] },
-        patches: { none: {} },
-      },
-      select: {
-        jerseyId: true,
-        purchasePrice: true,
-        condition: true,
-        purchaseDate: true,
-        createdAt: true,
-      },
-    }),
+  const [cfs, ebay] = await Promise.all([
     prisma.cfsAvailability.findMany({
       where: { price: { gt: 0 } },
       select: { jerseyId: true, price: true, lastSeenAt: true },
+    }),
+    prisma.ebayMarketData.findMany({
+      where: { sampleSize: { gt: 0 }, medianPrice: { gt: 0 } },
+      select: { jerseyId: true, medianPrice: true, sampleSize: true, lastSeenAt: true },
     }),
   ]);
 
@@ -99,21 +81,21 @@ export async function recomputeAllMarketValues(): Promise<{
     if (arr) arr.push(signal);
     else signalsByJersey.set(id, [signal]);
   };
-  for (const p of purchases) {
-    add(p.jerseyId, {
-      price: Number(p.purchasePrice),
-      type: "sold",
-      source: "purchasePrice",
-      condition: p.condition as Condition,
-      date: p.purchaseDate ?? p.createdAt,
-    });
-  }
   for (const c of cfs) {
     add(c.jerseyId, {
       price: Number(c.price),
       type: "asking",
       source: "cfs",
       date: c.lastSeenAt,
+    });
+  }
+  for (const e of ebay) {
+    add(e.jerseyId, {
+      price: e.medianPrice,
+      type: "asking",
+      source: "ebay",
+      date: e.lastSeenAt,
+      observations: e.sampleSize,
     });
   }
 

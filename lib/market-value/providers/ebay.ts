@@ -1,11 +1,26 @@
+import prisma from "@/lib/prisma";
 import type { PriceSignal } from "../types";
 
 /**
- * Signaux "vente réelle" eBay (ventes complétées) via la Marketplace Insights API.
- * STUB : renvoie [] tant que l'accès à l'API n'est pas approuvé par eBay.
- * À implémenter : requête par maillot (club/saison/type/marque), filtrage du bruit
- * (tailles enfant, contrefaçons, mauvaises saisons), médiane des ventes récentes.
+ * Signal "prix demandé" eBay : médiane des annonces actives (Browse API), déjà
+ * agrégée et convertie en EUR dans la table `EbayMarketData` par le cron
+ * `refreshEbayMarketData`. Abattu asking→sold par l'agrégateur.
+ * On ne lit que des prix agrégés (aucune donnée vendeur/PII eBay).
  */
-export async function ebaySignals(_jerseyId: string): Promise<PriceSignal[]> {
-  return [];
+export async function ebaySignals(jerseyId: string): Promise<PriceSignal[]> {
+  const row = await prisma.ebayMarketData.findUnique({
+    where: { jerseyId },
+    select: { medianPrice: true, sampleSize: true, lastSeenAt: true },
+  });
+  if (!row || row.sampleSize <= 0 || row.medianPrice <= 0) return [];
+
+  return [
+    {
+      price: row.medianPrice,
+      type: "asking",
+      source: "ebay",
+      date: row.lastSeenAt,
+      observations: row.sampleSize,
+    },
+  ];
 }

@@ -5,7 +5,7 @@
 
 export type SignalType = "sold" | "asking";
 
-export type SourceName = "purchasePrice" | "ebay" | "cfs";
+export type SourceName = "ebay" | "cfs";
 
 export type Condition = "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR";
 
@@ -17,6 +17,12 @@ export interface PriceSignal {
   condition?: Condition;
   /** Date de la vente/annonce, si connue (pour pondérer par récence plus tard). */
   date?: Date;
+  /**
+   * Nombre d'observations réelles derrière ce signal (défaut 1). Pour une source
+   * déjà agrégée comme eBay (médiane de N annonces), vaut N : c'est ce qui doit
+   * piloter la confiance, pas le simple nombre de signaux.
+   */
+  observations?: number;
 }
 
 export type Confidence = "high" | "medium" | "low";
