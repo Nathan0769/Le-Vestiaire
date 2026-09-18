@@ -8,6 +8,9 @@ import { PublicUserTabs } from "@/components/users/public-user-tabs";
 import { FollowButton } from "@/components/follow/follow-button";
 import { AuthGateBanner } from "@/components/auth/auth-gate-banner";
 import { BackButton } from "@/components/ui/back-button";
+import { SupporterBadge } from "@/components/supporter/supporter-badge";
+import { isSupporter } from "@/lib/subscription";
+import { cn } from "@/lib/utils";
 import { Gift, Heart, EyeOff } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
@@ -34,6 +37,8 @@ export async function PublicWishlistScreen({
       name: true,
       avatar: true,
       bio: true,
+      plan: true,
+      avatarFrame: true,
       leaderboardAnonymous: true,
       favoriteClub: { select: { id: true, name: true } },
       instagramHandle: true,
@@ -77,6 +82,7 @@ export async function PublicWishlistScreen({
   }
 
   const isAnonymous = targetUser.leaderboardAnonymous ?? false;
+  const targetIsSupporter = !isAnonymous && isSupporter(targetUser);
   const displayName = isAnonymous
     ? t("anonymous")
     : targetUser.username ?? targetUser.name;
@@ -179,12 +185,17 @@ export async function PublicWishlistScreen({
               src={avatarUrl || undefined}
               name={targetUser.name}
               size="lg"
+              frame={targetUser.avatarFrame}
+              isSupporter={targetIsSupporter}
             />
           )}
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <h2 className="text-xl font-semibold truncate flex-1 min-w-0">
-                {displayName}
+              <h2 className="text-xl font-semibold truncate flex-1 min-w-0 flex items-center gap-2">
+                <span className={cn("truncate", targetIsSupporter && "cos-name-gold")}>
+                  {displayName}
+                </span>
+                {targetIsSupporter && <SupporterBadge size="sm" />}
               </h2>
               {currentUser && !isAnonymous && (
                 <FollowButton

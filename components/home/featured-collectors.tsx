@@ -51,7 +51,11 @@ export async function FeaturedCollectors() {
                 />
                 <div className="w-full">
                   <div className="flex items-center justify-center gap-1.5">
-                    <span className="font-semibold truncate">
+                    <span
+                      className={`font-semibold truncate${
+                        collector.isSupporter ? " cos-name-gold" : ""
+                      }`}
+                    >
                       @{collector.username}
                     </span>
                     {collector.isSupporter && (
