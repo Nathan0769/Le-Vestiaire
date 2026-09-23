@@ -15,6 +15,7 @@ import { Textarea } from "@/components/ui/textarea";
 import {
   BadgeCheck,
   FileText,
+  Package,
   ShoppingBag,
   User,
 } from "lucide-react";
@@ -162,8 +163,11 @@ export function AddToCollectionModal({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent className="w-[95vw] sm:max-w-6xl max-h-[90vh] flex flex-col p-0 @container">
-        <DialogHeader className="sr-only">
-          <DialogTitle>{t("title")}</DialogTitle>
+        <DialogHeader className="px-6 py-4 border-b">
+          <DialogTitle className="flex items-center gap-2">
+            <Package className="w-5 h-5 text-primary" />
+            {t("title")}
+          </DialogTitle>
         </DialogHeader>
 
         <form
@@ -173,7 +177,7 @@ export function AddToCollectionModal({
         >
           <div className="grid grid-cols-1 @xl:grid-cols-[380px_1fr] @4xl:grid-cols-[440px_1fr] gap-5 @4xl:gap-6 items-stretch">
             {/* Colonne gauche : photo officielle + dropzone photo perso */}
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 @xl:self-start">
               <div className="rounded-2xl bg-[#FAF5EE] p-4 @xl:p-6 flex-1 flex items-center justify-center min-h-[280px] @xl:min-h-[420px]">
                 <div className="relative w-full aspect-square">
                   <Image
