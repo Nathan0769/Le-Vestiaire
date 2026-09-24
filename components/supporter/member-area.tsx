@@ -88,7 +88,7 @@ export function MemberArea({
     { icon: CircleUserRound, key: "frame" },
     { icon: BadgeCheck, key: "badge" },
     { icon: Camera, key: "photos" },
-    { icon: TrendingUp, key: "marketValue", coming: true },
+    { icon: TrendingUp, key: "marketValue" },
   ];
 
   const isStripe = subscription?.source === "stripe";

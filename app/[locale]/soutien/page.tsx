@@ -40,6 +40,7 @@ export default async function SoutienPage() {
     { icon: CircleUserRound, key: "frame" },
     { icon: BadgeCheck, key: "badge" },
     { icon: Camera, key: "photos" },
+    { icon: TrendingUp, key: "marketValue" },
   ] as const;
 
   // Accentue les mots-clés dans les descriptions (balise <b> côté traduction).
@@ -123,23 +124,6 @@ export default async function SoutienPage() {
                 </div>
               </div>
             ))}
-            {/* Valeur marché : à venir */}
-            <div className="flex items-start gap-3 rounded-xl border border-border bg-muted/30 p-4 shadow-sm">
-              <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md bg-muted text-muted-foreground">
-                <TrendingUp className="h-4 w-4" />
-              </div>
-              <div>
-                <p className="flex items-center gap-2 text-sm font-medium">
-                  {t("features.marketValue.title")}
-                  <span className="rounded-full bg-muted px-2 py-0.5 text-[10px] font-semibold text-muted-foreground">
-                    {t("comingSoon")}
-                  </span>
-                </p>
-                <p className="text-xs text-muted-foreground">
-                  {t.rich("features.marketValue.description", bold)}
-                </p>
-              </div>
-            </div>
           </div>
         </section>
 
