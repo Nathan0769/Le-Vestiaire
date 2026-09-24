@@ -14,6 +14,12 @@
     },
     "app/api/cron/cfs-promos/route.ts": {
       "maxDuration": 300
+    },
+    "app/api/cron/market-value/route.ts": {
+      "maxDuration": 300
+    },
+    "app/api/cron/ebay-refresh/route.ts": {
+      "maxDuration": 300
     }
   },
   "crons": [
@@ -32,6 +38,14 @@
     {
       "path": "/api/cron/cfs-promos",
       "schedule": "0 */12 * * *"
+    },
+    {
+      "path": "/api/cron/ebay-refresh",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/market-value",
+      "schedule": "0 4 * * 1"
     }
   ]
 }

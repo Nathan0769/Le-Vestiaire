@@ -148,11 +148,62 @@ model Jersey {
   reports                 JerseyReport[]
   cfsPromos               CfsPromo[]
   cfsAvailability         CfsAvailability?
+  ebayMarketData          EbayMarketData?
+  marketValue             JerseyMarketValue?
+  marketValueSnapshots    JerseyMarketValueSnapshot[]
 
   @@unique([clubId, season, type, variant])
   @@index([clubId], map: "idx_jerseys_club_id")
   @@index([createdAt(sort: Desc)], map: "idx_jerseys_createdat")
   @@map("jerseys")
+}
+
+/// Cote estimée d'un maillot (valeur pour l'état de référence GOOD) — voir
+/// docs/specs/2026-09-11-market-value.md. Recalculée périodiquement.
+model JerseyMarketValue {
+  id         String   @id @default(cuid())
+  jerseyId   String   @unique
+  jersey     Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  baseValue  Float
+  confidence String
+  sampleSize Int
+  sources    Json
+  computedAt DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map("jersey_market_values")
+}
+
+/// Données marché eBay agrégées par maillot (annonces actives via Browse API).
+/// IMPORTANT : PRIX AGRÉGÉS UNIQUEMENT — aucune donnée de vendeur/acheteur ni PII
+/// eBay n'est stockée (engagement d'exemption "Marketplace Account Deletion").
+model EbayMarketData {
+  id          String   @id @default(cuid())
+  jerseyId    String   @unique
+  jersey      Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  medianPrice Float // médiane des annonces retenues, convertie en EUR
+  sampleSize  Int // nb d'annonces retenues après filtrage
+  currency    String // devise source du marché (ex: GBP) avant conversion
+  marketId    String // marketplace eBay interrogé (ex: EBAY_GB)
+  query       String // requête utilisée (tuning/debug)
+  lastSeenAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([lastSeenAt])
+  @@map("ebay_market_data")
+}
+
+/// Historique de la cote (pour la tendance).
+model JerseyMarketValueSnapshot {
+  id       String   @id @default(cuid())
+  jerseyId String
+  jersey   Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  value    Float
+  date     DateTime @default(now())
+
+  @@index([jerseyId, date])
+  @@map("jersey_market_value_snapshots")
 }
 
 model JerseyReport {

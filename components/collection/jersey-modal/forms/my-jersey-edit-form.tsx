@@ -13,10 +13,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { PatchesSection } from "@/components/collection/patches-section";
 import { SIZE_LABELS } from "@/types/collection";
 import type {
@@ -186,8 +186,8 @@ export function MyJerseyEditForm({
         </div>
       </div>
 
-      <Popover modal>
-        <PopoverTrigger className="flex w-full items-center justify-between rounded-lg border px-3 py-2 text-sm font-medium cursor-pointer hover:bg-muted/40 [&[data-state=open]>svg]:rotate-180">
+      <Collapsible>
+        <CollapsibleTrigger className="flex w-full items-center justify-between rounded-lg border px-3 py-2 text-sm font-medium cursor-pointer hover:bg-muted/40 [&[data-state=open]>svg]:rotate-180">
           <span className="flex items-center gap-2">
             {t("cards.patchesTitle")}
             {patchCount > 0 && (
@@ -197,20 +197,19 @@ export function MyJerseyEditForm({
             )}
           </span>
           <ChevronDown className="h-4 w-4 transition-transform" />
-        </PopoverTrigger>
-        <PopoverContent
-          align="start"
-          className="w-[min(92vw,22rem)] max-h-[min(60vh,28rem)] overflow-y-auto"
-        >
-          <PatchesSection
-            jerseyId={jerseyId}
-            selectedPatches={formData.patches ?? []}
-            onChange={(patches: UserJerseyPatchInput[]) =>
-              setFormData({ ...formData, patches })
-            }
-          />
-        </PopoverContent>
-      </Popover>
+        </CollapsibleTrigger>
+        <CollapsibleContent>
+          <div className="rounded-lg border border-t-0 rounded-t-none -mt-px p-3">
+            <PatchesSection
+              jerseyId={jerseyId}
+              selectedPatches={formData.patches ?? []}
+              onChange={(patches: UserJerseyPatchInput[]) =>
+                setFormData({ ...formData, patches })
+              }
+            />
+          </div>
+        </CollapsibleContent>
+      </Collapsible>
     </div>
   );
 }

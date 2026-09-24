@@ -2,8 +2,8 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTranslations } from "next-intl";
-import { Wallet, TrendingUp, TrendingDown, DollarSign, BarChart2 } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Wallet, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
+import { MarketValueCard } from "./market-value-card";
 
 interface FinancialStatsCardsProps {
   financial: {
@@ -11,6 +11,23 @@ interface FinancialStatsCardsProps {
     averagePrice: number;
     totalRetailValue: number;
     totalCollectionValue: number;
+    estimatedMarketValue: number;
+    marketValueCoverage: number;
+    marketValueItems: number;
+    marketValueDetail: {
+      invested: number;
+      estimatedOnPriced: number;
+      confidence: { high: number; medium: number; low: number };
+      topJerseys: {
+        clubName: string;
+        jerseyName: string;
+        season: string;
+        value: number;
+        confidence: string;
+      }[];
+      byClub: { clubName: string; value: number }[];
+      byClubOther: number;
+    };
     mostExpensive: {
       jerseyName: string;
       clubName: string;
@@ -81,25 +98,7 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
           </CardContent>
         </Card>
 
-        <Card className="opacity-60">
-          <CardHeader className="pb-3">
-            <CardTitle className="text-sm font-medium flex items-center justify-between gap-2">
-              <span className="flex items-center gap-2">
-                <BarChart2 className="w-4 h-4 text-muted-foreground" />
-                {t("marketValue")}
-              </span>
-              <Badge variant="secondary" className="text-[10px] px-1.5 py-0">
-                {t("comingSoon")}
-              </Badge>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold text-muted-foreground">—</p>
-            <p className="text-xs text-muted-foreground mt-1">
-              {t("marketValueDescription")}
-            </p>
-          </CardContent>
-        </Card>
+        <MarketValueCard />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
