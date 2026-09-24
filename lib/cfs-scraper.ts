@@ -278,15 +278,30 @@ async function checkCandidateSizes(
     await page.setUserAgent(
       "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
     );
+    // The stock data ("quantities"/"sku" blob) is inline in the document HTML, so
+    // block images/styles/fonts/media: ~3x faster navigation and far less memory,
+    // which keeps the full run under the serverless time budget behind Cloudflare.
+    await page.setRequestInterception(true);
+    page.on("request", (req) => {
+      const type = req.resourceType();
+      if (type === "image" || type === "stylesheet" || type === "font" || type === "media") {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
     await page.goto(candidate.productUrl, {
       waitUntil: "domcontentloaded",
       timeout: 20000,
     });
-    // Wait for product config to be injected
+    // Wait for product config to be injected. The blob lands in well under 1s when
+    // present, so a short timeout only ever trims the dead wait on pages that will
+    // never carry it (out-of-catalog/redirects) — the main source of tail latency
+    // across the ~80 checks, which is what pushes the run toward the serverless cap.
     await page
       .waitForFunction(
         () => document.documentElement.innerHTML.includes('"quantities"'),
-        { timeout: 10000 }
+        { timeout: 4000 }
       )
       .catch(() => {});
 
