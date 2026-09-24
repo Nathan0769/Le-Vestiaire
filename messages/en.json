@@ -2608,7 +2608,7 @@
       },
       "marketValue": {
         "title": "Shirt market value",
-        "description": "Estimate the <b>real value</b> of your shirts."
+        "description": "Estimate the <b>market value</b> of your jerseys."
       }
     },
     "comingSoon": "Coming soon",

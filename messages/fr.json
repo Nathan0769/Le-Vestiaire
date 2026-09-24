@@ -2619,7 +2619,7 @@
       },
       "marketValue": {
         "title": "Valeur marché des maillots",
-        "description": "Estime la <b>cote réelle</b> de tes maillots."
+        "description": "Estime la <b>valeur marché</b> de tes maillots."
       }
     },
     "comingSoon": "À venir",

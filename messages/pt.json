@@ -2608,7 +2608,7 @@
       },
       "marketValue": {
         "title": "Valor de mercado das camisolas",
-        "description": "Estima o <b>valor real</b> das tuas camisolas."
+        "description": "Estima o <b>valor de mercado</b> das tuas camisas."
       }
     },
     "comingSoon": "Em breve",
