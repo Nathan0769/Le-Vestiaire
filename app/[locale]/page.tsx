@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { HeroSection } from "@/components/home/hero-section";
 import { UserStatsSection } from "@/components/home/user-stats-section";
+import { HomeValuePopup } from "@/components/home/home-value-popup";
 import { TopRatedSection } from "@/components/home/top-rated-section";
 import { RecentSection } from "@/components/home/recent-section";
 import prisma from "@/lib/prisma";
@@ -875,6 +876,7 @@ export default async function HomePage({
 
       {user && userStats && <UserStatsSection userStats={userStats} />}
       {user && <HomeFeedSection userId={user.id} />}
+      {user && <HomeValuePopup />}
       <TopRatedSection jerseys={topRatedJerseys} />
       <RecentSection jerseys={recentJerseys} />
       <CfsPromoSection promos={selectFeaturedCfsPromos(cfsPromos).map((p) => ({

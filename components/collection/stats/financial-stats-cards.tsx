@@ -98,12 +98,7 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
           </CardContent>
         </Card>
 
-        <MarketValueCard
-          estimatedMarketValue={financial.estimatedMarketValue}
-          marketValueCoverage={financial.marketValueCoverage}
-          marketValueItems={financial.marketValueItems}
-          detail={financial.marketValueDetail}
-        />
+        <MarketValueCard />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
