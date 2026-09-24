@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
@@ -44,25 +44,22 @@ export function MarketValueChart() {
     },
   });
 
-  const points = useMemo(() => {
-    const all = data?.points ?? [];
-    const days = PERIODS.find((p) => p.key === period)?.days ?? null;
-    if (days == null) return all;
-    const cutoff = Date.now() - days * 86400000;
-    return all.filter((p) => new Date(p.date).getTime() >= cutoff);
-  }, [data, period]);
+  // Filtrage relatif au DERNIER relevé (et non à Date.now(), impur pour la règle
+  // react-hooks/purity). La série est triée par date croissante.
+  const all = data?.points ?? [];
+  const days = PERIODS.find((p) => p.key === period)?.days ?? null;
+  const latest = all.length ? new Date(all[all.length - 1].date).getTime() : 0;
+  const cutoff = days == null ? null : latest - days * 86400000;
+  const points =
+    cutoff == null ? all : all.filter((p) => new Date(p.date).getTime() >= cutoff);
 
-  const chartData = useMemo(
-    () =>
-      points.map((p) => ({
-        ...p,
-        label: new Date(p.date).toLocaleDateString("fr-FR", {
-          day: "2-digit",
-          month: "short",
-        }),
-      })),
-    [points]
-  );
+  const chartData = points.map((p) => ({
+    ...p,
+    label: new Date(p.date).toLocaleDateString("fr-FR", {
+      day: "2-digit",
+      month: "short",
+    }),
+  }));
 
   return (
     <Card>
