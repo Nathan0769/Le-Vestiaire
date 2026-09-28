@@ -14,7 +14,7 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
-  const limit = Number(new URL(request.url).searchParams.get("limit")) || 300;
+  const limit = Number(new URL(request.url).searchParams.get("limit")) || 60;
 
   try {
     const result = await refreshEbayMarketData(limit);

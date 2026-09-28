@@ -341,10 +341,17 @@ async function selectAvailablePromos(
   let checked = 0;
   let cursor = 0;
 
+  // Garde-fou temps : le check stock Puppeteer est réseau-dépendant (Cloudflare CFS)
+  // et sa durée varie. On coupe avant le plafond Vercel (300s) et on renvoie le partiel
+  // déjà collecté plutôt que de laisser la fonction timeout et tout perdre.
+  const startedAt = Date.now();
+  const TIME_BUDGET_MS = 200_000;
+
   while (
     cursor < candidates.length &&
     promos.length < maxResults &&
-    checked < maxPagesToCheck
+    checked < maxPagesToCheck &&
+    Date.now() - startedAt < TIME_BUDGET_MS
   ) {
     // Build the next batch, skipping candidates whose team is already full BEFORE
     // loading their page. Clearance has many jerseys per popular team; without this,

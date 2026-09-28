@@ -16,11 +16,18 @@ export interface EbayRefreshResult {
   matched: number;
   apiCalls: number;
   stoppedByQuota: boolean;
+  stoppedByTime: boolean;
 }
 
+// Budget serverless : on s'arrête bien avant le plafond Vercel (300s) pour laisser
+// le temps de renvoyer la réponse. La rotation par lastSeenAt reprend là où on s'est
+// arrêté à l'exécution suivante, donc tout le parc est couvert sur plusieurs runs.
+const TIME_BUDGET_MS = 240_000;
+
 export async function refreshEbayMarketData(
-  limit = 300
+  limit = 60
 ): Promise<EbayRefreshResult> {
+  const startedAt = Date.now();
   // 1. Maillots possédés (distincts) + données catalogue pour la requête.
   const owned = await prisma.userJersey.findMany({
     distinct: ["jerseyId"],
@@ -52,9 +59,15 @@ export async function refreshEbayMarketData(
   let matched = 0;
   let apiCalls = 0;
   let stoppedByQuota = false;
+  let stoppedByTime = false;
   let processed = 0;
 
   for (const { jerseyId, jersey } of queue) {
+    if (Date.now() - startedAt > TIME_BUDGET_MS) {
+      stoppedByTime = true;
+      break;
+    }
+
     let result;
     try {
       result = await collectEbayForJersey(
@@ -93,5 +106,5 @@ export async function refreshEbayMarketData(
     }
   }
 
-  return { processed, matched, apiCalls, stoppedByQuota };
+  return { processed, matched, apiCalls, stoppedByQuota, stoppedByTime };
 }

@@ -9,9 +9,6 @@
     "app/api/cron/monthly-badges/route.ts": {
       "maxDuration": 60
     },
-    "app/api/cron/reddit-monitor/route.ts": {
-      "maxDuration": 60
-    },
     "app/api/cron/cfs-promos/route.ts": {
       "maxDuration": 300
     },
@@ -30,10 +27,6 @@
     {
       "path": "/api/cron/monthly-badges",
       "schedule": "5 0 1 * *"
-    },
-    {
-      "path": "/api/cron/reddit-monitor",
-      "schedule": "0 6 * * *"
     },
     {
       "path": "/api/cron/cfs-promos",
