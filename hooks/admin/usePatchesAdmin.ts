@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import type { PatchFamily } from "@/types/patch";
+import type { PatchFamily, PatchVariant } from "@/types/patch";
 
 export interface AdminPatch {
   id: string;
   name: string;
   family: PatchFamily;
+  variant: PatchVariant | null;
   leagueId: string | null;
   isActive: boolean;
   notes: string | null;
@@ -41,6 +42,7 @@ export function useCreatePatch() {
     mutationFn: async (data: {
       name: string;
       family: PatchFamily;
+      variant?: PatchVariant | null;
       leagueId?: string | null;
       isActive?: boolean;
       notes?: string | null;
@@ -74,6 +76,7 @@ export function useUpdatePatch() {
       data: Partial<{
         name: string;
         family: PatchFamily;
+        variant: PatchVariant | null;
         leagueId: string | null;
         isActive: boolean;
         notes: string | null;

@@ -1,6 +1,10 @@
-import type { PatchFamily as PrismaPatchFamily } from "@prisma/client";
+import type {
+  PatchFamily as PrismaPatchFamily,
+  PatchVariant as PrismaPatchVariant,
+} from "@prisma/client";
 
 export type PatchFamily = PrismaPatchFamily;
+export type PatchVariant = PrismaPatchVariant;
 
 export type Confederation = "UEFA" | "CONMEBOL" | "CONCACAF" | "AFC" | "CAF" | "OFC";
 
@@ -15,6 +19,7 @@ export interface PatchData {
   id: string;
   name: string;
   family: PatchFamily;
+  variant: PatchVariant | null;
   leagueId: string | null;
   isActive: boolean;
   notes: string | null;
@@ -54,6 +59,20 @@ export const PATCH_FAMILY_LABELS_FR: Record<PatchFamily, string> = {
   NATIONAL_TEAM_COMPETITION: "Compétitions sélections nationales",
   CUSTOM: "Personnalisé",
 };
+
+export const PATCH_VARIANT_LABELS_FR: Record<PatchVariant, string> = {
+  UEFA_STARBALL: "Starball (standard)",
+  UEFA_BADGE_OF_HONOUR: "Badge of Honour (multi-vainqueur)",
+  UEFA_TITLE_HOLDER: "Tenant du titre LDC",
+  UEFA_EL_TITLE_HOLDER: "Tenant du titre Europa League",
+};
+
+export const PATCH_VARIANT_ORDER: PatchVariant[] = [
+  "UEFA_STARBALL",
+  "UEFA_BADGE_OF_HONOUR",
+  "UEFA_TITLE_HOLDER",
+  "UEFA_EL_TITLE_HOLDER",
+];
 
 export const PATCH_FAMILY_ORDER: PatchFamily[] = [
   "DOMESTIC_CHAMPION",

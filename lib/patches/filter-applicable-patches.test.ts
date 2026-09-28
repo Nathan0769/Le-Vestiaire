@@ -17,6 +17,7 @@ function makePatch(overrides: Partial<PatchWithVersions> = {}): PatchWithVersion
     id: "p1",
     name: "Test Patch",
     family: "UEFA_COMPETITION",
+    variant: null,
     leagueId: null,
     isActive: true,
     notes: null,
@@ -473,5 +474,83 @@ describe("filterApplicablePatches", () => {
       "ligue-2"
     );
     expect(resultHistorical.map((r) => r.patch.id)).toEqual(["p-l2"]);
+  });
+
+  it("19. Badge of Honour prime le starball (précédence LDC)", () => {
+    const jersey = makeJersey("ligue-1", "2024-25");
+    const starball = makePatch({
+      id: "p-sb",
+      family: "UEFA_COMPETITION",
+      variant: "UEFA_STARBALL",
+    });
+    const honour = makePatch({
+      id: "p-ho",
+      family: "UEFA_COMPETITION",
+      variant: "UEFA_BADGE_OF_HONOUR",
+      eligibleClubIds: ["c1"],
+      versions: [makeVersion({ id: "vho", seasonStart: "2024-25" })],
+    });
+    const result = filterWithCurrentLeague([starball, honour], jersey);
+    expect(result.map((r) => r.patch.id)).toEqual(["p-ho"]);
+  });
+
+  it("20. Badge of Honour sans version couvrant la saison retombe sur le starball", () => {
+    const jersey = makeJersey("ligue-1", "2024-25");
+    const starball = makePatch({
+      id: "p-sb",
+      family: "UEFA_COMPETITION",
+      variant: "UEFA_STARBALL",
+    });
+    const honour = makePatch({
+      id: "p-ho",
+      family: "UEFA_COMPETITION",
+      variant: "UEFA_BADGE_OF_HONOUR",
+      eligibleClubIds: ["c1"],
+      versions: [makeVersion({ id: "vho", seasonStart: "2018-19", seasonEnd: "2020-21" })],
+    });
+    const result = filterWithCurrentLeague([starball, honour], jersey);
+    expect(result.map((r) => r.patch.id)).toEqual(["p-sb"]);
+  });
+
+  it("21. Tenant du titre prime le honour et le starball", () => {
+    const jersey = makeJersey("ligue-1", "2024-25");
+    const starball = makePatch({
+      id: "p-sb",
+      family: "UEFA_COMPETITION",
+      variant: "UEFA_STARBALL",
+    });
+    const honour = makePatch({
+      id: "p-ho",
+      family: "UEFA_COMPETITION",
+      variant: "UEFA_BADGE_OF_HONOUR",
+      eligibleClubIds: ["c1"],
+      versions: [makeVersion({ id: "vho", seasonStart: "2024-25" })],
+    });
+    const titleHolder = makePatch({
+      id: "p-th",
+      family: "UEFA_COMPETITION",
+      variant: "UEFA_TITLE_HOLDER",
+      versions: [
+        makeVersion({ id: "vth", seasonStart: "2024-25", eligibleClubIds: ["c1"] }),
+      ],
+    });
+    const result = filterWithCurrentLeague([starball, honour, titleHolder], jersey);
+    expect(result.map((r) => r.patch.id)).toEqual(["p-th"]);
+  });
+
+  it("22. Un patch UEFA legacy (variant null) n'est pas collapsé", () => {
+    const jersey = makeJersey("ligue-1", "2024-25");
+    const legacy = makePatch({
+      id: "p-legacy",
+      family: "UEFA_COMPETITION",
+      variant: null,
+    });
+    const starball = makePatch({
+      id: "p-sb",
+      family: "UEFA_COMPETITION",
+      variant: "UEFA_STARBALL",
+    });
+    const result = filterWithCurrentLeague([legacy, starball], jersey);
+    expect(result.map((r) => r.patch.id).sort()).toEqual(["p-legacy", "p-sb"]);
   });
 });

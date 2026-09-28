@@ -16,9 +16,17 @@ const PATCH_FAMILIES = [
   "CUSTOM",
 ] as const;
 
+const PATCH_VARIANTS = [
+  "UEFA_STARBALL",
+  "UEFA_BADGE_OF_HONOUR",
+  "UEFA_TITLE_HOLDER",
+  "UEFA_EL_TITLE_HOLDER",
+] as const;
+
 const createPatchSchema = z.object({
   name: z.string().min(1).max(100),
   family: z.enum(PATCH_FAMILIES),
+  variant: z.enum(PATCH_VARIANTS).optional().nullable(),
   leagueId: z.string().optional().nullable(),
   isActive: z.boolean().optional(),
   notes: z.string().max(500).optional().nullable(),
@@ -71,7 +79,8 @@ export async function POST(request: Request) {
       );
     }
 
-    const { name, family, leagueId, isActive, notes, eligibleClubIds } = validation.data;
+    const { name, family, variant, leagueId, isActive, notes, eligibleClubIds } =
+      validation.data;
 
     if (leagueId) {
       const league = await prisma.league.findUnique({ where: { id: leagueId } });
@@ -84,6 +93,7 @@ export async function POST(request: Request) {
       data: {
         name: name.trim(),
         family,
+        variant: variant ?? null,
         leagueId: leagueId ?? null,
         isActive: isActive ?? true,
         notes: notes ?? null,

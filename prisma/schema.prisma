@@ -297,6 +297,7 @@ model Patch {
   id              String            @id @default(cuid())
   name            String
   family          PatchFamily
+  variant         PatchVariant?
   leagueId        String?
   isActive        Boolean           @default(true)
   notes           String?
@@ -681,6 +682,15 @@ enum PatchFamily {
   DOMESTIC_SUPERCUP
   NATIONAL_TEAM_COMPETITION
   CUSTOM
+}
+
+// Discriminant des badges de manche UEFA (précédence : tenant > honour > starball).
+// null = patch non concerné par la précédence LDC (comportement historique).
+enum PatchVariant {
+  UEFA_STARBALL
+  UEFA_BADGE_OF_HONOUR
+  UEFA_TITLE_HOLDER
+  UEFA_EL_TITLE_HOLDER
 }
 
 // ============================================================================

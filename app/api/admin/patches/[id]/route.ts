@@ -16,9 +16,17 @@ const PATCH_FAMILIES = [
   "CUSTOM",
 ] as const;
 
+const PATCH_VARIANTS = [
+  "UEFA_STARBALL",
+  "UEFA_BADGE_OF_HONOUR",
+  "UEFA_TITLE_HOLDER",
+  "UEFA_EL_TITLE_HOLDER",
+] as const;
+
 const updatePatchSchema = z.object({
   name: z.string().min(1).max(100).optional(),
   family: z.enum(PATCH_FAMILIES).optional(),
+  variant: z.enum(PATCH_VARIANTS).optional().nullable(),
   leagueId: z.string().optional().nullable(),
   isActive: z.boolean().optional(),
   notes: z.string().max(500).optional().nullable(),
@@ -62,6 +70,9 @@ export async function PATCH(
       data: {
         ...(validation.data.name !== undefined && { name: validation.data.name.trim() }),
         ...(validation.data.family !== undefined && { family: validation.data.family }),
+        ...(validation.data.variant !== undefined && {
+          variant: validation.data.variant ?? null,
+        }),
         ...(validation.data.leagueId !== undefined && {
           leagueId: validation.data.leagueId ?? null,
         }),

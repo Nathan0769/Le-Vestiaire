@@ -25,7 +25,10 @@ import { toast } from "sonner";
 import {
   PATCH_FAMILY_LABELS_FR,
   PATCH_FAMILY_ORDER,
+  PATCH_VARIANT_LABELS_FR,
+  PATCH_VARIANT_ORDER,
   type PatchFamily,
+  type PatchVariant,
 } from "@/types/patch";
 import {
   useCreatePatch,
@@ -55,6 +58,9 @@ function PatchFormBody({ patch, onOpenChange }: PatchFormBodyProps) {
   const [family, setFamily] = useState<PatchFamily>(
     patch?.family ?? "UEFA_COMPETITION",
   );
+  const [variant, setVariant] = useState<PatchVariant | null>(
+    patch?.variant ?? null,
+  );
   const [leagueId, setLeagueId] = useState(patch?.leagueId ?? "");
   const [isActive, setIsActive] = useState(patch?.isActive ?? true);
   const [notes, setNotes] = useState(patch?.notes ?? "");
@@ -72,6 +78,8 @@ function PatchFormBody({ patch, onOpenChange }: PatchFormBodyProps) {
     const payload = {
       name: name.trim(),
       family,
+      // Le variant (précédence des badges de manche) n'a de sens que pour UEFA.
+      variant: family === "UEFA_COMPETITION" ? variant : null,
       leagueId: leagueId.trim() || null,
       isActive,
       notes: notes.trim() || null,
@@ -133,6 +141,33 @@ function PatchFormBody({ patch, onOpenChange }: PatchFormBodyProps) {
             </SelectContent>
           </Select>
         </div>
+
+        {family === "UEFA_COMPETITION" && (
+          <div className="space-y-2">
+            <Label htmlFor="variant">Type de badge UEFA (optionnel)</Label>
+            <Select
+              value={variant ?? "NONE"}
+              onValueChange={(v) =>
+                setVariant(v === "NONE" ? null : (v as PatchVariant))
+              }
+            >
+              <SelectTrigger>
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="NONE">Aucun</SelectItem>
+                {PATCH_VARIANT_ORDER.map((v) => (
+                  <SelectItem key={v} value={v}>
+                    {PATCH_VARIANT_LABELS_FR[v]}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <p className="text-xs text-muted-foreground">
+              Détermine la précédence sur la manche : tenant &gt; honour &gt; starball.
+            </p>
+          </div>
+        )}
 
         <div className="space-y-2">
           <Label htmlFor="leagueId">League ID (optionnel)</Label>

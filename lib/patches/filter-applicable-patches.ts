@@ -5,6 +5,7 @@ import {
   isNationalTeamLeague,
 } from "./confederation-by-league";
 import { isJerseySeasonInPatchPeriod } from "./season-format";
+import { pickTopUefaBadgeId } from "./uefa-badge-precedence";
 
 type PatchWithVersions = Patch & { versions: PatchVersion[] };
 type JerseyContext = Jersey & { club: Club & { league: League } };
@@ -57,11 +58,32 @@ export function filterApplicablePatches(
     ? applicable.filter(({ patch }) => patch.family !== "DOMESTIC_LEAGUE_BADGE")
     : applicable;
 
-  return filtered.map(({ patch, activeVersion }) => ({
+  // Collapse des badges de manche LDC : un maillot n'en porte qu'un seul.
+  // Précédence tenant > honour > starball. Ne concerne que les patchs porteurs
+  // d'un variant ; les patchs UEFA legacy (variant null) passent inchangés.
+  const badgeItems = filtered.filter(({ patch }) => patch.variant !== null);
+  const topUefaBadgeId =
+    badgeItems.length > 0
+      ? pickTopUefaBadgeId(
+          badgeItems.map(({ patch, activeVersion }) => ({
+            id: patch.id,
+            variant: patch.variant,
+            hasActiveVersion: activeVersion !== null,
+          }))
+        )
+      : null;
+
+  const collapsed = filtered.filter(({ patch }) => {
+    if (patch.variant === null) return true;
+    return patch.id === topUefaBadgeId;
+  });
+
+  return collapsed.map(({ patch, activeVersion }) => ({
     patch: {
       id: patch.id,
       name: patch.name,
       family: patch.family,
+      variant: patch.variant,
       leagueId: patch.leagueId,
       isActive: patch.isActive,
     },
