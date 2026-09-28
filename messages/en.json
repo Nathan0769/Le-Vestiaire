@@ -315,6 +315,27 @@
         "playerNumber": "Jersey number",
         "playerNumberPlaceholder": "Ex: 10",
         "hasTags": "Still has tags",
+        "patches": {
+          "title": "Jersey patches",
+          "loading": "Loading patches...",
+          "error": "Error loading patches",
+          "empty": "No patches available for this jersey",
+          "customLabel": "Custom patch",
+          "customPlaceholder": "e.g. Club's 100th anniversary",
+          "addCustom": "Add",
+          "removeCustom": "Remove {label}",
+          "families": {
+            "UEFA_COMPETITION": "UEFA competitions",
+            "CONFED_CLUB_COMPETITION": "Continental club competitions",
+            "FIFA_CLUB_COMPETITION": "FIFA club competitions",
+            "DOMESTIC_LEAGUE_BADGE": "League badge",
+            "DOMESTIC_CHAMPION": "Reigning champion",
+            "DOMESTIC_CUP": "Domestic cup",
+            "DOMESTIC_SUPERCUP": "Domestic super cup",
+            "NATIONAL_TEAM_COMPETITION": "National team competitions",
+            "CUSTOM": "Custom"
+          }
+        },
         "isGift": "Received as a gift",
         "isFromMysteryBox": "From a Mystery Box",
         "isSigned": "Signed jersey",

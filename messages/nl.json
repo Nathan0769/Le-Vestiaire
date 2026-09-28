@@ -315,6 +315,27 @@
         "playerNumber": "Shirtnummer",
         "playerNumberPlaceholder": "Bijv.: 10",
         "hasTags": "Nog met labels",
+        "patches": {
+          "title": "Shirtpatches",
+          "loading": "Patches laden...",
+          "error": "Fout bij het laden van patches",
+          "empty": "Geen patches beschikbaar voor dit shirt",
+          "customLabel": "Aangepaste patch",
+          "customPlaceholder": "Bijv. 100 jaar club",
+          "addCustom": "Toevoegen",
+          "removeCustom": "{label} verwijderen",
+          "families": {
+            "UEFA_COMPETITION": "UEFA-competities",
+            "CONFED_CLUB_COMPETITION": "Continentale clubcompetities",
+            "FIFA_CLUB_COMPETITION": "FIFA-clubcompetities",
+            "DOMESTIC_LEAGUE_BADGE": "Competitiebadge",
+            "DOMESTIC_CHAMPION": "Regerend kampioen",
+            "DOMESTIC_CUP": "Nationale beker",
+            "DOMESTIC_SUPERCUP": "Nationale supercup",
+            "NATIONAL_TEAM_COMPETITION": "Interlandcompetities",
+            "CUSTOM": "Aangepast"
+          }
+        },
         "isGift": "Ontvangen als cadeau",
         "isFromMysteryBox": "Uit een Mystery Box",
         "isSigned": "Gesigneerd shirt",

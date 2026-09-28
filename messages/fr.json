@@ -318,9 +318,24 @@
         "hasLongSleeves": "Manches longues",
         "patches": {
           "title": "Patches du maillot",
+          "loading": "Chargement des patches...",
+          "error": "Erreur lors du chargement des patches",
           "empty": "Aucun patch disponible pour ce maillot",
+          "customLabel": "Patch personnalisé",
           "customPlaceholder": "Ex: 100 ans du club",
-          "addCustom": "Ajouter"
+          "addCustom": "Ajouter",
+          "removeCustom": "Supprimer {label}",
+          "families": {
+            "UEFA_COMPETITION": "Compétitions UEFA",
+            "CONFED_CLUB_COMPETITION": "Compétitions continentales clubs",
+            "FIFA_CLUB_COMPETITION": "Compétitions FIFA clubs",
+            "DOMESTIC_LEAGUE_BADGE": "Badge de ligue",
+            "DOMESTIC_CHAMPION": "Champion en titre",
+            "DOMESTIC_CUP": "Coupe nationale",
+            "DOMESTIC_SUPERCUP": "Supercoupe nationale",
+            "NATIONAL_TEAM_COMPETITION": "Compétitions sélections nationales",
+            "CUSTOM": "Personnalisé"
+          }
         },
         "isGift": "Reçu en cadeau",
         "isFromMysteryBox": "Provenant d'une Box Mystère",

@@ -315,6 +315,27 @@
         "playerNumber": "Numero di maglia",
         "playerNumberPlaceholder": "Es: 10",
         "hasTags": "Ancora con cartellini",
+        "patches": {
+          "title": "Patch della maglia",
+          "loading": "Caricamento patch...",
+          "error": "Errore durante il caricamento delle patch",
+          "empty": "Nessuna patch disponibile per questa maglia",
+          "customLabel": "Patch personalizzata",
+          "customPlaceholder": "Es: 100 anni del club",
+          "addCustom": "Aggiungi",
+          "removeCustom": "Rimuovi {label}",
+          "families": {
+            "UEFA_COMPETITION": "Competizioni UEFA",
+            "CONFED_CLUB_COMPETITION": "Competizioni continentali per club",
+            "FIFA_CLUB_COMPETITION": "Competizioni FIFA per club",
+            "DOMESTIC_LEAGUE_BADGE": "Patch di lega",
+            "DOMESTIC_CHAMPION": "Campione in carica",
+            "DOMESTIC_CUP": "Coppa nazionale",
+            "DOMESTIC_SUPERCUP": "Supercoppa nazionale",
+            "NATIONAL_TEAM_COMPETITION": "Competizioni per nazionali",
+            "CUSTOM": "Personalizzato"
+          }
+        },
         "isGift": "Ricevuta in regalo",
         "isFromMysteryBox": "Da una Mystery Box",
         "isSigned": "Maglia autografata",

@@ -315,6 +315,27 @@
         "playerNumber": "Número da camisola",
         "playerNumberPlaceholder": "Ex: 10",
         "hasTags": "Ainda tem etiquetas",
+        "patches": {
+          "title": "Patches da camisola",
+          "loading": "A carregar patches...",
+          "error": "Erro ao carregar os patches",
+          "empty": "Nenhum patch disponível para esta camisola",
+          "customLabel": "Patch personalizado",
+          "customPlaceholder": "Ex: 100 anos do clube",
+          "addCustom": "Adicionar",
+          "removeCustom": "Remover {label}",
+          "families": {
+            "UEFA_COMPETITION": "Competições UEFA",
+            "CONFED_CLUB_COMPETITION": "Competições continentais de clubes",
+            "FIFA_CLUB_COMPETITION": "Competições FIFA de clubes",
+            "DOMESTIC_LEAGUE_BADGE": "Emblema de liga",
+            "DOMESTIC_CHAMPION": "Campeão em título",
+            "DOMESTIC_CUP": "Taça nacional",
+            "DOMESTIC_SUPERCUP": "Supertaça nacional",
+            "NATIONAL_TEAM_COMPETITION": "Competições de seleções",
+            "CUSTOM": "Personalizado"
+          }
+        },
         "isGift": "Recebida como oferta",
         "isFromMysteryBox": "De uma Caixa Mistério",
         "isSigned": "Camisola assinada",

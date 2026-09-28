@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -9,7 +10,6 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useApplicablePatches } from "@/hooks/useApplicablePatches";
 import {
-  PATCH_FAMILY_LABELS_FR,
   PATCH_FAMILY_ORDER,
   type ApplicablePatch,
   type PatchFamily,
@@ -31,6 +31,7 @@ export function PatchesSection({
   selectedPatches,
   onChange,
 }: PatchesSectionProps) {
+  const t = useTranslations("Collection.modal.add.patches");
   const { data, isLoading, isError } = useApplicablePatches(jerseyId);
   const [customDraft, setCustomDraft] = useState("");
 
@@ -92,16 +93,12 @@ export function PatchesSection({
 
   if (isLoading) {
     return (
-      <p className="text-sm text-muted-foreground">Chargement des patches...</p>
+      <p className="text-sm text-muted-foreground">{t("loading")}</p>
     );
   }
 
   if (isError) {
-    return (
-      <p className="text-sm text-destructive">
-        Erreur lors du chargement des patches
-      </p>
-    );
+    return <p className="text-sm text-destructive">{t("error")}</p>;
   }
 
   const hasAny = (data?.length ?? 0) > 0;
@@ -109,9 +106,7 @@ export function PatchesSection({
   return (
     <div className="space-y-4">
       {!hasAny && (
-        <p className="text-sm text-muted-foreground">
-          Aucun patch disponible pour ce maillot
-        </p>
+        <p className="text-sm text-muted-foreground">{t("empty")}</p>
       )}
 
       {PATCH_FAMILY_ORDER.filter((f) => f !== "CUSTOM").map((family) => {
@@ -130,7 +125,7 @@ export function PatchesSection({
         return (
           <div key={family} className="space-y-2">
             <h4 className="text-xs font-semibold uppercase text-muted-foreground">
-              {PATCH_FAMILY_LABELS_FR[family]}
+              {t(`families.${family}`)}
             </h4>
             <div className="space-y-2">
               {items.map((item) => {
@@ -168,11 +163,11 @@ export function PatchesSection({
 
       <div className="space-y-2 pt-2 border-t">
         <Label className="text-xs font-semibold uppercase text-muted-foreground">
-          Patch personnalisé
+          {t("customLabel")}
         </Label>
         <div className="flex gap-2">
           <Input
-            placeholder="Ex: 100 ans du club"
+            placeholder={t("customPlaceholder")}
             value={customDraft}
             maxLength={50}
             onChange={(e) => setCustomDraft(e.target.value)}
@@ -190,7 +185,7 @@ export function PatchesSection({
             onClick={addCustomPatch}
             disabled={!customDraft.trim()}
           >
-            Ajouter
+            {t("addCustom")}
           </Button>
         </div>
         {customPatches.length > 0 && (
@@ -205,7 +200,7 @@ export function PatchesSection({
                   type="button"
                   className="cursor-pointer hover:text-destructive"
                   onClick={() => removeCustomPatch(p.customLabel!)}
-                  aria-label={`Supprimer ${p.customLabel}`}
+                  aria-label={t("removeCustom", { label: p.customLabel! })}
                 >
                   <X className="w-3 h-3" />
                 </button>

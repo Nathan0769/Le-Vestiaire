@@ -315,6 +315,27 @@
         "playerNumber": "Trikotnummer",
         "playerNumberPlaceholder": "z.B.: 10",
         "hasTags": "Hat noch Etiketten",
+        "patches": {
+          "title": "Trikot-Patches",
+          "loading": "Patches werden geladen...",
+          "error": "Fehler beim Laden der Patches",
+          "empty": "Keine Patches für dieses Trikot verfügbar",
+          "customLabel": "Individueller Patch",
+          "customPlaceholder": "z. B. 100 Jahre Verein",
+          "addCustom": "Hinzufügen",
+          "removeCustom": "{label} entfernen",
+          "families": {
+            "UEFA_COMPETITION": "UEFA-Wettbewerbe",
+            "CONFED_CLUB_COMPETITION": "Kontinentale Klubwettbewerbe",
+            "FIFA_CLUB_COMPETITION": "FIFA-Klubwettbewerbe",
+            "DOMESTIC_LEAGUE_BADGE": "Liga-Aufnäher",
+            "DOMESTIC_CHAMPION": "Amtierender Meister",
+            "DOMESTIC_CUP": "Nationaler Pokal",
+            "DOMESTIC_SUPERCUP": "Nationaler Superpokal",
+            "NATIONAL_TEAM_COMPETITION": "Nationalmannschafts-Wettbewerbe",
+            "CUSTOM": "Individuell"
+          }
+        },
         "isGift": "Als Geschenk erhalten",
         "isFromMysteryBox": "Aus einer Mystery Box",
         "isSigned": "Signiertes Trikot",

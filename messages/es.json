@@ -315,6 +315,27 @@
         "playerNumber": "Número de camiseta",
         "playerNumberPlaceholder": "Ej: 10",
         "hasTags": "Todavía tiene etiquetas",
+        "patches": {
+          "title": "Parches de la camiseta",
+          "loading": "Cargando parches...",
+          "error": "Error al cargar los parches",
+          "empty": "No hay parches disponibles para esta camiseta",
+          "customLabel": "Parche personalizado",
+          "customPlaceholder": "Ej: 100 años del club",
+          "addCustom": "Añadir",
+          "removeCustom": "Eliminar {label}",
+          "families": {
+            "UEFA_COMPETITION": "Competiciones UEFA",
+            "CONFED_CLUB_COMPETITION": "Competiciones continentales de clubes",
+            "FIFA_CLUB_COMPETITION": "Competiciones FIFA de clubes",
+            "DOMESTIC_LEAGUE_BADGE": "Parche de liga",
+            "DOMESTIC_CHAMPION": "Campeón vigente",
+            "DOMESTIC_CUP": "Copa nacional",
+            "DOMESTIC_SUPERCUP": "Supercopa nacional",
+            "NATIONAL_TEAM_COMPETITION": "Competiciones de selecciones",
+            "CUSTOM": "Personalizado"
+          }
+        },
         "isGift": "Recibido como regalo",
         "isFromMysteryBox": "De una caja misteriosa",
         "isSigned": "Camiseta firmada",
