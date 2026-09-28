@@ -166,26 +166,41 @@ export function useUpdatePatchVersion() {
       seasonStart,
       seasonEnd,
       eligibleClubIds,
+      file,
     }: {
       patchId: string;
       versionId: string;
       seasonStart?: string;
       seasonEnd?: string | null;
       eligibleClubIds?: string[];
+      file?: File | null;
     }) => {
-      const body: Record<string, unknown> = {};
-      if (seasonStart !== undefined) body.seasonStart = seasonStart;
-      if (seasonEnd !== undefined) body.seasonEnd = seasonEnd;
-      if (eligibleClubIds !== undefined) body.eligibleClubIds = eligibleClubIds;
+      const url = `/api/admin/patches/${patchId}/versions/${versionId}`;
 
-      const res = await fetch(
-        `/api/admin/patches/${patchId}/versions/${versionId}`,
-        {
+      // Une nouvelle image impose le multipart (le PATCH serveur gère les deux).
+      let res: Response;
+      if (file) {
+        const fd = new FormData();
+        if (seasonStart !== undefined) fd.append("seasonStart", seasonStart);
+        // "" est interprété comme null cote serveur (fin vide = version active).
+        if (seasonEnd !== undefined) fd.append("seasonEnd", seasonEnd ?? "");
+        if (eligibleClubIds !== undefined) {
+          fd.append("eligibleClubIds", JSON.stringify(eligibleClubIds));
+        }
+        fd.append("file", file);
+        res = await fetch(url, { method: "PATCH", body: fd });
+      } else {
+        const body: Record<string, unknown> = {};
+        if (seasonStart !== undefined) body.seasonStart = seasonStart;
+        if (seasonEnd !== undefined) body.seasonEnd = seasonEnd;
+        if (eligibleClubIds !== undefined) body.eligibleClubIds = eligibleClubIds;
+        res = await fetch(url, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
-        }
-      );
+        });
+      }
+
       if (!res.ok) {
         const err = await res.json();
         throw new Error(err.error || "Erreur mise à jour");

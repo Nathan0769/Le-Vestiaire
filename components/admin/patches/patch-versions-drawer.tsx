@@ -46,6 +46,7 @@ export function PatchVersionsDrawer({
   const [editStart, setEditStart] = useState("");
   const [editEnd, setEditEnd] = useState("");
   const [editClubIds, setEditClubIds] = useState<string[]>([]);
+  const [editFile, setEditFile] = useState<File | null>(null);
 
   const clubLeagueFilter =
     patch?.family === "NATIONAL_TEAM_COMPETITION"
@@ -107,6 +108,7 @@ export function PatchVersionsDrawer({
     setEditStart(version.seasonStart);
     setEditEnd(version.seasonEnd ?? "");
     setEditClubIds(version.eligibleClubIds);
+    setEditFile(null);
   };
 
   const cancelEdit = () => {
@@ -114,6 +116,7 @@ export function PatchVersionsDrawer({
     setEditStart("");
     setEditEnd("");
     setEditClubIds([]);
+    setEditFile(null);
   };
 
   const handleSaveEdit = async (versionId: string) => {
@@ -139,6 +142,7 @@ export function PatchVersionsDrawer({
         seasonStart: editStart,
         seasonEnd: editEnd || null,
         eligibleClubIds: editClubIds,
+        file: editFile,
       });
       toast.success("Version mise à jour");
       cancelEdit();
@@ -265,6 +269,23 @@ export function PatchVersionsDrawer({
                           aria-label={endLabel}
                         />
                       </div>
+                    </div>
+                    <div className="space-y-1">
+                      <Label className="text-xs" htmlFor={`edit-file-${v.id}`}>
+                        {v.imageUrl ? "Remplacer l'image" : "Ajouter une image"} (max 2 MB)
+                      </Label>
+                      <Input
+                        id={`edit-file-${v.id}`}
+                        type="file"
+                        accept="image/png,image/webp,image/jpeg,image/avif"
+                        className="h-8 text-sm"
+                        onChange={(e) => setEditFile(e.target.files?.[0] ?? null)}
+                      />
+                      {editFile && (
+                        <p className="text-xs text-muted-foreground truncate">
+                          {editFile.name}
+                        </p>
+                      )}
                     </div>
                     <div className="space-y-1">
                       <Label className="text-xs">Clubs éligibles</Label>
