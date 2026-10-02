@@ -77,7 +77,10 @@ export async function PATCH(request: Request) {
       data: { favoriteClubId },
     });
 
-    return new NextResponse("Favorite club updated", { status: 200 });
+    // 204 sans corps : le client iOS décode la réponse (EmptyResponse) et un
+    // corps texte le faisait planter (erreur rouge "club" alors que la BDD était
+    // bien à jour). Corps vide -> succès côté app.
+    return new NextResponse(null, { status: 204 });
   } catch (error) {
     console.error("Error updating favorite club:", error);
     return new NextResponse("Internal server error", { status: 500 });
