@@ -55,7 +55,7 @@ export function IosAppBanner() {
     <>
       <div id="ios-app-banner" ref={ref} role="banner" style={outer}>
         <div style={inner}>
-          <div style={wordmark}>LE VESTIAIRE</div>
+          <div style={wordmark}>LE VESTIAIRE FOOT</div>
           <div style={separator} />
           <div style={message}>
             <span className="bn-full">L&apos;app iOS est enfin disponible</span>

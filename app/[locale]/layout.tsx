@@ -48,7 +48,7 @@ export async function generateMetadata({
   };
 
   return {
-    title: "Le Vestiaire Foot",
+    title: titles[locale] || titles.fr,
     description: descriptions[locale] || descriptions.fr,
     authors: [{ name: "Le Vestiaire" }],
     creator: "Le Vestiaire",
