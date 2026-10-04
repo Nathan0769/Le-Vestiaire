@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import { useTranslations } from "next-intl";
 
 const DISMISS_KEY = "ios-app-banner-dismissed-v1";
@@ -17,30 +17,10 @@ export function IosAppBanner() {
   const t = useTranslations("HomePage.iosBanner");
   const url = process.env.NEXT_PUBLIC_APP_STORE_URL || APP_STORE_URL;
   const [hidden, setHidden] = useState(true);
-  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setHidden(localStorage.getItem(DISMISS_KEY) === "1");
   }, []);
-
-  // Pousse les contrôles flottants (profil/réglages/notifs, fixed top-right)
-  // sous le bandeau : ils lisent --ios-banner-h au lieu de se superposer.
-  useEffect(() => {
-    const root = document.documentElement;
-    const apply = () => {
-      root.style.setProperty(
-        "--ios-banner-h",
-        hidden ? "0px" : `${ref.current?.offsetHeight ?? 54}px`
-      );
-    };
-    apply();
-    if (hidden) return;
-    window.addEventListener("resize", apply);
-    return () => {
-      window.removeEventListener("resize", apply);
-      root.style.setProperty("--ios-banner-h", "0px");
-    };
-  }, [hidden]);
 
   if (hidden) return null;
 
@@ -55,7 +35,7 @@ export function IosAppBanner() {
 
   return (
     <>
-      <div id="ios-app-banner" ref={ref} role="banner" style={outer}>
+      <div id="ios-app-banner" role="banner" style={outer}>
         <div style={inner}>
           <div style={wordmark}>LE VESTIAIRE FOOT</div>
           <div style={separator} />
@@ -98,10 +78,16 @@ export function IosAppBanner() {
 }
 
 const outer: CSSProperties = {
+  position: "fixed",
+  left: 0,
+  right: 0,
+  bottom: 0,
+  zIndex: 40,
   width: "100%",
   boxSizing: "border-box",
   background: "#15171f",
   color: "#ffffff",
+  boxShadow: "0 -6px 24px -8px rgba(0,0,0,0.5)",
   fontFamily: "Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif",
 };
 
@@ -146,7 +132,7 @@ const badge: CSSProperties = {
   height: 32,
   padding: "0 12px",
   boxSizing: "border-box",
-  background: "#ffffff",
+  background: "#C9A84C",
   color: "#0b0c12",
   borderRadius: 7,
   textDecoration: "none",

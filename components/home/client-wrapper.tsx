@@ -46,10 +46,7 @@ export default function ClientWrapper({
             <AppSidebar />
             <main id="main-content" className="flex-1 min-w-0 overflow-x-hidden">
               <SidebarTrigger />
-              <div
-                className="fixed right-2 z-40 flex items-center gap-1 bg-card border border-border rounded-full shadow-md px-1"
-                style={{ top: "calc(0.5rem + var(--ios-banner-h, 0px))" }}
-              >
+              <div className="fixed top-2 right-2 z-40 flex items-center gap-1 bg-card border border-border rounded-full shadow-md px-1">
                 <EditProfile iconOnly />
                 <Button
                   variant="ghost"
