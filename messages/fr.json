@@ -1158,6 +1158,11 @@
     }
   },
   "HomePage": {
+    "iosBanner": {
+      "message": "L'app iOS est enfin disponible",
+      "messageShort": "L'app est sur iOS",
+      "cta": "Télécharger sur l'App Store"
+    },
     "hero": {
       "title": "Bienvenue dans",
       "appName": "Le Vestiaire",

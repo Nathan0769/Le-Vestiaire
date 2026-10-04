@@ -1153,6 +1153,11 @@
     }
   },
   "HomePage": {
+    "iosBanner": {
+      "message": "A app para iOS já está disponível",
+      "messageShort": "Agora no iOS",
+      "cta": "Descarregar na App Store"
+    },
     "hero": {
       "title": "Bem-vindo ao",
       "appName": "The Locker Room",

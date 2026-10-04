@@ -1153,6 +1153,11 @@
     }
   },
   "HomePage": {
+    "iosBanner": {
+      "message": "La app para iOS ya está disponible",
+      "messageShort": "Ya en iOS",
+      "cta": "Descargar en el App Store"
+    },
     "hero": {
       "title": "Bienvenido a",
       "appName": "El Vestuario",

@@ -1153,6 +1153,11 @@
     }
   },
   "HomePage": {
+    "iosBanner": {
+      "message": "L'app per iOS è finalmente disponibile",
+      "messageShort": "Ora su iOS",
+      "cta": "Scarica su App Store"
+    },
     "hero": {
       "title": "Benvenuto su",
       "appName": "Lo Spogliatoio",
