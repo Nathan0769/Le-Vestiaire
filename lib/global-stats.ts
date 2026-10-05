@@ -179,13 +179,9 @@ async function getTotalCollectedJerseys(): Promise<number> {
   return prisma.userJersey.count();
 }
 
-/** Nombre de collectionneurs = utilisateurs distincts possédant au moins 1 maillot. */
+/** Nombre de collectionneurs = tous les utilisateurs inscrits sur Le Vestiaire. */
 async function getTotalCollectors(): Promise<number> {
-  const rows = await prisma.userJersey.findMany({
-    select: { userId: true },
-    distinct: ["userId"],
-  });
-  return rows.length;
+  return prisma.user.count();
 }
 
 async function getAverageRating(): Promise<number | null> {
