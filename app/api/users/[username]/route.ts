@@ -9,6 +9,9 @@ import { NextResponse } from "next/server";
 import { isBlocked } from "@/lib/follow";
 import { isSupporter } from "@/lib/subscription";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
+import { pickTopAchievements } from "@/lib/achievements/top-achievements";
+import { getBadgeUrl } from "@/lib/achievements/badge-url";
+import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definitions";
 
 /**
  * Profil public d'un utilisateur par username (consommé par l'app mobile).
@@ -67,7 +70,7 @@ export async function GET(
     return NextResponse.json({ error: "Accès bloqué" }, { status: 403 });
   }
 
-  const [followersCount, followingCount, follow, followRequest] =
+  const [followersCount, followingCount, follow, followRequest, achievementsRaw] =
     await Promise.all([
       prisma.follow.count({ where: { followingId: target.id } }),
       prisma.follow.count({ where: { followerId: target.id } }),
@@ -93,6 +96,11 @@ export async function GET(
             },
             select: { id: true },
           }),
+      prisma.achievement.findMany({
+        where: { userId: target.id },
+        orderBy: { unlockedAt: "desc" },
+        select: { key: true, tier: true, unlockedAt: true, metadata: true },
+      }),
     ]);
 
   let followState: "none" | "following" | "requested" | "self" = "none";
@@ -101,6 +109,16 @@ export async function GET(
   else if (followRequest) followState = "requested";
 
   const isAnonymous = target.leaderboardAnonymous ?? false;
+
+  // Teaser succès (lecture seule). Masqué si profil anonyme.
+  const knownAchievements = isAnonymous
+    ? []
+    : achievementsRaw.filter((a) => isKnownAchievementKey(a.key));
+  const topAchievements = pickTopAchievements(knownAchievements, 4).map((a) => ({
+    key: a.key,
+    tier: a.tier,
+    imageUrl: getBadgeUrl(a.key),
+  }));
 
   let avatarUrl: string | null = null;
   if (!isAnonymous && target.avatar) {
@@ -133,6 +151,9 @@ export async function GET(
       followersCount,
       followingCount,
     },
+    topAchievements,
+    achievementsUnlockedCount: knownAchievements.length,
+    achievementsTotal: Object.keys(ACHIEVEMENTS).length,
     followState,
     isSelf,
     createdAt: target.createdAt.toISOString(),

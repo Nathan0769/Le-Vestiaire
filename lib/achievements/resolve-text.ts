@@ -28,14 +28,21 @@ function interpolate(
 export function resolveAchievementText(
   key: string,
   metadata?: Record<string, unknown> | null,
-): { title: string; description: string; badgeUrl: string | null } {
+): {
+  title: string;
+  description: string;
+  howTo: string | null;
+  badgeUrl: string | null;
+} {
   const { i18nKey, params } = resolveAchievementI18n(key, metadata, "fr");
   const node = getNested(frMessages, i18nKey) as Json | undefined;
   const rawTitle = typeof node?.title === "string" ? node.title : key;
   const rawDesc = typeof node?.description === "string" ? node.description : "";
+  const rawHowTo = typeof node?.howTo === "string" ? node.howTo : null;
   return {
     title: interpolate(rawTitle, params),
     description: interpolate(rawDesc, params),
+    howTo: rawHowTo ? interpolate(rawHowTo, params) : null,
     badgeUrl: getBadgeUrl(key),
   };
 }

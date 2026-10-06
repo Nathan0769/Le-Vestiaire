@@ -8,6 +8,7 @@ import prisma from "@/lib/prisma";
 import { isSupporter } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
+import { resolveAchievementText } from "@/lib/achievements/resolve-text";
 
 const DEFAULT_LIMIT = 20;
 
@@ -112,6 +113,11 @@ export async function GET(request: Request) {
           60 * 60
         );
       }
+      const achievementText =
+        n.type === "ACHIEVEMENT_UNLOCKED" && n.achievementKey
+          ? resolveAchievementText(n.achievementKey)
+          : null;
+
       return {
         id: n.id,
         type: n.type,
@@ -119,6 +125,9 @@ export async function GET(request: Request) {
         readAt: n.readAt,
         postId: n.postId,
         commentId: n.commentId,
+        achievementKey: n.achievementKey,
+        achievementTitle: achievementText?.title ?? null,
+        badgeImageUrl: achievementText?.badgeUrl ?? null,
         actor: n.actor
           ? {
               id: n.actor.id,

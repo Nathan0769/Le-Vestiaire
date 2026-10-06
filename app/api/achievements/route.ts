@@ -9,6 +9,7 @@ import {
 import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definitions";
 import { getRarityMap } from "@/lib/achievements/rarity";
 import { createProgressCache } from "@/lib/achievements/progress-cache";
+import { resolveAchievementText } from "@/lib/achievements/resolve-text";
 
 export async function GET() {
   const user = await getCurrentUser();
@@ -38,6 +39,7 @@ export async function GET() {
   const inProgress = await Promise.all(
     inProgressEntries.map(async ([key, def]) => {
       const currentProgress = await getProgress(def.computeProgress);
+      const text = resolveAchievementText(key, null);
       return {
         key,
         category: def.category,
@@ -46,6 +48,10 @@ export async function GET() {
         threshold: def.threshold,
         percentage: Math.min(100, Math.round((currentProgress / def.threshold) * 100)),
         i18nKey: def.i18nKey,
+        title: text.title,
+        description: text.description,
+        howTo: text.howTo,
+        imageUrl: text.badgeUrl,
       };
     })
   );
@@ -56,8 +62,22 @@ export async function GET() {
 
   const rarity = await getRarityMap();
 
+  const unlockedResolved = unlocked.map((a) => {
+    const text = resolveAchievementText(
+      a.key,
+      a.metadata as Record<string, unknown> | null,
+    );
+    return {
+      ...a,
+      title: text.title,
+      description: text.description,
+      howTo: text.howTo,
+      imageUrl: text.badgeUrl,
+    };
+  });
+
   return NextResponse.json({
-    unlocked,
+    unlocked: unlockedResolved,
     inProgress,
     hiddenLocked,
     rarity,

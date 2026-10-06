@@ -9,6 +9,7 @@ interface CreateNotificationInput {
   actorId?: string | null;
   postId?: string | null;
   commentId?: string | null;
+  achievementKey?: string | null;
 }
 
 /**
@@ -40,6 +41,7 @@ export async function createNotification(
       actorId: input.actorId ?? null,
       postId: input.postId ?? null,
       commentId: input.commentId ?? null,
+      achievementKey: input.achievementKey ?? null,
     },
   });
 }

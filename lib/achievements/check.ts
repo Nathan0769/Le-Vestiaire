@@ -2,6 +2,7 @@ import type { Achievement } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { ACHIEVEMENTS, type AchievementTrigger, type AchievementDefinition } from "./definitions";
 import { createProgressCache } from "./progress-cache";
+import { createNotification } from "@/lib/notifications/create";
 
 export async function checkAchievements(
   userId: string,
@@ -12,12 +13,14 @@ export async function checkAchievements(
   );
 
   if (entries.length === 0) return [];
-  return checkEntries(userId, entries);
+  // Déblocage au fil de l'eau : on notifie l'utilisateur.
+  return checkEntries(userId, entries, true);
 }
 
 export async function checkAllAchievements(userId: string): Promise<Achievement[]> {
   const entries = Object.entries(ACHIEVEMENTS);
-  const unlocks = await checkEntries(userId, entries);
+  // Full-check = filet de sécurité / backfill : pas de notif (sinon flood au 1er passage).
+  const unlocks = await checkEntries(userId, entries, false);
   await prisma.user.update({
     where: { id: userId },
     data: { lastAchievementsFullCheckAt: new Date() },
@@ -42,7 +45,8 @@ export async function maybeCheckAllAchievements(
 
 async function checkEntries(
   userId: string,
-  entries: Array<[string, AchievementDefinition]>
+  entries: Array<[string, AchievementDefinition]>,
+  notify: boolean
 ): Promise<Achievement[]> {
 
   const alreadyUnlocked = await prisma.achievement.findMany({
@@ -77,6 +81,19 @@ async function checkEntries(
         },
       });
       newUnlocks.push(created);
+
+      if (notify) {
+        // Notif in-app (pas de push en v1). Ne jamais casser le déblocage si ça échoue.
+        try {
+          await createNotification({
+            userId,
+            type: "ACHIEVEMENT_UNLOCKED",
+            achievementKey: key,
+          });
+        } catch (notifyError) {
+          console.error("createNotification (achievement) failed:", notifyError);
+        }
+      }
     } catch (error) {
       if (!isUniqueConstraintError(error)) throw error;
     }

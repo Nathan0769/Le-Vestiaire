@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
+import { pickTopAchievements } from "@/lib/achievements/top-achievements";
+import { getBadgeUrl } from "@/lib/achievements/badge-url";
+import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definitions";
 
 export async function GET() {
   try {
@@ -10,7 +13,7 @@ export async function GET() {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    const [user, collectionClubs, followingCount, followersCount, accountProviders] = await Promise.all([
+    const [user, collectionClubs, followingCount, followersCount, accountProviders, achievementsRaw] = await Promise.all([
       prisma.user.findUnique({
         where: { id: sessionUser.id },
         select: {
@@ -64,6 +67,11 @@ export async function GET() {
         where: { userId: sessionUser.id },
         select: { providerId: true },
       }),
+      prisma.achievement.findMany({
+        where: { userId: sessionUser.id },
+        orderBy: { unlockedAt: "desc" },
+        select: { key: true, tier: true, unlockedAt: true, metadata: true },
+      }),
     ]);
 
     if (!user) {
@@ -78,6 +86,14 @@ export async function GET() {
     }
 
     const hasPassword = accountProviders.some((a) => a.providerId === "credential");
+
+    // Aperçu succès pour le teaser du profil (parité bloc web TopAchievementsBadges).
+    const knownAchievements = achievementsRaw.filter((a) =>
+      isKnownAchievementKey(a.key)
+    );
+    const topAchievements = pickTopAchievements(knownAchievements, 4).map(
+      (a) => ({ key: a.key, tier: a.tier, imageUrl: getBadgeUrl(a.key) })
+    );
 
     return NextResponse.json({
       id: user.id,
@@ -94,6 +110,9 @@ export async function GET() {
       hasPassword,
       favoriteClub: user.favoriteClub ?? null,
       createdAt: user.createdAt.toISOString(),
+      topAchievements,
+      achievementsUnlockedCount: knownAchievements.length,
+      achievementsTotal: Object.keys(ACHIEVEMENTS).length,
       stats: {
         collectionCount: user._count.collection,
         wishlistCount: user._count.wishlist,
