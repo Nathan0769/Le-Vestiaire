@@ -2776,7 +2776,8 @@
       "BRONZE": "Brons",
       "SILVER": "Zilver",
       "GOLD": "Goud",
-      "PLATINUM": "Platina"
+      "PLATINUM": "Platina",
+      "LEGEND": "Legende"
     },
     "toast": {
       "unlocked": "Prestatie ontgrendeld!"
@@ -3300,7 +3301,8 @@
         "BRONZE": "Brons",
         "SILVER": "Zilver",
         "GOLD": "Goud",
-        "PLATINUM": "Platina"
+        "PLATINUM": "Platina",
+        "LEGEND": "Legende"
       },
       "achievementUnlocked": "{tier} prestatie",
       "capCollectionLabel": "shirts in de collectie",

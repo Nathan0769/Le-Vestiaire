@@ -12,6 +12,7 @@ interface Props {
 }
 
 const TIER_GRADIENT: Record<string, string> = {
+  LEGEND: "from-zinc-600 via-zinc-800 to-black",
   PLATINUM: "from-cyan-400 via-blue-500 to-indigo-600",
   GOLD: "from-amber-300 via-yellow-500 to-orange-500",
   SILVER: "from-slate-200 via-slate-400 to-slate-600",

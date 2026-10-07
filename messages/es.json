@@ -2776,7 +2776,8 @@
       "BRONZE": "Bronce",
       "SILVER": "Plata",
       "GOLD": "Oro",
-      "PLATINUM": "Platino"
+      "PLATINUM": "Platino",
+      "LEGEND": "Leyenda"
     },
     "toast": {
       "unlocked": "¡Logro desbloqueado!"
@@ -3300,7 +3301,8 @@
         "BRONZE": "Bronce",
         "SILVER": "Plata",
         "GOLD": "Oro",
-        "PLATINUM": "Platino"
+        "PLATINUM": "Platino",
+        "LEGEND": "Leyenda"
       },
       "achievementUnlocked": "Logro {tier}",
       "capCollectionLabel": "camisetas en la colección",

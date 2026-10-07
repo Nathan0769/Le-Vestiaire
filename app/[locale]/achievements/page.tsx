@@ -1,7 +1,11 @@
 import { redirect } from "next/navigation";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definitions";
+import {
+  ACHIEVEMENTS,
+  effectiveTier,
+  isKnownAchievementKey,
+} from "@/lib/achievements/definitions";
 import { checkAllAchievements } from "@/lib/achievements/check";
 import { getRarityMap } from "@/lib/achievements/rarity";
 import { createProgressCache } from "@/lib/achievements/progress-cache";
@@ -73,7 +77,7 @@ export default async function AchievementsPage() {
       id: u.id,
       key: u.key,
       category: u.category,
-      tier: u.tier,
+      tier: effectiveTier(u.key, u.tier),
       unlockedAt: u.unlockedAt.toISOString(),
       metadata: u.metadata as Record<string, unknown> | null,
       isSecret: ACHIEVEMENTS[u.key]?.hidden === true,

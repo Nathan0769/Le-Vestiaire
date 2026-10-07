@@ -6,7 +6,11 @@ import {
   getRateLimitIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit";
-import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definitions";
+import {
+  ACHIEVEMENTS,
+  effectiveTier,
+  isKnownAchievementKey,
+} from "@/lib/achievements/definitions";
 import { getRarityMap } from "@/lib/achievements/rarity";
 import { createProgressCache } from "@/lib/achievements/progress-cache";
 import { resolveAchievementText } from "@/lib/achievements/resolve-text";
@@ -69,6 +73,7 @@ export async function GET() {
     );
     return {
       ...a,
+      tier: effectiveTier(a.key, a.tier),
       title: text.title,
       description: text.description,
       howTo: text.howTo,

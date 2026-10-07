@@ -2776,7 +2776,8 @@
       "BRONZE": "Bronze",
       "SILVER": "Silber",
       "GOLD": "Gold",
-      "PLATINUM": "Platin"
+      "PLATINUM": "Platin",
+      "LEGEND": "Legende"
     },
     "toast": {
       "unlocked": "Erfolg freigeschaltet!"
@@ -3300,7 +3301,8 @@
         "BRONZE": "Bronze",
         "SILVER": "Silber",
         "GOLD": "Gold",
-        "PLATINUM": "Platin"
+        "PLATINUM": "Platin",
+        "LEGEND": "Legende"
       },
       "achievementUnlocked": "{tier}-Erfolg",
       "capCollectionLabel": "Trikots in der Sammlung",

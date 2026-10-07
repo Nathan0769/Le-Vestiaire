@@ -3,7 +3,11 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { getTranslations } from "next-intl/server";
 import { Award } from "lucide-react";
 import prisma from "@/lib/prisma";
-import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definitions";
+import {
+  ACHIEVEMENTS,
+  effectiveTier,
+  isKnownAchievementKey,
+} from "@/lib/achievements/definitions";
 import { maybeCheckAllAchievements } from "@/lib/achievements/check";
 import { getRarityMap } from "@/lib/achievements/rarity";
 import { PublicUserTabs } from "@/components/users/public-user-tabs";
@@ -91,7 +95,7 @@ export async function PublicAchievementsScreen({
           id: u.id,
           key: u.key,
           category: u.category,
-          tier: u.tier,
+          tier: effectiveTier(u.key, u.tier),
           unlockedAt: u.unlockedAt.toISOString(),
           metadata: u.metadata as Record<string, unknown> | null,
         }))}

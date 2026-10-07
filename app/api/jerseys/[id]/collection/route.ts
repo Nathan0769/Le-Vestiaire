@@ -375,9 +375,9 @@ export async function POST(
         }
       }
 
-      // Feed post pour succès PLATINUM débloqué à cet ajout
+      // Feed post pour succès PLATINUM ou LEGEND débloqué à cet ajout
       for (const achievement of newAchievements) {
-        if (achievement.tier === "PLATINUM") {
+        if (achievement.tier === "PLATINUM" || achievement.tier === "LEGEND") {
           await createFeedPost({
             authorId: user.id,
             type: "ACHIEVEMENT_UNLOCK",

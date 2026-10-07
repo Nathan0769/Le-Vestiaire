@@ -1,4 +1,7 @@
+import { effectiveTier } from "./definitions";
+
 const TIER_WEIGHT: Record<string, number> = {
+  LEGEND: 5,
   PLATINUM: 4,
   GOLD: 3,
   SILVER: 2,
@@ -47,7 +50,8 @@ export function pickTopAchievements(
   limit: number
 ): TopAchievement[] {
   const bestByFamily = new Map<string, AchievementRow>();
-  for (const row of rows) {
+  for (const stored of rows) {
+    const row = { ...stored, tier: effectiveTier(stored.key, stored.tier) };
     const family = achievementFamily(row.key);
     const current = bestByFamily.get(family);
     if (!current) {

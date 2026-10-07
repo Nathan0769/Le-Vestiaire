@@ -28,6 +28,7 @@ const TIER_BG: Record<string, string> = {
   SILVER: "bg-slate-400/15 border-slate-400/50 text-slate-500",
   GOLD: "bg-yellow-400/15 border-yellow-400/60 text-yellow-500",
   PLATINUM: "bg-indigo-400/15 border-indigo-400/60 text-indigo-500",
+  LEGEND: "bg-zinc-500/15 border-zinc-500/60 text-zinc-900 dark:text-zinc-100",
 };
 
 const DEFAULT_BG = "bg-primary/10 border-primary/40 text-primary";

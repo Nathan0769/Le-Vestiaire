@@ -24,7 +24,13 @@ export type AchievementCategoryValue =
   | "RARITY"
   | "CONTRIBUTION";
 
-export type AchievementTier = "BRONZE" | "SILVER" | "GOLD" | "PLATINUM";
+// LEGEND : au-dessus de Platine, réservé aux succès de statut (Fondateur, Cercle).
+export type AchievementTier =
+  | "BRONZE"
+  | "SILVER"
+  | "GOLD"
+  | "PLATINUM"
+  | "LEGEND";
 
 export interface AchievementDefinition {
   category: AchievementCategoryValue;
@@ -329,7 +335,7 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
   // Succès exclusif Supporter : débloqué dès que le plan passe PRO.
   "loyalty.supporter": {
     category: "LOYALTY",
-    tier: "PLATINUM",
+    tier: "LEGEND",
     threshold: 1,
     triggers: ["supporter.subscribed", "auth.login"],
     i18nKey: "achievements.definitions.loyalty.supporter",
@@ -488,7 +494,7 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
   // ---------- SPECIAL (hidden) ----------
   "special.founder": {
     category: "LOYALTY",
-    tier: "PLATINUM",
+    tier: "LEGEND",
     threshold: 1,
     triggers: ["auth.login", "collection.add"],
     hidden: true,
@@ -502,6 +508,19 @@ export const ACHIEVEMENTS: Record<string, AchievementDefinition> = {
  * Filtre les succès débloqués devenus orphelins (définition supprimée),
  * tout en gardant les badges mensuels dynamiques (non listés dans ACHIEVEMENTS).
  */
+/**
+ * Palier à afficher pour un succès débloqué. La définition fait foi : le palier
+ * stocké sur la ligne date du déblocage et peut être périmé (ex. Fondateur,
+ * stocké PLATINUM avant la création de LEGEND). Les clés hors définitions
+ * (badges mensuels dynamiques) gardent leur palier stocké.
+ */
+export function effectiveTier(
+  key: string,
+  storedTier: string | null,
+): string | null {
+  return ACHIEVEMENTS[key]?.tier ?? storedTier;
+}
+
 export function isKnownAchievementKey(key: string): boolean {
   return key in ACHIEVEMENTS || key.startsWith("leaderboard.monthly");
 }

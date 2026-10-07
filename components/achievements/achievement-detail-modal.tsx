@@ -34,6 +34,7 @@ const TIER_PILL: Record<string, string> = {
   SILVER: "bg-slate-500 text-white",
   GOLD: "bg-yellow-500 text-white",
   PLATINUM: "bg-indigo-500 text-white",
+  LEGEND: "bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900",
 };
 
 interface Props {

@@ -7,7 +7,10 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import { isBlocked } from "@/lib/follow";
-import { isKnownAchievementKey } from "@/lib/achievements/definitions";
+import {
+  effectiveTier,
+  isKnownAchievementKey,
+} from "@/lib/achievements/definitions";
 import { getRarityMap } from "@/lib/achievements/rarity";
 import { resolveAchievementText } from "@/lib/achievements/resolve-text";
 
@@ -71,7 +74,7 @@ export async function GET(
         id: a.id,
         key: a.key,
         category: a.category,
-        tier: a.tier,
+        tier: effectiveTier(a.key, a.tier),
         unlockedAt: a.unlockedAt.toISOString(),
         metadata: a.metadata,
         title: text.title,

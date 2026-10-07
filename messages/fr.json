@@ -2781,7 +2781,8 @@
       "BRONZE": "Bronze",
       "SILVER": "Argent",
       "GOLD": "Or",
-      "PLATINUM": "Platine"
+      "PLATINUM": "Platine",
+      "LEGEND": "Légende"
     },
     "toast": {
       "unlocked": "Succès débloqué !"
@@ -3305,7 +3306,8 @@
         "BRONZE": "Bronze",
         "SILVER": "Argent",
         "GOLD": "Or",
-        "PLATINUM": "Platine"
+        "PLATINUM": "Platine",
+        "LEGEND": "Légende"
       },
       "achievementUnlocked": "Succès {tier}",
       "capCollectionLabel": "maillots dans la collection",

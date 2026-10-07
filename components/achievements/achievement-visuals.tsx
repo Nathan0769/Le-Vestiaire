@@ -39,6 +39,8 @@ export const TIER_DISC: Record<string, string> = {
   GOLD: "bg-gradient-to-br from-yellow-300 to-yellow-600 text-white shadow-lg shadow-yellow-600/30",
   PLATINUM:
     "bg-gradient-to-br from-indigo-300 to-indigo-600 text-white shadow-lg shadow-indigo-600/30",
+  LEGEND:
+    "bg-gradient-to-br from-zinc-700 to-zinc-950 text-white shadow-lg shadow-black/30 dark:from-zinc-100 dark:to-zinc-300 dark:text-zinc-900",
 };
 
 /** Couleur d'accent texte par palier. */
@@ -47,10 +49,12 @@ export const TIER_TEXT: Record<string, string> = {
   SILVER: "text-slate-500 dark:text-slate-300",
   GOLD: "text-yellow-600 dark:text-yellow-400",
   PLATINUM: "text-indigo-600 dark:text-indigo-400",
+  LEGEND: "text-zinc-900 dark:text-zinc-100",
 };
 
 /** Poids de tri des paliers (du plus prestigieux au moins). */
 export const TIER_WEIGHT: Record<string, number> = {
+  LEGEND: 5,
   PLATINUM: 4,
   GOLD: 3,
   SILVER: 2,

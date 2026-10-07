@@ -11,6 +11,7 @@ import { isSupporter } from "@/lib/subscription";
 import { computeClubRanks } from "@/lib/feed/club-rank";
 import { computeCapMosaics } from "@/lib/feed/cap-mosaic";
 import { resolveAchievementText } from "@/lib/achievements/resolve-text";
+import { effectiveTier } from "@/lib/achievements/definitions";
 import type { FeedPostItem, FeedLikerPreview } from "@/types/feed";
 
 const MAX_LIKERS_PREVIEW = 3;
@@ -240,7 +241,7 @@ export async function enrichPostsForFeed(
           const resolved = resolveAchievementText(ach.key, meta);
           payload = {
             key: ach.key,
-            tier: ach.tier,
+            tier: effectiveTier(ach.key, ach.tier),
             category: ach.category,
             unlockedAt: ach.unlockedAt.toISOString(),
             metadata: meta,

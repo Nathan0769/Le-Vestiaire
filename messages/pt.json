@@ -2776,7 +2776,8 @@
       "BRONZE": "Bronze",
       "SILVER": "Prata",
       "GOLD": "Ouro",
-      "PLATINUM": "Platina"
+      "PLATINUM": "Platina",
+      "LEGEND": "Lenda"
     },
     "toast": {
       "unlocked": "Conquista desbloqueada!"
@@ -3300,7 +3301,8 @@
         "BRONZE": "Bronze",
         "SILVER": "Prata",
         "GOLD": "Ouro",
-        "PLATINUM": "Platina"
+        "PLATINUM": "Platina",
+        "LEGEND": "Lenda"
       },
       "achievementUnlocked": "Conquista {tier}",
       "capCollectionLabel": "camisas na coleção",

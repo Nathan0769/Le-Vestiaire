@@ -12,6 +12,7 @@ const TIER_GLOW: Record<string, string> = {
   SILVER: "from-slate-400/15 border-slate-400/40",
   GOLD: "from-yellow-500/15 border-yellow-500/40",
   PLATINUM: "from-indigo-500/15 border-indigo-500/40",
+  LEGEND: "from-zinc-500/20 border-zinc-500/50",
 };
 
 interface Props {

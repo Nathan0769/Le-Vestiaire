@@ -26,7 +26,7 @@ describe("ACHIEVEMENTS catalogue", () => {
   });
 
   it("chaque tier optionnel est valide", () => {
-    const validTiers = ["BRONZE", "SILVER", "GOLD", "PLATINUM"];
+    const validTiers = ["BRONZE", "SILVER", "GOLD", "PLATINUM", "LEGEND"];
     for (const [key, def] of entries) {
       if (def.tier) expect(validTiers, `${key} tier`).toContain(def.tier);
     }

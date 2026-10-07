@@ -2776,7 +2776,8 @@
       "BRONZE": "Bronze",
       "SILVER": "Silver",
       "GOLD": "Gold",
-      "PLATINUM": "Platinum"
+      "PLATINUM": "Platinum",
+      "LEGEND": "Legend"
     },
     "toast": {
       "unlocked": "Achievement unlocked!"
@@ -3300,7 +3301,8 @@
         "BRONZE": "Bronze",
         "SILVER": "Silver",
         "GOLD": "Gold",
-        "PLATINUM": "Platinum"
+        "PLATINUM": "Platinum",
+        "LEGEND": "Legend"
       },
       "achievementUnlocked": "{tier} achievement",
       "capCollectionLabel": "shirts in the collection",

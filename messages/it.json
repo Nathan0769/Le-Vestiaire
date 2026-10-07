@@ -2776,7 +2776,8 @@
       "BRONZE": "Bronzo",
       "SILVER": "Argento",
       "GOLD": "Oro",
-      "PLATINUM": "Platino"
+      "PLATINUM": "Platino",
+      "LEGEND": "Leggenda"
     },
     "toast": {
       "unlocked": "Obiettivo sbloccato!"
@@ -3300,7 +3301,8 @@
         "BRONZE": "Bronzo",
         "SILVER": "Argento",
         "GOLD": "Oro",
-        "PLATINUM": "Platino"
+        "PLATINUM": "Platino",
+        "LEGEND": "Leggenda"
       },
       "achievementUnlocked": "Successo {tier}",
       "capCollectionLabel": "maglie in collezione",
