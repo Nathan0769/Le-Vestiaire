@@ -66,7 +66,8 @@ export function NotificationItem({ notification, onClick }: Props) {
     : t(`types.${notification.type}` as never);
 
   const href = notification.postId
-    ? notification.type === "POST_COMMENTED"
+    ? notification.type === "POST_COMMENTED" ||
+      notification.type === "COMMENT_REPLIED"
       ? `/feed?post=${notification.postId}&comments=1`
       : `/feed?post=${notification.postId}`
     : actor

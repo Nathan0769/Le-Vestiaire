@@ -70,6 +70,7 @@ model User {
   posts                       Post[]
   postLikes                   PostLike[]
   postComments                PostComment[]
+  postCommentLikes            PostCommentLike[]
   postReportsSent             PostReport[]          @relation("PostReportReporter")
   postReportsReviewed         PostReport[]          @relation("PostReportReviewer")
   notifications               Notification[]        @relation("NotificationRecipient")
@@ -797,18 +798,40 @@ model PostComment {
   postId    String    @map("post_id")
   authorId  String    @map("author_id")
   content   String    @db.VarChar(500)
+  // Un seul niveau de réponses : parentId pointe toujours vers un commentaire
+  // racine (une réponse à une réponse est rattachée à la racine côté API).
+  parentId   String?   @map("parent_id")
+  likeCount  Int       @default(0) @map("like_count")
+  replyCount Int       @default(0) @map("reply_count")
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime  @updatedAt @map("updated_at")
   deletedAt DateTime? @map("deleted_at")
 
-  post          Post           @relation(fields: [postId], references: [id], onDelete: Cascade)
-  author        User           @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  post          Post              @relation(fields: [postId], references: [id], onDelete: Cascade)
+  author        User              @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  parent        PostComment?      @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies       PostComment[]     @relation("CommentReplies")
+  likes         PostCommentLike[]
   reports       PostReport[]
   notifications Notification[]
 
   @@index([postId, createdAt])
+  @@index([parentId, createdAt])
   @@index([authorId])
   @@map("post_comments")
+}
+
+model PostCommentLike {
+  id        String      @id @default(cuid())
+  commentId String      @map("comment_id")
+  userId    String      @map("user_id")
+  createdAt DateTime    @default(now()) @map("created_at")
+  comment   PostComment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([commentId, userId])
+  @@index([userId])
+  @@map("post_comment_likes")
 }
 
 enum PostReportTargetType {
@@ -861,6 +884,7 @@ enum NotificationType {
   POST_COMMENTED
   FOLLOW_REQUEST_APPROVED
   ACHIEVEMENT_UNLOCKED
+  COMMENT_REPLIED
 }
 
 model Notification {

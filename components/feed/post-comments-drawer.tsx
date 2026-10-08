@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { FeedPostItem } from "@/types/feed";
 import {
@@ -12,7 +12,12 @@ import {
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { CommentItem, type CommentEntity } from "@/components/feed/comment-item";
+import { X } from "lucide-react";
+import {
+  CommentItem,
+  type CommentsPage,
+  type ReplyTarget,
+} from "@/components/feed/comment-item";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 import { trackEvent } from "@/lib/analytics";
 
@@ -22,11 +27,6 @@ interface PostCommentsDrawerProps {
   onClose: () => void;
 }
 
-interface CommentsPage {
-  items: CommentEntity[];
-  nextCursor: string | null;
-}
-
 export function PostCommentsDrawer({
   post,
   open,
@@ -34,6 +34,9 @@ export function PostCommentsDrawer({
 }: PostCommentsDrawerProps) {
   const t = useTranslations("Feed.comments");
   const [draft, setDraft] = useState("");
+  const [replyTo, setReplyTo] = useState<ReplyTarget | null>(null);
+  const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set());
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
   const queryClient = useQueryClient();
   const currentUser = useCurrentUser();
 
@@ -58,7 +61,7 @@ export function PostCommentsDrawer({
       const res = await fetch(`/api/posts/${post.id}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content }),
+        body: JSON.stringify({ content, parentId: replyTo?.commentId }),
       });
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
@@ -66,6 +69,14 @@ export function PostCommentsDrawer({
       }
     },
     onSuccess: () => {
+      if (replyTo) {
+        const rootId = replyTo.rootId;
+        setExpandedIds((prev) => new Set(prev).add(rootId));
+        queryClient.invalidateQueries({
+          queryKey: ["comment-replies", rootId],
+        });
+        setReplyTo(null);
+      }
       trackEvent({
         name: "post_commented",
         params: { post_type: post.type, content_length: draft.length },
@@ -77,6 +88,21 @@ export function PostCommentsDrawer({
   });
 
   const allComments = comments.data?.pages.flatMap((p) => p.items) ?? [];
+
+  const startReply = (target: ReplyTarget) => {
+    setReplyTo(target);
+    setDraft(`@${target.username} `);
+    textareaRef.current?.focus();
+  };
+
+  const toggleReplies = (commentId: string) => {
+    setExpandedIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(commentId)) next.delete(commentId);
+      else next.add(commentId);
+      return next;
+    });
+  };
 
   return (
     <Sheet open={open} onOpenChange={(v) => !v && onClose()}>
@@ -109,6 +135,9 @@ export function PostCommentsDrawer({
                 comment={comment}
                 currentUserId={currentUser?.id}
                 postAuthorId={post.author?.id ?? ""}
+                onReply={startReply}
+                repliesExpanded={expandedIds.has(comment.id)}
+                onToggleReplies={() => toggleReplies(comment.id)}
               />
             ))}
           </div>
@@ -131,7 +160,24 @@ export function PostCommentsDrawer({
 
         {currentUser && (
           <div className="border-t border-border p-4 space-y-2">
+            {replyTo && (
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
+                <span>{t("replyingTo", { username: replyTo.username })}</span>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setReplyTo(null);
+                    setDraft("");
+                  }}
+                  aria-label={t("cancelReply")}
+                  className="cursor-pointer hover:text-foreground"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+            )}
             <Textarea
+              ref={textareaRef}
               value={draft}
               onChange={(e) => setDraft(e.target.value)}
               placeholder={t("placeholder")}

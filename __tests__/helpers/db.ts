@@ -24,6 +24,7 @@ export const prismaTest = new PrismaClient({
 export async function cleanDatabase() {
   await prismaTest.notification.deleteMany();
   await prismaTest.postReport.deleteMany();
+  await prismaTest.postCommentLike.deleteMany();
   await prismaTest.postComment.deleteMany();
   await prismaTest.postLike.deleteMany();
   await prismaTest.post.deleteMany();

@@ -8,6 +8,7 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { PostReportStatus } from "@prisma/client";
+import { softDeleteComment } from "@/lib/feed/comments";
 
 const bodySchema = z.object({
   action: z.enum(["keep", "remove"]),
@@ -72,20 +73,7 @@ export async function POST(
           data: { deletedAt: now },
         });
       } else if (report.commentId) {
-        const comment = await tx.postComment.findUnique({
-          where: { id: report.commentId },
-          select: { postId: true, deletedAt: true },
-        });
-        if (comment && !comment.deletedAt) {
-          await tx.postComment.update({
-            where: { id: report.commentId },
-            data: { deletedAt: now },
-          });
-          await tx.post.update({
-            where: { id: comment.postId },
-            data: { commentCount: { decrement: 1 } },
-          });
-        }
+        await softDeleteComment(report.commentId, tx);
       }
     }
 

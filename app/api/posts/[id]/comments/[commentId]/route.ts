@@ -7,6 +7,7 @@ import {
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { softDeleteComment } from "@/lib/feed/comments";
 
 const EDIT_WINDOW_MS = 15 * 60 * 1000;
 
@@ -110,18 +111,7 @@ export async function DELETE(_request: Request, { params }: Ctx) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 403 });
   }
 
-  await prisma.$transaction(async (tx) => {
-    await tx.postComment.update({
-      where: { id: commentId },
-      data: { deletedAt: new Date() },
-    });
-    // Decrement conditionnel : évite un compteur négatif si le comment était déjà
-    // soft-deleted (par la modération admin par ex).
-    await tx.post.updateMany({
-      where: { id: comment.postId, commentCount: { gt: 0 } },
-      data: { commentCount: { decrement: 1 } },
-    });
-  });
+  await prisma.$transaction((tx) => softDeleteComment(commentId, tx));
 
   return new NextResponse(null, { status: 204 });
 }

@@ -3326,7 +3326,13 @@
       "report": "Report",
       "save": "Save",
       "cancel": "Cancel",
-      "counter": "{count} / 500"
+      "counter": "{count} / 500",
+      "reply": "Reply",
+      "replyingTo": "Replying to @{username}",
+      "cancelReply": "Cancel reply",
+      "viewReplies": "{count, plural, one {View # reply} other {View # replies}}",
+      "hideReplies": "Hide replies",
+      "like": "Like"
     },
     "recommendedTitle": "Suggestions",
     "recommendedJerseySingle": "shirt",
@@ -3351,7 +3357,8 @@
       "POST_LIKED": "liked your post",
       "POST_COMMENTED": "commented on your post",
       "FOLLOW_REQUEST_APPROVED": "accepted your follow request",
-      "FOLLOW_REQUEST_RECEIVED": "wants to follow you"
+      "FOLLOW_REQUEST_RECEIVED": "wants to follow you",
+      "COMMENT_REPLIED": "replied to your comment"
     },
     "someone": "Someone",
     "metadataTitle": "Notifications - Le Vestiaire Foot",

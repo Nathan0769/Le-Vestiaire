@@ -6,18 +6,14 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
-import { isSupporter } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { canInteract } from "@/lib/follow";
-import { createNotification } from "@/lib/notifications/create";
 import { pushForNotification } from "@/lib/push/notify";
-import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
-
-const LIMIT = 20;
+import { CommentError, createComment, listComments } from "@/lib/feed/comments";
 
 const bodySchema = z.object({
   content: z.string().trim().min(1).max(500),
+  parentId: z.string().min(1).max(64).nullish(),
 });
 
 export async function GET(
@@ -44,55 +40,15 @@ export async function GET(
     return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
   }
 
-  const rows = await prisma.postComment.findMany({
-    where: { postId, deletedAt: null },
-    include: {
-      author: {
-        select: {
-          id: true,
-          username: true,
-          name: true,
-          avatar: true,
-          image: true,
-          plan: true,
-          avatarFrame: true,
-        },
-      },
-    },
-    orderBy: [{ createdAt: "asc" }, { id: "asc" }],
-    take: LIMIT + 1,
-    ...(cursor ? { cursor: { id: cursor }, skip: 1 } : {}),
+  // Racines uniquement : les réponses se chargent à la demande via /replies.
+  const page = await listComments({
+    postId,
+    parentId: null,
+    viewerId: user?.id ?? null,
+    cursor,
   });
 
-  const hasMore = rows.length > LIMIT;
-  const sliced = hasMore ? rows.slice(0, LIMIT) : rows;
-
-  const items = await Promise.all(
-    sliced.map(async (c) => {
-      const avatarUrl = c.author.avatar
-        ? await getR2PresignedUrl(AVATARS_BUCKET, c.author.avatar, 60 * 60)
-        : null;
-      return {
-        id: c.id,
-        content: c.content,
-        createdAt: c.createdAt,
-        updatedAt: c.updatedAt,
-        author: {
-          id: c.author.id,
-          username: c.author.username,
-          name: c.author.username,
-          avatarUrl: avatarUrl,
-          isSupporter: isSupporter(c.author),
-          avatarFrame: c.author.avatarFrame,
-        },
-      };
-    })
-  );
-
-  return NextResponse.json({
-    items,
-    nextCursor: hasMore ? sliced[sliced.length - 1].id : null,
-  });
+  return NextResponse.json(page);
 }
 
 export async function POST(
@@ -120,83 +76,41 @@ export async function POST(
     );
   }
 
-  const post = await prisma.post.findFirst({
-    where: { id: postId, deletedAt: null },
-    select: { id: true, authorId: true, type: true },
-  });
-  if (!post) {
-    return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
-  }
-
-  if (!(await canInteract(user.id, post.authorId))) {
-    return NextResponse.json({ error: "Interaction bloquée" }, { status: 403 });
-  }
-
-  const comment = await prisma.$transaction(async (tx) => {
-    const created = await tx.postComment.create({
-      data: {
-        postId: post.id,
-        authorId: user.id,
-        content: parsed.data.content,
-      },
-      include: {
-        author: {
-          select: {
-            id: true,
-            username: true,
-            name: true,
-            avatar: true,
-            image: true,
-            plan: true,
-            avatarFrame: true,
-          },
-        },
-      },
+  try {
+    const { comment, pushes } = await createComment({
+      postId,
+      authorId: user.id,
+      content: parsed.data.content,
+      parentId: parsed.data.parentId ?? null,
     });
-    await tx.post.update({
-      where: { id: post.id },
-      data: { commentCount: { increment: 1 } },
-    });
-    await createNotification(
-      {
-        userId: post.authorId,
-        type: "POST_COMMENTED",
+
+    for (const push of pushes) {
+      await pushForNotification({
+        recipientId: push.recipientId,
         actorId: user.id,
-        postId: post.id,
-        commentId: created.id,
-      },
-      tx
-    );
-    return created;
-  });
+        type: push.type,
+        postId,
+      });
+    }
 
-  await pushForNotification({
-    recipientId: post.authorId,
-    actorId: user.id,
-    type: "POST_COMMENTED",
-    postId: post.id,
-  });
-
-  const avatarUrl = comment.author.avatar
-    ? await getR2PresignedUrl(
-        AVATARS_BUCKET,
-        comment.author.avatar,
-        60 * 60
-      )
-    : null;
-
-  return NextResponse.json({
-    id: comment.id,
-    content: comment.content,
-    createdAt: comment.createdAt,
-    updatedAt: comment.updatedAt,
-    author: {
-      id: comment.author.id,
-      username: comment.author.username,
-      name: comment.author.username,
-      avatarUrl: avatarUrl,
-      isSupporter: isSupporter(comment.author),
-      avatarFrame: comment.author.avatarFrame,
-    },
-  });
+    return NextResponse.json(comment);
+  } catch (error) {
+    if (error instanceof CommentError) {
+      switch (error.code) {
+        case "POST_NOT_FOUND":
+          return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
+        case "PARENT_NOT_FOUND":
+          return NextResponse.json(
+            { error: "Commentaire introuvable" },
+            { status: 404 }
+          );
+        default:
+          return NextResponse.json(
+            { error: "Interaction bloquée" },
+            { status: 403 }
+          );
+      }
+    }
+    throw error;
+  }
 }

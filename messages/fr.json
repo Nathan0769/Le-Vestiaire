@@ -3331,7 +3331,13 @@
       "report": "Signaler",
       "save": "Enregistrer",
       "cancel": "Annuler",
-      "counter": "{count} / 500"
+      "counter": "{count} / 500",
+      "reply": "Répondre",
+      "replyingTo": "Réponse à @{username}",
+      "cancelReply": "Annuler la réponse",
+      "viewReplies": "{count, plural, one {Voir # réponse} other {Voir les # réponses}}",
+      "hideReplies": "Masquer les réponses",
+      "like": "J'aime"
     },
     "recommendedTitle": "Suggestions",
     "recommendedJerseySingle": "maillot",
@@ -3356,7 +3362,8 @@
       "POST_LIKED": "a aimé ton post",
       "POST_COMMENTED": "a commenté ton post",
       "FOLLOW_REQUEST_APPROVED": "a accepté ta demande de suivi",
-      "FOLLOW_REQUEST_RECEIVED": "veut te suivre"
+      "FOLLOW_REQUEST_RECEIVED": "veut te suivre",
+      "COMMENT_REPLIED": "a répondu à ton commentaire"
     },
     "someone": "Quelqu'un",
     "metadataTitle": "Notifications - Le Vestiaire Foot",

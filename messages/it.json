@@ -3326,7 +3326,13 @@
       "report": "Segnala",
       "save": "Salva",
       "cancel": "Annulla",
-      "counter": "{count} / 500"
+      "counter": "{count} / 500",
+      "reply": "Rispondi",
+      "replyingTo": "Risposta a @{username}",
+      "cancelReply": "Annulla risposta",
+      "viewReplies": "{count, plural, one {Mostra # risposta} other {Mostra # risposte}}",
+      "hideReplies": "Nascondi risposte",
+      "like": "Mi piace"
     },
     "recommendedTitle": "Suggeriti",
     "recommendedJerseySingle": "maglia",
@@ -3351,7 +3357,8 @@
       "POST_LIKED": "ha messo mi piace al tuo post",
       "POST_COMMENTED": "ha commentato il tuo post",
       "FOLLOW_REQUEST_APPROVED": "ha accettato la tua richiesta",
-      "FOLLOW_REQUEST_RECEIVED": "vuole seguirti"
+      "FOLLOW_REQUEST_RECEIVED": "vuole seguirti",
+      "COMMENT_REPLIED": "ha risposto al tuo commento"
     },
     "someone": "Qualcuno",
     "metadataTitle": "Notifiche - Le Vestiaire Foot",

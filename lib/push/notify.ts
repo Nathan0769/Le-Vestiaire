@@ -24,6 +24,8 @@ function buildMessage(
       return { title: "Nouveau like", body: `${actor} a aimé ta publication` };
     case "POST_COMMENTED":
       return { title: "Nouveau commentaire", body: `${actor} a commenté ta publication` };
+    case "COMMENT_REPLIED":
+      return { title: "Nouvelle réponse", body: `${actor} a répondu à ton commentaire` };
     default:
       return { title: "Le Vestiaire", body: "Tu as une nouvelle notification" };
   }
