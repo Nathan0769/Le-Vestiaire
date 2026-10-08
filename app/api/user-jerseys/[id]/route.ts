@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { validateJerseySize } from "@/lib/jersey-size";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { Prisma } from "@prisma/client";
 import {
@@ -176,6 +177,11 @@ export async function PATCH(
       );
     }
 
+    const sizeError = validateJerseySize(size);
+    if (sizeError) {
+      return NextResponse.json({ error: sizeError }, { status: 400 });
+    }
+
     if (!condition) {
       return NextResponse.json(
         { error: "L'état est obligatoire" },
@@ -349,7 +355,7 @@ export async function PATCH(
 
     const updateData: Prisma.UserJerseyUpdateInput = {
       ...(version && { version }),
-      size: size || null,
+      size,
       condition,
       hasTags,
       playerName: playerName || null,

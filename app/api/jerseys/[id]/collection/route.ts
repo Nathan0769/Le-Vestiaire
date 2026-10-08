@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { validateJerseySize } from "@/lib/jersey-size";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
 import {
@@ -134,6 +135,14 @@ export async function POST(
       );
     }
     const photoPaths = photosResult.paths;
+
+    const sizeError = validateJerseySize(size);
+    if (sizeError) {
+      return NextResponse.json(
+        { success: false, error: sizeError },
+        { status: 400 }
+      );
+    }
 
     if (!condition) {
       return NextResponse.json(
@@ -299,7 +308,7 @@ export async function POST(
           userId: user.id,
           jerseyId,
           version,
-          size: size || null,
+          size,
           condition,
           hasTags,
           playerName: playerName || null,
