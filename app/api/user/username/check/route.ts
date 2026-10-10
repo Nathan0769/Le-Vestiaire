@@ -1,5 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { usernameExists, validateUsername } from "@/lib/username-generator";
+import {
+  normalizeUsername,
+  usernameExists,
+  validateUsername,
+} from "@/lib/username-generator";
 import {
   standardRateLimit,
   getRateLimitIdentifier,
@@ -15,7 +19,8 @@ export async function GET(request: NextRequest) {
   }
 
   const { searchParams } = new URL(request.url);
-  const username = searchParams.get("username");
+  const rawUsername = searchParams.get("username");
+  const username = rawUsername ? normalizeUsername(rawUsername) : "";
 
   if (!username) {
     return NextResponse.json({ error: "Username manquant" }, { status: 400 });

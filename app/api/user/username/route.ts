@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { validateUsername, usernameExists } from "@/lib/username-generator";
+import {
+  normalizeUsername,
+  validateUsername,
+  usernameExists,
+} from "@/lib/username-generator";
 import {
   standardRateLimit,
   moderateRateLimit,
@@ -46,17 +50,20 @@ export async function PATCH(request: Request) {
     return NextResponse.json({ error: "Trop de requêtes" }, { status: 429 });
   }
 
-  let username: unknown;
+  let rawUsername: unknown;
   try {
     const body = await request.json();
-    username = body?.username;
+    rawUsername = body?.username;
   } catch {
     return NextResponse.json({ error: "Corps de requête invalide" }, { status: 400 });
   }
 
-  if (typeof username !== "string") {
+  if (typeof rawUsername !== "string") {
     return NextResponse.json({ error: "Username invalide" }, { status: 400 });
   }
+
+  // Tout ce qui suit (validation, unicité, enregistrement) utilise la valeur nettoyée.
+  const username = normalizeUsername(rawUsername);
 
   try {
     const validation = validateUsername(username);

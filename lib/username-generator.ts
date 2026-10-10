@@ -82,6 +82,16 @@ export async function usernameExists(username: string): Promise<boolean> {
   return !!existingUser;
 }
 
+/**
+ * Nettoie un pseudo saisi avant validation ET avant enregistrement : retire les
+ * espaces (y compris insécables et de largeur nulle) en début et en fin.
+ * À appeler une seule fois, à l'entrée de la route : valider une copie nettoyée
+ * puis enregistrer la valeur brute laissait passer « pseudo␠ » en base.
+ */
+export function normalizeUsername(raw: string): string {
+  return raw.replace(/^[\s\u200B-\u200D\uFEFF]+|[\s\u200B-\u200D\uFEFF]+$/g, "");
+}
+
 export function validateUsername(username: string): {
   valid: boolean;
   error?: string;
