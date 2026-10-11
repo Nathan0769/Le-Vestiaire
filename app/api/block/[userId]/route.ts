@@ -29,7 +29,7 @@ export async function POST(
 
   if (targetId === user.id) {
     return NextResponse.json(
-      { error: "Impossible de se bloquer soi-même" },
+      { error: "Impossible de se bloquer soi-même", code: "CANNOT_BLOCK_SELF" },
       { status: 400 }
     );
   }
@@ -40,7 +40,7 @@ export async function POST(
   });
   if (!target) {
     return NextResponse.json(
-      { error: "Utilisateur introuvable" },
+      { error: "Utilisateur introuvable", code: "USER_NOT_FOUND" },
       { status: 404 }
     );
   }

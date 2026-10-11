@@ -25,7 +25,7 @@ export async function GET() {
     select: { plan: true },
   });
   if (!isSupporter(dbUser)) {
-    return NextResponse.json({ error: "Réservé aux Supporters" }, { status: 403 });
+    return NextResponse.json({ error: "Réservé aux Supporters", code: "SUPPORTER_ONLY" }, { status: 403 });
   }
 
   const collection = await prisma.userJersey.findMany({

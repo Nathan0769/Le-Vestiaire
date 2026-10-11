@@ -21,7 +21,7 @@ export async function POST(req: Request) {
     if (!rateLimitResult.success) {
       return NextResponse.json(
         {
-          error: "Trop de uploads. Réessayez plus tard.",
+          error: "Trop de uploads. Réessayez plus tard.", code: "UPLOAD_RATE_LIMITED",
           limit: rateLimitResult.limit,
           remaining: rateLimitResult.remaining,
           reset: rateLimitResult.reset,
@@ -43,7 +43,7 @@ export async function POST(req: Request) {
 
     if (!file) {
       return NextResponse.json(
-        { error: "Aucun fichier reçu" },
+        { error: "Aucun fichier reçu", code: "FILE_MISSING" },
         { status: 400 }
       );
     }
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
     const validation = await validateImageFile(file, MAX_FILE_SIZE);
     if (!validation.valid) {
       return NextResponse.json(
-        { error: validation.error },
+        { error: validation.error, code: validation.code },
         { status: 400 }
       );
     }

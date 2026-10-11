@@ -1,35 +1,7 @@
 import prisma from "@/lib/prisma";
 import type { NotificationType } from "@prisma/client";
 import { sendApns, apnsConfigured } from "./apns";
-
-/**
- * Type de push : les NotificationType stockés + FOLLOW_REQUEST_RECEIVED, qui est
- * un type virtuel (non stocké en base, synthétisé depuis les demandes en attente).
- */
-type PushType = NotificationType | "FOLLOW_REQUEST_RECEIVED";
-
-/** Construit le titre/corps FR du push selon le type de notification. */
-function buildMessage(
-  type: PushType,
-  actor: string
-): { title: string; body: string } {
-  switch (type) {
-    case "NEW_FOLLOWER":
-      return { title: "Nouvel abonné", body: `${actor} a commencé à te suivre` };
-    case "FOLLOW_REQUEST_RECEIVED":
-      return { title: "Demande d'abonnement", body: `${actor} souhaite te suivre` };
-    case "FOLLOW_REQUEST_APPROVED":
-      return { title: "Demande acceptée", body: `${actor} a accepté ta demande` };
-    case "POST_LIKED":
-      return { title: "Nouveau like", body: `${actor} a aimé ta publication` };
-    case "POST_COMMENTED":
-      return { title: "Nouveau commentaire", body: `${actor} a commenté ta publication` };
-    case "COMMENT_REPLIED":
-      return { title: "Nouvelle réponse", body: `${actor} a répondu à ton commentaire` };
-    default:
-      return { title: "Le Vestiaire", body: "Tu as une nouvelle notification" };
-  }
-}
+import { buildPushMessage, type PushType } from "./messages";
 
 interface PushInput {
   recipientId: string;
@@ -57,7 +29,7 @@ export async function pushForNotification(input: PushInput): Promise<void> {
         disabledPushTypes: true,
         pushTokens: {
           where: { platform: "ios" },
-          select: { token: true, environment: true },
+          select: { token: true, environment: true, locale: true },
         },
       },
     });
@@ -83,7 +55,6 @@ export async function pushForNotification(input: PushInput): Promise<void> {
         })
       : null;
     const actorName = actor?.username ?? "Quelqu'un";
-    const { title, body } = buildMessage(input.type, actorName);
 
     // Données pour le deep-link côté app (toutes en string pour l'APNs payload).
     const data: Record<string, string> = {
@@ -95,7 +66,14 @@ export async function pushForNotification(input: PushInput): Promise<void> {
 
     const tokens = recipient.pushTokens;
     const results = await Promise.all(
-      tokens.map((t) => sendApns(t.token, { title, body, data }, t.environment))
+      tokens.map((t) =>
+        sendApns(
+          t.token,
+          // Texte dans la langue de chaque appareil.
+          { ...buildPushMessage(input.type, actorName, t.locale), data },
+          t.environment
+        )
+      )
     );
 
     const invalidTokens = tokens

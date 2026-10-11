@@ -7,6 +7,7 @@ import {
 import { NextResponse } from "next/server";
 import { getFeedForUser, type FeedScope } from "@/lib/feed/get-feed";
 import { enrichPostsForFeed } from "@/lib/feed/enrich-posts";
+import { getRequestLocale } from "@/lib/request-locale";
 
 const DEFAULT_LIMIT = 20;
 
@@ -38,6 +39,10 @@ export async function GET(request: Request) {
     scope,
   });
 
-  const items = await enrichPostsForFeed(posts, user.id);
+  const items = await enrichPostsForFeed(
+    posts,
+    user.id,
+    getRequestLocale(request)
+  );
   return NextResponse.json({ items, nextCursor });
 }

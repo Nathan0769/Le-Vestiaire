@@ -36,7 +36,7 @@ export async function GET(
   });
   if (!parent) {
     return NextResponse.json(
-      { error: "Commentaire introuvable" },
+      { error: "Commentaire introuvable", code: "COMMENT_NOT_FOUND" },
       { status: 404 }
     );
   }

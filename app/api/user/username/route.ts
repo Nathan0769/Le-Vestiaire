@@ -68,7 +68,7 @@ export async function PATCH(request: Request) {
   try {
     const validation = validateUsername(username);
     if (!validation.valid) {
-      return NextResponse.json({ error: validation.error }, { status: 400 });
+      return NextResponse.json({ error: validation.error, code: validation.code }, { status: 400 });
     }
 
     const currentUser = await prisma.user.findUnique({
@@ -81,7 +81,7 @@ export async function PATCH(request: Request) {
       currentUser.username.toLowerCase() === username.toLowerCase()
     ) {
       return NextResponse.json(
-        { error: "C'est déjà votre pseudo actuel" },
+        { error: "C'est déjà votre pseudo actuel", code: "USERNAME_UNCHANGED" },
         { status: 400 }
       );
     }
@@ -89,7 +89,7 @@ export async function PATCH(request: Request) {
     const exists = await usernameExists(username);
     if (exists) {
       return NextResponse.json(
-        { error: "Ce pseudo est déjà pris" },
+        { error: "Ce pseudo est déjà pris", code: "USERNAME_TAKEN" },
         { status: 409 }
       );
     }

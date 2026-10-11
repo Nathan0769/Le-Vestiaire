@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { validateJerseySize } from "@/lib/jersey-size";
+import { validateJerseySize, jerseySizeErrorCode } from "@/lib/jersey-size";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { Prisma } from "@prisma/client";
 import {
@@ -54,7 +54,7 @@ export async function GET(
 
   if (!item) {
     return NextResponse.json(
-      { error: "Maillot introuvable" },
+      { error: "Maillot introuvable", code: "JERSEY_NOT_FOUND" },
       { status: 404 }
     );
   }
@@ -66,7 +66,7 @@ export async function GET(
 
   if (!owner) {
     return NextResponse.json(
-      { error: "Utilisateur introuvable" },
+      { error: "Utilisateur introuvable", code: "USER_NOT_FOUND" },
       { status: 404 }
     );
   }
@@ -85,13 +85,13 @@ export async function GET(
         })
       : null;
     if (!follow) {
-      return NextResponse.json({ error: "Profil privé" }, { status: 403 });
+      return NextResponse.json({ error: "Profil privé", code: "PROFILE_PRIVATE" }, { status: 403 });
     }
   }
 
   // Gate block
   if (currentUser && (await isBlocked(currentUser.id, item.userId))) {
-    return NextResponse.json({ error: "Accès bloqué" }, { status: 403 });
+    return NextResponse.json({ error: "Accès bloqué", code: "ACCESS_BLOCKED" }, { status: 403 });
   }
 
   const userPhotoUrls = await Promise.all(
@@ -141,7 +141,7 @@ export async function PATCH(
 
     if (!existing || existing.userId !== user.id) {
       return NextResponse.json(
-        { error: "Maillot introuvable dans votre collection" },
+        { error: "Maillot introuvable dans votre collection", code: "COLLECTION_ITEM_NOT_FOUND" },
         { status: 404 }
       );
     }
@@ -172,26 +172,29 @@ export async function PATCH(
 
     if (version && !VALID_VERSIONS.includes(version)) {
       return NextResponse.json(
-        { error: "Version de maillot invalide" },
+        { error: "Version de maillot invalide", code: "VERSION_INVALID" },
         { status: 400 }
       );
     }
 
     const sizeError = validateJerseySize(size);
     if (sizeError) {
-      return NextResponse.json({ error: sizeError }, { status: 400 });
+      return NextResponse.json(
+        { error: sizeError, code: jerseySizeErrorCode(size) },
+        { status: 400 }
+      );
     }
 
     if (!condition) {
       return NextResponse.json(
-        { error: "L'état est obligatoire" },
+        { error: "L'état est obligatoire", code: "CONDITION_REQUIRED" },
         { status: 400 }
       );
     }
 
     if (playerName && playerName.length > 100) {
       return NextResponse.json(
-        { error: "Le nom du joueur ne peut pas dépasser 100 caractères" },
+        { error: "Le nom du joueur ne peut pas dépasser 100 caractères", code: "PLAYER_NAME_TOO_LONG" },
         { status: 400 }
       );
     }
@@ -200,7 +203,7 @@ export async function PATCH(
       const num = parseInt(playerNumber.toString(), 10);
       if (isNaN(num) || num < 1 || num > 999) {
         return NextResponse.json(
-          { error: "Le numéro de maillot doit être compris entre 1 et 999" },
+          { error: "Le numéro de maillot doit être compris entre 1 et 999", code: "PLAYER_NUMBER_INVALID" },
           { status: 400 }
         );
       }
@@ -208,21 +211,21 @@ export async function PATCH(
 
     if (notes && notes.length > 1000) {
       return NextResponse.json(
-        { error: "Les notes ne peuvent pas dépasser 1000 caractères" },
+        { error: "Les notes ne peuvent pas dépasser 1000 caractères", code: "NOTES_TOO_LONG" },
         { status: 400 }
       );
     }
 
     if (signedBy && signedBy.length > 500) {
       return NextResponse.json(
-        { error: "Le champ 'signé par' ne peut pas dépasser 500 caractères" },
+        { error: "Le champ 'signé par' ne peut pas dépasser 500 caractères", code: "SIGNED_BY_TOO_LONG" },
         { status: 400 }
       );
     }
 
     if (matchDescription && matchDescription.length > 500) {
       return NextResponse.json(
-        { error: "La description du match ne peut pas dépasser 500 caractères" },
+        { error: "La description du match ne peut pas dépasser 500 caractères", code: "MATCH_DESCRIPTION_TOO_LONG" },
         { status: 400 }
       );
     }
@@ -230,7 +233,7 @@ export async function PATCH(
     if (certificateUrl) {
       if (certificateUrl.length > 2048) {
         return NextResponse.json(
-          { error: "L'URL du certificat est trop longue" },
+          { error: "L'URL du certificat est trop longue", code: "CERTIFICATE_URL_TOO_LONG" },
           { status: 400 }
         );
       }
@@ -238,13 +241,13 @@ export async function PATCH(
         const parsed = new URL(certificateUrl);
         if (parsed.protocol !== "https:") {
           return NextResponse.json(
-            { error: "L'URL du certificat doit commencer par https://" },
+            { error: "L'URL du certificat doit commencer par https://", code: "CERTIFICATE_URL_NOT_HTTPS" },
             { status: 400 }
           );
         }
       } catch {
         return NextResponse.json(
-          { error: "L'URL du certificat est invalide" },
+          { error: "L'URL du certificat est invalide", code: "CERTIFICATE_URL_INVALID" },
           { status: 400 }
         );
       }
@@ -254,7 +257,7 @@ export async function PATCH(
       const parsedPrice = parseFloat(purchasePrice.toString());
       if (isNaN(parsedPrice) || parsedPrice < 0) {
         return NextResponse.json(
-          { error: "Le prix d'achat doit être un nombre positif valide" },
+          { error: "Le prix d'achat doit être un nombre positif valide", code: "PURCHASE_PRICE_INVALID" },
           { status: 400 }
         );
       }
@@ -283,7 +286,7 @@ export async function PATCH(
         }
         if (customLabel && customLabel.length > 50) {
           return NextResponse.json(
-            { error: "Le label personnalisé ne peut pas dépasser 50 caractères" },
+            { error: "Le label personnalisé ne peut pas dépasser 50 caractères", code: "PATCH_LABEL_TOO_LONG" },
             { status: 400 }
           );
         }
@@ -304,7 +307,7 @@ export async function PATCH(
         });
         if (referenced.length !== refIds.length) {
           return NextResponse.json(
-            { error: "Un ou plusieurs patches sont introuvables" },
+            { error: "Un ou plusieurs patches sont introuvables", code: "PATCH_NOT_FOUND" },
             { status: 400 }
           );
         }
@@ -312,7 +315,7 @@ export async function PATCH(
           return NextResponse.json(
             {
               error:
-                "Un maillot ne peut pas porter à la fois un badge de championnat et un badge de compétition continentale",
+                "Un maillot ne peut pas porter à la fois un badge de championnat et un badge de compétition continentale", code: "PATCH_CONFLICT",
             },
             { status: 400 }
           );
@@ -334,7 +337,7 @@ export async function PATCH(
         maxUserJerseyPhotos(isSupporter(dbUser))
       );
       if (!photosResult.ok) {
-        return NextResponse.json({ error: photosResult.error }, { status: 400 });
+        return NextResponse.json({ error: photosResult.error, code: photosResult.code }, { status: 400 });
       }
       nextPhotoPaths = photosResult.paths;
 
@@ -472,7 +475,7 @@ export async function DELETE(
 
     if (!existing || existing.userId !== user.id) {
       return NextResponse.json(
-        { error: "Maillot introuvable dans votre collection" },
+        { error: "Maillot introuvable dans votre collection", code: "COLLECTION_ITEM_NOT_FOUND" },
         { status: 404 }
       );
     }

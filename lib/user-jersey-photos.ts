@@ -17,7 +17,7 @@ export function maxUserJerseyPhotos(isSupporter: boolean): number {
 
 export type NormalizeResult =
   | { ok: true; paths: string[] }
-  | { ok: false; error: string };
+  | { ok: false; error: string; code: "INVALID_PHOTOS" | "TOO_MANY_PHOTOS" };
 
 /**
  * Valide et normalise l'entree client en tableau de paths R2.
@@ -38,13 +38,21 @@ export function normalizeUserPhotoPaths(
   } else if (Array.isArray(input)) {
     raw = input;
   } else {
-    return { ok: false, error: "Les photos doivent etre un tableau" };
+    return {
+      ok: false,
+      error: "Les photos doivent etre un tableau",
+      code: "INVALID_PHOTOS",
+    };
   }
 
   const paths: string[] = [];
   for (const value of raw) {
     if (typeof value !== "string") {
-      return { ok: false, error: "Chaque photo doit etre une chaine de caracteres" };
+      return {
+        ok: false,
+        error: "Chaque photo doit etre une chaine de caracteres",
+        code: "INVALID_PHOTOS",
+      };
     }
     const trimmed = value.trim();
     if (trimmed.length === 0) continue;
@@ -57,6 +65,7 @@ export function normalizeUserPhotoPaths(
     return {
       ok: false,
       error: `Vous ne pouvez pas ajouter plus de ${max} photos`,
+      code: "TOO_MANY_PHOTOS",
     };
   }
 

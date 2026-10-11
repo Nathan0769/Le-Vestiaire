@@ -56,7 +56,7 @@ export async function PATCH(
 
     if (!jersey) {
       return NextResponse.json(
-        { error: "Maillot introuvable" },
+        { error: "Maillot introuvable", code: "JERSEY_NOT_FOUND" },
         { status: 404 }
       );
     }

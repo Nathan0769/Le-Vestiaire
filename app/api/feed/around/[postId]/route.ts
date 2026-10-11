@@ -7,6 +7,7 @@ import {
 import { NextResponse } from "next/server";
 import { getFeedAroundPost } from "@/lib/feed/get-feed-around";
 import { enrichPostsForFeed } from "@/lib/feed/enrich-posts";
+import { getRequestLocale } from "@/lib/request-locale";
 
 export async function GET(
   request: Request,
@@ -38,12 +39,16 @@ export async function GET(
     await getFeedAroundPost(user.id, postId, { beforeLimit, afterLimit });
 
   if (!target) {
-    return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
+    return NextResponse.json({ error: "Post introuvable", code: "POST_NOT_FOUND" }, { status: 404 });
   }
 
   // Enrichir tous les posts d'un coup (moins de queries)
   const allPosts = [...newer, target, ...older];
-  const enriched = await enrichPostsForFeed(allPosts, user.id);
+  const enriched = await enrichPostsForFeed(
+    allPosts,
+    user.id,
+    getRequestLocale(request)
+  );
   const enrichedById = new Map(enriched.map((p) => [p.id, p]));
 
   return NextResponse.json({

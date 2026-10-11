@@ -9,10 +9,11 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { hasPermission } from "@/lib/check-permission";
 import { enrichPostsForFeed } from "@/lib/feed/enrich-posts";
+import { getRequestLocale } from "@/lib/request-locale";
 import { isBlocked } from "@/lib/follow";
 
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getCurrentUser();
@@ -33,12 +34,12 @@ export async function GET(
   });
 
   if (!post) {
-    return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
+    return NextResponse.json({ error: "Post introuvable", code: "POST_NOT_FOUND" }, { status: 404 });
   }
 
   // Gate block bidirectionnel
   if (user.id !== post.authorId && (await isBlocked(user.id, post.authorId))) {
-    return NextResponse.json({ error: "Accès bloqué" }, { status: 403 });
+    return NextResponse.json({ error: "Accès bloqué", code: "ACCESS_BLOCKED" }, { status: 403 });
   }
 
   // Gate privacy : profil privé accessible seulement à l'auteur ou ses followers
@@ -58,12 +59,16 @@ export async function GET(
         select: { id: true },
       });
       if (!follows) {
-        return NextResponse.json({ error: "Profil privé" }, { status: 403 });
+        return NextResponse.json({ error: "Profil privé", code: "PROFILE_PRIVATE" }, { status: 403 });
       }
     }
   }
 
-  const [enriched] = await enrichPostsForFeed([post], user.id);
+  const [enriched] = await enrichPostsForFeed(
+    [post],
+    user.id,
+    getRequestLocale(request)
+  );
   return NextResponse.json({ post: enriched ?? null });
 }
 
@@ -89,7 +94,7 @@ export async function DELETE(
     select: { id: true, authorId: true, deletedAt: true },
   });
   if (!post || post.deletedAt) {
-    return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
+    return NextResponse.json({ error: "Post introuvable", code: "POST_NOT_FOUND" }, { status: 404 });
   }
 
   const isOwner = post.authorId === user.id;

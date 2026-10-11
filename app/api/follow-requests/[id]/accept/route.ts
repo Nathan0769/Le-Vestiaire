@@ -37,7 +37,7 @@ export async function POST(
 
   if (!request) {
     return NextResponse.json(
-      { error: "Demande introuvable" },
+      { error: "Demande introuvable", code: "FOLLOW_REQUEST_NOT_FOUND" },
       { status: 404 }
     );
   }

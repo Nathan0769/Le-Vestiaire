@@ -36,7 +36,7 @@ export async function PATCH(request: Request, { params }: Ctx) {
   const parsed = patchSchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Contenu invalide (1-500 caractères)" },
+      { error: "Contenu invalide (1-500 caractères)", code: "COMMENT_LENGTH_INVALID" },
       { status: 400 }
     );
   }
@@ -47,7 +47,7 @@ export async function PATCH(request: Request, { params }: Ctx) {
   });
   if (!comment || comment.deletedAt) {
     return NextResponse.json(
-      { error: "Commentaire introuvable" },
+      { error: "Commentaire introuvable", code: "COMMENT_NOT_FOUND" },
       { status: 404 }
     );
   }
@@ -58,7 +58,7 @@ export async function PATCH(request: Request, { params }: Ctx) {
 
   if (Date.now() - comment.createdAt.getTime() > EDIT_WINDOW_MS) {
     return NextResponse.json(
-      { error: "Fenêtre d'édition expirée (15 min)" },
+      { error: "Fenêtre d'édition expirée (15 min)", code: "EDIT_WINDOW_EXPIRED" },
       { status: 403 }
     );
   }
@@ -95,7 +95,7 @@ export async function DELETE(_request: Request, { params }: Ctx) {
   });
   if (!comment || comment.deletedAt) {
     return NextResponse.json(
-      { error: "Commentaire introuvable" },
+      { error: "Commentaire introuvable", code: "COMMENT_NOT_FOUND" },
       { status: 404 }
     );
   }

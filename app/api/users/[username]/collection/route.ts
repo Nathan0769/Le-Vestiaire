@@ -38,13 +38,13 @@ export async function GET(
     });
     if (!target) {
       return NextResponse.json(
-        { error: "Utilisateur introuvable" },
+        { error: "Utilisateur introuvable", code: "USER_NOT_FOUND" },
         { status: 404 }
       );
     }
 
     if (target.id !== currentUser.id && (await isBlocked(currentUser.id, target.id))) {
-      return NextResponse.json({ error: "Accès bloqué" }, { status: 403 });
+      return NextResponse.json({ error: "Accès bloqué", code: "ACCESS_BLOCKED" }, { status: 403 });
     }
 
     const collectionItems = await prisma.userJersey.findMany({

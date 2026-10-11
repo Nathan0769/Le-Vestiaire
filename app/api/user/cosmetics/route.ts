@@ -37,7 +37,7 @@ export async function PATCH(request: Request) {
     });
     if (!isSupporter(dbUser)) {
       return NextResponse.json(
-        { error: "Réservé aux membres Supporter" },
+        { error: "Réservé aux membres Supporter", code: "SUPPORTER_ONLY" },
         { status: 403 }
       );
     }

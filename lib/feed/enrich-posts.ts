@@ -10,7 +10,8 @@ import { getFollowingIds } from "@/lib/follow";
 import { isSupporter } from "@/lib/subscription";
 import { computeClubRanks } from "@/lib/feed/club-rank";
 import { computeCapMosaics } from "@/lib/feed/cap-mosaic";
-import { resolveAchievementText } from "@/lib/achievements/resolve-text";
+import { getAchievementTextResolver } from "@/lib/achievements/resolve-text";
+import { defaultLocale, type Locale } from "@/i18n/locales";
 import { effectiveTier } from "@/lib/achievements/definitions";
 import type { FeedPostItem, FeedLikerPreview } from "@/types/feed";
 
@@ -23,9 +24,13 @@ const MAX_LIKERS_PREVIEW = 3;
  */
 export async function enrichPostsForFeed(
   posts: Post[],
-  currentUserId: string
+  currentUserId: string,
+  // Langue des textes de succès résolus pour l'app mobile (le web les ignore).
+  locale: Locale = defaultLocale
 ): Promise<FeedPostItem[]> {
   if (posts.length === 0) return [];
+
+  const resolveAchievementText = await getAchievementTextResolver(locale);
 
   const authorIds = Array.from(new Set(posts.map((p) => p.authorId)));
   const jerseyRefIds = posts
@@ -236,7 +241,7 @@ export async function enrichPostsForFeed(
         const ach = achievementMap.get(post.referenceId);
         if (ach) {
           const meta = (ach.metadata as Record<string, unknown> | null) ?? null;
-          // Titre/description FR + badge résolus server-side (consommés par l'app
+          // Titre/description + badge résolus server-side (consommés par l'app
           // mobile ; le web garde sa résolution client-side par locale).
           const resolved = resolveAchievementText(ach.key, meta);
           payload = {

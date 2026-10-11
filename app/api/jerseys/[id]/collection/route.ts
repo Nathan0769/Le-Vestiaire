@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { validateJerseySize } from "@/lib/jersey-size";
+import { validateJerseySize, jerseySizeErrorCode } from "@/lib/jersey-size";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
 import {
@@ -113,7 +113,7 @@ export async function POST(
 
     if (version && !VALID_VERSIONS.includes(version)) {
       return NextResponse.json(
-        { success: false, error: "Version de maillot invalide" },
+        { success: false, error: "Version de maillot invalide", code: "VERSION_INVALID" },
         { status: 400 }
       );
     }
@@ -130,7 +130,7 @@ export async function POST(
     );
     if (!photosResult.ok) {
       return NextResponse.json(
-        { success: false, error: photosResult.error },
+        { success: false, error: photosResult.error, code: photosResult.code },
         { status: 400 }
       );
     }
@@ -139,21 +139,21 @@ export async function POST(
     const sizeError = validateJerseySize(size);
     if (sizeError) {
       return NextResponse.json(
-        { success: false, error: sizeError },
+        { success: false, error: sizeError, code: jerseySizeErrorCode(size) },
         { status: 400 }
       );
     }
 
     if (!condition) {
       return NextResponse.json(
-        { success: false, error: "L'état est obligatoire" },
+        { success: false, error: "L'état est obligatoire", code: "CONDITION_REQUIRED" },
         { status: 400 }
       );
     }
 
     if (playerName && playerName.length > 100) {
       return NextResponse.json(
-        { success: false, error: "Le nom du joueur ne peut pas dépasser 100 caractères" },
+        { success: false, error: "Le nom du joueur ne peut pas dépasser 100 caractères", code: "PLAYER_NAME_TOO_LONG" },
         { status: 400 }
       );
     }
@@ -162,7 +162,7 @@ export async function POST(
       const num = parseInt(playerNumber.toString(), 10);
       if (isNaN(num) || num < 1 || num > 999) {
         return NextResponse.json(
-          { success: false, error: "Le numéro de maillot doit être compris entre 1 et 999" },
+          { success: false, error: "Le numéro de maillot doit être compris entre 1 et 999", code: "PLAYER_NUMBER_INVALID" },
           { status: 400 }
         );
       }
@@ -170,21 +170,21 @@ export async function POST(
 
     if (notes && notes.length > 1000) {
       return NextResponse.json(
-        { success: false, error: "Les notes ne peuvent pas dépasser 1000 caractères" },
+        { success: false, error: "Les notes ne peuvent pas dépasser 1000 caractères", code: "NOTES_TOO_LONG" },
         { status: 400 }
       );
     }
 
     if (signedBy && signedBy.length > 500) {
       return NextResponse.json(
-        { success: false, error: "Le champ 'signé par' ne peut pas dépasser 500 caractères" },
+        { success: false, error: "Le champ 'signé par' ne peut pas dépasser 500 caractères", code: "SIGNED_BY_TOO_LONG" },
         { status: 400 }
       );
     }
 
     if (matchDescription && matchDescription.length > 500) {
       return NextResponse.json(
-        { success: false, error: "La description du match ne peut pas dépasser 500 caractères" },
+        { success: false, error: "La description du match ne peut pas dépasser 500 caractères", code: "MATCH_DESCRIPTION_TOO_LONG" },
         { status: 400 }
       );
     }
@@ -192,7 +192,7 @@ export async function POST(
     if (certificateUrl) {
       if (certificateUrl.length > 2048) {
         return NextResponse.json(
-          { success: false, error: "L'URL du certificat est trop longue" },
+          { success: false, error: "L'URL du certificat est trop longue", code: "CERTIFICATE_URL_TOO_LONG" },
           { status: 400 }
         );
       }
@@ -200,13 +200,13 @@ export async function POST(
         const parsed = new URL(certificateUrl);
         if (parsed.protocol !== "https:") {
           return NextResponse.json(
-            { success: false, error: "L'URL du certificat doit commencer par https://" },
+            { success: false, error: "L'URL du certificat doit commencer par https://", code: "CERTIFICATE_URL_NOT_HTTPS" },
             { status: 400 }
           );
         }
       } catch {
         return NextResponse.json(
-          { success: false, error: "L'URL du certificat est invalide" },
+          { success: false, error: "L'URL du certificat est invalide", code: "CERTIFICATE_URL_INVALID" },
           { status: 400 }
         );
       }
@@ -216,7 +216,7 @@ export async function POST(
       const parsedPrice = parseFloat(purchasePrice.toString());
       if (isNaN(parsedPrice) || parsedPrice < 0) {
         return NextResponse.json(
-          { success: false, error: "Le prix d'achat doit être un nombre positif valide" },
+          { success: false, error: "Le prix d'achat doit être un nombre positif valide", code: "PURCHASE_PRICE_INVALID" },
           { status: 400 }
         );
       }
@@ -245,7 +245,7 @@ export async function POST(
         }
         if (customLabel && customLabel.length > 50) {
           return NextResponse.json(
-            { success: false, error: "Le label personnalisé ne peut pas dépasser 50 caractères" },
+            { success: false, error: "Le label personnalisé ne peut pas dépasser 50 caractères", code: "PATCH_LABEL_TOO_LONG" },
             { status: 400 }
           );
         }
@@ -266,7 +266,7 @@ export async function POST(
         });
         if (existing.length !== referencedIds.length) {
           return NextResponse.json(
-            { success: false, error: "Un ou plusieurs patches sont introuvables" },
+            { success: false, error: "Un ou plusieurs patches sont introuvables", code: "PATCH_NOT_FOUND" },
             { status: 400 }
           );
         }
@@ -275,7 +275,7 @@ export async function POST(
             {
               success: false,
               error:
-                "Un maillot ne peut pas porter à la fois un badge de championnat et un badge de compétition continentale",
+                "Un maillot ne peut pas porter à la fois un badge de championnat et un badge de compétition continentale", code: "PATCH_CONFLICT",
             },
             { status: 400 }
           );
@@ -290,7 +290,7 @@ export async function POST(
 
     if (!jersey) {
       return NextResponse.json(
-        { success: false, error: "Maillot non trouvé" },
+        { success: false, error: "Maillot non trouvé", code: "JERSEY_NOT_FOUND" },
         { status: 404 }
       );
     }

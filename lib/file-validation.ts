@@ -16,9 +16,16 @@ export const MAX_FILE_SIZE = 10 * 1024 * 1024;
 /**
  * Résultat de la validation
  */
+export type FileValidationCode =
+  | "FILE_TOO_LARGE"
+  | "FILE_INVALID"
+  | "FILE_TYPE_NOT_ALLOWED";
+
 export interface FileValidationResult {
   valid: boolean;
   error?: string;
+  /** Code stable de l'erreur, traduit par l'app mobile (le message est en français). */
+  code?: FileValidationCode;
   detectedType?: string;
 }
 
@@ -42,6 +49,7 @@ export async function validateImageFile(
     return {
       valid: false,
       error: `Votre photo est trop volumineuse (${fileSizeMB}MB). La taille maximale autorisée est de ${maxSizeMB}MB. Veuillez compresser votre image.`,
+      code: "FILE_TOO_LARGE",
     };
   }
 
@@ -49,6 +57,7 @@ export async function validateImageFile(
     return {
       valid: false,
       error: "Le fichier est trop petit pour être une image valide",
+      code: "FILE_INVALID",
     };
   }
 
@@ -62,6 +71,7 @@ export async function validateImageFile(
       return {
         valid: false,
         error: "Impossible de détecter le type de fichier",
+        code: "FILE_INVALID",
       };
     }
 
@@ -71,6 +81,7 @@ export async function validateImageFile(
         error: `Type de fichier non autorisé. Types acceptés : ${ALLOWED_IMAGE_EXTENSIONS.join(
           ", "
         )}`,
+        code: "FILE_TYPE_NOT_ALLOWED",
         detectedType: fileType.mime,
       };
     }
@@ -84,6 +95,7 @@ export async function validateImageFile(
     return {
       valid: false,
       error: "Erreur lors de la validation du fichier",
+      code: "FILE_INVALID",
     };
   }
 }
@@ -105,6 +117,7 @@ export function validateImageFileBasic(
     return {
       valid: false,
       error: `Votre photo est trop volumineuse (${fileSizeMB}MB). La taille maximale autorisée est de ${maxSizeMB}MB. Veuillez compresser votre image.`,
+      code: "FILE_TOO_LARGE",
     };
   }
 
@@ -114,6 +127,7 @@ export function validateImageFileBasic(
       error: `Type de fichier non autorisé. Types acceptés : ${ALLOWED_IMAGE_EXTENSIONS.join(
         ", "
       )}`,
+        code: "FILE_TYPE_NOT_ALLOWED",
     };
   }
 

@@ -37,7 +37,7 @@ export async function POST(
 
     if (!existing || existing.userId !== user.id) {
       return NextResponse.json(
-        { error: "Maillot introuvable dans votre collection" },
+        { error: "Maillot introuvable dans votre collection", code: "COLLECTION_ITEM_NOT_FOUND" },
         { status: 404 }
       );
     }
@@ -106,7 +106,7 @@ export async function DELETE(
 
     if (!existing || existing.userId !== user.id) {
       return NextResponse.json(
-        { error: "Maillot introuvable dans votre collection" },
+        { error: "Maillot introuvable dans votre collection", code: "COLLECTION_ITEM_NOT_FOUND" },
         { status: 404 }
       );
     }

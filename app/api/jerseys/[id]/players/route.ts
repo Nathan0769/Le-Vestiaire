@@ -36,7 +36,7 @@ export async function GET(
 
     if (!jersey) {
       return NextResponse.json(
-        { error: "Maillot non trouvé" },
+        { error: "Maillot non trouvé", code: "JERSEY_NOT_FOUND" },
         { status: 404 }
       );
     }

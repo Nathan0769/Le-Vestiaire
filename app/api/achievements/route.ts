@@ -13,9 +13,10 @@ import {
 } from "@/lib/achievements/definitions";
 import { getRarityMap } from "@/lib/achievements/rarity";
 import { createProgressCache } from "@/lib/achievements/progress-cache";
-import { resolveAchievementText } from "@/lib/achievements/resolve-text";
+import { getAchievementTextResolver } from "@/lib/achievements/resolve-text";
+import { getRequestLocale } from "@/lib/request-locale";
 
-export async function GET() {
+export async function GET(request: Request) {
   const user = await getCurrentUser();
   if (!user) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
@@ -39,6 +40,9 @@ export async function GET() {
     ([key, def]) => !unlockedKeys.has(key) && !def.hidden
   );
 
+  const resolveAchievementText = await getAchievementTextResolver(
+    getRequestLocale(request),
+  );
   const getProgress = createProgressCache(user.id);
   const inProgress = await Promise.all(
     inProgressEntries.map(async ([key, def]) => {

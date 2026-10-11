@@ -37,7 +37,7 @@ export async function GET(
     select: { id: true },
   });
   if (!post) {
-    return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
+    return NextResponse.json({ error: "Post introuvable", code: "POST_NOT_FOUND" }, { status: 404 });
   }
 
   // Racines uniquement : les réponses se chargent à la demande via /replies.
@@ -71,7 +71,7 @@ export async function POST(
   const parsed = bodySchema.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
-      { error: "Contenu invalide (1-500 caractères)" },
+      { error: "Contenu invalide (1-500 caractères)", code: "COMMENT_LENGTH_INVALID" },
       { status: 400 }
     );
   }
@@ -98,15 +98,15 @@ export async function POST(
     if (error instanceof CommentError) {
       switch (error.code) {
         case "POST_NOT_FOUND":
-          return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
+          return NextResponse.json({ error: "Post introuvable", code: "POST_NOT_FOUND" }, { status: 404 });
         case "PARENT_NOT_FOUND":
           return NextResponse.json(
-            { error: "Commentaire introuvable" },
+            { error: "Commentaire introuvable", code: "COMMENT_NOT_FOUND" },
             { status: 404 }
           );
         default:
           return NextResponse.json(
-            { error: "Interaction bloquée" },
+            { error: "Interaction bloquée", code: "INTERACTION_BLOCKED" },
             { status: 403 }
           );
       }

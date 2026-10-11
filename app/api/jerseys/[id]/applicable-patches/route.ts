@@ -42,7 +42,7 @@ export async function GET(
     });
 
     if (!jersey) {
-      return NextResponse.json({ error: "Maillot introuvable" }, { status: 404 });
+      return NextResponse.json({ error: "Maillot introuvable", code: "JERSEY_NOT_FOUND" }, { status: 404 });
     }
 
     const resolvedLeagueId = resolveJerseyLeagueIdFromContext({

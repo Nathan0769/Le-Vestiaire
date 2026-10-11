@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       available: false,
       error: validation.error,
+      code: validation.code,
     });
   }
 

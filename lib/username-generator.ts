@@ -92,9 +92,18 @@ export function normalizeUsername(raw: string): string {
   return raw.replace(/^[\s\u200B-\u200D\uFEFF]+|[\s\u200B-\u200D\uFEFF]+$/g, "");
 }
 
+export type UsernameErrorCode =
+  | "USERNAME_TOO_SHORT"
+  | "USERNAME_TOO_LONG"
+  | "USERNAME_INVALID_CHARS"
+  | "USERNAME_INVALID_START"
+  | "USERNAME_FORBIDDEN";
+
 export function validateUsername(username: string): {
   valid: boolean;
   error?: string;
+  /** Code stable de l'erreur, traduit par l'app mobile (le message est en français). */
+  code?: UsernameErrorCode;
 } {
   username = username.trim();
 
@@ -102,6 +111,7 @@ export function validateUsername(username: string): {
     return {
       valid: false,
       error: "Le pseudo doit contenir au moins 5 caractères",
+      code: "USERNAME_TOO_SHORT",
     };
   }
 
@@ -109,6 +119,7 @@ export function validateUsername(username: string): {
     return {
       valid: false,
       error: "Le pseudo ne peut pas dépasser 20 caractères",
+      code: "USERNAME_TOO_LONG",
     };
   }
 
@@ -117,6 +128,7 @@ export function validateUsername(username: string): {
       valid: false,
       error:
         "Le pseudo ne peut contenir que des lettres, chiffres, tirets et underscores",
+      code: "USERNAME_INVALID_CHARS",
     };
   }
 
@@ -124,6 +136,7 @@ export function validateUsername(username: string): {
     return {
       valid: false,
       error: "Le pseudo doit commencer par une lettre ou un chiffre",
+      code: "USERNAME_INVALID_START",
     };
   }
 
@@ -131,6 +144,7 @@ export function validateUsername(username: string): {
     return {
       valid: false,
       error: "Ce pseudo contient un terme non autorisé",
+      code: "USERNAME_FORBIDDEN",
     };
   }
 

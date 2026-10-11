@@ -69,7 +69,7 @@ export async function PATCH(request: Request) {
     });
 
     if (!club) {
-      return NextResponse.json({ error: "Club introuvable" }, { status: 400 });
+      return NextResponse.json({ error: "Club introuvable", code: "CLUB_NOT_FOUND" }, { status: 400 });
     }
 
     await prisma.user.update({

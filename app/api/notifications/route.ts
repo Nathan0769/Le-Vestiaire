@@ -8,7 +8,8 @@ import prisma from "@/lib/prisma";
 import { isSupporter } from "@/lib/subscription";
 import { NextResponse } from "next/server";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
-import { resolveAchievementText } from "@/lib/achievements/resolve-text";
+import { getAchievementTextResolver } from "@/lib/achievements/resolve-text";
+import { getRequestLocale } from "@/lib/request-locale";
 
 const DEFAULT_LIMIT = 20;
 
@@ -103,6 +104,9 @@ export async function GET(request: Request) {
     })
   );
 
+  const resolveAchievementText = await getAchievementTextResolver(
+    getRequestLocale(request),
+  );
   const items = await Promise.all(
     sliced.map(async (n) => {
       let avatarUrl: string | null = null;

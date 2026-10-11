@@ -58,11 +58,11 @@ export async function POST(request: Request) {
       select: { id: true, authorId: true },
     });
     if (!post) {
-      return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
+      return NextResponse.json({ error: "Post introuvable", code: "POST_NOT_FOUND" }, { status: 404 });
     }
     if (post.authorId === user.id) {
       return NextResponse.json(
-        { error: "Impossible de signaler son propre post" },
+        { error: "Impossible de signaler son propre post", code: "CANNOT_REPORT_OWN_POST" },
         { status: 400 }
       );
     }
@@ -72,7 +72,7 @@ export async function POST(request: Request) {
     });
     if (existing) {
       return NextResponse.json(
-        { error: "Post déjà signalé" },
+        { error: "Post déjà signalé", code: "POST_ALREADY_REPORTED" },
         { status: 409 }
       );
     }
@@ -85,13 +85,13 @@ export async function POST(request: Request) {
     });
     if (!comment) {
       return NextResponse.json(
-        { error: "Commentaire introuvable" },
+        { error: "Commentaire introuvable", code: "COMMENT_NOT_FOUND" },
         { status: 404 }
       );
     }
     if (comment.authorId === user.id) {
       return NextResponse.json(
-        { error: "Impossible de signaler son propre commentaire" },
+        { error: "Impossible de signaler son propre commentaire", code: "CANNOT_REPORT_OWN_COMMENT" },
         { status: 400 }
       );
     }
@@ -101,7 +101,7 @@ export async function POST(request: Request) {
     });
     if (existing) {
       return NextResponse.json(
-        { error: "Commentaire déjà signalé" },
+        { error: "Commentaire déjà signalé", code: "COMMENT_ALREADY_REPORTED" },
         { status: 409 }
       );
     }

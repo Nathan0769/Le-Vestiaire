@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
     if (!user) {
       return NextResponse.json(
-        { error: "Utilisateur non trouvé" },
+        { error: "Utilisateur non trouvé", code: "USER_NOT_FOUND" },
         { status: 404 }
       );
     }

@@ -12,7 +12,8 @@ import {
   isKnownAchievementKey,
 } from "@/lib/achievements/definitions";
 import { getRarityMap } from "@/lib/achievements/rarity";
-import { resolveAchievementText } from "@/lib/achievements/resolve-text";
+import { getAchievementTextResolver } from "@/lib/achievements/resolve-text";
+import { getRequestLocale } from "@/lib/request-locale";
 
 /**
  * Succès débloqués d'un utilisateur (lecture seule, consommé par l'app mobile
@@ -20,7 +21,7 @@ import { resolveAchievementText } from "@/lib/achievements/resolve-text";
  * on n'expose que les succès obtenus. Masqué si profil anonyme.
  */
 export async function GET(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ username: string }> }
 ) {
   const currentUser = await getCurrentUser();
@@ -42,18 +43,21 @@ export async function GET(
     select: { id: true, leaderboardAnonymous: true },
   });
   if (!target) {
-    return NextResponse.json({ error: "Utilisateur introuvable" }, { status: 404 });
+    return NextResponse.json({ error: "Utilisateur introuvable", code: "USER_NOT_FOUND" }, { status: 404 });
   }
 
   const isSelf = target.id === currentUser.id;
   if (!isSelf && (await isBlocked(currentUser.id, target.id))) {
-    return NextResponse.json({ error: "Accès bloqué" }, { status: 403 });
+    return NextResponse.json({ error: "Accès bloqué", code: "ACCESS_BLOCKED" }, { status: 403 });
   }
 
   if (target.leaderboardAnonymous) {
     return NextResponse.json({ unlocked: [], rarity: {} });
   }
 
+  const resolveAchievementText = await getAchievementTextResolver(
+    getRequestLocale(request),
+  );
   const [rows, rarity] = await Promise.all([
     prisma.achievement.findMany({
       where: { userId: target.id },

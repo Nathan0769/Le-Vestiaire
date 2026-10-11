@@ -35,7 +35,7 @@ export async function GET(
 
   if (!target) {
     return NextResponse.json(
-      { error: "Utilisateur introuvable" },
+      { error: "Utilisateur introuvable", code: "USER_NOT_FOUND" },
       { status: 404 }
     );
   }
@@ -51,7 +51,7 @@ export async function GET(
       select: { id: true },
     });
     if (!isFollower) {
-      return NextResponse.json({ error: "Profil privé" }, { status: 403 });
+      return NextResponse.json({ error: "Profil privé", code: "PROFILE_PRIVATE" }, { status: 403 });
     }
   }
 

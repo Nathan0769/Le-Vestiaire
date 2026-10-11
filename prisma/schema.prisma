@@ -530,6 +530,9 @@ model PushToken {
   // Environnement APNs du token : "sandbox" (build dev) ou "production"
   // (TestFlight/App Store). Nullable = ancien token -> fallback APNS_PRODUCTION.
   environment String?
+  // Langue de l'app sur cet appareil (fr, en...), pour le texte des push.
+  // Nullable = ancien token ou app non localisée -> français.
+  locale    String?
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 

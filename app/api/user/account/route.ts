@@ -36,7 +36,7 @@ export async function DELETE() {
     });
 
     if (!user) {
-      return NextResponse.json({ error: "Utilisateur introuvable" }, { status: 404 });
+      return NextResponse.json({ error: "Utilisateur introuvable", code: "USER_NOT_FOUND" }, { status: 404 });
     }
 
     // Supprimer l'avatar R2

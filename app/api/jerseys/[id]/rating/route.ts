@@ -23,7 +23,7 @@ export async function GET(
 
     if (!jersey) {
       return NextResponse.json(
-        { error: "Maillot non trouvé" },
+        { error: "Maillot non trouvé", code: "JERSEY_NOT_FOUND" },
         { status: 404 }
       );
     }
@@ -93,7 +93,7 @@ export async function POST(
       (ratingNumber * 2) % 1 !== 0
     ) {
       return NextResponse.json(
-        { error: "Le rating doit être entre 0.5 et 5 par pas de 0.5" },
+        { error: "Le rating doit être entre 0.5 et 5 par pas de 0.5", code: "RATING_INVALID" },
         { status: 400 }
       );
     }
@@ -104,7 +104,7 @@ export async function POST(
 
     if (!jersey) {
       return NextResponse.json(
-        { error: "Maillot non trouvé" },
+        { error: "Maillot non trouvé", code: "JERSEY_NOT_FOUND" },
         { status: 404 }
       );
     }

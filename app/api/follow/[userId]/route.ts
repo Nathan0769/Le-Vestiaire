@@ -34,7 +34,7 @@ export async function POST(
 
   if (targetId === user.id) {
     return NextResponse.json(
-      { error: "Impossible de se suivre soi-même" },
+      { error: "Impossible de se suivre soi-même", code: "CANNOT_FOLLOW_SELF" },
       { status: 400 }
     );
   }
@@ -45,13 +45,13 @@ export async function POST(
   });
   if (!target) {
     return NextResponse.json(
-      { error: "Utilisateur introuvable" },
+      { error: "Utilisateur introuvable", code: "USER_NOT_FOUND" },
       { status: 404 }
     );
   }
 
   if (await isBlocked(user.id, targetId)) {
-    return NextResponse.json({ error: "Interaction bloquée" }, { status: 403 });
+    return NextResponse.json({ error: "Interaction bloquée", code: "INTERACTION_BLOCKED" }, { status: 403 });
   }
 
   if (target.isPrivate) {

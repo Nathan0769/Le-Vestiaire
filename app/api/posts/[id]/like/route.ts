@@ -33,11 +33,11 @@ export async function POST(
   });
 
   if (!post) {
-    return NextResponse.json({ error: "Post introuvable" }, { status: 404 });
+    return NextResponse.json({ error: "Post introuvable", code: "POST_NOT_FOUND" }, { status: 404 });
   }
 
   if (!(await canInteract(user.id, post.authorId))) {
-    return NextResponse.json({ error: "Interaction bloquée" }, { status: 403 });
+    return NextResponse.json({ error: "Interaction bloquée", code: "INTERACTION_BLOCKED" }, { status: 403 });
   }
 
   // Toggle atomique : findUnique + create/delete dans la même transaction pour

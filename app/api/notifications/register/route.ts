@@ -3,12 +3,15 @@ import { z } from "zod";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { standardRateLimit, getRateLimitIdentifier, checkRateLimit } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
+import { locales } from "@/i18n/locales";
 
 const registerSchema = z.object({
   token: z.string().min(1),
   platform: z.enum(["ios", "android"]),
   // Environnement APNs du token (le client iOS l'envoie selon son build).
   environment: z.enum(["sandbox", "production"]).optional(),
+  // Langue de l'app sur l'appareil : détermine la langue des push.
+  locale: z.enum(locales).optional(),
 });
 
 export async function POST(request: Request) {
@@ -30,18 +33,19 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Données invalides" }, { status: 400 });
     }
 
-    const { token, platform, environment } = parsed.data;
+    const { token, platform, environment, locale } = parsed.data;
 
     // Upsert : un token donné ne peut appartenir qu'à un seul utilisateur
     await prisma.pushToken.upsert({
       where: { token },
-      update: { userId: user.id, platform, environment },
+      update: { userId: user.id, platform, environment, locale },
       create: {
         id: crypto.randomUUID(),
         userId: user.id,
         token,
         platform,
         environment,
+        locale,
       },
     });
 

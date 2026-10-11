@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     if (!rateLimitResult.success) {
       return NextResponse.json(
         {
-          error: "Trop de uploads. Réessayez plus tard.",
+          error: "Trop de uploads. Réessayez plus tard.", code: "UPLOAD_RATE_LIMITED",
           limit: rateLimitResult.limit,
           remaining: rateLimitResult.remaining,
           reset: rateLimitResult.reset,
@@ -52,7 +52,7 @@ export async function POST(req: Request) {
 
     if (!file) {
       return NextResponse.json(
-        { error: "Aucun fichier reçu" },
+        { error: "Aucun fichier reçu", code: "FILE_MISSING" },
         { status: 400 }
       );
     }

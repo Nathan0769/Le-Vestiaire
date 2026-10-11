@@ -64,7 +64,7 @@ export async function POST(
       return NextResponse.json(
         {
           success: false,
-          error: "Maillot non trouvé",
+          error: "Maillot non trouvé", code: "JERSEY_NOT_FOUND",
         },
         { status: 404 }
       );

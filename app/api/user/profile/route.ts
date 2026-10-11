@@ -75,7 +75,7 @@ export async function GET() {
     ]);
 
     if (!user) {
-      return NextResponse.json({ error: "Utilisateur non trouvé" }, { status: 404 });
+      return NextResponse.json({ error: "Utilisateur non trouvé", code: "USER_NOT_FOUND" }, { status: 404 });
     }
 
     const clubsCount = new Set(collectionClubs.map((uj) => uj.jersey.clubId)).size;

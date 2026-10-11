@@ -34,9 +34,9 @@ export async function POST(
   } catch (error) {
     if (error instanceof CommentError) {
       return error.code === "BLOCKED"
-        ? NextResponse.json({ error: "Interaction bloquée" }, { status: 403 })
+        ? NextResponse.json({ error: "Interaction bloquée", code: "INTERACTION_BLOCKED" }, { status: 403 })
         : NextResponse.json(
-            { error: "Commentaire introuvable" },
+            { error: "Commentaire introuvable", code: "COMMENT_NOT_FOUND" },
             { status: 404 }
           );
     }
