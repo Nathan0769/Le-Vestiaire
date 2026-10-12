@@ -82,7 +82,7 @@ export async function CommunityHighlights() {
                   {mostOwnedJersey.clubName}
                 </span>
                 <span className="text-xs text-muted-foreground">
-                  {t("collectorsCount", { count: mostOwnedJersey.ownersCount })}
+                  {t("copiesCount", { count: mostOwnedJersey.ownersCount })}
                 </span>
               </Link>
             ) : (

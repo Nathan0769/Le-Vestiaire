@@ -590,7 +590,7 @@
       "error": "Impossible de charger les statistiques communautaires.",
       "averageRating": "Note moyenne globale",
       "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}",
-      "collectorsCount": "{count, plural, one {# collectionneur} other {# collectionneurs}}",
+      "copiesCount": "{count, plural, one {# exemplaire} other {# exemplaires}}",
       "favoriteClubCoverage": "Couverture de ton club favori",
       "noFavoriteClub": "Définis ton club favori pour suivre ta progression.",
       "setFavoriteClub": "Définir mon club favori",
@@ -1286,7 +1286,7 @@
       "totalCollected": "Maillots collectés",
       "inCollections": "dans les collections",
       "jerseysCount": "{count, plural, one {# maillot} other {# maillots}}",
-      "collectorsCount": "{count, plural, one {# collectionneur} other {# collectionneurs}}",
+      "copiesCount": "{count, plural, one {# exemplaire} other {# exemplaires}}",
       "topLeague": "Ligue dominante"
     },
     "faq": {

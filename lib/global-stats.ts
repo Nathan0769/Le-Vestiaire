@@ -84,7 +84,7 @@ async function getMostOwnedJersey(): Promise<MostOwnedJersey | null> {
       count: bigint;
     }[]
   >`
-    SELECT j.id, j.name, j."imageUrl", c.id as "clubId", c.name as "clubName", c."leagueId" as "leagueId", COUNT(DISTINCT uj."userId")::bigint as count
+    SELECT j.id, j.name, j."imageUrl", c.id as "clubId", c.name as "clubName", c."leagueId" as "leagueId", COUNT(*)::bigint as count
     FROM user_jerseys uj
     JOIN jerseys j ON j.id = uj."jerseyId"
     JOIN clubs c ON c.id = j."clubId"
@@ -237,7 +237,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
 
 export const getGlobalStatsCached = unstable_cache(
   getGlobalStats,
-  ["global-stats-v8"],
+  ["global-stats-v9"],
   { revalidate: 21600, tags: ["global-stats"] }
 );
 
@@ -299,7 +299,7 @@ async function getUserComparison(userId: string): Promise<UserComparison> {
       }[]
     >`
       WITH owner_counts AS (
-        SELECT "jerseyId", COUNT(DISTINCT "userId")::bigint as count
+        SELECT "jerseyId", COUNT(*)::bigint as count
         FROM user_jerseys
         GROUP BY "jerseyId"
       )
@@ -338,7 +338,7 @@ export async function getUserComparisonCached(
 ): Promise<UserComparison> {
   return unstable_cache(
     () => getUserComparison(userId),
-    ["user-comparison-v2", userId],
+    ["user-comparison-v3", userId],
     { revalidate: 1800, tags: [`user-comparison-${userId}`] }
   )();
 }

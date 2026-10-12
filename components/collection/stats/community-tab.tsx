@@ -255,7 +255,7 @@ export function CommunityTab() {
                     {global.mostOwnedJersey.name}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    {t("collectorsCount", {
+                    {t("copiesCount", {
                       count: global.mostOwnedJersey.ownersCount,
                     })}
                   </p>
@@ -401,7 +401,7 @@ export function CommunityTab() {
                           </p>
                         </div>
                         <span className="text-xs text-muted-foreground tabular-nums">
-                          {t("collectorsCount", { count: jersey.ownersCount })}
+                          {t("copiesCount", { count: jersey.ownersCount })}
                         </span>
                       </Link>
                     </li>

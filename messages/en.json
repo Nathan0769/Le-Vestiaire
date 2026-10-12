@@ -585,7 +585,7 @@
       "error": "Unable to load community statistics.",
       "averageRating": "Global average rating",
       "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}",
-      "collectorsCount": "{count, plural, one {# collector} other {# collectors}}",
+      "copiesCount": "{count, plural, one {# copy} other {# copies}}",
       "favoriteClubCoverage": "Your favorite club coverage",
       "noFavoriteClub": "Set your favorite club to track your progress.",
       "setFavoriteClub": "Set my favorite club",
@@ -1281,7 +1281,7 @@
       "totalCollected": "Jerseys collected",
       "inCollections": "in collections",
       "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}",
-      "collectorsCount": "{count, plural, one {# collector} other {# collectors}}",
+      "copiesCount": "{count, plural, one {# copy} other {# copies}}",
       "topLeague": "Top league"
     },
     "faq": {

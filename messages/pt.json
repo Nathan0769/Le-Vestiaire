@@ -585,7 +585,7 @@
       "error": "Não foi possível carregar as estatísticas da comunidade.",
       "averageRating": "Avaliação média global",
       "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}",
-      "collectorsCount": "{count, plural, one {# colecionador} other {# colecionadores}}",
+      "copiesCount": "{count, plural, one {# exemplar} other {# exemplares}}",
       "favoriteClubCoverage": "Cobertura do teu clube favorito",
       "noFavoriteClub": "Define o teu clube favorito para acompanhar o teu progresso.",
       "setFavoriteClub": "Definir o meu clube favorito",
@@ -1281,7 +1281,7 @@
       "totalCollected": "Camisolas colecionadas",
       "inCollections": "nas coleções",
       "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}",
-      "collectorsCount": "{count, plural, one {# colecionador} other {# colecionadores}}",
+      "copiesCount": "{count, plural, one {# exemplar} other {# exemplares}}",
       "topLeague": "Liga dominante"
     },
     "faq": {

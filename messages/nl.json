@@ -585,7 +585,7 @@
       "error": "Kan community-statistieken niet laden.",
       "averageRating": "Globale gemiddelde beoordeling",
       "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}",
-      "collectorsCount": "{count, plural, one {# verzamelaar} other {# verzamelaars}}",
+      "copiesCount": "{count, plural, one {# exemplaar} other {# exemplaren}}",
       "favoriteClubCoverage": "Dekking van je favoriete club",
       "noFavoriteClub": "Stel je favoriete club in om je voortgang te volgen.",
       "setFavoriteClub": "Mijn favoriete club instellen",
@@ -1281,7 +1281,7 @@
       "totalCollected": "Verzamelde shirts",
       "inCollections": "in collecties",
       "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}",
-      "collectorsCount": "{count, plural, one {# verzamelaar} other {# verzamelaars}}",
+      "copiesCount": "{count, plural, one {# exemplaar} other {# exemplaren}}",
       "topLeague": "Dominante competitie"
     },
     "faq": {

@@ -585,7 +585,7 @@
       "error": "Community-Statistiken konnten nicht geladen werden.",
       "averageRating": "Globale Durchschnittsbewertung",
       "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}",
-      "collectorsCount": "{count, plural, one {# Sammler} other {# Sammler}}",
+      "copiesCount": "{count, plural, one {# Exemplar} other {# Exemplare}}",
       "favoriteClubCoverage": "Abdeckung deines Lieblingsvereins",
       "noFavoriteClub": "Lege deinen Lieblingsverein fest, um deinen Fortschritt zu verfolgen.",
       "setFavoriteClub": "Meinen Lieblingsverein festlegen",
@@ -1281,7 +1281,7 @@
       "totalCollected": "Gesammelte Trikots",
       "inCollections": "in Sammlungen",
       "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}",
-      "collectorsCount": "{count, plural, one {# Sammler} other {# Sammler}}",
+      "copiesCount": "{count, plural, one {# Exemplar} other {# Exemplare}}",
       "topLeague": "Dominante Liga"
     },
     "faq": {
