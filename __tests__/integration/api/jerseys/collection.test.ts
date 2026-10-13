@@ -80,7 +80,7 @@ describe("GET /api/jerseys/[id]/collection", () => {
     vi.mocked(getCurrentUser).mockResolvedValue({ id: user.id } as never);
 
     const { jersey } = await createTestSetup();
-    await POST(makeRequest({ condition: "MINT" }), makeParams(jersey.id));
+    await POST(makeRequest({ size: "L", condition: "MINT" }), makeParams(jersey.id));
 
     const response = await GET(new Request("http://localhost"), makeParams(jersey.id));
     const data = await response.json();
@@ -96,8 +96,8 @@ describe("GET /api/jerseys/[id]/collection", () => {
     vi.mocked(getCurrentUser).mockResolvedValue({ id: user.id } as never);
 
     const { jersey } = await createTestSetup();
-    await POST(makeRequest({ condition: "MINT", version: "REPLICA" }), makeParams(jersey.id));
-    await POST(makeRequest({ condition: "MINT", version: "AUTHENTIC" }), makeParams(jersey.id));
+    await POST(makeRequest({ size: "L", condition: "MINT", version: "REPLICA" }), makeParams(jersey.id));
+    await POST(makeRequest({ size: "L", condition: "MINT", version: "AUTHENTIC" }), makeParams(jersey.id));
 
     const response = await GET(new Request("http://localhost"), makeParams(jersey.id));
     const data = await response.json();
@@ -182,7 +182,7 @@ describe("POST /api/jerseys/[id]/collection", () => {
 
     const { jersey } = await createTestSetup();
     const response = await POST(
-      makeRequest({ condition: "MINT", version: "MATCH_WORN", matchDescription: "PSG vs OL" }),
+      makeRequest({ size: "L", condition: "MINT", version: "MATCH_WORN", matchDescription: "PSG vs OL" }),
       makeParams(jersey.id)
     );
 
@@ -198,8 +198,8 @@ describe("POST /api/jerseys/[id]/collection", () => {
     vi.mocked(getCurrentUser).mockResolvedValue({ id: user.id } as never);
 
     const { jersey } = await createTestSetup();
-    const r1 = await POST(makeRequest({ condition: "MINT", version: "REPLICA" }), makeParams(jersey.id));
-    const r2 = await POST(makeRequest({ condition: "MINT", version: "AUTHENTIC" }), makeParams(jersey.id));
+    const r1 = await POST(makeRequest({ size: "L", condition: "MINT", version: "REPLICA" }), makeParams(jersey.id));
+    const r2 = await POST(makeRequest({ size: "L", condition: "MINT", version: "AUTHENTIC" }), makeParams(jersey.id));
 
     expect(r1.status).toBe(200);
     expect(r2.status).toBe(200);
@@ -212,7 +212,7 @@ describe("POST /api/jerseys/[id]/collection", () => {
 
     const { jersey } = await createTestSetup();
     const response = await POST(
-      makeRequest({ condition: "MINT", isSigned: true, signedBy: "Mbappé", hasAuthCertificate: true }),
+      makeRequest({ size: "L", condition: "MINT", isSigned: true, signedBy: "Mbappé", hasAuthCertificate: true }),
       makeParams(jersey.id)
     );
 
@@ -270,7 +270,7 @@ describe("DELETE /api/user-jerseys/[id]", () => {
     vi.mocked(getCurrentUser).mockResolvedValue({ id: user.id } as never);
 
     const { jersey } = await createTestSetup();
-    const addResponse = await POST(makeRequest({ condition: "MINT" }), makeParams(jersey.id));
+    const addResponse = await POST(makeRequest({ size: "L", condition: "MINT" }), makeParams(jersey.id));
     const addData = await addResponse.json();
     const userJerseyId = addData.userJersey.id;
 
@@ -288,7 +288,7 @@ describe("DELETE /api/user-jerseys/[id]", () => {
 
     vi.mocked(getCurrentUser).mockResolvedValue({ id: user1.id } as never);
     const { jersey } = await createTestSetup();
-    const addData = await (await POST(makeRequest({ condition: "MINT" }), makeParams(jersey.id))).json();
+    const addData = await (await POST(makeRequest({ size: "L", condition: "MINT" }), makeParams(jersey.id))).json();
     const userJerseyId = addData.userJersey.id;
 
     vi.mocked(getCurrentUser).mockResolvedValue({ id: user2.id } as never);
@@ -329,11 +329,11 @@ describe("PATCH /api/user-jerseys/[id]", () => {
     vi.mocked(getCurrentUser).mockResolvedValue({ id: user.id } as never);
 
     const { jersey } = await createTestSetup();
-    const addData = await (await POST(makeRequest({ condition: "MINT" }), makeParams(jersey.id))).json();
+    const addData = await (await POST(makeRequest({ size: "L", condition: "MINT" }), makeParams(jersey.id))).json();
     const userJerseyId = addData.userJersey.id;
 
     const response = await PATCH(
-      makePatchRequest({ condition: "GOOD", version: "AUTHENTIC", isSigned: false, hasAuthCertificate: false, isGift: false, isFromMysteryBox: false, hasTags: false }),
+      makePatchRequest({ size: "L", condition: "GOOD", version: "AUTHENTIC", isSigned: false, hasAuthCertificate: false, isGift: false, isFromMysteryBox: false, hasTags: false }),
       makeParams(userJerseyId)
     );
 
