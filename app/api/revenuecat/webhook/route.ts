@@ -1,6 +1,10 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import { planActionForRevenueCatEvent } from "@/lib/revenuecat-webhook";
+import {
+  planActionForRevenueCatEvent,
+  unlocksSupporterAchievement,
+} from "@/lib/revenuecat-webhook";
+import { checkAchievements } from "@/lib/achievements/check";
 
 /**
  * Webhook RevenueCat (abonnement Supporter iOS via IAP Apple).
@@ -57,6 +61,19 @@ export async function POST(request: Request) {
         where: { id: user.id },
         data: { plan: action.plan },
       });
+    }
+
+    if (unlocksSupporterAchievement(action)) {
+      // Ne jamais faire échouer le webhook pour un succès : RevenueCat
+      // rejouerait l'événement alors que le plan est déjà à jour.
+      try {
+        await checkAchievements(user.id, "supporter.subscribed");
+      } catch (achievementError) {
+        console.error(
+          "checkAchievements (supporter) failed on RevenueCat webhook:",
+          achievementError
+        );
+      }
     }
 
     return NextResponse.json({ received: true });

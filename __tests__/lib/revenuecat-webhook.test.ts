@@ -1,5 +1,8 @@
 import { describe, it, expect } from "vitest";
-import { planActionForRevenueCatEvent } from "@/lib/revenuecat-webhook";
+import {
+  planActionForRevenueCatEvent,
+  unlocksSupporterAchievement,
+} from "@/lib/revenuecat-webhook";
 
 describe("planActionForRevenueCatEvent", () => {
   it("upgrades to PRO on initial purchase", () => {
@@ -41,5 +44,19 @@ describe("planActionForRevenueCatEvent", () => {
   it("returns null for unhandled event types", () => {
     expect(planActionForRevenueCatEvent("TEST")).toBeNull();
     expect(planActionForRevenueCatEvent("TRANSFER")).toBeNull();
+  });
+});
+
+describe("unlocksSupporterAchievement", () => {
+  it("checks the Supporter achievement on any event granting PRO", () => {
+    expect(unlocksSupporterAchievement({ plan: "PRO" })).toBe(true);
+  });
+
+  it("does not check it on a downgrade to FREE", () => {
+    expect(unlocksSupporterAchievement({ plan: "FREE" })).toBe(false);
+  });
+
+  it("does not check it when the event has no effect on the plan", () => {
+    expect(unlocksSupporterAchievement(null)).toBe(false);
   });
 });

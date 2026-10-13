@@ -27,3 +27,12 @@ export function planActionForRevenueCatEvent(type: string): PlanAction {
       return null;
   }
 }
+
+/**
+ * Le succès Supporter se vérifie sur tout événement qui accorde PRO, pas
+ * seulement quand le plan change : un RENEWAL rattrape ainsi un abonné dont le
+ * succès n'avait pas été débloqué à l'achat. `checkAchievements` est idempotent.
+ */
+export function unlocksSupporterAchievement(action: PlanAction): boolean {
+  return action?.plan === "PRO";
+}
