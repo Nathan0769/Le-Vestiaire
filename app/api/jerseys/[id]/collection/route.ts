@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { validateJerseySize, jerseySizeErrorCode } from "@/lib/jersey-size";
+import { purchaseDateErrorCode, PURCHASE_DATE_ERROR_MESSAGES } from "@/lib/purchase-date";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
 import {
@@ -140,6 +141,14 @@ export async function POST(
     if (sizeError) {
       return NextResponse.json(
         { success: false, error: sizeError, code: jerseySizeErrorCode(size) },
+        { status: 400 }
+      );
+    }
+
+    const purchaseDateError = purchaseDateErrorCode(purchaseDate);
+    if (purchaseDateError) {
+      return NextResponse.json(
+        { success: false, error: PURCHASE_DATE_ERROR_MESSAGES[purchaseDateError], code: purchaseDateError },
         { status: 400 }
       );
     }
