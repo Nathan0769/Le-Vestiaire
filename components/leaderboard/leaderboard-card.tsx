@@ -37,7 +37,18 @@ export function LeaderboardCard({
     }
   };
 
-  const getRankBadgeColor = (rank: number) => {
+  const getRankBadgeColor = (rank: number, onCarbon: boolean) => {
+    // La ligne Supporter a un fond carbone sombre : le texte foncé du podium y devient illisible
+    if (onCarbon) {
+      switch (rank) {
+        case 1:
+          return "bg-yellow-500/25 text-yellow-300 border-yellow-500/60";
+        case 2:
+          return "bg-gray-300/20 text-gray-100 border-gray-300/60";
+        case 3:
+          return "bg-amber-600/30 text-amber-300 border-amber-500/60";
+      }
+    }
     switch (rank) {
       case 1:
         return "bg-yellow-500/20 text-yellow-700 border-yellow-300";
@@ -122,7 +133,8 @@ export function LeaderboardCard({
                 <Badge
                   variant="outline"
                   className={`${getRankBadgeColor(
-                    entry.rank
+                    entry.rank,
+                    sup
                   )} text-[10px] sm:text-xs px-1.5 sm:px-2`}
                 >
                   #{entry.rank}
