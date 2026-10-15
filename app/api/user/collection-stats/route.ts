@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/lib/get-current-user";
+import { pickCoverageClub } from "@/lib/club-coverage";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { valueForItem } from "@/lib/market-value/aggregate";
@@ -200,6 +201,53 @@ export async function GET() {
         }))
         .filter((r) => r.totalCollectors >= 5)
         .sort((a, b) => b.userCount - a.userCount);
+    }
+
+    // Couverture du catalogue d'un club : favori s'il est défini, sinon le club
+    // le plus collectionné (voir pickCoverageClub).
+    let clubCoverage: {
+      clubId: string;
+      clubName: string;
+      clubLogoUrl: string;
+      leagueId: string;
+      ownedCount: number;
+      totalCount: number;
+      percentage: number;
+      isFavorite: boolean;
+    } | null = null;
+
+    const userSettings = await prisma.user.findUnique({
+      where: { id: user.id },
+      select: { favoriteClubId: true },
+    });
+    const coverageTarget = pickCoverageClub(
+      userSettings?.favoriteClubId ?? null,
+      new Map([...clubMeta].map(([id, m]) => [id, m.jerseyIds.size]))
+    );
+    if (coverageTarget) {
+      const [club, totalCount] = await Promise.all([
+        prisma.club.findUnique({
+          where: { id: coverageTarget.clubId },
+          select: { id: true, name: true, logoUrl: true, leagueId: true },
+        }),
+        prisma.jersey.count({ where: { clubId: coverageTarget.clubId } }),
+      ]);
+      if (club) {
+        const ownedCount = clubMeta.get(club.id)?.jerseyIds.size ?? 0;
+        clubCoverage = {
+          clubId: club.id,
+          clubName: club.name,
+          clubLogoUrl: club.logoUrl,
+          leagueId: club.leagueId,
+          ownedCount,
+          totalCount,
+          percentage:
+            totalCount > 0
+              ? Math.round((ownedCount / totalCount) * 10000) / 100
+              : 0,
+          isFavorite: coverageTarget.isFavorite,
+        };
+      }
     }
 
     const itemsWithPrice = collection.filter(
@@ -472,6 +520,7 @@ export async function GET() {
         leagueDistribution,
         clubDistribution,
         clubRankings,
+        clubCoverage,
         financial: {
           totalSpent: Math.round(totalSpent * 100) / 100,
           averagePrice: Math.round(averagePrice * 100) / 100,

@@ -741,6 +741,12 @@
         "feature3": "Jersey with tags rate",
         "feature4": "Collection quality metrics"
       }
+    },
+    "clubCoverage": {
+      "titleFavorite": "Your favorite club coverage",
+      "titleTopClub": "Your most collected club coverage",
+      "ownedOutOf": "{owned} of {total} jerseys in the catalog",
+      "setFavoriteClub": "Set my favorite club"
     }
   },
   "Wishlist": {

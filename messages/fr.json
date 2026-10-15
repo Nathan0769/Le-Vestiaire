@@ -746,6 +746,12 @@
         "feature3": "Taux de maillots avec étiquettes",
         "feature4": "Métriques de qualité de collection"
       }
+    },
+    "clubCoverage": {
+      "titleFavorite": "Couverture de ton club favori",
+      "titleTopClub": "Couverture de ton club le plus collectionné",
+      "ownedOutOf": "{owned} sur {total} maillots du catalogue",
+      "setFavoriteClub": "Définir mon club favori"
     }
   },
   "Wishlist": {

@@ -741,6 +741,12 @@
         "feature3": "Tasa de camisetas con etiquetas",
         "feature4": "Métricas de calidad de colección"
       }
+    },
+    "clubCoverage": {
+      "titleFavorite": "Cobertura de tu club favorito",
+      "titleTopClub": "Cobertura de tu club más coleccionado",
+      "ownedOutOf": "{owned} de {total} camisetas del catálogo",
+      "setFavoriteClub": "Elegir mi club favorito"
     }
   },
   "Wishlist": {

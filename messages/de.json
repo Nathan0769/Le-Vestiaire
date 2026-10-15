@@ -741,6 +741,12 @@
         "feature3": "Trikots mit Etiketten Quote",
         "feature4": "Qualitätskennzahlen der Sammlung"
       }
+    },
+    "clubCoverage": {
+      "titleFavorite": "Abdeckung deines Lieblingsvereins",
+      "titleTopClub": "Abdeckung deines meistgesammelten Vereins",
+      "ownedOutOf": "{owned} von {total} Trikots im Katalog",
+      "setFavoriteClub": "Lieblingsverein festlegen"
     }
   },
   "Wishlist": {

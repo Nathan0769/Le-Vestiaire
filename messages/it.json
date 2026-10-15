@@ -741,6 +741,12 @@
         "feature3": "Tasso di maglie con cartellini",
         "feature4": "Metriche di qualità della collezione"
       }
+    },
+    "clubCoverage": {
+      "titleFavorite": "Copertura del tuo club preferito",
+      "titleTopClub": "Copertura del tuo club più collezionato",
+      "ownedOutOf": "{owned} su {total} maglie del catalogo",
+      "setFavoriteClub": "Scegli il mio club preferito"
     }
   },
   "Wishlist": {

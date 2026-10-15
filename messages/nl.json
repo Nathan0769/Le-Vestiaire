@@ -741,6 +741,12 @@
         "feature3": "Percentage shirts met labels",
         "feature4": "Kwaliteitsmetrieken van de collectie"
       }
+    },
+    "clubCoverage": {
+      "titleFavorite": "Dekking van je favoriete club",
+      "titleTopClub": "Dekking van je meest verzamelde club",
+      "ownedOutOf": "{owned} van {total} shirts in de catalogus",
+      "setFavoriteClub": "Mijn favoriete club kiezen"
     }
   },
   "Wishlist": {

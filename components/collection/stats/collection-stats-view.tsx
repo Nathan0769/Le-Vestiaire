@@ -8,6 +8,7 @@ import { TypeDistributionChart } from "./type-distribution-chart";
 import { LeagueDistributionChart } from "./league-distribution-chart";
 import { ClubDistributionChart } from "./club-distribution-chart";
 import { ClubRankingsCard } from "./club-rankings-card";
+import { ClubCoverageCard, type ClubCoverage } from "./club-coverage-card";
 import { SizeDistributionChart } from "./size-distribution-chart";
 import { ConditionDistributionChart } from "./condition-distribution-chart";
 import { SourceDistributionChart } from "./source-distribution-chart";
@@ -39,6 +40,7 @@ interface CollectionStats {
       rank: number;
       totalCollectors: number;
     }[];
+    clubCoverage: ClubCoverage | null;
     financial: {
       totalSpent: number;
       averagePrice: number;
@@ -198,6 +200,7 @@ export function CollectionStatsView() {
       <TabsContent value="distribution" className="space-y-6">
         <LeagueDistributionChart data={data.stats.leagueDistribution} />
         <ClubDistributionChart data={data.stats.clubDistribution} />
+        <ClubCoverageCard data={data.stats.clubCoverage} />
         <ClubRankingsCard data={data.stats.clubRankings} />
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           <SizeDistributionChart data={data.stats.sizeDistribution} />

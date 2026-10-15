@@ -741,6 +741,12 @@
         "feature3": "Taxa de camisolas com etiquetas",
         "feature4": "Métricas de qualidade da coleção"
       }
+    },
+    "clubCoverage": {
+      "titleFavorite": "Cobertura do teu clube favorito",
+      "titleTopClub": "Cobertura do teu clube mais colecionado",
+      "ownedOutOf": "{owned} de {total} camisolas do catálogo",
+      "setFavoriteClub": "Definir o meu clube favorito"
     }
   },
   "Wishlist": {
