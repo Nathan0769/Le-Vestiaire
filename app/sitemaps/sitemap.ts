@@ -1,6 +1,11 @@
 import { MetadataRoute } from "next";
 import prisma from "@/lib/prisma";
 import { SUPPORTED_BRAND_SLUGS } from "@/lib/brand-utils";
+import {
+  JERSEYS_PER_SITEMAP,
+  getSitemapIds,
+  parseJerseyChunk,
+} from "@/lib/sitemap-chunks";
 
 const BASE_URL = "https://le-vestiaire-foot.fr";
 const LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"] as const;
@@ -21,8 +26,57 @@ function staticLocalizedEntries(
   }));
 }
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+const JERSEY_WHERE = { slug: { not: null } };
+
+// Index servi par app/sitemap.xml/route.ts.
+export async function generateSitemaps() {
+  const jerseyCount = await prisma.jersey.count({ where: JERSEY_WHERE });
+  return getSitemapIds(jerseyCount, JERSEYS_PER_SITEMAP).map((id) => ({ id }));
+}
+
+async function jerseyChunkEntries(chunk: number): Promise<MetadataRoute.Sitemap> {
+  const jerseys = await prisma.jersey.findMany({
+    select: {
+      slug: true,
+      imageUrl: true,
+      updatedAt: true,
+      club: {
+        select: {
+          id: true,
+          league: {
+            select: { id: true },
+          },
+        },
+      },
+    },
+    where: JERSEY_WHERE,
+    // Ordre stable : un maillot ne doit pas changer de fichier entre deux lectures.
+    orderBy: { id: "asc" },
+    skip: chunk * JERSEYS_PER_SITEMAP,
+    take: JERSEYS_PER_SITEMAP,
+  });
+
+  return jerseys.map((jersey) => ({
+    url: `${BASE_URL}/fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.slug}`,
+    lastModified: jersey.updatedAt,
+    changeFrequency: "monthly",
+    priority: 0.6,
+    images: jersey.imageUrl ? [jersey.imageUrl] : undefined,
+  }));
+}
+
+export default async function sitemap({
+  id,
+}: {
+  id: string;
+}): Promise<MetadataRoute.Sitemap> {
   try {
+    const chunk = parseJerseyChunk(id);
+    if (chunk !== null) {
+      return await jerseyChunkEntries(chunk);
+    }
+    if (id !== "pages") return [];
+
     // Static pages: list all 7 locales so Google crawls de/pt/nl/it
     const staticRoutes: MetadataRoute.Sitemap = [
       ...staticLocalizedEntries("", { changeFrequency: "weekly", priority: 1 }),
@@ -85,31 +139,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     });
 
-    const jerseys = await prisma.jersey.findMany({
-      select: {
-        slug: true,
-        imageUrl: true,
-        updatedAt: true,
-        club: {
-          select: {
-            id: true,
-            league: {
-              select: { id: true },
-            },
-          },
-        },
-      },
-      where: { slug: { not: null } },
-    });
-
-    const jerseyRoutes: MetadataRoute.Sitemap = jerseys.map((jersey) => ({
-      url: `${BASE_URL}/fr/jerseys/${jersey.club.league.id}/clubs/${jersey.club.id}/jerseys/${jersey.slug}`,
-      lastModified: jersey.updatedAt,
-      changeFrequency: "monthly",
-      priority: 0.6,
-      images: jersey.imageUrl ? [jersey.imageUrl] : undefined,
-    }));
-
     const brandRoutes: MetadataRoute.Sitemap = SUPPORTED_BRAND_SLUGS.map(
       (brand) => ({
         url: `${BASE_URL}/fr/jerseys/marque/${brand}`,
@@ -155,13 +184,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     console.log(
-      `Sitemap généré : ${jerseyRoutes.length} maillots + ${leagueAndClubRoutes.length} leagues/clubs + ${brandRoutes.length} marques + ${seasonRoutes.length} saisons + ${profileRoutes.length} profils + ${staticRoutes.length} pages statiques`
+      `Sitemap généré : ${leagueAndClubRoutes.length} leagues/clubs + ${brandRoutes.length} marques + ${seasonRoutes.length} saisons + ${profileRoutes.length} profils + ${staticRoutes.length} pages statiques`
     );
 
     return [
       ...staticRoutes,
       ...leagueAndClubRoutes,
-      ...jerseyRoutes,
       ...brandRoutes,
       ...seasonRoutes,
       ...profileRoutes,
