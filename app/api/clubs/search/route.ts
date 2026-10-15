@@ -40,6 +40,7 @@ export async function GET(request: NextRequest) {
         name: true,
         shortName: true,
         logoUrl: true,
+        primaryColor: true,
         league: {
           select: {
             id: true,
