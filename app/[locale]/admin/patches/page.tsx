@@ -1,4 +1,6 @@
 import { PatchesManagement } from "@/components/admin/patches/patches-management";
+import { CustomPatchesPanel } from "@/components/admin/patches/custom-patches-panel";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const metadata = {
   title: "Gestion des patches - Admin",
@@ -15,7 +17,22 @@ export default function PatchesAdminPage() {
         </p>
       </div>
 
-      <PatchesManagement />
+      <Tabs defaultValue="catalog">
+        <TabsList>
+          <TabsTrigger value="catalog" className="cursor-pointer">
+            Catalogue
+          </TabsTrigger>
+          <TabsTrigger value="custom" className="cursor-pointer">
+            Patchs perso
+          </TabsTrigger>
+        </TabsList>
+        <TabsContent value="catalog">
+          <PatchesManagement />
+        </TabsContent>
+        <TabsContent value="custom">
+          <CustomPatchesPanel />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

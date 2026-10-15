@@ -42,19 +42,28 @@ interface PatchFormDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   patch?: AdminPatch | null;
+  defaultName?: string;
+  onCreated?: (patch: AdminPatch) => void;
 }
 
 interface PatchFormBodyProps {
   patch?: AdminPatch | null;
   onOpenChange: (open: boolean) => void;
+  defaultName?: string;
+  onCreated?: (patch: AdminPatch) => void;
 }
 
-function PatchFormBody({ patch, onOpenChange }: PatchFormBodyProps) {
+function PatchFormBody({
+  patch,
+  onOpenChange,
+  defaultName,
+  onCreated,
+}: PatchFormBodyProps) {
   const create = useCreatePatch();
   const update = useUpdatePatch();
   const isEdit = !!patch;
 
-  const [name, setName] = useState(patch?.name ?? "");
+  const [name, setName] = useState(patch?.name ?? defaultName ?? "");
   const [family, setFamily] = useState<PatchFamily>(
     patch?.family ?? "UEFA_COMPETITION",
   );
@@ -91,8 +100,9 @@ function PatchFormBody({ patch, onOpenChange }: PatchFormBodyProps) {
         await update.mutateAsync({ id: patch.id, data: payload });
         toast.success("Patch mis à jour");
       } else {
-        await create.mutateAsync(payload);
+        const created = await create.mutateAsync(payload);
         toast.success("Patch créé");
+        onCreated?.(created);
       }
       onOpenChange(false);
     } catch (err) {
@@ -140,6 +150,13 @@ function PatchFormBody({ patch, onOpenChange }: PatchFormBodyProps) {
               ))}
             </SelectContent>
           </Select>
+          {family === "CUSTOM" && (
+            <p className="text-xs text-muted-foreground">
+              Les patchs CUSTOM n&apos;apparaissent pas dans le formulaire
+              utilisateur : il verra le patch sur son maillot sans pouvoir le
+              décocher.
+            </p>
+          )}
         </div>
 
         {family === "UEFA_COMPETITION" && (
@@ -246,6 +263,8 @@ export function PatchFormDialog({
   open,
   onOpenChange,
   patch,
+  defaultName,
+  onCreated,
 }: PatchFormDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -254,6 +273,8 @@ export function PatchFormDialog({
           key={patch?.id ?? "new"}
           patch={patch}
           onOpenChange={onOpenChange}
+          defaultName={defaultName}
+          onCreated={onCreated}
         />
       </DialogContent>
     </Dialog>

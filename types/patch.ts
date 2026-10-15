@@ -85,3 +85,25 @@ export const PATCH_FAMILY_ORDER: PatchFamily[] = [
   "NATIONAL_TEAM_COMPETITION",
   "CUSTOM",
 ];
+
+export interface CustomPatchOccurrence {
+  id: string;
+  customLabel: string;
+  userJerseyId: string;
+  username: string | null;
+  jersey: {
+    id: string;
+    name: string;
+    season: string;
+    clubId: string;
+    clubName: string;
+  };
+}
+
+export interface CustomPatchGroup {
+  key: string;
+  label: string;
+  variants: string[];
+  count: number;
+  occurrences: CustomPatchOccurrence[];
+}

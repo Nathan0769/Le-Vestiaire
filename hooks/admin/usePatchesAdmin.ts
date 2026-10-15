@@ -57,7 +57,7 @@ export function useCreatePatch() {
         const err = await res.json();
         throw new Error(err.error || "Erreur création");
       }
-      return res.json();
+      return res.json() as Promise<AdminPatch>;
     },
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["admin", "patches"] });
