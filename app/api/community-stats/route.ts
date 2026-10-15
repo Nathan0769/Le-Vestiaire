@@ -5,10 +5,7 @@ import {
   getRateLimitIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit";
-import {
-  getGlobalStatsCached,
-  getUserComparisonCached,
-} from "@/lib/global-stats";
+import { getGlobalStatsCached } from "@/lib/global-stats";
 import type { CommunityStatsResponse } from "@/types/community-stats";
 
 export async function GET() {
@@ -24,12 +21,9 @@ export async function GET() {
       );
     }
 
-    const [global, comparison] = await Promise.all([
-      getGlobalStatsCached(),
-      user ? getUserComparisonCached(user.id) : Promise.resolve(null),
-    ]);
+    const global = await getGlobalStatsCached();
 
-    const response: CommunityStatsResponse = { global, comparison };
+    const response: CommunityStatsResponse = { global };
     return NextResponse.json(response);
   } catch (error) {
     console.error("Error fetching community stats:", error);

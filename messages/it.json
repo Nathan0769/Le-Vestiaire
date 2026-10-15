@@ -571,7 +571,6 @@
     },
     "community": {
       "globalTitle": "Statistiche globali dell'app",
-      "yourPosition": "La tua posizione",
       "topClubs": "Club più collezionati",
       "topLeagues": "Leghe più collezionate",
       "topBrands": "Marche più collezionate",
@@ -580,16 +579,19 @@
       "topSeason": "Stagione dominante",
       "acquisitionsThisMonth": "Acquisizioni questo mese",
       "catalogCoverage": "Copertura del catalogo",
-      "rarestJerseys": "I gioielli della tua collezione",
       "ratingWithVotes": "{rating}/5 ({count, plural, one {# voto} other {# voti}})",
       "error": "Impossibile caricare le statistiche della community.",
       "averageRating": "Valutazione media globale",
       "jerseysCount": "{count, plural, one {# maglia} other {# maglie}}",
       "copiesCount": "{count, plural, one {# esemplare} other {# esemplari}}",
-      "favoriteClubCoverage": "Copertura del tuo club preferito",
-      "noFavoriteClub": "Imposta il tuo club preferito per seguire i tuoi progressi.",
-      "setFavoriteClub": "Imposta il mio club preferito",
-      "ownedOutOf": "{owned} su {total} maglie"
+      "piecesTitle": "Pezzi da collezione",
+      "collectorsWithPiece": "{count, plural, =0 {Nessun collezionista ne ha ancora uno} one {# collezionista ne ha almeno uno} other {# collezionisti ne hanno almeno uno}}",
+      "pieces": {
+        "signed": "Maglie autografate",
+        "matchWorn": "Indossate in partita",
+        "playerIssue": "Player issue",
+        "withCertificate": "Con certificato"
+      }
     },
     "timeline": {
       "title": "Evoluzione della collezione",

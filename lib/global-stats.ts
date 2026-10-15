@@ -1,15 +1,15 @@
 import { unstable_cache } from "next/cache";
 import prisma from "@/lib/prisma";
+import { toCollectionPieces, type CollectionPiecesRow } from "@/lib/collection-pieces";
 import type {
+  CollectionPieces,
   GlobalStats,
-  UserComparison,
   TopClubEntry,
   TopLeagueEntry,
   TopBrandEntry,
   MostOwnedJersey,
   TopRatedJersey,
   TopSeason,
-  RareJersey,
 } from "@/types/community-stats";
 
 async function getTopClubs(): Promise<TopClubEntry[]> {
@@ -192,6 +192,23 @@ async function getAverageRating(): Promise<number | null> {
   return Math.round(Number(result._avg.rating) * 100) / 100;
 }
 
+async function getCollectionPieces(): Promise<CollectionPieces> {
+  const rows = await prisma.$queryRaw<CollectionPiecesRow[]>`
+    SELECT
+      COUNT(*) FILTER (WHERE "isSigned")::bigint as "signed",
+      COUNT(*) FILTER (WHERE version = 'MATCH_WORN')::bigint as "matchWorn",
+      COUNT(*) FILTER (WHERE version = 'PLAYER_ISSUE')::bigint as "playerIssue",
+      COUNT(*) FILTER (WHERE "hasAuthCertificate")::bigint as "withCertificate",
+      COUNT(DISTINCT "userId") FILTER (
+        WHERE "isSigned"
+          OR version IN ('MATCH_WORN', 'PLAYER_ISSUE')
+          OR "hasAuthCertificate"
+      )::bigint as "collectorsWithPiece"
+    FROM user_jerseys
+  `;
+  return toCollectionPieces(rows[0]);
+}
+
 async function getGlobalStats(): Promise<GlobalStats> {
   const [
     topClubs,
@@ -205,6 +222,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
     totalCollectedJerseys,
     totalCollectors,
     averageRating,
+    collectionPieces,
   ] = await Promise.all([
     getTopClubs(),
     getTopLeagues(),
@@ -217,6 +235,7 @@ async function getGlobalStats(): Promise<GlobalStats> {
     getTotalCollectedJerseys(),
     getTotalCollectors(),
     getAverageRating(),
+    getCollectionPieces(),
   ]);
 
   return {
@@ -232,113 +251,12 @@ async function getGlobalStats(): Promise<GlobalStats> {
     totalCollectedJerseys,
     totalCollectors,
     averageRating,
+    collectionPieces,
   };
 }
 
 export const getGlobalStatsCached = unstable_cache(
   getGlobalStats,
-  ["global-stats-v9"],
+  ["global-stats-v10"],
   { revalidate: 21600, tags: ["global-stats"] }
 );
-
-async function getUserComparison(userId: string): Promise<UserComparison> {
-  const [user, personalJerseyIds] = await Promise.all([
-    prisma.user.findUnique({
-      where: { id: userId },
-      select: {
-        favoriteClub: {
-          select: { id: true, name: true, logoUrl: true, leagueId: true },
-        },
-      },
-    }),
-    prisma.userJersey.findMany({
-      where: { userId },
-      select: { jerseyId: true },
-      distinct: ["jerseyId"],
-    }),
-  ]);
-
-  let favoriteClubCoverage: UserComparison["favoriteClubCoverage"] = null;
-
-  if (user?.favoriteClub) {
-    const club = user.favoriteClub;
-    const [totalCount, ownedDistinct] = await Promise.all([
-      prisma.jersey.count({ where: { clubId: club.id } }),
-      prisma.userJersey.findMany({
-        where: { userId, jersey: { clubId: club.id } },
-        select: { jerseyId: true },
-        distinct: ["jerseyId"],
-      }),
-    ]);
-    favoriteClubCoverage = {
-      clubId: club.id,
-      clubName: club.name,
-      clubLogoUrl: club.logoUrl,
-      leagueId: club.leagueId,
-      ownedCount: ownedDistinct.length,
-      totalCount,
-      percentage:
-        totalCount > 0
-          ? Math.round((ownedDistinct.length / totalCount) * 10000) / 100
-          : 0,
-    };
-  }
-
-  let rarestJerseys: RareJersey[] = [];
-
-  if (personalJerseyIds.length > 0) {
-    const rows = await prisma.$queryRaw<
-      {
-        id: string;
-        name: string;
-        imageUrl: string;
-        clubId: string;
-        clubName: string;
-        leagueId: string;
-        ownersCount: bigint;
-      }[]
-    >`
-      WITH owner_counts AS (
-        SELECT "jerseyId", COUNT(*)::bigint as count
-        FROM user_jerseys
-        GROUP BY "jerseyId"
-      )
-      SELECT j.id, j.name, j."imageUrl", c.id as "clubId", c.name as "clubName", c."leagueId" as "leagueId",
-        oc.count as "ownersCount"
-      FROM (
-        SELECT DISTINCT "jerseyId"
-        FROM user_jerseys
-        WHERE "userId" = ${userId}
-      ) uuj
-      JOIN jerseys j ON j.id = uuj."jerseyId"
-      JOIN clubs c ON c.id = j."clubId"
-      JOIN owner_counts oc ON oc."jerseyId" = uuj."jerseyId"
-      ORDER BY oc.count ASC, j.id ASC
-      LIMIT 3
-    `;
-    rarestJerseys = rows.map((r) => ({
-      id: r.id,
-      name: r.name,
-      clubId: r.clubId,
-      clubName: r.clubName,
-      leagueId: r.leagueId,
-      imageUrl: r.imageUrl,
-      ownersCount: Number(r.ownersCount),
-    }));
-  }
-
-  return {
-    favoriteClubCoverage,
-    rarestJerseys,
-  };
-}
-
-export async function getUserComparisonCached(
-  userId: string
-): Promise<UserComparison> {
-  return unstable_cache(
-    () => getUserComparison(userId),
-    ["user-comparison-v3", userId],
-    { revalidate: 1800, tags: [`user-comparison-${userId}`] }
-  )();
-}

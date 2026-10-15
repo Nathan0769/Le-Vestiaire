@@ -571,7 +571,6 @@
     },
     "community": {
       "globalTitle": "Globale app-statistieken",
-      "yourPosition": "Jouw positie",
       "topClubs": "Meest verzamelde clubs",
       "topLeagues": "Meest verzamelde competities",
       "topBrands": "Meest verzamelde merken",
@@ -580,16 +579,19 @@
       "topSeason": "Dominant seizoen",
       "acquisitionsThisMonth": "Aanschaffingen deze maand",
       "catalogCoverage": "Catalogusdekking",
-      "rarestJerseys": "De pareltjes van je collectie",
       "ratingWithVotes": "{rating}/5 ({count, plural, one {# stem} other {# stemmen}})",
       "error": "Kan community-statistieken niet laden.",
       "averageRating": "Globale gemiddelde beoordeling",
       "jerseysCount": "{count, plural, one {# shirt} other {# shirts}}",
       "copiesCount": "{count, plural, one {# exemplaar} other {# exemplaren}}",
-      "favoriteClubCoverage": "Dekking van je favoriete club",
-      "noFavoriteClub": "Stel je favoriete club in om je voortgang te volgen.",
-      "setFavoriteClub": "Mijn favoriete club instellen",
-      "ownedOutOf": "{owned} van de {total} shirts"
+      "piecesTitle": "Verzamelstukken",
+      "collectorsWithPiece": "{count, plural, =0 {Nog geen verzamelaar heeft er een} one {# verzamelaar heeft er minstens één} other {# verzamelaars hebben er minstens één}}",
+      "pieces": {
+        "signed": "Gesigneerde shirts",
+        "matchWorn": "Matchworn",
+        "playerIssue": "Player issue",
+        "withCertificate": "Met certificaat"
+      }
     },
     "timeline": {
       "title": "Evolutie van de collectie",

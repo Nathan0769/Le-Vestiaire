@@ -9,7 +9,10 @@ import {
   Calendar,
   TrendingUp,
   Percent,
-  Sparkles,
+  PenLine,
+  Shirt,
+  UserCheck,
+  ShieldCheck,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -140,7 +143,14 @@ export function CommunityTab() {
     );
   }
 
-  const { global, comparison } = data;
+  const { global } = data;
+  const pieces = global.collectionPieces;
+  const pieceTiles = [
+    { key: "signed", icon: PenLine, value: pieces.signed },
+    { key: "matchWorn", icon: Shirt, value: pieces.matchWorn },
+    { key: "playerIssue", icon: UserCheck, value: pieces.playerIssue },
+    { key: "withCertificate", icon: ShieldCheck, value: pieces.withCertificate },
+  ] as const;
 
   return (
     <div className="space-y-8">
@@ -303,115 +313,30 @@ export function CommunityTab() {
         </div>
       </section>
 
-      {comparison && (
-        <section className="space-y-4">
-          <h2 className="text-xl font-semibold">{t("yourPosition")}</h2>
+      <section className="space-y-4">
+        <div className="space-y-1">
+          <h2 className="text-xl font-semibold">{t("piecesTitle")}</h2>
+          <p className="text-sm text-muted-foreground">
+            {t("collectorsWithPiece", { count: pieces.collectorsWithPiece })}
+          </p>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Card className="p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Percent className="w-5 h-5 text-primary" />
-                <h3 className="font-semibold">{t("favoriteClubCoverage")}</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {pieceTiles.map(({ key, icon: Icon, value }) => (
+            <Card key={key} className="p-4 items-start">
+              <div className="flex items-center gap-2">
+                <Icon className="w-4 h-4 text-primary" />
+                <span className="text-xs text-muted-foreground">
+                  {t(`pieces.${key}`)}
+                </span>
               </div>
-              {comparison.favoriteClubCoverage ? (
-                <Link
-                  href={`/jerseys/${comparison.favoriteClubCoverage.leagueId}/clubs/${comparison.favoriteClubCoverage.clubId}`}
-                  className="space-y-3 block hover:opacity-80 transition-opacity"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="relative w-10 h-10 shrink-0">
-                      <Image
-                        src={comparison.favoriteClubCoverage.clubLogoUrl}
-                        alt={comparison.favoriteClubCoverage.clubName}
-                        fill
-                        className="object-contain"
-                        unoptimized
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium truncate">
-                        {comparison.favoriteClubCoverage.clubName}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {t("ownedOutOf", {
-                          owned: comparison.favoriteClubCoverage.ownedCount,
-                          total: comparison.favoriteClubCoverage.totalCount,
-                        })}
-                      </p>
-                    </div>
-                    <span className="text-lg font-bold tabular-nums">
-                      {formatPercent(
-                        comparison.favoriteClubCoverage.percentage,
-                        locale
-                      )}
-                    </span>
-                  </div>
-                  <div className="h-2 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-primary transition-all"
-                      style={{
-                        width: `${Math.min(100, comparison.favoriteClubCoverage.percentage)}%`,
-                      }}
-                    />
-                  </div>
-                </Link>
-              ) : (
-                <div className="text-sm text-muted-foreground space-y-2">
-                  <p>{t("noFavoriteClub")}</p>
-                  <Link
-                    href="/settings"
-                    className="inline-block text-primary hover:underline text-sm font-medium"
-                  >
-                    {t("setFavoriteClub")}
-                  </Link>
-                </div>
-              )}
+              <span className="text-2xl font-bold tabular-nums">
+                {formatNumber(value, locale)}
+              </span>
             </Card>
-
-            <Card className="p-6">
-              <div className="flex items-center gap-2 mb-4">
-                <Sparkles className="w-5 h-5 text-primary" />
-                <h3 className="font-semibold">{t("rarestJerseys")}</h3>
-              </div>
-              {comparison.rarestJerseys.length === 0 ? (
-                <p className="text-sm text-muted-foreground">—</p>
-              ) : (
-                <ul className="space-y-3">
-                  {comparison.rarestJerseys.map((jersey) => (
-                    <li key={jersey.id}>
-                      <Link
-                        href={`/jerseys/${jersey.leagueId}/clubs/${jersey.clubId}/jerseys/${jersey.id}`}
-                        className="flex items-center gap-3 hover:opacity-80 transition-opacity"
-                      >
-                        <div className="relative w-10 h-10 shrink-0">
-                          <Image
-                            src={jersey.imageUrl}
-                            alt={jersey.name}
-                            fill
-                            className="object-contain"
-                            unoptimized
-                          />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <p className="text-sm font-medium truncate">
-                            {jersey.clubName}
-                          </p>
-                          <p className="text-xs text-muted-foreground truncate">
-                            {jersey.name}
-                          </p>
-                        </div>
-                        <span className="text-xs text-muted-foreground tabular-nums">
-                          {t("copiesCount", { count: jersey.ownersCount })}
-                        </span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </Card>
-          </div>
-        </section>
-      )}
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

@@ -44,6 +44,15 @@ export type TopSeason = {
   count: number;
 };
 
+export type CollectionPieces = {
+  signed: number;
+  matchWorn: number;
+  playerIssue: number;
+  withCertificate: number;
+  /** Collectionneurs distincts possédant au moins une pièce (signée, portée, player issue ou certifiée). */
+  collectorsWithPiece: number;
+};
+
 export type GlobalStats = {
   topClubs: TopClubEntry[];
   topLeagues: TopLeagueEntry[];
@@ -57,34 +66,9 @@ export type GlobalStats = {
   totalCollectedJerseys: number;
   totalCollectors: number;
   averageRating: number | null;
-};
-
-export type RareJersey = {
-  id: string;
-  name: string;
-  clubId: string;
-  clubName: string;
-  leagueId: string;
-  imageUrl: string;
-  ownersCount: number;
-};
-
-export type FavoriteClubCoverage = {
-  clubId: string;
-  clubName: string;
-  clubLogoUrl: string;
-  leagueId: string;
-  ownedCount: number;
-  totalCount: number;
-  percentage: number;
-};
-
-export type UserComparison = {
-  favoriteClubCoverage: FavoriteClubCoverage | null;
-  rarestJerseys: RareJersey[];
+  collectionPieces: CollectionPieces;
 };
 
 export type CommunityStatsResponse = {
   global: GlobalStats;
-  comparison: UserComparison | null;
 };

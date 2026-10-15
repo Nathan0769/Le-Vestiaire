@@ -571,7 +571,6 @@
     },
     "community": {
       "globalTitle": "Global app stats",
-      "yourPosition": "Your position",
       "topClubs": "Most collected clubs",
       "topLeagues": "Most collected leagues",
       "topBrands": "Most collected brands",
@@ -580,16 +579,19 @@
       "topSeason": "Dominant season",
       "acquisitionsThisMonth": "Acquisitions this month",
       "catalogCoverage": "Catalog coverage",
-      "rarestJerseys": "Gems in your collection",
       "ratingWithVotes": "{rating}/5 ({count, plural, one {# vote} other {# votes}})",
       "error": "Unable to load community statistics.",
       "averageRating": "Global average rating",
       "jerseysCount": "{count, plural, one {# jersey} other {# jerseys}}",
       "copiesCount": "{count, plural, one {# copy} other {# copies}}",
-      "favoriteClubCoverage": "Your favorite club coverage",
-      "noFavoriteClub": "Set your favorite club to track your progress.",
-      "setFavoriteClub": "Set my favorite club",
-      "ownedOutOf": "{owned} out of {total} jerseys"
+      "piecesTitle": "Collector pieces",
+      "collectorsWithPiece": "{count, plural, =0 {No collector owns one yet} one {# collector owns at least one} other {# collectors own at least one}}",
+      "pieces": {
+        "signed": "Signed shirts",
+        "matchWorn": "Match worn",
+        "playerIssue": "Player issue",
+        "withCertificate": "With certificate"
+      }
     },
     "timeline": {
       "title": "Collection Evolution",

@@ -571,7 +571,6 @@
     },
     "community": {
       "globalTitle": "Globale App-Statistiken",
-      "yourPosition": "Deine Position",
       "topClubs": "Meistgesammelte Vereine",
       "topLeagues": "Meistgesammelte Ligen",
       "topBrands": "Meistgesammelte Marken",
@@ -580,16 +579,19 @@
       "topSeason": "Dominierende Saison",
       "acquisitionsThisMonth": "Erwerbungen diesen Monat",
       "catalogCoverage": "Katalogabdeckung",
-      "rarestJerseys": "Die Schätze deiner Sammlung",
       "ratingWithVotes": "{rating}/5 ({count, plural, one {# Stimme} other {# Stimmen}})",
       "error": "Community-Statistiken konnten nicht geladen werden.",
       "averageRating": "Globale Durchschnittsbewertung",
       "jerseysCount": "{count, plural, one {# Trikot} other {# Trikots}}",
       "copiesCount": "{count, plural, one {# Exemplar} other {# Exemplare}}",
-      "favoriteClubCoverage": "Abdeckung deines Lieblingsvereins",
-      "noFavoriteClub": "Lege deinen Lieblingsverein fest, um deinen Fortschritt zu verfolgen.",
-      "setFavoriteClub": "Meinen Lieblingsverein festlegen",
-      "ownedOutOf": "{owned} von {total} Trikots"
+      "piecesTitle": "Sammlerstücke",
+      "collectorsWithPiece": "{count, plural, =0 {Noch kein Sammler besitzt eines} one {# Sammler besitzt mindestens eines} other {# Sammler besitzen mindestens eines}}",
+      "pieces": {
+        "signed": "Signierte Trikots",
+        "matchWorn": "Matchworn",
+        "playerIssue": "Player Issue",
+        "withCertificate": "Mit Zertifikat"
+      }
     },
     "timeline": {
       "title": "Sammlungsentwicklung",
