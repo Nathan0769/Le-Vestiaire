@@ -1,22 +1,19 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
-import {
-  planActionForRevenueCatEvent,
-  unlocksSupporterAchievement,
-} from "@/lib/revenuecat-webhook";
-import { checkAchievements } from "@/lib/achievements/check";
+import { revenueCatCandidateUserIds } from "@/lib/supporter-sync";
+import { syncSupporterPlan } from "@/lib/sync-supporter-plan";
 
 /**
  * Webhook RevenueCat (abonnement Supporter iOS via IAP Apple).
- * RevenueCat POST un événement ; on met à jour `User.plan` en conséquence.
  * L'app appelle `Purchases.logIn(User.id)` → `app_user_id = User.id`.
  *
  * Auth : header `Authorization` == `REVENUECAT_WEBHOOK_SECRET` (configuré à
  * l'identique dans le dashboard RevenueCat).
  *
- * Cohabitation Stripe : on ne repasse pas un user en FREE s'il a un
- * `stripeCustomerId` (un abo web pourrait être actif) — le webhook Stripe gère
- * ce cas. Edge V1 assumé (cf. spec).
+ * L'événement ne sert qu'à savoir quels comptes recalculer : le plan est relu
+ * chez Stripe et RevenueCat (`syncSupporterPlan`). Un événement rejoué ou reçu
+ * dans le désordre ne peut donc pas inverser l'état, et une expiration Apple ne
+ * rétrograde pas un abonné Stripe (spec docs/specs/2026-10-15-supporter-sync.md).
  */
 export async function POST(request: Request) {
   try {
@@ -27,53 +24,34 @@ export async function POST(request: Request) {
     }
 
     const body = await request.json().catch(() => null);
-    const event = body?.event;
-    const type: unknown = event?.type;
-    const appUserId: unknown = event?.app_user_id;
-
-    if (typeof type !== "string" || typeof appUserId !== "string") {
+    const event: unknown = body?.event;
+    if (!event || typeof event !== "object" || typeof (event as { type?: unknown }).type !== "string") {
       return NextResponse.json({ error: "Payload invalide" }, { status: 400 });
     }
 
-    const action = planActionForRevenueCatEvent(type);
-    if (!action) {
-      // Événement sans effet sur le plan (CANCELLATION, BILLING_ISSUE, TEST…).
+    const type = (event as { type: string }).type;
+    if (type === "TEST") {
       return NextResponse.json({ received: true });
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: appUserId },
-      select: { id: true, plan: true, stripeCustomerId: true },
-    });
+    // Un achat sous ID anonyme puis rattaché n'est retrouvable que via les
+    // alias ou un TRANSFER : on cherche tous les comptes réels concernés.
+    const candidates = revenueCatCandidateUserIds(event as Record<string, unknown>);
+    const users = candidates.length
+      ? await prisma.user.findMany({
+          where: { id: { in: candidates } },
+          select: { id: true },
+        })
+      : [];
 
-    // ID anonyme RevenueCat ou user supprimé : on ignore proprement.
-    if (!user) {
+    if (users.length === 0) {
+      console.warn("[RevenueCat Webhook] aucun compte trouvé", { type, candidates });
       return NextResponse.json({ received: true });
     }
 
-    // Ne pas downgrader un user susceptible d'avoir un abo Stripe web actif.
-    if (action.plan === "FREE" && user.stripeCustomerId) {
-      return NextResponse.json({ received: true });
-    }
-
-    if (user.plan !== action.plan) {
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { plan: action.plan },
-      });
-    }
-
-    if (unlocksSupporterAchievement(action)) {
-      // Ne jamais faire échouer le webhook pour un succès : RevenueCat
-      // rejouerait l'événement alors que le plan est déjà à jour.
-      try {
-        await checkAchievements(user.id, "supporter.subscribed");
-      } catch (achievementError) {
-        console.error(
-          "checkAchievements (supporter) failed on RevenueCat webhook:",
-          achievementError
-        );
-      }
+    // Une source injoignable lève une erreur → 500 → RevenueCat réessaie.
+    for (const user of users) {
+      await syncSupporterPlan(user.id);
     }
 
     return NextResponse.json({ received: true });

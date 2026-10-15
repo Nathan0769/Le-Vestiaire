@@ -1,44 +1,14 @@
 import { describe, it, expect } from "vitest";
-import { planActionForEvent } from "@/lib/stripe-webhook";
+import { affectsSupporterPlan } from "@/lib/stripe-webhook";
 
-describe("planActionForEvent", () => {
-  it("upgrades to SUPPORTER on checkout completion", () => {
-    expect(planActionForEvent({ type: "checkout.session.completed" })).toEqual({
-      plan: "PRO",
-    });
+describe("affectsSupporterPlan", () => {
+  it("déclenche une synchro sur les événements d'abonnement", () => {
+    expect(affectsSupporterPlan("checkout.session.completed")).toBe(true);
+    expect(affectsSupporterPlan("customer.subscription.updated")).toBe(true);
+    expect(affectsSupporterPlan("customer.subscription.deleted")).toBe(true);
   });
 
-  it("keeps SUPPORTER while the subscription is active or trialing", () => {
-    expect(
-      planActionForEvent({
-        type: "customer.subscription.updated",
-        subscriptionStatus: "active",
-      })
-    ).toEqual({ plan: "PRO" });
-    expect(
-      planActionForEvent({
-        type: "customer.subscription.updated",
-        subscriptionStatus: "trialing",
-      })
-    ).toEqual({ plan: "PRO" });
-  });
-
-  it("downgrades to FREE when the subscription is no longer active", () => {
-    expect(
-      planActionForEvent({
-        type: "customer.subscription.updated",
-        subscriptionStatus: "past_due",
-      })
-    ).toEqual({ plan: "FREE" });
-  });
-
-  it("downgrades to FREE when the subscription is deleted", () => {
-    expect(
-      planActionForEvent({ type: "customer.subscription.deleted" })
-    ).toEqual({ plan: "FREE" });
-  });
-
-  it("returns null for unhandled event types", () => {
-    expect(planActionForEvent({ type: "invoice.paid" })).toBeNull();
+  it("ignore les autres événements", () => {
+    expect(affectsSupporterPlan("invoice.paid")).toBe(false);
   });
 });

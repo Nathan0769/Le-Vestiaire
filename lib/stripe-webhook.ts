@@ -1,31 +1,15 @@
-import type { UserPlan } from "@prisma/client";
-
-export type PlanAction = { plan: UserPlan } | null;
+const SUPPORTER_PLAN_EVENTS = new Set([
+  "checkout.session.completed",
+  "customer.subscription.updated",
+  "customer.subscription.deleted",
+]);
 
 /**
- * Logique pure de transition de plan à partir d'un événement Stripe.
- * Extraite du handler pour être testable sans DB ni signature.
- * Retourne l'action à appliquer, ou null si l'événement n'affecte pas le plan.
+ * Événements Stripe après lesquels le plan Supporter doit être recalculé. Le
+ * plan n'est pas déduit de l'événement lui-même : `syncSupporterPlan` relit
+ * Stripe et Apple, pour qu'une fin d'abonnement Stripe ne rétrograde pas un
+ * abonné Apple (spec docs/specs/2026-10-15-supporter-sync.md).
  */
-export function planActionForEvent(event: {
-  type: string;
-  subscriptionStatus?: string;
-}): PlanAction {
-  switch (event.type) {
-    case "checkout.session.completed":
-      return { plan: "PRO" };
-
-    case "customer.subscription.updated": {
-      const active =
-        event.subscriptionStatus === "active" ||
-        event.subscriptionStatus === "trialing";
-      return { plan: active ? "PRO" : "FREE" };
-    }
-
-    case "customer.subscription.deleted":
-      return { plan: "FREE" };
-
-    default:
-      return null;
-  }
+export function affectsSupporterPlan(type: string): boolean {
+  return SUPPORTER_PLAN_EVENTS.has(type);
 }
