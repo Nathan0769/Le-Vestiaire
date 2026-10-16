@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import type { NotificationType } from "@prisma/client";
 import { sendApns, apnsConfigured } from "./apns";
+import { reportError } from "@/lib/report-error";
 import { buildPushMessage, type PushType } from "./messages";
 
 interface PushInput {
@@ -76,6 +77,13 @@ export async function pushForNotification(input: PushInput): Promise<void> {
       )
     );
 
+    // Échec hors token périmé = config APNs (clé, topic) ou panne Apple.
+    for (const result of results) {
+      if (!result.ok && !result.invalid) {
+        await reportError("push.apns", `APNs ${result.status} ${result.reason ?? ""}`.trim());
+      }
+    }
+
     const invalidTokens = tokens
       .filter((_, i) => results[i]?.invalid)
       .map((t) => t.token);
@@ -85,6 +93,6 @@ export async function pushForNotification(input: PushInput): Promise<void> {
       });
     }
   } catch (err) {
-    console.error("pushForNotification error:", err);
+    await reportError("push.notify", err);
   }
 }

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { revenueCatCandidateUserIds } from "@/lib/supporter-sync";
 import { syncSupporterPlan } from "@/lib/sync-supporter-plan";
+import { reportError } from "@/lib/report-error";
 
 /**
  * Webhook RevenueCat (abonnement Supporter iOS via IAP Apple).
@@ -56,7 +57,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error("Erreur webhook RevenueCat:", error);
+    await reportError("revenuecat.webhook", error);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

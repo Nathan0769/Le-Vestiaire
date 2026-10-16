@@ -4,6 +4,7 @@ import { getStripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
 import { affectsSupporterPlan } from "@/lib/stripe-webhook";
 import { syncSupporterPlan } from "@/lib/sync-supporter-plan";
+import { reportError } from "@/lib/report-error";
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -72,11 +73,8 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ received: true });
   } catch (error) {
-    console.error("[Stripe Webhook Error]", {
-      eventId: event.id,
-      eventType: event.type,
-      error: error instanceof Error ? error.message : error,
-    });
+    console.error("[Stripe Webhook Error]", { eventId: event.id, eventType: event.type });
+    await reportError(`stripe.webhook.${event.type}`, error);
     // 500 : Stripe réessaie. Sans risque, la synchro relit l'état réel.
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }

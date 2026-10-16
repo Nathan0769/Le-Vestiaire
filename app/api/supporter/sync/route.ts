@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { strictRateLimit, getRateLimitIdentifier, checkRateLimit } from "@/lib/rate-limit";
 import { syncSupporterPlan } from "@/lib/sync-supporter-plan";
+import { reportError } from "@/lib/report-error";
 
 /**
  * Recalcule le plan Supporter du compte connecté à partir de Stripe et Apple.
@@ -33,9 +34,7 @@ export async function POST() {
       isSupporter: result.next === "PRO",
     });
   } catch (error) {
-    console.error("[Supporter Sync Error]", {
-      error: error instanceof Error ? error.message : error,
-    });
+    await reportError("supporter.sync", error);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });
   }
 }

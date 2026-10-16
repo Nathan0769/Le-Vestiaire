@@ -72,6 +72,18 @@ export const generousRateLimit = new Ratelimit({
 });
 
 /**
+ * CLIENT ERRORS : rapports d'erreurs de l'app iOS (route publique, par IP).
+ * 30 requêtes par minute : un appareil n'en envoie que quelques-unes, le
+ * plafond sert à empêcher de remplir la table `error_events`.
+ */
+export const clientErrorsRateLimit = new Ratelimit({
+  redis,
+  limiter: Ratelimit.slidingWindow(30, "1 m"),
+  analytics: true,
+  prefix: "@upstash/ratelimit/client-errors-v1",
+});
+
+/**
  * PROPOSALS : Pour les propositions de maillots
  * 600 requêtes par minute
  */

@@ -911,3 +911,28 @@ model Notification {
   @@index([userId, readAt, createdAt])
   @@map("notifications")
 }
+
+enum ErrorSource {
+  SERVER
+  IOS
+}
+
+// Monitoring d'erreurs auto-hébergé : une ligne par erreur distincte
+// (fingerprint), comptée à chaque occurrence. Aucun identifiant de compte.
+model ErrorEvent {
+  id          String      @id @default(cuid())
+  fingerprint String      @unique
+  source      ErrorSource
+  context     String
+  message     String
+  stack       String?
+  appVersion  String?     @map("app_version")
+  count       Int         @default(1)
+  firstSeenAt DateTime    @default(now()) @map("first_seen_at")
+  lastSeenAt  DateTime    @default(now()) @map("last_seen_at")
+  notifiedAt  DateTime?   @map("notified_at")
+  resolvedAt  DateTime?   @map("resolved_at")
+
+  @@index([resolvedAt, lastSeenAt])
+  @@map("error_events")
+}

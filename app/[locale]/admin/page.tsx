@@ -19,6 +19,7 @@ import {
   Sparkles,
   Flag,
   CalendarRange,
+  Bug,
 } from "lucide-react";
 
 export default async function AdminPage() {
@@ -30,9 +31,10 @@ export default async function AdminPage() {
 
   const isSuperAdmin = user.role === "superadmin";
 
-  const [pendingReportsCount, pendingCommunityReportsCount] = await Promise.all([
+  const [pendingReportsCount, pendingCommunityReportsCount, openErrorsCount] = await Promise.all([
     prisma.jerseyReport.count({ where: { status: "PENDING" } }),
     prisma.postReport.count({ where: { status: "PENDING" } }),
+    prisma.errorEvent.count({ where: { resolvedAt: null } }),
   ]);
 
   const tMod = await getTranslations("Moderation.admin");
@@ -126,6 +128,30 @@ export default async function AdminPage() {
             <Link href="/admin/community-reports">
               <Button className="w-full cursor-pointer">
                 {tMod("cardCta")}
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Bug className="h-5 w-5" />
+              <CardTitle className="flex-1">Erreurs</CardTitle>
+              {openErrorsCount > 0 && (
+                <span className="inline-flex items-center justify-center min-w-6 h-6 px-2 rounded-full bg-destructive text-destructive-foreground text-xs font-bold">
+                  {openErrorsCount}
+                </span>
+              )}
+            </div>
+            <CardDescription>
+              Erreurs serveur et iOS regroupées, avec leur nombre d&apos;occurrences
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/admin/errors">
+              <Button className="w-full cursor-pointer">
+                Voir les erreurs
               </Button>
             </Link>
           </CardContent>

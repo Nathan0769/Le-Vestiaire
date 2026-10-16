@@ -56,6 +56,17 @@ export interface ApnsResult {
   status: number;
   /** Token à supprimer (410 Unregistered / 400 BadDeviceToken). */
   invalid: boolean;
+  /** Champ `reason` de la réponse APNs en cas d'échec (ex. InvalidProviderToken). */
+  reason?: string;
+}
+
+function apnsReason(data: string): string | undefined {
+  try {
+    const reason = (JSON.parse(data) as { reason?: unknown }).reason;
+    return typeof reason === "string" ? reason : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 export async function sendApns(
@@ -108,11 +119,11 @@ export async function sendApns(
       client.close();
       const invalid =
         status === 410 || (status === 400 && data.includes("BadDeviceToken"));
-      done({ ok: status === 200, status, invalid });
+      done({ ok: status === 200, status, invalid, reason: status === 200 ? undefined : apnsReason(data) });
     });
-    req.on("error", () => {
+    req.on("error", (error) => {
       client.close();
-      done({ ok: false, status: 0, invalid: false });
+      done({ ok: false, status: 0, invalid: false, reason: error.message });
     });
 
     req.write(body);
