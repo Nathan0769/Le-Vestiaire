@@ -37,7 +37,6 @@ export function filterApplicablePatches(
 
   const applicable = allPatches
     .filter((p) => p.isActive)
-    .filter((p) => p.family !== "CUSTOM")
     .filter((p) =>
       isPatchEligible(p, resolvedLeagueId, isNational, clubConfederation)
     )
@@ -139,8 +138,10 @@ function isPatchEligible(
       if (patch.leagueId !== null && patch.leagueId !== resolvedLeagueId) return false;
       return true;
 
+    // Patchs propres à un club (titres, anniversaires) : seule la liste de clubs
+    // décide, quelle que soit la ligue (voir isClubEligible).
     case "CUSTOM":
-      return false;
+      return true;
 
     default:
       return false;
@@ -159,6 +160,7 @@ function isClubEligible(
     activeVersion && activeVersion.eligibleClubIds.length > 0
       ? activeVersion.eligibleClubIds
       : patch.eligibleClubIds;
-  if (effective.length === 0) return true;
+  // Un patch CUSTOM sans club n'est qu'une cible de rattachement admin : caché.
+  if (effective.length === 0) return patch.family !== "CUSTOM";
   return effective.includes(clubId);
 }

@@ -152,9 +152,9 @@ function PatchFormBody({
           </Select>
           {family === "CUSTOM" && (
             <p className="text-xs text-muted-foreground">
-              Les patchs CUSTOM n&apos;apparaissent pas dans le formulaire
-              utilisateur : il verra le patch sur son maillot sans pouvoir le
-              décocher.
+              Patch propre à un club (titres, anniversaire...) : il n&apos;est
+              proposé qu&apos;aux clubs listés (sur le patch ou la version). Sans
+              club, il reste caché du formulaire utilisateur.
             </p>
           )}
         </div>

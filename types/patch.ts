@@ -57,7 +57,7 @@ export const PATCH_FAMILY_LABELS_FR: Record<PatchFamily, string> = {
   DOMESTIC_CUP: "Coupe nationale",
   DOMESTIC_SUPERCUP: "Supercoupe nationale",
   NATIONAL_TEAM_COMPETITION: "Compétitions sélections nationales",
-  CUSTOM: "Personnalisé",
+  CUSTOM: "Patchs du club",
 };
 
 export const PATCH_VARIANT_LABELS_FR: Record<PatchVariant, string> = {

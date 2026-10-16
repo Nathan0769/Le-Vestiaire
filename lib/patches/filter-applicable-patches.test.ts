@@ -183,7 +183,7 @@ describe("filterApplicablePatches", () => {
     expect(filterWithCurrentLeague([patch], jersey)).toHaveLength(0);
   });
 
-  it("15. CUSTOM est toujours exclu du catalogue applicable", () => {
+  it("15. CUSTOM sans liste de clubs est exclu du catalogue applicable", () => {
     const jersey = makeJersey("ligue-1");
     const patch = makePatch({ family: "CUSTOM", name: "Centenaire club" });
     const result = filterWithCurrentLeague([patch], jersey);
@@ -651,5 +651,38 @@ describe("filterApplicablePatches - J1", () => {
     });
     const result = filterWithCurrentLeague([champion, badge], jersey);
     expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+});
+
+describe("filterApplicablePatches - patchs propres à un club (CUSTOM)", () => {
+  it("CUSTOM : proposé au club cité dans la liste du patch", () => {
+    const patch = makePatch({ id: "p-club", family: "CUSTOM", eligibleClubIds: ["c1"] });
+    const result = filterWithCurrentLeague([patch], makeJersey("liga-mx"));
+    expect(result.map((r) => r.patch.id)).toEqual(["p-club"]);
+  });
+
+  it("CUSTOM : non proposé à un autre club", () => {
+    const patch = makePatch({ id: "p-club", family: "CUSTOM", eligibleClubIds: ["c2"] });
+    expect(filterWithCurrentLeague([patch], makeJersey("liga-mx"))).toHaveLength(0);
+  });
+
+  it("CUSTOM : sans liste de clubs, reste caché", () => {
+    const patch = makePatch({ id: "p-club", family: "CUSTOM", eligibleClubIds: [] });
+    expect(filterWithCurrentLeague([patch], makeJersey("liga-mx"))).toHaveLength(0);
+  });
+
+  it("CUSTOM : la liste de la version active suffit", () => {
+    const patch = makePatch({
+      id: "p-club",
+      family: "CUSTOM",
+      versions: [makeVersion({ seasonStart: "2024-25", eligibleClubIds: ["c1"] })],
+    });
+    const result = filterWithCurrentLeague([patch], makeJersey("liga-mx", "2025-26"));
+    expect(result[0]?.activeVersion?.id).toBe("v1");
+  });
+
+  it("CUSTOM : proposé quelle que soit la ligue du maillot", () => {
+    const patch = makePatch({ id: "p-club", family: "CUSTOM", eligibleClubIds: ["c1"] });
+    expect(filterWithCurrentLeague([patch], makeJersey("ligue-1"))).toHaveLength(1);
   });
 });

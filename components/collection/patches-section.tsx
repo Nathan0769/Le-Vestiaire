@@ -109,7 +109,7 @@ export function PatchesSection({
         <p className="text-sm text-muted-foreground">{t("empty")}</p>
       )}
 
-      {PATCH_FAMILY_ORDER.filter((f) => f !== "CUSTOM").map((family) => {
+      {PATCH_FAMILY_ORDER.map((family) => {
         const allItems = patchesByFamily.get(family);
         if (!allItems || allItems.length === 0) return null;
         // Masque les patchs du groupe verrouille oppose (un maillot est soit
