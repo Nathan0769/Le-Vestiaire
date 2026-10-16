@@ -3,6 +3,11 @@ import { isCalendarYearLeague } from "./calendar-year-leagues";
 
 const YEAR_REGEX = /^\d{4}$/;
 export const SEASON_REGEX = /^\d{4}-\d{2}$/;
+const YEAR_OR_SEASON_REGEX = /^\d{4}(-\d{2})?$/;
+
+// Ligues passées de l'année civile à la saison à cheval (J1 en 2026-27) :
+// leurs versions de patch peuvent être dans l'un ou l'autre format.
+const MIXED_SEASON_FORMAT_LEAGUE_IDS = new Set(["j1-league"]);
 
 export type ValidationResult =
   | { valid: true }
@@ -15,15 +20,31 @@ export function isYearFormat(
   return family === "NATIONAL_TEAM_COMPETITION" || isCalendarYearLeague(leagueId);
 }
 
+export type PatchPeriodFormat = {
+  regex: RegExp;
+  label: string;
+  useYear: boolean;
+};
+
+export function getPatchPeriodFormat(
+  family: PatchFamily,
+  leagueId: string | null
+): PatchPeriodFormat {
+  if (leagueId && MIXED_SEASON_FORMAT_LEAGUE_IDS.has(leagueId)) {
+    return { regex: YEAR_OR_SEASON_REGEX, label: "YYYY ou YYYY-YY", useYear: true };
+  }
+  return isYearFormat(family, leagueId)
+    ? { regex: YEAR_REGEX, label: "YYYY", useYear: true }
+    : { regex: SEASON_REGEX, label: "YYYY-YY", useYear: false };
+}
+
 export function validatePatchVersionPeriod(
   family: PatchFamily,
   leagueId: string | null,
   start: string,
   end: string | null
 ): ValidationResult {
-  const useYear = isYearFormat(family, leagueId);
-  const regex = useYear ? YEAR_REGEX : SEASON_REGEX;
-  const formatLabel = useYear ? "YYYY" : "YYYY-YY";
+  const { regex, label: formatLabel } = getPatchPeriodFormat(family, leagueId);
 
   if (!regex.test(start)) {
     return {

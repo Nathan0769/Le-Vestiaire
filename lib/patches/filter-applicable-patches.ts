@@ -18,6 +18,7 @@ const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
   "bundesliga",
   "premier-league",
   "mls",
+  "j1-league",
 ]);
 
 // Ligues dont les patchs n'existent que sur les saisons et clubs couverts par une

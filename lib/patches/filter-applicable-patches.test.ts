@@ -631,3 +631,25 @@ describe("filterApplicablePatches - MLS", () => {
     expect(result[0].activeVersion).toBeNull();
   });
 });
+
+describe("filterApplicablePatches - J1", () => {
+  it("J1 : le champion en titre remplace le badge de ligue", () => {
+    const jersey = makeJersey("j1-league", "2025");
+    const champion = makePatch({
+      id: "p-champ",
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "j1-league",
+      versions: [
+        makeVersion({ seasonStart: "2025", seasonEnd: "2025", eligibleClubIds: ["c1"] }),
+      ],
+    });
+    const badge = makePatch({
+      id: "p-badge",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "j1-league",
+      versions: [makeVersion({ seasonStart: "2019" })],
+    });
+    const result = filterWithCurrentLeague([champion, badge], jersey);
+    expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+});

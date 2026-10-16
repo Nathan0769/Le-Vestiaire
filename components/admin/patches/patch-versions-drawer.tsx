@@ -20,7 +20,7 @@ import {
   useUpdatePatchVersion,
   type AdminPatch,
 } from "@/hooks/admin/usePatchesAdmin";
-import { isYearFormat } from "@/lib/patches/season-format";
+import { getPatchPeriodFormat } from "@/lib/patches/season-format";
 import { NATIONAL_TEAM_LEAGUE_IDS } from "@/lib/patches/confederation-by-league";
 import { ClubsMultiSelect } from "./clubs-multi-select";
 
@@ -53,9 +53,12 @@ export function PatchVersionsDrawer({
       ? [...NATIONAL_TEAM_LEAGUE_IDS]
       : undefined;
 
-  const useYear = patch ? isYearFormat(patch.family, patch.leagueId) : false;
-  const formatRegex = useYear ? /^\d{4}$/ : /^\d{4}-\d{2}$/;
-  const formatLabel = useYear ? "YYYY" : "YYYY-YY";
+  const periodFormat = patch
+    ? getPatchPeriodFormat(patch.family, patch.leagueId)
+    : null;
+  const useYear = periodFormat?.useYear ?? false;
+  const formatRegex = periodFormat?.regex ?? /^\d{4}-\d{2}$/;
+  const formatLabel = periodFormat?.label ?? "YYYY-YY";
   const startLabel = useYear ? "Année début" : "Saison début";
   const endLabel = useYear ? "Année fin" : "Saison fin";
   const startPlaceholder = useYear ? "2024" : "2024-25";

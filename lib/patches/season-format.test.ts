@@ -4,6 +4,7 @@ import {
   isYearFormat,
   validatePatchVersionPeriod,
   isJerseySeasonInPatchPeriod,
+  getPatchPeriodFormat,
 } from "./season-format";
 
 describe("isYearFormat", () => {
@@ -134,6 +135,35 @@ describe("format année des ligues à année civile", () => {
     expect(
       validatePatchVersionPeriod("DOMESTIC_CHAMPION", "mls", "2025-26", null)
     ).toEqual({ valid: false, error: "Format début invalide (attendu YYYY)" });
+  });
+});
+
+describe("format mixte des ligues ayant changé de calendrier (J1)", () => {
+  it("accepte une version en année pour la J1", () => {
+    expect(
+      validatePatchVersionPeriod("DOMESTIC_LEAGUE_BADGE", "j1-league", "2019", null)
+    ).toEqual({ valid: true });
+  });
+
+  it("accepte une version en saison pour la J1", () => {
+    expect(
+      validatePatchVersionPeriod("DOMESTIC_LEAGUE_BADGE", "j1-league", "2026-27", null)
+    ).toEqual({ valid: true });
+  });
+
+  it("rejette un format invalide pour la J1", () => {
+    expect(
+      validatePatchVersionPeriod("DOMESTIC_LEAGUE_BADGE", "j1-league", "abcd", null)
+    ).toEqual({
+      valid: false,
+      error: "Format début invalide (attendu YYYY ou YYYY-YY)",
+    });
+  });
+
+  it("getPatchPeriodFormat expose le format mixte pour la J1", () => {
+    const format = getPatchPeriodFormat("DOMESTIC_LEAGUE_BADGE", "j1-league");
+    expect(format.label).toBe("YYYY ou YYYY-YY");
+    expect(format.regex.test("2019") && format.regex.test("2026-27")).toBe(true);
   });
 });
 
