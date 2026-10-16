@@ -19,6 +19,7 @@ const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
   "premier-league",
   "mls",
   "j1-league",
+  "liga-mx",
 ]);
 
 // Ligues dont les patchs n'existent que sur les saisons et clubs couverts par une

@@ -686,3 +686,25 @@ describe("filterApplicablePatches - patchs propres à un club (CUSTOM)", () => {
     expect(filterWithCurrentLeague([patch], makeJersey("ligue-1"))).toHaveLength(1);
   });
 });
+
+describe("filterApplicablePatches - Liga MX", () => {
+  it("Liga MX : le champion en titre remplace le badge de ligue", () => {
+    const jersey = makeJersey("liga-mx", "2025-26");
+    const champion = makePatch({
+      id: "p-champ",
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "liga-mx",
+      versions: [
+        makeVersion({ seasonStart: "2025-26", seasonEnd: "2025-26", eligibleClubIds: ["c1"] }),
+      ],
+    });
+    const badge = makePatch({
+      id: "p-badge",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "liga-mx",
+      versions: [makeVersion({ seasonStart: "2019-20" })],
+    });
+    const result = filterWithCurrentLeague([champion, badge], jersey);
+    expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+});
