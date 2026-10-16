@@ -1,5 +1,6 @@
 import type { Patch, PatchVersion } from "@prisma/client";
 import { isJerseySeasonInPatchPeriod } from "./season-format";
+import { findActiveVersion } from "./find-active-version";
 
 interface LinkOccurrence {
   id: string;
@@ -51,9 +52,12 @@ export function computeEligibilityAdditions(
   const versionLists = new Map<string, string[]>();
 
   for (const { clubId, season } of occurrences) {
-    const activeVersion = patch.versions.find((v) =>
-      isJerseySeasonInPatchPeriod(season, v.seasonStart, v.seasonEnd)
-    );
+    // La version propre au club prime (badges par club), sinon la première de la saison.
+    const activeVersion =
+      findActiveVersion(patch.versions, season, clubId) ??
+      patch.versions.find((v) =>
+        isJerseySeasonInPatchPeriod(season, v.seasonStart, v.seasonEnd)
+      );
     if (activeVersion && activeVersion.eligibleClubIds.length > 0) {
       const list =
         versionLists.get(activeVersion.id) ?? [...activeVersion.eligibleClubIds];

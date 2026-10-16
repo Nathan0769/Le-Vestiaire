@@ -8,6 +8,7 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { isBlocked } from "@/lib/follow";
 import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
+import { scopePatchVersionsToClub } from "@/lib/patches/find-active-version";
 
 /**
  * Collection publique d'un utilisateur par username (app mobile).
@@ -90,6 +91,7 @@ export async function GET(
                     seasonStart: true,
                     seasonEnd: true,
                     imageUrl: true,
+                    eligibleClubIds: true,
                   },
                 },
               },
@@ -149,6 +151,7 @@ export async function GET(
 
         return {
           ...item,
+          patches: scopePatchVersionsToClub(item.patches, item.jersey.clubId),
           userPhotoUrl: userPhotoUrls[0] ?? null,
           userPhotoUrls,
           purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,

@@ -1,4 +1,5 @@
 import type { PatchFamily } from "@prisma/client";
+import { isCalendarYearLeague } from "./calendar-year-leagues";
 
 const YEAR_REGEX = /^\d{4}$/;
 export const SEASON_REGEX = /^\d{4}-\d{2}$/;
@@ -7,16 +8,20 @@ export type ValidationResult =
   | { valid: true }
   | { valid: false; error: string };
 
-export function isYearFormat(family: PatchFamily): boolean {
-  return family === "NATIONAL_TEAM_COMPETITION";
+export function isYearFormat(
+  family: PatchFamily,
+  leagueId: string | null
+): boolean {
+  return family === "NATIONAL_TEAM_COMPETITION" || isCalendarYearLeague(leagueId);
 }
 
 export function validatePatchVersionPeriod(
   family: PatchFamily,
+  leagueId: string | null,
   start: string,
   end: string | null
 ): ValidationResult {
-  const useYear = isYearFormat(family);
+  const useYear = isYearFormat(family, leagueId);
   const regex = useYear ? YEAR_REGEX : SEASON_REGEX;
   const formatLabel = useYear ? "YYYY" : "YYYY-YY";
 

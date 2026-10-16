@@ -108,4 +108,17 @@ describe("computeEligibilityAdditions", () => {
       ])
     ).toEqual({ patchClubIds: ["a", "b"], versionUpdates: [] });
   });
+
+  it("ne rajoute pas un club dans la version d'un autre club quand il a la sienne", () => {
+    const patch = makePatch(
+      [],
+      [
+        { seasonStart: "2023", eligibleClubIds: ["a"] },
+        { seasonStart: "2023", eligibleClubIds: ["b"] },
+      ]
+    );
+    expect(
+      computeEligibilityAdditions(patch, [{ clubId: "b", season: "2024" }])
+    ).toEqual(NOTHING);
+  });
 });

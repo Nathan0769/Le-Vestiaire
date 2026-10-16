@@ -53,7 +53,7 @@ export function PatchVersionsDrawer({
       ? [...NATIONAL_TEAM_LEAGUE_IDS]
       : undefined;
 
-  const useYear = patch ? isYearFormat(patch.family) : false;
+  const useYear = patch ? isYearFormat(patch.family, patch.leagueId) : false;
   const formatRegex = useYear ? /^\d{4}$/ : /^\d{4}-\d{2}$/;
   const formatLabel = useYear ? "YYYY" : "YYYY-YY";
   const startLabel = useYear ? "Année début" : "Saison début";

@@ -554,3 +554,80 @@ describe("filterApplicablePatches", () => {
     expect(result.map((r) => r.patch.id).sort()).toEqual(["p-legacy", "p-sb"]);
   });
 });
+
+describe("filterApplicablePatches - MLS", () => {
+  function mlsJersey(season: string, clubId = "c1"): JerseyContext {
+    return { ...makeJersey("mls", season), clubId };
+  }
+
+  it("MLS : une version par club, le maillot reçoit la version de son club", () => {
+    const badge = makePatch({
+      id: "p-mls",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "mls",
+      versions: [
+        makeVersion({ id: "v-c1", seasonStart: "2023", eligibleClubIds: ["c1"] }),
+        makeVersion({ id: "v-c2", seasonStart: "2023", eligibleClubIds: ["c2"] }),
+      ],
+    });
+    const result = filterWithCurrentLeague([badge], mlsJersey("2024", "c2"));
+    expect(result[0]?.activeVersion?.id).toBe("v-c2");
+  });
+
+  it("MLS : patch sans version active non proposé", () => {
+    const badge = makePatch({
+      id: "p-mls",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "mls",
+      versions: [
+        makeVersion({ seasonStart: "1996", seasonEnd: "2014", eligibleClubIds: ["c1"] }),
+      ],
+    });
+    expect(filterWithCurrentLeague([badge], mlsJersey("1980"))).toHaveLength(0);
+  });
+
+  it("MLS : Champion MLS non proposé à un autre club", () => {
+    const champion = makePatch({
+      id: "p-champ",
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "mls",
+      versions: [
+        makeVersion({ seasonStart: "2025", seasonEnd: "2025", eligibleClubIds: ["la-galaxy"] }),
+      ],
+    });
+    expect(filterWithCurrentLeague([champion], mlsJersey("2025"))).toHaveLength(0);
+  });
+
+  it("MLS : le champion en titre remplace le badge MLS", () => {
+    const champion = makePatch({
+      id: "p-champ",
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "mls",
+      versions: [
+        makeVersion({ id: "cv", seasonStart: "2025", seasonEnd: "2025", eligibleClubIds: ["c1"] }),
+      ],
+    });
+    const badge = makePatch({
+      id: "p-mls",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "mls",
+      versions: [
+        makeVersion({ id: "bv", seasonStart: "2023", eligibleClubIds: ["c1"] }),
+      ],
+    });
+    const result = filterWithCurrentLeague([champion, badge], mlsJersey("2025"));
+    expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+
+  it("Hors MLS : patch sans version active toujours proposé", () => {
+    const badge = makePatch({
+      id: "p-l1",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "ligue-1",
+      versions: [makeVersion({ seasonStart: "2030-31" })],
+    });
+    const result = filterWithCurrentLeague([badge], makeJersey("ligue-1", "2024-25"));
+    expect(result).toHaveLength(1);
+    expect(result[0].activeVersion).toBeNull();
+  });
+});

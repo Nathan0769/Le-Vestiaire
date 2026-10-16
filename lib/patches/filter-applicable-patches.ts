@@ -4,6 +4,7 @@ import {
   CONFEDERATION_BY_LEAGUE_ID,
   isNationalTeamLeague,
 } from "./confederation-by-league";
+import { findActiveVersion } from "./find-active-version";
 import { isJerseySeasonInPatchPeriod } from "./season-format";
 import { pickTopUefaBadgeId } from "./uefa-badge-precedence";
 
@@ -11,12 +12,17 @@ type PatchWithVersions = Patch & { versions: PatchVersion[] };
 type JerseyContext = Jersey & { club: Club & { league: League } };
 
 // Ligues où le badge "champion en titre" remplace le badge de ligue normal.
-// Restreint volontairement à ces trois ligues pour l'instant.
+// Restreint volontairement à ces ligues pour l'instant.
 const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
   "ligue-1",
   "bundesliga",
   "premier-league",
+  "mls",
 ]);
+
+// Ligues dont les patchs n'existent que sur les saisons et clubs couverts par une
+// version : pas de version active = patch non proposé (ex. maillots NASL rangés en MLS).
+const STRICT_VERSION_LEAGUE_IDS = new Set(["mls"]);
 
 export function filterApplicablePatches(
   allPatches: PatchWithVersions[],
@@ -36,12 +42,19 @@ export function filterApplicablePatches(
     )
     .map((p) => ({
       patch: p,
-      activeVersion: p.versions.find((v) =>
+      activeVersion: findActiveVersion(p.versions, jersey.season, jersey.clubId),
+      hasSeasonVersion: p.versions.some((v) =>
         isJerseySeasonInPatchPeriod(jersey.season, v.seasonStart, v.seasonEnd)
-      ) ?? null,
+      ),
     }))
-    .filter(({ patch, activeVersion }) =>
-      isClubEligible(patch, activeVersion, jersey.clubId)
+    .filter(
+      ({ patch, activeVersion }) =>
+        activeVersion !== null ||
+        patch.leagueId === null ||
+        !STRICT_VERSION_LEAGUE_IDS.has(patch.leagueId)
+    )
+    .filter(({ patch, activeVersion, hasSeasonVersion }) =>
+      isClubEligible(patch, activeVersion, hasSeasonVersion, jersey.clubId)
     );
 
   // Si le club est champion en titre sur la saison du maillot (patch
@@ -136,8 +149,11 @@ function isPatchEligible(
 function isClubEligible(
   patch: PatchWithVersions,
   activeVersion: PatchVersion | null,
+  hasSeasonVersion: boolean,
   clubId: string
 ): boolean {
+  // Des versions couvrent la saison mais aucune ne cite le club : il en est exclu.
+  if (!activeVersion && hasSeasonVersion) return false;
   const effective =
     activeVersion && activeVersion.eligibleClubIds.length > 0
       ? activeVersion.eligibleClubIds

@@ -32,6 +32,7 @@ import Image from "next/image";
 import { JerseyType } from "@prisma/client";
 import { CreateProposalData } from "@/types/proposal";
 import { useTranslations } from "next-intl";
+import { isCalendarYearLeague } from "@/lib/patches/calendar-year-leagues";
 
 interface Club {
   id: string;
@@ -72,7 +73,6 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
   const [seasonError, setSeasonError] = useState<string | null>(null);
 
   const NATIONAL_TEAM_LEAGUES = ["conmebol", "caf", "concacaf", "uefa", "afc"];
-  const CALENDAR_YEAR_LEAGUES = ["mls", "brasileiro-serie-a", "allsvenskan"]; // Ligues fonctionnant par année civile
 
   useEffect(() => {
     const loadClubs = async () => {
@@ -138,7 +138,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
 
     const leagueId = selectedClub.league.id.toLowerCase();
     const isYearFormat = NATIONAL_TEAM_LEAGUES.includes(leagueId) ||
-                        CALENDAR_YEAR_LEAGUES.includes(leagueId);
+                        isCalendarYearLeague(leagueId);
 
     if (isYearFormat) {
       // Format YYYY pour sélections nationales et ligues par année civile
@@ -411,7 +411,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
                   .find((club) => club.id === formData.clubId)!
                   .league.id.toLowerCase();
                 return NATIONAL_TEAM_LEAGUES.includes(leagueId) ||
-                       CALENDAR_YEAR_LEAGUES.includes(leagueId);
+                       isCalendarYearLeague(leagueId);
               })()
                 ? t("seasonPlaceholderNationalTeam")
                 : t("seasonPlaceholder")

@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
+import { scopePatchVersionsToClub } from "@/lib/patches/find-active-version";
 
 export async function GET() {
   try {
@@ -53,6 +54,7 @@ export async function GET() {
                     seasonStart: true,
                     seasonEnd: true,
                     imageUrl: true,
+                    eligibleClubIds: true,
                   },
                 },
               },
@@ -112,6 +114,7 @@ export async function GET() {
 
         return {
           ...item,
+          patches: scopePatchVersionsToClub(item.patches, item.jersey.clubId),
           userPhotoUrl: userPhotoUrls[0] ?? null,
           userPhotoUrls,
           userPhotoPaths: item.userPhotoUrls,

@@ -127,6 +127,7 @@ export async function PATCH(
         seasonEnd !== undefined ? seasonEnd : existing.seasonEnd;
       const periodValidation = validatePatchVersionPeriod(
         existing.patch.family,
+        existing.patch.leagueId,
         effectiveStart,
         effectiveEnd
       );

@@ -7,6 +7,7 @@ import { ShareCollectionButton } from "@/components/collection/share-collection-
 import { Package, AlertCircle, RefreshCw, BarChart3 } from "lucide-react";
 import type { CollectionItemWithJersey } from "@/types/collection-page";
 import { getR2PresignedUrl, USER_JERSEY_PHOTOS_BUCKET } from "@/lib/r2-storage";
+import { scopePatchVersionsToClub } from "@/lib/patches/find-active-version";
 import { TopAchievementsBadges } from "@/components/achievements/top-achievements-badges";
 import { maybeCheckAllAchievements } from "@/lib/achievements/check";
 import { pickTopAchievements } from "@/lib/achievements/top-achievements";
@@ -117,6 +118,7 @@ export default async function CollectionPage() {
 
         return {
           ...item,
+          patches: scopePatchVersionsToClub(item.patches, item.jersey.clubId),
           purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
           isGift: item.isGift,
           isFromMysteryBox: item.isFromMysteryBox,

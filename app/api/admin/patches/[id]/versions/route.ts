@@ -44,6 +44,7 @@ export async function POST(
 
     const periodValidation = validatePatchVersionPeriod(
       patch.family,
+      patch.leagueId,
       seasonStart,
       seasonEnd
     );

@@ -23,6 +23,7 @@ import {
 } from "@/lib/user-jersey-photos";
 import { isSupporter } from "@/lib/subscription";
 import { hasExclusivityConflict } from "@/lib/patches/patch-exclusivity";
+import { scopePatchVersionsToClub } from "@/lib/patches/find-active-version";
 
 export async function GET(
   _request: Request,
@@ -103,6 +104,7 @@ export async function GET(
 
   return NextResponse.json({
     ...item,
+    patches: scopePatchVersionsToClub(item.patches, item.jersey.clubId),
     userPhotoUrl: userPhotoUrls[0] ?? null,
     userPhotoUrls,
     purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
@@ -436,6 +438,7 @@ export async function PATCH(
       message: "Maillot mis à jour avec succès",
       userJersey: {
         ...updated,
+        patches: scopePatchVersionsToClub(updated.patches, updated.jersey.clubId),
         purchasePrice: updated.purchasePrice
           ? Number(updated.purchasePrice)
           : null,
