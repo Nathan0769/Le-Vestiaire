@@ -157,7 +157,7 @@ describe("filterApplicablePatches", () => {
   it("11. Saison hors toutes les fenetres retourne activeVersion=null", () => {
     const jersey = makeJersey("ligue-1", "2019-20");
     const v1 = makeVersion({ seasonStart: "2020-21", seasonEnd: "2023-24" });
-    const patch = makePatch({ versions: [v1] });
+    const patch = makePatch({ family: "DOMESTIC_LEAGUE_BADGE", leagueId: "ligue-1", versions: [v1] });
     const result = filterWithCurrentLeague([patch], jersey);
     expect(result[0].activeVersion).toBeNull();
   });
@@ -629,6 +629,23 @@ describe("filterApplicablePatches - MLS", () => {
     const result = filterWithCurrentLeague([badge], makeJersey("ligue-1", "2024-25"));
     expect(result).toHaveLength(1);
     expect(result[0].activeVersion).toBeNull();
+  });
+});
+
+describe("filterApplicablePatches - compétitions UEFA par saison", () => {
+  it("UEFA : patch versionné sans version pour la saison non proposé", () => {
+    const starball = makePatch({
+      id: "p-sb",
+      family: "UEFA_COMPETITION",
+      variant: "UEFA_STARBALL",
+      versions: [makeVersion({ seasonStart: "1992-93", seasonEnd: "1992-93", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([starball], makeJersey("ligue-1", "1990-91"))).toHaveLength(0);
+  });
+
+  it("UEFA : patch sans aucune version toujours proposé", () => {
+    const patch = makePatch({ id: "p-new", family: "UEFA_COMPETITION" });
+    expect(filterWithCurrentLeague([patch], makeJersey("ligue-1", "1990-91"))).toHaveLength(1);
   });
 });
 

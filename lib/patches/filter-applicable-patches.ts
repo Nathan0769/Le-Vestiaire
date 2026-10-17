@@ -48,12 +48,7 @@ export function filterApplicablePatches(
         isJerseySeasonInPatchPeriod(jersey.season, v.seasonStart, v.seasonEnd)
       ),
     }))
-    .filter(
-      ({ patch, activeVersion }) =>
-        activeVersion !== null ||
-        patch.leagueId === null ||
-        !STRICT_VERSION_LEAGUE_IDS.has(patch.leagueId)
-    )
+    .filter(({ patch, activeVersion }) => activeVersion !== null || !isVersionStrict(patch))
     .filter(({ patch, activeVersion, hasSeasonVersion }) =>
       isClubEligible(patch, activeVersion, hasSeasonVersion, jersey.clubId)
     );
@@ -110,6 +105,14 @@ export function filterApplicablePatches(
         }
       : null,
   }));
+}
+
+// Les compétitions UEFA sont versionnées saison par saison avec leurs participants :
+// une saison sans version (avant la création du patch, après sa disparition) n'a pas
+// de patch. Un patch UEFA encore sans aucune version reste proposé à tous.
+function isVersionStrict(patch: PatchWithVersions): boolean {
+  if (patch.leagueId !== null && STRICT_VERSION_LEAGUE_IDS.has(patch.leagueId)) return true;
+  return patch.family === "UEFA_COMPETITION" && patch.versions.length > 0;
 }
 
 function isPatchEligible(
