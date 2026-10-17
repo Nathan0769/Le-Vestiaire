@@ -1,0 +1,46 @@
+{
+  "id": "cmvc7a1qu000amse8a9n5mwxs",
+  "email": "test-1792229682771474@example.com",
+  "name": "Test User",
+  "username": "test-179222968277147",
+  "usernameGenerated": false,
+  "image": "https://test.r2.dev/photo.jpg",
+  "bio": "Collectionneur",
+  "isSupporter": true,
+  "isPrivate": false,
+  "notificationsEnabled": true,
+  "disabledPushTypes": [],
+  "hasPassword": true,
+  "favoriteClub": {
+    "id": "cmvc7a1j00002mse863odlnvd",
+    "name": "PSG",
+    "shortName": "TC",
+    "logoUrl": "https://example.com/club.png",
+    "primaryColor": "#000000",
+    "league": {
+      "id": "cmvc7a1gu0000mse87mdqjfvb",
+      "name": "Ligue 1",
+      "country": "France",
+      "logoUrl": "https://example.com/logo.png",
+      "tier": 1
+    }
+  },
+  "createdAt": "2026-10-17T09:34:42.773Z",
+  "topAchievements": [
+    {
+      "key": "social.follower.first",
+      "tier": "BRONZE",
+      "imageUrl": null
+    }
+  ],
+  "achievementsUnlockedCount": 1,
+  "achievementsTotal": 55,
+  "stats": {
+    "collectionCount": 2,
+    "wishlistCount": 2,
+    "ratingsCount": 1,
+    "clubsCount": 1,
+    "followingCount": 1,
+    "followersCount": 1
+  }
+}

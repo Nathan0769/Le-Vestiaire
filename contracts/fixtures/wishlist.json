@@ -1,0 +1,89 @@
+[
+  {
+    "id": "cmvc7a6ho003dmse8gb8fphpa",
+    "jerseyId": "cmvc7a61x002kmse8u4ujq27s",
+    "priority": 3,
+    "createdAt": "2026-10-17T09:34:48.925Z",
+    "jersey": {
+      "id": "cmvc7a61x002kmse8u4ujq27s",
+      "name": "Maillot PSG Domicile 2024/25",
+      "clubId": "cmvc7a617002imse8909wqi3j",
+      "season": "2024/25",
+      "type": "HOME",
+      "brand": "Nike",
+      "imageUrl": "https://example.com/jersey.png",
+      "retailPrice": 90,
+      "createdAt": "2026-10-17T09:34:48.358Z",
+      "updatedAt": "2026-10-17T09:34:48.358Z",
+      "description": null,
+      "slug": null,
+      "descriptionTranslations": null,
+      "variant": 1,
+      "mainColor": null,
+      "club": {
+        "id": "cmvc7a617002imse8909wqi3j",
+        "name": "PSG",
+        "shortName": "TC",
+        "leagueId": "cmvc7a60k002gmse864u9ivwy",
+        "logoUrl": "https://example.com/club.png",
+        "primaryColor": "#000000",
+        "apiFootballTeamId": null,
+        "league": {
+          "id": "cmvc7a60k002gmse864u9ivwy",
+          "name": "Ligue 1",
+          "country": "France",
+          "logoUrl": "https://example.com/logo.png",
+          "tier": 1,
+          "logoDarkUrl": null
+        }
+      },
+      "cfsAvailability": {
+        "id": "cmvc7a63a002omse84fw4l0gi",
+        "price": 89.99,
+        "promoPrice": 59.99,
+        "affiliateUrl": "https://example.com/affilie"
+      }
+    }
+  },
+  {
+    "id": "cmvc7a6ho003emse8z73jfig7",
+    "jerseyId": "cmvc7a62m002mmse8li4r0cvo",
+    "priority": 1,
+    "createdAt": "2026-10-17T09:34:48.925Z",
+    "jersey": {
+      "id": "cmvc7a62m002mmse8li4r0cvo",
+      "name": "Maillot PSG Gardien 2024/25",
+      "clubId": "cmvc7a617002imse8909wqi3j",
+      "season": "2024/25",
+      "type": "GOALKEEPER",
+      "brand": "Nike",
+      "imageUrl": "https://example.com/jersey.png",
+      "retailPrice": 90,
+      "createdAt": "2026-10-17T09:34:48.382Z",
+      "updatedAt": "2026-10-17T09:34:48.382Z",
+      "description": null,
+      "slug": null,
+      "descriptionTranslations": null,
+      "variant": 1,
+      "mainColor": null,
+      "club": {
+        "id": "cmvc7a617002imse8909wqi3j",
+        "name": "PSG",
+        "shortName": "TC",
+        "leagueId": "cmvc7a60k002gmse864u9ivwy",
+        "logoUrl": "https://example.com/club.png",
+        "primaryColor": "#000000",
+        "apiFootballTeamId": null,
+        "league": {
+          "id": "cmvc7a60k002gmse864u9ivwy",
+          "name": "Ligue 1",
+          "country": "France",
+          "logoUrl": "https://example.com/logo.png",
+          "tier": 1,
+          "logoDarkUrl": null
+        }
+      },
+      "cfsAvailability": null
+    }
+  }
+]

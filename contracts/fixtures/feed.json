@@ -1,0 +1,123 @@
+{
+  "items": [
+    {
+      "id": "cmvc7a7ri004rmse8z3miofa7",
+      "type": "CAP_REACHED",
+      "createdAt": "2026-10-17T09:34:50.574Z",
+      "likeCount": 0,
+      "commentCount": 0,
+      "hasLiked": false,
+      "isFollowingAuthor": false,
+      "likersPreview": [],
+      "author": {
+        "id": "cmvc7a7a6003xmse830wv4agx",
+        "username": "test-179222968994947",
+        "name": "test-179222968994947",
+        "avatarUrl": "https://test.r2.dev/photo.jpg",
+        "favoriteClubColor": "#000000",
+        "favoriteClubName": "PSG",
+        "isSupporter": true,
+        "avatarFrame": null
+      },
+      "payload": {
+        "capKind": "COLLECTION_50",
+        "mosaic": [
+          {
+            "imageUrl": "https://example.com/jersey.png"
+          },
+          {
+            "imageUrl": "https://example.com/jersey.png"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cmvc7a7qu004pmse81os0f4wm",
+      "type": "ACHIEVEMENT_UNLOCK",
+      "createdAt": "2026-10-17T09:34:50.550Z",
+      "likeCount": 0,
+      "commentCount": 0,
+      "hasLiked": false,
+      "isFollowingAuthor": false,
+      "likersPreview": [],
+      "author": {
+        "id": "cmvc7a7a6003xmse830wv4agx",
+        "username": "test-179222968994947",
+        "name": "test-179222968994947",
+        "avatarUrl": "https://test.r2.dev/photo.jpg",
+        "favoriteClubColor": "#000000",
+        "favoriteClubName": "PSG",
+        "isSupporter": true,
+        "avatarFrame": null
+      },
+      "payload": {
+        "key": "social.follower.first",
+        "tier": "BRONZE",
+        "category": "SOCIAL",
+        "unlockedAt": "2026-10-17T09:34:50.100Z",
+        "metadata": null,
+        "title": "Premier ami",
+        "description": "Ajoute ton premier ami",
+        "badgeUrl": null
+      }
+    },
+    {
+      "id": "cmvc7a7q5004nmse8qldj0uqx",
+      "type": "JERSEY_ADD",
+      "createdAt": "2026-10-17T09:34:50.525Z",
+      "likeCount": 1,
+      "commentCount": 0,
+      "hasLiked": false,
+      "isFollowingAuthor": false,
+      "likersPreview": [
+        {
+          "userId": "cmvc7a7ax003zmse856j3913i",
+          "name": "test-179222968997646",
+          "avatarUrl": "https://test.r2.dev/photo.jpg",
+          "isSupporter": false
+        }
+      ],
+      "author": {
+        "id": "cmvc7a7a6003xmse830wv4agx",
+        "username": "test-179222968994947",
+        "name": "test-179222968994947",
+        "avatarUrl": "https://test.r2.dev/photo.jpg",
+        "favoriteClubColor": "#000000",
+        "favoriteClubName": "PSG",
+        "isSupporter": true,
+        "avatarFrame": null
+      },
+      "payload": {
+        "userJerseyId": "cmvc7a7j6004cmse82seisvzy",
+        "jersey": {
+          "id": "cmvc7a782003rmse829ut66vx",
+          "name": "Maillot PSG Domicile 2024/25",
+          "season": "2024/25",
+          "type": "HOME",
+          "imageUrl": "https://example.com/jersey.png",
+          "slug": null,
+          "mainColor": null,
+          "club": {
+            "id": "cmvc7a77d003pmse8k9rtr5zt",
+            "leagueId": "cmvc7a76o003nmse8ad28ahgd",
+            "name": "PSG",
+            "shortName": "TC",
+            "logoUrl": "https://example.com/club.png",
+            "primaryColor": "#000000"
+          }
+        },
+        "customPhotoUrl": "https://test.r2.dev/photo.jpg",
+        "condition": "MINT",
+        "size": "M",
+        "version": "AUTHENTIC",
+        "playerName": "Dembélé",
+        "playerNumber": 10,
+        "purchasePrice": 120,
+        "authorRating": 4.5,
+        "clubRank": 1,
+        "patchesCount": 2
+      }
+    }
+  ],
+  "nextCursor": null
+}

@@ -1,0 +1,165 @@
+[
+  {
+    "id": "cmvc7a5230023mse8tjkrp0mm",
+    "jerseyId": "cmvc7a4nx001fmse8fgr0ae6h",
+    "version": "REPLICA",
+    "size": null,
+    "condition": "GOOD",
+    "hasTags": false,
+    "playerName": null,
+    "playerNumber": null,
+    "purchasePrice": null,
+    "purchaseDate": null,
+    "notes": null,
+    "isGift": false,
+    "isFromMysteryBox": false,
+    "hasLongSleeves": false,
+    "userPhotoUrls": [],
+    "isSigned": false,
+    "signedBy": null,
+    "hasAuthCertificate": false,
+    "certificateUrl": null,
+    "matchDescription": null,
+    "matchDate": null,
+    "pinnedAt": null,
+    "createdAt": "2026-10-17T09:34:47.067Z",
+    "updatedAt": "2026-10-17T09:34:47.067Z",
+    "patches": [],
+    "jersey": {
+      "id": "cmvc7a4nx001fmse8fgr0ae6h",
+      "name": "Maillot PSG Gardien 2024/25",
+      "clubId": "cmvc7a4mj001bmse8lbmdhbba",
+      "season": "2024/25",
+      "type": "GOALKEEPER",
+      "brand": "Nike",
+      "imageUrl": "https://example.com/jersey.png",
+      "retailPrice": 90,
+      "createdAt": "2026-10-17T09:34:46.557Z",
+      "updatedAt": "2026-10-17T09:34:46.557Z",
+      "description": null,
+      "slug": null,
+      "descriptionTranslations": null,
+      "variant": 1,
+      "mainColor": null,
+      "club": {
+        "id": "cmvc7a4mj001bmse8lbmdhbba",
+        "name": "PSG",
+        "shortName": "TC",
+        "leagueId": "cmvc7a4lt0019mse85he42rkg",
+        "logoUrl": "https://example.com/club.png",
+        "primaryColor": "#000000",
+        "apiFootballTeamId": null,
+        "league": {
+          "id": "cmvc7a4lt0019mse85he42rkg",
+          "name": "Ligue 1",
+          "country": "France",
+          "logoUrl": "https://example.com/logo.png",
+          "tier": 1,
+          "logoDarkUrl": null
+        }
+      }
+    },
+    "userPhotoUrl": null,
+    "userPhotoPaths": [],
+    "postId": null,
+    "likeCount": 0,
+    "hasLiked": false
+  },
+  {
+    "id": "cmvc7a4yp001ymse8lduumtz7",
+    "jerseyId": "cmvc7a4n8001dmse8zccczmgp",
+    "version": "AUTHENTIC",
+    "size": "M",
+    "condition": "MINT",
+    "hasTags": true,
+    "playerName": "Dembélé",
+    "playerNumber": 10,
+    "purchasePrice": 120,
+    "purchaseDate": "2025-01-10T00:00:00.000Z",
+    "notes": "Acheté au Parc",
+    "isGift": false,
+    "isFromMysteryBox": false,
+    "hasLongSleeves": false,
+    "userPhotoUrls": [
+      "https://test.r2.dev/photo.jpg",
+      "https://test.r2.dev/photo.jpg"
+    ],
+    "isSigned": true,
+    "signedBy": "Ousmane Dembélé",
+    "hasAuthCertificate": true,
+    "certificateUrl": "https://example.com/certificat.pdf",
+    "matchDescription": "PSG - OM",
+    "matchDate": "2025-03-16T00:00:00.000Z",
+    "pinnedAt": "2026-10-17T09:34:46.943Z",
+    "createdAt": "2026-10-17T09:34:46.945Z",
+    "updatedAt": "2026-10-17T09:34:46.945Z",
+    "patches": [
+      {
+        "id": "cmvc7a4yp0020mse8i6vmuwe2",
+        "patchId": "cmvc7a4v6001vmse8nqqi45oz",
+        "customLabel": null,
+        "patch": {
+          "id": "cmvc7a4v6001vmse8nqqi45oz",
+          "name": "Ligue 1 McDonald's",
+          "family": "DOMESTIC_LEAGUE_BADGE",
+          "versions": [
+            {
+              "id": "cmvc7a4v6001wmse8ugclx0ep",
+              "seasonStart": "2024/25",
+              "seasonEnd": null,
+              "imageUrl": "https://example.com/patch.png"
+            }
+          ]
+        }
+      },
+      {
+        "id": "cmvc7a4yp0021mse8n3ouesvw",
+        "patchId": null,
+        "customLabel": "Patch fait main",
+        "patch": null
+      }
+    ],
+    "jersey": {
+      "id": "cmvc7a4n8001dmse8zccczmgp",
+      "name": "Maillot PSG Domicile 2024/25",
+      "clubId": "cmvc7a4mj001bmse8lbmdhbba",
+      "season": "2024/25",
+      "type": "HOME",
+      "brand": "Nike",
+      "imageUrl": "https://example.com/jersey.png",
+      "retailPrice": 90,
+      "createdAt": "2026-10-17T09:34:46.532Z",
+      "updatedAt": "2026-10-17T09:34:46.532Z",
+      "description": null,
+      "slug": null,
+      "descriptionTranslations": null,
+      "variant": 1,
+      "mainColor": null,
+      "club": {
+        "id": "cmvc7a4mj001bmse8lbmdhbba",
+        "name": "PSG",
+        "shortName": "TC",
+        "leagueId": "cmvc7a4lt0019mse85he42rkg",
+        "logoUrl": "https://example.com/club.png",
+        "primaryColor": "#000000",
+        "apiFootballTeamId": null,
+        "league": {
+          "id": "cmvc7a4lt0019mse85he42rkg",
+          "name": "Ligue 1",
+          "country": "France",
+          "logoUrl": "https://example.com/logo.png",
+          "tier": 1,
+          "logoDarkUrl": null
+        }
+      }
+    },
+    "userPhotoUrl": "https://test.r2.dev/photo.jpg",
+    "userPhotoPaths": [
+      "photos/1.jpg",
+      "photos/2.jpg"
+    ],
+    "postId": "cmvc7a55h0029mse8obyoan27",
+    "likeCount": 1,
+    "hasLiked": false
+  }
+]

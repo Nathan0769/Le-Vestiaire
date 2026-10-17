@@ -1,0 +1,27 @@
+{
+  "id": "cmvc7a42x0018mse8r424ylta",
+  "email": "test-1792229685800449@example.com",
+  "name": "Test User",
+  "username": "test-179222968580044",
+  "usernameGenerated": false,
+  "image": null,
+  "bio": null,
+  "isSupporter": false,
+  "isPrivate": false,
+  "notificationsEnabled": true,
+  "disabledPushTypes": [],
+  "hasPassword": false,
+  "favoriteClub": null,
+  "createdAt": "2026-10-17T09:34:45.801Z",
+  "topAchievements": [],
+  "achievementsUnlockedCount": 0,
+  "achievementsTotal": 55,
+  "stats": {
+    "collectionCount": 0,
+    "wishlistCount": 0,
+    "ratingsCount": 0,
+    "clubsCount": 0,
+    "followingCount": 0,
+    "followersCount": 0
+  }
+}

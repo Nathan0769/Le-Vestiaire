@@ -1,0 +1,40 @@
+{
+  "id": "cmvc7a9yb006dmse8y5nfzb07",
+  "username": "test-179222969341124",
+  "name": "test-179222969341124",
+  "avatarUrl": "https://test.r2.dev/photo.jpg",
+  "bio": "Fan du PSG",
+  "isPrivate": false,
+  "isAnonymous": false,
+  "isSupporter": false,
+  "avatarFrame": null,
+  "favoriteClub": {
+    "id": "cmvc7a9ut0063mse8bnoohihh",
+    "name": "PSG"
+  },
+  "socialLinks": {
+    "instagram": "auteur",
+    "twitter": null,
+    "tiktok": null,
+    "youtube": null,
+    "twitch": null
+  },
+  "stats": {
+    "collectionCount": 0,
+    "wishlistCount": 0,
+    "followersCount": 1,
+    "followingCount": 1
+  },
+  "topAchievements": [
+    {
+      "key": "social.follower.first",
+      "tier": "BRONZE",
+      "imageUrl": null
+    }
+  ],
+  "achievementsUnlockedCount": 1,
+  "achievementsTotal": 55,
+  "followState": "following",
+  "isSelf": false,
+  "createdAt": "2026-10-17T09:34:53.412Z"
+}

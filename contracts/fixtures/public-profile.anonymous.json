@@ -1,0 +1,25 @@
+{
+  "id": "cmvc7ab2f007bmse8yenvrnua",
+  "username": "test-179222969485335",
+  "name": "Utilisateur",
+  "avatarUrl": null,
+  "bio": null,
+  "isPrivate": false,
+  "isAnonymous": true,
+  "isSupporter": false,
+  "avatarFrame": null,
+  "favoriteClub": null,
+  "socialLinks": null,
+  "stats": {
+    "collectionCount": 0,
+    "wishlistCount": 0,
+    "followersCount": 0,
+    "followingCount": 0
+  },
+  "topAchievements": [],
+  "achievementsUnlockedCount": 0,
+  "achievementsTotal": 55,
+  "followState": "none",
+  "isSelf": false,
+  "createdAt": "2026-10-17T09:34:54.855Z"
+}

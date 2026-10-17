@@ -1,0 +1,85 @@
+{
+  "jerseys": [
+    {
+      "id": "cmvc7a8p2004ymse8iq0g6up0",
+      "name": "Maillot PSG Domicile 2024/25",
+      "clubId": "cmvc7a8od004wmse8etpklkax",
+      "season": "2024/25",
+      "type": "HOME",
+      "brand": "Nike",
+      "imageUrl": "https://example.com/jersey.png",
+      "retailPrice": "90",
+      "createdAt": "2026-10-17T09:34:51.782Z",
+      "updatedAt": "2026-10-17T09:34:51.782Z",
+      "description": null,
+      "slug": null,
+      "descriptionTranslations": null,
+      "variant": 1,
+      "mainColor": null,
+      "club": {
+        "id": "cmvc7a8od004wmse8etpklkax",
+        "name": "PSG",
+        "shortName": "TC",
+        "leagueId": "cmvc7a8np004umse81zkf50ka",
+        "logoUrl": "https://example.com/club.png",
+        "primaryColor": "#000000",
+        "apiFootballTeamId": null,
+        "league": {
+          "id": "cmvc7a8np004umse81zkf50ka",
+          "name": "Ligue 1",
+          "country": "France",
+          "logoUrl": "https://example.com/logo.png",
+          "tier": 1,
+          "logoDarkUrl": null
+        }
+      },
+      "cfsAvailability": {
+        "id": "cmvc7a8qv0052mse89rzm9mjw",
+        "price": 89.99,
+        "promoPrice": 59.99,
+        "affiliateUrl": "https://example.com/affilie"
+      }
+    },
+    {
+      "id": "cmvc7a8pu0050mse8r5gg0gnu",
+      "name": "Maillot PSG Gardien 2024/25",
+      "clubId": "cmvc7a8od004wmse8etpklkax",
+      "season": "2024/25",
+      "type": "GOALKEEPER",
+      "brand": "Nike",
+      "imageUrl": "https://example.com/jersey.png",
+      "retailPrice": "90",
+      "createdAt": "2026-10-17T09:34:51.810Z",
+      "updatedAt": "2026-10-17T09:34:51.810Z",
+      "description": null,
+      "slug": null,
+      "descriptionTranslations": null,
+      "variant": 1,
+      "mainColor": null,
+      "club": {
+        "id": "cmvc7a8od004wmse8etpklkax",
+        "name": "PSG",
+        "shortName": "TC",
+        "leagueId": "cmvc7a8np004umse81zkf50ka",
+        "logoUrl": "https://example.com/club.png",
+        "primaryColor": "#000000",
+        "apiFootballTeamId": null,
+        "league": {
+          "id": "cmvc7a8np004umse81zkf50ka",
+          "name": "Ligue 1",
+          "country": "France",
+          "logoUrl": "https://example.com/logo.png",
+          "tier": 1,
+          "logoDarkUrl": null
+        }
+      },
+      "cfsAvailability": null
+    }
+  ],
+  "pagination": {
+    "total": 2,
+    "page": 1,
+    "limit": 200,
+    "hasMore": false
+  }
+}
