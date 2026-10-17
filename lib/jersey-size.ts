@@ -21,7 +21,7 @@ export function jerseySizeErrorCode(size: unknown): JerseySizeErrorCode | null {
   return null;
 }
 
-const SIZE_ERROR_MESSAGES: Record<JerseySizeErrorCode, string> = {
+export const SIZE_ERROR_MESSAGES: Record<JerseySizeErrorCode, string> = {
   SIZE_REQUIRED: "La taille est obligatoire",
   SIZE_INVALID: "Taille de maillot invalide",
 };
