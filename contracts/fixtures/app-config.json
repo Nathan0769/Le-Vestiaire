@@ -1,0 +1,40 @@
+{
+  "collectionItem": {
+    "versions": [
+      "REPLICA",
+      "AUTHENTIC",
+      "STOCK_PRO",
+      "PLAYER_ISSUE",
+      "MATCH_WORN"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "conditions": [
+      "MINT",
+      "EXCELLENT",
+      "GOOD",
+      "FAIR",
+      "POOR"
+    ],
+    "limits": {
+      "playerNameMax": 100,
+      "playerNumberMin": 1,
+      "playerNumberMax": 999,
+      "notesMax": 1000,
+      "signedByMax": 500,
+      "matchDescriptionMax": 500,
+      "certificateUrlMax": 2048,
+      "patchLabelMax": 50
+    },
+    "maxPhotos": {
+      "free": 2,
+      "supporter": 4
+    }
+  }
+}

@@ -10,6 +10,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import { NextResponse } from "next/server";
+import { JERSEY_CONDITIONS, JERSEY_SIZES, JERSEY_VERSIONS } from "@/lib/collection-item-rules";
 
 export async function GET() {
   try {
@@ -385,7 +386,7 @@ export async function GET() {
         count,
       }))
       .sort((a, b) => {
-        const sizeOrder = ["XS", "S", "M", "L", "XL", "XXL"];
+        const sizeOrder: readonly string[] = JERSEY_SIZES;
         return sizeOrder.indexOf(a.size) - sizeOrder.indexOf(b.size);
       });
 
@@ -402,7 +403,7 @@ export async function GET() {
         percentage: Math.round((count / collection.length) * 100),
       }))
       .sort((a, b) => {
-        const conditionOrder = ["MINT", "EXCELLENT", "GOOD", "FAIR", "POOR"];
+        const conditionOrder: readonly string[] = JERSEY_CONDITIONS;
         return (
           conditionOrder.indexOf(a.condition) -
           conditionOrder.indexOf(b.condition)
@@ -429,7 +430,7 @@ export async function GET() {
       return acc;
     }, {} as Record<string, number>);
 
-    const versionOrder = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"];
+    const versionOrder: readonly string[] = JERSEY_VERSIONS;
     const versionDistribution = Object.entries(versionStats)
       .map(([version, count]) => ({
         version,

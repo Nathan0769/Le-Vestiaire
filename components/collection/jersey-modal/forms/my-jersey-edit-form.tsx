@@ -26,6 +26,7 @@ import type {
   UpdateCollectionData,
 } from "@/types/collection";
 import type { UserJerseyPatchInput } from "@/types/patch";
+import { JERSEY_CONDITIONS } from "@/lib/collection-item-rules";
 
 const VERSION_ORDER: JerseyVersion[] = [
   "REPLICA",
@@ -116,7 +117,7 @@ export function MyJerseyEditForm({
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                {(["MINT", "EXCELLENT", "GOOD", "FAIR", "POOR"] as const).map(
+                {JERSEY_CONDITIONS.map(
                   (value) => (
                     <SelectItem key={value} value={value}>
                       {tCondition(value)}

@@ -22,8 +22,9 @@ import {
   type TriStateFilter,
 } from "@/lib/collection-filters";
 import { cn } from "@/lib/utils";
+import { JERSEY_CONDITIONS } from "@/lib/collection-item-rules";
 
-const CONDITIONS = ["MINT", "EXCELLENT", "GOOD", "FAIR", "POOR"] as const;
+const CONDITIONS = JERSEY_CONDITIONS;
 const TYPES = ["HOME", "AWAY", "THIRD", "FOURTH", "GOALKEEPER", "SPECIAL"] as const;
 const TRI_STATES: TriStateFilter[] = ["all", "yes", "no"];
 

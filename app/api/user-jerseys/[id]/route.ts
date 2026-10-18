@@ -1,7 +1,10 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { validateJerseySize, jerseySizeErrorCode } from "@/lib/jersey-size";
-import { purchaseDateErrorCode, PURCHASE_DATE_ERROR_MESSAGES } from "@/lib/purchase-date";
+import {
+  collectionItemFieldError,
+  normalizePatchInputs,
+  type PatchInput,
+} from "@/lib/collection-item-rules";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { Prisma } from "@prisma/client";
 import {
@@ -117,8 +120,6 @@ export async function GET(
   });
 }
 
-const VALID_VERSIONS = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"] as const;
-
 export async function PATCH(
   request: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -173,140 +174,33 @@ export async function PATCH(
       patches,
     } = await request.json();
 
-    if (version && !VALID_VERSIONS.includes(version)) {
-      return NextResponse.json(
-        { error: "Version de maillot invalide", code: "VERSION_INVALID" },
-        { status: 400 }
-      );
+    const fieldError = collectionItemFieldError({
+      version,
+      size,
+      condition,
+      playerName,
+      playerNumber,
+      purchasePrice,
+      purchaseDate,
+      notes,
+      signedBy,
+      matchDescription,
+      certificateUrl,
+    });
+    if (fieldError) {
+      return NextResponse.json({ ...fieldError }, { status: 400 });
     }
 
-    const sizeError = validateJerseySize(size);
-    if (sizeError) {
-      return NextResponse.json(
-        { error: sizeError, code: jerseySizeErrorCode(size) },
-        { status: 400 }
-      );
-    }
-
-    const purchaseDateError = purchaseDateErrorCode(purchaseDate);
-    if (purchaseDateError) {
-      return NextResponse.json(
-        { error: PURCHASE_DATE_ERROR_MESSAGES[purchaseDateError], code: purchaseDateError },
-        { status: 400 }
-      );
-    }
-
-    if (!condition) {
-      return NextResponse.json(
-        { error: "L'état est obligatoire", code: "CONDITION_REQUIRED" },
-        { status: 400 }
-      );
-    }
-
-    if (playerName && playerName.length > 100) {
-      return NextResponse.json(
-        { error: "Le nom du joueur ne peut pas dépasser 100 caractères", code: "PLAYER_NAME_TOO_LONG" },
-        { status: 400 }
-      );
-    }
-
-    if (playerNumber !== null && playerNumber !== undefined) {
-      const num = parseInt(playerNumber.toString(), 10);
-      if (isNaN(num) || num < 1 || num > 999) {
-        return NextResponse.json(
-          { error: "Le numéro de maillot doit être compris entre 1 et 999", code: "PLAYER_NUMBER_INVALID" },
-          { status: 400 }
-        );
-      }
-    }
-
-    if (notes && notes.length > 1000) {
-      return NextResponse.json(
-        { error: "Les notes ne peuvent pas dépasser 1000 caractères", code: "NOTES_TOO_LONG" },
-        { status: 400 }
-      );
-    }
-
-    if (signedBy && signedBy.length > 500) {
-      return NextResponse.json(
-        { error: "Le champ 'signé par' ne peut pas dépasser 500 caractères", code: "SIGNED_BY_TOO_LONG" },
-        { status: 400 }
-      );
-    }
-
-    if (matchDescription && matchDescription.length > 500) {
-      return NextResponse.json(
-        { error: "La description du match ne peut pas dépasser 500 caractères", code: "MATCH_DESCRIPTION_TOO_LONG" },
-        { status: 400 }
-      );
-    }
-
-    if (certificateUrl) {
-      if (certificateUrl.length > 2048) {
-        return NextResponse.json(
-          { error: "L'URL du certificat est trop longue", code: "CERTIFICATE_URL_TOO_LONG" },
-          { status: 400 }
-        );
-      }
-      try {
-        const parsed = new URL(certificateUrl);
-        if (parsed.protocol !== "https:") {
-          return NextResponse.json(
-            { error: "L'URL du certificat doit commencer par https://", code: "CERTIFICATE_URL_NOT_HTTPS" },
-            { status: 400 }
-          );
-        }
-      } catch {
-        return NextResponse.json(
-          { error: "L'URL du certificat est invalide", code: "CERTIFICATE_URL_INVALID" },
-          { status: 400 }
-        );
-      }
-    }
-
-    if (purchasePrice !== null && purchasePrice !== undefined) {
-      const parsedPrice = parseFloat(purchasePrice.toString());
-      if (isNaN(parsedPrice) || parsedPrice < 0) {
-        return NextResponse.json(
-          { error: "Le prix d'achat doit être un nombre positif valide", code: "PURCHASE_PRICE_INVALID" },
-          { status: 400 }
-        );
-      }
-    }
-
-    type PatchInput = { patchId?: string; customLabel?: string };
     let normalizedPatches: PatchInput[] | null = null;
     if (patches !== undefined && patches !== null) {
-      if (!Array.isArray(patches)) {
+      const patchesResult = normalizePatchInputs(patches);
+      if (!patchesResult.ok) {
         return NextResponse.json(
-          { error: "patches doit être un tableau" },
+          { error: patchesResult.error, code: patchesResult.code },
           { status: 400 }
         );
       }
-      normalizedPatches = [];
-      const seenPatchIds = new Set<string>();
-      for (const raw of patches as PatchInput[]) {
-        const patchId = typeof raw.patchId === "string" ? raw.patchId : undefined;
-        const customLabel =
-          typeof raw.customLabel === "string" ? raw.customLabel.trim() : undefined;
-        if (!patchId && !customLabel) {
-          return NextResponse.json(
-            { error: "Chaque patch doit avoir un patchId ou un customLabel" },
-            { status: 400 }
-          );
-        }
-        if (customLabel && customLabel.length > 50) {
-          return NextResponse.json(
-            { error: "Le label personnalisé ne peut pas dépasser 50 caractères", code: "PATCH_LABEL_TOO_LONG" },
-            { status: 400 }
-          );
-        }
-        if (patchId) {
-          if (seenPatchIds.has(patchId)) continue;
-          seenPatchIds.add(patchId);
-        }
-        normalizedPatches.push({ patchId, customLabel: customLabel || undefined });
-      }
+      normalizedPatches = patchesResult.patches;
 
       const refIds = normalizedPatches
         .map((p) => p.patchId)

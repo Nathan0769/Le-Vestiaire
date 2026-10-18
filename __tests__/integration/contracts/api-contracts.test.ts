@@ -17,6 +17,7 @@ import { GET as getWishlist } from "@/app/api/wishlist/route";
 import { GET as getFeed } from "@/app/api/feed/route";
 import { GET as getJerseys } from "@/app/api/jerseys/route";
 import { GET as getPublicProfile } from "@/app/api/users/[username]/route";
+import { GET as getAppConfig } from "@/app/api/app/config/route";
 import "@/__tests__/setup.integration";
 
 /**
@@ -232,6 +233,10 @@ describe("Contrats API web ↔ iOS", () => {
       params: Promise.resolve({ username: author.username! }),
     });
     await expectContract("public-profile.full", response);
+  });
+
+  it("config de l'app", async () => {
+    await expectContract("app-config", await getAppConfig());
   });
 
   it("profil public anonyme", async () => {
