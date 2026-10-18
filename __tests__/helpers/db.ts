@@ -1,12 +1,19 @@
 import { PrismaClient } from "@prisma/client";
+import { testDatabaseError } from "./test-database-guard";
 
-const devUrl = process.env.DATABASE_URL_DEV;
-
-if (!devUrl) {
-  throw new Error(
-    "DANGER: DATABASE_URL_DEV n'est pas défini. Vérifiez votre .env."
-  );
+// vitest.setup.ts compare déjà à DATABASE_URL ; ici DATABASE_URL vaut la dev,
+// seul l'endpoint de prod connu peut encore être vérifié.
+function assertTestDatabase(): string {
+  if (process.env.VITEST_PROJECT === "unit") {
+    throw new Error("Ce test touche la base : le renommer en *.integration.test.ts (exclu du pre-push).");
+  }
+  const url = process.env.DATABASE_URL_DEV;
+  const unsafe = testDatabaseError(url, undefined);
+  if (unsafe || !url) throw new Error(`DANGER: ${unsafe} Vérifiez votre .env.`);
+  return url;
 }
+
+const devUrl = assertTestDatabase();
 
 export const prismaTest = new PrismaClient({
   datasources: {
@@ -22,6 +29,7 @@ export const prismaTest = new PrismaClient({
  * Supprime les données dans le bon ordre pour respecter les contraintes FK
  */
 export async function cleanDatabase() {
+  assertTestDatabase();
   await prismaTest.notification.deleteMany();
   await prismaTest.postReport.deleteMany();
   await prismaTest.postCommentLike.deleteMany();

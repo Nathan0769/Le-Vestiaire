@@ -1,1 +1,3 @@
-pnpm test:run
+# Tests unitaires seulement (sans base, ~30 s). Les tests d'intégration
+# tournent en CI à chaque push sur main.
+pnpm test:unit

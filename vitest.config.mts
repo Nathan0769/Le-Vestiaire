@@ -3,6 +3,9 @@ import react from "@vitejs/plugin-react";
 import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
+const INTEGRATION_FILES = ["__tests__/integration/**/*.test.ts", "**/*.integration.test.ts"];
+const UNIT_EXCLUDE = ["**/node_modules/**", ".next/**", "dist/**", "build/**"];
+
 export default defineConfig(({}) => ({
   // Charger les variables d'environnement de test
   envDir: ".",
@@ -27,11 +30,27 @@ export default defineConfig(({}) => ({
     // Timeout élevé pour les tests d'intégration (requêtes DB + rate limit Upstash indisponible)
     testTimeout: 30000,
 
-    // Pattern des fichiers de test
-    include: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
-
     // Exclure node_modules et .next
     exclude: ["node_modules", ".next", "dist", "build"],
+
+    // unit : sans base, lancé au pre-push. integration : base de dev, en CI.
+    // Un test qui touche la base vit dans __tests__/integration ou s'appelle
+    // *.integration.test.ts ; sinon helpers/db le refuse en projet unit.
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: "unit",
+          include: ["**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+          exclude: [...UNIT_EXCLUDE, ...INTEGRATION_FILES],
+          env: { VITEST_PROJECT: "unit" },
+        },
+      },
+      {
+        extends: true,
+        test: { name: "integration", include: INTEGRATION_FILES },
+      },
+    ],
 
     // Coverage configuration
     coverage: {
