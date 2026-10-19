@@ -50,13 +50,17 @@ export async function GET(
       club: jersey.club,
     });
 
-    const allPatches = await prisma.patch.findMany({
-      where: { isActive: true },
-      include: { versions: true },
-      orderBy: { name: "asc" },
-    });
+    const [allPatches, leagues] = await Promise.all([
+      prisma.patch.findMany({
+        where: { isActive: true },
+        include: { versions: true },
+        orderBy: { name: "asc" },
+      }),
+      prisma.league.findMany({ select: { id: true, country: true } }),
+    ]);
+    const countryByLeagueId = new Map(leagues.map((l) => [l.id, l.country]));
 
-    const applicable = filterApplicablePatches(allPatches, jersey, resolvedLeagueId);
+    const applicable = filterApplicablePatches(allPatches, jersey, resolvedLeagueId, countryByLeagueId);
     return NextResponse.json(applicable);
   } catch (error) {
     console.error("GET applicable-patches error:", error);

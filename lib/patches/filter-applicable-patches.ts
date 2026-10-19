@@ -29,7 +29,8 @@ const STRICT_VERSION_LEAGUE_IDS = new Set(["mls"]);
 export function filterApplicablePatches(
   allPatches: PatchWithVersions[],
   jersey: JerseyContext,
-  resolvedLeagueId: string
+  resolvedLeagueId: string,
+  countryByLeagueId: ReadonlyMap<string, string> = new Map()
 ): ApplicablePatch[] {
   const isNational = isNationalTeamLeague(resolvedLeagueId);
   const clubConfederation: Confederation | null = isNational
@@ -39,7 +40,7 @@ export function filterApplicablePatches(
   const applicable = allPatches
     .filter((p) => p.isActive)
     .filter((p) =>
-      isPatchEligible(p, resolvedLeagueId, isNational, clubConfederation)
+      isPatchEligible(p, resolvedLeagueId, isNational, clubConfederation, countryByLeagueId)
     )
     .map((p) => ({
       patch: p,
@@ -107,19 +108,22 @@ export function filterApplicablePatches(
   }));
 }
 
-// Les compétitions UEFA sont versionnées saison par saison avec leurs participants :
-// une saison sans version (avant la création du patch, après sa disparition) n'a pas
-// de patch. Un patch UEFA encore sans aucune version reste proposé à tous.
+// Les compétitions UEFA (participants) et les badges champion (tenant du titre) sont
+// versionnés saison par saison : une saison sans version n'a pas de patch. Un patch
+// encore sans aucune version reste proposé à tous.
+const VERSION_STRICT_FAMILIES = new Set(["UEFA_COMPETITION", "DOMESTIC_CHAMPION"]);
+
 function isVersionStrict(patch: PatchWithVersions): boolean {
   if (patch.leagueId !== null && STRICT_VERSION_LEAGUE_IDS.has(patch.leagueId)) return true;
-  return patch.family === "UEFA_COMPETITION" && patch.versions.length > 0;
+  return VERSION_STRICT_FAMILIES.has(patch.family) && patch.versions.length > 0;
 }
 
 function isPatchEligible(
   patch: PatchWithVersions,
   resolvedLeagueId: string,
   isNational: boolean,
-  clubConfederation: Confederation | null
+  clubConfederation: Confederation | null,
+  countryByLeagueId: ReadonlyMap<string, string>
 ): boolean {
   switch (patch.family) {
     case "UEFA_COMPETITION":
@@ -133,9 +137,13 @@ function isPatchEligible(
 
     case "DOMESTIC_LEAGUE_BADGE":
     case "DOMESTIC_CHAMPION":
+      return !isNational && patch.leagueId === resolvedLeagueId;
+
+    // Coupe et supercoupe nationales ouvertes à toutes les divisions du pays
+    // (ex. Taça de Portugal gagnée par un club de Liga 2).
     case "DOMESTIC_CUP":
     case "DOMESTIC_SUPERCUP":
-      return !isNational && patch.leagueId === resolvedLeagueId;
+      return !isNational && isSameCountryLeague(patch.leagueId, resolvedLeagueId, countryByLeagueId);
 
     case "NATIONAL_TEAM_COMPETITION":
       if (!isNational) return false;
@@ -150,6 +158,18 @@ function isPatchEligible(
     default:
       return false;
   }
+}
+
+// La ligue "Autres" (country "Autres") regroupe des clubs de tous pays : pas de pays commun.
+function isSameCountryLeague(
+  patchLeagueId: string | null,
+  resolvedLeagueId: string,
+  countryByLeagueId: ReadonlyMap<string, string>
+): boolean {
+  if (patchLeagueId === resolvedLeagueId) return true;
+  if (patchLeagueId === null) return false;
+  const country = countryByLeagueId.get(patchLeagueId);
+  return country !== undefined && country !== "Autres" && country === countryByLeagueId.get(resolvedLeagueId);
 }
 
 function isClubEligible(

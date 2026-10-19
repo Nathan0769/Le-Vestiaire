@@ -409,7 +409,7 @@ describe("filterApplicablePatches", () => {
     expect(result.map((r) => r.patch.id)).toEqual(["p-badge"]);
   });
 
-  it("19d. Ligue 1: champion sans version couvrant la saison garde le badge de ligue", () => {
+  it("19d. Ligue 1: champion sans version couvrant la saison n'est pas proposé, le badge reste", () => {
     const jersey = makeJersey("ligue-1", "2024-25");
     const champion = makePatch({
       id: "p-champ",
@@ -425,7 +425,14 @@ describe("filterApplicablePatches", () => {
       leagueId: "ligue-1",
     });
     const result = filterWithCurrentLeague([champion, badge], jersey);
-    expect(result.map((r) => r.patch.id).sort()).toEqual(["p-badge", "p-champ"]);
+    expect(result.map((r) => r.patch.id)).toEqual(["p-badge"]);
+  });
+
+  it("19d2. Patch champion sans aucune version toujours proposé", () => {
+    const jersey = makeJersey("ligue-1", "2024-25");
+    const champion = makePatch({ family: "DOMESTIC_CHAMPION", leagueId: "ligue-1" });
+    const result = filterWithCurrentLeague([champion], jersey);
+    expect(result).toHaveLength(1);
   });
 
   it("19e. Serie A (hors périmètre): champion et badge de ligue coexistent", () => {
@@ -723,5 +730,42 @@ describe("filterApplicablePatches - Liga MX", () => {
     });
     const result = filterWithCurrentLeague([champion, badge], jersey);
     expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+});
+
+describe("filterApplicablePatches - coupes nationales sur toutes les ligues du pays", () => {
+  const COUNTRIES = new Map([
+    ["liga-portugal", "Portugal"],
+    ["liga-portugal-2", "Portugal"],
+    ["la-liga", "Espagne"],
+    ["cmq9sh0qf0000msdlbfyvp77u", "Autres"],
+  ]);
+
+  it("Coupe : proposée à un club d'une autre ligue du même pays", () => {
+    const jersey = makeJersey("liga-portugal-2");
+    const cup = makePatch({ family: "DOMESTIC_CUP", leagueId: "liga-portugal" });
+    const result = filterApplicablePatches([cup], jersey, "liga-portugal-2", COUNTRIES);
+    expect(result).toHaveLength(1);
+  });
+
+  it("Supercoupe : proposée à un club d'une autre ligue du même pays", () => {
+    const jersey = makeJersey("liga-portugal-2");
+    const supercup = makePatch({ family: "DOMESTIC_SUPERCUP", leagueId: "liga-portugal" });
+    const result = filterApplicablePatches([supercup], jersey, "liga-portugal-2", COUNTRIES);
+    expect(result).toHaveLength(1);
+  });
+
+  it("Coupe : non proposée à un club d'un autre pays", () => {
+    const jersey = makeJersey("la-liga");
+    const cup = makePatch({ family: "DOMESTIC_CUP", leagueId: "liga-portugal" });
+    const result = filterApplicablePatches([cup], jersey, "la-liga", COUNTRIES);
+    expect(result).toHaveLength(0);
+  });
+
+  it("Badge de ligue : reste réservé à sa ligue", () => {
+    const jersey = makeJersey("liga-portugal-2");
+    const badge = makePatch({ family: "DOMESTIC_LEAGUE_BADGE", leagueId: "liga-portugal" });
+    const result = filterApplicablePatches([badge], jersey, "liga-portugal-2", COUNTRIES);
+    expect(result).toHaveLength(0);
   });
 });
