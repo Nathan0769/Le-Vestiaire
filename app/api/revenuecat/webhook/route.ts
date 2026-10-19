@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { revenueCatCandidateUserIds } from "@/lib/supporter-sync";
 import { syncSupporterPlan } from "@/lib/sync-supporter-plan";
+import { scheduleNewSupporterScan } from "@/lib/market-value/new-supporter-scan";
 import { reportError } from "@/lib/report-error";
 
 /**
@@ -52,7 +53,7 @@ export async function POST(request: Request) {
 
     // Une source injoignable lève une erreur → 500 → RevenueCat réessaie.
     for (const user of users) {
-      await syncSupporterPlan(user.id);
+      scheduleNewSupporterScan(await syncSupporterPlan(user.id));
     }
 
     return NextResponse.json({ received: true });

@@ -18,6 +18,15 @@
     "app/api/cron/ebay-refresh/route.ts": {
       "maxDuration": 300
     },
+    "app/api/stripe/webhook/route.ts": {
+      "maxDuration": 120
+    },
+    "app/api/revenuecat/webhook/route.ts": {
+      "maxDuration": 120
+    },
+    "app/api/supporter/sync/route.ts": {
+      "maxDuration": 120
+    },
     "app/api/cron/error-digest/route.ts": {
       "maxDuration": 60
     }
@@ -37,11 +46,11 @@
     },
     {
       "path": "/api/cron/ebay-refresh",
-      "schedule": "0 3 * * *"
+      "schedule": "0,30 1,2 * * *"
     },
     {
       "path": "/api/cron/market-value",
-      "schedule": "0 4 * * 1"
+      "schedule": "0 4 * * *"
     },
     {
       "path": "/api/cron/error-digest",

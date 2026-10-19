@@ -4,6 +4,7 @@ import { getStripe } from "@/lib/stripe";
 import prisma from "@/lib/prisma";
 import { affectsSupporterPlan } from "@/lib/stripe-webhook";
 import { syncSupporterPlan } from "@/lib/sync-supporter-plan";
+import { scheduleNewSupporterScan } from "@/lib/market-value/new-supporter-scan";
 import { reportError } from "@/lib/report-error";
 
 export async function POST(request: Request) {
@@ -59,7 +60,7 @@ export async function POST(request: Request) {
       // Le plan est relu chez Stripe et Apple : une fin d'abonnement Stripe ne
       // rétrograde pas un abonné Apple (spec docs/specs/2026-10-15-supporter-sync.md).
       if (userId) {
-        await syncSupporterPlan(userId);
+        scheduleNewSupporterScan(await syncSupporterPlan(userId));
       }
     }
 

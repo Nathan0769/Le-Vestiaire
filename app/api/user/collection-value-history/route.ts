@@ -11,7 +11,7 @@ export const dynamic = "force-dynamic";
  * Série "valeur de la collection dans le temps" (option 2 : valeur de ce que
  * l'utilisateur POSSÉDAIT à chaque date, valorisé au prix de la date). Reconstruite
  * à partir des snapshots de cote par maillot (`JerseyMarketValueSnapshot`), écrits
- * périodiquement par le cron. L'historique se construit donc au fil des semaines.
+ * par le cron quotidien quand une cote change. L'historique se construit donc au fil des jours.
  */
 export async function GET() {
   const user = await getCurrentUser();
@@ -63,8 +63,13 @@ export async function GET() {
   }
 
   // Dates distinctes (normalisées au jour) sur lesquelles on évalue la collection.
+  // Le jour courant est toujours inclus : les snapshots ne sont écrits que quand
+  // une cote change, la courbe doit quand même s'arrêter à aujourd'hui.
   const dayKeys = [
-    ...new Set(snapshots.map((s) => s.date.toISOString().slice(0, 10))),
+    ...new Set([
+      ...snapshots.map((s) => s.date.toISOString().slice(0, 10)),
+      new Date().toISOString().slice(0, 10),
+    ]),
   ].sort();
 
   // Dernière valeur de base connue pour un maillot à une date donnée (<=).

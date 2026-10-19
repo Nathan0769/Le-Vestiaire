@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { aggregate } from "./aggregate";
 import { cfsSignals } from "./providers/cfs";
 import { ebaySignals } from "./providers/ebay";
+import { snapshotsToWrite } from "./snapshots";
 import type { MarketEstimate, PriceSignal } from "./types";
 
 /** Rassemble les signaux de toutes les sources pour un maillot. */
@@ -46,9 +47,18 @@ export async function computeJerseyMarketValue(
     },
   });
 
-  await prisma.jerseyMarketValueSnapshot.create({
-    data: { jerseyId, value: estimate.baseValue },
+  const last = await prisma.jerseyMarketValueSnapshot.findFirst({
+    where: { jerseyId },
+    orderBy: { date: "desc" },
+    select: { value: true },
   });
+  const [snapshot] = snapshotsToWrite(
+    [{ jerseyId, baseValue: estimate.baseValue }],
+    new Map(last ? [[jerseyId, last.value]] : [])
+  );
+  if (snapshot) {
+    await prisma.jerseyMarketValueSnapshot.create({ data: snapshot });
+  }
 
   return estimate;
 }
@@ -56,7 +66,8 @@ export async function computeJerseyMarketValue(
 /**
  * Recalcule la cote de TOUS les maillots ayant un signal, en batch (lectures
  * groupées + écritures groupées) — pour le cron, sans timeout serverless.
- * Stratégie "full refresh" : on remplace toute la table + un snapshot par cote.
+ * Stratégie "full refresh" : on remplace toute la table ; snapshot seulement
+ * pour les cotes qui ont changé depuis le précédent.
  * Sources : CFS (asking, tout le catalogue) + eBay (asking agrégé, maillots
  * possédés — alimenté par le cron refreshEbayMarketData).
  */
@@ -64,7 +75,7 @@ export async function recomputeAllMarketValues(): Promise<{
   computed: number;
   cleared: number;
 }> {
-  const [cfs, ebay] = await Promise.all([
+  const [cfs, ebay, lastSnapshots] = await Promise.all([
     prisma.cfsAvailability.findMany({
       where: { price: { gt: 0 } },
       select: { jerseyId: true, price: true, lastSeenAt: true },
@@ -73,6 +84,12 @@ export async function recomputeAllMarketValues(): Promise<{
       where: { sampleSize: { gt: 0 }, medianPrice: { gt: 0 } },
       select: { jerseyId: true, medianPrice: true, sampleSize: true, lastSeenAt: true },
     }),
+    // DISTINCT ON côté Postgres : `distinct` Prisma chargerait tout l'historique.
+    prisma.$queryRaw<{ jerseyId: string; value: number }[]>`
+      SELECT DISTINCT ON ("jerseyId") "jerseyId", "value"
+      FROM "jersey_market_value_snapshots"
+      ORDER BY "jerseyId", "date" DESC
+    `,
   ]);
 
   const signalsByJersey = new Map<string, PriceSignal[]>();
@@ -106,7 +123,6 @@ export async function recomputeAllMarketValues(): Promise<{
     sampleSize: number;
     sources: PriceSignal["source"][];
   }[] = [];
-  const snapshots: { jerseyId: string; value: number }[] = [];
   for (const [jerseyId, signals] of signalsByJersey) {
     const estimate = aggregate(signals);
     if (!estimate) continue;
@@ -117,13 +133,16 @@ export async function recomputeAllMarketValues(): Promise<{
       sampleSize: estimate.sampleSize,
       sources: estimate.sources,
     });
-    snapshots.push({ jerseyId, value: estimate.baseValue });
   }
 
   const [cleared] = await prisma.$transaction([
     prisma.jerseyMarketValue.deleteMany({}),
     prisma.jerseyMarketValue.createMany({ data: values }),
   ]);
+  const snapshots = snapshotsToWrite(
+    values,
+    new Map(lastSnapshots.map((s) => [s.jerseyId, s.value]))
+  );
   if (snapshots.length > 0) {
     await prisma.jerseyMarketValueSnapshot.createMany({ data: snapshots });
   }

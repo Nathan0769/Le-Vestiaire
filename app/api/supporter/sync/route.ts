@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { strictRateLimit, getRateLimitIdentifier, checkRateLimit } from "@/lib/rate-limit";
 import { syncSupporterPlan } from "@/lib/sync-supporter-plan";
+import { scheduleNewSupporterScan } from "@/lib/market-value/new-supporter-scan";
 import { reportError } from "@/lib/report-error";
 
 /**
@@ -25,6 +26,7 @@ export async function POST() {
     }
 
     const result = await syncSupporterPlan(user.id);
+    scheduleNewSupporterScan(result);
     if (!result) {
       return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
     }
