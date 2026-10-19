@@ -26,6 +26,15 @@ const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
 // version : pas de version active = patch non proposé (ex. maillots NASL rangés en MLS).
 const STRICT_VERSION_LEAGUE_IDS = new Set(["mls"]);
 
+// Familles versionnées saison par saison sans trou dans ces ligues : une saison sans
+// version n'a pas de patch. Ailleurs les données ont des trous (un champion sans
+// version doit rester proposé), on n'y ajoute une ligue qu'une fois complète.
+const STRICT_VERSION_FAMILIES_BY_LEAGUE: Record<string, ReadonlySet<string>> = {
+  "liga-portugal": new Set(["DOMESTIC_CHAMPION", "DOMESTIC_SUPERCUP"]),
+  "j1-league": new Set(["DOMESTIC_CHAMPION"]),
+  "liga-mx": new Set(["DOMESTIC_CHAMPION"]),
+};
+
 export function filterApplicablePatches(
   allPatches: PatchWithVersions[],
   jersey: JerseyContext,
@@ -108,14 +117,14 @@ export function filterApplicablePatches(
   }));
 }
 
-// Les compétitions UEFA (participants) et les badges champion (tenant du titre) sont
-// versionnés saison par saison : une saison sans version n'a pas de patch. Un patch
-// encore sans aucune version reste proposé à tous.
-const VERSION_STRICT_FAMILIES = new Set(["UEFA_COMPETITION", "DOMESTIC_CHAMPION"]);
-
+// Les compétitions UEFA sont versionnées saison par saison avec leurs participants :
+// une saison sans version (avant la création du patch, après sa disparition) n'a pas
+// de patch. Un patch encore sans aucune version reste proposé à tous.
 function isVersionStrict(patch: PatchWithVersions): boolean {
   if (patch.leagueId !== null && STRICT_VERSION_LEAGUE_IDS.has(patch.leagueId)) return true;
-  return VERSION_STRICT_FAMILIES.has(patch.family) && patch.versions.length > 0;
+  if (patch.versions.length === 0) return false;
+  if (patch.family === "UEFA_COMPETITION") return true;
+  return patch.leagueId !== null && (STRICT_VERSION_FAMILIES_BY_LEAGUE[patch.leagueId]?.has(patch.family) ?? false);
 }
 
 function isPatchEligible(

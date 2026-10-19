@@ -409,7 +409,7 @@ describe("filterApplicablePatches", () => {
     expect(result.map((r) => r.patch.id)).toEqual(["p-badge"]);
   });
 
-  it("19d. Ligue 1: champion sans version couvrant la saison n'est pas proposé, le badge reste", () => {
+  it("19d. Ligue 1: champion sans version couvrant la saison garde le badge de ligue", () => {
     const jersey = makeJersey("ligue-1", "2024-25");
     const champion = makePatch({
       id: "p-champ",
@@ -425,14 +425,7 @@ describe("filterApplicablePatches", () => {
       leagueId: "ligue-1",
     });
     const result = filterWithCurrentLeague([champion, badge], jersey);
-    expect(result.map((r) => r.patch.id)).toEqual(["p-badge"]);
-  });
-
-  it("19d2. Patch champion sans aucune version toujours proposé", () => {
-    const jersey = makeJersey("ligue-1", "2024-25");
-    const champion = makePatch({ family: "DOMESTIC_CHAMPION", leagueId: "ligue-1" });
-    const result = filterWithCurrentLeague([champion], jersey);
-    expect(result).toHaveLength(1);
+    expect(result.map((r) => r.patch.id).sort()).toEqual(["p-badge", "p-champ"]);
   });
 
   it("19e. Serie A (hors périmètre): champion et badge de ligue coexistent", () => {
@@ -767,5 +760,37 @@ describe("filterApplicablePatches - coupes nationales sur toutes les ligues du p
     const badge = makePatch({ family: "DOMESTIC_LEAGUE_BADGE", leagueId: "liga-portugal" });
     const result = filterApplicablePatches([badge], jersey, "liga-portugal-2", COUNTRIES);
     expect(result).toHaveLength(0);
+  });
+});
+
+describe("filterApplicablePatches - Liga Portugal (champion et Supertaça par saison)", () => {
+  it("Champion versionné : non proposé sur une saison sans version", () => {
+    const jersey = makeJersey("liga-portugal", "2005-06");
+    const champion = makePatch({
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "liga-portugal",
+      versions: [makeVersion({ seasonStart: "2013-14", seasonEnd: "2013-14", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([champion], jersey)).toHaveLength(0);
+  });
+
+  it("Supertaça versionnée : non proposée sur une saison sans version", () => {
+    const jersey = makeJersey("liga-portugal", "2005-06");
+    const supercup = makePatch({
+      family: "DOMESTIC_SUPERCUP",
+      leagueId: "liga-portugal",
+      versions: [makeVersion({ seasonStart: "2015-16", seasonEnd: "2015-16", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([supercup], jersey)).toHaveLength(0);
+  });
+
+  it("Badge de ligue : toujours proposé hors des périodes versionnées", () => {
+    const jersey = makeJersey("liga-portugal", "2005-06");
+    const badge = makePatch({
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "liga-portugal",
+      versions: [makeVersion({ seasonStart: "2010-11", seasonEnd: "2013-14" })],
+    });
+    expect(filterWithCurrentLeague([badge], jersey)).toHaveLength(1);
   });
 });
