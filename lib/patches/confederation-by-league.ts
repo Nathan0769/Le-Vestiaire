@@ -3,8 +3,11 @@ import type { Confederation } from "@/types/patch";
 export const CONFEDERATION_BY_LEAGUE_ID: Record<string, Confederation> = {
   "ligue-1": "UEFA",
   "ligue-2": "UEFA",
+  "ligue-3": "UEFA",
+  "national": "UEFA",
   "premier-league": "UEFA",
   "efl-championship": "UEFA",
+  "efl-league-one": "UEFA",
   "la-liga": "UEFA",
   "la-liga-2": "UEFA",
   "bundesliga": "UEFA",
@@ -17,10 +20,12 @@ export const CONFEDERATION_BY_LEAGUE_ID: Record<string, Confederation> = {
   "liga-portugal-2": "UEFA",
   "liga-3-portugal": "UEFA",
   "eredivisie": "UEFA",
+  "eerste-divisie": "UEFA",
   "jupiler-pro-league": "UEFA",
+  "challenger-pro-league": "UEFA",
   "swiss-super-league": "UEFA",
   "austrian-bundesliga": "UEFA",
-  "super-lig": "UEFA",
+  "superlig": "UEFA",
   "scottish-premiership": "UEFA",
   "ukrainian-premier-league": "UEFA",
   "greek-super-league": "UEFA",
@@ -31,6 +36,9 @@ export const CONFEDERATION_BY_LEAGUE_ID: Record<string, Confederation> = {
   "parva-liga": "UEFA",
   "toplyga": "UEFA",
   "bgl-ligue": "UEFA",
+  "eliteserien": "UEFA",
+  "ekstraklasa": "UEFA",
+  "russian-premier-league": "UEFA",
 
   "mls": "CONCACAF",
   "liga-mx": "CONCACAF",
@@ -38,7 +46,8 @@ export const CONFEDERATION_BY_LEAGUE_ID: Record<string, Confederation> = {
   "saudi-pro-league": "AFC",
   "j1-league": "AFC",
 
-  "brasileirao": "CONMEBOL",
+  "brasileiro-serie-a": "CONMEBOL",
+  "primera-division-argentina": "CONMEBOL",
 };
 
 export const NATIONAL_TEAM_LEAGUE_IDS = [

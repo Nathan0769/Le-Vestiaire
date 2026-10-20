@@ -131,6 +131,11 @@ function isVersionStrict(patch: PatchWithVersions): boolean {
   if (patch.leagueId !== null && STRICT_VERSION_LEAGUE_IDS.has(patch.leagueId)) return true;
   if (patch.versions.length === 0) return false;
   if (patch.family === "UEFA_COMPETITION") return true;
+  // Compétition continentale versionnée par participants (Libertadores) : seuls les clubs
+  // d'une édition l'ont. Les patchs sans liste de clubs restent ouverts à toute la confédération.
+  if (patch.family === "CONFED_CLUB_COMPETITION") {
+    return patch.versions.some((v) => v.eligibleClubIds.length > 0);
+  }
   return patch.leagueId !== null && (STRICT_VERSION_FAMILIES_BY_LEAGUE[patch.leagueId]?.has(patch.family) ?? false);
 }
 

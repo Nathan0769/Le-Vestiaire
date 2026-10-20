@@ -91,14 +91,14 @@ describe("filterApplicablePatches", () => {
   });
 
   it("2. Club CONMEBOL ne voit pas un patch UEFA_COMPETITION", () => {
-    const jersey = makeJersey("brasileirao");
+    const jersey = makeJersey("brasileiro-serie-a");
     const patch = makePatch({ family: "UEFA_COMPETITION" });
     const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(0);
   });
 
   it("3. Club CONMEBOL voit un patch CONFED_CLUB_COMPETITION", () => {
-    const jersey = makeJersey("brasileirao");
+    const jersey = makeJersey("brasileiro-serie-a");
     const patch = makePatch({ family: "CONFED_CLUB_COMPETITION" });
     const result = filterWithCurrentLeague([patch], jersey);
     expect(result).toHaveLength(1);
@@ -171,7 +171,7 @@ describe("filterApplicablePatches", () => {
 
   it("13. FIFA_CLUB_COMPETITION visible pour tout club non national", () => {
     const jerseyUEFA = makeJersey("ligue-1");
-    const jerseyCONMEBOL = makeJersey("brasileirao");
+    const jerseyCONMEBOL = makeJersey("brasileiro-serie-a");
     const patch = makePatch({ family: "FIFA_CLUB_COMPETITION" });
     expect(filterWithCurrentLeague([patch], jerseyUEFA)).toHaveLength(1);
     expect(filterWithCurrentLeague([patch], jerseyCONMEBOL)).toHaveLength(1);
@@ -887,5 +887,42 @@ describe("filterApplicablePatches - Scottish Premiership", () => {
       versions: [makeVersion({ seasonStart: "2021-22", seasonEnd: "2023-24", eligibleClubIds: ["autre-club"] })],
     });
     expect(filterWithCurrentLeague([badge], jersey)).toHaveLength(0);
+  });
+});
+
+describe("filterApplicablePatches - Copa Libertadores (participants par édition)", () => {
+  const libertadores = (eligibleClubIds: string[]) =>
+    makePatch({
+      family: "CONFED_CLUB_COMPETITION",
+      versions: [makeVersion({ seasonStart: "2019", seasonEnd: "2019", eligibleClubIds })],
+    });
+
+  it("Proposée à un club participant de l'édition", () => {
+    const jersey = makeJersey("brasileiro-serie-a", "2019");
+    expect(filterWithCurrentLeague([libertadores(["c1"])], jersey)).toHaveLength(1);
+  });
+
+  it("Non proposée à un club CONMEBOL absent de l'édition", () => {
+    const jersey = makeJersey("brasileiro-serie-a", "2019");
+    expect(filterWithCurrentLeague([libertadores(["autre-club"])], jersey)).toHaveLength(0);
+  });
+
+  it("Non proposée sur une saison sans édition versionnée", () => {
+    const jersey = makeJersey("brasileiro-serie-a", "2010");
+    expect(filterWithCurrentLeague([libertadores(["c1"])], jersey)).toHaveLength(0);
+  });
+
+  it("Non proposée à un club d'une autre confédération (MLS)", () => {
+    const jersey = makeJersey("mls", "2019");
+    expect(filterWithCurrentLeague([libertadores(["autre-club"])], jersey)).toHaveLength(0);
+  });
+
+  it("Patch continental sans liste de clubs : toujours proposé hors de ses versions", () => {
+    const jersey = makeJersey("brasileiro-serie-a", "2010");
+    const sudamericana = makePatch({
+      family: "CONFED_CLUB_COMPETITION",
+      versions: [makeVersion({ seasonStart: "2017-18" })],
+    });
+    expect(filterWithCurrentLeague([sudamericana], jersey)).toHaveLength(1);
   });
 });
