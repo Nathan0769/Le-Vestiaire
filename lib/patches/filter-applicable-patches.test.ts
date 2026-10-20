@@ -841,3 +841,51 @@ describe("filterApplicablePatches - Jupiler Pro League (champion et Supercoupe p
     expect(filterWithCurrentLeague([supercup], jersey)).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - badge champion à la place du badge de ligue (Europe)", () => {
+  it.each(["liga-portugal", "eredivisie", "jupiler-pro-league", "scottish-premiership"])(
+    "%s : le champion en titre remplace le badge de ligue",
+    (leagueId) => {
+      const jersey = makeJersey(leagueId, "2024-25");
+      const champion = makePatch({
+        id: "p-champ",
+        family: "DOMESTIC_CHAMPION",
+        leagueId,
+        versions: [makeVersion({ seasonStart: "2024-25", seasonEnd: "2024-25", eligibleClubIds: ["c1"] })],
+      });
+      const badge = makePatch({
+        id: "p-badge",
+        family: "DOMESTIC_LEAGUE_BADGE",
+        leagueId,
+        versions: [makeVersion({ seasonStart: "2020-21" })],
+      });
+      const result = filterWithCurrentLeague([champion, badge], jersey);
+      expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+    }
+  );
+});
+
+describe("filterApplicablePatches - Scottish Premiership", () => {
+  it("Champion versionné : non proposé en 2021-22, les Rangers refusaient le badge cinch", () => {
+    const jersey = makeJersey("scottish-premiership", "2021-22");
+    const champion = makePatch({
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "scottish-premiership",
+      versions: [
+        makeVersion({ seasonStart: "2020-21", seasonEnd: "2020-21", eligibleClubIds: ["c1"] }),
+        makeVersion({ seasonStart: "2022-23", seasonEnd: "2022-23", eligibleClubIds: ["c1"] }),
+      ],
+    });
+    expect(filterWithCurrentLeague([champion], jersey)).toHaveLength(0);
+  });
+
+  it("Badge de ligue : un club exclu d'une version de la saison n'a pas le badge", () => {
+    const jersey = makeJersey("scottish-premiership", "2022-23");
+    const badge = makePatch({
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "scottish-premiership",
+      versions: [makeVersion({ seasonStart: "2021-22", seasonEnd: "2023-24", eligibleClubIds: ["autre-club"] })],
+    });
+    expect(filterWithCurrentLeague([badge], jersey)).toHaveLength(0);
+  });
+});

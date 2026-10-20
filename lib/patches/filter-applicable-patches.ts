@@ -20,6 +20,10 @@ const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
   "mls",
   "j1-league",
   "liga-mx",
+  "liga-portugal",
+  "eredivisie",
+  "jupiler-pro-league",
+  "scottish-premiership",
 ]);
 
 // Ligues dont les patchs n'existent que sur les saisons et clubs couverts par une
@@ -33,6 +37,7 @@ const STRICT_VERSION_FAMILIES_BY_LEAGUE: Record<string, ReadonlySet<string>> = {
   "liga-portugal": new Set(["DOMESTIC_CHAMPION", "DOMESTIC_SUPERCUP"]),
   eredivisie: new Set(["DOMESTIC_CHAMPION", "DOMESTIC_SUPERCUP"]),
   "jupiler-pro-league": new Set(["DOMESTIC_CHAMPION", "DOMESTIC_SUPERCUP"]),
+  "scottish-premiership": new Set(["DOMESTIC_CHAMPION"]),
   "j1-league": new Set(["DOMESTIC_CHAMPION"]),
   "liga-mx": new Set(["DOMESTIC_CHAMPION"]),
 };
