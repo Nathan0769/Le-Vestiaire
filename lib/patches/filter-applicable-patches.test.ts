@@ -794,3 +794,28 @@ describe("filterApplicablePatches - Liga Portugal (champion et Supertaça par sa
     expect(filterWithCurrentLeague([badge], jersey)).toHaveLength(1);
   });
 });
+
+describe("filterApplicablePatches - Eredivisie (champion et Johan Cruijff Schaal par saison)", () => {
+  it("Champion versionné : non proposé en 2020-21, titre 2019-20 non attribué", () => {
+    const jersey = makeJersey("eredivisie", "2020-21");
+    const champion = makePatch({
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "eredivisie",
+      versions: [
+        makeVersion({ seasonStart: "2019-20", seasonEnd: "2019-20", eligibleClubIds: ["c1"] }),
+        makeVersion({ seasonStart: "2021-22", seasonEnd: "2021-22", eligibleClubIds: ["c1"] }),
+      ],
+    });
+    expect(filterWithCurrentLeague([champion], jersey)).toHaveLength(0);
+  });
+
+  it("Schaal versionnée : non proposée sur une saison sans version", () => {
+    const jersey = makeJersey("eredivisie", "2020-21");
+    const supercup = makePatch({
+      family: "DOMESTIC_SUPERCUP",
+      leagueId: "eredivisie",
+      versions: [makeVersion({ seasonStart: "2019-20", seasonEnd: "2019-20", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([supercup], jersey)).toHaveLength(0);
+  });
+});
