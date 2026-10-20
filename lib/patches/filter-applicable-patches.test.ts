@@ -819,3 +819,25 @@ describe("filterApplicablePatches - Eredivisie (champion et Johan Cruijff Schaal
     expect(filterWithCurrentLeague([supercup], jersey)).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - Jupiler Pro League (champion et Supercoupe par saison)", () => {
+  it("Champion versionné : non proposé avant le badge 2020", () => {
+    const jersey = makeJersey("jupiler-pro-league", "2018-19");
+    const champion = makePatch({
+      family: "DOMESTIC_CHAMPION",
+      leagueId: "jupiler-pro-league",
+      versions: [makeVersion({ seasonStart: "2020-21", seasonEnd: "2020-21", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([champion], jersey)).toHaveLength(0);
+  });
+
+  it("Supercoupe versionnée : non proposée sur une saison sans version", () => {
+    const jersey = makeJersey("jupiler-pro-league", "2020-21");
+    const supercup = makePatch({
+      family: "DOMESTIC_SUPERCUP",
+      leagueId: "jupiler-pro-league",
+      versions: [makeVersion({ seasonStart: "2021-22", seasonEnd: "2021-22", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([supercup], jersey)).toHaveLength(0);
+  });
+});

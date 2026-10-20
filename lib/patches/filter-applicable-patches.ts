@@ -32,6 +32,7 @@ const STRICT_VERSION_LEAGUE_IDS = new Set(["mls"]);
 const STRICT_VERSION_FAMILIES_BY_LEAGUE: Record<string, ReadonlySet<string>> = {
   "liga-portugal": new Set(["DOMESTIC_CHAMPION", "DOMESTIC_SUPERCUP"]),
   eredivisie: new Set(["DOMESTIC_CHAMPION", "DOMESTIC_SUPERCUP"]),
+  "jupiler-pro-league": new Set(["DOMESTIC_CHAMPION", "DOMESTIC_SUPERCUP"]),
   "j1-league": new Set(["DOMESTIC_CHAMPION"]),
   "liga-mx": new Set(["DOMESTIC_CHAMPION"]),
 };
