@@ -973,3 +973,29 @@ describe("filterApplicablePatches - compétitions FIFA de clubs (participants pa
     expect(filterWithCurrentLeague([open], makeJersey("la-liga", "2023-24"))).toHaveLength(1);
   });
 });
+
+describe("filterApplicablePatches - compétition de sélections ouverte aux invités (Copa América)", () => {
+  const copa = makePatch({
+    family: "NATIONAL_TEAM_COMPETITION",
+    leagueId: null,
+    versions: [makeVersion({ seasonStart: "2015", seasonEnd: "2016", eligibleClubIds: ["c1"] })],
+  });
+
+  it("Proposée à une sélection invitée d'une autre confédération qui a joué l'édition", () => {
+    expect(filterWithCurrentLeague([copa], makeJersey("concacaf", "2016"))).toHaveLength(1);
+  });
+
+  it("Non proposée sur une année sans édition", () => {
+    expect(filterWithCurrentLeague([copa], makeJersey("uefa", "2022"))).toHaveLength(0);
+  });
+
+  it("Champion du Monde (liste de sélections sur le patch) reste proposé hors de ses versions", () => {
+    const champion = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      leagueId: null,
+      eligibleClubIds: ["c1"],
+      versions: [makeVersion({ seasonStart: "2022", seasonEnd: "2026", eligibleClubIds: ["autre"] })],
+    });
+    expect(filterWithCurrentLeague([champion], makeJersey("uefa", "2018"))).toHaveLength(1);
+  });
+});
