@@ -42,6 +42,22 @@ const STRICT_VERSION_FAMILIES_BY_LEAGUE: Record<string, ReadonlySet<string>> = {
   "liga-mx": new Set(["DOMESTIC_CHAMPION"]),
 };
 
+// Le modèle Patch ne porte pas de confédération : sans cette table, un club CONMEBOL se
+// verrait proposer les compétitions CAF, Concacaf et AFC. Un patch absent reste ouvert à
+// toute confédération hors UEFA.
+const CONFEDERATION_BY_CONFED_PATCH_NAME: Record<string, Confederation> = {
+  "Copa Libertadores": "CONMEBOL",
+  "Titres Copa Libertadores": "CONMEBOL",
+  "Copa Sudamericana": "CONMEBOL",
+  "Recopa Sudamericana": "CONMEBOL",
+  "Coupe des Champions Concacaf": "CONCACAF",
+  "Ligue des Champions AFC Elite": "AFC",
+  "Ligue des Champions AFC Two": "AFC",
+  "Ligue des Champions CAF": "CAF",
+  "Coupe de la Confédération CAF": "CAF",
+  "Supercoupe CAF": "CAF",
+};
+
 export function filterApplicablePatches(
   allPatches: PatchWithVersions[],
   jersey: JerseyContext,
@@ -150,8 +166,11 @@ function isPatchEligible(
     case "UEFA_COMPETITION":
       return !isNational && clubConfederation === "UEFA";
 
-    case "CONFED_CLUB_COMPETITION":
-      return !isNational && clubConfederation !== null && clubConfederation !== "UEFA";
+    case "CONFED_CLUB_COMPETITION": {
+      if (isNational || clubConfederation === null || clubConfederation === "UEFA") return false;
+      const patchConfederation = CONFEDERATION_BY_CONFED_PATCH_NAME[patch.name];
+      return patchConfederation === undefined || patchConfederation === clubConfederation;
+    }
 
     case "FIFA_CLUB_COMPETITION":
       return !isNational;

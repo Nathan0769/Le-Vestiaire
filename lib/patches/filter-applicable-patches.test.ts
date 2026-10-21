@@ -926,3 +926,28 @@ describe("filterApplicablePatches - Copa Libertadores (participants par édition
     expect(filterWithCurrentLeague([sudamericana], jersey)).toHaveLength(1);
   });
 });
+
+describe("filterApplicablePatches - patch continental réservé à sa confédération", () => {
+  const confed = (name: string) => makePatch({ name, family: "CONFED_CLUB_COMPETITION" });
+
+  it.each([
+    ["Ligue des Champions CAF", "primera-division-argentina"],
+    ["Coupe des Champions Concacaf", "brasileiro-serie-a"],
+    ["Ligue des Champions AFC Elite", "liga-mx"],
+    ["Copa Sudamericana", "saudi-pro-league"],
+  ])("%s non proposé à un club de %s", (name, leagueId) => {
+    expect(filterWithCurrentLeague([confed(name)], makeJersey(leagueId))).toHaveLength(0);
+  });
+
+  it.each([
+    ["Copa Sudamericana", "primera-division-argentina"],
+    ["Coupe des Champions Concacaf", "mls"],
+    ["Ligue des Champions AFC Two", "j1-league"],
+  ])("%s proposé à un club de %s", (name, leagueId) => {
+    expect(filterWithCurrentLeague([confed(name)], makeJersey(leagueId))).toHaveLength(1);
+  });
+
+  it("Patch continental inconnu de la table : ouvert à toute confédération hors UEFA", () => {
+    expect(filterWithCurrentLeague([confed("Nouveau patch")], makeJersey("mls"))).toHaveLength(1);
+  });
+});
