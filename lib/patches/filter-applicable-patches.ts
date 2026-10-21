@@ -48,6 +48,8 @@ const STRICT_VERSION_FAMILIES_BY_LEAGUE: Record<string, ReadonlySet<string>> = {
 const CONFEDERATION_BY_CONFED_PATCH_NAME: Record<string, Confederation> = {
   "Copa Libertadores": "CONMEBOL",
   "Titres Copa Libertadores": "CONMEBOL",
+  "Champion Copa Libertadores": "CONMEBOL",
+  "Champion Copa Sudamericana": "CONMEBOL",
   "Copa Sudamericana": "CONMEBOL",
   "Recopa Sudamericana": "CONMEBOL",
   "Coupe des Champions Concacaf": "CONCACAF",

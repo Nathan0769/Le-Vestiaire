@@ -935,6 +935,8 @@ describe("filterApplicablePatches - patch continental réservé à sa confédér
     ["Coupe des Champions Concacaf", "brasileiro-serie-a"],
     ["Ligue des Champions AFC Elite", "liga-mx"],
     ["Copa Sudamericana", "saudi-pro-league"],
+    ["Champion Copa Libertadores", "mls"],
+    ["Champion Copa Sudamericana", "liga-mx"],
   ])("%s non proposé à un club de %s", (name, leagueId) => {
     expect(filterWithCurrentLeague([confed(name)], makeJersey(leagueId))).toHaveLength(0);
   });
