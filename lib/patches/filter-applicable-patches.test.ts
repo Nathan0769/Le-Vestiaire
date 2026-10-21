@@ -999,3 +999,14 @@ describe("filterApplicablePatches - compétition de sélections ouverte aux invi
     expect(filterWithCurrentLeague([champion], makeJersey("uefa", "2018"))).toHaveLength(1);
   });
 });
+
+describe("filterApplicablePatches - compétition de sélections d'une confédération versionnée par édition", () => {
+  it("Coupe d'Asie non proposée sur une année sans édition", () => {
+    const asie = makePatch({
+      family: "NATIONAL_TEAM_COMPETITION",
+      leagueId: "afc",
+      versions: [makeVersion({ seasonStart: "2023", seasonEnd: "2024", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([asie], makeJersey("afc", "2021"))).toHaveLength(0);
+  });
+});

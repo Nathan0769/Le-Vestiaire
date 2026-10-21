@@ -154,10 +154,10 @@ function isVersionStrict(patch: PatchWithVersions): boolean {
   if (patch.family === "CONFED_CLUB_COMPETITION" || patch.family === "FIFA_CLUB_COMPETITION") {
     return patch.versions.some((v) => v.eligibleClubIds.length > 0);
   }
-  // Compétition de sélections ouverte aux invités d'autres confédérations (Copa América) : pas de
-  // ligue pour la limiter, seules les sélections d'une édition l'ont. Un patch qui porte sa propre
-  // liste (Champion du Monde) garde ce repli hors de ses versions.
-  if (patch.family === "NATIONAL_TEAM_COMPETITION" && patch.leagueId === null && patch.eligibleClubIds.length === 0) {
+  // Compétition de sélections versionnée par édition (Euro, CAN, Copa América avec ses invités) :
+  // seules les sélections d'une édition l'ont, une année sans édition n'a pas de patch. Un patch qui
+  // porte sa propre liste (Champion du Monde) garde ce repli hors de ses versions.
+  if (patch.family === "NATIONAL_TEAM_COMPETITION" && patch.eligibleClubIds.length === 0) {
     return patch.versions.some((v) => v.eligibleClubIds.length > 0);
   }
   return patch.leagueId !== null && (STRICT_VERSION_FAMILIES_BY_LEAGUE[patch.leagueId]?.has(patch.family) ?? false);
