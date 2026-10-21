@@ -953,3 +953,23 @@ describe("filterApplicablePatches - patch continental réservé à sa confédér
     expect(filterWithCurrentLeague([confed("Nouveau patch")], makeJersey("mls"))).toHaveLength(1);
   });
 });
+
+describe("filterApplicablePatches - compétitions FIFA de clubs (participants par édition)", () => {
+  const cwc = makePatch({
+    family: "FIFA_CLUB_COMPETITION",
+    versions: [makeVersion({ seasonStart: "2018-19", seasonEnd: "2018-19", eligibleClubIds: ["c1"] })],
+  });
+
+  it("Proposée à un participant de l'édition", () => {
+    expect(filterWithCurrentLeague([cwc], makeJersey("la-liga", "2018-19"))).toHaveLength(1);
+  });
+
+  it("Non proposée sur une saison sans édition versionnée", () => {
+    expect(filterWithCurrentLeague([cwc], makeJersey("la-liga", "2023-24"))).toHaveLength(0);
+  });
+
+  it("Patch FIFA sans liste de clubs : proposé hors de ses versions", () => {
+    const open = makePatch({ family: "FIFA_CLUB_COMPETITION", versions: [makeVersion({ seasonStart: "2025-26" })] });
+    expect(filterWithCurrentLeague([open], makeJersey("la-liga", "2023-24"))).toHaveLength(1);
+  });
+});
