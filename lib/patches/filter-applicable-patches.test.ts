@@ -1010,3 +1010,20 @@ describe("filterApplicablePatches - compétition de sélections d'une confédér
     expect(filterWithCurrentLeague([asie], makeJersey("afc", "2021"))).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - patchs de campagne UEFA limités à leurs années", () => {
+  const campaign = (name: string, seasonStart: string, seasonEnd: string | null) =>
+    makePatch({ name, family: "NATIONAL_TEAM_COMPETITION", leagueId: "uefa", versions: [makeVersion({ seasonStart, seasonEnd })] });
+
+  it.each([
+    ["Ligue des Nations UEFA", "2018", null, "2010"],
+    ["UEFA Foundation", "2021", null, "2016"],
+    ["Respect UEFA", "2014", "2020", "2022"],
+  ])("%s non proposé hors de ses années", (name, start, end, season) => {
+    expect(filterWithCurrentLeague([campaign(name, start, end)], makeJersey("uefa", season))).toHaveLength(0);
+  });
+
+  it("Proposé sur une année couverte", () => {
+    expect(filterWithCurrentLeague([campaign("Respect UEFA", "2014", "2020")], makeJersey("uefa", "2016"))).toHaveLength(1);
+  });
+});

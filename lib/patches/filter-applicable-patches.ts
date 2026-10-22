@@ -30,6 +30,16 @@ const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
 // version : pas de version active = patch non proposé (ex. maillots NASL rangés en MLS).
 const STRICT_VERSION_LEAGUE_IDS = new Set(["mls"]);
 
+// Patchs de campagne versionnés sans trou de leur création à leur fin : hors de leurs années
+// ils n'existaient pas (Ligue des Nations avant 2018, Respect après 2020).
+const STRICT_VERSION_PATCH_NAMES = new Set([
+  "Ligue des Nations UEFA",
+  "Ligue des Nations Concacaf",
+  "Qualifications UEFA",
+  "Respect UEFA",
+  "UEFA Foundation",
+]);
+
 // Familles versionnées saison par saison sans trou dans ces ligues : une saison sans
 // version n'a pas de patch. Ailleurs les données ont des trous (un champion sans
 // version doit rester proposé), on n'y ajoute une ligue qu'une fois complète.
@@ -148,6 +158,7 @@ export function filterApplicablePatches(
 function isVersionStrict(patch: PatchWithVersions): boolean {
   if (patch.leagueId !== null && STRICT_VERSION_LEAGUE_IDS.has(patch.leagueId)) return true;
   if (patch.versions.length === 0) return false;
+  if (STRICT_VERSION_PATCH_NAMES.has(patch.name)) return true;
   if (patch.family === "UEFA_COMPETITION") return true;
   // Compétition versionnée par participants (Libertadores, Coupe du monde des clubs) : seuls
   // les clubs d'une édition l'ont. Les patchs sans liste de clubs restent ouverts.
