@@ -31,13 +31,16 @@ const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
 const STRICT_VERSION_LEAGUE_IDS = new Set(["mls"]);
 
 // Patchs de campagne versionnés sans trou de leur création à leur fin : hors de leurs années
-// ils n'existaient pas (Ligue des Nations avant 2018, Respect après 2020).
+// ils n'existaient pas (Ligue des Nations avant 2018, Respect après 2020, badge des anciens
+// vainqueurs propre à 2026).
 const STRICT_VERSION_PATCH_NAMES = new Set([
   "Ligue des Nations UEFA",
   "Ligue des Nations Concacaf",
   "Qualifications UEFA",
   "Respect UEFA",
   "UEFA Foundation",
+  "Coupe du Monde FIFA champion clair",
+  "Coupe du Monde FIFA champion foncé",
 ]);
 
 // Familles versionnées saison par saison sans trou dans ces ligues : une saison sans

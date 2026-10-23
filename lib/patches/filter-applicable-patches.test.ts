@@ -1027,3 +1027,15 @@ describe("filterApplicablePatches - patchs de campagne UEFA limités à leurs an
     expect(filterWithCurrentLeague([campaign("Respect UEFA", "2014", "2020")], makeJersey("uefa", "2016"))).toHaveLength(1);
   });
 });
+
+describe("filterApplicablePatches - badge manche 2026 des anciens vainqueurs", () => {
+  it("Non proposé à un ancien vainqueur hors de 2026", () => {
+    const badge = makePatch({
+      name: "Coupe du Monde FIFA champion clair",
+      family: "NATIONAL_TEAM_COMPETITION",
+      eligibleClubIds: ["c1"],
+      versions: [makeVersion({ seasonStart: "2026", seasonEnd: "2026", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([badge], makeJersey("uefa", "2018"))).toHaveLength(0);
+  });
+});
