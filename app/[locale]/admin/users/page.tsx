@@ -18,6 +18,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
 
@@ -65,6 +74,9 @@ export default function AdminUsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [changingRole, setChangingRole] = useState<string | null>(null);
+  const [banTarget, setBanTarget] = useState<User | null>(null);
+  const [banReason, setBanReason] = useState("");
+  const [banning, setBanning] = useState<string | null>(null);
 
   // Charger les utilisateurs
   useEffect(() => {
@@ -112,6 +124,69 @@ export default function AdminUsersPage() {
     } finally {
       setChangingRole(null);
     }
+  }
+
+  async function submitBan(
+    user: User,
+    body: { action: "ban"; reason: string } | { action: "unban" }
+  ) {
+    try {
+      setBanning(user.id);
+
+      const response = await fetch("/api/admin/users/ban", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId: user.id, ...body }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        toast.success(
+          body.action === "ban"
+            ? `${user.name} banni : ${data.photos} image(s) supprimée(s), ${data.posts} post(s) masqué(s)`
+            : `${user.name} débanni`
+        );
+        setBanTarget(null);
+        setBanReason("");
+        await fetchUsers();
+      } else {
+        toast.error(data.error || "Action impossible");
+      }
+    } catch {
+      toast.error("Erreur lors du bannissement");
+    } finally {
+      setBanning(null);
+    }
+  }
+
+  function BanButton({ user }: { user: User }) {
+    if (user.role === "admin" || user.role === "superadmin") return null;
+
+    if (user.banned) {
+      return (
+        <Button
+          variant="outline"
+          size="sm"
+          className="cursor-pointer"
+          disabled={banning === user.id}
+          onClick={() => submitBan(user, { action: "unban" })}
+        >
+          Débannir
+        </Button>
+      );
+    }
+
+    return (
+      <Button
+        variant="destructive"
+        size="sm"
+        className="cursor-pointer"
+        onClick={() => setBanTarget(user)}
+      >
+        Bannir
+      </Button>
+    );
   }
 
   function RoleSelect({ user }: { user: User }) {
@@ -189,7 +264,10 @@ export default function AdminUsersPage() {
                   {user.email}
                 </p>
               </div>
-              <RoleSelect user={user} />
+              <div className="flex flex-col items-end gap-2">
+                <RoleSelect user={user} />
+                <BanButton user={user} />
+              </div>
             </div>
 
             <div className="grid grid-cols-3 gap-2 text-center">
@@ -232,6 +310,7 @@ export default function AdminUsersPage() {
               <TableHead className="text-center">Wishlist</TableHead>
               <TableHead className="text-center">Notes</TableHead>
               <TableHead>Inscription</TableHead>
+              <TableHead />
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -263,11 +342,61 @@ export default function AdminUsersPage() {
                 <TableCell className="text-sm text-muted-foreground">
                   {formatDateTime(user.createdAt)}
                 </TableCell>
+                <TableCell>
+                  <BanButton user={user} />
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </div>
+
+      <Dialog
+        open={banTarget !== null}
+        onOpenChange={(open) => {
+          if (!open) {
+            setBanTarget(null);
+            setBanReason("");
+          }
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Bannir {banTarget?.name}</DialogTitle>
+            <DialogDescription>
+              Le compte est déconnecté partout et ne peut plus se connecter.
+              Ses photos de collection et son avatar sont supprimés
+              définitivement, ses posts sont retirés du feed.
+            </DialogDescription>
+          </DialogHeader>
+          <Textarea
+            placeholder="Raison (ex. contenu sexuel)"
+            value={banReason}
+            maxLength={200}
+            onChange={(e) => setBanReason(e.target.value)}
+          />
+          <DialogFooter>
+            <Button
+              variant="outline"
+              className="cursor-pointer"
+              onClick={() => setBanTarget(null)}
+            >
+              Annuler
+            </Button>
+            <Button
+              variant="destructive"
+              className="cursor-pointer"
+              disabled={!banReason.trim() || banning !== null}
+              onClick={() =>
+                banTarget &&
+                submitBan(banTarget, { action: "ban", reason: banReason.trim() })
+              }
+            >
+              {banning ? <Loader2 className="h-4 w-4 animate-spin" /> : "Bannir"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
