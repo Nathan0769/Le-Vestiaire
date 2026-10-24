@@ -41,6 +41,7 @@ const STRICT_VERSION_PATCH_NAMES = new Set([
   "UEFA Foundation",
   "Coupe du Monde FIFA champion clair",
   "Coupe du Monde FIFA champion foncé",
+  "Coupe de la Ligue",
 ]);
 
 // Familles versionnées saison par saison sans trou dans ces ligues : une saison sans
@@ -53,6 +54,7 @@ const STRICT_VERSION_FAMILIES_BY_LEAGUE: Record<string, ReadonlySet<string>> = {
   "scottish-premiership": new Set(["DOMESTIC_CHAMPION"]),
   "j1-league": new Set(["DOMESTIC_CHAMPION"]),
   "liga-mx": new Set(["DOMESTIC_CHAMPION"]),
+  "ligue-1": new Set(["DOMESTIC_SUPERCUP"]),
 };
 
 // Le modèle Patch ne porte pas de confédération : sans cette table, un club CONMEBOL se

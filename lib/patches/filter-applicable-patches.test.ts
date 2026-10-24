@@ -1039,3 +1039,24 @@ describe("filterApplicablePatches - badge manche 2026 des anciens vainqueurs", (
     expect(filterWithCurrentLeague([badge], makeJersey("uefa", "2018"))).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - coupes françaises", () => {
+  it("Trophée des Champions non proposé sur une saison sans édition", () => {
+    const tdc = makePatch({
+      family: "DOMESTIC_SUPERCUP",
+      leagueId: "ligue-1",
+      versions: [makeVersion({ seasonStart: "2019-20", seasonEnd: "2019-20", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([tdc], makeJersey("ligue-1", "1996-97"))).toHaveLength(0);
+  });
+
+  it("Coupe de la Ligue non proposée après sa disparition", () => {
+    const cdl = makePatch({
+      name: "Coupe de la Ligue",
+      family: "DOMESTIC_CUP",
+      leagueId: "ligue-1",
+      versions: [makeVersion({ seasonStart: "2017-18", seasonEnd: "2019-20" })],
+    });
+    expect(filterWithCurrentLeague([cdl], makeJersey("ligue-1", "2022-23"))).toHaveLength(0);
+  });
+});
