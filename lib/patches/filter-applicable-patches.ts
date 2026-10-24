@@ -75,6 +75,12 @@ const CONFEDERATION_BY_CONFED_PATCH_NAME: Record<string, Confederation> = {
   "Supercoupe CAF": "CAF",
 };
 
+// Coupes nationales réservées à certaines divisions (la Coupe de la Ligue n'était ouverte qu'aux
+// clubs professionnels), au lieu de toutes les ligues du pays.
+const LEAGUES_BY_CUP_PATCH_NAME: Record<string, ReadonlySet<string>> = {
+  "Coupe de la Ligue": new Set(["ligue-1", "ligue-2"]),
+};
+
 export function filterApplicablePatches(
   allPatches: PatchWithVersions[],
   jersey: JerseyContext,
@@ -206,8 +212,12 @@ function isPatchEligible(
     // Coupe et supercoupe nationales ouvertes à toutes les divisions du pays
     // (ex. Taça de Portugal gagnée par un club de Liga 2).
     case "DOMESTIC_CUP":
-    case "DOMESTIC_SUPERCUP":
-      return !isNational && isSameCountryLeague(patch.leagueId, resolvedLeagueId, countryByLeagueId);
+    case "DOMESTIC_SUPERCUP": {
+      if (isNational) return false;
+      const leagues = LEAGUES_BY_CUP_PATCH_NAME[patch.name];
+      if (leagues) return leagues.has(resolvedLeagueId);
+      return isSameCountryLeague(patch.leagueId, resolvedLeagueId, countryByLeagueId);
+    }
 
     case "NATIONAL_TEAM_COMPETITION":
       if (!isNational) return false;

@@ -1060,3 +1060,21 @@ describe("filterApplicablePatches - coupes françaises", () => {
     expect(filterWithCurrentLeague([cdl], makeJersey("ligue-1", "2022-23"))).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - Coupe de la Ligue réservée aux clubs pros", () => {
+  const cdl = makePatch({
+    name: "Coupe de la Ligue",
+    family: "DOMESTIC_CUP",
+    leagueId: "ligue-1",
+    versions: [makeVersion({ seasonStart: "2017-18", seasonEnd: "2019-20" })],
+  });
+  const countries = new Map([["ligue-1", "France"], ["ligue-2", "France"], ["national", "France"]]);
+
+  it("Proposée à un club de Ligue 2", () => {
+    expect(filterApplicablePatches([cdl], makeJersey("ligue-2", "2018-19"), "ligue-2", countries)).toHaveLength(1);
+  });
+
+  it("Non proposée à un club de National", () => {
+    expect(filterApplicablePatches([cdl], makeJersey("national", "2018-19"), "national", countries)).toHaveLength(0);
+  });
+});
