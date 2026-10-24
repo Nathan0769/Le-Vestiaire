@@ -55,6 +55,7 @@ const STRICT_VERSION_FAMILIES_BY_LEAGUE: Record<string, ReadonlySet<string>> = {
   "j1-league": new Set(["DOMESTIC_CHAMPION"]),
   "liga-mx": new Set(["DOMESTIC_CHAMPION"]),
   "ligue-1": new Set(["DOMESTIC_SUPERCUP"]),
+  "premier-league": new Set(["DOMESTIC_SUPERCUP"]),
 };
 
 // Le modèle Patch ne porte pas de confédération : sans cette table, un club CONMEBOL se

@@ -1078,3 +1078,14 @@ describe("filterApplicablePatches - Coupe de la Ligue réservée aux clubs pros"
     expect(filterApplicablePatches([cdl], makeJersey("national", "2018-19"), "national", countries)).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - FA Community Shield réservé aux finalistes", () => {
+  it("Non proposé sur une saison sans édition", () => {
+    const shield = makePatch({
+      family: "DOMESTIC_SUPERCUP",
+      leagueId: "premier-league",
+      versions: [makeVersion({ seasonStart: "2019-20", seasonEnd: "2019-20", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([shield], makeJersey("premier-league", "1990-91"))).toHaveLength(0);
+  });
+});
