@@ -1089,3 +1089,15 @@ describe("filterApplicablePatches - FA Community Shield réservé aux finalistes
     expect(filterWithCurrentLeague([shield], makeJersey("premier-league", "1990-91"))).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - patch FA Cup du tenant du titre", () => {
+  it("Non proposé au club hors de sa saison de tenant", () => {
+    const holder = makePatch({
+      name: "FA Cup - tenant du titre",
+      family: "DOMESTIC_CUP",
+      leagueId: "premier-league",
+      versions: [makeVersion({ seasonStart: "2020-21", seasonEnd: "2020-21", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([holder], makeJersey("premier-league", "2023-24"))).toHaveLength(0);
+  });
+});
