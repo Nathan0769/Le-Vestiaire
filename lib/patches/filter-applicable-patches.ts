@@ -43,6 +43,8 @@ const STRICT_VERSION_PATCH_NAMES = new Set([
   "Coupe du Monde FIFA champion foncé",
   "Coupe de la Ligue",
   "FA Cup - tenant du titre",
+  "EFL Cup",
+  "EFL Cup - tenant du titre",
 ]);
 
 // Familles versionnées saison par saison sans trou dans ces ligues : une saison sans

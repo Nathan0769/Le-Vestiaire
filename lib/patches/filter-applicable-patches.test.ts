@@ -1101,3 +1101,18 @@ describe("filterApplicablePatches - patch FA Cup du tenant du titre", () => {
     expect(filterWithCurrentLeague([holder], makeJersey("premier-league", "2023-24"))).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - EFL Cup", () => {
+  it.each([
+    ["EFL Cup", "2005-06"],
+    ["EFL Cup - tenant du titre", "2023-24"],
+  ])("%s non proposé hors de ses années (%s)", (name, season) => {
+    const patch = makePatch({
+      name,
+      family: "DOMESTIC_CUP",
+      leagueId: "premier-league",
+      versions: [makeVersion({ seasonStart: "2025-26", seasonEnd: "2025-26", eligibleClubIds: name.includes("tenant") ? ["c1"] : [] })],
+    });
+    expect(filterWithCurrentLeague([patch], makeJersey("premier-league", season))).toHaveLength(0);
+  });
+});
