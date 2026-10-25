@@ -24,6 +24,7 @@ const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
   "eredivisie",
   "jupiler-pro-league",
   "scottish-premiership",
+  "allsvenskan",
 ]);
 
 // Ligues dont les patchs n'existent que sur les saisons et clubs couverts par une
@@ -59,6 +60,7 @@ const STRICT_VERSION_FAMILIES_BY_LEAGUE: Record<string, ReadonlySet<string>> = {
   "liga-mx": new Set(["DOMESTIC_CHAMPION"]),
   "ligue-1": new Set(["DOMESTIC_SUPERCUP"]),
   "premier-league": new Set(["DOMESTIC_SUPERCUP"]),
+  allsvenskan: new Set(["DOMESTIC_CHAMPION"]),
 };
 
 // Le modèle Patch ne porte pas de confédération : sans cette table, un club CONMEBOL se

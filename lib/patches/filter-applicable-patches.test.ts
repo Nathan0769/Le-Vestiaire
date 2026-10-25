@@ -1116,3 +1116,27 @@ describe("filterApplicablePatches - EFL Cup", () => {
     expect(filterWithCurrentLeague([patch], makeJersey("premier-league", season))).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - Allsvenskan", () => {
+  const champion = makePatch({
+    id: "p-champ",
+    family: "DOMESTIC_CHAMPION",
+    leagueId: "allsvenskan",
+    versions: [makeVersion({ seasonStart: "2024", seasonEnd: "2024", eligibleClubIds: ["c1"] })],
+  });
+  const badge = makePatch({
+    id: "p-badge",
+    family: "DOMESTIC_LEAGUE_BADGE",
+    leagueId: "allsvenskan",
+    versions: [makeVersion({ seasonStart: "2019", seasonEnd: null })],
+  });
+
+  it("Le champion en titre porte le badge doré à la place du badge de ligue", () => {
+    const result = filterWithCurrentLeague([champion, badge], makeJersey("allsvenskan", "2024"));
+    expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+
+  it("Pas de badge champion avant 2021", () => {
+    expect(filterWithCurrentLeague([champion], makeJersey("allsvenskan", "2019"))).toHaveLength(0);
+  });
+});
