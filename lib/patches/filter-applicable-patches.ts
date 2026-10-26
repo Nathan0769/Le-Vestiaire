@@ -46,6 +46,9 @@ const STRICT_VERSION_PATCH_NAMES = new Set([
   "FA Cup - tenant du titre",
   "EFL Cup",
   "EFL Cup - tenant du titre",
+  "Sky Bet - jeu responsable",
+  "Not Today or Any Day",
+  "EFL Together",
 ]);
 
 // Familles versionnées saison par saison sans trou dans ces ligues : une saison sans

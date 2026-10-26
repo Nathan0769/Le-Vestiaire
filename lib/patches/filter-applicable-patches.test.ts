@@ -1117,6 +1117,22 @@ describe("filterApplicablePatches - EFL Cup", () => {
   });
 });
 
+describe("filterApplicablePatches - patchs de campagne EFL", () => {
+  it.each([
+    ["Sky Bet - jeu responsable", "2016-17"],
+    ["Not Today or Any Day", "2023-24"],
+    ["EFL Together", "2019-20"],
+  ])("%s non proposé hors de ses saisons (%s)", (name, season) => {
+    const patch = makePatch({
+      name,
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "efl-championship",
+      versions: [makeVersion({ seasonStart: "2021-22", seasonEnd: "2021-22" })],
+    });
+    expect(filterWithCurrentLeague([patch], makeJersey("efl-championship", season))).toHaveLength(0);
+  });
+});
+
 describe("filterApplicablePatches - Allsvenskan", () => {
   const champion = makePatch({
     id: "p-champ",
