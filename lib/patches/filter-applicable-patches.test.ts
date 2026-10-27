@@ -1156,3 +1156,33 @@ describe("filterApplicablePatches - Allsvenskan", () => {
     expect(filterWithCurrentLeague([champion], makeJersey("allsvenskan", "2019"))).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - Saudi Pro League", () => {
+  const champion = makePatch({
+    id: "p-champ",
+    name: "Champion Roshn Saudi League",
+    family: "DOMESTIC_CHAMPION",
+    leagueId: "saudi-pro-league",
+    versions: [makeVersion({ seasonStart: "2025-26", seasonEnd: "2025-26", eligibleClubIds: ["c1"] })],
+  });
+  const badge = makePatch({
+    id: "p-badge",
+    name: "Roshn Saudi League",
+    family: "DOMESTIC_LEAGUE_BADGE",
+    leagueId: "saudi-pro-league",
+    versions: [makeVersion({ seasonStart: "2022-23", seasonEnd: null })],
+  });
+
+  it("Le champion en titre porte le badge doré à la place du badge de ligue", () => {
+    const result = filterWithCurrentLeague([champion, badge], makeJersey("saudi-pro-league", "2025-26"));
+    expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+
+  it("Pas de badge champion hors des saisons versionnées", () => {
+    expect(filterWithCurrentLeague([champion], makeJersey("saudi-pro-league", "2023-24"))).toHaveLength(0);
+  });
+
+  it("Pas de badge Roshn avant le sponsoring (2022-23)", () => {
+    expect(filterWithCurrentLeague([badge], makeJersey("saudi-pro-league", "2021-22"))).toHaveLength(0);
+  });
+});
