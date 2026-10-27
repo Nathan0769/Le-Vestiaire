@@ -27,21 +27,21 @@ import { AuthGateModal } from "@/components/auth/auth-gate-modal";
 import { usePendingIntent } from "@/hooks/usePendingIntent";
 import { buildReturnTo } from "@/lib/auth-gate";
 import { trackEvent } from "@/lib/analytics";
+import { useAuth } from "@/hooks/useAuth";
 
 const CATEGORIES = ["LETTERING", "SEASON", "BRAND", "IMAGE", "OTHER"] as const;
 type Category = (typeof CATEGORIES)[number];
 
 interface JerseyReportButtonProps {
   jerseyId: string;
-  isAuthenticated: boolean;
   jersey: { name: string; imageUrl: string };
 }
 
 export function JerseyReportButton({
   jerseyId,
-  isAuthenticated,
   jersey,
 }: JerseyReportButtonProps) {
+  const { user } = useAuth();
   const t = useTranslations("Jerseys.report");
   const pathname = usePathname();
 
@@ -58,7 +58,7 @@ export function JerseyReportButton({
   });
 
   const handleOpen = () => {
-    if (!isAuthenticated) {
+    if (!user) {
       setShowAuthGate(true);
       return;
     }

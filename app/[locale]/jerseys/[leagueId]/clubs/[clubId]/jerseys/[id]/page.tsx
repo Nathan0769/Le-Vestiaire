@@ -17,54 +17,51 @@ import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import { WebPageSchema } from "@/components/seo/webpage-schema";
 import { FaqSchema } from "@/components/seo/faq-schema";
 import { JerseyTabs } from "@/components/jerseys/jersey-tabs";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 import { autoJerseyDescription } from "@/lib/auto-jersey-description";
 import { jerseyTypeLabel, JERSEY_TYPE_ORDER } from "@/lib/jersey-utils";
 import { EditableBrand } from "@/components/jerseys/editable-brand";
 import { EditableMainColor } from "@/components/jerseys/editable-main-color";
 import { JerseyReportButton } from "@/components/jerseys/jersey-report-button";
-import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
 import { JerseyNavigator } from "@/components/jerseys/jersey-navigator";
 
-export const dynamic = "force-dynamic";
+// Rendue sans session pour etre mise en cache : les donnees personnelles
+// (wishlist, collection, role admin) et les compteurs vivants (note, stats) sont
+// charges cote client. Les ecritures admin purgent la page via revalidateJerseyPages.
+export const revalidate = 86400;
+
+export function generateStaticParams() {
+  return [];
+}
 
 interface JerseyPageProps {
   params: Promise<{
+    locale: string;
     leagueId: string;
     clubId: string;
     id: string;
   }>;
 }
 
-const getCachedUser = cache(() => getCurrentUser());
-
 const getCachedJersey = cache(async (id: string) => {
-  const user = await getCachedUser();
   const searchBySlug = isSlug(id);
 
   const jersey = await prisma.jersey.findUnique({
     where: searchBySlug ? { slug: id } : { id },
     include: {
       club: { include: { league: true } },
-      ...(user && {
-        wishlist: {
-          where: { userId: user.id },
-          select: { id: true },
-        },
-      }),
     },
   });
 
   if (!jersey) return null;
-  const { wishlist, retailPrice, ...rest } = jersey as typeof jersey & {
-    wishlist?: { id: string }[];
-  };
+  const { retailPrice, ...rest } = jersey;
   return {
     ...rest,
     retailPrice: retailPrice == null ? undefined : Number(retailPrice),
-    isInWishlist: user ? (wishlist?.length ?? 0) > 0 : false,
+    // Etat reel synchronise par WishlistButton / CollectionButton cote client.
+    isInWishlist: false,
     isInCollection: false,
   } as unknown as JerseyWithWishlistAndCollection;
 });
@@ -127,8 +124,8 @@ function buildJerseyLanguageAlternates(slugOrId: string, leagueId: string, clubI
 export async function generateMetadata({
   params,
 }: JerseyPageProps): Promise<Metadata> {
-  const { leagueId, clubId, id } = await params;
-  const locale = await getLocale();
+  const { locale, leagueId, clubId, id } = await params;
+  setRequestLocale(locale);
   const tMeta = await getTranslations("JerseyMetadata");
 
   try {
@@ -291,12 +288,8 @@ export async function generateMetadata({
 }
 
 export default async function JerseyPage({ params }: JerseyPageProps) {
-  const { leagueId, clubId, id } = await params;
-
-  const currentUser = await getCachedUser();
-  const isAdmin =
-    currentUser?.role === "admin" || currentUser?.role === "superadmin";
-  const isSuperAdmin = currentUser?.role === "superadmin";
+  const { locale, leagueId, clubId, id } = await params;
+  setRequestLocale(locale);
 
   const jersey = await getCachedJersey(id);
   if (!jersey) notFound();
@@ -367,7 +360,6 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     .filter((j) => j.id !== jersey.id)
     .slice(0, 8);
 
-  const locale = await getLocale();
   const [tJerseyType, t, tBreadcrumb, tMeta] = await Promise.all([
     getTranslations("JerseyType"),
     getTranslations("Jerseys"),
@@ -507,7 +499,6 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                     jerseyId={jersey.id}
                     currentMainColor={jersey.mainColor ?? null}
                     clubPrimaryColor={jersey.club.primaryColor}
-                    isSuperAdmin={isSuperAdmin}
                   >
                     <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-4 break-words">
                       {translatedJerseyName}
@@ -540,7 +531,6 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                       <EditableBrand
                         jerseyId={jersey.id}
                         currentBrand={jersey.brand}
-                        isAdmin={isAdmin}
                       />
                     </div>
 
@@ -628,7 +618,6 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
           <div className="mt-8 flex justify-center">
             <JerseyReportButton
               jerseyId={jersey.id}
-              isAuthenticated={!!currentUser}
               jersey={{ name: translatedJerseyName, imageUrl: jersey.imageUrl }}
             />
           </div>

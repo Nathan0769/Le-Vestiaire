@@ -15,18 +15,18 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 interface EditableBrandProps {
   jerseyId: string;
   currentBrand: string;
-  isAdmin: boolean;
 }
 
 export function EditableBrand({
   jerseyId,
   currentBrand,
-  isAdmin,
 }: EditableBrandProps) {
+  const { isAdmin } = useIsAdmin();
   const [open, setOpen] = useState(false);
   const [brand, setBrand] = useState(currentBrand);
   const [isLoading, setIsLoading] = useState(false);

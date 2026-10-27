@@ -15,12 +15,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 interface EditableMainColorProps {
   jerseyId: string;
   currentMainColor: string | null;
   clubPrimaryColor: string;
-  isSuperAdmin: boolean;
   children: ReactNode;
 }
 
@@ -30,9 +30,9 @@ export function EditableMainColor({
   jerseyId,
   currentMainColor,
   clubPrimaryColor,
-  isSuperAdmin,
   children,
 }: EditableMainColorProps) {
+  const { isSuperAdmin } = useIsAdmin();
   const [open, setOpen] = useState(false);
   const [color, setColor] = useState(
     currentMainColor || clubPrimaryColor || "#1f2937"

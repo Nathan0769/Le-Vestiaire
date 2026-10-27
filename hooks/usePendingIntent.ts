@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuth } from "@/hooks/useAuth";
 import { parsePendingIntent, type AuthGateIntent } from "@/lib/auth-gate";
 import { trackEvent } from "@/lib/analytics";
@@ -19,7 +19,6 @@ export function usePendingIntent({
 }: UsePendingIntentArgs): void {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { user, loading } = useAuth();
   const hasTriggered = useRef(false);
 
@@ -27,7 +26,10 @@ export function usePendingIntent({
     if (hasTriggered.current) return;
     if (loading || !user) return;
 
-    const intent = parsePendingIntent(new URLSearchParams(searchParams.toString()));
+    // Lu dans l'effet plutot que via useSearchParams : ce hook vit sur la fiche
+    // maillot rendue en cache, ou useSearchParams hors Suspense casse le rendu.
+    const params = new URLSearchParams(window.location.search);
+    const intent = parsePendingIntent(params);
     if (intent !== expectedIntent) return;
 
     hasTriggered.current = true;
@@ -38,9 +40,8 @@ export function usePendingIntent({
       params: { intent: expectedIntent, jersey_id: jerseyId },
     });
 
-    const params = new URLSearchParams(searchParams.toString());
     params.delete("intent");
     const query = params.toString();
     router.replace(`${pathname}${query ? `?${query}` : ""}`, { scroll: false });
-  }, [loading, user, searchParams, expectedIntent, jerseyId, onTrigger, pathname, router]);
+  }, [loading, user, expectedIntent, jerseyId, onTrigger, pathname, router]);
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,7 @@ import { ProposeDescriptionModal } from "./propose-description-modal";
 import { PlayersDisplay } from "./players-display";
 import { PalmaresDisplay } from "./palmares-display";
 import Link from "next/link";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 interface JerseyTabsProps {
   jerseyId: string;
@@ -36,23 +37,7 @@ export function JerseyTabs({
   const translations = descriptionTranslations as Record<string, string> | null | undefined;
   const localizedDescription = translations?.[locale] ?? translations?.["en"] ?? description;
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
-
-  useEffect(() => {
-    const checkAdmin = async () => {
-      try {
-        const response = await fetch("/api/user/is-admin");
-        if (response.ok) {
-          const data = await response.json();
-          setIsAdmin(data.isAdmin);
-        }
-      } catch (err) {
-        console.error("Error checking admin status:", err);
-      }
-    };
-
-    checkAdmin();
-  }, []);
+  const { isAdmin } = useIsAdmin();
 
   return (
     <div className="w-full overflow-x-hidden">

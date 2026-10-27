@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { ClubHero } from "./club-hero";
 import { BrandTimeline } from "./brand-timeline";
 import { JerseysBySeason } from "@/components/jerseys/jerseys/jerseys-by-season";
 import { SimpleJersey, ClubWithLeague } from "@/types/jersey";
 import type { ClubStats } from "@/lib/club-stats";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 type Props = {
   jerseys: (SimpleJersey & { slug?: string | null })[];
@@ -16,20 +17,7 @@ type Props = {
 
 export function ClubDetailClient({ jerseys, primaryColor, club, stats }: Props) {
   const [deleteMode, setDeleteMode] = useState(false);
-  const [isSuperAdmin, setIsSuperAdmin] = useState(false);
-
-  useEffect(() => {
-    let cancelled = false;
-    fetch("/api/user/is-admin")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
-        if (!cancelled && data?.isSuperAdmin) setIsSuperAdmin(true);
-      })
-      .catch(() => {});
-    return () => {
-      cancelled = true;
-    };
-  }, []);
+  const { isSuperAdmin } = useIsAdmin();
 
   const handleNameClick = useCallback(
     (e: React.MouseEvent) => {
