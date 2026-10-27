@@ -5,6 +5,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
+import { revalidateJerseyPages } from "@/lib/catalog-revalidation";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -52,6 +53,7 @@ export async function PATCH(
 
     const jersey = await prisma.jersey.findUnique({
       where: { id },
+      select: { id: true, slug: true, clubId: true, club: { select: { leagueId: true } } },
     });
 
     if (!jersey) {
@@ -67,6 +69,8 @@ export async function PATCH(
         brand: validation.data.brand,
       },
     });
+
+    revalidateJerseyPages({ ...jersey, leagueId: jersey.club.leagueId });
 
     return NextResponse.json({
       success: true,

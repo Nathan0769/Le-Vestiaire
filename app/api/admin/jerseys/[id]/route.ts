@@ -1,5 +1,6 @@
 import { requireRole } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
+import { revalidateJerseyPages } from "@/lib/catalog-revalidation";
 import { NextResponse } from "next/server";
 
 export async function DELETE(
@@ -11,7 +12,10 @@ export async function DELETE(
 
   const { id } = await params;
 
-  const jersey = await prisma.jersey.findUnique({ where: { id } });
+  const jersey = await prisma.jersey.findUnique({
+    where: { id },
+    select: { id: true, slug: true, clubId: true, club: { select: { leagueId: true } } },
+  });
   if (!jersey) {
     return NextResponse.json({ error: "Maillot introuvable" }, { status: 404 });
   }
@@ -24,6 +28,8 @@ export async function DELETE(
     prisma.descriptionProposal.deleteMany({ where: { jerseyId: id } }),
     prisma.jersey.delete({ where: { id } }),
   ]);
+
+  revalidateJerseyPages({ ...jersey, leagueId: jersey.club.leagueId });
 
   return NextResponse.json({ success: true });
 }

@@ -1,5 +1,6 @@
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
+import { revalidateJerseyPages } from "@/lib/catalog-revalidation";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -45,7 +46,13 @@ export async function PATCH(
 
     const jersey = await prisma.jersey.findUnique({
       where: { id },
-      select: { id: true, imageUrl: true },
+      select: {
+        id: true,
+        slug: true,
+        clubId: true,
+        imageUrl: true,
+        club: { select: { leagueId: true } },
+      },
     });
 
     if (!jersey) {
@@ -75,6 +82,8 @@ export async function PATCH(
       data: { mainColor: nextColor },
       select: { mainColor: true },
     });
+
+    revalidateJerseyPages({ ...jersey, leagueId: jersey.club.leagueId });
 
     return NextResponse.json({
       success: true,

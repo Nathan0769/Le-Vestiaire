@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requirePermission } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
+import { revalidateJerseyPages } from "@/lib/catalog-revalidation";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { translateDescription } from "@/lib/deepl";
 import { checkAchievements } from "@/lib/achievements/check";
@@ -101,6 +102,15 @@ export async function POST(
           fallbackErr
         );
       }
+    }
+
+    // Apres la traduction : la fiche en cache doit reprendre la description finale.
+    const cachedJersey = await prisma.jersey.findUnique({
+      where: { id: proposal.jerseyId },
+      select: { id: true, slug: true, clubId: true, club: { select: { leagueId: true } } },
+    });
+    if (cachedJersey) {
+      revalidateJerseyPages({ ...cachedJersey, leagueId: cachedJersey.club.leagueId });
     }
 
     try {
