@@ -1186,3 +1186,33 @@ describe("filterApplicablePatches - Saudi Pro League", () => {
     expect(filterWithCurrentLeague([badge], makeJersey("saudi-pro-league", "2021-22"))).toHaveLength(0);
   });
 });
+
+describe("filterApplicablePatches - Primera División (Argentine)", () => {
+  const champion = makePatch({
+    id: "p-champ",
+    name: "Champion Primera División (Argentine)",
+    family: "DOMESTIC_CHAMPION",
+    leagueId: "primera-division-argentina",
+    versions: [makeVersion({ seasonStart: "2022", seasonEnd: "2022", eligibleClubIds: ["c1"] })],
+  });
+  const badge = makePatch({
+    id: "p-badge",
+    name: "Primera División (Argentine)",
+    family: "DOMESTIC_LEAGUE_BADGE",
+    leagueId: "primera-division-argentina",
+    versions: [makeVersion({ seasonStart: "2017-18", seasonEnd: null })],
+  });
+
+  it("Le champion en titre porte le patch doré à la place du badge de ligue", () => {
+    const result = filterWithCurrentLeague([champion, badge], makeJersey("primera-division-argentina", "2022"));
+    expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+
+  it("Pas de patch champion hors des saisons versionnées", () => {
+    expect(filterWithCurrentLeague([champion], makeJersey("primera-division-argentina", "2023"))).toHaveLength(0);
+  });
+
+  it("Pas de badge de ligue avant la Superliga (2017-18)", () => {
+    expect(filterWithCurrentLeague([badge], makeJersey("primera-division-argentina", "2015-16"))).toHaveLength(0);
+  });
+});
