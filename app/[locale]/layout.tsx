@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import ClientWrapper from "@/components/home/client-wrapper";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { getOrganizationSchema, getWebSiteSchema } from "@/lib/site-entity";
@@ -121,6 +121,10 @@ export default async function LocaleLayout({
   if (!routing.locales.includes(locale as Locale)) {
     notFound();
   }
+
+  // Sans locale explicite, next-intl la lit dans les en-tetes et rend toutes
+  // les pages dynamiques : le cache ISR du catalogue ne s'appliquait jamais.
+  setRequestLocale(locale);
 
   const messages = await getMessages();
 

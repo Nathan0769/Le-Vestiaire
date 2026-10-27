@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import { SeasonHubView } from "@/components/jerseys/season/season-hub-view";
@@ -23,6 +23,7 @@ function buildSeasonLanguageAlternates(season: string) {
 
 type Props = {
   params: Promise<{
+    locale: string;
     season: string;
   }>;
 };
@@ -117,8 +118,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { season } = await params;
-  const locale = await getLocale();
+  const { locale, season } = await params;
+  setRequestLocale(locale);
   const tMeta = await getTranslations("SeasonPageMetadata");
 
   const data = await getCachedSeasonData(season);
@@ -176,7 +177,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function SeasonPage({ params }: Props) {
-  const { season } = await params;
+  const { locale, season } = await params;
+  setRequestLocale(locale);
 
   const data = await getCachedSeasonData(season);
 

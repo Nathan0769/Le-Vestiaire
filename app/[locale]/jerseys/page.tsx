@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { LeaguesPageClient } from "@/components/jerseys/leagues/leagues-page-client";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
 export const revalidate = 300;
@@ -26,8 +26,11 @@ function buildCatalogueLanguageAlternates() {
   }, {});
 }
 
-export async function generateMetadata(): Promise<Metadata> {
-  const locale = await getLocale();
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const tMeta = await getTranslations("CatalogueMetadata");
 
   const title = tMeta("title");
@@ -81,7 +84,9 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function MaillotsPage() {
+export default async function MaillotsPage({ params }: Props) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   const [leagues, tBreadcrumb] = await Promise.all([
     prisma.league.findMany({
       orderBy: [{ tier: "asc" }, { name: "asc" }],

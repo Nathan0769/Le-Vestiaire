@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { notFound } from "next/navigation";
 import { cache } from "react";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import { BrandHubView } from "@/components/jerseys/brand/brand-hub-view";
@@ -26,6 +26,7 @@ function buildBrandLanguageAlternates(brandSlug: string) {
 
 type Props = {
   params: Promise<{
+    locale: string;
     brand: string;
   }>;
 };
@@ -88,8 +89,8 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { brand: brandSlug } = await params;
-  const locale = await getLocale();
+  const { locale, brand: brandSlug } = await params;
+  setRequestLocale(locale);
   const tMeta = await getTranslations("BrandPageMetadata");
 
   const data = await getCachedBrandData(brandSlug);
@@ -147,7 +148,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BrandPage({ params }: Props) {
-  const { brand: brandSlug } = await params;
+  const { locale, brand: brandSlug } = await params;
+  setRequestLocale(locale);
 
   const data = await getCachedBrandData(brandSlug);
 

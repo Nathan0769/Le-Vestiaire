@@ -12,7 +12,7 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { cache } from "react";
 import { computeClubStats } from "@/lib/club-stats";
 
@@ -29,8 +29,15 @@ function buildClubLanguageAlternates(leagueId: string, clubId: string) {
 
 export const revalidate = 3600;
 
+// Aucun pre-rendu au build : chaque page est rendue a la premiere visite puis
+// servie depuis le cache ISR, sans requete en base pendant `revalidate`.
+export function generateStaticParams() {
+  return [];
+}
+
 type Props = {
   params: Promise<{
+    locale: string;
     leagueId: string;
     clubId: string;
   }>;
@@ -61,8 +68,8 @@ const getCachedClub = cache(async (clubId: string) => {
 });
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { clubId } = await params;
-  const locale = await getLocale();
+  const { locale, clubId } = await params;
+  setRequestLocale(locale);
   const tMeta = await getTranslations("ClubMetadata");
 
   const club = await getCachedClub(clubId);
@@ -127,7 +134,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ClubDetailPage(props: Props) {
-  const { leagueId, clubId } = await props.params;
+  const { locale, leagueId, clubId } = await props.params;
+  setRequestLocale(locale);
 
   const club = await getCachedClub(clubId);
 

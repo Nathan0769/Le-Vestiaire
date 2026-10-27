@@ -4,11 +4,17 @@ import { ClubListByCountry } from "@/components/jerseys/clubs/clubs-list-by-coun
 import { notFound } from "next/navigation";
 import { LeagueBreadcrumb } from "@/components/jerseys/leagues/league-bread-crumb";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
-import { getTranslations, getLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { cache } from "react";
 
-export const revalidate = 300;
+export const revalidate = 3600;
+
+// Aucun pre-rendu au build : chaque page est rendue a la premiere visite puis
+// servie depuis le cache ISR, sans requete en base pendant `revalidate`.
+export function generateStaticParams() {
+  return [];
+}
 
 const SUPPORTED_LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"];
 
@@ -23,6 +29,7 @@ function buildLeagueLanguageAlternates(leagueId: string) {
 
 type Props = {
   params: Promise<{
+    locale: string;
     leagueId: string;
   }>;
 };
@@ -38,8 +45,8 @@ const getCachedLeague = cache(async (leagueId: string) => {
 });
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { leagueId } = await params;
-  const locale = await getLocale();
+  const { locale, leagueId } = await params;
+  setRequestLocale(locale);
   const tMeta = await getTranslations("LeagueMetadata");
 
   const league = await getCachedLeague(leagueId);
@@ -94,7 +101,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function LeagueDetailPage({ params }: Props) {
-  const { leagueId } = await params;
+  const { locale, leagueId } = await params;
+  setRequestLocale(locale);
 
   const league = await getCachedLeague(leagueId);
 
