@@ -1102,6 +1102,18 @@ describe("filterApplicablePatches - patch FA Cup du tenant du titre", () => {
   });
 });
 
+describe("filterApplicablePatches - badge DFB-Pokal du tenant du titre", () => {
+  it("Non proposé au club hors de sa saison de tenant", () => {
+    const holder = makePatch({
+      name: "DFB-Pokal - tenant du titre",
+      family: "DOMESTIC_CUP",
+      leagueId: "bundesliga",
+      versions: [makeVersion({ seasonStart: "2020-21", seasonEnd: "2020-21", eligibleClubIds: ["c1"] })],
+    });
+    expect(filterWithCurrentLeague([holder], makeJersey("bundesliga", "2022-23"))).toHaveLength(0);
+  });
+});
+
 describe("filterApplicablePatches - EFL Cup", () => {
   it.each([
     ["EFL Cup", "2005-06"],

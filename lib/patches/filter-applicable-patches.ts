@@ -48,6 +48,7 @@ const STRICT_VERSION_PATCH_NAMES = new Set([
   "FA Cup - tenant du titre",
   "EFL Cup",
   "EFL Cup - tenant du titre",
+  "DFB-Pokal - tenant du titre",
   "Sky Bet - jeu responsable",
   "Not Today or Any Day",
   "EFL Together",
