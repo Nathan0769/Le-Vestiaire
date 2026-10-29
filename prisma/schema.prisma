@@ -75,6 +75,7 @@ model User {
   postReportsReviewed         PostReport[]          @relation("PostReportReviewer")
   notifications               Notification[]        @relation("NotificationRecipient")
   notificationsActedOn        Notification[]        @relation("NotificationActor")
+  activityDays                UserActivityDay[]
 
   @@map("user")
 }
@@ -935,4 +936,18 @@ model ErrorEvent {
 
   @@index([resolvedAt, lastSeenAt])
   @@map("error_events")
+}
+
+// Une ligne par utilisateur et par jour où il a fait au moins une requête
+// authentifiée (web ou iOS). Sert aux actifs et aux cohortes du dashboard KPI.
+model UserActivityDay {
+  userId   String   @map("user_id")
+  day      DateTime @db.Date
+  // "ios" (Bearer, seule l'app l'utilise) ou "web" (cookies)
+  platform String   @default("web")
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([userId, day, platform])
+  @@index([day])
+  @@map("user_activity_days")
 }

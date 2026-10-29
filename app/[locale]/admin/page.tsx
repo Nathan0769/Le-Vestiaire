@@ -20,6 +20,7 @@ import {
   Flag,
   CalendarRange,
   Bug,
+  BarChart3,
 } from "lucide-react";
 
 export default async function AdminPage() {
@@ -49,6 +50,25 @@ export default async function AdminPage() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <BarChart3 className="h-5 w-5" />
+              <CardTitle>KPI</CardTitle>
+            </div>
+            <CardDescription>
+              Croissance, activité, social, monétisation et rétention
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Link href="/admin/kpi">
+              <Button className="w-full cursor-pointer">
+                Voir les KPI
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+
         <Card>
           <CardHeader>
             <div className="flex items-center gap-2">

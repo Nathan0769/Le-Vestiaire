@@ -1,6 +1,17 @@
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
+import { recordUserActivity, type ActivityPlatform } from "@/lib/user-activity";
 import { cookies, headers } from "next/headers";
+import { after } from "next/server";
+
+// after() garantit que l'écriture se termine sur Vercel sans retarder la réponse
+function trackActivity(userId: string, platform: ActivityPlatform) {
+  try {
+    after(() => recordUserActivity(userId, platform));
+  } catch {
+    // Hors contexte de requête (script, build) : rien à suivre
+  }
+}
 
 /**
  * Récupère l'utilisateur courant depuis la session.
@@ -26,6 +37,8 @@ export async function getCurrentUser() {
         include: { user: true },
       });
       if (!session || session.expiresAt < new Date()) return null;
+      // Seule l'app iOS s'authentifie en Bearer
+      trackActivity(session.user.id, "ios");
       return session.user;
     }
 
@@ -37,6 +50,7 @@ export async function getCurrentUser() {
       }),
     });
 
+    if (session?.user) trackActivity(session.user.id, "web");
     return session?.user ?? null;
   } catch (error) {
     console.error("❌ Direct auth error:", error);
