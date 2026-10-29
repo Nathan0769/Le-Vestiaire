@@ -4,6 +4,7 @@ import {
   errorFingerprint,
   toErrorParts,
   buildErrorEvent,
+  isPaymentErrorContext,
   MESSAGE_MAX,
   STACK_MAX,
 } from "@/lib/error-events";
@@ -86,5 +87,15 @@ describe("buildErrorEvent", () => {
     });
     expect(event.message).toBe("mail [email]");
     expect(event.stack).toBe("at [email]");
+  });
+});
+
+describe("isPaymentErrorContext", () => {
+  it("reconnaît les erreurs serveur liées au paiement", () => {
+    expect(["revenuecat.webhook", "supporter.sync", "stripe.webhook.invoice.paid"].every(isPaymentErrorContext)).toBe(true);
+  });
+
+  it("ignore les autres erreurs, même proches", () => {
+    expect(["market-value.new-supporter-scan", "jerseys.create", "stripe"].some(isPaymentErrorContext)).toBe(false);
   });
 });

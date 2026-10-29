@@ -1,7 +1,21 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
 import { prismaTest } from "@/__tests__/helpers/db";
+import { createTestUser } from "@/__tests__/helpers/fixtures";
 import { recordErrorEvent, reportError } from "@/lib/report-error";
 import "@/__tests__/setup.integration";
+
+const send = vi.fn();
+
+vi.mock("@/lib/email", () => ({
+  resend: { emails: { send: (...args: unknown[]) => send(...args) } },
+  FROM_EMAIL: "test@example.com",
+  APP_URL: "http://localhost:3000",
+}));
+
+beforeEach(() => {
+  send.mockReset();
+  send.mockResolvedValue({ data: { id: "mail" }, error: null });
+});
 
 const input = {
   source: "SERVER" as const,
@@ -51,5 +65,41 @@ describe("reportError", () => {
     const row = await prismaTest.errorEvent.findFirstOrThrow();
     expect(row.source).toBe("SERVER");
     expect(row.message).toBe("Error: signature invalide");
+  });
+});
+
+describe("reportError sur le parcours d'achat", () => {
+  beforeEach(async () => {
+    await createTestUser({ role: "superadmin" });
+  });
+
+  it("alerte tout de suite et marque l'erreur notifiée", async () => {
+    await reportError("revenuecat.webhook", new Error("RevenueCat a répondu 401"));
+
+    expect(send).toHaveBeenCalledTimes(1);
+    const row = await prismaTest.errorEvent.findFirstOrThrow();
+    expect(row.notifiedAt).not.toBeNull();
+  });
+
+  it("n'alerte qu'une fois pour la même erreur répétée", async () => {
+    await reportError("revenuecat.webhook", new Error("RevenueCat a répondu 401"));
+    await reportError("revenuecat.webhook", new Error("RevenueCat a répondu 401"));
+
+    expect(send).toHaveBeenCalledTimes(1);
+  });
+
+  it("laisse l'erreur au digest si l'email échoue", async () => {
+    send.mockResolvedValue({ data: null, error: { message: "quota" } });
+
+    await reportError("supporter.sync", new Error("RevenueCat a répondu 401"));
+
+    const row = await prismaTest.errorEvent.findFirstOrThrow();
+    expect(row.notifiedAt).toBeNull();
+  });
+
+  it("garde les autres erreurs pour le digest", async () => {
+    await reportError("jerseys.create", new Error("boom"));
+
+    expect(send).not.toHaveBeenCalled();
   });
 });

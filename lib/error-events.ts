@@ -50,6 +50,16 @@ export function toErrorParts(error: unknown): { message: string; stack: string |
   }
 }
 
+const PAYMENT_CONTEXT_PREFIXES = ["revenuecat.", "supporter.", "stripe."];
+
+/**
+ * Erreur serveur sur le parcours d'achat : signalée tout de suite et pas au
+ * digest du lendemain, un acheteur qui ne voit rien venir résilie en minutes.
+ */
+export function isPaymentErrorContext(context: string): boolean {
+  return PAYMENT_CONTEXT_PREFIXES.some((prefix) => context.startsWith(prefix));
+}
+
 export interface ErrorEventInput {
   source: ErrorSourceName;
   context: string;
