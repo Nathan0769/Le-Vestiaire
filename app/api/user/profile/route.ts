@@ -29,6 +29,7 @@ export async function GET() {
           isPrivate: true,
           notificationsEnabled: true,
           disabledPushTypes: true,
+          currency: true,
           createdAt: true,
           favoriteClub: {
             select: {
@@ -107,6 +108,8 @@ export async function GET() {
       isPrivate: user.isPrivate,
       notificationsEnabled: user.notificationsEnabled,
       disabledPushTypes: user.disabledPushTypes,
+      // Devise préférée (null = jamais choisie, EUR par défaut côté app).
+      currency: user.currency ?? null,
       hasPassword,
       favoriteClub: user.favoriteClub ?? null,
       createdAt: user.createdAt.toISOString(),

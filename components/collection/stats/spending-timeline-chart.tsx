@@ -3,15 +3,20 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ChartContainer, ChartTooltip } from "@/components/ui/chart";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { DEFAULT_CURRENCY } from "@/lib/currency";
+import { formatMoney } from "@/lib/format-money";
 import { TrendingUp } from "lucide-react";
 
 interface SpendingTimelineChartProps {
   data: { month: string; amount: number }[];
+  currency?: string;
 }
 
-export function SpendingTimelineChart({ data }: SpendingTimelineChartProps) {
+export function SpendingTimelineChart({ data, currency = DEFAULT_CURRENCY }: SpendingTimelineChartProps) {
   const t = useTranslations("CollectionStats.spendingTimeline");
+  const locale = useLocale();
+  const money = (n: number) => formatMoney(n, currency, locale);
 
   if (!data || data.length === 0) {
     return (
@@ -99,7 +104,7 @@ export function SpendingTimelineChart({ data }: SpendingTimelineChartProps) {
               tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
               width={60}
               domain={[0, "auto"]}
-              tickFormatter={(v) => `${v}€`}
+              tickFormatter={(v) => money(Number(v))}
             />
             <ChartTooltip
               content={({ active, payload }) => {
@@ -109,10 +114,10 @@ export function SpendingTimelineChart({ data }: SpendingTimelineChartProps) {
                   <div className="bg-background border border-border rounded-lg p-2 shadow-lg space-y-1">
                     <p className="text-sm font-medium">{d.monthLabel}</p>
                     <p className="text-sm text-muted-foreground">
-                      {t("monthlySpent")}: <span className="font-medium text-foreground">{d.amount.toFixed(2)}€</span>
+                      {t("monthlySpent")}: <span className="font-medium text-foreground">{money(d.amount)}</span>
                     </p>
                     <p className="text-sm text-muted-foreground">
-                      {t("totalInvested")}: <span className="font-medium text-foreground">{d.cumulative.toFixed(2)}€</span>
+                      {t("totalInvested")}: <span className="font-medium text-foreground">{money(d.cumulative)}</span>
                     </p>
                   </div>
                 );

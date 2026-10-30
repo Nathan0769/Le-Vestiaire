@@ -21,6 +21,9 @@ import {
 } from "@/lib/user-jersey-photos";
 import { isSupporter } from "@/lib/subscription";
 import { hasExclusivityConflict } from "@/lib/patches/patch-exclusivity";
+import { currencyForCountry, DEFAULT_CURRENCY } from "@/lib/currency";
+import { getRatesToEur } from "@/lib/fx";
+import { priceEur, sumPurchasesEur } from "@/lib/purchase-totals";
 
 export async function GET(
   request: Request,
@@ -97,6 +100,7 @@ export async function POST(
       playerName,
       playerNumber,
       purchasePrice,
+      purchaseCurrency,
       purchaseDate,
       notes,
       isGift,
@@ -120,6 +124,7 @@ export async function POST(
       playerName,
       playerNumber,
       purchasePrice,
+      purchaseCurrency,
       purchaseDate,
       notes,
       signedBy,
@@ -134,7 +139,7 @@ export async function POST(
     // champ userPhotoUrl (string unique) pour compat client.
     const dbUser = await prisma.user.findUnique({
       where: { id: user.id },
-      select: { plan: true },
+      select: { plan: true, currency: true },
     });
     const photosResult = normalizeUserPhotoPaths(
       userPhotoUrls !== undefined ? userPhotoUrls : userPhotoUrl,
@@ -205,6 +210,16 @@ export async function POST(
         ? parseFloat(purchasePrice.toString())
         : null;
 
+    // Devise : celle envoyée, sinon la préférence du user, sinon celle du pays
+    // de l'IP (première saisie d'un prix). Retenue comme préférence si absente.
+    const resolvedCurrency: string =
+      purchaseCurrency ??
+      dbUser?.currency ??
+      (parsedPurchasePrice !== null
+        ? currencyForCountry(request.headers.get("x-vercel-ip-country"))
+        : DEFAULT_CURRENCY);
+    const savePreferredCurrency = parsedPurchasePrice !== null && !dbUser?.currency;
+
     const [userJersey, deletedWishlist] = await prisma.$transaction([
       prisma.userJersey.create({
         data: {
@@ -217,6 +232,7 @@ export async function POST(
           playerName: playerName || null,
           playerNumber: playerNumber ? parseInt(playerNumber.toString(), 10) : null,
           purchasePrice: parsedPurchasePrice,
+          purchaseCurrency: resolvedCurrency,
           purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
           notes: notes || null,
           isGift: isGift || false,
@@ -243,6 +259,10 @@ export async function POST(
         where: { userId: user.id, jerseyId },
       }),
     ]);
+
+    if (savePreferredCurrency) {
+      await prisma.user.update({ where: { id: user.id }, data: { currency: resolvedCurrency } });
+    }
 
     let newAchievements: Awaited<ReturnType<typeof checkAchievements>> = [];
     try {
@@ -271,12 +291,16 @@ export async function POST(
 
       // Cap valeur cumulée d'achat
       if (parsedPurchasePrice && parsedPurchasePrice > 0) {
-        const valueAgg = await prisma.userJersey.aggregate({
-          where: { userId: user.id, purchasePrice: { not: null } },
-          _sum: { purchasePrice: true },
-        });
-        const totalAfter = Number(valueAgg._sum.purchasePrice ?? 0);
-        const totalBefore = totalAfter - parsedPurchasePrice;
+        // Paliers exprimés en EUR : un total en R$ les franchirait trop tôt.
+        const [priced, rates] = await Promise.all([
+          prisma.userJersey.findMany({
+            where: { userId: user.id, purchasePrice: { not: null } },
+            select: { purchasePrice: true, purchaseCurrency: true },
+          }),
+          getRatesToEur(),
+        ]);
+        const totalAfter = sumPurchasesEur(priced, rates);
+        const totalBefore = totalAfter - (priceEur(userJersey, rates) ?? 0);
         const valueCap = detectValueCap(totalBefore, totalAfter);
         if (valueCap) {
           await createFeedPost({

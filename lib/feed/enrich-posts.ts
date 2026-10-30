@@ -230,6 +230,7 @@ export async function enrichPostsForFeed(
             playerName: uj.playerName ?? null,
             playerNumber: uj.playerNumber ?? null,
             purchasePrice: uj.purchasePrice ? Number(uj.purchasePrice) : null,
+            purchaseCurrency: uj.purchaseCurrency,
             authorRating: ratingsMap.get(`${uj.userId}:${uj.jersey.id}`) ?? null,
             clubRank: clubRanksByUserJersey.get(uj.id) ?? null,
             patchesCount: uj._count.patches,

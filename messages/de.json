@@ -450,7 +450,8 @@
           "error": "Ein Fehler ist aufgetreten",
           "connectionError": "Verbindungsfehler. Bitte versuche es erneut.",
           "deleted": "Trikot aus deiner Sammlung entfernt"
-        }
+        },
+        "purchaseCurrency": "Währung des Preises"
       },
       "delete": {
         "title": "Trikot löschen?",
@@ -2131,6 +2132,15 @@
       "none": "Keine",
       "saved": "Änderung gespeichert",
       "saveError": "Speichern fehlgeschlagen"
+    },
+    "currency": {
+      "title": "Währung",
+      "description": "Wird für deine Kaufpreise und die Anzeige deiner Statistiken verwendet",
+      "label": "Standardwährung",
+      "hint": "Wird beim Eingeben eines Preises vorgeschlagen. Bereits eingegebene Preise behalten ihre Währung.",
+      "saved": "Währung aktualisiert",
+      "updateError": "Währung konnte nicht aktualisiert werden",
+      "loading": "Wird geladen..."
     }
   },
   "CookieConsent": {

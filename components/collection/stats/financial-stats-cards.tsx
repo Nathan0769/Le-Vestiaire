@@ -1,12 +1,15 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { DEFAULT_CURRENCY } from "@/lib/currency";
+import { formatMoney } from "@/lib/format-money";
 import { Wallet, TrendingUp, TrendingDown, DollarSign } from "lucide-react";
 import { MarketValueCard } from "./market-value-card";
 
 interface FinancialStatsCardsProps {
   financial: {
+    currency?: string;
     totalSpent: number;
     averagePrice: number;
     totalRetailValue: number;
@@ -43,6 +46,8 @@ interface FinancialStatsCardsProps {
 
 export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
   const t = useTranslations("CollectionStats.financial");
+  const locale = useLocale();
+  const money = (n: number) => formatMoney(n, financial.currency ?? DEFAULT_CURRENCY, locale);
 
   return (
     <div className="space-y-4">
@@ -56,7 +61,7 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">
-              {financial.totalCollectionValue.toFixed(2)}€
+              {money(financial.totalCollectionValue)}
             </p>
             <p className="text-xs text-muted-foreground mt-1">
               {t("totalCollectionValueDescription")}
@@ -73,7 +78,7 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">
-              {financial.totalSpent.toFixed(2)}€
+              {money(financial.totalSpent)}
             </p>
             <p className="text-xs text-muted-foreground mt-1">
               {t("totalSpentDescription")}
@@ -90,7 +95,7 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">
-              {financial.averagePrice.toFixed(2)}€
+              {money(financial.averagePrice)}
             </p>
             <p className="text-xs text-muted-foreground mt-1">
               {t("averagePriceDescription")}
@@ -119,7 +124,7 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
                   className="text-2xl font-bold"
                   style={{ color: "oklch(0.70 0.25 150)" }}
                 >
-                  {financial.mostExpensive.price.toFixed(2)}€
+                  {money(financial.mostExpensive.price)}
                 </p>
                 <p className="text-xs text-muted-foreground mt-1">
                   {financial.mostExpensive.jerseyName}
@@ -150,7 +155,7 @@ export function FinancialStatsCards({ financial }: FinancialStatsCardsProps) {
                 className="text-2xl font-bold"
                 style={{ color: "oklch(0.75 0.25 40)" }}
               >
-                {financial.leastExpensive.price.toFixed(2)}€
+                {money(financial.leastExpensive.price)}
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 {financial.leastExpensive.jerseyName}

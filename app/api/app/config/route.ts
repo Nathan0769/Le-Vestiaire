@@ -4,6 +4,7 @@ import {
   JERSEY_CONDITIONS,
   JERSEY_SIZES,
   JERSEY_VERSIONS,
+  PURCHASE_CURRENCIES,
 } from "@/lib/collection-item-rules";
 import { MAX_USER_JERSEY_PHOTOS, MAX_USER_JERSEY_PHOTOS_SUPPORTER } from "@/lib/user-jersey-photos";
 
@@ -20,6 +21,7 @@ export async function GET() {
         versions: JERSEY_VERSIONS,
         sizes: JERSEY_SIZES,
         conditions: JERSEY_CONDITIONS,
+        currencies: PURCHASE_CURRENCIES,
         limits: COLLECTION_ITEM_LIMITS,
         maxPhotos: { free: MAX_USER_JERSEY_PHOTOS, supporter: MAX_USER_JERSEY_PHOTOS_SUPPORTER },
       },

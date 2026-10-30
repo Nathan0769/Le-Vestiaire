@@ -24,6 +24,7 @@ import { FeaturedCollectors } from "@/components/home/featured-collectors";
 import { CfsPromoSection } from "@/components/home/cfs-promo-section";
 import { selectFeaturedCfsPromos } from "@/lib/cfs-affiliate";
 import { HomeFeedSection } from "@/components/home/home-feed-section";
+import { getUserPurchaseTotal } from "@/lib/user-purchase-total";
 
 export const dynamic = "force-dynamic";
 
@@ -240,12 +241,11 @@ ORDER BY j."createdAt" DESC;
 }
 
 async function getUserStats(userId: string): Promise<UserHomeStats> {
-  const [collectionStats, wishlistStats, recentCollectionItems] =
+  const [collectionStats, wishlistStats, recentCollectionItems, purchaseTotal] =
     await Promise.all([
       prisma.userJersey.aggregate({
         where: { userId },
         _count: { id: true },
-        _sum: { purchasePrice: true },
       }),
 
       prisma.wishlist.aggregate({
@@ -258,6 +258,7 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
         select: {
           id: true,
           purchasePrice: true,
+          purchaseCurrency: true,
           createdAt: true,
           jersey: {
             select: {
@@ -285,6 +286,8 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
         orderBy: { createdAt: "desc" },
         take: 3,
       }),
+
+      getUserPurchaseTotal(userId),
     ]);
 
   const [leagueStats, recentWishlistItems, diversityStats] = await Promise.all([
@@ -371,6 +374,7 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
       },
     },
     purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
+    purchaseCurrency: item.purchaseCurrency,
     createdAt: item.createdAt.toISOString(),
   }));
 
@@ -398,9 +402,8 @@ async function getUserStats(userId: string): Promise<UserHomeStats> {
   return {
     collection: {
       total: collectionStats._count.id || 0,
-      totalValue: collectionStats._sum.purchasePrice
-        ? Number(collectionStats._sum.purchasePrice)
-        : null,
+      totalValue: purchaseTotal.totalValue,
+      currency: purchaseTotal.currency,
       recentItems: formattedRecentCollection,
       leagueStats: leagueStatsObject,
       uniqueClubs: diversity.unique_clubs,

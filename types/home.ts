@@ -68,8 +68,10 @@ export interface UserHomeStats {
         };
       };
       purchasePrice: number | null;
+      purchaseCurrency: string;
       createdAt: string;
     }>;
+    currency: string;
     leagueStats: Record<string, number>;
     uniqueClubs: number;
     uniqueCountries: number;

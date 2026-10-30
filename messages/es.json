@@ -450,7 +450,8 @@
           "error": "Ha ocurrido un error",
           "connectionError": "Error de conexión. Por favor, inténtalo de nuevo.",
           "deleted": "Camiseta eliminada de tu colección"
-        }
+        },
+        "purchaseCurrency": "Moneda del precio"
       },
       "delete": {
         "title": "¿Eliminar camiseta?",
@@ -2131,6 +2132,15 @@
       "none": "Ninguno",
       "saved": "Cambio guardado",
       "saveError": "Error al guardar"
+    },
+    "currency": {
+      "title": "Moneda",
+      "description": "Se usa para tus precios de compra y para mostrar tus estadísticas",
+      "label": "Moneda predeterminada",
+      "hint": "Se propone al introducir un precio. Los precios ya introducidos conservan su moneda.",
+      "saved": "Moneda actualizada",
+      "updateError": "No se pudo actualizar la moneda",
+      "loading": "Cargando..."
     }
   },
   "CookieConsent": {

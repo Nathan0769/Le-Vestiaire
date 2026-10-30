@@ -40,6 +40,7 @@ export interface UserCollectionItem {
   playerNumber: number | null;
   notes?: string | null;
   purchasePrice: number | null;
+  purchaseCurrency: string;
   purchaseDate: Date | null;
   isGift: boolean;
   isFromMysteryBox: boolean;

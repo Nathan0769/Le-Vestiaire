@@ -1,8 +1,8 @@
 {
-  "id": "cmvc7a1qu000amse8a9n5mwxs",
-  "email": "test-1792229682771474@example.com",
+  "id": "cmvty1phe000aynr4z1n0b8up",
+  "email": "test-1793302568257606@example.com",
   "name": "Test User",
-  "username": "test-179222968277147",
+  "username": "test-179330256825760",
   "usernameGenerated": false,
   "image": "https://test.r2.dev/photo.jpg",
   "bio": "Collectionneur",
@@ -10,22 +10,23 @@
   "isPrivate": false,
   "notificationsEnabled": true,
   "disabledPushTypes": [],
+  "currency": null,
   "hasPassword": true,
   "favoriteClub": {
-    "id": "cmvc7a1j00002mse863odlnvd",
+    "id": "cmvty1orz0002ynr4m4d00znu",
     "name": "PSG",
     "shortName": "TC",
     "logoUrl": "https://example.com/club.png",
     "primaryColor": "#000000",
     "league": {
-      "id": "cmvc7a1gu0000mse87mdqjfvb",
+      "id": "cmvty1okt0000ynr4ph9sdkcs",
       "name": "Ligue 1",
       "country": "France",
       "logoUrl": "https://example.com/logo.png",
       "tier": 1
     }
   },
-  "createdAt": "2026-10-17T09:34:42.773Z",
+  "createdAt": "2026-10-29T19:36:08.258Z",
   "topAchievements": [
     {
       "key": "social.follower.first",

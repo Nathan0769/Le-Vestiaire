@@ -3,6 +3,8 @@ import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 import { isSupporter } from "@/lib/subscription";
+import { getRatesToEur } from "@/lib/fx";
+import { sumPurchasesEur } from "@/lib/purchase-totals";
 import type {
   LeaderboardCategory,
   LeaderboardPeriod,
@@ -100,10 +102,14 @@ async function getCollectionSizeLeaderboard(
           : undefined,
         select: {
           purchasePrice: true,
+          purchaseCurrency: true,
         },
       },
     },
   });
+
+  // Valeurs comparées entre utilisateurs : toutes ramenées en EUR.
+  const rates = await getRatesToEur();
 
   const leaderboard = users
     .map((user) => {
@@ -120,11 +126,7 @@ async function getCollectionSizeLeaderboard(
         avatarFrame: isAnonymous ? null : user.avatarFrame,
         score: user.collection.length,
         metadata: {
-          totalValue: user.collection.reduce(
-            (sum, item) =>
-              sum + (item.purchasePrice ? Number(item.purchasePrice) : 0),
-            0
-          ),
+          totalValue: sumPurchasesEur(user.collection, rates),
         },
         isAnonymous,
       };

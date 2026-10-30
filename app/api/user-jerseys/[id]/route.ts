@@ -5,6 +5,7 @@ import {
   normalizePatchInputs,
   type PatchInput,
 } from "@/lib/collection-item-rules";
+import { currencyForCountry } from "@/lib/currency";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { Prisma } from "@prisma/client";
 import {
@@ -158,6 +159,7 @@ export async function PATCH(
       playerName,
       playerNumber,
       purchasePrice,
+      purchaseCurrency,
       purchaseDate,
       notes,
       isGift,
@@ -181,6 +183,7 @@ export async function PATCH(
       playerName,
       playerNumber,
       purchasePrice,
+      purchaseCurrency,
       purchaseDate,
       notes,
       signedBy,
@@ -261,6 +264,25 @@ export async function PATCH(
         ? parseFloat(purchasePrice.toString())
         : null;
 
+    // Devise envoyée = choix explicite. Sinon (app iOS sans sélecteur) on garde
+    // celle de l'item, sauf premier prix saisi : préférence du user, puis pays de
+    // l'IP. Le premier prix fixe aussi la préférence si elle est absente.
+    let nextCurrency: string | undefined = purchaseCurrency ?? undefined;
+    let savePreferredCurrency = false;
+    if (parsedPurchasePrice !== null) {
+      const owner = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { currency: true },
+      });
+      if (!nextCurrency && existing.purchasePrice === null) {
+        nextCurrency =
+          owner?.currency ?? currencyForCountry(request.headers.get("x-vercel-ip-country"));
+      }
+      // L'EUR par défaut d'un ancien item n'est pas un choix : seule une devise
+      // choisie ou détectée devient la préférence.
+      savePreferredCurrency = !owner?.currency && !!nextCurrency;
+    }
+
     const updateData: Prisma.UserJerseyUpdateInput = {
       ...(version && { version }),
       size,
@@ -271,6 +293,7 @@ export async function PATCH(
         ? parseInt(playerNumber.toString(), 10)
         : null,
       purchasePrice: parsedPurchasePrice,
+      ...(nextCurrency && { purchaseCurrency: nextCurrency }),
       purchaseDate: purchaseDate ? new Date(purchaseDate) : null,
       notes: notes || null,
       isGift: isGift || false,
@@ -320,6 +343,13 @@ export async function PATCH(
         },
       });
     });
+
+    if (savePreferredCurrency) {
+      await prisma.user.update({
+        where: { id: user.id },
+        data: { currency: nextCurrency },
+      });
+    }
 
     const signedPhotoUrls = await Promise.all(
       updated.userPhotoUrls.map((path) =>

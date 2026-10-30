@@ -450,7 +450,8 @@
           "error": "Ocorreu um erro",
           "connectionError": "Erro de ligação. Tente novamente.",
           "deleted": "Camisola removida da sua coleção"
-        }
+        },
+        "purchaseCurrency": "Moeda do preço"
       },
       "delete": {
         "title": "Eliminar camisola?",
@@ -2131,6 +2132,15 @@
       "none": "Nenhum",
       "saved": "Alteração guardada",
       "saveError": "Falha ao guardar"
+    },
+    "currency": {
+      "title": "Moeda",
+      "description": "Usada para os seus preços de compra e para exibir as suas estatísticas",
+      "label": "Moeda padrão",
+      "hint": "Sugerida quando você informa um preço. Os preços já informados mantêm a moeda.",
+      "saved": "Moeda atualizada",
+      "updateError": "Não foi possível atualizar a moeda",
+      "loading": "Carregando..."
     }
   },
   "CookieConsent": {

@@ -4,6 +4,9 @@ import prisma from "@/lib/prisma";
 import { valueForItem } from "@/lib/market-value/aggregate";
 import { isSupporter } from "@/lib/subscription";
 import type { Condition } from "@/lib/market-value/types";
+import { DEFAULT_CURRENCY, fromEur, toEur } from "@/lib/currency";
+import { getRatesToEur } from "@/lib/fx";
+import { priceEur } from "@/lib/purchase-totals";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +15,9 @@ export const dynamic = "force-dynamic";
  * plus-value, moyenne) + valeur par maillot. Couverture 100% : un maillot sans
  * cote marché est estimé à son prix d'achat (le tien, sinon la moyenne des achats
  * de ce maillot sur le site).
+ *
+ * Calculs en EUR (cote et prix d'achat convertis), montants renvoyés dans la
+ * devise du user (`currency`).
  */
 export async function GET() {
   const user = await getCurrentUser();
@@ -22,7 +28,7 @@ export async function GET() {
   // Réservé aux Supporters : on ne divulgue aucune valeur aux autres.
   const dbUser = await prisma.user.findUnique({
     where: { id: user.id },
-    select: { plan: true },
+    select: { plan: true, currency: true },
   });
   if (!isSupporter(dbUser)) {
     return NextResponse.json({ error: "Réservé aux Supporters", code: "SUPPORTER_ONLY" }, { status: 403 });
@@ -38,6 +44,7 @@ export async function GET() {
       hasLongSleeves: true,
       isSigned: true,
       purchasePrice: true,
+      purchaseCurrency: true,
       isGift: true,
       createdAt: true,
       jersey: {
@@ -52,10 +59,14 @@ export async function GET() {
     },
   });
 
+  const rates = await getRatesToEur();
+  const currency = dbUser?.currency && rates[dbUser.currency] ? dbUser.currency : DEFAULT_CURRENCY;
+
   if (collection.length === 0) {
     return NextResponse.json({
       summary: { estimated: 0, invested: 0, gain: 0, gainPct: 0, avg: 0, count: 0 },
       rows: [],
+      currency,
     });
   }
 
@@ -67,23 +78,34 @@ export async function GET() {
       select: { jerseyId: true, baseValue: true, confidence: true },
     }),
     // Prix d'achat moyen de ce maillot, tous utilisateurs confondus (repli).
+    // Groupé aussi par devise : une moyenne SQL mélangerait R$ et €.
     prisma.userJersey.groupBy({
-      by: ["jerseyId"],
+      by: ["jerseyId", "purchaseCurrency"],
       where: { jerseyId: { in: jerseyIds }, isGift: false, purchasePrice: { gt: 0 } },
-      _avg: { purchasePrice: true },
+      _sum: { purchasePrice: true },
+      _count: { _all: true },
     }),
   ]);
 
   const baseByJersey = new Map(marketRows.map((m) => [m.jerseyId, m.baseValue]));
   const confByJersey = new Map(marketRows.map((m) => [m.jerseyId, m.confidence]));
+  const buyTotals = new Map<string, { sumEur: number; count: number }>();
+  for (const r of avgRows) {
+    const sumEur = toEur(Number(r._sum.purchasePrice ?? 0), r.purchaseCurrency, rates);
+    if (sumEur === null) continue;
+    const t = buyTotals.get(r.jerseyId) ?? { sumEur: 0, count: 0 };
+    t.sumEur += sumEur;
+    t.count += r._count._all;
+    buyTotals.set(r.jerseyId, t);
+  }
   const avgBuyByJersey = new Map(
-    avgRows.map((r) => [r.jerseyId, r._avg.purchasePrice ? Number(r._avg.purchasePrice) : 0])
+    [...buyTotals].map(([jerseyId, t]) => [jerseyId, t.count > 0 ? t.sumEur / t.count : 0])
   );
 
   const rows = collection.map((item) => {
     const base = baseByJersey.get(item.jerseyId);
-    const ownBuy =
-      item.purchasePrice && Number(item.purchasePrice) > 0 ? Number(item.purchasePrice) : null;
+    const ownBuyEur = priceEur(item, rates);
+    const ownBuy = ownBuyEur !== null && ownBuyEur > 0 ? ownBuyEur : null;
 
     let value: number | null;
     let source: "market" | "purchase" | "unknown";
@@ -147,7 +169,7 @@ export async function GET() {
   }
   const gain = pricedCurrentValue - invested;
 
-  const round = (n: number) => Math.round(n * 100) / 100;
+  const round = (n: number) => Math.round((fromEur(n, currency, rates) ?? n) * 100) / 100;
   const summary = {
     estimated: round(estimated),
     count: valued,
@@ -159,5 +181,11 @@ export async function GET() {
     avg: valued > 0 ? round(estimated / valued) : 0,
   };
 
-  return NextResponse.json({ summary, rows });
+  const displayRows = rows.map((r) => ({
+    ...r,
+    value: r.value != null ? round(r.value) : null,
+    ownBuy: r.ownBuy != null ? round(r.ownBuy) : null,
+  }));
+
+  return NextResponse.json({ summary, rows: displayRows, currency });
 }

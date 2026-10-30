@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { getUserPurchaseTotal } from "@/lib/user-purchase-total";
 
 export async function GET() {
   try {
@@ -63,16 +64,7 @@ export async function GET() {
         }),
       ]);
 
-    // Calculer la valeur totale de la collection (si prix d'achat disponible)
-    const totalValue = await prisma.userJersey.aggregate({
-      where: {
-        userId: user.id,
-        purchasePrice: { not: null },
-      },
-      _sum: {
-        purchasePrice: true,
-      },
-    });
+    const { totalValue, currency } = await getUserPurchaseTotal(user.id);
 
     // Stats par ligue dans la collection
     const leagueStats = await prisma.userJersey.groupBy({
@@ -112,9 +104,8 @@ export async function GET() {
     const response = {
       collection: {
         total: collectionCount,
-        totalValue: totalValue._sum.purchasePrice
-          ? Number(totalValue._sum.purchasePrice)
-          : null,
+        totalValue,
+        currency,
         recentItems: collectionItems.map((item) => ({
           id: item.id,
           jersey: {
@@ -126,6 +117,7 @@ export async function GET() {
             club: item.jersey.club,
           },
           purchasePrice: item.purchasePrice ? Number(item.purchasePrice) : null,
+          purchaseCurrency: item.purchaseCurrency,
           createdAt: item.createdAt,
         })),
         leagueStats: leagueCount,

@@ -450,7 +450,8 @@
           "error": "Si è verificato un errore",
           "connectionError": "Errore di connessione. Riprova.",
           "deleted": "Maglia rimossa dalla tua collezione"
-        }
+        },
+        "purchaseCurrency": "Valuta del prezzo"
       },
       "delete": {
         "title": "Eliminare la maglia?",
@@ -2131,6 +2132,15 @@
       "none": "Nessuno",
       "saved": "Modifica salvata",
       "saveError": "Salvataggio non riuscito"
+    },
+    "currency": {
+      "title": "Valuta",
+      "description": "Usata per i tuoi prezzi d'acquisto e per mostrare le tue statistiche",
+      "label": "Valuta predefinita",
+      "hint": "Proposta quando inserisci un prezzo. I prezzi già inseriti mantengono la loro valuta.",
+      "saved": "Valuta aggiornata",
+      "updateError": "Impossibile aggiornare la valuta",
+      "loading": "Caricamento..."
     }
   },
   "CookieConsent": {

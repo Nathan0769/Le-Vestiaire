@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { DEFAULT_CURRENCY } from "@/lib/currency";
+import { formatMoney } from "@/lib/format-money";
 import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { TrendingUp } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -26,16 +28,16 @@ const PERIODS: { key: Period; tKey: string; days: number | null }[] = [
   { key: "ALL", tKey: "periodAll", days: null },
 ];
 
-const eur = (n: number) => `${Math.round(n).toLocaleString("fr-FR")} €`;
 
 // Or (pas orange) : hue jaune ~90, chroma modérée. Lisible clair comme sombre.
 const GOLD = "oklch(0.76 0.115 90)";
 
 export function MarketValueChart() {
   const t = useTranslations("MarketValue");
+  const locale = useLocale();
   const [period, setPeriod] = useState<Period>("1Y");
 
-  const { data, isLoading } = useQuery<{ points: HistoryPoint[] }>({
+  const { data, isLoading } = useQuery<{ points: HistoryPoint[]; currency?: string }>({
     queryKey: ["collection-value-history"],
     queryFn: async () => {
       const res = await fetch("/api/user/collection-value-history");
@@ -43,6 +45,7 @@ export function MarketValueChart() {
       return res.json();
     },
   });
+  const eur = (n: number) => formatMoney(Math.round(n), data?.currency ?? DEFAULT_CURRENCY, locale);
 
   // Filtrage relatif au DERNIER relevé (et non à Date.now(), impur pour la règle
   // react-hooks/purity). La série est triée par date croissante.

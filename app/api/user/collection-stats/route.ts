@@ -4,6 +4,9 @@ import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
 import { valueForItem } from "@/lib/market-value/aggregate";
 import type { Condition } from "@/lib/market-value/types";
+import { DEFAULT_CURRENCY, fromEur } from "@/lib/currency";
+import { getRatesToEur } from "@/lib/fx";
+import { priceEur } from "@/lib/purchase-totals";
 import {
   standardRateLimit,
   getRateLimitIdentifier,
@@ -219,7 +222,7 @@ export async function GET() {
 
     const userSettings = await prisma.user.findUnique({
       where: { id: user.id },
-      select: { favoriteClubId: true },
+      select: { favoriteClubId: true, currency: true },
     });
     const coverageTarget = pickCoverageClub(
       userSettings?.favoriteClubId ?? null,
@@ -251,13 +254,19 @@ export async function GET() {
       }
     }
 
+    // Calculs en EUR (prix d'achat convertis, cote et prix catalogue déjà en EUR),
+    // montants renvoyés dans la devise du user.
+    const rates = await getRatesToEur();
+    const currency =
+      userSettings?.currency && rates[userSettings.currency] ? userSettings.currency : DEFAULT_CURRENCY;
+    const eur = (item: (typeof collection)[number]) => priceEur(item, rates) ?? 0;
+    const money = (amountEur: number) =>
+      Math.round((fromEur(amountEur, currency, rates) ?? amountEur) * 100) / 100;
+
     const itemsWithPrice = collection.filter(
       (item) => item.purchasePrice && !item.isGift
     );
-    const totalSpent = itemsWithPrice.reduce(
-      (sum, item) => sum + Number(item.purchasePrice || 0),
-      0
-    );
+    const totalSpent = itemsWithPrice.reduce((sum, item) => sum + eur(item), 0);
     const averagePrice =
       itemsWithPrice.length > 0 ? totalSpent / itemsWithPrice.length : 0;
 
@@ -269,9 +278,7 @@ export async function GET() {
       0
     );
 
-    const totalCollectionValue = collection.reduce((sum, item) => {
-      return sum + (item.purchasePrice ? Number(item.purchasePrice) : 0);
-    }, 0);
+    const totalCollectionValue = collection.reduce((sum, item) => sum + eur(item), 0);
 
     // Valeur marché estimée : cotes stockées (base état de référence) × multiplicateur
     // d'état de chaque item. Couverture = part des maillots ayant une cote.
@@ -318,8 +325,8 @@ export async function GET() {
         value,
         confidence: conf,
       });
-      if (!item.isGift && item.purchasePrice && Number(item.purchasePrice) > 0) {
-        mvInvested += Number(item.purchasePrice);
+      if (!item.isGift && eur(item) > 0) {
+        mvInvested += eur(item);
         mvEstimatedOnPriced += value;
       }
     }
@@ -331,26 +338,21 @@ export async function GET() {
         : 0;
 
     const marketValueDetail = {
-      invested: Math.round(mvInvested * 100) / 100,
-      estimatedOnPriced: Math.round(mvEstimatedOnPriced * 100) / 100,
+      invested: money(mvInvested),
+      estimatedOnPriced: money(mvEstimatedOnPriced),
       confidence: mvConfidence,
-      topJerseys: mvTop.slice(0, 10),
+      topJerseys: mvTop.slice(0, 10).map((j) => ({ ...j, value: money(j.value) })),
       byClub: byClubSorted
         .slice(0, 4)
-        .map(([clubName, value]) => ({ clubName, value: Math.round(value * 100) / 100 })),
-      byClubOther:
-        Math.round(byClubSorted.slice(4).reduce((s, [, v]) => s + v, 0) * 100) / 100,
+        .map(([clubName, value]) => ({ clubName, value: money(value) })),
+      byClubOther: money(byClubSorted.slice(4).reduce((s, [, v]) => s + v, 0)),
     };
 
-    const mostExpensive = itemsWithPrice.sort(
-      (a, b) => Number(b.purchasePrice || 0) - Number(a.purchasePrice || 0)
-    )[0];
+    const mostExpensive = itemsWithPrice.sort((a, b) => eur(b) - eur(a))[0];
 
     const leastExpensive = itemsWithPrice
-      .filter((item) => Number(item.purchasePrice) > 0)
-      .sort(
-        (a, b) => Number(a.purchasePrice || 0) - Number(b.purchasePrice || 0)
-      )[0];
+      .filter((item) => eur(item) > 0)
+      .sort((a, b) => eur(a) - eur(b))[0];
 
     let spendingData: { month: string; amount: number }[] = [];
 
@@ -360,14 +362,14 @@ export async function GET() {
         const monthYear = `${date.getFullYear()}-${String(
           date.getMonth() + 1
         ).padStart(2, "0")}`;
-        acc[monthYear] = (acc[monthYear] || 0) + Number(item.purchasePrice);
+        acc[monthYear] = (acc[monthYear] || 0) + eur(item);
         return acc;
       }, {} as Record<string, number>);
 
       spendingData = Object.entries(spendingTimeline)
         .map(([month, amount]) => ({
           month,
-          amount: Math.round(amount * 100) / 100,
+          amount: money(amount),
         }))
         .sort((a, b) => a.month.localeCompare(b.month));
     }
@@ -523,11 +525,12 @@ export async function GET() {
         clubRankings,
         clubCoverage,
         financial: {
-          totalSpent: Math.round(totalSpent * 100) / 100,
-          averagePrice: Math.round(averagePrice * 100) / 100,
-          totalRetailValue: Math.round(totalRetailValue * 100) / 100,
-          totalCollectionValue: Math.round(totalCollectionValue * 100) / 100,
-          estimatedMarketValue: Math.round(estimatedMarketValue * 100) / 100,
+          currency,
+          totalSpent: money(totalSpent),
+          averagePrice: money(averagePrice),
+          totalRetailValue: money(totalRetailValue),
+          totalCollectionValue: money(totalCollectionValue),
+          estimatedMarketValue: money(estimatedMarketValue),
           marketValueCoverage,
           marketValueItems: estimatedItems,
           marketValueDetail,
@@ -535,14 +538,14 @@ export async function GET() {
             ? {
                 jerseyName: mostExpensive.jersey.name,
                 clubName: mostExpensive.jersey.club.name,
-                price: Number(mostExpensive.purchasePrice),
+                price: money(eur(mostExpensive)),
               }
             : null,
           leastExpensive: leastExpensive
             ? {
                 jerseyName: leastExpensive.jersey.name,
                 clubName: leastExpensive.jersey.club.name,
-                price: Number(leastExpensive.purchasePrice),
+                price: money(eur(leastExpensive)),
               }
             : null,
           spendingTimeline: spendingData,

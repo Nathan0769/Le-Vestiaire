@@ -1,18 +1,18 @@
 {
   "items": [
     {
-      "id": "cmvc7a7ri004rmse8z3miofa7",
+      "id": "cmvty253z004rynr4xenuyvib",
       "type": "CAP_REACHED",
-      "createdAt": "2026-10-17T09:34:50.574Z",
+      "createdAt": "2026-10-29T19:36:28.511Z",
       "likeCount": 0,
       "commentCount": 0,
       "hasLiked": false,
       "isFollowingAuthor": false,
       "likersPreview": [],
       "author": {
-        "id": "cmvc7a7a6003xmse830wv4agx",
-        "username": "test-179222968994947",
-        "name": "test-179222968994947",
+        "id": "cmvty23ii003xynr4js97afsf",
+        "username": "test-179330258644296",
+        "name": "test-179330258644296",
         "avatarUrl": "https://test.r2.dev/photo.jpg",
         "favoriteClubColor": "#000000",
         "favoriteClubName": "PSG",
@@ -32,18 +32,18 @@
       }
     },
     {
-      "id": "cmvc7a7qu004pmse81os0f4wm",
+      "id": "cmvty2529004pynr4yg8o1lfz",
       "type": "ACHIEVEMENT_UNLOCK",
-      "createdAt": "2026-10-17T09:34:50.550Z",
+      "createdAt": "2026-10-29T19:36:28.450Z",
       "likeCount": 0,
       "commentCount": 0,
       "hasLiked": false,
       "isFollowingAuthor": false,
       "likersPreview": [],
       "author": {
-        "id": "cmvc7a7a6003xmse830wv4agx",
-        "username": "test-179222968994947",
-        "name": "test-179222968994947",
+        "id": "cmvty23ii003xynr4js97afsf",
+        "username": "test-179330258644296",
+        "name": "test-179330258644296",
         "avatarUrl": "https://test.r2.dev/photo.jpg",
         "favoriteClubColor": "#000000",
         "favoriteClubName": "PSG",
@@ -54,7 +54,7 @@
         "key": "social.follower.first",
         "tier": "BRONZE",
         "category": "SOCIAL",
-        "unlockedAt": "2026-10-17T09:34:50.100Z",
+        "unlockedAt": "2026-10-29T19:36:26.933Z",
         "metadata": null,
         "title": "Premier ami",
         "description": "Ajoute ton premier ami",
@@ -62,25 +62,25 @@
       }
     },
     {
-      "id": "cmvc7a7q5004nmse8qldj0uqx",
+      "id": "cmvty250c004nynr46sdlrgy6",
       "type": "JERSEY_ADD",
-      "createdAt": "2026-10-17T09:34:50.525Z",
+      "createdAt": "2026-10-29T19:36:28.380Z",
       "likeCount": 1,
       "commentCount": 0,
       "hasLiked": false,
       "isFollowingAuthor": false,
       "likersPreview": [
         {
-          "userId": "cmvc7a7ax003zmse856j3913i",
-          "name": "test-179222968997646",
+          "userId": "cmvty23km003zynr4eu80waqo",
+          "name": "test-179330258651745",
           "avatarUrl": "https://test.r2.dev/photo.jpg",
           "isSupporter": false
         }
       ],
       "author": {
-        "id": "cmvc7a7a6003xmse830wv4agx",
-        "username": "test-179222968994947",
-        "name": "test-179222968994947",
+        "id": "cmvty23ii003xynr4js97afsf",
+        "username": "test-179330258644296",
+        "name": "test-179330258644296",
         "avatarUrl": "https://test.r2.dev/photo.jpg",
         "favoriteClubColor": "#000000",
         "favoriteClubName": "PSG",
@@ -88,9 +88,9 @@
         "avatarFrame": null
       },
       "payload": {
-        "userJerseyId": "cmvc7a7j6004cmse82seisvzy",
+        "userJerseyId": "cmvty24ie004cynr4b85wxo7u",
         "jersey": {
-          "id": "cmvc7a782003rmse829ut66vx",
+          "id": "cmvty23c7003rynr4w2xjcpew",
           "name": "Maillot PSG Domicile 2024/25",
           "season": "2024/25",
           "type": "HOME",
@@ -98,8 +98,8 @@
           "slug": null,
           "mainColor": null,
           "club": {
-            "id": "cmvc7a77d003pmse8k9rtr5zt",
-            "leagueId": "cmvc7a76o003nmse8ad28ahgd",
+            "id": "cmvty23aq003pynr4bxkzedea",
+            "leagueId": "cmvty2398003nynr4jnyiyoj2",
             "name": "PSG",
             "shortName": "TC",
             "logoUrl": "https://example.com/club.png",
@@ -113,6 +113,7 @@
         "playerName": "Dembélé",
         "playerNumber": 10,
         "purchasePrice": 120,
+        "purchaseCurrency": "EUR",
         "authorRating": 4.5,
         "clubRank": 1,
         "patchesCount": 2

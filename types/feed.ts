@@ -44,6 +44,7 @@ export interface JerseyAddPayload {
   playerName: string | null;
   playerNumber: number | null;
   purchasePrice: number | null;
+  purchaseCurrency: string;
   authorRating: number | null;
   clubRank: number | null;
   patchesCount: number;

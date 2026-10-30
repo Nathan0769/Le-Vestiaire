@@ -42,6 +42,7 @@ interface CollectionStats {
     }[];
     clubCoverage: ClubCoverage | null;
     financial: {
+      currency?: string;
       totalSpent: number;
       averagePrice: number;
       totalRetailValue: number;
@@ -217,7 +218,10 @@ export function CollectionStatsView() {
       <TabsContent value="financial" className="space-y-6">
         <FinancialStatsCards financial={data.stats.financial} />
         <div className="w-full">
-          <SpendingTimelineChart data={data.stats.financial.spendingTimeline} />
+          <SpendingTimelineChart
+            data={data.stats.financial.spendingTimeline}
+            currency={data.stats.financial.currency}
+          />
         </div>
       </TabsContent>
 
@@ -226,6 +230,7 @@ export function CollectionStatsView() {
           records={data.stats.records}
           additional={data.stats.additional}
           financial={{
+            currency: data.stats.financial.currency,
             mostExpensive: data.stats.financial.mostExpensive,
             leastExpensive: data.stats.financial.leastExpensive,
           }}

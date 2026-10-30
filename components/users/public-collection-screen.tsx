@@ -137,6 +137,7 @@ export async function PublicCollectionScreen({
       playerName: true,
       playerNumber: true,
       purchasePrice: true,
+      purchaseCurrency: true,
       purchaseDate: true,
       notes: true,
       isGift: true,

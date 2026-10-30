@@ -20,6 +20,10 @@ import {
   type TopJerseyInput,
 } from "@/lib/collection-share/select-top-jerseys";
 import { computeCollectionStats } from "@/lib/collection-share/stats";
+import { DEFAULT_CURRENCY, fromEur } from "@/lib/currency";
+import { formatMoney } from "@/lib/format-money";
+import { getRatesToEur } from "@/lib/fx";
+import { priceEur } from "@/lib/purchase-totals";
 
 export const runtime = "nodejs";
 
@@ -174,7 +178,7 @@ export async function GET(request: Request) {
 
   const dbUser = await prisma.user.findUnique({
     where: { id: user.id },
-    select: { username: true, name: true, avatar: true },
+    select: { username: true, name: true, avatar: true, currency: true },
   });
   if (!dbUser) {
     return NextResponse.json({ error: "Utilisateur introuvable" }, { status: 404 });
@@ -205,6 +209,7 @@ export async function GET(request: Request) {
       select: {
         id: true,
         purchasePrice: true,
+        purchaseCurrency: true,
         jersey: {
           select: {
             club: {
@@ -220,12 +225,19 @@ export async function GET(request: Request) {
       },
     });
 
+    // Prix ramenés dans la devise du user avant de les additionner.
+    const rates = await getRatesToEur();
+    const currency =
+      dbUser.currency && rates[dbUser.currency] ? dbUser.currency : DEFAULT_CURRENCY;
     const stats = computeCollectionStats(
-      items.map((i) => ({
-        id: i.id,
-        purchasePrice: i.purchasePrice ? Number(i.purchasePrice) : null,
-        jersey: i.jersey,
-      })),
+      items.map((i) => {
+        const eur = priceEur(i, rates);
+        return {
+          id: i.id,
+          purchasePrice: eur !== null ? fromEur(eur, currency, rates) : null,
+          jersey: i.jersey,
+        };
+      }),
     );
 
     const clubCounts = new Map<
@@ -257,7 +269,7 @@ export async function GET(request: Request) {
     );
 
     return new ImageResponse(
-      renderStatsCard({ stats, enabledStats, topClubs, ...commonProps }),
+      renderStatsCard({ stats, currency, enabledStats, topClubs, ...commonProps }),
       { ...size, headers },
     );
   }
@@ -543,6 +555,7 @@ function InnerCard({
 
 function renderStatsCard({
   stats,
+  currency,
   enabledStats,
   topClubs,
   format,
@@ -552,6 +565,7 @@ function renderStatsCard({
   qrDataUri,
 }: {
   stats: ReturnType<typeof computeCollectionStats>;
+  currency: string;
   enabledStats: Set<StatKey>;
   topClubs: { id: string; name: string; count: number; logoDataUri: string | null }[];
   format: FormatKey;
@@ -583,7 +597,7 @@ function renderStatsCard({
   if (enabledStats.has("value") && stats.estimatedValue > 0) {
     secondaryStats.push({
       key: "value",
-      value: `${Math.round(stats.estimatedValue)}€`,
+      value: formatMoney(Math.round(stats.estimatedValue), currency, "fr"),
       label: "valeur estimée",
     });
   }

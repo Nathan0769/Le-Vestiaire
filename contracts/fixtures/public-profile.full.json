@@ -1,7 +1,7 @@
 {
-  "id": "cmvc7a9yb006dmse8y5nfzb07",
-  "username": "test-179222969341124",
-  "name": "test-179222969341124",
+  "id": "cmvty2b13006dynr4nm8j7nkw",
+  "username": "test-179330259618247",
+  "name": "test-179330259618247",
   "avatarUrl": "https://test.r2.dev/photo.jpg",
   "bio": "Fan du PSG",
   "isPrivate": false,
@@ -9,7 +9,7 @@
   "isSupporter": false,
   "avatarFrame": null,
   "favoriteClub": {
-    "id": "cmvc7a9ut0063mse8bnoohihh",
+    "id": "cmvty2asp0063ynr457nmoohc",
     "name": "PSG"
   },
   "socialLinks": {
@@ -36,5 +36,5 @@
   "achievementsTotal": 55,
   "followState": "following",
   "isSelf": false,
-  "createdAt": "2026-10-17T09:34:53.412Z"
+  "createdAt": "2026-10-29T19:36:36.183Z"
 }

@@ -450,7 +450,8 @@
           "error": "Er is een fout opgetreden",
           "connectionError": "Verbindingsfout. Probeer het opnieuw.",
           "deleted": "Shirt verwijderd uit je collectie"
-        }
+        },
+        "purchaseCurrency": "Valuta van de prijs"
       },
       "delete": {
         "title": "Shirt verwijderen?",
@@ -2131,6 +2132,15 @@
       "none": "Geen",
       "saved": "Wijziging opgeslagen",
       "saveError": "Opslaan mislukt"
+    },
+    "currency": {
+      "title": "Valuta",
+      "description": "Gebruikt voor je aankoopprijzen en de weergave van je statistieken",
+      "label": "Standaardvaluta",
+      "hint": "Voorgesteld wanneer je een prijs invoert. Al ingevoerde prijzen behouden hun valuta.",
+      "saved": "Valuta bijgewerkt",
+      "updateError": "Valuta kon niet worden bijgewerkt",
+      "loading": "Laden..."
     }
   },
   "CookieConsent": {

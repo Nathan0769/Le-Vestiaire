@@ -15,6 +15,8 @@ import Image from "next/image";
 import { UserHomeStats } from "@/types/home";
 import { useTranslations, useLocale } from "next-intl";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
+import { DEFAULT_CURRENCY } from "@/lib/currency";
+import { formatMoney } from "@/lib/format-money";
 import type { JerseyType } from "@/types/jersey";
 
 interface UserStatsSectionProps {
@@ -78,7 +80,12 @@ export function UserStatsSection({ userStats }: UserStatsSectionProps) {
                 <div className="flex items-center gap-2 text-sm">
                   <TrendingUp className="w-4 h-4 text-green-500" />
                   <span className="font-medium">
-                    {userStats.collection.totalValue.toFixed(0)}€ {t("invested")}
+                    {formatMoney(
+                      Math.round(userStats.collection.totalValue),
+                      userStats.collection.currency ?? DEFAULT_CURRENCY,
+                      locale
+                    )}{" "}
+                    {t("invested")}
                   </span>
                 </div>
               )}
@@ -225,7 +232,7 @@ export function UserStatsSection({ userStats }: UserStatsSectionProps) {
                       </div>
                       {item.purchasePrice && (
                         <div className="text-sm font-medium text-green-600">
-                          {item.purchasePrice}€
+                          {formatMoney(item.purchasePrice, item.purchaseCurrency ?? DEFAULT_CURRENCY, locale)}
                         </div>
                       )}
                     </div>

@@ -1,6 +1,8 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { DEFAULT_CURRENCY } from "@/lib/currency";
+import { formatMoney } from "@/lib/format-money";
 import { ShoppingBag } from "lucide-react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -23,6 +25,7 @@ export function AcquisitionCard({
   setFormData,
 }: AcquisitionCardProps) {
   const t = useTranslations("Collection.modal.view");
+  const locale = useLocale();
 
   if (isEditing && formData && setFormData) {
     return (
@@ -39,7 +42,11 @@ export function AcquisitionCard({
           label={t("purchasePrice")}
           value={
             <span className="font-semibold text-primary">
-              {collectionItem.purchasePrice}€
+              {formatMoney(
+                collectionItem.purchasePrice,
+                collectionItem.purchaseCurrency ?? DEFAULT_CURRENCY,
+                locale
+              )}
             </span>
           }
         />

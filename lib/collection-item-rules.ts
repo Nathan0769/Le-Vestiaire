@@ -1,5 +1,6 @@
 import { VALID_SIZES, jerseySizeErrorCode, SIZE_ERROR_MESSAGES } from "@/lib/jersey-size";
 import { purchaseDateErrorCode, PURCHASE_DATE_ERROR_MESSAGES } from "@/lib/purchase-date";
+import { isSupportedCurrency, CURRENCY_ERROR_MESSAGES, SUPPORTED_CURRENCIES } from "@/lib/currency";
 
 /**
  * Règles d'un maillot de collection, partagées par l'ajout
@@ -15,6 +16,8 @@ export const JERSEY_VERSIONS = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISS
 export const JERSEY_CONDITIONS = ["MINT", "EXCELLENT", "GOOD", "FAIR", "POOR"] as const;
 
 export { VALID_SIZES as JERSEY_SIZES };
+
+export { SUPPORTED_CURRENCIES as PURCHASE_CURRENCIES };
 
 export const COLLECTION_ITEM_LIMITS = {
   playerNameMax: 100,
@@ -36,6 +39,7 @@ export type CollectionItemFields = {
   playerName?: unknown;
   playerNumber?: unknown;
   purchasePrice?: unknown;
+  purchaseCurrency?: unknown;
   purchaseDate?: unknown;
   notes?: unknown;
   signedBy?: unknown;
@@ -109,6 +113,10 @@ export function collectionItemFieldError(f: CollectionItemFields): CollectionIte
     if (isNaN(price) || price < 0) {
       return { error: "Le prix d'achat doit être un nombre positif valide", code: "PURCHASE_PRICE_INVALID" };
     }
+  }
+
+  if (f.purchaseCurrency !== null && f.purchaseCurrency !== undefined && !isSupportedCurrency(f.purchaseCurrency)) {
+    return { error: CURRENCY_ERROR_MESSAGES.PURCHASE_CURRENCY_INVALID, code: "PURCHASE_CURRENCY_INVALID" };
   }
 
   return null;

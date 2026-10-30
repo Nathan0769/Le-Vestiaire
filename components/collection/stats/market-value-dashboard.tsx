@@ -2,7 +2,9 @@
 
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { DEFAULT_CURRENCY } from "@/lib/currency";
+import { formatMoney } from "@/lib/format-money";
 import { Loader2, Package, ChevronDown } from "lucide-react";
 import { MarketValueChart } from "./market-value-chart";
 
@@ -33,9 +35,9 @@ interface ValueResponse {
     avg: number;
   };
   rows: Row[];
+  currency?: string;
 }
 
-const eur = (n: number) => `${Math.round(n).toLocaleString("fr-FR")} €`;
 
 type Sort = "value" | "recent" | "club";
 
@@ -43,6 +45,7 @@ export function MarketValueDashboard() {
   const [sort, setSort] = useState<Sort>("value");
   const [expanded, setExpanded] = useState(false);
   const t = useTranslations("MarketValue");
+  const locale = useLocale();
   const tType = useTranslations("JerseyType");
   const tVersion = useTranslations("JerseyVersion");
   const tCondition = useTranslations("Condition");
@@ -62,6 +65,7 @@ export function MarketValueDashboard() {
       return res.json();
     },
   });
+  const eur = (n: number) => formatMoney(Math.round(n), data?.currency ?? DEFAULT_CURRENCY, locale);
 
   const rows = useMemo(() => {
     const r = [...(data?.rows ?? [])];

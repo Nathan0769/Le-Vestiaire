@@ -13,10 +13,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { BarChart2, ChevronRight, Lock, Check } from "lucide-react";
 import { Link } from "@/i18n/routing";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { DEFAULT_CURRENCY } from "@/lib/currency";
+import { formatMoney } from "@/lib/format-money";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
 
-const eur = (n: number) => `${Math.round(n).toLocaleString("fr-FR")} €`;
 const GOLD = "text-[oklch(0.66_0.11_88)] dark:text-[oklch(0.82_0.11_90)]";
 const GOLD_HEX = "oklch(0.72 0.115 90)";
 
@@ -25,12 +26,13 @@ const OTHER_PERK_KEYS = ["badge", "frame", "banner", "photos"];
 
 export function MarketValueCard() {
   const t = useTranslations("MarketValue");
+  const locale = useLocale();
   const tPricing = useTranslations("Pricing");
   const user = useCurrentUser();
   const isSupporter = !!user?.isSupporter;
   const [showPaywall, setShowPaywall] = useState(false);
 
-  const { data } = useQuery<{ summary: { estimated: number; gain: number; gainPct: number } }>({
+  const { data } = useQuery<{ summary: { estimated: number; gain: number; gainPct: number }; currency?: string }>({
     queryKey: ["collection-value"],
     queryFn: async () => {
       const res = await fetch("/api/user/collection-value");
@@ -39,6 +41,7 @@ export function MarketValueCard() {
     },
     enabled: isSupporter, // on n'appelle pas l'API (403) pour les non-Supporters
   });
+  const eur = (n: number) => formatMoney(Math.round(n), data?.currency ?? DEFAULT_CURRENCY, locale);
 
   const estimated = data?.summary.estimated ?? 0;
 

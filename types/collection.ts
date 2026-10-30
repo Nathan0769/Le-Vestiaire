@@ -45,6 +45,7 @@ export interface UserJersey {
   playerName?: string;
   playerNumber?: number;
   purchasePrice?: number;
+  purchaseCurrency?: string;
   purchaseDate?: Date;
   notes?: string;
   isGift: boolean;
@@ -70,6 +71,7 @@ export interface AddToCollectionData {
   playerName?: string;
   playerNumber?: number;
   purchasePrice?: number;
+  purchaseCurrency?: string;
   purchaseDate?: Date;
   notes?: string;
   isGift: boolean;
@@ -95,6 +97,7 @@ export interface UpdateCollectionData {
   playerName?: string;
   playerNumber?: number;
   purchasePrice?: number;
+  purchaseCurrency?: string;
   purchaseDate?: Date;
   notes?: string;
   isGift: boolean;

@@ -47,6 +47,15 @@ describe("collectionItemFieldError", () => {
   it("refuse un prix négatif", () => {
     expect(collectionItemFieldError({ ...valid, purchasePrice: -1 })?.code).toBe("PURCHASE_PRICE_INVALID");
   });
+
+  it("refuse une devise d'achat hors liste", () => {
+    expect(collectionItemFieldError({ ...valid, purchaseCurrency: "XYZ" })?.code).toBe("PURCHASE_CURRENCY_INVALID");
+  });
+
+  it("accepte une devise supportée ou absente", () => {
+    expect(collectionItemFieldError({ ...valid, purchaseCurrency: "BRL" })).toBeNull();
+    expect(collectionItemFieldError({ ...valid, purchaseCurrency: undefined })).toBeNull();
+  });
 });
 
 describe("normalizePatchInputs", () => {

@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { DEFAULT_CURRENCY } from "@/lib/currency";
+import { formatMoney } from "@/lib/format-money";
 import type { JerseyAddPayload } from "@/types/feed";
 import type { UserCollectionItem } from "@/types/user-public-collection";
 import dynamic from "next/dynamic";
@@ -32,6 +34,7 @@ const CONDITION_DOT: Record<string, string> = {
 
 export function PostCardJersey({ payload }: Props) {
   const t = useTranslations("Feed.post");
+  const locale = useLocale();
   const tType = useTranslations("JerseyType");
   const [modalOpen, setModalOpen] = useState(false);
   const displayImage = payload.customPhotoUrl ?? payload.jersey.imageUrl;
@@ -114,7 +117,7 @@ export function PostCardJersey({ payload }: Props) {
           </Chip>
           {payload.size && <Chip>{t("size", { size: payload.size })}</Chip>}
           {payload.purchasePrice !== null && payload.purchasePrice > 0 && (
-            <Chip>{payload.purchasePrice}€</Chip>
+            <Chip>{formatMoney(payload.purchasePrice, payload.purchaseCurrency ?? DEFAULT_CURRENCY, locale)}</Chip>
           )}
           {payload.playerName && (
             <PlayerChip

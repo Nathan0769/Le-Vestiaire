@@ -115,6 +115,9 @@ export function CollectionJerseyModal({
     playerName: collectionItem.playerName || "",
     playerNumber: collectionItem.playerNumber ?? undefined,
     purchasePrice: collectionItem.purchasePrice || undefined,
+    // Sans prix, la devise par défaut (EUR) n'est pas un choix : on laisse le
+    // formulaire proposer la préférence du user.
+    purchaseCurrency: collectionItem.purchasePrice ? collectionItem.purchaseCurrency : undefined,
     purchaseDate: collectionItem.purchaseDate || undefined,
     notes: collectionItem.notes || "",
     isGift: collectionItem.isGift || false,
@@ -190,6 +193,9 @@ export function CollectionJerseyModal({
         playerName: dataToSave.playerName || null,
         playerNumber: dataToSave.playerNumber ?? null,
         purchasePrice: dataToSave.purchasePrice || null,
+        ...(dataToSave.purchasePrice && dataToSave.purchaseCurrency
+          ? { purchaseCurrency: dataToSave.purchaseCurrency }
+          : {}),
         purchaseDate: dataToSave.purchaseDate || null,
         notes: dataToSave.notes || null,
         isGift: dataToSave.isGift ?? false,

@@ -450,7 +450,8 @@
           "error": "An error occurred",
           "connectionError": "Connection error. Please try again.",
           "deleted": "Jersey removed from your collection"
-        }
+        },
+        "purchaseCurrency": "Price currency"
       },
       "delete": {
         "title": "Delete jersey?",
@@ -2131,6 +2132,15 @@
       "none": "None",
       "saved": "Change saved",
       "saveError": "Save failed"
+    },
+    "currency": {
+      "title": "Currency",
+      "description": "Used for your purchase prices and to display your stats",
+      "label": "Default currency",
+      "hint": "Suggested when you enter a price. Prices already entered keep their currency.",
+      "saved": "Currency updated",
+      "updateError": "Could not update the currency",
+      "loading": "Loading..."
     }
   },
   "CookieConsent": {

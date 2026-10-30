@@ -8,6 +8,7 @@ import { EmailSettings } from "./email-settings";
 import { PasswordSettings } from "./password-settings";
 import { SessionSettings } from "./session-settings";
 import { LeaderboardPrivacySettings } from "./leaderboard-privacy-settings";
+import { CurrencySettings } from "./currency-settings";
 import { CookieSettings } from "./cookie-settings";
 import { SubscriptionSettings } from "./subscription-settings";
 import { Link } from "@/i18n/routing";
@@ -38,6 +39,8 @@ export function SettingsClient() {
         <AccountInfo user={currentUser} />
         <SubscriptionSettings />
         <LeaderboardPrivacySettings userId={currentUser.id} />
+
+        <CurrencySettings />
 
         <EmailSettings
           isGoogleOnly={currentUser.authProvider?.isGoogleOnly ?? false}

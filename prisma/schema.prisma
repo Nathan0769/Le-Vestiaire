@@ -19,6 +19,8 @@ model User {
   avatar                      String?
   bio                         String?
   favoriteClubId              String?
+  // ISO 4217, devise préférée (préremplissage du prix d'achat + affichage des stats). Null = EUR
+  currency                    String?
   createdAt                   DateTime              @default(now())
   updatedAt                   DateTime              @updatedAt
   username                    String                @unique
@@ -267,6 +269,8 @@ model UserJersey {
   condition          Condition
   hasTags            Boolean           @default(false)
   purchasePrice      Decimal?
+  // ISO 4217 du purchasePrice tel que saisi, jamais converti à l'écriture
+  purchaseCurrency   String            @default("EUR")
   purchaseDate       DateTime?
   notes              String?
   userPhotoUrls      String[]          @default([])

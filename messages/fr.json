@@ -455,7 +455,8 @@
           "error": "Une erreur est survenue",
           "connectionError": "Erreur de connexion. Veuillez réessayer.",
           "deleted": "Maillot supprimé de votre collection"
-        }
+        },
+        "purchaseCurrency": "Devise du prix"
       },
       "delete": {
         "title": "Supprimer le maillot ?",
@@ -2136,6 +2137,15 @@
       "none": "Aucun",
       "saved": "Modification enregistrée",
       "saveError": "Échec de l'enregistrement"
+    },
+    "currency": {
+      "title": "Devise",
+      "description": "Utilisée pour vos prix d'achat et l'affichage de vos statistiques",
+      "label": "Devise par défaut",
+      "hint": "Proposée quand vous saisissez un prix. Les prix déjà saisis gardent leur devise.",
+      "saved": "Devise mise à jour",
+      "updateError": "Impossible de mettre à jour la devise",
+      "loading": "Chargement..."
     }
   },
   "CookieConsent": {

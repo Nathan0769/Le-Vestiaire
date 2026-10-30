@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { getEbayToken } from "./client";
 import { collectEbayForJersey, VALUE_MARKETS } from "./collect";
-import { getRatesToEur } from "./fx";
+import { getRatesToEur } from "@/lib/fx";
 import type { JerseyForQuery } from "./matching";
 import { buildRefreshQueue } from "./queue";
 import { computeJerseyMarketValue } from "../compute";

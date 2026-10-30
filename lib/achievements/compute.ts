@@ -1,4 +1,6 @@
 import prisma from "@/lib/prisma";
+import { getRatesToEur } from "@/lib/fx";
+import { sumPurchasesEur } from "@/lib/purchase-totals";
 
 export async function getUserJerseyCount(userId: string): Promise<number> {
   return prisma.userJersey.count({ where: { userId } });
@@ -13,12 +15,16 @@ export async function getSupporterProgress(userId: string): Promise<number> {
   return user?.plan === "PRO" ? 1 : 0;
 }
 
+/** Valeur d'achat cumulée en EUR : les seuils de succès sont exprimés en euros. */
 export async function getUserCollectionValue(userId: string): Promise<number> {
-  const result = await prisma.userJersey.aggregate({
-    where: { userId, purchasePrice: { not: null } },
-    _sum: { purchasePrice: true },
-  });
-  return result._sum.purchasePrice ? Number(result._sum.purchasePrice) : 0;
+  const [items, rates] = await Promise.all([
+    prisma.userJersey.findMany({
+      where: { userId, purchasePrice: { not: null } },
+      select: { purchasePrice: true, purchaseCurrency: true },
+    }),
+    getRatesToEur(),
+  ]);
+  return sumPurchasesEur(items, rates);
 }
 
 export async function getUserUniqueClubs(userId: string): Promise<number> {

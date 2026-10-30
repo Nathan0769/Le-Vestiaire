@@ -4,6 +4,8 @@ import prisma from "@/lib/prisma";
 import { valueForItem } from "@/lib/market-value/aggregate";
 import { isSupporter } from "@/lib/subscription";
 import type { Condition } from "@/lib/market-value/types";
+import { DEFAULT_CURRENCY, fromEur } from "@/lib/currency";
+import { getRatesToEur } from "@/lib/fx";
 
 export const dynamic = "force-dynamic";
 
@@ -12,6 +14,7 @@ export const dynamic = "force-dynamic";
  * l'utilisateur POSSÉDAIT à chaque date, valorisé au prix de la date). Reconstruite
  * à partir des snapshots de cote par maillot (`JerseyMarketValueSnapshot`), écrits
  * par le cron quotidien quand une cote change. L'historique se construit donc au fil des jours.
+ * Cotes en EUR, converties dans la devise du user au taux du jour.
  */
 export async function GET() {
   const user = await getCurrentUser();
@@ -21,7 +24,7 @@ export async function GET() {
 
   const dbUser = await prisma.user.findUnique({
     where: { id: user.id },
-    select: { plan: true },
+    select: { plan: true, currency: true },
   });
   if (!isSupporter(dbUser)) {
     return NextResponse.json({ error: "Réservé aux Supporters", code: "SUPPORTER_ONLY" }, { status: 403 });
@@ -39,8 +42,11 @@ export async function GET() {
     },
   });
 
+  const rates = await getRatesToEur();
+  const currency = dbUser?.currency && rates[dbUser.currency] ? dbUser.currency : DEFAULT_CURRENCY;
+
   if (items.length === 0) {
-    return NextResponse.json({ points: [] });
+    return NextResponse.json({ points: [], currency });
   }
 
   const jerseyIds = [...new Set(items.map((i) => i.jerseyId))];
@@ -51,7 +57,7 @@ export async function GET() {
   });
 
   if (snapshots.length === 0) {
-    return NextResponse.json({ points: [] });
+    return NextResponse.json({ points: [], currency });
   }
 
   // Snapshots groupés par maillot, triés par date croissante.
@@ -99,8 +105,9 @@ export async function GET() {
         isSigned: it.isSigned,
       });
     }
-    return { date: day, value: Math.round(total * 100) / 100 };
+    const value = fromEur(total, currency, rates) ?? total;
+    return { date: day, value: Math.round(value * 100) / 100 };
   });
 
-  return NextResponse.json({ points });
+  return NextResponse.json({ points, currency });
 }
