@@ -103,6 +103,20 @@ describe("resolvePartnerMatch", () => {
     expect(r).toEqual({ jerseyId: null, matchStatus: "NEEDS_ALIAS" });
   });
 
+  it("MATCHED par l'année de début quand le catalogue range le maillot par année", async () => {
+    const yearJersey = await createTestJersey(clubId, { season: "2025", type: "AWAY" });
+    const index = await loadClubIndex("test-shop");
+    const r = await resolvePartnerMatch(parsed({ season: "2025-26", type: "AWAY" }), index);
+    expect(r).toEqual({ jerseyId: yearJersey.id, matchStatus: "MATCHED" });
+  });
+
+  it("préfère la saison exacte au repli", async () => {
+    await createTestJersey(clubId, { season: "2022", type: "HOME" });
+    const index = await loadClubIndex("test-shop");
+    const r = await resolvePartnerMatch(parsed(), index);
+    expect(r).toEqual({ jerseyId, matchStatus: "MATCHED" });
+  });
+
   it("NO_JERSEY quand le club existe mais pas ce maillot", async () => {
     const index = await loadClubIndex("test-shop");
     const r = await resolvePartnerMatch(parsed({ season: "1999-00" }), index);

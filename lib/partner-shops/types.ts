@@ -17,6 +17,7 @@ export interface ShopProduct {
   externalId: string;
   title: string;
   productType: string | null;
+  vendor: string | null;
   url: string;
   imageUrl: string | null;
   variants: ShopVariant[];

@@ -27,6 +27,7 @@ const product = (id: string, over: Partial<ShopProduct> = {}): ShopProduct => ({
   externalId: id,
   title: `${CLUB_NAME} Domicile 22-23 (M/L)`,
   productType: "Maillot",
+  vendor: "Macron",
   url: `https://shop.example.com/products/${id}`,
   imageUrl: "https://cdn.shopify.com/s/files/1/x.jpg",
   variants: [variant("M"), variant("L", { price: 44.99 })],
@@ -137,6 +138,11 @@ describe("syncPartnerShop", () => {
     await sync([product("p1", { title: "Club Inconnu Domicile 2022-23 (M)" })], later(24));
     const p1 = await prismaTest.partnerProduct.findFirstOrThrow({ where: { shop: SHOP.slug } });
     expect(p1).toMatchObject({ matchStatus: "MANUAL", jerseyId });
+  });
+
+  it("ne stocke pas les maillots de rugby (marque Rugby)", async () => {
+    const r = await sync([product("p1", { title: "Stade Français Extérieur 2025-26 (XXL)", vendor: "Rugby" })], T0);
+    expect(r).toMatchObject({ fetched: 1, upserted: 0, skipped: 1 });
   });
 
   it("refuse un produit dont l'URL sort du domaine de la boutique", async () => {

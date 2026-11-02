@@ -5,14 +5,14 @@ import { availabilityTransitions, CANCEL_WINDOW_MS } from "./inferred-sales";
 import { loadClubIndex, resolvePartnerMatch } from "./matcher";
 import { offerChanged, type OfferState } from "./offer-changes";
 import { isAllowedImageUrl, isAllowedShopUrl, PARTNER_SHOPS } from "./shops";
-import { isJerseyProductType, parsePartnerTitle } from "./title-parser";
+import { isStorableProduct, parsePartnerTitle } from "./title-parser";
 import type { PartnerShop, ShopProduct } from "./types";
 
 export interface SyncResult {
   shop: string;
   fetched: number;
   upserted: number;
-  /** Produits hors maillots (veste, polo...) : ni cote ni affichage, non stockés. */
+  /** Produits hors maillots de foot (veste, polo, rugby...) : ni cote ni affichage, non stockés. */
   skipped: number;
   rejected: number;
   removed: number;
@@ -107,7 +107,7 @@ export async function syncPartnerShop(
   const seen = new Set<string>();
 
   for (const item of feed) {
-    if (!isJerseyProductType(item.productType)) {
+    if (!isStorableProduct(item.productType, item.vendor)) {
       result.skipped++;
       continue;
     }

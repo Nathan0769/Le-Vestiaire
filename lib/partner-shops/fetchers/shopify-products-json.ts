@@ -30,6 +30,7 @@ export interface ShopifyRawProduct {
   title: string;
   handle: string;
   product_type: string | null;
+  vendor: string | null;
   images: { src: string }[];
   variants: ShopifyRawVariant[];
 }
@@ -45,6 +46,7 @@ export function normalizeShopifyProduct(raw: ShopifyRawProduct, baseUrl: string)
     externalId: String(raw.id),
     title: raw.title,
     productType: raw.product_type || null,
+    vendor: raw.vendor || null,
     url: `${baseUrl}/products/${raw.handle}`,
     imageUrl: raw.images[0]?.src ?? null,
     variants: raw.variants.map((v) => ({

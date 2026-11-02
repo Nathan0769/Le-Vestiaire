@@ -21,6 +21,14 @@ export function isJerseyProductType(productType: string | null): boolean {
   return productType !== null && JERSEY_PRODUCT_TYPES.has(productType);
 }
 
+// Le catalogue Le Vestiaire est du foot : la boutique range le rugby sous cette marque.
+const EXCLUDED_VENDORS = new Set(["Rugby"]);
+
+/** Produit à stocker : un maillot de foot, quelle que soit sa taille (junior écarté ensuite). */
+export function isStorableProduct(productType: string | null, vendor: string | null): boolean {
+  return isJerseyProductType(productType) && !(vendor !== null && EXCLUDED_VENDORS.has(vendor));
+}
+
 // Lookarounds Unicode plutôt que \b, qui ne voit pas "É" comme une lettre.
 const word = (source: string) => new RegExp(`(?<![\\p{L}\\d])(?:${source})(?![\\p{L}\\d])`, "iu");
 

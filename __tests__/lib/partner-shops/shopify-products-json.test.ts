@@ -22,6 +22,7 @@ describe("normalizeShopifyProduct", () => {
     expect(p.externalId).toBe(String(raw[0].id));
     expect(p.title).toBe(raw[0].title);
     expect(p.productType).toBe("Maillot");
+    expect(p.vendor).toBe(raw[0].vendor);
     expect(p.url).toBe(`${BASE}/products/${raw[0].handle}`);
     expect(p.imageUrl).toBe(raw[0].images[0].src);
     expect(p.variants[0]).toEqual({

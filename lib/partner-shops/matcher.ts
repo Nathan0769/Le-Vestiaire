@@ -1,6 +1,7 @@
 import type { PartnerMatchStatus } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { normalizeClubName } from "./club-name";
+import { seasonCandidates } from "./season-candidates";
 import { parsePartnerTitle, type ParsedPartnerTitle } from "./title-parser";
 
 export interface PartnerMatchResult {
@@ -46,11 +47,13 @@ export async function resolvePartnerMatch(
   const clubId = clubIndex.get(normalizeClubName(parsed.club));
   if (!clubId) return { jerseyId: null, matchStatus: "NEEDS_ALIAS" };
 
-  const jersey = await prisma.jersey.findFirst({
-    where: { clubId, season: parsed.season, type: parsed.type },
+  const seasons = seasonCandidates(parsed.season);
+  const jerseys = await prisma.jersey.findMany({
+    where: { clubId, season: { in: seasons }, type: parsed.type },
     orderBy: { variant: "asc" },
-    select: { id: true },
+    select: { id: true, season: true },
   });
+  const jersey = seasons.map((s) => jerseys.find((j) => j.season === s)).find(Boolean);
   if (!jersey) return { jerseyId: null, matchStatus: "NO_JERSEY" };
 
   return { jerseyId: jersey.id, matchStatus: "MATCHED" };
