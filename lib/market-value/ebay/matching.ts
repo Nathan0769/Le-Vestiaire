@@ -1,3 +1,4 @@
+import { isReferenceListing, listingTraits } from "../listing-traits";
 import type { EbayItem } from "./client";
 
 /**
@@ -192,13 +193,32 @@ export function itemPriceEur(
   return v * rate;
 }
 
-/** Retire les annonces hors-comparable (match worn, floqué, tailles enfant). */
-export function filterItems(items: EbayItem[]): EbayItem[] {
+/** Annonces comparables (sans match worn, flocage ni taille enfant), toutes versions confondues. */
+export function filterComparable(items: EbayItem[]): EbayItem[] {
   return items.filter((i) => {
     const t = i.title.toLowerCase();
     if (SHIRT_NUMBER_RE.test(t)) return false;
     return !NOISE_TERMS.some((term) => t.includes(term));
   });
+}
+
+/**
+ * Sous ce seuil d'évaluations, les annonces sont 20 % moins chères que la
+ * médiane du maillot (mesure du 2026-11-02, 6 500 annonces) : signe de contrefaçons.
+ */
+export const MIN_SELLER_FEEDBACK = 50;
+
+/**
+ * Annonces de référence de la cote : comparables, maillot supporter manches
+ * courtes coupe homme, vendeur établi. Les autres versions sont valorisées par
+ * valueForItem. Une annonce sans information vendeur est gardée.
+ */
+export function filterItems(items: EbayItem[]): EbayItem[] {
+  return filterComparable(items).filter(
+    (i) =>
+      isReferenceListing(listingTraits(i.title)) &&
+      (i.seller?.feedbackScore === undefined || i.seller.feedbackScore >= MIN_SELLER_FEEDBACK)
+  );
 }
 
 function median(sorted: number[]): number {

@@ -24,9 +24,9 @@ describe("aggregate", () => {
     expect(aggregate([])).toBeNull();
   });
 
-  it("abat un prix demandé CFS (asking→sold, facteur 0.8)", () => {
+  it("abat un prix demandé CFS (calibré sur eBay, facteur 0,65)", () => {
     const est = aggregate([asking(100, "cfs")]);
-    expect(est?.baseValue).toBe(80);
+    expect(est?.baseValue).toBe(65);
     expect(est?.confidence).toBe("low");
     expect(est?.sources).toEqual(["cfs"]);
   });
@@ -42,10 +42,10 @@ describe("aggregate", () => {
     expect(aggregate([sold(100, "ebay", "GOOD")])?.baseValue).toBe(85);
   });
 
-  it("prend une médiane pondérée (eBay pèse plus que le CFS)", () => {
+  it("résume chaque source par sa médiane, puis fait la moyenne des sources à poids égal", () => {
     const est = aggregate([asking(80, "ebay"), asking(120, "ebay"), asking(200, "cfs")]);
-    // normalisés: 68 (w1), 102 (w1), 160 (w0.5) → médiane pondérée = 102
-    expect(est?.baseValue).toBe(102);
+    // eBay : médiane de 68 et 102 = 85 ; CFS : 130 -> (85 + 130) / 2 = 107,5
+    expect(est?.baseValue).toBe(107.5);
   });
 
   it("confiance HAUTE dès qu'une source agrège beaucoup d'annonces", () => {
@@ -71,6 +71,47 @@ describe("aggregate", () => {
   });
 });
 
+describe("aggregate : boutiques partenaires", () => {
+  const PARC = "partner:leparcamaillots" as const;
+
+  it("ramène un prix neuf demandé à l'état GOOD avec l'abattement de la boutique", () => {
+    // 100 × 1,0 / 1,25 (MINT) = 80
+    const est = aggregate([{ price: 100, type: "asking", source: PARC, condition: "MINT" }]);
+    expect(est?.baseValue).toBe(80);
+    expect(est?.sources).toEqual([PARC]);
+  });
+
+  it("n'abat pas une vente déduite", () => {
+    // 100 / 1,25 (MINT) = 80
+    expect(aggregate([{ price: 100, type: "sold", source: PARC, condition: "MINT" }])?.baseValue).toBe(80);
+  });
+
+  it("compte autant qu'eBay dans la moyenne des sources", () => {
+    // eBay 100 -> 85 ; Parc 200 MINT -> 160 -> (85 + 160) / 2 = 122,5
+    const est = aggregate([
+      { price: 100, type: "asking", source: "ebay" },
+      { price: 200, type: "asking", source: PARC, condition: "MINT" },
+    ]);
+    expect(est?.baseValue).toBe(122.5);
+  });
+
+  it("résume prix demandés et ventes déduites d'une boutique en une seule valeur", () => {
+    // Parc : 100 MINT asking -> 80, 100 MINT sold -> 80, 110 MINT sold -> 88 -> médiane 80
+    // eBay : 100 -> 85 -> (80 + 85) / 2 = 82,5
+    const est = aggregate([
+      { price: 100, type: "asking", source: PARC, condition: "MINT" },
+      { price: 100, type: "sold", source: PARC, condition: "MINT" },
+      { price: 110, type: "sold", source: PARC, condition: "MINT" },
+      { price: 100, type: "asking", source: "ebay" },
+    ]);
+    expect(est?.baseValue).toBe(82.5);
+  });
+
+  it("ignore une boutique absente du registre", () => {
+    expect(aggregate([{ price: 100, type: "asking", source: "partner:inconnue" }])).toBeNull();
+  });
+});
+
 describe("valueForItem", () => {
   it("replica GOOD = base", () => {
     expect(valueForItem(100, { condition: "GOOD", version: "REPLICA" })).toBe(100);
@@ -83,8 +124,11 @@ describe("valueForItem", () => {
     expect(valueForItem(100, { condition: "MINT", version: "AUTHENTIC" })).toBe(187.5);
   });
   it("premium manches longues et signé", () => {
-    // GOOD × replica × manches 1.1 × signé 1.4 = 154
-    expect(valueForItem(100, { condition: "GOOD", hasLongSleeves: true, isSigned: true })).toBe(154);
+    // GOOD × replica × manches 1.2 × signé 1.4 = 168
+    expect(valueForItem(100, { condition: "GOOD", hasLongSleeves: true, isSigned: true })).toBe(168);
+  });
+  it("player issue mesuré sur eBay (×2,35)", () => {
+    expect(valueForItem(100, { condition: "GOOD", version: "PLAYER_ISSUE" })).toBe(235);
   });
   it("version inconnue -> pas de premium (×1)", () => {
     expect(valueForItem(100, { condition: "GOOD", version: "???" })).toBe(100);

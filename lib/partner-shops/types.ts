@@ -34,9 +34,7 @@ export interface PartnerShop {
   fetcher: FetcherConfig;
   /** État des articles pour la cote : neuf = MINT, occasion = GOOD. */
   itemCondition: Extract<Condition, "MINT" | "GOOD">;
-  askingWeight: number;
   askingAbatement: number;
-  inferredSoldWeight: number;
   promoCode?: string;
   /** Lien sortant vers une fiche produit (tracking, puis affiliation). */
   productLink: (url: string) => string;

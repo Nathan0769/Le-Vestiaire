@@ -8,9 +8,10 @@ import type { PriceSignal } from "../types";
 export async function cfsSignals(jerseyId: string): Promise<PriceSignal[]> {
   const cfs = await prisma.cfsAvailability.findUnique({
     where: { jerseyId },
-    select: { price: true, lastSeenAt: true },
+    select: { price: true, lastSeenAt: true, isReference: true },
   });
-  if (!cfs || Number(cfs.price) <= 0) return [];
+  // Version pro ou manches longues : affichée sur la fiche, mais hors base de la cote.
+  if (!cfs || !cfs.isReference || Number(cfs.price) <= 0) return [];
 
   return [
     {

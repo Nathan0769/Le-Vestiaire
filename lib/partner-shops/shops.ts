@@ -22,9 +22,9 @@ export const PARTNER_SHOPS: PartnerShop[] = [
     fetcher: { kind: "shopify-products-json", baseUrl: "https://leparcamaillots.com" },
     // Neuf authentique de déstockage : ramené à l'état de référence GOOD par l'agrégateur.
     itemCondition: "MINT",
-    askingWeight: 0.4,
-    askingAbatement: 0.85,
-    inferredSoldWeight: 0.6,
+    // Mesure du 2026-11-02 : prix neuf = 1,03 × médiane eBay (32 maillots). Une fois
+    // ramené à GOOD (÷ 1,25), il tombe au niveau eBay sans abattement.
+    askingAbatement: 1.0,
     productLink: withTracking,
     active: true,
   },

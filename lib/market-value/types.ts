@@ -5,7 +5,8 @@
 
 export type SignalType = "sold" | "asking";
 
-export type SourceName = "ebay" | "cfs";
+/** Sources intégrées, plus une par boutique partenaire (`partner:<slug>` du registre). */
+export type SourceName = "ebay" | "cfs" | `partner:${string}`;
 
 export type Condition = "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR";
 

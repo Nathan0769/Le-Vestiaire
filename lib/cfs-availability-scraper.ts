@@ -2,6 +2,7 @@ import axios from "axios";
 import pLimit from "p-limit";
 import prisma from "@/lib/prisma";
 import { parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
+import { isReferenceListing, listingTraits } from "@/lib/market-value/listing-traits";
 
 // Concurrency caps: network is the bottleneck, DB writes share the Prisma pool.
 const CLUB_FETCH_CONCURRENCY = 6;
@@ -170,6 +171,20 @@ interface CfsAvailabilityUpsertData {
   productUrl: string;
   affiliateUrl: string;
   imageUrl: string;
+  isReference: boolean;
+}
+
+/**
+ * Plusieurs produits CFS pour un même maillot : on garde de préférence un
+ * maillot supporter manches courtes, le seul qui compte dans la cote.
+ * À référence égale, le dernier produit vu l'emporte.
+ */
+export function pickCfsOffer(
+  current: CfsAvailabilityUpsertData | undefined,
+  candidate: CfsAvailabilityUpsertData
+): CfsAvailabilityUpsertData {
+  if (current?.isReference && !candidate.isReference) return current;
+  return candidate;
 }
 
 // One query for all wishlisted clubs; keep the lowest variant per
@@ -263,8 +278,8 @@ export async function scrapeCfsAvailability(): Promise<ScrapeStats> {
   );
 
   // Phase 2: match products against the in-memory index (no I/O). Dedupe by
-  // jerseyId, last match wins, matching the original sequential semantics and
-  // avoiding concurrent upserts racing on the same unique row.
+  // jerseyId (see pickCfsOffer), avoiding concurrent upserts racing on the same
+  // unique row.
   const now = new Date();
   const matches = new Map<string, CfsAvailabilityUpsertData>();
   for (const { clubId, products } of clubResults) {
@@ -294,13 +309,17 @@ export async function scrapeCfsAvailability(): Promise<ScrapeStats> {
       stats.matched++;
 
       const promoPrice = item.data.special_price_eur;
-      matches.set(jerseyId, {
-        price,
-        promoPrice: promoPrice && promoPrice < price ? promoPrice : null,
-        productUrl: item.data.url,
-        affiliateUrl: buildAffiliateUrl(item.data.url),
-        imageUrl,
-      });
+      matches.set(
+        jerseyId,
+        pickCfsOffer(matches.get(jerseyId), {
+          price,
+          promoPrice: promoPrice && promoPrice < price ? promoPrice : null,
+          productUrl: item.data.url,
+          affiliateUrl: buildAffiliateUrl(item.data.url),
+          imageUrl,
+          isReference: isReferenceListing(listingTraits(item.data.name)),
+        })
+      );
     }
   }
 

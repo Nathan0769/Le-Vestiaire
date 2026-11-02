@@ -2,16 +2,18 @@ import prisma from "@/lib/prisma";
 import { aggregate } from "./aggregate";
 import { cfsSignals } from "./providers/cfs";
 import { ebaySignals } from "./providers/ebay";
+import { loadPartnerSignals } from "./providers/partners";
 import { snapshotsToWrite } from "./snapshots";
 import type { MarketEstimate, PriceSignal } from "./types";
 
 /** Rassemble les signaux de toutes les sources pour un maillot. */
 export async function collectSignals(jerseyId: string): Promise<PriceSignal[]> {
-  const [cfs, ebay] = await Promise.all([
+  const [cfs, ebay, partners] = await Promise.all([
     cfsSignals(jerseyId),
     ebaySignals(jerseyId),
+    loadPartnerSignals([jerseyId]),
   ]);
-  return [...cfs, ...ebay];
+  return [...cfs, ...ebay, ...(partners.get(jerseyId) ?? [])];
 }
 
 /**
@@ -69,21 +71,23 @@ export async function computeJerseyMarketValue(
  * Stratégie "full refresh" : on remplace toute la table ; snapshot seulement
  * pour les cotes qui ont changé depuis le précédent.
  * Sources : CFS (asking, tout le catalogue) + eBay (asking agrégé, maillots
- * possédés — alimenté par le cron refreshEbayMarketData).
+ * possédés — alimenté par le cron refreshEbayMarketData) + boutiques partenaires
+ * (asking et ventes déduites, maillots de référence uniquement).
  */
 export async function recomputeAllMarketValues(): Promise<{
   computed: number;
   cleared: number;
 }> {
-  const [cfs, ebay, lastSnapshots] = await Promise.all([
+  const [cfs, ebay, partners, lastSnapshots] = await Promise.all([
     prisma.cfsAvailability.findMany({
-      where: { price: { gt: 0 } },
+      where: { price: { gt: 0 }, isReference: true },
       select: { jerseyId: true, price: true, lastSeenAt: true },
     }),
     prisma.ebayMarketData.findMany({
       where: { sampleSize: { gt: 0 }, medianPrice: { gt: 0 } },
       select: { jerseyId: true, medianPrice: true, sampleSize: true, lastSeenAt: true },
     }),
+    loadPartnerSignals(),
     // DISTINCT ON côté Postgres : `distinct` Prisma chargerait tout l'historique.
     prisma.$queryRaw<{ jerseyId: string; value: number }[]>`
       SELECT DISTINCT ON ("jerseyId") "jerseyId", "value"
@@ -114,6 +118,10 @@ export async function recomputeAllMarketValues(): Promise<{
       date: e.lastSeenAt,
       observations: e.sampleSize,
     });
+  }
+
+  for (const [jerseyId, signals] of partners) {
+    for (const signal of signals) add(jerseyId, signal);
   }
 
   const values: {

@@ -594,6 +594,8 @@ model CfsAvailability {
   productUrl   String
   affiliateUrl String
   imageUrl     String
+  /// Faux si l'offre gardée n'est pas un maillot supporter manches courtes : affichée, mais hors cote.
+  isReference  Boolean  @default(true)
   lastSeenAt   DateTime @default(now())
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt

@@ -18,6 +18,7 @@ export interface EbayItem {
   price?: { value: string; currency: string };
   condition?: string;
   buyingOptions?: string[];
+  seller?: { feedbackScore?: number };
 }
 
 interface TokenResponse {

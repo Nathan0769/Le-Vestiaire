@@ -79,6 +79,29 @@ describe("filterItems", () => {
     expect(kept).toHaveLength(1);
     expect(kept[0].title).toContain("home shirt");
   });
+
+  it("écarte les vendeurs à moins de 50 évaluations (indice de contrefaçon)", () => {
+    const kept = filterItems([
+      { ...item("France 2020 home shirt", "40"), seller: { feedbackScore: 12 } },
+      { ...item("France 2020 home shirt", "45"), seller: { feedbackScore: 50 } },
+      item("France 2020 home shirt", "42"),
+    ]);
+    expect(kept.map((i) => i.price?.value)).toEqual(["45", "42"]);
+  });
+
+  it("ne garde que la référence : supporter, manches courtes, coupe homme", () => {
+    const kept = filterItems([
+      item("France 2020 home shirt", "40"),
+      item("France 2020 home shirt Replica", "45"),
+      item("France 2020 home shirt Authentic Player Version", "90"),
+      item("France 2020 home shirt Long Sleeve", "60"),
+      item("France 2020 home shirt Womens", "35"),
+    ]);
+    expect(kept.map((i) => i.title)).toEqual([
+      "France 2020 home shirt",
+      "France 2020 home shirt Replica",
+    ]);
+  });
 });
 
 describe("aggregateEbay", () => {
