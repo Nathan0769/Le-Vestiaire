@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidateJerseysByIds } from "@/lib/catalog-revalidation";
 import { syncAllPartnerShops } from "@/lib/partner-shops/sync";
 
 export const maxDuration = 300;
@@ -11,7 +12,9 @@ export async function GET(request: Request) {
 
   try {
     const results = await syncAllPartnerShops();
-    return NextResponse.json({ results });
+    const changed = results.flatMap((r) => ("changedJerseyIds" in r ? r.changedJerseyIds : []));
+    const revalidated = await revalidateJerseysByIds([...new Set(changed)]);
+    return NextResponse.json({ results, revalidated });
   } catch (err) {
     console.error("GET /api/cron/partner-shops error:", err);
     return NextResponse.json({ error: "Erreur lors de la synchro" }, { status: 500 });

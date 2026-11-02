@@ -756,10 +756,10 @@
     }
   },
   "Wishlist": {
-    "cfsMatch": {
+    "shopMatch": {
       "badge": {
-        "discount": "Dispo -{percent}% chez CFS",
-        "available": "Dispo chez CFS"
+        "discount": "Dispo -{percent}% chez {shop}",
+        "available": "Dispo chez {shop}"
       }
     },
     "button": {
@@ -1017,13 +1017,13 @@
       },
       "jerseys": "Vos maillots",
       "sections": {
-        "promo": "{count, plural, one {En promo chez CFS (#)} other {En promo chez CFS (#)}}",
-        "available": "{count, plural, one {Dispo chez CFS (#)} other {Dispo chez CFS (#)}}",
+        "promo": "{count, plural, one {En promo (#)} other {En promo (#)}}",
+        "available": "{count, plural, one {Dispo en boutique (#)} other {Dispo en boutique (#)}}",
         "unavailable": "{count, plural, one {Non disponible (#)} other {Non disponibles (#)}}"
       },
       "hero": {
         "total": "Wishlist",
-        "availableCfs": "Dispo CFS",
+        "availableInShops": "Dispo en boutique",
         "availableSubtitle": "sur {total, plural, one {# maillot} other {# maillots}}",
         "savings": "Économies",
         "savingsSubtitle": "{count, plural, one {sur # maillot en promo} other {sur # maillots en promo}}",
@@ -2197,6 +2197,7 @@
     "brand": "Marque",
     "type": "Type",
     "findOnCFS": "Où acheter",
+    "promoCode": "Code {code}",
     "averageRating": "Note moyenne",
     "collectorStats": "Statistiques des collectionneurs",
     "inCollection": "Dans {count} collection",

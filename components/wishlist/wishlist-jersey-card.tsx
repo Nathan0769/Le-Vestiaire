@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { Heart, ExternalLink } from "lucide-react";
+import { Heart } from "lucide-react";
 import type { JerseyType } from "@prisma/client";
 
 const TYPE_BADGE_CLASSES: Partial<Record<JerseyType, string>> = {
@@ -35,6 +35,8 @@ import { getJerseyUrl } from "@/lib/jersey-url";
 import { translateJerseyName } from "@/lib/translate-jersey-name";
 import { jerseyTypeLabel } from "@/lib/jersey-utils";
 import { trackEvent } from "@/lib/analytics";
+import type { PartnerOffer } from "@/lib/partner-shops/offers";
+import { ShopOfferBadge } from "@/components/wishlist/shop-offer-badge";
 
 interface Props {
   jersey: {
@@ -60,13 +62,26 @@ interface Props {
     promoPrice: string | null;
     affiliateUrl: string;
   } | null;
+  partnerOffers?: PartnerOffer[];
 }
 
-export function WishlistJerseyCard({ jersey, club, cfsAvailability }: Props) {
+interface CardOffer {
+  shop: string;
+  shopName: string;
+  price: number;
+  compareAtPrice: number | null;
+  discount: number;
+  url: string;
+}
+
+const discountOf = (price: number, reference: number | null) =>
+  reference !== null && reference > price ? Math.round(((reference - price) / reference) * 100) : 0;
+
+export function WishlistJerseyCard({ jersey, club, cfsAvailability, partnerOffers = [] }: Props) {
   const router = useRouter();
   const locale = useLocale();
   const tJerseyType = useTranslations("JerseyType");
-  const tCfs = useTranslations("Wishlist.cfsMatch");
+  const tShop = useTranslations("Wishlist.shopMatch");
 
   const typeLabel = jerseyTypeLabel(
     tJerseyType(jersey.type),
@@ -94,6 +109,52 @@ export function WishlistJerseyCard({ jersey, club, cfsAvailability }: Props) {
     inPromo && price !== null && promoPrice !== null
       ? Math.round(((price - promoPrice) / price) * 100)
       : 0;
+
+  // CFS et boutiques partenaires, du moins cher au plus cher.
+  const offers: CardOffer[] = [
+    ...(cfsAvailability && price !== null
+      ? [
+          {
+            shop: "cfs",
+            shopName: "CFS",
+            price: inPromo && promoPrice !== null ? promoPrice : price,
+            compareAtPrice: inPromo ? price : null,
+            discount,
+            url: cfsAvailability.affiliateUrl,
+          },
+        ]
+      : []),
+    ...partnerOffers.map((o) => ({
+      shop: o.shop,
+      shopName: o.shopName,
+      price: o.price,
+      compareAtPrice: o.compareAtPrice,
+      discount: discountOf(o.price, o.compareAtPrice),
+      url: o.url,
+    })),
+  ].sort((a, b) => a.price - b.price);
+
+  const partnerShops = partnerOffers.map((o) => o.shop).join(",");
+  useEffect(() => {
+    if (!partnerShops || typeof window === "undefined") return;
+    for (const offer of partnerOffers) {
+      const key = `partner-viewed-${offer.shop}-${jersey.id}`;
+      if (sessionStorage.getItem(key)) continue;
+      sessionStorage.setItem(key, "1");
+      trackEvent({
+        name: "partner_wishlist_match_view",
+        params: {
+          jersey_id: jersey.id,
+          club_id: club.id,
+          season: jersey.season,
+          shop: offer.shop,
+          discount_pct: discountOf(offer.price, offer.compareAtPrice),
+        },
+      });
+    }
+    // partnerShops résume la liste : l'effet ne repart pas à chaque rendu.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [partnerShops, jersey.id, club.id, jersey.season]);
 
   useEffect(() => {
     if (!cfsAvailability) return;
@@ -127,8 +188,22 @@ export function WishlistJerseyCard({ jersey, club, cfsAvailability }: Props) {
     );
   };
 
-  const handleCfsClick = (e: React.MouseEvent) => {
+  const handleOfferClick = (offer: CardOffer) => (e: React.MouseEvent) => {
     e.stopPropagation();
+    if (offer.shop !== "cfs") {
+      trackEvent({
+        name: "partner_wishlist_match_click",
+        params: {
+          jersey_id: jersey.id,
+          club_id: club.id,
+          season: jersey.season,
+          shop: offer.shop,
+          discount_pct: offer.discount,
+        },
+      });
+      window.open(offer.url, "_blank", "noopener,noreferrer");
+      return;
+    }
     if (!cfsAvailability) return;
     trackEvent({
       name: "cfs_wishlist_match_click",
@@ -186,48 +261,23 @@ export function WishlistJerseyCard({ jersey, club, cfsAvailability }: Props) {
       </div>
 
       <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
-        {cfsAvailability && price !== null && (
-          <div className="px-3 pb-2">
-            <button
-              type="button"
-              onClick={handleCfsClick}
-              aria-label={
-                inPromo
-                  ? tCfs("badge.discount", { percent: discount })
-                  : tCfs("badge.available")
-              }
-              className={`pointer-events-auto w-full flex items-center justify-between gap-2 rounded-lg px-2.5 py-1.5 cursor-pointer transition-transform hover:scale-[1.02] shadow-md ${
-                inPromo
-                  ? "bg-green-600 text-white hover:bg-green-700"
-                  : "bg-amber-50 text-amber-900 hover:bg-amber-100 border border-amber-200"
-              }`}
-            >
-              <div className="flex items-baseline gap-1.5 min-w-0 flex-wrap">
-                {inPromo && promoPrice !== null ? (
-                  <>
-                    <span className="text-sm font-bold">
-                      {promoPrice.toFixed(2)}€
-                    </span>
-                    <span className="text-[10px] line-through opacity-70">
-                      {price.toFixed(2)}€
-                    </span>
-                    <span className="text-[10px] font-bold bg-white/20 rounded px-1 py-0.5">
-                      -{discount}%
-                    </span>
-                  </>
-                ) : (
-                  <>
-                    <span className="text-sm font-bold">
-                      {price.toFixed(2)}€
-                    </span>
-                    <span className="text-[10px] opacity-70">
-                      {tCfs("badge.available")}
-                    </span>
-                  </>
-                )}
-              </div>
-              <ExternalLink className="w-3 h-3 shrink-0" />
-            </button>
+        {offers.length > 0 && (
+          <div className="px-3 pb-2 space-y-1.5">
+            {offers.map((offer) => (
+              <ShopOfferBadge
+                key={offer.shop}
+                shopName={offer.shopName}
+                ariaLabel={
+                  offer.discount > 0
+                    ? tShop("badge.discount", { percent: offer.discount, shop: offer.shopName })
+                    : tShop("badge.available", { shop: offer.shopName })
+                }
+                price={offer.price}
+                compareAtPrice={offer.compareAtPrice}
+                discount={offer.discount}
+                onClick={handleOfferClick(offer)}
+              />
+            ))}
           </div>
         )}
 

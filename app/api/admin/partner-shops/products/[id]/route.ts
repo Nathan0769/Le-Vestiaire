@@ -3,6 +3,7 @@ import { JerseyType } from "@prisma/client";
 import { z } from "zod";
 import { requireRole } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
+import { revalidateJerseysByIds } from "@/lib/catalog-revalidation";
 import { rematchPartnerProducts } from "@/lib/partner-shops/matcher";
 
 const PatchSchema = z.discriminatedUnion("action", [
@@ -35,7 +36,7 @@ export async function PATCH(
 
     const product = await prisma.partnerProduct.findUnique({
       where: { id },
-      select: { id: true, shop: true },
+      select: { id: true, shop: true, jerseyId: true },
     });
     if (!product) {
       return NextResponse.json({ error: "Produit introuvable" }, { status: 404 });
@@ -71,6 +72,10 @@ export async function PATCH(
       where: { id },
       select: { id: true, matchStatus: true, jerseyId: true },
     });
+    // L'offre passe d'une fiche à l'autre : les deux sont régénérées.
+    await revalidateJerseysByIds(
+      [...new Set([product.jerseyId, updated?.jerseyId].filter((j): j is string => !!j))]
+    );
     return NextResponse.json({ product: updated });
   } catch (err) {
     console.error("PATCH /api/admin/partner-shops/products/[id] error:", err);

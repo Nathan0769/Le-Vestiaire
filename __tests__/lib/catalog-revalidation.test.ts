@@ -4,7 +4,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 const revalidatePath = vi.fn();
 vi.mock("next/cache", () => ({ revalidatePath: (p: string) => revalidatePath(p) }));
 
-import { jerseyCachePaths, revalidateJerseyPages } from "@/lib/catalog-revalidation";
+import { jerseyCachePaths, revalidateJerseyPages, revalidateJerseysByIds } from "@/lib/catalog-revalidation";
 
 const jersey = {
   id: "j1",
@@ -40,5 +40,32 @@ describe("revalidateJerseyPages", () => {
     revalidateJerseyPages(jersey);
 
     expect(revalidatePath.mock.calls.map(([p]) => p)).toEqual(jerseyCachePaths(jersey));
+  });
+});
+
+describe("revalidateJerseysByIds", () => {
+  beforeEach(() => revalidatePath.mockClear());
+
+  const other = { id: "j2", slug: null, clubId: "om", leagueId: "ligue-1" };
+
+  it("invalide les fiches de chaque maillot retrouvé", async () => {
+    const loadRefs = vi.fn().mockResolvedValue([jersey, other]);
+
+    const count = await revalidateJerseysByIds(["j1", "j2"], loadRefs);
+
+    expect(loadRefs).toHaveBeenCalledWith(["j1", "j2"]);
+    expect(count).toBe(2);
+    expect(revalidatePath.mock.calls.map(([p]) => p)).toEqual([
+      ...jerseyCachePaths(jersey),
+      ...jerseyCachePaths(other),
+    ]);
+  });
+
+  it("ne fait rien pour une liste vide", async () => {
+    const loadRefs = vi.fn();
+
+    expect(await revalidateJerseysByIds([], loadRefs)).toBe(0);
+    expect(loadRefs).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
   });
 });

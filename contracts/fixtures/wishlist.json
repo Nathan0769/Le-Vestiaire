@@ -1,35 +1,35 @@
 [
   {
-    "id": "cmvty216p003dynr4c7g224p8",
-    "jerseyId": "cmvty1zik002kynr4bj7rcjrg",
+    "id": "cmvzcd4xy003pynqjjawbnjxg",
+    "jerseyId": "cmvzcd3ys002synqj1l5rq9wp",
     "priority": 3,
-    "createdAt": "2026-10-29T19:36:23.425Z",
+    "createdAt": "2026-11-02T14:15:47.014Z",
     "jersey": {
-      "id": "cmvty1zik002kynr4bj7rcjrg",
+      "id": "cmvzcd3ys002synqj1l5rq9wp",
       "name": "Maillot PSG Domicile 2024/25",
-      "clubId": "cmvty1zh8002iynr4nwte2ode",
+      "clubId": "cmvzcd3xk002qynqju808jits",
       "season": "2024/25",
       "type": "HOME",
       "brand": "Nike",
       "imageUrl": "https://example.com/jersey.png",
       "retailPrice": 90,
-      "createdAt": "2026-10-29T19:36:21.260Z",
-      "updatedAt": "2026-10-29T19:36:21.260Z",
+      "createdAt": "2026-11-02T14:15:45.749Z",
+      "updatedAt": "2026-11-02T14:15:45.749Z",
       "description": null,
       "slug": null,
       "descriptionTranslations": null,
       "variant": 1,
       "mainColor": null,
       "club": {
-        "id": "cmvty1zh8002iynr4nwte2ode",
+        "id": "cmvzcd3xk002qynqju808jits",
         "name": "PSG",
         "shortName": "TC",
-        "leagueId": "cmvty1zfq002gynr4qxtgcmu9",
+        "leagueId": "cmvzcd3w7002oynqj46s73kt0",
         "logoUrl": "https://example.com/club.png",
         "primaryColor": "#000000",
         "apiFootballTeamId": null,
         "league": {
-          "id": "cmvty1zfq002gynr4qxtgcmu9",
+          "id": "cmvzcd3w7002oynqj46s73kt0",
           "name": "Ligue 1",
           "country": "France",
           "logoUrl": "https://example.com/logo.png",
@@ -38,44 +38,60 @@
         }
       },
       "cfsAvailability": {
-        "id": "cmvty1zlz002oynr48l07o01g",
+        "id": "cmvzcd41s002wynqjugc621lp",
         "price": 89.99,
         "promoPrice": 59.99,
         "affiliateUrl": "https://example.com/affilie"
-      }
+      },
+      "partnerOffers": [
+        {
+          "shop": "leparcamaillots",
+          "shopName": "Le Parc à Maillots",
+          "logoUrl": "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/logo-app/logo-le-parc-a-maillots.png",
+          "itemCondition": "MINT",
+          "price": 49.99,
+          "compareAtPrice": 90,
+          "sizes": [
+            "M",
+            "L"
+          ],
+          "url": "https://leparcamaillots.com/products/psg-domicile-2024-25?utm_source=levestiaire&utm_medium=referral",
+          "promoCode": null
+        }
+      ]
     }
   },
   {
-    "id": "cmvty216p003eynr4mdgmt4c8",
-    "jerseyId": "cmvty1zk6002mynr419ndwp45",
+    "id": "cmvzcd4xy003qynqjenuvadjk",
+    "jerseyId": "cmvzcd40f002uynqj281mcoys",
     "priority": 1,
-    "createdAt": "2026-10-29T19:36:23.425Z",
+    "createdAt": "2026-11-02T14:15:47.014Z",
     "jersey": {
-      "id": "cmvty1zk6002mynr419ndwp45",
+      "id": "cmvzcd40f002uynqj281mcoys",
       "name": "Maillot PSG Gardien 2024/25",
-      "clubId": "cmvty1zh8002iynr4nwte2ode",
+      "clubId": "cmvzcd3xk002qynqju808jits",
       "season": "2024/25",
       "type": "GOALKEEPER",
       "brand": "Nike",
       "imageUrl": "https://example.com/jersey.png",
       "retailPrice": 90,
-      "createdAt": "2026-10-29T19:36:21.318Z",
-      "updatedAt": "2026-10-29T19:36:21.318Z",
+      "createdAt": "2026-11-02T14:15:45.807Z",
+      "updatedAt": "2026-11-02T14:15:45.807Z",
       "description": null,
       "slug": null,
       "descriptionTranslations": null,
       "variant": 1,
       "mainColor": null,
       "club": {
-        "id": "cmvty1zh8002iynr4nwte2ode",
+        "id": "cmvzcd3xk002qynqju808jits",
         "name": "PSG",
         "shortName": "TC",
-        "leagueId": "cmvty1zfq002gynr4qxtgcmu9",
+        "leagueId": "cmvzcd3w7002oynqj46s73kt0",
         "logoUrl": "https://example.com/club.png",
         "primaryColor": "#000000",
         "apiFootballTeamId": null,
         "league": {
-          "id": "cmvty1zfq002gynr4qxtgcmu9",
+          "id": "cmvzcd3w7002oynqj46s73kt0",
           "name": "Ligue 1",
           "country": "France",
           "logoUrl": "https://example.com/logo.png",
@@ -83,7 +99,8 @@
           "logoDarkUrl": null
         }
       },
-      "cfsAvailability": null
+      "cfsAvailability": null,
+      "partnerOffers": []
     }
   }
 ]

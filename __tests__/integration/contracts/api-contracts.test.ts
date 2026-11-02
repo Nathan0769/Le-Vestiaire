@@ -69,6 +69,7 @@ async function signIn(user: User) {
 }
 
 const createdPatchIds: string[] = [];
+const createdPartnerProductIds: string[] = [];
 
 /** Données couvrant les champs optionnels remplis ET vides de chaque route. */
 async function seed() {
@@ -90,6 +91,27 @@ async function seed() {
       imageUrl: "https://example.com/image.jpg",
     },
   });
+  // Offre de boutique partenaire : la fixture wishlist doit montrer sa forme complète à l'app.
+  const partnerProduct = await prismaTest.partnerProduct.create({
+    data: {
+      shop: "leparcamaillots",
+      externalId: `contract-${jerseyWithShop.id}`,
+      title: "PSG Domicile 2024-25 (M/L)",
+      url: "https://leparcamaillots.com/products/psg-domicile-2024-25",
+      price: 49.99,
+      compareAtPrice: 90,
+      available: true,
+      jerseyId: jerseyWithShop.id,
+      matchStatus: "MATCHED",
+      variants: {
+        create: [
+          { externalId: `contract-${jerseyWithShop.id}-m`, size: "M", price: 49.99, available: true },
+          { externalId: `contract-${jerseyWithShop.id}-l`, size: "L", price: 49.99, available: true },
+        ],
+      },
+    },
+  });
+  createdPartnerProductIds.push(partnerProduct.id);
 
   const viewer = await createTestUser({
     bio: "Collectionneur",
@@ -184,6 +206,8 @@ describe("Contrats API web ↔ iOS", () => {
 
   afterEach(async () => {
     await prismaTest.patch.deleteMany({ where: { id: { in: createdPatchIds } } });
+    await prismaTest.partnerProduct.deleteMany({ where: { id: { in: createdPartnerProductIds } } });
+    createdPartnerProductIds.length = 0;
     createdPatchIds.length = 0;
   });
 

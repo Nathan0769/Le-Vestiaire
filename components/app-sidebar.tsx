@@ -42,7 +42,7 @@ import { isHotkeyPressed } from "react-hotkeys-hook";
 import { useRouter } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { LanguageSwitcher } from "@/components/ui/language-switcher";
-import { CFS_CLEARANCE_URL } from "@/lib/cfs-affiliate";
+import { DEAL_LINKS } from "@/lib/deal-links";
 
 export function AppSidebar() {
   const t = useTranslations("Sidebar");
@@ -251,19 +251,21 @@ export function AppSidebar() {
             <SidebarGroupLabel>{t("bonsPlansSectionLabel")}</SidebarGroupLabel>
             <SidebarGroupContent>
               <SidebarMenu>
-                <SidebarMenuItem>
-                  <SidebarMenuButton asChild className="px-4 py-3 gap-3 text-base rounded-md transition-colors hover:bg-primary/20">
-                    <a
-                      href={CFS_CLEARANCE_URL}
-                      target="_blank"
-                      rel="noopener noreferrer nofollow"
-                      className="flex items-center w-full"
-                    >
-                      <Tag className="h-5 w-5" />
-                      <span>{t("cfsSalesLink")}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                {DEAL_LINKS.map((link) => (
+                  <SidebarMenuItem key={link.id}>
+                    <SidebarMenuButton asChild className="px-4 py-3 gap-3 text-base rounded-md transition-colors hover:bg-primary/20">
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer nofollow"
+                        className="flex items-center w-full"
+                      >
+                        <Tag className="h-5 w-5" />
+                        <span>{t(link.labelKey)}</span>
+                      </a>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                ))}
               </SidebarMenu>
             </SidebarGroupContent>
           </SidebarGroup>

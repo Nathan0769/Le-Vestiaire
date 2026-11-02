@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { getPartnerOffers } from "@/lib/partner-shops/offers";
 
 export async function GET() {
   try {
@@ -37,6 +38,8 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
     });
 
+    const partnerOffers = await getPartnerOffers(wishlistItems.map((item) => item.jerseyId));
+
     const formatted = wishlistItems.map((item) => ({
       ...item,
       jersey: {
@@ -54,6 +57,7 @@ export async function GET() {
                   : null,
             }
           : null,
+        partnerOffers: partnerOffers.get(item.jerseyId) ?? [],
       },
     }));
 

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { pickCfsOffer } from "@/lib/cfs-availability-scraper";
+import { cfsChangedJerseyIds, pickCfsOffer } from "@/lib/cfs-availability-scraper";
 
 const offer = (isReference: boolean, price = 50) => ({
   price,
@@ -25,5 +25,34 @@ describe("pickCfsOffer", () => {
 
   it("à référence égale, le dernier produit l'emporte (comportement historique)", () => {
     expect(pickCfsOffer(offer(true, 50), offer(true, 60))).toEqual(offer(true, 60));
+  });
+});
+
+describe("cfsChangedJerseyIds", () => {
+  const row = (price: number, promoPrice: number | null = null, affiliateUrl = "https://example.com/a") => ({
+    price,
+    promoPrice,
+    affiliateUrl,
+  });
+
+  it("signale les dispos apparues, modifiées et purgées, pas les inchangées", () => {
+    const before = new Map([
+      ["same", row(50)],
+      ["price", row(50)],
+      ["promo", row(50)],
+      ["url", row(50)],
+      ["gone", row(50)],
+    ]);
+    const after = new Map([
+      ["same", row(50)],
+      ["price", row(45)],
+      ["promo", row(50, 40)],
+      ["url", row(50, null, "https://example.com/b")],
+      ["new", row(60)],
+    ]);
+
+    expect(cfsChangedJerseyIds(before, after, ["gone"]).sort()).toEqual(
+      ["gone", "new", "price", "promo", "url"].sort()
+    );
   });
 });

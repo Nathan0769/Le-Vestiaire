@@ -26,6 +26,9 @@ import { EditableMainColor } from "@/components/jerseys/editable-main-color";
 import { JerseyReportButton } from "@/components/jerseys/jersey-report-button";
 import prisma from "@/lib/prisma";
 import { JerseyNavigator } from "@/components/jerseys/jersey-navigator";
+import { WhereToBuy } from "@/components/jerseys/where-to-buy";
+import { getPartnerOffers } from "@/lib/partner-shops/offers";
+import { buildWhereToBuy } from "@/lib/where-to-buy";
 
 // Rendue sans session pour etre mise en cache : les donnees personnelles
 // (wishlist, collection, role admin) et les compteurs vivants (note, stats) sont
@@ -98,6 +101,20 @@ const getCachedCfsAvailability = cache(async (jerseyId: string) => {
     promoPrice: av.promoPrice == null ? null : Number(av.promoPrice),
     affiliateUrl: av.affiliateUrl,
   };
+});
+
+const getCachedPartnerOffers = cache(
+  async (jerseyId: string) => (await getPartnerOffers([jerseyId])).get(jerseyId) ?? []
+);
+
+// Nom anglais du club chez CFS : une recherche sur le nom français ne trouve rien ("Liban").
+const getCachedCfsSearchName = cache(async (clubId: string) => {
+  const alias = await prisma.cfsClubAlias.findFirst({
+    where: { clubId },
+    orderBy: { createdAt: "asc" },
+    select: { cfsName: true },
+  });
+  return alias?.cfsName ?? null;
 });
 
 const OG_LOCALES: Record<string, string> = {
@@ -308,11 +325,19 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     );
   }
 
-  const [ratingData, statsData, cfsAvailability] = await Promise.all([
+  const [ratingData, statsData, cfsAvailability, partnerOffers, cfsSearchName] = await Promise.all([
     getCachedRating(jersey.id),
     getCachedStats(jersey.id),
     getCachedCfsAvailability(jersey.id),
+    getCachedPartnerOffers(jersey.id),
+    getCachedCfsSearchName(jersey.club.id),
   ]);
+  const whereToBuy = buildWhereToBuy({
+    partnerOffers,
+    cfs: cfsAvailability,
+    // La recherche générique n'existe que si le lien affilié CFS est configuré.
+    cfsSearchName: process.env.NEXT_PUBLIC_AFFILIATE_LINK_CFS ? cfsSearchName : null,
+  });
 
   const [clubJerseys, seasonLeagueEntry, seasonTrophies, seasonSquad] =
     await Promise.all([
@@ -440,6 +465,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
         collectionCount={statsData?.collectionCount}
         wishlistCount={statsData?.wishlistCount}
         cfsAvailability={cfsAvailability}
+        partnerOffers={partnerOffers}
       />
       <BreadcrumbSchema items={breadcrumbItems} />
       <WebPageSchema
@@ -543,28 +569,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                       </span>
                     </div>
 
-                    {process.env.NEXT_PUBLIC_AFFILIATE_LINK_CFS && (
-                      <div className="flex items-center justify-between gap-2 py-2 border-b border-border/50 min-w-0">
-                        <span className="text-sm font-medium text-muted-foreground shrink-0">
-                          {t("findOnCFS")}
-                        </span>
-                        <a
-                          href={`https://www.classicfootballshirts.co.uk/catalogsearch/result/?ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate&q=${encodeURIComponent(jersey.club.name)}`}
-                          target="_blank"
-                          rel="noopener noreferrer nofollow"
-                          className="text-sm text-primary hover:text-primary/80 hover:underline transition-colors flex items-center gap-1.5"
-                        >
-                          <span>Classic Football Shirts</span>
-                          <Image
-                            src="https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/logo-app/logo-cfs.png"
-                            alt="Classic Football Shirts"
-                            width={16}
-                            height={16}
-                            className="object-contain"
-                          />
-                        </a>
-                      </div>
-                    )}
+                    <WhereToBuy data={whereToBuy} />
                   </div>
                 </div>
 

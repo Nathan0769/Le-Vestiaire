@@ -3,6 +3,7 @@ import { Prisma } from "@prisma/client";
 import { z } from "zod";
 import { requireRole } from "@/lib/check-permission";
 import prisma from "@/lib/prisma";
+import { revalidateJerseysByIds } from "@/lib/catalog-revalidation";
 import { normalizeClubName } from "@/lib/partner-shops/club-name";
 import { rematchPartnerProducts } from "@/lib/partner-shops/matcher";
 import { getPartnerShop } from "@/lib/partner-shops/shops";
@@ -64,6 +65,11 @@ export async function POST(request: Request) {
       })
       .map((p) => p.id);
     const rematched = await rematchPartnerProducts(shop, ids);
+    const linked = await prisma.partnerProduct.findMany({
+      where: { id: { in: ids }, jerseyId: { not: null } },
+      select: { jerseyId: true },
+    });
+    await revalidateJerseysByIds([...new Set(linked.map((p) => p.jerseyId!))]);
 
     return NextResponse.json({ alias, rematched, evaluated: ids.length }, { status: 201 });
   } catch (err) {

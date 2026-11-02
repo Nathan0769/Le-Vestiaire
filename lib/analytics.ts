@@ -56,6 +56,16 @@ export type AnalyticsEvent =
         in_promo: number;
       };
     }
+  | {
+      name: "partner_wishlist_match_view" | "partner_wishlist_match_click";
+      params: {
+        jersey_id: string;
+        club_id: string;
+        season: string;
+        shop: string;
+        discount_pct: number;
+      };
+    }
   | { name: "achievement_unlocked"; params: { key: string; category: string; tier: string | null } }
   | { name: "achievements_page_viewed"; params: Record<string, never> }
   | { name: "achievement_toast_clicked"; params: { key: string } };

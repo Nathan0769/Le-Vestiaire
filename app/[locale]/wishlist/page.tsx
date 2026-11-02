@@ -7,6 +7,8 @@ import WishlistLanding from "@/components/wishlist/wishlist-landing";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
+import { getPartnerOffers } from "@/lib/partner-shops/offers";
+import { wishlistOfferSummary } from "@/lib/wishlist-offers";
 
 export const dynamic = "force-dynamic";
 
@@ -99,24 +101,28 @@ export default async function WishlistPage() {
     return acc;
   }, {} as Record<string, number>);
 
-  const promoItems = wishlistItems.filter((item) => {
-    const av = item.jersey.cfsAvailability;
-    if (!av) return false;
-    return av.promoPrice !== null && Number(av.promoPrice) < Number(av.price);
-  });
-  const availableItems = wishlistItems.filter((item) => {
-    const av = item.jersey.cfsAvailability;
-    if (!av) return false;
-    return !(av.promoPrice !== null && Number(av.promoPrice) < Number(av.price));
-  });
-  const unavailableItems = wishlistItems.filter(
-    (item) => !item.jersey.cfsAvailability
+  const partnerOffers = await getPartnerOffers(wishlistItems.map((item) => item.jersey.id));
+  const summaries = new Map(
+    wishlistItems.map((item) => {
+      const av = item.jersey.cfsAvailability;
+      return [
+        item.id,
+        wishlistOfferSummary({
+          cfs: av
+            ? { price: Number(av.price), promoPrice: av.promoPrice === null ? null : Number(av.promoPrice) }
+            : null,
+          partnerOffers: partnerOffers.get(item.jersey.id) ?? [],
+        }),
+      ];
+    })
   );
+  const byStatus = (status: "promo" | "available" | "unavailable") =>
+    wishlistItems.filter((item) => summaries.get(item.id)?.status === status);
+  const promoItems = byStatus("promo");
+  const availableItems = byStatus("available");
+  const unavailableItems = byStatus("unavailable");
 
-  const savingsAmount = promoItems.reduce((sum, item) => {
-    const av = item.jersey.cfsAvailability!;
-    return sum + (Number(av.price) - Number(av.promoPrice));
-  }, 0);
+  const savingsAmount = promoItems.reduce((sum, item) => sum + (summaries.get(item.id)?.savings ?? 0), 0);
   const availableCount = promoItems.length + availableItems.length;
   const topLeague = Object.entries(leagueStats).sort(
     ([, a], [, b]) => b - a
@@ -203,7 +209,7 @@ export default async function WishlistPage() {
               <Shirt className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
             </div>
             <span className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-              {t("hero.availableCfs")}
+              {t("hero.availableInShops")}
             </span>
           </div>
           <p className="text-2xl font-bold leading-tight">{availableCount}</p>
@@ -318,6 +324,7 @@ export default async function WishlistPage() {
                           }
                         : null
                     }
+                    partnerOffers={partnerOffers.get(item.jersey.id) ?? []}
                   />
                 </div>
               );

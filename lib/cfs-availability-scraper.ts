@@ -96,6 +96,8 @@ interface ScrapeStats {
   matched: number;
   upserted: number;
   purged: number;
+  /** Maillots dont la dispo affichée a changé : fiches ISR à régénérer. */
+  changedJerseyIds: string[];
 }
 
 async function fetchClubProducts(slug: string): Promise<ConstructorItem[]> {
@@ -179,6 +181,29 @@ interface CfsAvailabilityUpsertData {
  * maillot supporter manches courtes, le seul qui compte dans la cote.
  * À référence égale, le dernier produit vu l'emporte.
  */
+type DisplayedOffer = { price: number; promoPrice: number | null; affiliateUrl: string };
+
+/** Dispos apparues, modifiées (prix, promo, lien) ou purgées depuis le dernier scrape. */
+export function cfsChangedJerseyIds(
+  before: Map<string, DisplayedOffer>,
+  after: Map<string, DisplayedOffer>,
+  purgedIds: string[]
+): string[] {
+  const changed = new Set(purgedIds);
+  for (const [jerseyId, offer] of after) {
+    const old = before.get(jerseyId);
+    if (
+      !old ||
+      old.price !== offer.price ||
+      old.promoPrice !== offer.promoPrice ||
+      old.affiliateUrl !== offer.affiliateUrl
+    ) {
+      changed.add(jerseyId);
+    }
+  }
+  return [...changed];
+}
+
 export function pickCfsOffer(
   current: CfsAvailabilityUpsertData | undefined,
   candidate: CfsAvailabilityUpsertData
@@ -242,6 +267,7 @@ export async function scrapeCfsAvailability(): Promise<ScrapeStats> {
     matched: 0,
     upserted: 0,
     purged: 0,
+    changedJerseyIds: [],
   };
 
   const wishlistedClubs = await prisma.wishlist.findMany({
@@ -323,6 +349,20 @@ export async function scrapeCfsAvailability(): Promise<ScrapeStats> {
     }
   }
 
+  const existing = await prisma.cfsAvailability.findMany({
+    select: { jerseyId: true, price: true, promoPrice: true, affiliateUrl: true },
+  });
+  const before = new Map(
+    existing.map((e) => [
+      e.jerseyId,
+      {
+        price: Number(e.price),
+        promoPrice: e.promoPrice === null ? null : Number(e.promoPrice),
+        affiliateUrl: e.affiliateUrl,
+      },
+    ])
+  );
+
   // Phase 3: write matches concurrently, bounded to the Prisma pool.
   const upsertLimit = pLimit(UPSERT_CONCURRENCY);
   await Promise.all(
@@ -341,10 +381,19 @@ export async function scrapeCfsAvailability(): Promise<ScrapeStats> {
   const staleThreshold = new Date(
     Date.now() - STALE_THRESHOLD_HOURS * 60 * 60 * 1000
   );
-  const purged = await prisma.cfsAvailability.deleteMany({
+  const stale = await prisma.cfsAvailability.findMany({
     where: { lastSeenAt: { lt: staleThreshold } },
+    select: { jerseyId: true },
+  });
+  const purged = await prisma.cfsAvailability.deleteMany({
+    where: { jerseyId: { in: stale.map((r) => r.jerseyId) } },
   });
   stats.purged = purged.count;
+  stats.changedJerseyIds = cfsChangedJerseyIds(
+    before,
+    matches,
+    stale.map((r) => r.jerseyId)
+  );
 
   return stats;
 }

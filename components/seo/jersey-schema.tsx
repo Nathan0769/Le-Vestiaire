@@ -1,4 +1,5 @@
 import type { JerseyWithWishlistAndCollection } from "@/types/jersey";
+import type { PartnerOffer } from "@/lib/partner-shops/offers";
 import {
   buildJerseyProductDescription,
   buildJerseyKeywords,
@@ -20,6 +21,7 @@ interface JerseySchemaProps {
     promoPrice: number | null;
     affiliateUrl: string;
   } | null;
+  partnerOffers?: PartnerOffer[];
 }
 
 export function JerseySchema({
@@ -32,6 +34,7 @@ export function JerseySchema({
   collectionCount = 0,
   wishlistCount = 0,
   cfsAvailability = null,
+  partnerOffers = [],
 }: JerseySchemaProps) {
   const displayName = translatedJerseyName || jersey.name;
   const typeLower = translatedType.toLowerCase();
@@ -52,6 +55,18 @@ export function JerseySchema({
         },
       }
     : null;
+
+  const partnerSchemaOffers = partnerOffers.map((o) => ({
+    "@type": "Offer",
+    price: o.price.toFixed(2),
+    priceCurrency: "EUR",
+    availability: "https://schema.org/InStock",
+    itemCondition:
+      o.itemCondition === "MINT" ? "https://schema.org/NewCondition" : "https://schema.org/UsedCondition",
+    url: o.url,
+    seller: { "@type": "Organization", name: o.shopName },
+  }));
+  const offers = [...(cfsOffer ? [cfsOffer] : []), ...partnerSchemaOffers];
 
   const schema = {
     "@context": "https://schema.org",
@@ -100,7 +115,7 @@ export function JerseySchema({
       jersey.club.id
     }/jerseys/${jersey.slug || jersey.id}`,
 
-    ...(cfsOffer && { offers: cfsOffer }),
+    ...(offers.length > 0 && { offers: offers.length === 1 ? offers[0] : offers }),
 
     ...(totalRatings > 0 && {
       aggregateRating: {

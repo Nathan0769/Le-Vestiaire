@@ -1,5 +1,6 @@
 import { revalidatePath } from "next/cache";
 import { locales } from "@/i18n/locales";
+import prisma from "@/lib/prisma";
 
 export type CachedJerseyRef = {
   id: string;
@@ -27,4 +28,26 @@ export function revalidateJerseyPages(jersey: CachedJerseyRef): void {
   for (const path of jerseyCachePaths(jersey)) {
     revalidatePath(path);
   }
+}
+
+async function loadJerseyRefs(ids: string[]): Promise<CachedJerseyRef[]> {
+  const jerseys = await prisma.jersey.findMany({
+    where: { id: { in: ids } },
+    select: { id: true, slug: true, clubId: true, club: { select: { leagueId: true } } },
+  });
+  return jerseys.map((j) => ({ id: j.id, slug: j.slug, clubId: j.clubId, leagueId: j.club.leagueId }));
+}
+
+/**
+ * Purge les fiches de maillots connus seulement par leur id (crons de synchro
+ * des boutiques). Renvoie le nombre de maillots purgés.
+ */
+export async function revalidateJerseysByIds(
+  ids: string[],
+  loadRefs: (ids: string[]) => Promise<CachedJerseyRef[]> = loadJerseyRefs
+): Promise<number> {
+  if (ids.length === 0) return 0;
+  const refs = await loadRefs(ids);
+  for (const ref of refs) revalidateJerseyPages(ref);
+  return refs.length;
 }

@@ -751,10 +751,10 @@
     }
   },
   "Wishlist": {
-    "cfsMatch": {
+    "shopMatch": {
       "badge": {
-        "discount": "Disponível -{percent}% na CFS",
-        "available": "Disponível na CFS"
+        "discount": "Disponível -{percent}% na {shop}",
+        "available": "Disponível na {shop}"
       }
     },
     "button": {
@@ -1012,13 +1012,13 @@
       },
       "jerseys": "As suas camisolas",
       "sections": {
-        "promo": "{count, plural, one {Em promoção na CFS (#)} other {Em promoção na CFS (#)}}",
-        "available": "{count, plural, one {Disponível na CFS (#)} other {Disponíveis na CFS (#)}}",
+        "promo": "{count, plural, one {Em promoção (#)} other {Em promoção (#)}}",
+        "available": "{count, plural, one {Disponível em lojas (#)} other {Disponíveis em lojas (#)}}",
         "unavailable": "{count, plural, one {Não disponível (#)} other {Não disponíveis (#)}}"
       },
       "hero": {
         "total": "Lista de desejos",
-        "availableCfs": "Disponível na CFS",
+        "availableInShops": "Em lojas",
         "availableSubtitle": "de {total, plural, one {# camisola} other {# camisolas}}",
         "savings": "Poupança",
         "savingsSubtitle": "{count, plural, one {em # camisola em promoção} other {em # camisolas em promoção}}",
@@ -2192,6 +2192,7 @@
     "brand": "Marca",
     "type": "Tipo",
     "findOnCFS": "Onde comprar",
+    "promoCode": "Código {code}",
     "averageRating": "Avaliação média",
     "collectorStats": "Estatísticas de colecionadores",
     "inCollection": "Em {count} coleção",
