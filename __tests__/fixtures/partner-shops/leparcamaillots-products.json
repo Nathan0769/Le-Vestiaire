@@ -1,0 +1,604 @@
+{
+  "products": [
+    {
+      "id": 11005208101197,
+      "title": "Etoile Rouge Belgrade Domicile 22-23 (M/XL)",
+      "handle": "etoile-rouge-belgrade-domicile-22-23",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/58567440.jpg?v=1793533735"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55250507202893,
+          "title": "M",
+          "option1": "M",
+          "price": "49.99",
+          "compare_at_price": "85.00",
+          "available": true
+        },
+        {
+          "id": 55250507235661,
+          "title": "XL",
+          "option1": "XL",
+          "price": "49.99",
+          "compare_at_price": "85.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 11005206561101,
+      "title": "Nantes Domicile 2025-26 (XL/XXL)",
+      "handle": "nantes-domicile-2025-26",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/700114880001.jpg?v=1793533624"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55250479612237,
+          "title": "XL",
+          "option1": "XL",
+          "price": "48.00",
+          "compare_at_price": "90.00",
+          "available": true
+        },
+        {
+          "id": 55250479645005,
+          "title": "XXL",
+          "option1": "XXL",
+          "price": "48.00",
+          "compare_at_price": "90.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10990280835405,
+      "title": "Cavalry FC Extérieur 2025 (L)",
+      "handle": "cavalry-fc-exterieur-2025",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/400048660001.jpg?v=1792923161"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55178246914381,
+          "title": "L",
+          "option1": "L",
+          "price": "48.00",
+          "compare_at_price": "90.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 8376483545421,
+      "title": "Ethiopian Coffee 2021 Extérieur (M)",
+      "handle": "ethiopian-coffee-2021-exterieur",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/products/ETHIOPIAN_COFFEE_SC_EVERTON_00150_Custom_View_5.png?v=1681641564"
+        }
+      ],
+      "variants": [
+        {
+          "id": 46564336468301,
+          "title": "M",
+          "option1": "M",
+          "price": "45.00",
+          "compare_at_price": null,
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 11000096424269,
+      "title": "Santos FC GK 2024 (M)",
+      "handle": "santos-fc-gk-2024",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/Santos-Photoroom.png?v=1793276847"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55224262230349,
+          "title": "M",
+          "option1": "M",
+          "price": "42.99",
+          "compare_at_price": "80.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10683017429325,
+      "title": "Salernitana Domicile GK 2023-24 (M/L)",
+      "handle": "salernitana-domicile-gk-2023-24",
+      "product_type": "Maillot Gardien",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/1690_3_GK-THIRD-TRE-QUARTI.jpg?v=1780242235"
+        }
+      ],
+      "variants": [
+        {
+          "id": 54008317149517,
+          "title": "M",
+          "option1": "M",
+          "price": "39.99",
+          "compare_at_price": "75.00",
+          "available": true
+        },
+        {
+          "id": 54008317182285,
+          "title": "L",
+          "option1": "L",
+          "price": "39.99",
+          "compare_at_price": "75.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10990520992077,
+      "title": "Aalborg Extérieur LS 2025-26 (XL)",
+      "handle": "aalborg-exterieur-ls-2025-26",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/Aalborg1-Photoroom.png?v=1792936454"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55179602919757,
+          "title": "XL",
+          "option1": "XL",
+          "price": "48.00",
+          "compare_at_price": "86.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10994094244173,
+      "title": "Boluspor Fourth 2021-22 (S)",
+      "handle": "boluspor-fourth-2021-22",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/F744B008-601F-4FF1-A904-C102E5DF8635.jpg?v=1793095178"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55199868879181,
+          "title": "S",
+          "option1": "S",
+          "price": "34.99",
+          "compare_at_price": "70.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10979869098317,
+      "title": "Versailles Fifth LS 2025-26 (S/M/L/XL)",
+      "handle": "versailles-fifth-ls-2025-26",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/kappa-322k89w-a05-yellow-gold-rich-blue-iris-69c250b33a9b8-1.webp?v=1792505371"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55129888162125,
+          "title": "S",
+          "option1": "S",
+          "price": "64.99",
+          "compare_at_price": "100.00",
+          "available": true
+        },
+        {
+          "id": 55129888194893,
+          "title": "M",
+          "option1": "M",
+          "price": "64.99",
+          "compare_at_price": "100.00",
+          "available": true
+        },
+        {
+          "id": 55129888227661,
+          "title": "L",
+          "option1": "L",
+          "price": "64.99",
+          "compare_at_price": "100.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10990285652301,
+      "title": "Danemark Domicile 2022 World Cup (XXL)",
+      "handle": "danemark-domicile-2022-world-cup",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/hummel-danemark-trikot-home-herren-wm-2022-579229.webp?v=1792924007"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55178375332173,
+          "title": "XXL",
+          "option1": "XXL",
+          "price": "49.99",
+          "compare_at_price": "90.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10182658392397,
+      "title": "Bolton Wanderers Third 2023-24 (S) [match day]",
+      "handle": "bolton-wanderers-third-2023-24",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/BWFC_24.png?v=1752943753"
+        }
+      ],
+      "variants": [
+        {
+          "id": 52118396535117,
+          "title": "S",
+          "option1": "S",
+          "price": "42.99",
+          "compare_at_price": "85.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10792301855053,
+      "title": "Pakistan Domicile 2024-25 Khan #7 (M/L/XL)",
+      "handle": "pakistan-domicile-2024-25-khan-7",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/D9DB4E53-39BB-426A-A7C8-2909493A5822.jpg?v=1785853375"
+        }
+      ],
+      "variants": [
+        {
+          "id": 54459702051149,
+          "title": "M",
+          "option1": "M",
+          "price": "44.99",
+          "compare_at_price": "80.00",
+          "available": true
+        },
+        {
+          "id": 54459702083917,
+          "title": "L",
+          "option1": "L",
+          "price": "44.99",
+          "compare_at_price": "80.00",
+          "available": true
+        },
+        {
+          "id": 54459702116685,
+          "title": "XL",
+          "option1": "XL",
+          "price": "44.99",
+          "compare_at_price": "80.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 11000101011789,
+      "title": "Valenciennes Third 2012-13 (M) * 100ans *",
+      "handle": "valenciennes-third-2012-13-m-100ans",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/VA-Photoroom.png?v=1793277482"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55224665342285,
+          "title": "M",
+          "option1": "M",
+          "price": "42.99",
+          "compare_at_price": "80.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 9802599924045,
+      "title": "Wigan Third 2022-23 JUNIOR (8 ans)",
+      "handle": "wigan-third-2022-23-junior-8-ans",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/468F03B4-B4EB-40A5-B7D8-32DAD526854C.jpg?v=1729069335"
+        }
+      ],
+      "variants": [
+        {
+          "id": 50363502756173,
+          "title": "8 ans",
+          "option1": "8 ans",
+          "price": "29.99",
+          "compare_at_price": "65.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 11005205676365,
+      "title": "Almeria Veste Official 2025-26 (M/L/XL)",
+      "handle": "almeria-veste-official-2025-26",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/Almeria_jacket1-Photoroom.png?v=1793533378"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55250478432589,
+          "title": "M",
+          "option1": "M",
+          "price": "29.99",
+          "compare_at_price": "58.00",
+          "available": true
+        },
+        {
+          "id": 55250478465357,
+          "title": "L",
+          "option1": "L",
+          "price": "29.99",
+          "compare_at_price": "58.00",
+          "available": true
+        },
+        {
+          "id": 55250478498125,
+          "title": "XL",
+          "option1": "XL",
+          "price": "29.99",
+          "compare_at_price": "58.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10999149658445,
+      "title": "Nantes Training T-Shirt 2025-26 (S/L)",
+      "handle": "nantes-training-t-shirt-2025-26",
+      "product_type": "Training",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/FCNb-Photoroom.png?v=1793214821"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55218926780749,
+          "title": "S",
+          "option1": "S",
+          "price": "28.00",
+          "compare_at_price": "55.00",
+          "available": true
+        },
+        {
+          "id": 55218926813517,
+          "title": "L",
+          "option1": "L",
+          "price": "28.00",
+          "compare_at_price": "55.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10769636360525,
+      "title": "Real Madrid Third 2024-25 (M/L)",
+      "handle": "real-madrid-third-2024-25",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/EEA747A6-C7E4-4B25-999F-EABE262B67F6.jpg?v=1784636795"
+        }
+      ],
+      "variants": [
+        {
+          "id": 54358270378317,
+          "title": "M",
+          "option1": "M",
+          "price": "62.99",
+          "compare_at_price": "95.99",
+          "available": true
+        },
+        {
+          "id": 54358270411085,
+          "title": "L",
+          "option1": "L",
+          "price": "62.99",
+          "compare_at_price": "95.99",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10644086063437,
+      "title": "Arménie Third 2024-25 (S/XXL)",
+      "handle": "armenie-third-2024-25",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/47f5b99cf43e514045a7ba269203e9d8600043130001-Photoroom.png?v=1777537304"
+        }
+      ],
+      "variants": [
+        {
+          "id": 54058759455053,
+          "title": "S",
+          "option1": "S",
+          "price": "48.00",
+          "compare_at_price": "90.00",
+          "available": true
+        },
+        {
+          "id": 54058759520589,
+          "title": "XXL",
+          "option1": "XXL",
+          "price": "48.00",
+          "compare_at_price": "90.00",
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10975231148365,
+      "title": "Catania GK 2007-08 (L)",
+      "handle": "catania-gk-2007-08",
+      "product_type": "Maillot Gardien",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/Catania_GK-Photoroom.png?v=1792335010"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55110975947085,
+          "title": "L",
+          "option1": "L",
+          "price": "32.99",
+          "compare_at_price": null,
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10990505558349,
+      "title": "Teramo Veste Official 2018-19 (XL)",
+      "handle": "teramo-veste-official-2018-19",
+      "product_type": "Veste",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/Teramo11-Photoroom.png?v=1792935569"
+        }
+      ],
+      "variants": [
+        {
+          "id": 55179561599309,
+          "title": "XL",
+          "option1": "XL",
+          "price": "29.99",
+          "compare_at_price": null,
+          "available": true
+        }
+      ]
+    },
+    {
+      "id": 10824567390541,
+      "title": "Géorgie Rugby Domicile 2025-26 (L)",
+      "handle": "georgie-rugby-domicile-2025-26",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/maillot-georgie.jpg?v=1787477876"
+        }
+      ],
+      "variants": [
+        {
+          "id": 54567683916109,
+          "title": "L",
+          "option1": "L",
+          "price": "49.99",
+          "compare_at_price": "95.00",
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": 10824564769101,
+      "title": "HFX Wanderers Domicile 2025 (L)",
+      "handle": "hfx-wanderers-domicile-2025",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/400048700001.jpg?v=1787476957"
+        }
+      ],
+      "variants": [
+        {
+          "id": 54567656325453,
+          "title": "L",
+          "option1": "L",
+          "price": "49.99",
+          "compare_at_price": "90.00",
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": 10798371995981,
+      "title": "Bosnie-Herzegovine Extérieur LS 2012 (XL)",
+      "handle": "bosnie-herzegovine-exterieur-ls-2012",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/9cfe7ebb-2263-4688-a09c-b2fb84d382a3.png?v=1786279056"
+        }
+      ],
+      "variants": [
+        {
+          "id": 54484608352589,
+          "title": "XL",
+          "option1": "XL",
+          "price": "39.99",
+          "compare_at_price": "75.00",
+          "available": false
+        }
+      ]
+    },
+    {
+      "id": 10845321167181,
+      "title": "Udinese Extérieur 2012-13 JUNIOR (12 ans)",
+      "handle": "udinese-exterieur-2012-13-junior",
+      "product_type": "Maillot",
+      "images": [
+        {
+          "src": "https://cdn.shopify.com/s/files/1/0729/2197/3069/files/Udinese1-Photoroom.png?v=1788442964"
+        }
+      ],
+      "variants": [
+        {
+          "id": 54648346444109,
+          "title": "12 ans",
+          "option1": "12 ans",
+          "price": "29.99",
+          "compare_at_price": null,
+          "available": true
+        }
+      ]
+    }
+  ]
+}

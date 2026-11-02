@@ -47,6 +47,10 @@ export async function cleanDatabase() {
   await prismaTest.session.deleteMany();
   await prismaTest.account.deleteMany();
   await prismaTest.verification.deleteMany();
+  await prismaTest.partnerSale.deleteMany();
+  await prismaTest.partnerVariant.deleteMany();
+  await prismaTest.partnerProduct.deleteMany();
+  await prismaTest.partnerClubAlias.deleteMany();
   await prismaTest.jersey.deleteMany();
   await prismaTest.user.deleteMany();
   await prismaTest.club.deleteMany();

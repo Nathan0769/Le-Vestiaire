@@ -152,6 +152,7 @@ model Jersey {
   reports                 JerseyReport[]
   cfsPromos               CfsPromo[]
   cfsAvailability         CfsAvailability?
+  partnerProducts         PartnerProduct[]
   ebayMarketData          EbayMarketData?
   marketValue             JerseyMarketValue?
   marketValueSnapshots    JerseyMarketValueSnapshot[]
@@ -366,6 +367,7 @@ model Club {
   seasonLeagues     ClubSeasonLeague[]
   favoriteBy        User[]
   cfsAliases        CfsClubAlias[]
+  partnerAliases    PartnerClubAlias[]
 
   @@index([leagueId], map: "idx_clubs_league_id")
   @@map("clubs")
@@ -954,4 +956,99 @@ model UserActivityDay {
   @@id([userId, day, platform])
   @@index([day])
   @@map("user_activity_days")
+}
+
+/// Produit d'une boutique partenaire (registre : lib/partner-shops/shops.ts).
+/// Aucune PII : catalogue public uniquement.
+model PartnerProduct {
+  id             String             @id @default(cuid())
+  shop           String // slug du registre
+  externalId     String
+  title          String
+  url            String
+  imageUrl       String?
+  price          Decimal // min des variantes dispo, sinon min de toutes
+  compareAtPrice Decimal?
+  available      Boolean
+  jerseyId       String?
+  jersey         Jersey?            @relation(fields: [jerseyId], references: [id], onDelete: SetNull)
+  matchStatus    PartnerMatchStatus @default(PARSE_FAILED)
+  firstSeenAt    DateTime           @default(now())
+  lastSeenAt     DateTime           @default(now())
+  removedAt      DateTime?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+  variants       PartnerVariant[]
+  sales          PartnerSale[]
+
+  @@unique([shop, externalId])
+  @@index([jerseyId])
+  @@index([shop, matchStatus])
+  @@map("partner_products")
+}
+
+model PartnerVariant {
+  id                    String         @id @default(cuid())
+  productId             String
+  product               PartnerProduct @relation(fields: [productId], references: [id], onDelete: Cascade)
+  externalId            String
+  size                  String?
+  price                 Decimal
+  available             Boolean
+  availabilityChangedAt DateTime       @default(now())
+  removedAt             DateTime? // taille retirée du flux (souvent = vendue)
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+  sales                 PartnerSale[]
+
+  @@unique([productId, externalId])
+  @@map("partner_variants")
+}
+
+/// Vente déduite : taille passée en épuisé ou retirée du flux (approximative : pas de quantités).
+model PartnerSale {
+  id          String          @id @default(cuid())
+  shop        String
+  productId   String
+  product     PartnerProduct  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  variantId   String
+  variant     PartnerVariant  @relation(fields: [variantId], references: [id], onDelete: Cascade)
+  jerseyId    String?
+  kind        PartnerSaleKind
+  price       Decimal
+  soldAt      DateTime
+  cancelledAt DateTime?
+  createdAt   DateTime        @default(now())
+
+  @@index([jerseyId, soldAt])
+  @@index([variantId, soldAt])
+  @@map("partner_sales")
+}
+
+model PartnerClubAlias {
+  id           String   @id @default(cuid())
+  shop         String
+  externalName String
+  clubId       String
+  club         Club     @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@unique([shop, externalName])
+  @@index([clubId])
+  @@map("partner_club_aliases")
+}
+
+enum PartnerSaleKind {
+  SOLD_OUT
+  REMOVED
+}
+
+enum PartnerMatchStatus {
+  MATCHED
+  MANUAL
+  NEEDS_ALIAS
+  PARSE_FAILED
+  NO_JERSEY
+  IGNORED
 }

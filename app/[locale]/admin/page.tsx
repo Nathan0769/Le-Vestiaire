@@ -242,6 +242,27 @@ export default async function AdminPage() {
           <Card>
             <CardHeader>
               <div className="flex items-center gap-2">
+                <Tag className="h-5 w-5" />
+                <CardTitle>Boutiques partenaires</CardTitle>
+              </div>
+              <CardDescription>
+                Relier les produits des boutiques partenaires aux maillots du catalogue
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Link href="/admin/partner-shops">
+                <Button className="w-full cursor-pointer">
+                  Gérer le matching
+                </Button>
+              </Link>
+            </CardContent>
+          </Card>
+        )}
+
+        {isSuperAdmin && (
+          <Card>
+            <CardHeader>
+              <div className="flex items-center gap-2">
                 <Sparkles className="h-5 w-5" />
                 <CardTitle>Patches</CardTitle>
               </div>
