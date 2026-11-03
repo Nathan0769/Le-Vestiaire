@@ -1,3 +1,4 @@
+import pLimit from "p-limit";
 import type { PartnerMatchStatus, Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { fetchShopProducts } from "./fetchers";
@@ -12,6 +13,8 @@ export interface SyncResult {
   shop: string;
   fetched: number;
   upserted: number;
+  /** Produits du flux non écrits faute de temps (repris au passage suivant). */
+  notProcessed: number;
   /** Produits hors maillots de foot (veste, polo, rugby...) : ni cote ni affichage, non stockés. */
   skipped: number;
   rejected: number;
@@ -21,6 +24,12 @@ export interface SyncResult {
   /** Maillots dont l'offre visible a changé : fiches ISR à régénérer. */
   changedJerseyIds: string[];
 }
+
+// Écritures en parallèle : en série, 600 produits modifiés dépassaient les 300 s
+// du cron (nuit du 2026-11-03, le Parc avait changé tous ses prix).
+const WRITE_CONCURRENCY = 8;
+/** Garde-fou sous le maxDuration de 300 s, lecture du flux comprise. */
+const DEFAULT_BUDGET_MS = 200_000;
 
 // Statuts posés à la main (ou définitifs) : la synchro ne les recalcule pas.
 const KEPT_STATUSES: PartnerMatchStatus[] = ["MANUAL", "IGNORED"];
@@ -76,8 +85,9 @@ function productDirty(p: StoredProduct, f: ProductFields): boolean {
 
 export async function syncPartnerShop(
   shop: PartnerShop,
-  options: { fetchProducts?: (shop: PartnerShop) => Promise<ShopProduct[]>; now?: Date } = {}
+  options: { fetchProducts?: (shop: PartnerShop) => Promise<ShopProduct[]>; now?: Date; budgetMs?: number } = {}
 ): Promise<SyncResult> {
+  const deadline = Date.now() + (options.budgetMs ?? DEFAULT_BUDGET_MS);
   const now = options.now ?? new Date();
   const feed = await (options.fetchProducts ?? fetchShopProducts)(shop);
 
@@ -85,6 +95,7 @@ export async function syncPartnerShop(
     shop: shop.slug,
     fetched: feed.length,
     upserted: 0,
+    notProcessed: 0,
     skipped: 0,
     rejected: 0,
     removed: 0,
@@ -106,6 +117,8 @@ export async function syncPartnerShop(
   const storedById = new Map(stored.map((p) => [p.externalId, p]));
   const seen = new Set<string>();
 
+  const writeLimit = pLimit(WRITE_CONCURRENCY);
+  const tasks: Promise<void>[] = [];
   for (const item of feed) {
     if (!isStorableProduct(item.productType, item.vendor)) {
       result.skipped++;
@@ -116,131 +129,143 @@ export async function syncPartnerShop(
       continue;
     }
     seen.add(item.externalId);
-    const existing = storedById.get(item.externalId);
+    tasks.push(
+      writeLimit(async () => {
+        // Plus le temps : le produit est dans le flux (date de passage mise à jour plus bas),
+        // ses changements seront écrits au prochain passage.
+        if (Date.now() > deadline) {
+          result.notProcessed++;
+          return;
+        }
+          const existing = storedById.get(item.externalId);
 
-    let match: { jerseyId: string | null; matchStatus: PartnerMatchStatus };
-    if (existing && (KEPT_STATUSES.includes(existing.matchStatus) || (existing.matchStatus === "MATCHED" && existing.jerseyId))) {
-      match = { jerseyId: existing.jerseyId, matchStatus: existing.matchStatus };
-    } else {
-      match = await resolvePartnerMatch(parsePartnerTitle(item.title, item.productType), clubIndex);
-    }
+          let match: { jerseyId: string | null; matchStatus: PartnerMatchStatus };
+          if (existing && (KEPT_STATUSES.includes(existing.matchStatus) || (existing.matchStatus === "MATCHED" && existing.jerseyId))) {
+            match = { jerseyId: existing.jerseyId, matchStatus: existing.matchStatus };
+          } else {
+            match = await resolvePartnerMatch(parsePartnerTitle(item.title, item.productType), clubIndex);
+          }
 
-    const headline = headlineVariant(item)!;
-    const fields: ProductFields = {
-      title: item.title,
-      url: item.url,
-      imageUrl: item.imageUrl && isAllowedImageUrl(shop, item.imageUrl) ? item.imageUrl : null,
-      price: headline.price,
-      compareAtPrice: headline.compareAtPrice,
-      available: item.variants.some((v) => v.available),
-      jerseyId: match.jerseyId,
-      matchStatus: match.matchStatus,
-      removedAt: null,
-    };
-    markChanged(existing ? storedOffer(existing) : null, { ...fields, jerseyId: match.jerseyId });
-
-    if (!existing) {
-      await prisma.partnerProduct.create({
-        data: {
-          shop: shop.slug,
-          externalId: item.externalId,
-          firstSeenAt: now,
-          lastSeenAt: now,
-          ...fields,
-          variants: {
-            create: item.variants.map((v) => ({
-              externalId: v.externalId,
-              size: v.size,
-              price: v.price,
-              available: v.available,
-              availabilityChangedAt: now,
-            })),
-          },
-        },
-      });
-      result.upserted++;
-      continue;
-    }
-
-    const transitions = availabilityTransitions({
-      stored: existing.variants.map((v) => ({
-        id: v.id,
-        externalId: v.externalId,
-        available: v.available,
-        removedAt: v.removedAt,
-        availabilityChangedAt: v.availabilityChangedAt,
-        price: Number(v.price),
-      })),
-      feed: item.variants,
-      productStillListed: true,
-      now,
-    });
-
-    const storedVariantIds = new Set(existing.variants.map((v) => v.externalId));
-    const ops: Prisma.PrismaPromise<unknown>[] = [
-      ...(productDirty(existing, fields)
-        ? [prisma.partnerProduct.update({ where: { id: existing.id }, data: fields })]
-        : []),
-      ...item.variants
-        .filter((v) => !storedVariantIds.has(v.externalId))
-        .map((v) =>
-          prisma.partnerVariant.create({
-            data: {
-              productId: existing.id,
-              externalId: v.externalId,
-              size: v.size,
-              price: v.price,
-              available: v.available,
-              availabilityChangedAt: now,
-            },
-          })
-        ),
-      ...transitions.changes.map((c) =>
-        prisma.partnerVariant.update({
-          where: { id: c.variantId },
-          data: { available: c.available, removedAt: c.removedAt, availabilityChangedAt: c.availabilityChangedAt },
-        })
-      ),
-      ...existing.variants
-        .map((v) => ({ v, inFeed: item.variants.find((f) => f.externalId === v.externalId) }))
-        .filter(({ v, inFeed }) => inFeed && inFeed.price !== Number(v.price))
-        .map(({ v, inFeed }) =>
-          prisma.partnerVariant.update({ where: { id: v.id }, data: { price: inFeed!.price, size: inFeed!.size } })
-        ),
-    ];
-    if (transitions.sales.length > 0) {
-      ops.push(
-        prisma.partnerSale.createMany({
-          data: transitions.sales.map((s) => ({
-            shop: shop.slug,
-            productId: existing.id,
-            variantId: s.variantId,
+          const headline = headlineVariant(item)!;
+          const fields: ProductFields = {
+            title: item.title,
+            url: item.url,
+            imageUrl: item.imageUrl && isAllowedImageUrl(shop, item.imageUrl) ? item.imageUrl : null,
+            price: headline.price,
+            compareAtPrice: headline.compareAtPrice,
+            available: item.variants.some((v) => v.available),
             jerseyId: match.jerseyId,
-            kind: s.kind,
-            price: s.price,
-            soldAt: now,
-          })),
-        })
-      );
-    }
-    for (const variantId of transitions.cancelVariantIds) {
-      ops.push(
-        prisma.partnerSale.updateMany({
-          where: {
-            variantId,
-            cancelledAt: null,
-            soldAt: { gte: new Date(now.getTime() - CANCEL_WINDOW_MS) },
-          },
-          data: { cancelledAt: now },
-        })
-      );
-    }
+            matchStatus: match.matchStatus,
+            removedAt: null,
+          };
+          markChanged(existing ? storedOffer(existing) : null, { ...fields, jerseyId: match.jerseyId });
 
-    if (ops.length > 0) await prisma.$transaction(ops);
-    result.upserted++;
-    result.sales += transitions.sales.length;
-    result.cancelled += transitions.cancelVariantIds.length;
+          if (!existing) {
+            await prisma.partnerProduct.create({
+              data: {
+                shop: shop.slug,
+                externalId: item.externalId,
+                firstSeenAt: now,
+                lastSeenAt: now,
+                ...fields,
+                variants: {
+                  create: item.variants.map((v) => ({
+                    externalId: v.externalId,
+                    size: v.size,
+                    price: v.price,
+                    available: v.available,
+                    availabilityChangedAt: now,
+                  })),
+                },
+              },
+            });
+            result.upserted++;
+            return;
+          }
+
+          const transitions = availabilityTransitions({
+            stored: existing.variants.map((v) => ({
+              id: v.id,
+              externalId: v.externalId,
+              available: v.available,
+              removedAt: v.removedAt,
+              availabilityChangedAt: v.availabilityChangedAt,
+              price: Number(v.price),
+            })),
+            feed: item.variants,
+            productStillListed: true,
+            now,
+          });
+
+          const storedVariantIds = new Set(existing.variants.map((v) => v.externalId));
+          const ops: Prisma.PrismaPromise<unknown>[] = [
+            ...(productDirty(existing, fields)
+              ? [prisma.partnerProduct.update({ where: { id: existing.id }, data: fields })]
+              : []),
+            ...item.variants
+              .filter((v) => !storedVariantIds.has(v.externalId))
+              .map((v) =>
+                prisma.partnerVariant.create({
+                  data: {
+                    productId: existing.id,
+                    externalId: v.externalId,
+                    size: v.size,
+                    price: v.price,
+                    available: v.available,
+                    availabilityChangedAt: now,
+                  },
+                })
+              ),
+            ...transitions.changes.map((c) =>
+              prisma.partnerVariant.update({
+                where: { id: c.variantId },
+                data: { available: c.available, removedAt: c.removedAt, availabilityChangedAt: c.availabilityChangedAt },
+              })
+            ),
+            ...existing.variants
+              .map((v) => ({ v, inFeed: item.variants.find((f) => f.externalId === v.externalId) }))
+              .filter(({ v, inFeed }) => inFeed && inFeed.price !== Number(v.price))
+              .map(({ v, inFeed }) =>
+                prisma.partnerVariant.update({ where: { id: v.id }, data: { price: inFeed!.price, size: inFeed!.size } })
+              ),
+          ];
+          if (transitions.sales.length > 0) {
+            ops.push(
+              prisma.partnerSale.createMany({
+                data: transitions.sales.map((s) => ({
+                  shop: shop.slug,
+                  productId: existing.id,
+                  variantId: s.variantId,
+                  jerseyId: match.jerseyId,
+                  kind: s.kind,
+                  price: s.price,
+                  soldAt: now,
+                })),
+              })
+            );
+          }
+          for (const variantId of transitions.cancelVariantIds) {
+            ops.push(
+              prisma.partnerSale.updateMany({
+                where: {
+                  variantId,
+                  cancelledAt: null,
+                  soldAt: { gte: new Date(now.getTime() - CANCEL_WINDOW_MS) },
+                },
+                data: { cancelledAt: now },
+              })
+            );
+          }
+
+          if (ops.length > 0) await prisma.$transaction(ops);
+          result.upserted++;
+          result.sales += transitions.sales.length;
+          result.cancelled += transitions.cancelVariantIds.length;
+      })
+    );
   }
+
+  await Promise.all(tasks);
 
   // Une seule écriture pour tous les produits vus : la plupart ne changent pas d'un jour à l'autre.
   await prisma.partnerProduct.updateMany({

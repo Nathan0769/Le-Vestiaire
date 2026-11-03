@@ -145,6 +145,21 @@ describe("syncPartnerShop", () => {
     expect(r).toMatchObject({ fetched: 1, upserted: 0, skipped: 1 });
   });
 
+  it("à court de temps, n'écrit plus les produits mais met à jour leur date de passage", async () => {
+    await sync([product("p1")], T0);
+
+    const r = await syncPartnerShop(SHOP, {
+      fetchProducts: async () => [product("p1", { variants: [variant("M", { price: 39.99 }), variant("L", { price: 44.99 })] })],
+      now: later(24),
+      budgetMs: -1,
+    });
+
+    expect(r).toMatchObject({ notProcessed: 1, upserted: 0, removed: 0 });
+    const p1 = await prismaTest.partnerProduct.findFirstOrThrow({ where: { shop: SHOP.slug } });
+    expect(Number(p1.price)).toBe(44.99);
+    expect(p1.lastSeenAt).toEqual(later(24));
+  });
+
   it("refuse un produit dont l'URL sort du domaine de la boutique", async () => {
     const r = await sync([product("p1", { url: "https://evil.com/products/p1" })], T0);
     expect(r).toMatchObject({ fetched: 1, upserted: 0, rejected: 1 });
