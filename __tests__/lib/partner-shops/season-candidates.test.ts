@@ -10,6 +10,11 @@ describe("seasonCandidates", () => {
     expect(seasonCandidates("2025")).toEqual(["2025", "2025-26", "2024-25"]);
   });
 
+  it("pour un maillot porté plusieurs saisons, essaie chaque saison couverte", () => {
+    expect(seasonCandidates("2008-10")).toEqual(["2008-10", "2008-09", "2009-10", "2008"]);
+    expect(seasonCandidates("1998-00")).toEqual(["1998-00", "1998-99", "1999-00", "1998"]);
+  });
+
   it("gère le passage de siècle", () => {
     expect(seasonCandidates("1999-00")).toEqual(["1999-00", "1999"]);
     expect(seasonCandidates("2000")).toEqual(["2000", "2000-01", "1999-00"]);

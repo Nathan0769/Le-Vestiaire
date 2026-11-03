@@ -4,7 +4,7 @@ import { parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
 import { fetchCfsTeams, fetchTeamProducts, isAllowedCfsUrl, type CfsItem } from "@/lib/cfs-constructor";
 import { isReferenceListing, listingTraits } from "@/lib/market-value/listing-traits";
 import { normalizeClubName } from "@/lib/partner-shops/club-name";
-import { seasonCandidates } from "@/lib/partner-shops/season-candidates";
+import { seasonCandidates, spanSeasons } from "@/lib/partner-shops/season-candidates";
 import type { Condition } from "@/lib/market-value/types";
 
 /**
@@ -124,13 +124,40 @@ async function buildJerseyIndex(clubIds: string[]): Promise<Map<string, string>>
   return index;
 }
 
-/** Maillot du catalogue pour (club, saison, type), saison exacte d'abord puis repli (sélections rangées par année). */
-export function findJerseyId(index: Map<string, string>, clubId: string, season: string, type: string): string | null {
-  for (const candidate of seasonCandidates(season)) {
-    const id = index.get(`${clubId}|${candidate}|${type}`);
-    if (id) return id;
-  }
+/** Type de base d'une version spéciale ("'CL Winners' Home Shirt" -> HOME), lu dans le nom. */
+export function baseJerseyType(name: string): "HOME" | "AWAY" | "THIRD" | null {
+  if (/\bHome\b/i.test(name)) return "HOME";
+  if (/\bAway\b/i.test(name)) return "AWAY";
+  if (/\bThird\b/i.test(name)) return "THIRD";
   return null;
+}
+
+/**
+ * Fiches du catalogue pour un produit CFS : saison exacte d'abord ; un maillot
+ * porté plusieurs saisons ("2008-10") est relié à chaque saison couverte ;
+ * sinon repli (sélections rangées par année). Types essayés dans l'ordre
+ * (type lu, puis type de base d'une version spéciale absente du catalogue).
+ */
+export function findJerseyIds(
+  index: Map<string, string>,
+  clubId: string,
+  season: string,
+  types: string[]
+): string[] {
+  const lookup = (s: string, type: string) => index.get(`${clubId}|${s}|${type}`);
+  for (const type of [...new Set(types)]) {
+    const exact = lookup(season, type);
+    if (exact) return [exact];
+    const spanned = spanSeasons(season)
+      .map((s) => lookup(s, type))
+      .filter((id): id is string => !!id);
+    if (spanned.length > 0) return spanned;
+    for (const candidate of seasonCandidates(season)) {
+      const id = lookup(candidate, type);
+      if (id) return [id];
+    }
+  }
+  return [];
 }
 
 const sameOffer = (a: CfsAvailabilityUpsertData, b: CfsAvailabilityUpsertData) =>
@@ -204,10 +231,13 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
           const season = parseCfsSeason(item.name);
           const type = parseCfsType(item.name);
           if (!offer || !season || !type) continue;
-          const jerseyId = findJerseyId(jerseyIndex, team.clubId, season, type);
-          if (!jerseyId) continue;
+          const base = baseJerseyType(item.name);
+          const jerseyIds = findJerseyIds(jerseyIndex, team.clubId, season, base ? [type, base] : [type]);
+          if (jerseyIds.length === 0) continue;
           stats.matched++;
-          matches.set(jerseyId, pickCfsOffer(matches.get(jerseyId), offer));
+          for (const jerseyId of jerseyIds) {
+            matches.set(jerseyId, pickCfsOffer(matches.get(jerseyId), offer));
+          }
         }
       })
     )

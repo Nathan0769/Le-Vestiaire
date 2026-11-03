@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { cfsChangedJerseyIds, findJerseyId, pickCfsOffer } from "@/lib/cfs-availability-scraper";
+import { baseJerseyType, cfsChangedJerseyIds, findJerseyIds, pickCfsOffer } from "@/lib/cfs-availability-scraper";
 
 const offer = (
   isReference: boolean,
@@ -71,23 +71,45 @@ describe("cfsChangedJerseyIds", () => {
   });
 });
 
-describe("findJerseyId", () => {
+describe("findJerseyIds", () => {
   const index = new Map([
     ["liverpool|2024-25|HOME", "lfc-2425"],
+    ["liverpool|2008-09|HOME", "lfc-0809"],
+    ["liverpool|2009-10|HOME", "lfc-0910"],
+    ["liverpool|2018-19|HOME", "lfc-1819"],
     ["allemagne|2022|HOME", "ger-2022"],
     ["allemagne|1990|AWAY", "ger-1990"],
   ]);
 
   it("trouve la saison exacte", () => {
-    expect(findJerseyId(index, "liverpool", "2024-25", "HOME")).toBe("lfc-2425");
+    expect(findJerseyIds(index, "liverpool", "2024-25", ["HOME"])).toEqual(["lfc-2425"]);
+  });
+
+  it("relie un maillot porté deux saisons aux deux fiches", () => {
+    expect(findJerseyIds(index, "liverpool", "2008-10", ["HOME"])).toEqual(["lfc-0809", "lfc-0910"]);
   });
 
   it("se replie sur l'année de début quand le catalogue range le maillot par année (sélections)", () => {
-    expect(findJerseyId(index, "allemagne", "2022-23", "HOME")).toBe("ger-2022");
-    expect(findJerseyId(index, "allemagne", "1990-92", "AWAY")).toBe("ger-1990");
+    expect(findJerseyIds(index, "allemagne", "2022-23", ["HOME"])).toEqual(["ger-2022"]);
+    expect(findJerseyIds(index, "allemagne", "1990-92", ["AWAY"])).toEqual(["ger-1990"]);
   });
 
-  it("renvoie null sans maillot", () => {
-    expect(findJerseyId(index, "liverpool", "1999-00", "HOME")).toBeNull();
+  it("se rabat sur le type de base pour une version spéciale absente du catalogue", () => {
+    expect(findJerseyIds(index, "liverpool", "2018-19", ["CHAMPION", "HOME"])).toEqual(["lfc-1819"]);
+  });
+
+  it("renvoie une liste vide sans maillot", () => {
+    expect(findJerseyIds(index, "liverpool", "1999-00", ["HOME"])).toEqual([]);
+  });
+});
+
+describe("baseJerseyType", () => {
+  it.each([
+    ["2018-19 Liverpool 'CL Winners' Home Shirt M.Salah #11 (L)", "HOME"],
+    ["2002-03 Real Madrid Centenary Away Shirt", "AWAY"],
+    ["2020-21 Arsenal Third Shirt", "THIRD"],
+    ["2001-03 Liverpool CL Shirt (XL)", null],
+  ])("%s -> %s", (name, type) => {
+    expect(baseJerseyType(name)).toBe(type);
   });
 });
