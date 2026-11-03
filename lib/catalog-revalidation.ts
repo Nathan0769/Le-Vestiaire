@@ -39,6 +39,12 @@ async function loadJerseyRefs(ids: string[]): Promise<CachedJerseyRef[]> {
 }
 
 /**
+ * Au-delà, une purge fiche par fiche (21 chemins chacune) devient trop lourde
+ * pour une requête : les fiches expirent seules après 24 h (revalidate ISR).
+ */
+export const MAX_TARGETED_REVALIDATIONS = 500;
+
+/**
  * Purge les fiches de maillots connus seulement par leur id (crons de synchro
  * des boutiques). Renvoie le nombre de maillots purgés.
  */
@@ -47,6 +53,10 @@ export async function revalidateJerseysByIds(
   loadRefs: (ids: string[]) => Promise<CachedJerseyRef[]> = loadJerseyRefs
 ): Promise<number> {
   if (ids.length === 0) return 0;
+  if (ids.length > MAX_TARGETED_REVALIDATIONS) {
+    console.warn(`[revalidation] ${ids.length} fiches changées : expiration ISR naturelle (24 h) plutôt que purge ciblée`);
+    return 0;
+  }
   const refs = await loadRefs(ids);
   for (const ref of refs) revalidateJerseyPages(ref);
   return refs.length;

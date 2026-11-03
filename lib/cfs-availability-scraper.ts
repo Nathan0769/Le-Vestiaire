@@ -4,6 +4,7 @@ import { parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
 import { fetchCfsTeams, fetchTeamProducts, isAllowedCfsUrl, type CfsItem } from "@/lib/cfs-constructor";
 import { isReferenceListing, listingTraits } from "@/lib/market-value/listing-traits";
 import { normalizeClubName } from "@/lib/partner-shops/club-name";
+import { seasonCandidates } from "@/lib/partner-shops/season-candidates";
 import type { Condition } from "@/lib/market-value/types";
 
 /**
@@ -123,6 +124,15 @@ async function buildJerseyIndex(clubIds: string[]): Promise<Map<string, string>>
   return index;
 }
 
+/** Maillot du catalogue pour (club, saison, type), saison exacte d'abord puis repli (sélections rangées par année). */
+export function findJerseyId(index: Map<string, string>, clubId: string, season: string, type: string): string | null {
+  for (const candidate of seasonCandidates(season)) {
+    const id = index.get(`${clubId}|${candidate}|${type}`);
+    if (id) return id;
+  }
+  return null;
+}
+
 const sameOffer = (a: CfsAvailabilityUpsertData, b: CfsAvailabilityUpsertData) =>
   a.price === b.price &&
   a.promoPrice === b.promoPrice &&
@@ -194,7 +204,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
           const season = parseCfsSeason(item.name);
           const type = parseCfsType(item.name);
           if (!offer || !season || !type) continue;
-          const jerseyId = jerseyIndex.get(`${team.clubId}|${season}|${type}`);
+          const jerseyId = findJerseyId(jerseyIndex, team.clubId, season, type);
           if (!jerseyId) continue;
           stats.matched++;
           matches.set(jerseyId, pickCfsOffer(matches.get(jerseyId), offer));

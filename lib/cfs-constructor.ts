@@ -93,12 +93,15 @@ export function normalizeCfsItem(raw: CfsRawItem): CfsItem {
   };
 }
 
+// L'API renvoie le site international (.com) ; l'ancien index renvoyait le .co.uk.
+const CFS_DOMAINS = ["classicfootballshirts.com", "classicfootballshirts.co.uk"];
+
 export function isAllowedCfsUrl(url: string): boolean {
   try {
     const parsed = new URL(url);
     return (
       parsed.protocol === "https:" &&
-      (parsed.hostname === "classicfootballshirts.co.uk" || parsed.hostname.endsWith(".classicfootballshirts.co.uk"))
+      CFS_DOMAINS.some((d) => parsed.hostname === d || parsed.hostname.endsWith(`.${d}`))
     );
   } catch {
     return false;

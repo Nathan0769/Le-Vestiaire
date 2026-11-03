@@ -80,10 +80,23 @@ describe("mapCfsCondition", () => {
 });
 
 describe("isAllowedCfsUrl", () => {
-  it("accepte une fiche produit CFS en https", () => {
-    expect(isAllowedCfsUrl("https://www.classicfootballshirts.co.uk/2024-25-liverpool-home-shirt.html")).toBe(true);
+  // L'API renvoie le site international (.com) ; l'ancien index renvoyait le .co.uk.
+  it.each([
+    "https://www.classicfootballshirts.com/2012-13-liverpool-home-shirt-suarez-7-livh127v.html",
+    "https://www.classicfootballshirts.co.uk/2024-25-liverpool-home-shirt.html",
+  ])("accepte une fiche produit CFS en https : %s", (url) => {
+    expect(isAllowedCfsUrl(url)).toBe(true);
   });
-  it.each(["http://www.classicfootballshirts.co.uk/x.html", "https://evil.com/classicfootballshirts.co.uk", "pas une url"])(
+
+  it("accepte les liens produit réels renvoyés par l'API", () => {
+    expect(rows.every((r) => isAllowedCfsUrl(r.data.url))).toBe(true);
+  });
+  it.each([
+    "http://www.classicfootballshirts.co.uk/x.html",
+    "https://evil.com/classicfootballshirts.co.uk",
+    "https://classicfootballshirts.com.evil.com/x.html",
+    "pas une url",
+  ])(
     "refuse %s",
     (url) => {
       expect(isAllowedCfsUrl(url)).toBe(false);

@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { cfsChangedJerseyIds, pickCfsOffer } from "@/lib/cfs-availability-scraper";
+import { cfsChangedJerseyIds, findJerseyId, pickCfsOffer } from "@/lib/cfs-availability-scraper";
 
 const offer = (
   isReference: boolean,
@@ -68,5 +68,26 @@ describe("cfsChangedJerseyIds", () => {
     expect(cfsChangedJerseyIds(before, after, ["gone"]).sort()).toEqual(
       ["gone", "new", "price", "promo", "url"].sort()
     );
+  });
+});
+
+describe("findJerseyId", () => {
+  const index = new Map([
+    ["liverpool|2024-25|HOME", "lfc-2425"],
+    ["allemagne|2022|HOME", "ger-2022"],
+    ["allemagne|1990|AWAY", "ger-1990"],
+  ]);
+
+  it("trouve la saison exacte", () => {
+    expect(findJerseyId(index, "liverpool", "2024-25", "HOME")).toBe("lfc-2425");
+  });
+
+  it("se replie sur l'année de début quand le catalogue range le maillot par année (sélections)", () => {
+    expect(findJerseyId(index, "allemagne", "2022-23", "HOME")).toBe("ger-2022");
+    expect(findJerseyId(index, "allemagne", "1990-92", "AWAY")).toBe("ger-1990");
+  });
+
+  it("renvoie null sans maillot", () => {
+    expect(findJerseyId(index, "liverpool", "1999-00", "HOME")).toBeNull();
   });
 });

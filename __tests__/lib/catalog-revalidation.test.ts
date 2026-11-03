@@ -4,7 +4,12 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 const revalidatePath = vi.fn();
 vi.mock("next/cache", () => ({ revalidatePath: (p: string) => revalidatePath(p) }));
 
-import { jerseyCachePaths, revalidateJerseyPages, revalidateJerseysByIds } from "@/lib/catalog-revalidation";
+import {
+  jerseyCachePaths,
+  MAX_TARGETED_REVALIDATIONS,
+  revalidateJerseyPages,
+  revalidateJerseysByIds,
+} from "@/lib/catalog-revalidation";
 
 const jersey = {
   id: "j1",
@@ -59,6 +64,16 @@ describe("revalidateJerseysByIds", () => {
       ...jerseyCachePaths(jersey),
       ...jerseyCachePaths(other),
     ]);
+  });
+
+  it("au-delà du plafond, laisse les fiches expirer seules (ISR 24 h) au lieu de les purger une à une", async () => {
+    expect(MAX_TARGETED_REVALIDATIONS).toBeGreaterThan(0);
+    const loadRefs = vi.fn();
+    const ids = Array.from({ length: MAX_TARGETED_REVALIDATIONS + 1 }, (_, i) => `j${i}`);
+
+    expect(await revalidateJerseysByIds(ids, loadRefs)).toBe(0);
+    expect(loadRefs).not.toHaveBeenCalled();
+    expect(revalidatePath).not.toHaveBeenCalled();
   });
 
   it("ne fait rien pour une liste vide", async () => {
