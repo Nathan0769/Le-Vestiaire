@@ -4,15 +4,19 @@ const pad2 = (n: number) => String(n % 100).padStart(2, "0");
  * Saisons couvertes par un maillot porté plusieurs saisons ("2008-10" ->
  * 2008-09 et 2009-10). Vide pour une saison simple ou une année.
  */
-export function spanSeasons(season: string): string[] {
+function spanBounds(season: string): { start: number; end: number } | null {
   const m = /^(\d{4})-(\d{2})$/.exec(season);
-  if (!m) return [];
+  if (!m) return null;
   const start = Number(m[1]);
-  const century = start - (start % 100);
-  let end = century + Number(m[2]);
+  let end = start - (start % 100) + Number(m[2]);
   if (end <= start) end += 100;
-  if (end - start < 2) return [];
-  return Array.from({ length: end - start }, (_, i) => `${start + i}-${pad2(start + i + 1)}`);
+  return { start, end };
+}
+
+export function spanSeasons(season: string): string[] {
+  const bounds = spanBounds(season);
+  if (!bounds || bounds.end - bounds.start < 2) return [];
+  return Array.from({ length: bounds.end - bounds.start }, (_, i) => `${bounds.start + i}-${pad2(bounds.start + i + 1)}`);
 }
 
 /**
@@ -22,8 +26,12 @@ export function spanSeasons(season: string): string[] {
  * période de plusieurs saisons ("2008-10").
  */
 export function seasonCandidates(season: string): string[] {
-  const span = /^(\d{4})-\d{2}$/.exec(season);
-  if (span) return [season, ...spanSeasons(season), span[1]];
+  const bounds = spanBounds(season);
+  if (bounds) {
+    // Sélections rangées par année : "2005-07" est le maillot de 2006 au catalogue.
+    const years = Array.from({ length: bounds.end - bounds.start + 1 }, (_, i) => String(bounds.start + i));
+    return [season, ...spanSeasons(season), ...years];
+  }
 
   if (/^\d{4}$/.test(season)) {
     const year = Number(season);

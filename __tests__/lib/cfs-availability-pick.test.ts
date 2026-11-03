@@ -94,6 +94,12 @@ describe("findJerseyIds", () => {
     expect(findJerseyIds(index, "allemagne", "1990-92", ["AWAY"])).toEqual(["ger-1990"]);
   });
 
+  it("relie un maillot de sélection porté sur deux ans à l'année du catalogue", () => {
+    const nations = new Map([["angleterre|2006|HOME", "eng-2006"], ["angleterre|2010|HOME", "eng-2010"]]);
+    expect(findJerseyIds(nations, "angleterre", "2005-07", ["HOME"])).toEqual(["eng-2006"]);
+    expect(findJerseyIds(nations, "angleterre", "2009-10", ["HOME"])).toEqual(["eng-2010"]);
+  });
+
   it("se rabat sur le type de base pour une version spéciale absente du catalogue", () => {
     expect(findJerseyIds(index, "liverpool", "2018-19", ["CHAMPION", "HOME"])).toEqual(["lfc-1819"]);
   });
