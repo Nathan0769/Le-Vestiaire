@@ -14,6 +14,7 @@ describe("getConfederationForLeague", () => {
     ["eerste-divisie", "UEFA"],
     ["ekstraklasa", "UEFA"],
     ["russian-premier-league", "UEFA"],
+    ["cypriot-first-division", "UEFA"],
   ])("%s -> %s (id de la ligue en base)", (leagueId, confederation) => {
     expect(getConfederationForLeague(leagueId)).toBe(confederation);
   });

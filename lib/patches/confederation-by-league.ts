@@ -39,6 +39,7 @@ export const CONFEDERATION_BY_LEAGUE_ID: Record<string, Confederation> = {
   "eliteserien": "UEFA",
   "ekstraklasa": "UEFA",
   "russian-premier-league": "UEFA",
+  "cypriot-first-division": "UEFA",
 
   "mls": "CONCACAF",
   "liga-mx": "CONCACAF",
