@@ -1,9 +1,8 @@
 import axios from "axios";
 import type { Browser } from "puppeteer-core";
 import { parseCfsClub } from "@/lib/cfs-name-parser";
+import { CFS_API_KEY, CFS_BROWSE_BASE } from "@/lib/cfs-constructor";
 
-const CFS_API_KEY = "key_gafGDajYFUpadvrp";
-const CFS_BROWSE_BASE = "https://ac.cnstrc.com/browse";
 // CFS migrated its Constructor index (2026): "clearance" is no longer a browsable
 // group_id but a value of the `department` facet, so we browse it by filter.
 const CFS_CLEARANCE_PATH = "department/Clearance";

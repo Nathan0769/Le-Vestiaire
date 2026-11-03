@@ -22,7 +22,7 @@ export const FALLBACK_RATES: Record<string, number> = {
  * (nos sélections portent le nom du pays) et les rares clubs à nom francisé.
  * Liste non exhaustive, enrichie au fil des trous constatés.
  */
-const NAME_FR_TO_EN: Record<string, string> = {
+export const NAME_FR_TO_EN: Record<string, string> = {
   // Nations
   Allemagne: "Germany",
   Angleterre: "England",

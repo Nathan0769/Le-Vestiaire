@@ -81,7 +81,7 @@ export async function recomputeAllMarketValues(): Promise<{
   const [cfs, ebay, partners, lastSnapshots] = await Promise.all([
     prisma.cfsAvailability.findMany({
       where: { price: { gt: 0 }, isReference: true },
-      select: { jerseyId: true, price: true, lastSeenAt: true },
+      select: { jerseyId: true, price: true, lastSeenAt: true, condition: true },
     }),
     prisma.ebayMarketData.findMany({
       where: { sampleSize: { gt: 0 }, medianPrice: { gt: 0 } },
@@ -107,6 +107,7 @@ export async function recomputeAllMarketValues(): Promise<{
       price: Number(c.price),
       type: "asking",
       source: "cfs",
+      condition: c.condition ?? undefined,
       date: c.lastSeenAt,
     });
   }

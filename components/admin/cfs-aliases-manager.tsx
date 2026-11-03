@@ -156,7 +156,7 @@ export function CfsAliasesManager() {
       if (res.ok) {
         const s = data.stats;
         toast.success(
-          `Scrape terminé — ${s.clubsScanned} clubs, ${s.matched} maillots matchés, ${s.purged} obsolètes purgés`
+          `Scrape terminé : ${s.teamsScanned} équipes, ${s.matched} produits reliés, ${s.written} dispos écrites, ${s.purged} purgées`
         );
       } else {
         toast.error(data.error || "Erreur lors du scrape");
@@ -208,7 +208,7 @@ export function CfsAliasesManager() {
         <div>
           <h2 className="text-lg font-semibold">Scrape dispo wishlist</h2>
           <p className="text-sm text-muted-foreground">
-            Parcourt CFS par club (uniquement les clubs présents dans au moins une wishlist) et met à jour les dispos + promos. À lancer après avoir mappé un nouvel alias.
+            Parcourt CFS équipe par équipe (toutes les équipes reliées à un club par un alias) et met à jour les dispos. Tourne aussi chaque nuit ; à lancer à la main après avoir ajouté des alias.
           </p>
         </div>
         <Button onClick={handleScrape} disabled={scraping} className="cursor-pointer shrink-0">

@@ -1,170 +1,41 @@
-import axios from "axios";
 import pLimit from "p-limit";
 import prisma from "@/lib/prisma";
 import { parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
+import { fetchCfsTeams, fetchTeamProducts, isAllowedCfsUrl, type CfsItem } from "@/lib/cfs-constructor";
 import { isReferenceListing, listingTraits } from "@/lib/market-value/listing-traits";
+import { normalizeClubName } from "@/lib/partner-shops/club-name";
+import type { Condition } from "@/lib/market-value/types";
 
-// Concurrency caps: network is the bottleneck, DB writes share the Prisma pool.
-const CLUB_FETCH_CONCURRENCY = 6;
+/**
+ * Dispos CFS de toutes les équipes reliées à un club du catalogue (CfsClubAlias).
+ * Spec : docs/specs/2026-11-02-cfs-catalogue-complet.md.
+ */
+
+// Le réseau est le goulot ; les écritures partagent le pool Prisma.
+const TEAM_FETCH_CONCURRENCY = 6;
 const UPSERT_CONCURRENCY = 8;
-
-const CFS_API_KEY = "key_8uhN6ajd7mHKd4K3";
-const CFS_BROWSE_URL = "https://ac.cnstrc.com/browse/group_id";
-const CFS_SEARCH_URL = "https://ac.cnstrc.com/search";
-const AFFILIATE_PARAMS =
-  "ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
+const AFFILIATE_PARAMS = "ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
 const STALE_THRESHOLD_HOURS = 48;
-
-const ADULT_SIZES = new Set(["XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL"]);
+/** Marge sous le maxDuration de 300 s du cron. */
+const DEFAULT_BUDGET_MS = 240_000;
+// Au moins une taille courante : une pièce en XS ou 4XL seulement n'intéresse presque personne.
 const TARGET_SIZES = new Set(["S", "M", "L", "XL"]);
-const MIN_TARGET_SIZES = 1;
-
-const JERSEY_EXCLUDE_TERMS = [
-  "polo",
-  "template",
-  "t-shirt",
-  "pre-match",
-  "training shirt",
-  "women",
-  "womens",
-  "woman",
-  " gk ",
-  "shorts",
-  "short ",
-  "sock",
-  "jacket",
-  "hoodie",
-  "sweatshirt",
-  "tracksuit",
-  "track suit",
-  "sponsor",
-  "patch",
-  "flock",
-  "print",
-  "scarf",
-  "cap",
-  "bag",
-  "mug",
-  "poster",
-];
-
-interface ConstructorVariation {
-  // Constructor.io returns numeric sizes (e.g. 10, 12) as JS numbers, not strings
-  data: { size_product?: string | number };
-}
-
-interface ConstructorItem {
-  data: {
-    name: string;
-    url: string;
-    image_url?: string;
-    price_eur?: number;
-    special_price_eur?: number;
-  };
-  variations?: ConstructorVariation[];
-}
-
-function isAdultJerseyInStock(item: ConstructorItem): boolean {
-  const name = item.data.name.toLowerCase();
-  if (!name.includes("shirt")) return false;
-  if (name.includes("(kids)") || name.includes("kids)")) return false;
-  if (JERSEY_EXCLUDE_TERMS.some((t) => name.includes(t))) return false;
-  const variations = item.variations ?? [];
-
-  // Vintage single-piece items have no variations; size is embedded in the name like "(XL)"
-  if (variations.length === 0) {
-    const sizeMatch = item.data.name.match(/\(([A-Z0-9]+)\)\s*$/);
-    if (!sizeMatch) return false;
-    const size = sizeMatch[1].toUpperCase();
-    return ADULT_SIZES.has(size);
-  }
-
-  const adultVariations = variations.filter((v) =>
-    ADULT_SIZES.has(String(v.data.size_product ?? "").toUpperCase())
-  );
-  if (adultVariations.length === 0) return false;
-  const targetCount = adultVariations.filter((v) =>
-    TARGET_SIZES.has(String(v.data.size_product ?? "").toUpperCase())
-  ).length;
-  return targetCount >= MIN_TARGET_SIZES;
-}
+// Coupe femme : pas un maillot du catalogue (le filtre de l'API ne la distingue pas).
+const WOMEN_RE = /\bwom[ae]n'?s?\b/i;
 
 interface ScrapeStats {
-  clubsScanned: number;
-  clubsSkipped: string[];
+  teamsTotal: number;
+  teamsScanned: number;
+  /** Équipes CFS sans alias vers un club du catalogue. */
+  teamsWithoutAlias: number;
+  /** Équipes aliasées non parcourues faute de temps. */
+  teamsNotReached: string[];
   productsSeen: number;
   matched: number;
-  upserted: number;
+  written: number;
   purged: number;
   /** Maillots dont la dispo affichée a changé : fiches ISR à régénérer. */
   changedJerseyIds: string[];
-}
-
-async function fetchClubProducts(slug: string): Promise<ConstructorItem[]> {
-  const all: ConstructorItem[] = [];
-  let page = 1;
-  while (true) {
-    const url = `${CFS_BROWSE_URL}/${slug}?key=${CFS_API_KEY}&num_results_per_page=200&page=${page}`;
-    const res = await axios.get(url, { timeout: 15000 });
-    const results: ConstructorItem[] = res.data.response.results ?? [];
-    const total: number = res.data.response.total_num_results ?? 0;
-    all.push(...results);
-    if (all.length >= total || results.length === 0) break;
-    page++;
-    if (page > 20) break;
-  }
-  return all;
-}
-
-async function fetchClubBySearch(clubName: string): Promise<ConstructorItem[]> {
-  const query = encodeURIComponent(`${clubName} shirt`);
-  const all: ConstructorItem[] = [];
-  let page = 1;
-  const namePrefix = clubName.toLowerCase();
-  while (true) {
-    // No filter: some Arsenal shirts have only `price-drops` as group_id.
-    // We rely on the name prefix filter below + isAdultJerseyInStock later.
-    const url = `${CFS_SEARCH_URL}/${query}?key=${CFS_API_KEY}&num_results_per_page=200&page=${page}`;
-    const res = await axios.get(url, { timeout: 15000 });
-    const results: ConstructorItem[] = res.data.response.results ?? [];
-    const total: number = res.data.response.total_num_results ?? 0;
-    // Only keep products whose name starts with a season followed by the club name
-    const filtered = results.filter((item) => {
-      const lower = item.data.name.toLowerCase();
-      const withoutYear = lower.replace(/^\d{4}(?:-\d{2})?\s+/, "");
-      return withoutYear.startsWith(namePrefix);
-    });
-    all.push(...filtered);
-    if (results.length === 0 || page * 200 >= total) break;
-    page++;
-    if (page > 15) break;
-  }
-  return all;
-}
-
-function buildAffiliateUrl(productUrl: string): string {
-  const sep = productUrl.includes("?") ? "&" : "?";
-  return `${productUrl}${sep}${AFFILIATE_PARAMS}`;
-}
-
-interface ClubLookup {
-  slugs: string[];
-  searchNames: string[];
-}
-
-async function loadReverseAliasMap(): Promise<Map<string, ClubLookup>> {
-  const aliases = await prisma.cfsClubAlias.findMany({
-    select: { cfsName: true, clubId: true },
-  });
-  const map = new Map<string, ClubLookup>();
-  for (const a of aliases) {
-    const slug = a.cfsName.toLowerCase().replace(/\s+/g, "-");
-    const existing = map.get(a.clubId) ?? { slugs: [], searchNames: [] };
-    if (!existing.slugs.includes(slug)) existing.slugs.push(slug);
-    if (!existing.searchNames.includes(a.cfsName)) existing.searchNames.push(a.cfsName);
-    map.set(a.clubId, existing);
-  }
-  return map;
 }
 
 interface CfsAvailabilityUpsertData {
@@ -174,13 +45,9 @@ interface CfsAvailabilityUpsertData {
   affiliateUrl: string;
   imageUrl: string;
   isReference: boolean;
+  condition: Condition | null;
 }
 
-/**
- * Plusieurs produits CFS pour un même maillot : on garde de préférence un
- * maillot supporter manches courtes, le seul qui compte dans la cote.
- * À référence égale, le dernier produit vu l'emporte.
- */
 type DisplayedOffer = { price: number; promoPrice: number | null; affiliateUrl: string };
 
 /** Dispos apparues, modifiées (prix, promo, lien) ou purgées depuis le dernier scrape. */
@@ -204,19 +71,45 @@ export function cfsChangedJerseyIds(
   return [...changed];
 }
 
+const CONDITION_RANK: Record<Condition, number> = { MINT: 4, EXCELLENT: 3, GOOD: 2, FAIR: 1, POOR: 0 };
+const conditionRank = (c: Condition | null) => (c ? CONDITION_RANK[c] : -1);
+
+/**
+ * Plusieurs produits CFS pour un même maillot : on garde de préférence un
+ * maillot supporter manches courtes (le seul qui compte dans la cote), puis le
+ * meilleur état. À égalité, le dernier produit vu l'emporte.
+ */
 export function pickCfsOffer(
   current: CfsAvailabilityUpsertData | undefined,
   candidate: CfsAvailabilityUpsertData
 ): CfsAvailabilityUpsertData {
-  if (current?.isReference && !candidate.isReference) return current;
-  return candidate;
+  if (!current) return candidate;
+  if (current.isReference !== candidate.isReference) return current.isReference ? current : candidate;
+  return conditionRank(current.condition) > conditionRank(candidate.condition) ? current : candidate;
 }
 
-// One query for all wishlisted clubs; keep the lowest variant per
-// (club, season, type) to mirror the old findFirst(orderBy: variant asc).
-async function buildJerseyIndex(
-  clubIds: string[]
-): Promise<Map<string, string>> {
+function buildAffiliateUrl(productUrl: string): string {
+  const sep = productUrl.includes("?") ? "&" : "?";
+  return `${productUrl}${sep}${AFFILIATE_PARAMS}`;
+}
+
+function toOffer(item: CfsItem): CfsAvailabilityUpsertData | null {
+  if (!item.price || !item.imageUrl || !isAllowedCfsUrl(item.url)) return null;
+  if (WOMEN_RE.test(item.name) || !item.sizes.some((s) => TARGET_SIZES.has(s))) return null;
+  return {
+    price: item.price,
+    promoPrice: item.promoPrice,
+    productUrl: item.url,
+    affiliateUrl: buildAffiliateUrl(item.url),
+    imageUrl: item.imageUrl,
+    isReference: !item.longSleeve && isReferenceListing(listingTraits(item.name)),
+    condition: item.condition,
+  };
+}
+
+// Une requête pour tous les clubs aliasés ; variante la plus basse par
+// (club, saison, type), comme l'ancien findFirst(orderBy: variant asc).
+async function buildJerseyIndex(clubIds: string[]): Promise<Map<string, string>> {
   const jerseys = await prisma.jersey.findMany({
     where: { clubId: { in: clubIds } },
     orderBy: { variant: "asc" },
@@ -230,143 +123,125 @@ async function buildJerseyIndex(
   return index;
 }
 
-async function fetchClubProductsWithFallback(
-  clubId: string,
-  lookup: ClubLookup | undefined
-): Promise<ConstructorItem[]> {
-  const slugs = [...(lookup?.slugs ?? [])];
-  if (!slugs.includes(clubId)) slugs.push(clubId);
+const sameOffer = (a: CfsAvailabilityUpsertData, b: CfsAvailabilityUpsertData) =>
+  a.price === b.price &&
+  a.promoPrice === b.promoPrice &&
+  a.productUrl === b.productUrl &&
+  a.imageUrl === b.imageUrl &&
+  a.isReference === b.isReference &&
+  a.condition === b.condition;
 
-  for (const slug of slugs) {
-    try {
-      const found = await fetchClubProducts(slug);
-      if (found.length > 0) return found;
-    } catch {
-      // Try next slug
-    }
-  }
-
-  // Fallback: search when browse returned 0 (some clubs like Arsenal have no group_id on CFS)
-  for (const name of lookup?.searchNames ?? []) {
-    try {
-      const found = await fetchClubBySearch(name);
-      if (found.length > 0) return found;
-    } catch {
-      // Try next name
-    }
-  }
-
-  return [];
-}
-
-export async function scrapeCfsAvailability(): Promise<ScrapeStats> {
+export async function scrapeCfsAvailability(options: { budgetMs?: number } = {}): Promise<ScrapeStats> {
+  const deadline = Date.now() + (options.budgetMs ?? DEFAULT_BUDGET_MS);
   const stats: ScrapeStats = {
-    clubsScanned: 0,
-    clubsSkipped: [],
+    teamsTotal: 0,
+    teamsScanned: 0,
+    teamsWithoutAlias: 0,
+    teamsNotReached: [],
     productsSeen: 0,
     matched: 0,
-    upserted: 0,
+    written: 0,
     purged: 0,
     changedJerseyIds: [],
   };
 
-  const wishlistedClubs = await prisma.wishlist.findMany({
-    distinct: ["jerseyId"],
-    select: { jersey: { select: { clubId: true } } },
-  });
-  const clubIds = Array.from(
-    new Set(wishlistedClubs.map((w) => w.jersey.clubId))
-  );
-
-  if (clubIds.length === 0) return stats;
-
-  // Load the alias map and prebuild a (clubId|season|type) -> jerseyId index in
-  // one query, so matching later is pure in-memory lookups instead of a
-  // findFirst per product.
-  const [reverseAliasMap, jerseyIndex] = await Promise.all([
-    loadReverseAliasMap(),
-    buildJerseyIndex(clubIds),
+  const [teams, aliases, followed] = await Promise.all([
+    fetchCfsTeams(),
+    prisma.cfsClubAlias.findMany({ select: { cfsName: true, clubId: true } }),
+    prisma.$queryRaw<{ clubId: string }[]>`
+      SELECT DISTINCT j."clubId" FROM jerseys j
+      WHERE EXISTS (SELECT 1 FROM user_jerseys u WHERE u."jerseyId" = j.id)
+         OR EXISTS (SELECT 1 FROM wishlist w WHERE w."jerseyId" = j.id)
+    `,
   ]);
+  stats.teamsTotal = teams.length;
 
-  // Phase 1: fetch every club's products concurrently. Network is the
-  // bottleneck, so a bounded pool collapses the serial per-club waits.
-  const fetchLimit = pLimit(CLUB_FETCH_CONCURRENCY);
-  const clubResults = await Promise.all(
-    clubIds.map((clubId) =>
-      fetchLimit(async () => ({
-        clubId,
-        products: await fetchClubProductsWithFallback(
-          clubId,
-          reverseAliasMap.get(clubId)
-        ),
-      }))
+  const clubByTeam = new Map(aliases.map((a) => [normalizeClubName(a.cfsName), a.clubId]));
+  const followedClubs = new Set(followed.map((f) => f.clubId));
+  const queue = teams
+    .map((t) => ({ ...t, clubId: clubByTeam.get(normalizeClubName(t.name)) }))
+    .filter((t): t is typeof t & { clubId: string } => {
+      if (!t.clubId) stats.teamsWithoutAlias++;
+      return !!t.clubId;
+    })
+    // Clubs suivis d'abord : un manque de temps ne touche pas les fiches regardées.
+    .sort((a, b) => Number(followedClubs.has(b.clubId)) - Number(followedClubs.has(a.clubId)) || b.count - a.count);
+
+  const jerseyIndex = await buildJerseyIndex([...new Set(queue.map((t) => t.clubId))]);
+
+  const matches = new Map<string, CfsAvailabilityUpsertData>();
+  const limit = pLimit(TEAM_FETCH_CONCURRENCY);
+  await Promise.all(
+    queue.map((team) =>
+      limit(async () => {
+        if (Date.now() > deadline) {
+          stats.teamsNotReached.push(team.name);
+          return;
+        }
+        let products: CfsItem[];
+        try {
+          products = await fetchTeamProducts(team.name);
+        } catch (err) {
+          console.error(`[cfs-availability] ${team.name} :`, err);
+          stats.teamsNotReached.push(team.name);
+          return;
+        }
+        stats.teamsScanned++;
+        stats.productsSeen += products.length;
+
+        for (const item of products) {
+          const offer = toOffer(item);
+          const season = parseCfsSeason(item.name);
+          const type = parseCfsType(item.name);
+          if (!offer || !season || !type) continue;
+          const jerseyId = jerseyIndex.get(`${team.clubId}|${season}|${type}`);
+          if (!jerseyId) continue;
+          stats.matched++;
+          matches.set(jerseyId, pickCfsOffer(matches.get(jerseyId), offer));
+        }
+      })
     )
   );
 
-  // Phase 2: match products against the in-memory index (no I/O). Dedupe by
-  // jerseyId (see pickCfsOffer), avoiding concurrent upserts racing on the same
-  // unique row.
-  const now = new Date();
-  const matches = new Map<string, CfsAvailabilityUpsertData>();
-  for (const { clubId, products } of clubResults) {
-    if (products.length === 0) {
-      stats.clubsSkipped.push(clubId);
-      continue;
-    }
-
-    stats.clubsScanned++;
-    stats.productsSeen += products.length;
-
-    for (const item of products) {
-      if (!isAdultJerseyInStock(item)) continue;
-
-      const price = item.data.price_eur;
-      if (!price) continue;
-      const imageUrl = item.data.image_url;
-      if (!imageUrl) continue;
-
-      const season = parseCfsSeason(item.data.name);
-      const type = parseCfsType(item.data.name);
-      if (!season || !type) continue;
-
-      const jerseyId = jerseyIndex.get(`${clubId}|${season}|${type}`);
-      if (!jerseyId) continue;
-
-      stats.matched++;
-
-      const promoPrice = item.data.special_price_eur;
-      matches.set(
-        jerseyId,
-        pickCfsOffer(matches.get(jerseyId), {
-          price,
-          promoPrice: promoPrice && promoPrice < price ? promoPrice : null,
-          productUrl: item.data.url,
-          affiliateUrl: buildAffiliateUrl(item.data.url),
-          imageUrl,
-          isReference: isReferenceListing(listingTraits(item.data.name)),
-        })
-      );
-    }
-  }
-
   const existing = await prisma.cfsAvailability.findMany({
-    select: { jerseyId: true, price: true, promoPrice: true, affiliateUrl: true },
+    select: {
+      jerseyId: true,
+      price: true,
+      promoPrice: true,
+      productUrl: true,
+      affiliateUrl: true,
+      imageUrl: true,
+      isReference: true,
+      condition: true,
+    },
   });
-  const before = new Map(
+  const before = new Map<string, CfsAvailabilityUpsertData>(
     existing.map((e) => [
       e.jerseyId,
       {
         price: Number(e.price),
         promoPrice: e.promoPrice === null ? null : Number(e.promoPrice),
+        productUrl: e.productUrl,
         affiliateUrl: e.affiliateUrl,
+        imageUrl: e.imageUrl,
+        isReference: e.isReference,
+        condition: e.condition,
       },
     ])
   );
 
-  // Phase 3: write matches concurrently, bounded to the Prisma pool.
+  // Seules les dispos nouvelles ou modifiées sont réécrites ; les autres ne
+  // reçoivent que leur date de passage, en une requête.
+  const now = new Date();
+  const toWrite = [...matches].filter(([jerseyId, offer]) => {
+    const old = before.get(jerseyId);
+    return !old || !sameOffer(old, offer);
+  });
+  const written = new Set(toWrite.map(([jerseyId]) => jerseyId));
+  const unchangedIds = [...matches.keys()].filter((id) => !written.has(id));
   const upsertLimit = pLimit(UPSERT_CONCURRENCY);
   await Promise.all(
-    Array.from(matches.entries()).map(([jerseyId, data]) =>
+    toWrite.map(([jerseyId, data]) =>
       upsertLimit(() =>
         prisma.cfsAvailability.upsert({
           where: { jerseyId },
@@ -376,11 +251,12 @@ export async function scrapeCfsAvailability(): Promise<ScrapeStats> {
       )
     )
   );
-  stats.upserted = matches.size;
+  if (unchangedIds.length > 0) {
+    await prisma.cfsAvailability.updateMany({ where: { jerseyId: { in: unchangedIds } }, data: { lastSeenAt: now } });
+  }
+  stats.written = toWrite.length;
 
-  const staleThreshold = new Date(
-    Date.now() - STALE_THRESHOLD_HOURS * 60 * 60 * 1000
-  );
+  const staleThreshold = new Date(Date.now() - STALE_THRESHOLD_HOURS * 60 * 60 * 1000);
   const stale = await prisma.cfsAvailability.findMany({
     where: { lastSeenAt: { lt: staleThreshold } },
     select: { jerseyId: true },

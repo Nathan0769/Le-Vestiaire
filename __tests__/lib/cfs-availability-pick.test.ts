@@ -1,13 +1,18 @@
 import { describe, it, expect } from "vitest";
 import { cfsChangedJerseyIds, pickCfsOffer } from "@/lib/cfs-availability-scraper";
 
-const offer = (isReference: boolean, price = 50) => ({
+const offer = (
+  isReference: boolean,
+  price = 50,
+  condition: "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | null = null
+) => ({
   price,
   promoPrice: null,
   productUrl: `https://example.com/${price}`,
   affiliateUrl: `https://example.com/${price}?ref=x`,
   imageUrl: "https://example.com/x.jpg",
   isReference,
+  condition,
 });
 
 describe("pickCfsOffer", () => {
@@ -23,7 +28,16 @@ describe("pickCfsOffer", () => {
     expect(pickCfsOffer(offer(false, 90), offer(true, 50))).toEqual(offer(true, 50));
   });
 
-  it("à référence égale, le dernier produit l'emporte (comportement historique)", () => {
+  it("à référence égale, garde le meilleur état", () => {
+    expect(pickCfsOffer(offer(true, 50, "MINT"), offer(true, 40, "GOOD"))).toEqual(offer(true, 50, "MINT"));
+    expect(pickCfsOffer(offer(true, 40, "FAIR"), offer(true, 50, "EXCELLENT"))).toEqual(offer(true, 50, "EXCELLENT"));
+  });
+
+  it("un état connu passe devant un état non précisé", () => {
+    expect(pickCfsOffer(offer(true, 50, null), offer(true, 60, "GOOD"))).toEqual(offer(true, 60, "GOOD"));
+  });
+
+  it("à référence et état égaux, le dernier produit l'emporte (comportement historique)", () => {
     expect(pickCfsOffer(offer(true, 50), offer(true, 60))).toEqual(offer(true, 60));
   });
 });
