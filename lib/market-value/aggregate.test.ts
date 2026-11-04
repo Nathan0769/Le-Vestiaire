@@ -24,9 +24,9 @@ describe("aggregate", () => {
     expect(aggregate([])).toBeNull();
   });
 
-  it("abat un prix demandé CFS (calibré sur eBay, facteur 0,65)", () => {
+  it("abat un prix demandé CFS (calibré sur eBay, facteur 0,73)", () => {
     const est = aggregate([asking(100, "cfs")]);
-    expect(est?.baseValue).toBe(65);
+    expect(est?.baseValue).toBe(73);
     expect(est?.confidence).toBe("low");
     expect(est?.sources).toEqual(["cfs"]);
   });
@@ -44,8 +44,8 @@ describe("aggregate", () => {
 
   it("résume chaque source par sa médiane, puis fait la moyenne des sources à poids égal", () => {
     const est = aggregate([asking(80, "ebay"), asking(120, "ebay"), asking(200, "cfs")]);
-    // eBay : médiane de 68 et 102 = 85 ; CFS : 130 -> (85 + 130) / 2 = 107,5
-    expect(est?.baseValue).toBe(107.5);
+    // eBay : médiane de 68 et 102 = 85 ; CFS : 146 -> (85 + 146) / 2 = 115,5
+    expect(est?.baseValue).toBe(115.5);
   });
 
   it("confiance HAUTE dès qu'une source agrège beaucoup d'annonces", () => {

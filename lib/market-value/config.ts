@@ -11,13 +11,16 @@ import type { Condition, SignalType, SourceName } from "./types";
  * de vente sur le marché de l'occasion (asking * facteur). Les sources ont des
  * poids égaux dans la cote, donc leurs niveaux doivent être alignés : eBay sert
  * d'étalon (marché le plus liquide, vendeurs peu évalués écartés) et les autres
- * sources sont calibrées sur lui. Mesure du 2026-11-02 : prix CFS de référence
- * = 1,29 × médiane eBay pour un même maillot (218 maillots) -> 0,85 / 1,29.
+ * sources sont calibrées sur lui. Mesure du 2026-11-04, depuis que tous les
+ * produits CFS comptent : médiane des produits CFS de référence (état ramené à
+ * GOOD) = 1,17 × médiane eBay pour un même maillot (1 034 maillots ; 1,16 sur
+ * les seuls produits en stock) -> 0,85 / 1,17. Avant (un produit par maillot,
+ * 218 maillots) : 1,29 -> 0,65.
  */
 export const ASKING_ABATEMENT: Record<"ebay" | "cfs", number> = {
   // Best Offer / négociation courants sur eBay.
   ebay: 0.85,
-  cfs: 0.65,
+  cfs: 0.73,
 };
 
 function partnerShopOf(source: SourceName) {

@@ -54,7 +54,7 @@ describe("recomputeAllMarketValues", () => {
     await recomputeAllMarketValues();
 
     const value = await prismaTest.jerseyMarketValue.findUnique({ where: { jerseyId } });
-    // CFS : médiane 120 × 0,65 = 78 ; eBay : 80 × 0,85 = 68 ; poids égaux -> 73.
-    expect(value?.baseValue).toBeCloseTo(73, 0);
+    // CFS : médiane 120 × 0,73 = 87,6 ; eBay : 80 × 0,85 = 68 ; poids égaux -> 77,8.
+    expect(value?.baseValue).toBeCloseTo(77.8, 1);
   });
 });
