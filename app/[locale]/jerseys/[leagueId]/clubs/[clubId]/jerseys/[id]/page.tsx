@@ -28,7 +28,7 @@ import prisma from "@/lib/prisma";
 import { JerseyNavigator } from "@/components/jerseys/jersey-navigator";
 import { WhereToBuy } from "@/components/jerseys/where-to-buy";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
-import { buildWhereToBuy } from "@/lib/where-to-buy";
+import { buildWhereToBuy, cfsClubSearchName } from "@/lib/where-to-buy";
 
 // Rendue sans session pour etre mise en cache : les donnees personnelles
 // (wishlist, collection, role admin) et les compteurs vivants (note, stats) sont
@@ -114,7 +114,10 @@ const getCachedCfsSearchName = cache(async (clubId: string) => {
     orderBy: { createdAt: "asc" },
     select: { cfsName: true },
   });
-  return alias?.cfsName ?? null;
+  const product = alias
+    ? null
+    : await prisma.cfsProduct.findFirst({ where: { jersey: { clubId } }, select: { name: true } });
+  return cfsClubSearchName({ aliasName: alias?.cfsName ?? null, productName: product?.name ?? null });
 });
 
 const OG_LOCALES: Record<string, string> = {

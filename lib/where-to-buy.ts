@@ -1,3 +1,4 @@
+import { parseCfsClub } from "@/lib/cfs-name-parser";
 import type { PartnerOffer } from "@/lib/partner-shops/offers";
 
 /** Recherche CFS affiliée, sans le terme recherché (ajouté en `&q=`). */
@@ -5,6 +6,15 @@ export const CFS_SEARCH_BASE_URL =
   "https://www.classicfootballshirts.co.uk/catalogsearch/result/?ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
 
 export const CFS_LOGO_URL = "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/logo-app/logo-cfs.png";
+
+/**
+ * Nom du club pour la recherche CFS générique : l'alias CFS, sinon le club tel
+ * que CFS l'écrit dans le nom d'un de ses produits (clubs des groupes CFS, sans
+ * alias). Sans l'un ni l'autre, CFS n'a rien pour ce club : pas de recherche.
+ */
+export function cfsClubSearchName(input: { aliasName: string | null; productName: string | null }): string | null {
+  return input.aliasName ?? (input.productName ? parseCfsClub(input.productName) : null);
+}
 
 export interface WhereToBuyLink {
   shop: string;

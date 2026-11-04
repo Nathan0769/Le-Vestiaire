@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildWhereToBuy, CFS_SEARCH_BASE_URL } from "@/lib/where-to-buy";
+import { buildWhereToBuy, cfsClubSearchName, CFS_SEARCH_BASE_URL } from "@/lib/where-to-buy";
 import type { PartnerOffer } from "@/lib/partner-shops/offers";
 
 const parc = (price: number): PartnerOffer => ({
@@ -75,5 +75,21 @@ describe("buildWhereToBuy", () => {
 
   it("dispo nulle part, sans nom anglais : rien", () => {
     expect(buildWhereToBuy({ partnerOffers: [], cfs: null, cfsSearchName: null })).toBeNull();
+  });
+});
+
+describe("cfsClubSearchName", () => {
+  it("prend le nom de l'alias CFS du club", () => {
+    expect(cfsClubSearchName({ aliasName: "Manchester United", productName: "1999-00 Man Utd Home Shirt" })).toBe(
+      "Manchester United"
+    );
+  });
+
+  it("sans alias, lit le club dans le nom d'un produit CFS du club (groupes CFS)", () => {
+    expect(cfsClubSearchName({ aliasName: null, productName: "2024-25 Servette Away Shirt - As New" })).toBe("Servette");
+  });
+
+  it("sans alias ni produit CFS, ne propose pas de recherche (elle ne trouverait rien)", () => {
+    expect(cfsClubSearchName({ aliasName: null, productName: null })).toBeNull();
   });
 });
