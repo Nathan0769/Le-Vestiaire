@@ -11,7 +11,9 @@ import {
   slugToBrand,
 } from "@/lib/brand-utils";
 
-export const revalidate = 3600;
+// Pages de plusieurs Mo (toute la marque) : chaque régénération coûte cher en
+// écritures ISR Vercel. Générées à la première visite, puis au plus une fois par jour.
+export const revalidate = 86400;
 
 const SUPPORTED_LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"];
 
@@ -84,8 +86,10 @@ const getCachedBrandData = cache(async (brandSlug: string) => {
   };
 });
 
+// Pas de pré-génération au déploiement : 3 marques × 7 langues × ~10 Mo
+// réécrits à chaque déploiement (incident de facture ISR, 2026-11-04).
 export function generateStaticParams() {
-  return SUPPORTED_BRAND_SLUGS.map((brand) => ({ brand }));
+  return [];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

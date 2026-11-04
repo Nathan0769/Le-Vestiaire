@@ -6,7 +6,9 @@ import type { Metadata } from "next";
 import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import { SeasonHubView } from "@/components/jerseys/season/season-hub-view";
 
-export const revalidate = 3600;
+// Pages lourdes (jusqu'à 1,8 Mo) : générées à la première visite, puis au plus
+// une fois par jour, pour limiter les écritures ISR Vercel.
+export const revalidate = 86400;
 
 const SUPPORTED_LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"];
 
@@ -107,14 +109,10 @@ const getCachedSeasonData = cache(async (season: string) => {
   };
 });
 
-export async function generateStaticParams() {
-  const seasons = await prisma.jersey.findMany({
-    distinct: ["season"],
-    select: { season: true },
-  });
-  return seasons
-    .filter((s) => SEASON_URL_PATTERN.test(s.season))
-    .map((s) => ({ season: s.season }));
+// Pas de pré-génération au déploiement : 55 saisons × 7 langues réécrites à
+// chaque déploiement (incident de facture ISR, 2026-11-04).
+export function generateStaticParams() {
+  return [];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
