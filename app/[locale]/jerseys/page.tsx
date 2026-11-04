@@ -4,7 +4,10 @@ import { BreadcrumbSchema } from "@/components/seo/breadcrumb-schema";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 
-export const revalidate = 300;
+// Rendu à chaque visite : le cache ISR du catalogue coûtait plus en écritures
+// Vercel (1,23 M unités en 6 jours) qu'il ne faisait gagner sur Neon (retour
+// arrière du 2026-11-04, spec docs/specs/2026-10-27-cache-catalogue-neon.md).
+export const dynamic = "force-dynamic";
 
 const SUPPORTED_LOCALES = ["fr", "en", "es", "de", "pt", "nl", "it"];
 

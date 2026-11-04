@@ -27,7 +27,10 @@ function buildClubLanguageAlternates(leagueId: string, clubId: string) {
   }, {});
 }
 
-export const revalidate = 3600;
+// Rendu à chaque visite : le cache ISR du catalogue coûtait plus en écritures
+// Vercel (1,23 M unités en 6 jours) qu'il ne faisait gagner sur Neon (retour
+// arrière du 2026-11-04, spec docs/specs/2026-10-27-cache-catalogue-neon.md).
+export const dynamic = "force-dynamic";
 
 // Aucun pre-rendu au build : chaque page est rendue a la premiere visite puis
 // servie depuis le cache ISR, sans requete en base pendant `revalidate`.

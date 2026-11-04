@@ -30,10 +30,10 @@ import { WhereToBuy } from "@/components/jerseys/where-to-buy";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
 import { buildWhereToBuy, cfsClubSearchName } from "@/lib/where-to-buy";
 
-// Rendue sans session pour etre mise en cache : les donnees personnelles
-// (wishlist, collection, role admin) et les compteurs vivants (note, stats) sont
-// charges cote client. Les ecritures admin purgent la page via revalidateJerseyPages.
-export const revalidate = 86400;
+// Rendu à chaque visite : le cache ISR du catalogue coûtait plus en écritures
+// Vercel (1,23 M unités en 6 jours) qu'il ne faisait gagner sur Neon (retour
+// arrière du 2026-11-04, spec docs/specs/2026-10-27-cache-catalogue-neon.md).
+export const dynamic = "force-dynamic";
 
 export function generateStaticParams() {
   return [];
