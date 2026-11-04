@@ -1,5 +1,6 @@
 import axios from "axios";
 import type { Browser } from "puppeteer-core";
+import { buildCfsAffiliateUrl } from "@/lib/cfs-affiliate";
 import { parseCfsClub } from "@/lib/cfs-name-parser";
 import { CFS_API_KEY, CFS_BROWSE_BASE } from "@/lib/cfs-constructor";
 
@@ -10,9 +11,6 @@ const CFS_CLEARANCE_PATH = "department/Clearance";
 // CFS renames periodically. We discover it at runtime rather than hardcode a slug.
 const CFS_WEEKLY_DEALS_URL =
   "https://www.classicfootballshirts.com/theme/cfs-weekly-deals.html";
-const AFFILIATE_PARAMS =
-  "ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
-
 const ADULT_SIZES = new Set(["XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL"]);
 const TARGET_SIZES = new Set(["S", "M", "L", "XL"]);
 const MIN_DISCOUNT_PCT = 20;
@@ -142,11 +140,6 @@ function isAdultJersey(item: ConstructorItem): boolean {
   return (item.variations ?? []).some((v) =>
     (v.data.size_product ?? []).some((s) => ADULT_SIZES.has(s))
   );
-}
-
-function buildAffiliateUrl(productUrl: string): string {
-  const sep = productUrl.includes("?") ? "&" : "?";
-  return `${productUrl}${sep}${AFFILIATE_PARAMS}`;
 }
 
 // Non-club group_ids: marketing, categories, brands, seasons. Only used as a
@@ -388,7 +381,7 @@ async function selectAvailablePromos(
         imageUrl: c.imageUrl,
         price: c.price,
         promoPrice: c.promoPrice,
-        affiliateUrl: buildAffiliateUrl(c.productUrl),
+        affiliateUrl: buildCfsAffiliateUrl(c.productUrl),
         club: c.club,
         brand: c.brand,
         source: c.source,

@@ -5,6 +5,7 @@ import {
   clubIdForItem,
   findJerseyIds,
   isGroupedCfsTeam,
+  sameCfsOffer,
   toProduct,
 } from "@/lib/cfs-availability-scraper";
 
@@ -177,5 +178,14 @@ describe("toProduct", () => {
 
   it("écarte une pièce disponible seulement en 3XL ou 4XL", () => {
     expect(toProduct({ ...item, sizes: ["3XL", "4XL"] })).toBeNull();
+  });
+});
+
+describe("sameCfsOffer", () => {
+  it("voit un changement de lien affilié (réécriture des liens existants)", () => {
+    const before = offer(true, 50);
+    expect(sameCfsOffer(before, { ...before, affiliateUrl: "https://www.classicfootballshirts.co.uk/x?ref=mgi4mta" })).toBe(
+      false
+    );
   });
 });

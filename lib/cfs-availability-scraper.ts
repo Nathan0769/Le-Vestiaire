@@ -1,6 +1,7 @@
 import pLimit from "p-limit";
 import prisma from "@/lib/prisma";
 import { parseCfsClub, parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
+import { buildCfsAffiliateUrl } from "@/lib/cfs-affiliate";
 import { fetchCfsTeams, fetchTeamProducts, isAllowedCfsUrl, type CfsItem } from "@/lib/cfs-constructor";
 import { isReferenceListing, listingTraits } from "@/lib/market-value/listing-traits";
 import { nextCfsProductState, pickDisplayedOffer, type CfsProductState, type SeenCfsProduct } from "@/lib/cfs-products";
@@ -22,7 +23,6 @@ const UPSERT_CONCURRENCY = 8;
 const CREATE_BATCH = 1_000;
 const CREATE_CONCURRENCY = 4;
 const TOUCH_BATCH = 5_000;
-const AFFILIATE_PARAMS = "ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
 const STALE_THRESHOLD_HOURS = 48;
 /** Marge sous le maxDuration de 300 s du cron. */
 const DEFAULT_BUDGET_MS = 240_000;
@@ -90,11 +90,6 @@ export function cfsChangedJerseyIds(
   return [...changed];
 }
 
-function buildAffiliateUrl(productUrl: string): string {
-  const sep = productUrl.includes("?") ? "&" : "?";
-  return `${productUrl}${sep}${AFFILIATE_PARAMS}`;
-}
-
 /** Produit CFS gardé (en stock ou non), ou null s'il ne correspond à aucun maillot du catalogue. */
 export function toProduct(item: CfsItem): SeenCfsProduct | null {
   if (!item.price || !item.imageUrl || !isAllowedCfsUrl(item.url)) return null;
@@ -115,7 +110,7 @@ const toDisplayed = (p: SeenCfsProduct): CfsAvailabilityUpsertData => ({
   price: p.price,
   promoPrice: p.promoPrice,
   productUrl: p.productUrl,
-  affiliateUrl: buildAffiliateUrl(p.productUrl),
+  affiliateUrl: buildCfsAffiliateUrl(p.productUrl),
   imageUrl: p.imageUrl,
   isReference: p.isReference,
   condition: p.condition,
@@ -221,10 +216,11 @@ export function findJerseyIds(
   return [];
 }
 
-const sameOffer = (a: CfsAvailabilityUpsertData, b: CfsAvailabilityUpsertData) =>
+export const sameCfsOffer = (a: CfsAvailabilityUpsertData, b: CfsAvailabilityUpsertData) =>
   a.price === b.price &&
   a.promoPrice === b.promoPrice &&
   a.productUrl === b.productUrl &&
+  a.affiliateUrl === b.affiliateUrl &&
   a.imageUrl === b.imageUrl &&
   a.isReference === b.isReference &&
   a.condition === b.condition;
@@ -438,7 +434,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
 
   const toWrite = [...displayed].filter(([jerseyId, offer]) => {
     const old = before.get(jerseyId);
-    return !old || !sameOffer(old, offer);
+    return !old || !sameCfsOffer(old, offer);
   });
   await Promise.all(
     toWrite.map(([jerseyId, data]) =>

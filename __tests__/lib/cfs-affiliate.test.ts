@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { selectFeaturedCfsPromos } from "@/lib/cfs-affiliate";
+import { buildCfsAffiliateUrl, selectFeaturedCfsPromos } from "@/lib/cfs-affiliate";
 
 type P = { id: string; club: string | null; source: string };
 const mk = (id: string, club: string | null, source = "clearance"): P => ({
@@ -108,5 +108,21 @@ describe("selectFeaturedCfsPromos", () => {
     ];
     const featured = selectFeaturedCfsPromos(input).slice(0, 6);
     expect(featured).toHaveLength(6);
+  });
+});
+
+describe("buildCfsAffiliateUrl", () => {
+  it("pointe vers le .co.uk : Tapfiliate ne compte pas les visites du .com", () => {
+    expect(
+      buildCfsAffiliateUrl("https://www.classicfootballshirts.com/2024-25-servette-away-shirtip2174-srv-a24-wte.html")
+    ).toBe(
+      "https://www.classicfootballshirts.co.uk/2024-25-servette-away-shirtip2174-srv-a24-wte.html?ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate"
+    );
+  });
+
+  it("garde un lien déjà en .co.uk et ajoute les paramètres après ceux existants", () => {
+    expect(buildCfsAffiliateUrl("https://www.classicfootballshirts.co.uk/x.html?colour=red")).toBe(
+      "https://www.classicfootballshirts.co.uk/x.html?colour=red&ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate"
+    );
   });
 });

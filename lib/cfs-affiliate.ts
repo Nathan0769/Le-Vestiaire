@@ -1,6 +1,20 @@
 export const CFS_CLEARANCE_URL =
   "https://www.classicfootballshirts.co.uk/clearance/?ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
 
+const AFFILIATE_PARAMS = "ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
+// Le programme Tapfiliate ne compte que les visites du site britannique : un
+// lien .com avec les mêmes paramètres arrive sur la fiche sans être compté
+// (vérifié par Nathan le 2026-11-04). L'API renvoie des liens .com.
+const AFFILIATE_HOST = "www.classicfootballshirts.co.uk";
+
+/** Lien affilié d'un produit CFS : même chemin sur le .co.uk, paramètres Tapfiliate ajoutés. */
+export function buildCfsAffiliateUrl(productUrl: string): string {
+  const url = new URL(productUrl);
+  url.host = AFFILIATE_HOST;
+  const base = url.toString();
+  return `${base}${url.search ? "&" : "?"}${AFFILIATE_PARAMS}`;
+}
+
 const WEEKLY_DEALS_SOURCE = "cfs-weekly-deals";
 
 interface FeaturablePromo {
