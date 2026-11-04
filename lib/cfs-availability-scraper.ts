@@ -116,6 +116,59 @@ const toDisplayed = (p: SeenCfsProduct): CfsAvailabilityUpsertData => ({
   condition: p.condition,
 });
 
+const STORED_READ_BATCH = 20_000;
+
+/**
+ * Produits déjà en base, sans les textes (nom, liens) : lus d'un bloc, les
+ * ~200 000 lignes complètes prennent 1,7 Go et font tomber la fonction Vercel
+ * (incident du 2026-11-04). Lecture par paquets, nombres en float8.
+ */
+async function loadStoredProducts() {
+  type Row = {
+    id: string;
+    cfsId: string;
+    jerseyId: string;
+    price: number;
+    promoPrice: number | null;
+    inStock: boolean;
+    isReference: boolean;
+    condition: Condition | null;
+    soldAt: Date | null;
+    soldPrice: number | null;
+    lastSeenAt: Date;
+  };
+  const stored = new Map<
+    string,
+    { id: string; jerseyId: string; lastSeenAt: Date; state: Omit<CfsProductState, "name" | "productUrl" | "imageUrl"> }
+  >();
+  let cursor = "";
+  for (;;) {
+    const rows = await prisma.$queryRaw<Row[]>`
+      SELECT id, "cfsId", "jerseyId", price::float8 AS price, "promoPrice"::float8 AS "promoPrice",
+             "inStock", "isReference", condition::text AS condition, "soldAt",
+             "soldPrice"::float8 AS "soldPrice", "lastSeenAt"
+      FROM cfs_products WHERE id > ${cursor} ORDER BY id LIMIT ${STORED_READ_BATCH}`;
+    for (const r of rows) {
+      stored.set(`${r.cfsId}|${r.jerseyId}`, {
+        id: r.id,
+        jerseyId: r.jerseyId,
+        lastSeenAt: r.lastSeenAt,
+        state: {
+          price: r.price,
+          promoPrice: r.promoPrice,
+          inStock: r.inStock,
+          isReference: r.isReference,
+          condition: r.condition,
+          soldAt: r.soldAt,
+          soldPrice: r.soldPrice,
+        },
+      });
+    }
+    if (rows.length < STORED_READ_BATCH) return stored;
+    cursor = rows[rows.length - 1].id;
+  }
+}
+
 const chunk = <T>(items: T[], size: number): T[][] =>
   Array.from({ length: Math.ceil(items.length / size) }, (_, i) => items.slice(i * size, (i + 1) * size));
 
@@ -320,29 +373,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
   const staleThreshold = new Date(now.getTime() - STALE_THRESHOLD_HOURS * 60 * 60 * 1000);
 
   // 1. Produits : création, mise à jour des lignes changées, date de passage des autres.
-  const storedRows = await prisma.cfsProduct.findMany();
-  const stored = new Map(
-    storedRows.map((r) => [
-      `${r.cfsId}|${r.jerseyId}`,
-      {
-        id: r.id,
-        jerseyId: r.jerseyId,
-        lastSeenAt: r.lastSeenAt,
-        state: {
-          name: r.name,
-          price: Number(r.price),
-          promoPrice: r.promoPrice === null ? null : Number(r.promoPrice),
-          inStock: r.inStock,
-          isReference: r.isReference,
-          condition: r.condition,
-          productUrl: r.productUrl,
-          imageUrl: r.imageUrl,
-          soldAt: r.soldAt,
-          soldPrice: r.soldPrice === null ? null : Number(r.soldPrice),
-        } satisfies CfsProductState,
-      },
-    ])
-  );
+  const stored = await loadStoredProducts();
 
   const toCreate: (CfsProductState & { cfsId: string; jerseyId: string })[] = [];
   const toUpdate: { id: string; state: CfsProductState }[] = [];
@@ -357,7 +388,14 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
 
   for (const [key, { cfsId, jerseyId, product }] of seen) {
     const old = stored.get(key);
-    const next = nextCfsProductState(old?.state, product, now);
+    // Textes non relus (mémoire) : réputés inchangés, réécrits au prochain vrai changement.
+    const oldState = old && {
+      ...old.state,
+      name: product.name,
+      productUrl: product.productUrl,
+      imageUrl: product.imageUrl,
+    };
+    const next = nextCfsProductState(oldState, product, now);
     if (next.sale) stats.sales++;
     if (next.cancelled) stats.cancelledSales++;
     if (!old) toCreate.push({ ...next.state, cfsId, jerseyId });
@@ -365,10 +403,15 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     else unchangedIds.push(old.id);
     keep(jerseyId, next.state);
   }
-  // Produit non revu (équipe non atteinte cette nuit) : gardé jusqu'à la purge de 48 h.
+  // Maillot sans produit revu mais avec des produits récents (équipe non atteinte
+  // cette nuit) : son offre affichée reste telle quelle jusqu'à la purge de 48 h.
+  const untouchedJerseys = new Set<string>();
   for (const [key, old] of stored) {
-    if (!seen.has(key) && old.lastSeenAt >= staleThreshold) keep(old.jerseyId, old.state);
+    if (!seen.has(key) && old.lastSeenAt >= staleThreshold && !productsByJersey.has(old.jerseyId)) {
+      untouchedJerseys.add(old.jerseyId);
+    }
   }
+  stored.clear();
 
   const createLimit = pLimit(CREATE_CONCURRENCY);
   await Promise.all(
@@ -448,7 +491,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     )
   );
   // Plus aucun produit en stock : le lien disparaît de la fiche.
-  const removedIds = [...before.keys()].filter((id) => !displayed.has(id));
+  const removedIds = [...before.keys()].filter((id) => !displayed.has(id) && !untouchedJerseys.has(id));
   for (const ids of chunk(removedIds, TOUCH_BATCH)) {
     await prisma.cfsAvailability.deleteMany({ where: { jerseyId: { in: ids } } });
   }
