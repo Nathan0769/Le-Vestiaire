@@ -29,4 +29,32 @@ describe("recomputeAllMarketValues", () => {
 
     expect(await prismaTest.jerseyMarketValueSnapshot.count({ where: { jerseyId } })).toBe(2);
   });
+
+  it("compte tous les produits CFS de référence, ruptures comprises, mais pas les autres versions", async () => {
+    const product = (cfsId: string, price: number, over: { inStock?: boolean; isReference?: boolean } = {}) => ({
+      cfsId,
+      jerseyId,
+      name: `Produit ${cfsId}`,
+      price,
+      inStock: over.inStock ?? true,
+      isReference: over.isReference ?? true,
+      condition: "GOOD" as const,
+      productUrl: `https://www.classicfootballshirts.com/${cfsId}.html`,
+      imageUrl: `https://www.classicfootballshirts.co.uk/${cfsId}.jpg`,
+    });
+    await prismaTest.cfsProduct.createMany({
+      data: [
+        product("a", 100),
+        product("b", 120, { inStock: false }),
+        product("c", 140),
+        product("pro", 400, { isReference: false }),
+      ],
+    });
+
+    await recomputeAllMarketValues();
+
+    const value = await prismaTest.jerseyMarketValue.findUnique({ where: { jerseyId } });
+    // CFS : médiane 120 × 0,65 = 78 ; eBay : 80 × 0,85 = 68 ; poids égaux -> 73.
+    expect(value?.baseValue).toBeCloseTo(73, 0);
+  });
 });

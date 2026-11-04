@@ -26,6 +26,8 @@ function partnerShopOf(source: SourceName) {
 
 /** Facteur asking -> sold d'un signal ; null = source inconnue (boutique retirée du registre), signal ignoré. */
 export function signalAbatement(source: SourceName, type: SignalType): number | null {
+  // Vente CFS déduite : faite au niveau de prix de CFS, abattue comme un prix
+  // demandé CFS (à recalibrer à partir de 50 ventes).
   if (source === "ebay" || source === "cfs") return ASKING_ABATEMENT[source];
   const shop = partnerShopOf(source);
   if (!shop) return null;

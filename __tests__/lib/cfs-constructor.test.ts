@@ -33,6 +33,11 @@ describe("buildBrowseUrl", () => {
     expect(url.searchParams.has("filters[era]")).toBe(false);
   });
 
+  it("demande les champs cachés, dont le stock (in_stock)", () => {
+    const url = new URL(buildBrowseUrl({ team: "Liverpool", style: "Home", page: 1 }));
+    expect(url.searchParams.get("fmt_options[show_hidden_fields]")).toBe("true");
+  });
+
   it("ajoute l'époque quand elle est fournie", () => {
     const url = new URL(buildBrowseUrl({ team: "Liverpool", style: "Home", era: "1990s", page: 1 }));
     expect(url.searchParams.getAll("filters[era]")).toEqual(["1990s"]);
@@ -56,6 +61,34 @@ describe("normalizeCfsItem", () => {
       data: { ...rows[0].data, price_eur: 80, special_price_eur: 80 },
     });
     expect(item.promoPrice).toBeNull();
+  });
+
+  it("lit l'identifiant CFS du produit", () => {
+    const item = normalizeCfsItem({ data: { ...rows[0].data, id: "IP2174-SRV-A24-WTE" } });
+    expect(item.cfsId).toBe("IP2174-SRV-A24-WTE");
+  });
+
+  it.each([
+    ["1", ["M"]],
+    ["True", ["M"]],
+    ["0", []],
+    ["False", []],
+    [undefined, []],
+  ])("in_stock %s sur le produit -> tailles en stock %j", (inStock, expected) => {
+    const item = normalizeCfsItem({ data: { ...rows[0].data, size_product: ["M"], in_stock: inStock } });
+    expect(item.inStockSizes).toEqual(expected);
+  });
+
+  it("lit le stock taille par taille dans les variantes (le produit ne reflète qu'une variante)", () => {
+    const item = normalizeCfsItem({
+      data: { ...rows[0].data, size_product: ["L"], in_stock: "False" },
+      variations: [
+        { data: { size_product: ["XXL"], in_stock: "1" } },
+        { data: { size_product: ["XL"], in_stock: "0" } },
+        { data: { size_product: ["L"], in_stock: "False" } },
+      ],
+    });
+    expect([item.sizes, item.inStockSizes]).toEqual([["L", "XL", "XXL"], ["XXL"]]);
   });
 
   it("ne garde que les tailles adultes d'une pièce unique", () => {

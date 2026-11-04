@@ -22,6 +22,7 @@ const ERAS = ["1960s", "1970s", "1980s", "1990s", "2000s", "2010s", "2020s"];
 
 export interface CfsRawItem {
   data: {
+    id?: string;
     name: string;
     url: string;
     image_url?: string | null;
@@ -30,11 +31,17 @@ export interface CfsRawItem {
     prodcat?: string | null;
     sleeve_length?: string | null;
     size_product?: (string | number)[] | string | number | null;
+    /** Champ caché ("1"/"True" ou "0"/"False"), renvoyé avec show_hidden_fields. */
+    in_stock?: string | boolean | null;
   };
-  variations?: { data: { size_product?: (string | number)[] | string | number | null } }[];
+  variations?: {
+    data: { size_product?: (string | number)[] | string | number | null; in_stock?: string | boolean | null };
+  }[];
 }
 
 export interface CfsItem {
+  /** Identifiant CFS (data.id) ; le lien produit à défaut. */
+  cfsId: string;
   name: string;
   url: string;
   imageUrl: string | null;
@@ -42,8 +49,10 @@ export interface CfsItem {
   promoPrice: number | null;
   condition: Condition | null;
   longSleeve: boolean;
-  /** Tailles adultes disponibles. */
+  /** Tailles adultes proposées, en stock ou non. */
   sizes: string[];
+  /** Tailles adultes en stock. */
+  inStockSizes: string[];
 }
 
 export function buildBrowseUrl(input: { team: string; style: string; era?: string; page: number }): string {
@@ -51,6 +60,8 @@ export function buildBrowseUrl(input: { team: string; style: string; era?: strin
   url.searchParams.set("key", CFS_API_KEY);
   url.searchParams.set("num_results_per_page", String(PAGE_SIZE));
   url.searchParams.set("page", String(input.page));
+  // L'API renvoie aussi les produits épuisés ; seul ce champ caché les distingue.
+  url.searchParams.set("fmt_options[show_hidden_fields]", "true");
   url.searchParams.append("filters[product_style]", input.style);
   for (const size of ADULT_SIZES) url.searchParams.append("filters[size_product]", size);
   for (const department of DEPARTMENTS) url.searchParams.append("filters[department]", department);
@@ -74,14 +85,19 @@ export function mapCfsCondition(prodcat: string | null | undefined): Condition |
 const toSizes = (value: (string | number)[] | string | number | null | undefined): string[] =>
   (Array.isArray(value) ? value : value == null ? [] : [value]).map((s) => String(s).toUpperCase());
 
+const isInStock = (value: string | boolean | null | undefined) =>
+  ["1", "true"].includes(String(value).toLowerCase());
+
 export function normalizeCfsItem(raw: CfsRawItem): CfsItem {
   const price = raw.data.price_eur ?? null;
   const special = raw.data.special_price_eur ?? null;
-  const sizes = new Set([
-    ...toSizes(raw.data.size_product),
-    ...(raw.variations ?? []).flatMap((v) => toSizes(v.data.size_product)),
-  ]);
+  // Le produit ne reflète qu'une de ses variantes (une par taille) : le stock se
+  // lit variante par variante.
+  const variants = [raw.data, ...(raw.variations ?? []).map((v) => v.data)];
+  const sizes = new Set(variants.flatMap((v) => toSizes(v.size_product)));
+  const inStock = new Set(variants.filter((v) => isInStock(v.in_stock)).flatMap((v) => toSizes(v.size_product)));
   return {
+    cfsId: raw.data.id || raw.data.url,
     name: raw.data.name,
     url: raw.data.url,
     imageUrl: raw.data.image_url || null,
@@ -90,6 +106,7 @@ export function normalizeCfsItem(raw: CfsRawItem): CfsItem {
     condition: mapCfsCondition(raw.data.prodcat),
     longSleeve: raw.data.sleeve_length === "Long-Sleeve",
     sizes: ADULT_SIZES.filter((s) => sizes.has(s)),
+    inStockSizes: ADULT_SIZES.filter((s) => inStock.has(s)),
   };
 }
 

@@ -1,40 +1,58 @@
 import pLimit from "p-limit";
 import prisma from "@/lib/prisma";
-import { parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
+import { parseCfsClub, parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
 import { fetchCfsTeams, fetchTeamProducts, isAllowedCfsUrl, type CfsItem } from "@/lib/cfs-constructor";
 import { isReferenceListing, listingTraits } from "@/lib/market-value/listing-traits";
+import { nextCfsProductState, pickDisplayedOffer, type CfsProductState, type SeenCfsProduct } from "@/lib/cfs-products";
 import { normalizeClubName } from "@/lib/partner-shops/club-name";
 import { seasonCandidates, spanSeasons } from "@/lib/partner-shops/season-candidates";
 import type { Condition } from "@/lib/market-value/types";
 
 /**
- * Dispos CFS de toutes les équipes reliées à un club du catalogue (CfsClubAlias).
- * Spec : docs/specs/2026-11-02-cfs-catalogue-complet.md.
+ * Produits CFS de toutes les équipes reliées à un club du catalogue (CfsClubAlias)
+ * et des groupes de clubs : une ligne CfsProduct par (produit, maillot), ruptures
+ * comprises, puis CfsAvailability = le produit en stock le moins cher du maillot.
+ * Specs : docs/specs/2026-11-02-cfs-catalogue-complet.md,
+ * docs/specs/2026-11-03-cfs-produits-stock.md.
  */
 
 // Le réseau est le goulot ; les écritures partagent le pool Prisma.
 const TEAM_FETCH_CONCURRENCY = 6;
 const UPSERT_CONCURRENCY = 8;
+const CREATE_BATCH = 1_000;
+const CREATE_CONCURRENCY = 4;
+const TOUCH_BATCH = 5_000;
 const AFFILIATE_PARAMS = "ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
 const STALE_THRESHOLD_HOURS = 48;
 /** Marge sous le maxDuration de 300 s du cron. */
 const DEFAULT_BUDGET_MS = 240_000;
-// Au moins une taille courante : une pièce en XS ou 4XL seulement n'intéresse presque personne.
-const TARGET_SIZES = new Set(["S", "M", "L", "XL"]);
+// Au moins une taille de XS à XXL : une pièce en 3XL ou 4XL seulement n'intéresse presque personne.
+const TARGET_SIZES = new Set(["XS", "S", "M", "L", "XL", "XXL"]);
 // Coupe femme : pas un maillot du catalogue (le filtre de l'API ne la distingue pas).
 const WOMEN_RE = /\bwom[ae]n'?s?\b/i;
 
 interface ScrapeStats {
   teamsTotal: number;
   teamsScanned: number;
-  /** Équipes CFS sans alias vers un club du catalogue. */
+  /** Équipes CFS sans alias vers un club du catalogue (hors groupes). */
   teamsWithoutAlias: number;
   /** Équipes aliasées non parcourues faute de temps. */
   teamsNotReached: string[];
   productsSeen: number;
   matched: number;
-  written: number;
+  /** Lignes CfsProduct vues : créées, modifiées, en stock. */
+  products: number;
+  productsCreated: number;
+  productsUpdated: number;
+  productsInStock: number;
+  /** Passages en rupture (ventes déduites) et retours sous 48 h. */
+  sales: number;
+  cancelledSales: number;
+  /** Lignes CfsProduct non vues depuis 48 h, supprimées. */
   purged: number;
+  /** Offres affichées (CfsAvailability) écrites, et retirées faute de produit en stock. */
+  written: number;
+  removed: number;
   /** Maillots dont la dispo affichée a changé : fiches ISR à régénérer. */
   changedJerseyIds: string[];
 }
@@ -72,40 +90,83 @@ export function cfsChangedJerseyIds(
   return [...changed];
 }
 
-const CONDITION_RANK: Record<Condition, number> = { MINT: 4, EXCELLENT: 3, GOOD: 2, FAIR: 1, POOR: 0 };
-const conditionRank = (c: Condition | null) => (c ? CONDITION_RANK[c] : -1);
-
-/**
- * Plusieurs produits CFS pour un même maillot : on garde de préférence un
- * maillot supporter manches courtes (le seul qui compte dans la cote), puis le
- * meilleur état. À égalité, le dernier produit vu l'emporte.
- */
-export function pickCfsOffer(
-  current: CfsAvailabilityUpsertData | undefined,
-  candidate: CfsAvailabilityUpsertData
-): CfsAvailabilityUpsertData {
-  if (!current) return candidate;
-  if (current.isReference !== candidate.isReference) return current.isReference ? current : candidate;
-  return conditionRank(current.condition) > conditionRank(candidate.condition) ? current : candidate;
-}
-
 function buildAffiliateUrl(productUrl: string): string {
   const sep = productUrl.includes("?") ? "&" : "?";
   return `${productUrl}${sep}${AFFILIATE_PARAMS}`;
 }
 
-function toOffer(item: CfsItem): CfsAvailabilityUpsertData | null {
+/** Produit CFS gardé (en stock ou non), ou null s'il ne correspond à aucun maillot du catalogue. */
+export function toProduct(item: CfsItem): SeenCfsProduct | null {
   if (!item.price || !item.imageUrl || !isAllowedCfsUrl(item.url)) return null;
   if (WOMEN_RE.test(item.name) || !item.sizes.some((s) => TARGET_SIZES.has(s))) return null;
   return {
+    name: item.name,
     price: item.price,
     promoPrice: item.promoPrice,
-    productUrl: item.url,
-    affiliateUrl: buildAffiliateUrl(item.url),
-    imageUrl: item.imageUrl,
+    inStock: item.inStockSizes.some((s) => TARGET_SIZES.has(s)),
     isReference: !item.longSleeve && isReferenceListing(listingTraits(item.name)),
     condition: item.condition,
+    productUrl: item.url,
+    imageUrl: item.imageUrl,
   };
+}
+
+const toDisplayed = (p: SeenCfsProduct): CfsAvailabilityUpsertData => ({
+  price: p.price,
+  promoPrice: p.promoPrice,
+  productUrl: p.productUrl,
+  affiliateUrl: buildAffiliateUrl(p.productUrl),
+  imageUrl: p.imageUrl,
+  isReference: p.isReference,
+  condition: p.condition,
+});
+
+const chunk = <T>(items: T[], size: number): T[][] =>
+  Array.from({ length: Math.ceil(items.length / size) }, (_, i) => items.slice(i * size, (i + 1) * size));
+
+/**
+ * Groupe CFS qui rassemble plusieurs clubs ("Swiss Teams", "Other Italian
+ * Clubs", "Other") : pas d'alias possible, le club se lit dans chaque produit.
+ */
+export function isGroupedCfsTeam(name: string): boolean {
+  return /^Other$/.test(name) || /^Other\b.*\b(?:Clubs|Teams)$/.test(name) || /\bTeams$/.test(name);
+}
+
+// Noms courts qu'un groupe CFS emploie pour un autre club que celui du catalogue
+// (la sélection d'Andorre, Bohemian FC de Dublin, Racing Club d'Avellaneda).
+// Relevés au premier passage sur les groupes, le 2026-11-03.
+const AMBIGUOUS_GROUPED_NAMES = new Set(["andorra", "bohemians", "racing", "liverpool"]);
+
+/** Club du catalogue d'un produit : celui de l'alias, sinon le club lu dans le nom (groupe). */
+export function clubIdForItem(
+  team: { name: string; clubId?: string },
+  productName: string,
+  clubIndex: Map<string, string>
+): string | undefined {
+  if (team.clubId) return team.clubId;
+  const club = parseCfsClub(productName);
+  const key = club ? normalizeClubName(club) : "";
+  return key && !AMBIGUOUS_GROUPED_NAMES.has(key) ? clubIndex.get(key) : undefined;
+}
+
+/**
+ * Nom normalisé -> clubId : alias CFS, puis nom et nom court des clubs. Un nom
+ * porté par deux clubs n'est pas indexé (comme loadClubIndex des boutiques).
+ */
+async function buildClubNameIndex(aliases: { cfsName: string; clubId: string }[]): Promise<Map<string, string>> {
+  const clubs = await prisma.club.findMany({ select: { id: true, name: true, shortName: true } });
+  const byName = new Map<string, string | null>();
+  for (const club of clubs) {
+    for (const key of new Set([normalizeClubName(club.name), normalizeClubName(club.shortName)])) {
+      if (!key) continue;
+      const existing = byName.get(key);
+      byName.set(key, existing === undefined || existing === club.id ? club.id : null);
+    }
+  }
+  const index = new Map<string, string>();
+  for (const [key, clubId] of byName) if (clubId) index.set(key, clubId);
+  for (const alias of aliases) index.set(normalizeClubName(alias.cfsName), alias.clubId);
+  return index;
 }
 
 // Une requête pour tous les clubs aliasés ; variante la plus basse par
@@ -177,8 +238,15 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     teamsNotReached: [],
     productsSeen: 0,
     matched: 0,
-    written: 0,
+    products: 0,
+    productsCreated: 0,
+    productsUpdated: 0,
+    productsInStock: 0,
+    sales: 0,
+    cancelledSales: 0,
     purged: 0,
+    written: 0,
+    removed: 0,
     changedJerseyIds: [],
   };
 
@@ -197,16 +265,23 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
   const followedClubs = new Set(followed.map((f) => f.clubId));
   const queue = teams
     .map((t) => ({ ...t, clubId: clubByTeam.get(normalizeClubName(t.name)) }))
-    .filter((t): t is typeof t & { clubId: string } => {
-      if (!t.clubId) stats.teamsWithoutAlias++;
-      return !!t.clubId;
+    .filter((t) => {
+      if (t.clubId || isGroupedCfsTeam(t.name)) return true;
+      stats.teamsWithoutAlias++;
+      return false;
     })
-    // Clubs suivis d'abord : un manque de temps ne touche pas les fiches regardées.
-    .sort((a, b) => Number(followedClubs.has(b.clubId)) - Number(followedClubs.has(a.clubId)) || b.count - a.count);
+    // Clubs suivis d'abord, groupes ensuite : un manque de temps ne touche pas les fiches regardées.
+    .sort(
+      (a, b) =>
+        Number(!!b.clubId && followedClubs.has(b.clubId)) - Number(!!a.clubId && followedClubs.has(a.clubId)) ||
+        b.count - a.count
+    );
 
-  const jerseyIndex = await buildJerseyIndex([...new Set(queue.map((t) => t.clubId))]);
+  const clubIndex = await buildClubNameIndex(aliases);
+  const jerseyIndex = await buildJerseyIndex([...new Set(clubIndex.values())]);
 
-  const matches = new Map<string, CfsAvailabilityUpsertData>();
+  // Clé `${cfsId}|${jerseyId}` : un produit vu dans son équipe et dans un groupe ne compte qu'une fois.
+  const seen = new Map<string, { cfsId: string; jerseyId: string; product: SeenCfsProduct }>();
   const limit = pLimit(TEAM_FETCH_CONCURRENCY);
   await Promise.all(
     queue.map((team) =>
@@ -227,21 +302,112 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
         stats.productsSeen += products.length;
 
         for (const item of products) {
-          const offer = toOffer(item);
+          const product = toProduct(item);
           const season = parseCfsSeason(item.name);
           const type = parseCfsType(item.name);
-          if (!offer || !season || !type) continue;
+          if (!product || !season || !type) continue;
+          const clubId = clubIdForItem(team, item.name, clubIndex);
+          if (!clubId) continue;
           const base = baseJerseyType(item.name);
-          const jerseyIds = findJerseyIds(jerseyIndex, team.clubId, season, base ? [type, base] : [type]);
+          const jerseyIds = findJerseyIds(jerseyIndex, clubId, season, base ? [type, base] : [type]);
           if (jerseyIds.length === 0) continue;
           stats.matched++;
           for (const jerseyId of jerseyIds) {
-            matches.set(jerseyId, pickCfsOffer(matches.get(jerseyId), offer));
+            seen.set(`${item.cfsId}|${jerseyId}`, { cfsId: item.cfsId, jerseyId, product });
           }
         }
       })
     )
   );
+
+  const now = new Date();
+  const staleThreshold = new Date(now.getTime() - STALE_THRESHOLD_HOURS * 60 * 60 * 1000);
+
+  // 1. Produits : création, mise à jour des lignes changées, date de passage des autres.
+  const storedRows = await prisma.cfsProduct.findMany();
+  const stored = new Map(
+    storedRows.map((r) => [
+      `${r.cfsId}|${r.jerseyId}`,
+      {
+        id: r.id,
+        jerseyId: r.jerseyId,
+        lastSeenAt: r.lastSeenAt,
+        state: {
+          name: r.name,
+          price: Number(r.price),
+          promoPrice: r.promoPrice === null ? null : Number(r.promoPrice),
+          inStock: r.inStock,
+          isReference: r.isReference,
+          condition: r.condition,
+          productUrl: r.productUrl,
+          imageUrl: r.imageUrl,
+          soldAt: r.soldAt,
+          soldPrice: r.soldPrice === null ? null : Number(r.soldPrice),
+        } satisfies CfsProductState,
+      },
+    ])
+  );
+
+  const toCreate: (CfsProductState & { cfsId: string; jerseyId: string })[] = [];
+  const toUpdate: { id: string; state: CfsProductState }[] = [];
+  const unchangedIds: string[] = [];
+  // État courant de chaque produit encore valable, par maillot, pour l'offre affichée.
+  const productsByJersey = new Map<string, CfsProductState[]>();
+  const keep = (jerseyId: string, state: CfsProductState) => {
+    const list = productsByJersey.get(jerseyId);
+    if (list) list.push(state);
+    else productsByJersey.set(jerseyId, [state]);
+  };
+
+  for (const [key, { cfsId, jerseyId, product }] of seen) {
+    const old = stored.get(key);
+    const next = nextCfsProductState(old?.state, product, now);
+    if (next.sale) stats.sales++;
+    if (next.cancelled) stats.cancelledSales++;
+    if (!old) toCreate.push({ ...next.state, cfsId, jerseyId });
+    else if (next.changed) toUpdate.push({ id: old.id, state: next.state });
+    else unchangedIds.push(old.id);
+    keep(jerseyId, next.state);
+  }
+  // Produit non revu (équipe non atteinte cette nuit) : gardé jusqu'à la purge de 48 h.
+  for (const [key, old] of stored) {
+    if (!seen.has(key) && old.lastSeenAt >= staleThreshold) keep(old.jerseyId, old.state);
+  }
+
+  const createLimit = pLimit(CREATE_CONCURRENCY);
+  await Promise.all(
+    chunk(toCreate, CREATE_BATCH).map((batch) =>
+      createLimit(() =>
+        prisma.cfsProduct.createMany({
+          data: batch.map((p) => ({ ...p, firstSeenAt: now, lastSeenAt: now })),
+          skipDuplicates: true,
+        })
+      )
+    )
+  );
+  const upsertLimit = pLimit(UPSERT_CONCURRENCY);
+  await Promise.all(
+    toUpdate.map(({ id, state }) =>
+      upsertLimit(() => prisma.cfsProduct.update({ where: { id }, data: { ...state, lastSeenAt: now } }))
+    )
+  );
+  for (const ids of chunk(unchangedIds, TOUCH_BATCH)) {
+    await prisma.cfsProduct.updateMany({ where: { id: { in: ids } }, data: { lastSeenAt: now } });
+  }
+  const purged = await prisma.cfsProduct.deleteMany({ where: { lastSeenAt: { lt: staleThreshold } } });
+
+  stats.products = seen.size;
+  stats.productsCreated = toCreate.length;
+  stats.productsUpdated = toUpdate.length;
+  stats.productsInStock = [...seen.values()].filter((s) => s.product.inStock).length;
+  stats.purged = purged.count;
+
+  // 2. Offre affichée : le produit en stock le moins cher de chaque maillot.
+  const displayed = new Map<string, CfsAvailabilityUpsertData>();
+  for (const [jerseyId, products] of productsByJersey) {
+    const best = pickDisplayedOffer(products);
+    if (best) displayed.set(jerseyId, toDisplayed(best));
+  }
 
   const existing = await prisma.cfsAvailability.findMany({
     select: {
@@ -270,46 +436,29 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     ])
   );
 
-  // Seules les dispos nouvelles ou modifiées sont réécrites ; les autres ne
-  // reçoivent que leur date de passage, en une requête.
-  const now = new Date();
-  const toWrite = [...matches].filter(([jerseyId, offer]) => {
+  const toWrite = [...displayed].filter(([jerseyId, offer]) => {
     const old = before.get(jerseyId);
     return !old || !sameOffer(old, offer);
   });
-  const written = new Set(toWrite.map(([jerseyId]) => jerseyId));
-  const unchangedIds = [...matches.keys()].filter((id) => !written.has(id));
-  const upsertLimit = pLimit(UPSERT_CONCURRENCY);
   await Promise.all(
     toWrite.map(([jerseyId, data]) =>
       upsertLimit(() =>
         prisma.cfsAvailability.upsert({
           where: { jerseyId },
-          create: { jerseyId, ...data },
+          create: { jerseyId, ...data, lastSeenAt: now },
           update: { ...data, lastSeenAt: now },
         })
       )
     )
   );
-  if (unchangedIds.length > 0) {
-    await prisma.cfsAvailability.updateMany({ where: { jerseyId: { in: unchangedIds } }, data: { lastSeenAt: now } });
+  // Plus aucun produit en stock : le lien disparaît de la fiche.
+  const removedIds = [...before.keys()].filter((id) => !displayed.has(id));
+  for (const ids of chunk(removedIds, TOUCH_BATCH)) {
+    await prisma.cfsAvailability.deleteMany({ where: { jerseyId: { in: ids } } });
   }
   stats.written = toWrite.length;
-
-  const staleThreshold = new Date(Date.now() - STALE_THRESHOLD_HOURS * 60 * 60 * 1000);
-  const stale = await prisma.cfsAvailability.findMany({
-    where: { lastSeenAt: { lt: staleThreshold } },
-    select: { jerseyId: true },
-  });
-  const purged = await prisma.cfsAvailability.deleteMany({
-    where: { jerseyId: { in: stale.map((r) => r.jerseyId) } },
-  });
-  stats.purged = purged.count;
-  stats.changedJerseyIds = cfsChangedJerseyIds(
-    before,
-    matches,
-    stale.map((r) => r.jerseyId)
-  );
+  stats.removed = removedIds.length;
+  stats.changedJerseyIds = cfsChangedJerseyIds(before, displayed, removedIds);
 
   return stats;
 }

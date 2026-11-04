@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { baseJerseyType, cfsChangedJerseyIds, findJerseyIds, pickCfsOffer } from "@/lib/cfs-availability-scraper";
+import {
+  baseJerseyType,
+  cfsChangedJerseyIds,
+  clubIdForItem,
+  findJerseyIds,
+  isGroupedCfsTeam,
+  toProduct,
+} from "@/lib/cfs-availability-scraper";
 
 const offer = (
   isReference: boolean,
@@ -13,33 +20,6 @@ const offer = (
   imageUrl: "https://example.com/x.jpg",
   isReference,
   condition,
-});
-
-describe("pickCfsOffer", () => {
-  it("prend le candidat quand il n'y a encore rien", () => {
-    expect(pickCfsOffer(undefined, offer(false))).toEqual(offer(false));
-  });
-
-  it("garde une offre de référence face à une version pro ou manches longues", () => {
-    expect(pickCfsOffer(offer(true, 50), offer(false, 90))).toEqual(offer(true, 50));
-  });
-
-  it("remplace une offre hors référence par une offre de référence", () => {
-    expect(pickCfsOffer(offer(false, 90), offer(true, 50))).toEqual(offer(true, 50));
-  });
-
-  it("à référence égale, garde le meilleur état", () => {
-    expect(pickCfsOffer(offer(true, 50, "MINT"), offer(true, 40, "GOOD"))).toEqual(offer(true, 50, "MINT"));
-    expect(pickCfsOffer(offer(true, 40, "FAIR"), offer(true, 50, "EXCELLENT"))).toEqual(offer(true, 50, "EXCELLENT"));
-  });
-
-  it("un état connu passe devant un état non précisé", () => {
-    expect(pickCfsOffer(offer(true, 50, null), offer(true, 60, "GOOD"))).toEqual(offer(true, 60, "GOOD"));
-  });
-
-  it("à référence et état égaux, le dernier produit l'emporte (comportement historique)", () => {
-    expect(pickCfsOffer(offer(true, 50), offer(true, 60))).toEqual(offer(true, 60));
-  });
 });
 
 describe("cfsChangedJerseyIds", () => {
@@ -117,5 +97,85 @@ describe("baseJerseyType", () => {
     ["2001-03 Liverpool CL Shirt (XL)", null],
   ])("%s -> %s", (name, type) => {
     expect(baseJerseyType(name)).toBe(type);
+  });
+});
+
+describe("isGroupedCfsTeam", () => {
+  it("reconnaît les groupes qui rassemblent plusieurs clubs", () => {
+    expect(["Swiss Teams", "Other Italian Clubs", "Other", "MLS Teams"].map(isGroupedCfsTeam)).toEqual([
+      true,
+      true,
+      true,
+      true,
+    ]);
+  });
+
+  it("ne prend pas une équipe à son nom pour un groupe", () => {
+    expect(["Servette", "Arsenal", "Other Side FC"].map(isGroupedCfsTeam)).toEqual([false, false, false]);
+  });
+});
+
+describe("clubIdForItem", () => {
+  const index = new Map([["servette", "club-servette"]]);
+
+  it("prend le club de l'alias pour une équipe à son nom", () => {
+    expect(clubIdForItem({ name: "Servette", clubId: "club-alias" }, "2024-25 Servette Away Shirt", index)).toBe(
+      "club-alias"
+    );
+  });
+
+  it("lit le club dans le nom du produit pour un groupe (Swiss Teams)", () => {
+    expect(clubIdForItem({ name: "Swiss Teams" }, "2024-25 Servette Away Shirt - As New", index)).toBe(
+      "club-servette"
+    );
+  });
+
+  it("ignore un nom court porté par un autre club ailleurs (Andorra, Bohemians, Racing)", () => {
+    const withShortNames = new Map([...index, ["andorra", "fc-andorra"], ["bohemians", "bohemians-prague"]]);
+    expect(clubIdForItem({ name: "Other European National Teams" }, "2004-05 Andorra Home Shirt", withShortNames)).toBeUndefined();
+    expect(clubIdForItem({ name: "Irish Teams" }, "1998-99 Bohemians Home Shirt", withShortNames)).toBeUndefined();
+  });
+
+  it("ignore un produit de groupe dont le club n'est pas au catalogue", () => {
+    expect(clubIdForItem({ name: "Swiss Teams" }, "2024-25 Lugano Home Shirt", index)).toBeUndefined();
+  });
+});
+
+describe("toProduct", () => {
+  const item = {
+    cfsId: "IP2174-SRV-A24-WTE",
+    name: "2024-25 Servette Away Shirt",
+    url: "https://www.classicfootballshirts.com/2024-25-servette-away-shirt.html",
+    imageUrl: "https://www.classicfootballshirts.co.uk/x.jpg",
+    price: 105.59,
+    promoPrice: 39.59,
+    condition: "MINT" as const,
+    longSleeve: false,
+    sizes: ["XXL"],
+    inStockSizes: ["XXL"],
+  };
+
+  it("garde une pièce disponible seulement en XXL", () => {
+    expect(toProduct(item)?.promoPrice).toBe(39.59);
+  });
+
+  it("garde un produit en rupture, marqué comme tel (compté dans la cote, pas affiché)", () => {
+    expect(toProduct({ ...item, inStockSizes: [] })?.inStock).toBe(false);
+  });
+
+  it("est en stock si une taille de XS à XXL l'est", () => {
+    expect(toProduct({ ...item, sizes: ["M", "XXL"], inStockSizes: ["XXL"] })?.inStock).toBe(true);
+  });
+
+  it("n'est pas en stock si seule une taille 3XL ou 4XL l'est", () => {
+    expect(toProduct({ ...item, sizes: ["M", "3XL"], inStockSizes: ["3XL"] })?.inStock).toBe(false);
+  });
+
+  it("garde une pièce disponible seulement en XS", () => {
+    expect(toProduct({ ...item, sizes: ["XS"], inStockSizes: ["XS"] })).not.toBeNull();
+  });
+
+  it("écarte une pièce disponible seulement en 3XL ou 4XL", () => {
+    expect(toProduct({ ...item, sizes: ["3XL", "4XL"] })).toBeNull();
   });
 });

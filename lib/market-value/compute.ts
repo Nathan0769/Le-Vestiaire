@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { aggregate } from "./aggregate";
-import { cfsSignals } from "./providers/cfs";
+import { CFS_PRODUCT_SIGNAL_SELECT, cfsRowToState, cfsSignals } from "./providers/cfs";
+import { toCfsSignals } from "@/lib/cfs-products";
 import { ebaySignals } from "./providers/ebay";
 import { loadPartnerSignals } from "./providers/partners";
 import { snapshotsToWrite } from "./snapshots";
@@ -70,7 +71,7 @@ export async function computeJerseyMarketValue(
  * groupées + écritures groupées) — pour le cron, sans timeout serverless.
  * Stratégie "full refresh" : on remplace toute la table ; snapshot seulement
  * pour les cotes qui ont changé depuis le précédent.
- * Sources : CFS (asking, tout le catalogue) + eBay (asking agrégé, maillots
+ * Sources : CFS (produits de référence, ruptures comprises, et ventes déduites) + eBay (asking agrégé, maillots
  * possédés — alimenté par le cron refreshEbayMarketData) + boutiques partenaires
  * (asking et ventes déduites, maillots de référence uniquement).
  */
@@ -79,9 +80,9 @@ export async function recomputeAllMarketValues(): Promise<{
   cleared: number;
 }> {
   const [cfs, ebay, partners, lastSnapshots] = await Promise.all([
-    prisma.cfsAvailability.findMany({
+    prisma.cfsProduct.findMany({
       where: { price: { gt: 0 }, isReference: true },
-      select: { jerseyId: true, price: true, lastSeenAt: true, condition: true },
+      select: CFS_PRODUCT_SIGNAL_SELECT,
     }),
     prisma.ebayMarketData.findMany({
       where: { sampleSize: { gt: 0 }, medianPrice: { gt: 0 } },
@@ -102,14 +103,9 @@ export async function recomputeAllMarketValues(): Promise<{
     if (arr) arr.push(signal);
     else signalsByJersey.set(id, [signal]);
   };
+  const now = new Date();
   for (const c of cfs) {
-    add(c.jerseyId, {
-      price: Number(c.price),
-      type: "asking",
-      source: "cfs",
-      condition: c.condition ?? undefined,
-      date: c.lastSeenAt,
-    });
+    for (const signal of toCfsSignals([cfsRowToState(c)], now)) add(c.jerseyId, signal);
   }
   for (const e of ebay) {
     add(e.jerseyId, {

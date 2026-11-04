@@ -152,6 +152,7 @@ model Jersey {
   reports                 JerseyReport[]
   cfsPromos               CfsPromo[]
   cfsAvailability         CfsAvailability?
+  cfsProducts             CfsProduct[]
   partnerProducts         PartnerProduct[]
   ebayMarketData          EbayMarketData?
   marketValue             JerseyMarketValue?
@@ -604,6 +605,37 @@ model CfsAvailability {
 
   @@index([lastSeenAt])
   @@map("cfs_availability")
+}
+
+/// Un produit CFS relié à un maillot du catalogue (un produit porté sur deux
+/// saisons donne deux lignes). Source de la cote CFS et de CfsAvailability.
+/// Spec : docs/specs/2026-11-03-cfs-produits-stock.md.
+model CfsProduct {
+  id          String     @id @default(cuid())
+  /// Identifiant CFS du produit (data.id, ex. "IP2174-SRV-A24-WTE").
+  cfsId       String
+  jerseyId    String
+  jersey      Jersey     @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  name        String
+  price       Decimal
+  promoPrice  Decimal?
+  inStock     Boolean
+  /// Maillot supporter manches courtes adulte sans flocage : seul compté dans la cote.
+  isReference Boolean
+  condition   Condition?
+  productUrl  String
+  imageUrl    String
+  /// Passage en rupture observé entre deux scrapes ; null si aucun ou annulé (retour sous 48 h).
+  soldAt      DateTime?
+  soldPrice   Decimal?
+  firstSeenAt DateTime   @default(now())
+  lastSeenAt  DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([cfsId, jerseyId])
+  @@index([jerseyId])
+  @@index([lastSeenAt])
+  @@map("cfs_products")
 }
 
 model stripe_events {
