@@ -2,6 +2,8 @@ import pLimit from "p-limit";
 import prisma from "@/lib/prisma";
 import { parseCfsClub, parseCfsSeason, parseCfsType } from "@/lib/cfs-name-parser";
 import { buildCfsAffiliateUrl } from "@/lib/cfs-affiliate";
+import { cfsSitePrices } from "@/lib/cfs-price";
+import { getRatesToEur } from "@/lib/fx";
 import { fetchCfsTeams, fetchTeamProducts, isAllowedCfsUrl, type CfsItem } from "@/lib/cfs-constructor";
 import { isReferenceListing, listingTraits } from "@/lib/market-value/listing-traits";
 import { nextCfsProductState, pickDisplayedOffer, type CfsProductState, type SeenCfsProduct } from "@/lib/cfs-products";
@@ -299,7 +301,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     changedJerseyIds: [],
   };
 
-  const [teams, aliases, followed] = await Promise.all([
+  const [teams, aliases, followed, rates] = await Promise.all([
     fetchCfsTeams(),
     prisma.cfsClubAlias.findMany({ select: { cfsName: true, clubId: true } }),
     prisma.$queryRaw<{ clubId: string }[]>`
@@ -307,6 +309,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
       WHERE EXISTS (SELECT 1 FROM user_jerseys u WHERE u."jerseyId" = j.id)
          OR EXISTS (SELECT 1 FROM wishlist w WHERE w."jerseyId" = j.id)
     `,
+    getRatesToEur(),
   ]);
   stats.teamsTotal = teams.length;
 
@@ -330,7 +333,12 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
   const jerseyIndex = await buildJerseyIndex([...new Set(clubIndex.values())]);
 
   // Clé `${cfsId}|${jerseyId}` : un produit vu dans son équipe et dans un groupe ne compte qu'une fois.
-  const seen = new Map<string, { cfsId: string; jerseyId: string; product: SeenCfsProduct }>();
+  // sitePrices : prix affiché par le site, pour l'offre de la fiche ; `product.price`
+  // (euros de l'API) reste la base de la cote, calibrée dessus.
+  const seen = new Map<
+    string,
+    { cfsId: string; jerseyId: string; product: SeenCfsProduct; sitePrices: { price: number; promoPrice: number | null } }
+  >();
   const limit = pLimit(TEAM_FETCH_CONCURRENCY);
   await Promise.all(
     queue.map((team) =>
@@ -361,8 +369,9 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
           const jerseyIds = findJerseyIds(jerseyIndex, clubId, season, base ? [type, base] : [type]);
           if (jerseyIds.length === 0) continue;
           stats.matched++;
+          const sitePrices = cfsSitePrices({ ...product, priceGbp: item.priceGbp, promoPriceGbp: item.promoPriceGbp }, rates.GBP);
           for (const jerseyId of jerseyIds) {
-            seen.set(`${item.cfsId}|${jerseyId}`, { cfsId: item.cfsId, jerseyId, product });
+            seen.set(`${item.cfsId}|${jerseyId}`, { cfsId: item.cfsId, jerseyId, product, sitePrices });
           }
         }
       })
@@ -386,7 +395,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     else productsByJersey.set(jerseyId, [state]);
   };
 
-  for (const [key, { cfsId, jerseyId, product }] of seen) {
+  for (const [key, { cfsId, jerseyId, product, sitePrices }] of seen) {
     const old = stored.get(key);
     // Textes non relus (mémoire) : réputés inchangés, réécrits au prochain vrai changement.
     const oldState = old && {
@@ -401,7 +410,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     if (!old) toCreate.push({ ...next.state, cfsId, jerseyId });
     else if (next.changed) toUpdate.push({ id: old.id, state: next.state });
     else unchangedIds.push(old.id);
-    keep(jerseyId, next.state);
+    keep(jerseyId, { ...next.state, ...sitePrices });
   }
   // Maillot sans produit revu mais avec des produits récents (équipe non atteinte
   // cette nuit) : son offre affichée reste telle quelle jusqu'à la purge de 48 h.

@@ -2,6 +2,8 @@ import axios from "axios";
 import type { Browser } from "puppeteer-core";
 import { buildCfsAffiliateUrl } from "@/lib/cfs-affiliate";
 import { parseCfsClub } from "@/lib/cfs-name-parser";
+import { cfsSitePrices } from "@/lib/cfs-price";
+import { getRatesToEur } from "@/lib/fx";
 import { CFS_API_KEY, CFS_BROWSE_BASE } from "@/lib/cfs-constructor";
 
 // CFS migrated its Constructor index (2026): "clearance" is no longer a browsable
@@ -45,6 +47,8 @@ interface ConstructorItem {
     image_url?: string;
     price_eur?: number;
     special_price_eur?: number;
+    price_gbp?: number;
+    special_price_gbp?: number;
     brand?: string;
     group_ids?: string[];
   };
@@ -197,10 +201,23 @@ async function fetchAllPages(browsePath: string): Promise<ConstructorItem[]> {
   return all;
 }
 
-function toCandidate(item: ConstructorItem, source: "clearance" | "cfs-weekly-deals"): Candidate | null {
-  const price = item.data.price_eur;
-  const promoPrice = item.data.special_price_eur;
-  if (!price || !promoPrice) return null;
+function toCandidate(
+  item: ConstructorItem,
+  source: "clearance" | "cfs-weekly-deals",
+  gbpToEur: number
+): Candidate | null {
+  if (!item.data.price_eur || !item.data.special_price_eur) return null;
+  // Prix affichés par le site, pas les euros de l'API (plus chers, voir lib/cfs-price.ts).
+  const { price, promoPrice } = cfsSitePrices(
+    {
+      price: item.data.price_eur,
+      promoPrice: item.data.special_price_eur,
+      priceGbp: item.data.price_gbp ?? null,
+      promoPriceGbp: item.data.special_price_gbp ?? null,
+    },
+    gbpToEur
+  );
+  if (!promoPrice) return null;
 
   const discountPct = Math.round(((price - promoPrice) / price) * 100);
   if (discountPct < MIN_DISCOUNT_PCT) return null;
@@ -486,11 +503,12 @@ export async function scrapeCfsPromos(opts?: {
       ...clearanceItems.map((item) => ({ item, source: "clearance" as const })),
     ];
 
+    const { GBP: gbpToEur } = await getRatesToEur();
     const candidates: Candidate[] = [];
     const seenNames = new Set<string>();
 
     for (const { item, source } of allItems) {
-      const candidate = toCandidate(item, source);
+      const candidate = toCandidate(item, source, gbpToEur);
       if (!candidate) continue;
       const normalized = candidate.name.replace(/\s*-\s*\d+\/10$/, "").trim();
       if (seenNames.has(normalized)) continue;

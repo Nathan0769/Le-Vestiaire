@@ -63,6 +63,19 @@ describe("normalizeCfsItem", () => {
     expect(item.promoPrice).toBeNull();
   });
 
+  it("lit le prix et la promo en livres, seuls prix alignés sur le site", () => {
+    const item = normalizeCfsItem({
+      data: { ...rows[0].data, price_gbp: 84.99, special_price_gbp: 29.99 },
+    });
+    expect(item.priceGbp).toBe(84.99);
+    expect(item.promoPriceGbp).toBe(29.99);
+  });
+
+  it("met la promo en livres à null quand elle n'est pas inférieure au prix", () => {
+    const item = normalizeCfsItem({ data: { ...rows[0].data, price_gbp: 84.99, special_price_gbp: 84.99 } });
+    expect(item.promoPriceGbp).toBeNull();
+  });
+
   it("lit l'identifiant CFS du produit", () => {
     const item = normalizeCfsItem({ data: { ...rows[0].data, id: "IP2174-SRV-A24-WTE" } });
     expect(item.cfsId).toBe("IP2174-SRV-A24-WTE");

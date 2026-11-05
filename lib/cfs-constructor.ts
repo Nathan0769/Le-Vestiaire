@@ -28,6 +28,8 @@ export interface CfsRawItem {
     image_url?: string | null;
     price_eur?: number | null;
     special_price_eur?: number | null;
+    price_gbp?: number | null;
+    special_price_gbp?: number | null;
     prodcat?: string | null;
     sleeve_length?: string | null;
     size_product?: (string | number)[] | string | number | null;
@@ -47,6 +49,9 @@ export interface CfsItem {
   imageUrl: string | null;
   price: number | null;
   promoPrice: number | null;
+  /** Prix en livres : base du prix affiché par le site (lib/cfs-price.ts). */
+  priceGbp: number | null;
+  promoPriceGbp: number | null;
   condition: Condition | null;
   longSleeve: boolean;
   /** Tailles adultes proposées, en stock ou non. */
@@ -91,6 +96,8 @@ const isInStock = (value: string | boolean | null | undefined) =>
 export function normalizeCfsItem(raw: CfsRawItem): CfsItem {
   const price = raw.data.price_eur ?? null;
   const special = raw.data.special_price_eur ?? null;
+  const priceGbp = raw.data.price_gbp ?? null;
+  const specialGbp = raw.data.special_price_gbp ?? null;
   // Le produit ne reflète qu'une de ses variantes (une par taille) : le stock se
   // lit variante par variante.
   const variants = [raw.data, ...(raw.variations ?? []).map((v) => v.data)];
@@ -103,6 +110,8 @@ export function normalizeCfsItem(raw: CfsRawItem): CfsItem {
     imageUrl: raw.data.image_url || null,
     price,
     promoPrice: price !== null && special !== null && special < price ? special : null,
+    priceGbp,
+    promoPriceGbp: priceGbp !== null && specialGbp !== null && specialGbp < priceGbp ? specialGbp : null,
     condition: mapCfsCondition(raw.data.prodcat),
     longSleeve: raw.data.sleeve_length === "Long-Sleeve",
     sizes: ADULT_SIZES.filter((s) => sizes.has(s)),

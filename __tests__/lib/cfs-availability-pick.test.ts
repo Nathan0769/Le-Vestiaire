@@ -150,6 +150,8 @@ describe("toProduct", () => {
     imageUrl: "https://www.classicfootballshirts.co.uk/x.jpg",
     price: 105.59,
     promoPrice: 39.59,
+    priceGbp: 84.99,
+    promoPriceGbp: 29.99,
     condition: "MINT" as const,
     longSleeve: false,
     sizes: ["XXL"],
