@@ -2725,7 +2725,9 @@
     "wishlistTitle": "Lista de desejos de {name}",
     "wishlistEmpty": "Lista de desejos vazia",
     "wishlistEmptyMessage": "{name} ainda não adicionou nenhuma camisola à sua lista de desejos.",
-    "topAchievements": "Melhores conquistas"
+    "topAchievements": "Melhores conquistas",
+    "privateTitle": "Este perfil é privado",
+    "privateMessage": "Apenas os seguidores veem a coleção, a lista de desejos e as conquistas."
   },
   "ForgotPassword": {
     "title": "Esqueceu a palavra-passe",

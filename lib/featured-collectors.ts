@@ -39,6 +39,7 @@ async function fetchFeaturedCollectors(): Promise<FeaturedCollector[]> {
     where: {
       leaderboardAnonymous: false,
       usernameGenerated: false,
+      isPrivate: false,
       collection: { some: {} },
     },
     select: {

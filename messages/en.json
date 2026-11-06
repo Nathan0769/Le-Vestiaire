@@ -2725,7 +2725,9 @@
     "wishlistTitle": "Wishlist of {name}",
     "wishlistEmpty": "Empty wishlist",
     "wishlistEmptyMessage": "{name} hasn't added any jerseys to their wishlist yet.",
-    "topAchievements": "Top achievements"
+    "topAchievements": "Top achievements",
+    "privateTitle": "This profile is private",
+    "privateMessage": "Only followers can see this collection, wishlist and achievements."
   },
   "ForgotPassword": {
     "title": "Forgot password",

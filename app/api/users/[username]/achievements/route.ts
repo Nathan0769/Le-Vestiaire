@@ -6,7 +6,7 @@ import {
   getRateLimitIdentifier,
   checkRateLimit,
 } from "@/lib/rate-limit";
-import { isBlocked } from "@/lib/follow";
+import { isBlocked, canViewPrivateContent } from "@/lib/follow";
 import {
   effectiveTier,
   isKnownAchievementKey,
@@ -40,7 +40,7 @@ export async function GET(
 
   const target = await prisma.user.findUnique({
     where: { username },
-    select: { id: true, leaderboardAnonymous: true },
+    select: { id: true, isPrivate: true, leaderboardAnonymous: true },
   });
   if (!target) {
     return NextResponse.json({ error: "Utilisateur introuvable", code: "USER_NOT_FOUND" }, { status: 404 });
@@ -49,6 +49,10 @@ export async function GET(
   const isSelf = target.id === currentUser.id;
   if (!isSelf && (await isBlocked(currentUser.id, target.id))) {
     return NextResponse.json({ error: "Accès bloqué", code: "ACCESS_BLOCKED" }, { status: 403 });
+  }
+
+  if (!(await canViewPrivateContent(currentUser.id, target))) {
+    return NextResponse.json({ error: "Profil privé", code: "PROFILE_PRIVATE" }, { status: 403 });
   }
 
   if (target.leaderboardAnonymous) {

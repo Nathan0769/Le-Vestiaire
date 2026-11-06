@@ -9,6 +9,7 @@ import {
   getFollowersCount,
   getFollowingIds,
   getBlockedIdsBothWays,
+  canViewPrivateContent,
 } from "./index";
 import { prismaTest } from "@/__tests__/helpers/db";
 
@@ -190,5 +191,46 @@ describe("getBlockedIdsBothWays", () => {
   it("retourne un tableau vide si aucun block", async () => {
     const alice = await createTestUser();
     expect(await getBlockedIdsBothWays(alice.id, prismaTest)).toEqual([]);
+  });
+});
+
+describe("canViewPrivateContent", () => {
+  beforeEach(async () => {
+    await cleanDatabase();
+  });
+
+  it("autorise tout le monde, même déconnecté, sur un compte public", async () => {
+    const owner = await createTestUser({ isPrivate: false });
+
+    expect(await canViewPrivateContent(null, owner, prismaTest)).toBe(true);
+  });
+
+  it("refuse un visiteur déconnecté sur un compte privé", async () => {
+    const owner = await createTestUser({ isPrivate: true });
+
+    expect(await canViewPrivateContent(null, owner, prismaTest)).toBe(false);
+  });
+
+  it("refuse un connecté qui ne suit pas le compte privé", async () => {
+    const owner = await createTestUser({ isPrivate: true });
+    const viewer = await createTestUser();
+
+    expect(await canViewPrivateContent(viewer.id, owner, prismaTest)).toBe(false);
+  });
+
+  it("autorise un abonné du compte privé", async () => {
+    const owner = await createTestUser({ isPrivate: true });
+    const viewer = await createTestUser();
+    await prismaTest.follow.create({
+      data: { followerId: viewer.id, followingId: owner.id },
+    });
+
+    expect(await canViewPrivateContent(viewer.id, owner, prismaTest)).toBe(true);
+  });
+
+  it("autorise le propriétaire sur son propre compte privé", async () => {
+    const owner = await createTestUser({ isPrivate: true });
+
+    expect(await canViewPrivateContent(owner.id, owner, prismaTest)).toBe(true);
   });
 });

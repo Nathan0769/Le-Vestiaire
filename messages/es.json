@@ -2725,7 +2725,9 @@
     "wishlistTitle": "Lista de deseos de {name}",
     "wishlistEmpty": "Lista de deseos vacía",
     "wishlistEmptyMessage": "{name} aún no ha añadido camisetas a su lista de deseos.",
-    "topAchievements": "Mejores logros"
+    "topAchievements": "Mejores logros",
+    "privateTitle": "Este perfil es privado",
+    "privateMessage": "Solo sus seguidores pueden ver su colección, su lista de deseos y sus logros."
   },
   "ForgotPassword": {
     "title": "Contraseña olvidada",

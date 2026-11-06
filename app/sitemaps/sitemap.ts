@@ -164,13 +164,14 @@ export default async function sitemap({
 
     // Profils publics : uniquement les collectionneurs qui ont explicitement
     // rendu leur profil visible (leaderboardAnonymous=false) avec un pseudo
-    // choisi (usernameGenerated=false) et une collection non vide. Ce filtre
+    // choisi (usernameGenerated=false), non privé, et une collection non vide. Ce filtre
     // reflète exactement la logique noindex de la page profil : ne jamais
     // exposer dans le sitemap une URL que la page elle-même désindexe.
     const publicProfiles = await prisma.user.findMany({
       where: {
         leaderboardAnonymous: false,
         usernameGenerated: false,
+        isPrivate: false,
         collection: { some: {} },
       },
       select: { username: true, updatedAt: true },

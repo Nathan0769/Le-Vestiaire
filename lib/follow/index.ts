@@ -21,6 +21,21 @@ export async function isFollowing(
 }
 
 /**
+ * Collection, wishlist et succès d'un compte privé ne sont visibles que par
+ * son propriétaire et ses abonnés (promesse du réglage "Compte privé").
+ */
+export async function canViewPrivateContent(
+  viewerId: string | null | undefined,
+  owner: { id: string; isPrivate: boolean },
+  db: Db = prisma
+): Promise<boolean> {
+  if (!owner.isPrivate) return true;
+  if (!viewerId) return false;
+  if (viewerId === owner.id) return true;
+  return isFollowing(viewerId, owner.id, db);
+}
+
+/**
  * Retourne true si l'un des deux users a bloqué l'autre (symétrique).
  */
 export async function isBlocked(

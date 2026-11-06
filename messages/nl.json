@@ -2725,7 +2725,9 @@
     "wishlistTitle": "Verlanglijst van {name}",
     "wishlistEmpty": "Lege verlanglijst",
     "wishlistEmptyMessage": "{name} heeft nog geen shirts aan zijn/haar verlanglijst toegevoegd.",
-    "topAchievements": "Beste prestaties"
+    "topAchievements": "Beste prestaties",
+    "privateTitle": "Dit profiel is privé",
+    "privateMessage": "Alleen volgers zien de collectie, het verlanglijstje en de prestaties."
   },
   "ForgotPassword": {
     "title": "Wachtwoord vergeten",

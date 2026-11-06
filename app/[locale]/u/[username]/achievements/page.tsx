@@ -20,6 +20,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       name: true,
       usernameGenerated: true,
       leaderboardAnonymous: true,
+      isPrivate: true,
     },
   });
 
@@ -35,7 +36,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return {
     title,
     description,
-    robots: user.usernameGenerated || user.leaderboardAnonymous
+    robots: user.usernameGenerated || user.leaderboardAnonymous || user.isPrivate
       ? { index: false, follow: true }
       : undefined,
     openGraph: {

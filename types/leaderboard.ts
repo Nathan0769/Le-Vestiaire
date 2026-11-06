@@ -29,6 +29,8 @@ export interface LeaderboardEntry {
   };
   hasBadge?: boolean;
   isAnonymous?: boolean;
+  /** Compte privé : carte non cliquable, contenu réservé aux abonnés. */
+  isPrivate?: boolean;
   isSupporter?: boolean;
   avatarFrame?: string | null;
 }

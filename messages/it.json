@@ -2725,7 +2725,9 @@
     "wishlistTitle": "Lista dei desideri di {name}",
     "wishlistEmpty": "Lista dei desideri vuota",
     "wishlistEmptyMessage": "{name} non ha ancora aggiunto maglie alla sua lista dei desideri.",
-    "topAchievements": "Migliori obiettivi"
+    "topAchievements": "Migliori obiettivi",
+    "privateTitle": "Questo profilo è privato",
+    "privateMessage": "Solo i follower vedono la collezione, la wishlist e i traguardi."
   },
   "ForgotPassword": {
     "title": "Password dimenticata",

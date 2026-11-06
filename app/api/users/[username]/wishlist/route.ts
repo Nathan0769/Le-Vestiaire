@@ -6,7 +6,7 @@ import {
 } from "@/lib/rate-limit";
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { isBlocked } from "@/lib/follow";
+import { isBlocked, canViewPrivateContent } from "@/lib/follow";
 
 /**
  * Wishlist publique d'un utilisateur par username (app mobile).
@@ -33,7 +33,7 @@ export async function GET(
 
     const target = await prisma.user.findUnique({
       where: { username },
-      select: { id: true },
+      select: { id: true, isPrivate: true },
     });
     if (!target) {
       return NextResponse.json(
@@ -44,6 +44,10 @@ export async function GET(
 
     if (target.id !== currentUser.id && (await isBlocked(currentUser.id, target.id))) {
       return NextResponse.json({ error: "Accès bloqué", code: "ACCESS_BLOCKED" }, { status: 403 });
+    }
+
+    if (!(await canViewPrivateContent(currentUser.id, target))) {
+      return NextResponse.json({ error: "Profil privé", code: "PROFILE_PRIVATE" }, { status: 403 });
     }
 
     const wishlistItems = await prisma.wishlist.findMany({

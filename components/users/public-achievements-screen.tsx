@@ -3,6 +3,8 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { getTranslations } from "next-intl/server";
 import { Award } from "lucide-react";
 import prisma from "@/lib/prisma";
+import { canViewPrivateContent } from "@/lib/follow";
+import { PrivateProfileScreen } from "@/components/users/private-profile-screen";
 import {
   ACHIEVEMENTS,
   effectiveTier,
@@ -36,6 +38,7 @@ export async function PublicAchievementsScreen({
       username: true,
       name: true,
       leaderboardAnonymous: true,
+      isPrivate: true,
       lastAchievementsFullCheckAt: true,
     },
   });
@@ -44,6 +47,17 @@ export async function PublicAchievementsScreen({
 
   if (currentUser && targetUser.id === currentUser.id) {
     redirect("/achievements");
+  }
+
+  if (!(await canViewPrivateContent(currentUser?.id, targetUser))) {
+    return (
+      <PrivateProfileScreen
+        targetUserId={targetUser.id}
+        displayName={targetUser.leaderboardAnonymous ? tPublic("anonymous") : targetUser.username ?? targetUser.name}
+        isAnonymous={targetUser.leaderboardAnonymous ?? false}
+        currentUserId={currentUser?.id ?? null}
+      />
+    );
   }
 
   const isAnonymous = targetUser.leaderboardAnonymous ?? false;

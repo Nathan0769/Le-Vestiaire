@@ -13,6 +13,8 @@ import { isSupporter } from "@/lib/subscription";
 import { cn } from "@/lib/utils";
 import { Gift, Heart, EyeOff } from "lucide-react";
 import prisma from "@/lib/prisma";
+import { canViewPrivateContent } from "@/lib/follow";
+import { PrivateProfileScreen } from "@/components/users/private-profile-screen";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 import { getTranslations } from "next-intl/server";
 import type { FollowState } from "@/types/follow";
@@ -40,6 +42,7 @@ export async function PublicWishlistScreen({
       plan: true,
       avatarFrame: true,
       leaderboardAnonymous: true,
+      isPrivate: true,
       favoriteClub: { select: { id: true, name: true } },
       instagramHandle: true,
       twitterHandle: true,
@@ -53,6 +56,17 @@ export async function PublicWishlistScreen({
 
   if (currentUser && targetUser.id === currentUser.id) {
     redirect("/wishlist");
+  }
+
+  if (!(await canViewPrivateContent(currentUser?.id, targetUser))) {
+    return (
+      <PrivateProfileScreen
+        targetUserId={targetUser.id}
+        displayName={targetUser.leaderboardAnonymous ? t("anonymous") : targetUser.username ?? targetUser.name}
+        isAnonymous={targetUser.leaderboardAnonymous ?? false}
+        currentUserId={currentUser?.id ?? null}
+      />
+    );
   }
 
   let followState: FollowState = "none";

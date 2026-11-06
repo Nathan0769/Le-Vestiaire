@@ -2730,7 +2730,9 @@
     "wishlistTitle": "Wishlist de {name}",
     "wishlistEmpty": "Wishlist vide",
     "wishlistEmptyMessage": "{name} n'a pas encore ajouté de maillots à sa wishlist.",
-    "topAchievements": "Meilleurs succès"
+    "topAchievements": "Meilleurs succès",
+    "privateTitle": "Ce profil est privé",
+    "privateMessage": "Seuls ses abonnés voient sa collection, sa wishlist et ses succès."
   },
   "ForgotPassword": {
     "title": "Mot de passe oublié",

@@ -2725,7 +2725,9 @@
     "wishlistTitle": "Wunschliste von {name}",
     "wishlistEmpty": "Leere Wunschliste",
     "wishlistEmptyMessage": "{name} hat noch keine Trikots zu seiner Wunschliste hinzugefügt.",
-    "topAchievements": "Top-Erfolge"
+    "topAchievements": "Top-Erfolge",
+    "privateTitle": "Dieses Profil ist privat",
+    "privateMessage": "Nur Follower sehen die Sammlung, die Wunschliste und die Erfolge."
   },
   "ForgotPassword": {
     "title": "Passwort vergessen",

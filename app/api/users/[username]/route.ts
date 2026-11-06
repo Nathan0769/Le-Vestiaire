@@ -15,8 +15,9 @@ import { ACHIEVEMENTS, isKnownAchievementKey } from "@/lib/achievements/definiti
 
 /**
  * Profil public d'un utilisateur par username (consommé par l'app mobile).
- * Auth requise. Blocage réciproque -> 403. `isPrivate` ne gate pas le contenu
- * (modèle browse-first) mais informe l'état du bouton suivre côté client.
+ * Auth requise. Blocage réciproque -> 403. L'en-tête reste servi pour un compte
+ * privé (bouton suivre) ; collection, wishlist et succès sont refusés aux
+ * non-abonnés par leurs propres routes (`canViewPrivateContent`).
  */
 export async function GET(
   _request: Request,

@@ -112,13 +112,14 @@ export function LeaderboardCard({
         ? `/${locale}/u/${entry.username}/collection`
         : `/${locale}/users/${entry.userId}/collection`;
 
-  return (
-    <Tooltip>
-    <TooltipTrigger asChild>
-    <Link href={href} className="block">
+  // Compte privé : collection réservée aux abonnés, la carte ne mène nulle part.
+  const isLocked = (entry.isPrivate ?? false) && !isCurrentUser;
+
+  const card = (
     <Card
       className={cn(
-        "hover:shadow-md transition-all overflow-hidden cursor-pointer",
+        "transition-all overflow-hidden",
+        !isLocked && "hover:shadow-md cursor-pointer",
         isCurrentUser && "ring-2 ring-primary",
         getPodiumBorderClass(entry.rank),
         sup && "cos-row-carbon"
@@ -212,6 +213,15 @@ export function LeaderboardCard({
         </div>
       </CardContent>
     </Card>
+  );
+
+  if (isLocked) return card;
+
+  return (
+    <Tooltip>
+    <TooltipTrigger asChild>
+    <Link href={href} className="block">
+      {card}
     </Link>
     </TooltipTrigger>
     <TooltipContent>Voir la collection</TooltipContent>

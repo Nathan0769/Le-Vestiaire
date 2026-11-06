@@ -14,6 +14,8 @@ import { pickTopAchievements } from "@/lib/achievements/top-achievements";
 import { BackButton } from "@/components/ui/back-button";
 import { Package, Heart, EyeOff } from "lucide-react";
 import prisma from "@/lib/prisma";
+import { canViewPrivateContent } from "@/lib/follow";
+import { PrivateProfileScreen } from "@/components/users/private-profile-screen";
 import {
   getR2PresignedUrl,
   AVATARS_BUCKET,
@@ -50,6 +52,7 @@ export async function PublicCollectionScreen({
       avatarFrame: true,
       profileBanner: true,
       leaderboardAnonymous: true,
+      isPrivate: true,
       favoriteClub: { select: { id: true, name: true } },
       instagramHandle: true,
       twitterHandle: true,
@@ -63,6 +66,17 @@ export async function PublicCollectionScreen({
 
   if (currentUser && targetUser.id === currentUser.id) {
     redirect("/collection");
+  }
+
+  if (!(await canViewPrivateContent(currentUser?.id, targetUser))) {
+    return (
+      <PrivateProfileScreen
+        targetUserId={targetUser.id}
+        displayName={targetUser.leaderboardAnonymous ? t("anonymous") : targetUser.username ?? targetUser.name}
+        isAnonymous={targetUser.leaderboardAnonymous ?? false}
+        currentUserId={currentUser?.id ?? null}
+      />
+    );
   }
 
   try {

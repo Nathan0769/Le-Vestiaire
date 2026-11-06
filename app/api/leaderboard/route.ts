@@ -91,6 +91,7 @@ async function getCollectionSizeLeaderboard(
       plan: true,
       avatarFrame: true,
       leaderboardAnonymous: true,
+      isPrivate: true,
       favoriteClub: {
         select: { id: true, name: true },
       },
@@ -113,7 +114,8 @@ async function getCollectionSizeLeaderboard(
 
   const leaderboard = users
     .map((user) => {
-      const isAnonymous = user.leaderboardAnonymous ?? false;
+      // Un compte privé n'apparaît jamais nominativement dans le classement.
+      const isAnonymous = (user.leaderboardAnonymous ?? false) || user.isPrivate;
       return {
         userId: user.id,
         username: isAnonymous
@@ -129,6 +131,7 @@ async function getCollectionSizeLeaderboard(
           totalValue: sumPurchasesEur(user.collection, rates),
         },
         isAnonymous,
+        isPrivate: user.isPrivate,
       };
     })
     .filter((u) => u.score > 0)
@@ -186,6 +189,7 @@ async function getCollectionDiversityLeaderboard(): Promise<
       plan: true,
       avatarFrame: true,
       leaderboardAnonymous: true,
+      isPrivate: true,
       favoriteClub: {
         select: { id: true, name: true },
       },
@@ -194,7 +198,8 @@ async function getCollectionDiversityLeaderboard(): Promise<
 
   const leaderboard = result.map((r) => {
     const user = users.find((u) => u.id === r.user_id)!;
-    const isAnonymous = user.leaderboardAnonymous ?? false;
+    // Un compte privé n'apparaît jamais nominativement dans le classement.
+    const isAnonymous = (user.leaderboardAnonymous ?? false) || user.isPrivate;
 
     return {
       userId: user.id,
@@ -211,6 +216,7 @@ async function getCollectionDiversityLeaderboard(): Promise<
         uniqueClubs: Number(r.unique_clubs),
       },
       isAnonymous,
+      isPrivate: user.isPrivate,
     };
   });
 
@@ -264,6 +270,7 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
       plan: true,
       avatarFrame: true,
       leaderboardAnonymous: true,
+      isPrivate: true,
       favoriteClub: {
         select: { id: true, name: true },
       },
@@ -272,7 +279,8 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
 
   const leaderboard = result.map((r) => {
     const user = users.find((u) => u.id === r.user_id)!;
-    const isAnonymous = user.leaderboardAnonymous ?? false;
+    // Un compte privé n'apparaît jamais nominativement dans le classement.
+    const isAnonymous = (user.leaderboardAnonymous ?? false) || user.isPrivate;
 
     return {
       userId: user.id,
@@ -289,6 +297,7 @@ async function getLeagueDiversityLeaderboard(): Promise<LeaderboardEntry[]> {
         uniqueLeagues: Number(r.unique_leagues),
       },
       isAnonymous,
+      isPrivate: user.isPrivate,
     };
   });
 
@@ -342,6 +351,7 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
       plan: true,
       avatarFrame: true,
       leaderboardAnonymous: true,
+      isPrivate: true,
       favoriteClub: {
         select: { id: true, name: true },
       },
@@ -350,7 +360,8 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
 
   const leaderboard = result.map((r) => {
     const user = users.find((u) => u.id === r.user_id)!;
-    const isAnonymous = user.leaderboardAnonymous ?? false;
+    // Un compte privé n'apparaît jamais nominativement dans le classement.
+    const isAnonymous = (user.leaderboardAnonymous ?? false) || user.isPrivate;
 
     return {
       userId: user.id,
@@ -367,6 +378,7 @@ async function getVintageSpecialistLeaderboard(): Promise<LeaderboardEntry[]> {
         vintageCount: Number(r.vintage_count),
       },
       isAnonymous,
+      isPrivate: user.isPrivate,
     };
   });
 
