@@ -8,6 +8,7 @@ import {
 } from "@/lib/rate-limit";
 import { CreateProposalData } from "@/types/proposal";
 import { JerseyType } from "@prisma/client";
+import { buildFrenchJerseyName } from "@/lib/jersey-proposal-name";
 
 export async function GET() {
   try {
@@ -81,9 +82,9 @@ export async function POST(req: Request) {
     }
 
     const body: CreateProposalData = await req.json();
-    const { name, clubId, season, type, brand, imageUrl, description } = body;
+    const { specialName, clubId, season, type, brand, imageUrl, description } = body;
 
-    if (!name || !clubId || !season || !type || !brand || !imageUrl) {
+    if (!clubId || !season || !type || !brand || !imageUrl) {
       return NextResponse.json(
         { error: "Tous les champs sont obligatoires sauf la description" },
         { status: 400 }
@@ -112,6 +113,14 @@ export async function POST(req: Request) {
     if (!clubExists) {
       return NextResponse.json({ error: "Club non trouvé" }, { status: 404 });
     }
+
+    // Jersey.name est en français : on ne garde pas le nom généré dans la langue du navigateur
+    const name = buildFrenchJerseyName({
+      clubShortName: clubExists.shortName,
+      type,
+      season,
+      specialName: typeof specialName === "string" ? specialName.slice(0, 100) : null,
+    });
 
     // Pour les gardiens, plusieurs maillots par saison sont autorisés
     const existingJersey = type !== "GOALKEEPER"

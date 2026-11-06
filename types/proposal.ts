@@ -1,7 +1,10 @@
 import { JerseyType } from "@prisma/client";
 
 export interface CreateProposalData {
-  name: string;
+  /** Ignoré : le serveur construit le nom en français (buildFrenchJerseyName). */
+  name?: string;
+  /** Nom saisi pour un maillot SPECIAL (ex. "Centenaire"). */
+  specialName?: string;
   clubId: string;
   season: string;
   type: JerseyType;

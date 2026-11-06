@@ -12,6 +12,7 @@ import {
 } from "@/lib/r2-storage";
 import { checkAchievements } from "@/lib/achievements/check";
 import { translateDescription } from "@/lib/deepl";
+import { buildFrenchJerseyName } from "@/lib/jersey-proposal-name";
 
 export async function POST(
   request: Request,
@@ -134,7 +135,17 @@ export async function POST(
     const result = await prisma.$transaction(async (tx) => {
       const jersey = await tx.jersey.create({
         data: {
-          name: proposal.name,
+          // Propositions créées avant le nom FR côté serveur : le nom peut être
+          // dans la langue du contributeur. Le nom libre d'un SPECIAL n'est pas
+          // stocké à part, on le garde tel quel.
+          name:
+            proposal.type === "SPECIAL"
+              ? proposal.name
+              : buildFrenchJerseyName({
+                  clubShortName: proposal.club.shortName,
+                  type: proposal.type,
+                  season: proposal.season,
+                }),
           clubId: proposal.clubId,
           season: proposal.season,
           type: proposal.type,

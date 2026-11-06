@@ -256,7 +256,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
     setIsSubmitting(true);
     try {
       const proposalData: CreateProposalData = {
-        name: generatedName,
+        specialName: formData.type === "SPECIAL" ? specialName.trim() : undefined,
         clubId: formData.clubId!,
         season: formData.season!,
         type: formData.type!,
