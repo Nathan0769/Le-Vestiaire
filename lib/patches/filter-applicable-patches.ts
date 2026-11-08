@@ -27,6 +27,7 @@ const CHAMPION_REPLACES_LEAGUE_BADGE_LEAGUE_IDS = new Set([
   "allsvenskan",
   "saudi-pro-league",
   "primera-division-argentina",
+  "brasileiro-serie-a",
 ]);
 
 // Ligues dont les patchs n'existent que sur les saisons et clubs couverts par une
@@ -49,11 +50,14 @@ const STRICT_VERSION_PATCH_NAMES = new Set([
   "EFL Cup",
   "EFL Cup - tenant du titre",
   "DFB-Pokal - tenant du titre",
+  "Jupiler Pro League",
   "Sky Bet - jeu responsable",
   "Not Today or Any Day",
   "EFL Together",
   "Roshn Saudi League",
   "Primera División (Argentine)",
+  "Stoiximan Super League",
+  "Brasileirão Série A",
 ]);
 
 // Familles versionnées saison par saison sans trou dans ces ligues : une saison sans
@@ -71,6 +75,7 @@ const STRICT_VERSION_FAMILIES_BY_LEAGUE: Record<string, ReadonlySet<string>> = {
   allsvenskan: new Set(["DOMESTIC_CHAMPION"]),
   "saudi-pro-league": new Set(["DOMESTIC_CHAMPION"]),
   "primera-division-argentina": new Set(["DOMESTIC_CHAMPION"]),
+  "brasileiro-serie-a": new Set(["DOMESTIC_CHAMPION"]),
 };
 
 // Le modèle Patch ne porte pas de confédération : sans cette table, un club CONMEBOL se

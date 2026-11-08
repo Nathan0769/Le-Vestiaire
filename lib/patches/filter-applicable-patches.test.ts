@@ -1114,6 +1114,30 @@ describe("filterApplicablePatches - badge DFB-Pokal du tenant du titre", () => {
   });
 });
 
+describe("filterApplicablePatches - Super League grecque", () => {
+  it("Badge Stoiximan non proposé avant le sponsoring", () => {
+    const badge = makePatch({
+      name: "Stoiximan Super League",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "greek-super-league",
+      versions: [makeVersion({ seasonStart: "2023-24", seasonEnd: null })],
+    });
+    expect(filterWithCurrentLeague([badge], makeJersey("greek-super-league", "2021-22"))).toHaveLength(0);
+  });
+});
+
+describe("filterApplicablePatches - Pro League belge", () => {
+  it("Badge Pro League non proposé avant le premier patch officiel (2010-11)", () => {
+    const badge = makePatch({
+      name: "Jupiler Pro League",
+      family: "DOMESTIC_LEAGUE_BADGE",
+      leagueId: "jupiler-pro-league",
+      versions: [makeVersion({ seasonStart: "2010-11", seasonEnd: null })],
+    });
+    expect(filterWithCurrentLeague([badge], makeJersey("jupiler-pro-league", "2007-08"))).toHaveLength(0);
+  });
+});
+
 describe("filterApplicablePatches - EFL Cup", () => {
   it.each([
     ["EFL Cup", "2005-06"],
@@ -1226,5 +1250,38 @@ describe("filterApplicablePatches - Primera División (Argentine)", () => {
 
   it("Pas de badge de ligue avant la Superliga (2017-18)", () => {
     expect(filterWithCurrentLeague([badge], makeJersey("primera-division-argentina", "2015-16"))).toHaveLength(0);
+  });
+});
+
+describe("filterApplicablePatches - Brasileirão Série A", () => {
+  const champion = makePatch({
+    id: "p-champ",
+    name: "Champion Brasileirão",
+    family: "DOMESTIC_CHAMPION",
+    leagueId: "brasileiro-serie-a",
+    versions: [makeVersion({ seasonStart: "2020", seasonEnd: "2020", eligibleClubIds: ["c1"] })],
+  });
+  const badge = makePatch({
+    id: "p-badge",
+    name: "Brasileirão Série A",
+    family: "DOMESTIC_LEAGUE_BADGE",
+    leagueId: "brasileiro-serie-a",
+    versions: [
+      makeVersion({ seasonStart: "2019", seasonEnd: "2023" }),
+      makeVersion({ seasonStart: "2026", seasonEnd: null }),
+    ],
+  });
+
+  it("Le champion en titre porte son patch à la place du badge de ligue", () => {
+    const result = filterWithCurrentLeague([champion, badge], makeJersey("brasileiro-serie-a", "2020"));
+    expect(result.map((r) => r.patch.id)).toEqual(["p-champ"]);
+  });
+
+  it("Pas de patch champion hors des saisons versionnées", () => {
+    expect(filterWithCurrentLeague([champion], makeJersey("brasileiro-serie-a", "2012"))).toHaveLength(0);
+  });
+
+  it("Pas de badge de ligue pendant les saisons sans patch (2024-2025)", () => {
+    expect(filterWithCurrentLeague([badge], makeJersey("brasileiro-serie-a", "2024"))).toHaveLength(0);
   });
 });
