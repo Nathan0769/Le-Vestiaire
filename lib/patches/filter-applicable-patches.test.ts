@@ -1129,7 +1129,7 @@ describe("filterApplicablePatches - Super League grecque", () => {
 describe("filterApplicablePatches - Pro League belge", () => {
   it("Badge Pro League non proposé avant le premier patch officiel (2010-11)", () => {
     const badge = makePatch({
-      name: "Jupiler Pro League",
+      name: "Pro League",
       family: "DOMESTIC_LEAGUE_BADGE",
       leagueId: "jupiler-pro-league",
       versions: [makeVersion({ seasonStart: "2010-11", seasonEnd: null })],

@@ -50,7 +50,7 @@ const STRICT_VERSION_PATCH_NAMES = new Set([
   "EFL Cup",
   "EFL Cup - tenant du titre",
   "DFB-Pokal - tenant du titre",
-  "Jupiler Pro League",
+  "Pro League",
   "Sky Bet - jeu responsable",
   "Not Today or Any Day",
   "EFL Together",
