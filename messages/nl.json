@@ -1061,7 +1061,49 @@
     "priorities": "Prioriteiten",
     "priorityHigh": "Hoog",
     "priorityMedium": "Gemiddeld",
-    "priorityLow": "Laag"
+    "priorityLow": "Laag",
+    "reservation": {
+      "cta": "Ik geef het",
+      "namePlaceholder": "Je voornaam",
+      "confirm": "Dit shirt reserveren",
+      "hint": "Anderen zien je naam. Degene die de lijst maakte niet.",
+      "youGiveIt": "Jij geeft het",
+      "cancel": "Annuleren",
+      "reservedBy": "Gereserveerd door {name}",
+      "alreadyReserved": "Iemand heeft het net gereserveerd.",
+      "tooManyRequests": "Te veel pogingen, probeer het over een minuut opnieuw.",
+      "error": "Reserveren mislukt, probeer opnieuw.",
+      "close": "Sluiten"
+    },
+    "liveShare": {
+      "jerseyCount": "{count, plural, one {# shirt} other {# shirts}}",
+      "ownerHidden": "Dit is jouw lijst: reserveringen zijn verborgen om de verrassing te bewaren.",
+      "goneNotice": "{count, plural, one {Een shirt dat je zou geven staat niet meer op de lijst.} other {# shirts die je zou geven staan niet meer op de lijst.}}",
+      "empty": "Deze lijst is nog leeg.",
+      "favorite": "Favoriet",
+      "size": "Maat",
+      "sizeValue": "Maat {size}",
+      "version": "Versie",
+      "flock": "Bedrukking",
+      "flockValue": "Bedrukking {flock}",
+      "at": "bij {shop}",
+      "createdWith": "Lijst gemaakt met Le Vestiaire"
+    },
+    "gift": {
+      "edit": "Cadeau-info",
+      "received": "Ontvangen",
+      "title": "Cadeau-info",
+      "subtitle": "Zichtbaar voor je naasten op je gedeelde lijst, zodat ze het juiste shirt kiezen.",
+      "size": "Maat",
+      "version": "Versie",
+      "flockName": "Bedrukking: naam",
+      "flockNumber": "Nummer",
+      "favorite": "Favoriet",
+      "noPreference": "Maakt niet uit",
+      "save": "Opslaan",
+      "error": "Er ging iets mis, probeer opnieuw.",
+      "receivedDone": "Toegevoegd aan je collectie, verwijderd van je wishlist"
+    }
   },
   "Login": {
     "title": "Welkom terug",

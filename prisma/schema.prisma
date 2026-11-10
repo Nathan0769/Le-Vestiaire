@@ -61,6 +61,7 @@ model User {
   favoriteClub                Club?                 @relation(fields: [favoriteClubId], references: [id])
   collection                  UserJersey[]
   wishlist                    Wishlist[]
+  wishlistShares              WishlistShare[]
   reportedJerseys             JerseyReport[]        @relation("ReportedBy")
   resolvedReports             JerseyReport[]        @relation("ReportResolver")
   followers                   Follow[]              @relation("Following")
@@ -129,7 +130,7 @@ model Verification {
 }
 
 model Jersey {
-  id                      String                @id @default(cuid())
+  id                      String                      @id @default(cuid())
   name                    String
   clubId                  String
   season                  String
@@ -137,15 +138,15 @@ model Jersey {
   brand                   String
   imageUrl                String
   retailPrice             Decimal?
-  createdAt               DateTime              @default(now())
-  updatedAt               DateTime              @updatedAt
+  createdAt               DateTime                    @default(now())
+  updatedAt               DateTime                    @updatedAt
   description             String?
-  slug                    String?               @unique
+  slug                    String?                     @unique
   descriptionTranslations Json?
-  variant                 Int                   @default(1)
+  variant                 Int                         @default(1)
   mainColor               String?
   descriptionProposals    DescriptionProposal[]
-  club                    Club                  @relation(fields: [clubId], references: [id])
+  club                    Club                        @relation(fields: [clubId], references: [id])
   ratings                 Rating[]
   collection              UserJersey[]
   wishlist                Wishlist[]
@@ -420,16 +421,59 @@ model League {
 }
 
 model Wishlist {
-  id        String   @id @default(cuid())
-  userId    String
-  jerseyId  String
-  priority  Int      @default(1)
-  createdAt DateTime @default(now())
-  jersey    Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                 String           @id @default(cuid())
+  userId             String
+  jerseyId           String
+  // 1 = normal, 2 = coup de cœur (en tête de la liste et de la page partagée)
+  priority           Int              @default(1)
+  createdAt          DateTime         @default(now())
+  // Infos cadeau, visibles sur la page partagée. Valeurs : lib/collection-item-rules.ts
+  size               Size?
+  version            JerseyVersion?
+  flockName          String?          @map("flock_name")
+  flockNumber        Int?             @map("flock_number")
+  // Meilleur prix promo (EUR) déjà notifié : évite de renvoyer la même promo
+  promoNotifiedPrice Decimal?         @map("promo_notified_price") @db.Decimal(10, 2)
+  jersey             Jersey           @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  user               User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Jamais renvoyée au propriétaire (surprise)
+  reservation        GiftReservation?
 
   @@unique([userId, jerseyId])
   @@map("wishlist")
+}
+
+// Lien de partage vivant /w/{id} : lit la wishlist en direct.
+model WishlistShare {
+  id           String            @id // nanoid(12), non devinable
+  userId       String            @map("user_id")
+  theme        String
+  title        String
+  message      String?
+  // Vide = toute la wishlist
+  jerseyIds    String[]          @map("jersey_ids")
+  revokedAt    DateTime?         @map("revoked_at")
+  createdAt    DateTime          @default(now()) @map("created_at")
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservations GiftReservation[]
+
+  @@index([userId])
+  @@map("wishlist_shares")
+}
+
+// « Je l'offre » sans compte : prénom + hash du jeton gardé dans le navigateur.
+model GiftReservation {
+  id         String        @id @default(cuid())
+  wishlistId String        @unique @map("wishlist_id")
+  shareId    String        @map("share_id")
+  name       String
+  tokenHash  String        @map("token_hash")
+  createdAt  DateTime      @default(now()) @map("created_at")
+  wishlist   Wishlist      @relation(fields: [wishlistId], references: [id], onDelete: Cascade)
+  share      WishlistShare @relation(fields: [shareId], references: [id], onDelete: Cascade)
+
+  @@index([shareId])
+  @@map("gift_reservations")
 }
 
 enum AchievementCategory {
@@ -531,18 +575,18 @@ model DescriptionProposal {
 }
 
 model PushToken {
-  id        String   @id @default(cuid())
-  userId    String
-  token     String   @unique
-  platform  String
+  id          String   @id @default(cuid())
+  userId      String
+  token       String   @unique
+  platform    String
   // Environnement APNs du token : "sandbox" (build dev) ou "production"
   // (TestFlight/App Store). Nullable = ancien token -> fallback APNS_PRODUCTION.
   environment String?
   // Langue de l'app sur cet appareil (fr, en...), pour le texte des push.
   // Nullable = ancien token ou app non localisée -> français.
-  locale    String?
-  createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  locale      String?
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@map("push_tokens")
@@ -587,21 +631,21 @@ model CfsClubAlias {
 }
 
 model CfsAvailability {
-  id           String   @id @default(cuid())
-  jerseyId     String   @unique
-  jersey       Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  id           String     @id @default(cuid())
+  jerseyId     String     @unique
+  jersey       Jersey     @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
   price        Decimal
   promoPrice   Decimal?
   productUrl   String
   affiliateUrl String
   imageUrl     String
   /// Faux si l'offre gardée n'est pas un maillot supporter manches courtes : affichée, mais hors cote.
-  isReference  Boolean  @default(true)
+  isReference  Boolean    @default(true)
   /// État du produit CFS (facette prodcat) ; null = non précisé, traité comme GOOD par la cote.
   condition    Condition?
-  lastSeenAt   DateTime @default(now())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  lastSeenAt   DateTime   @default(now())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
 
   @@index([lastSeenAt])
   @@map("cfs_availability")
@@ -840,18 +884,18 @@ model PostLike {
 }
 
 model PostComment {
-  id        String    @id @default(cuid())
-  postId    String    @map("post_id")
-  authorId  String    @map("author_id")
-  content   String    @db.VarChar(500)
+  id         String    @id @default(cuid())
+  postId     String    @map("post_id")
+  authorId   String    @map("author_id")
+  content    String    @db.VarChar(500)
   // Un seul niveau de réponses : parentId pointe toujours vers un commentaire
   // racine (une réponse à une réponse est rattachée à la racine côté API).
   parentId   String?   @map("parent_id")
   likeCount  Int       @default(0) @map("like_count")
   replyCount Int       @default(0) @map("reply_count")
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime  @updatedAt @map("updated_at")
-  deletedAt DateTime? @map("deleted_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+  deletedAt  DateTime? @map("deleted_at")
 
   post          Post              @relation(fields: [postId], references: [id], onDelete: Cascade)
   author        User              @relation(fields: [authorId], references: [id], onDelete: Cascade)
@@ -931,12 +975,13 @@ enum NotificationType {
   FOLLOW_REQUEST_APPROVED
   ACHIEVEMENT_UNLOCKED
   COMMENT_REPLIED
+  WISHLIST_PROMO
 }
 
 model Notification {
-  id        String           @id @default(cuid())
-  userId    String           @map("user_id")
-  type      NotificationType
+  id             String           @id @default(cuid())
+  userId         String           @map("user_id")
+  type           NotificationType
   actorId        String?          @map("actor_id")
   postId         String?          @map("post_id")
   commentId      String?          @map("comment_id")

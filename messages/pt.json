@@ -1061,7 +1061,49 @@
     "priorities": "Prioridades",
     "priorityHigh": "Alta",
     "priorityMedium": "Média",
-    "priorityLow": "Baixa"
+    "priorityLow": "Baixa",
+    "reservation": {
+      "cta": "Eu ofereço",
+      "namePlaceholder": "O teu nome",
+      "confirm": "Reservar esta camisola",
+      "hint": "Os outros vão ver o teu nome. Quem fez a lista não.",
+      "youGiveIt": "Tu ofereces",
+      "cancel": "Cancelar",
+      "reservedBy": "Reservada por {name}",
+      "alreadyReserved": "Alguém acabou de a reservar.",
+      "tooManyRequests": "Demasiadas tentativas, tenta daqui a um minuto.",
+      "error": "Não foi possível reservar, tenta de novo.",
+      "close": "Fechar"
+    },
+    "liveShare": {
+      "jerseyCount": "{count, plural, one {# camisola} other {# camisolas}}",
+      "ownerHidden": "É a tua lista: as reservas estão escondidas para manter a surpresa.",
+      "goneNotice": "{count, plural, one {Uma camisola que ias oferecer já não está na lista.} other {# camisolas que ias oferecer já não estão na lista.}}",
+      "empty": "Esta lista ainda está vazia.",
+      "favorite": "Favorita",
+      "size": "Tamanho",
+      "sizeValue": "Tamanho {size}",
+      "version": "Versão",
+      "flock": "Personalização",
+      "flockValue": "Personalização {flock}",
+      "at": "na {shop}",
+      "createdWith": "Lista criada com Le Vestiaire"
+    },
+    "gift": {
+      "edit": "Info do presente",
+      "received": "Já recebi",
+      "title": "Info do presente",
+      "subtitle": "Visíveis para os teus na lista partilhada, para escolherem a camisola certa.",
+      "size": "Tamanho",
+      "version": "Versão",
+      "flockName": "Personalização: nome",
+      "flockNumber": "Número",
+      "favorite": "Favorita",
+      "noPreference": "Tanto faz",
+      "save": "Guardar",
+      "error": "Ocorreu um erro, tenta de novo.",
+      "receivedDone": "Adicionada à tua coleção, retirada da wishlist"
+    }
   },
   "Login": {
     "title": "Bem-vindo de volta",

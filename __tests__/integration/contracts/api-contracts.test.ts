@@ -14,6 +14,7 @@ import { contractShape, breakingChanges } from "@/lib/contract-shape";
 import { GET as getProfile } from "@/app/api/user/profile/route";
 import { GET as getCollection } from "@/app/api/collection/route";
 import { GET as getWishlist } from "@/app/api/wishlist/route";
+import { GET as getWishlistShares } from "@/app/api/wishlist/shares/route";
 import { GET as getFeed } from "@/app/api/feed/route";
 import { GET as getJerseys } from "@/app/api/jerseys/route";
 import { GET as getPublicProfile } from "@/app/api/users/[username]/route";
@@ -35,6 +36,7 @@ vi.mock("@/lib/get-current-user", () => ({ getCurrentUser: vi.fn() }));
 vi.mock("@/lib/rate-limit", () => ({
   standardRateLimit: {},
   generousRateLimit: {},
+  moderateRateLimit: {},
   getRateLimitIdentifier: vi.fn().mockResolvedValue("test-identifier"),
   checkRateLimit: vi.fn().mockResolvedValue({ success: true, limit: 100, remaining: 99, reset: 0 }),
 }));
@@ -182,9 +184,22 @@ async function seed() {
 
   await prismaTest.wishlist.createMany({
     data: [
-      { userId: viewer.id, jerseyId: jerseyWithShop.id, priority: 3 },
+      // Infos cadeau remplies : la fixture doit montrer leur type à l'app.
+      {
+        userId: viewer.id,
+        jerseyId: jerseyWithShop.id,
+        priority: 2,
+        size: "M",
+        version: "AUTHENTIC",
+        flockName: "MBAPPE",
+        flockNumber: 10,
+      },
       { userId: viewer.id, jerseyId: jerseyPlain.id },
     ],
+  });
+
+  await prismaTest.wishlistShare.create({
+    data: { id: "contractshar", userId: viewer.id, theme: "christmas", title: "Ma liste de Noël", message: "Merci !", jerseyIds: [jerseyWithShop.id] },
   });
 
   const jerseyPost = await prismaTest.post.create({
@@ -232,6 +247,12 @@ describe("Contrats API web ↔ iOS", () => {
     const { viewer } = await seed();
     await signIn(viewer);
     await expectContract("wishlist", await getWishlist());
+  });
+
+  it("liens de partage de la wishlist", async () => {
+    const { viewer } = await seed();
+    await signIn(viewer);
+    await expectContract("wishlist-shares", await getWishlistShares(new Request("http://localhost/api/wishlist/shares")));
   });
 
   it("feed global", async () => {

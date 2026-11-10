@@ -1061,7 +1061,49 @@
     "priorities": "Priorities",
     "priorityHigh": "High",
     "priorityMedium": "Medium",
-    "priorityLow": "Low"
+    "priorityLow": "Low",
+    "reservation": {
+      "cta": "I'll give it",
+      "namePlaceholder": "Your first name",
+      "confirm": "Reserve this jersey",
+      "hint": "Other friends and family will see your name. The person who made the list won't.",
+      "youGiveIt": "You're giving it",
+      "cancel": "Cancel",
+      "reservedBy": "Reserved by {name}",
+      "alreadyReserved": "Someone just reserved it.",
+      "tooManyRequests": "Too many attempts, try again in a minute.",
+      "error": "Couldn't reserve, please try again.",
+      "close": "Close"
+    },
+    "liveShare": {
+      "jerseyCount": "{count, plural, one {# jersey} other {# jerseys}}",
+      "ownerHidden": "This is your list: reservations are hidden to keep the surprise.",
+      "goneNotice": "{count, plural, one {A jersey you were giving is no longer on the list.} other {# jerseys you were giving are no longer on the list.}}",
+      "empty": "This list is empty for now.",
+      "favorite": "Top pick",
+      "size": "Size",
+      "sizeValue": "Size {size}",
+      "version": "Version",
+      "flock": "Printing",
+      "flockValue": "Printing {flock}",
+      "at": "at {shop}",
+      "createdWith": "List made with Le Vestiaire"
+    },
+    "gift": {
+      "edit": "Gift details",
+      "received": "I got it",
+      "title": "Gift details",
+      "subtitle": "Shown to friends and family on your shared list, so they pick the right jersey.",
+      "size": "Size",
+      "version": "Version",
+      "flockName": "Printing: name",
+      "flockNumber": "Number",
+      "favorite": "Top pick",
+      "noPreference": "Any",
+      "save": "Save",
+      "error": "Something went wrong, please try again.",
+      "receivedDone": "Added to your collection, removed from your wishlist"
+    }
   },
   "Login": {
     "title": "Welcome back",

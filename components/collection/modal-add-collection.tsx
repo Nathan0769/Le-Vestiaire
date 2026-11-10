@@ -53,6 +53,8 @@ interface AddToCollectionModalProps {
   onSubmit: (data: AddToCollectionData) => Promise<void>;
   isLoading: boolean;
   jersey: AddToCollectionJersey;
+  /** Préremplissage (ex. « Je l'ai reçu » depuis la wishlist : taille, version, flocage, cadeau). */
+  initialValues?: Partial<UpdateCollectionData>;
 }
 
 const VERSIONS_WITH_MATCH_INFO: JerseyVersion[] = [
@@ -96,13 +98,15 @@ export function AddToCollectionModal({
   onSubmit,
   isLoading,
   jersey,
+  initialValues,
 }: AddToCollectionModalProps) {
   const t = useTranslations("Collection.modal.add");
   const currentUser = useCurrentUser();
   const maxPhotos = maxUserJerseyPhotos(currentUser?.isSupporter ?? false);
   const tView = useTranslations("Collection.modal.view");
 
-  const [formData, setFormData] = useState<UpdateCollectionData>(INITIAL_FORM);
+  const startForm: UpdateCollectionData = { ...INITIAL_FORM, ...initialValues };
+  const [formData, setFormData] = useState<UpdateCollectionData>(startForm);
   const [photoSlots, setPhotoSlots] = useState<PhotoSlot[]>([]);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
 
@@ -149,7 +153,7 @@ export function AddToCollectionModal({
   };
 
   const handleReset = () => {
-    setFormData(INITIAL_FORM);
+    setFormData(startForm);
     setPhotoSlots([]);
   };
 

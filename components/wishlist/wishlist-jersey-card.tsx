@@ -37,6 +37,7 @@ import { jerseyTypeLabel } from "@/lib/jersey-utils";
 import { trackEvent } from "@/lib/analytics";
 import type { PartnerOffer } from "@/lib/partner-shops/offers";
 import { ShopOfferBadge } from "@/components/wishlist/shop-offer-badge";
+import { wishlistOffers, type WishlistOffer } from "@/lib/wishlist-offers";
 
 interface Props {
   jersey: {
@@ -63,25 +64,23 @@ interface Props {
     affiliateUrl: string;
   } | null;
   partnerOffers?: PartnerOffer[];
+  /** Taille voulue : écarte les boutiques qui ne l'ont pas. */
+  size?: string | null;
+  /** Coup de cœur : cœur rose au lieu de la couleur primaire. */
+  favorite?: boolean;
 }
 
-interface CardOffer {
-  shop: string;
-  shopName: string;
-  price: number;
-  compareAtPrice: number | null;
-  discount: number;
-  url: string;
-}
+type CardOffer = WishlistOffer;
 
 const discountOf = (price: number, reference: number | null) =>
   reference !== null && reference > price ? Math.round(((reference - price) / reference) * 100) : 0;
 
-export function WishlistJerseyCard({ jersey, club, cfsAvailability, partnerOffers = [] }: Props) {
+export function WishlistJerseyCard({ jersey, club, cfsAvailability, partnerOffers = [], size, favorite = false }: Props) {
   const router = useRouter();
   const locale = useLocale();
   const tJerseyType = useTranslations("JerseyType");
   const tShop = useTranslations("Wishlist.shopMatch");
+  const tGift = useTranslations("Wishlist.gift");
 
   const typeLabel = jerseyTypeLabel(
     tJerseyType(jersey.type),
@@ -99,40 +98,11 @@ export function WishlistJerseyCard({ jersey, club, cfsAvailability, partnerOffer
     typeTranslation: typeLabel,
   });
 
-  const price = cfsAvailability ? parseFloat(cfsAvailability.price) : null;
-  const promoPrice = cfsAvailability?.promoPrice
-    ? parseFloat(cfsAvailability.promoPrice)
-    : null;
-  const inPromo =
-    promoPrice !== null && price !== null && promoPrice < price;
-  const discount =
-    inPromo && price !== null && promoPrice !== null
-      ? Math.round(((price - promoPrice) / price) * 100)
-      : 0;
-
-  // CFS et boutiques partenaires, du moins cher au plus cher.
-  const offers: CardOffer[] = [
-    ...(cfsAvailability && price !== null
-      ? [
-          {
-            shop: "cfs",
-            shopName: "CFS",
-            price: inPromo && promoPrice !== null ? promoPrice : price,
-            compareAtPrice: inPromo ? price : null,
-            discount,
-            url: cfsAvailability.affiliateUrl,
-          },
-        ]
-      : []),
-    ...partnerOffers.map((o) => ({
-      shop: o.shop,
-      shopName: o.shopName,
-      price: o.price,
-      compareAtPrice: o.compareAtPrice,
-      discount: discountOf(o.price, o.compareAtPrice),
-      url: o.url,
-    })),
-  ].sort((a, b) => a.price - b.price);
+  // CFS et boutiques partenaires du moins cher au plus cher, filtrées par la taille voulue.
+  const offers: CardOffer[] = wishlistOffers({ cfs: cfsAvailability, partnerOffers, size: size ?? null });
+  const cfsOffer = offers.find((o) => o.shop === "cfs");
+  const discount = cfsOffer?.discount ?? 0;
+  const inPromo = discount > 0;
 
   const partnerShops = partnerOffers.map((o) => o.shop).join(",");
   useEffect(() => {
@@ -253,8 +223,8 @@ export function WishlistJerseyCard({ jersey, club, cfsAvailability, partnerOffer
           {typeLabel}
         </span>
         <span
-          className="bg-primary/95 text-primary-foreground rounded-full shadow-sm p-1.5"
-          aria-label="Dans la wishlist"
+          className={`${favorite ? "bg-rose-600 text-white" : "bg-primary/95 text-primary-foreground"} rounded-full shadow-sm p-1.5`}
+          aria-label={favorite ? tGift("favorite") : "Dans la wishlist"}
         >
           <Heart className="w-3 h-3 fill-current" />
         </span>

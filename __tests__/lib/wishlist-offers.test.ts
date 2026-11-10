@@ -1,8 +1,15 @@
 import { describe, it, expect } from "vitest";
-import { wishlistOfferSummary } from "@/lib/wishlist-offers";
+import { wishlistOfferSummary, wishlistOffers } from "@/lib/wishlist-offers";
 
-const parc = (price: number, compareAtPrice: number | null) => ({ price, compareAtPrice });
-const cfs = (price: number, promoPrice: number | null = null) => ({ price, promoPrice });
+const parc = (price: number, compareAtPrice: number | null, sizes: string[] = ["S", "L"]) => ({
+  shop: "parc",
+  shopName: "Le Parc à Maillots",
+  price,
+  compareAtPrice,
+  sizes,
+  url: "https://parc.test/a",
+});
+const cfs = (price: number, promoPrice: number | null = null) => ({ price, promoPrice, affiliateUrl: "https://cfs.test/a" });
 
 describe("wishlistOfferSummary", () => {
   it("promo CFS : économie = prix - prix promo", () => {
@@ -38,5 +45,47 @@ describe("wishlistOfferSummary", () => {
 
   it("aucune offre : indisponible", () => {
     expect(wishlistOfferSummary({ cfs: null, partnerOffers: [] })).toEqual({ status: "unavailable", savings: 0 });
+  });
+
+  it("ignore la promo d'une boutique sans la taille voulue", () => {
+    expect(wishlistOfferSummary({ cfs: cfs(90, 70), partnerOffers: [parc(65, 80)], size: "M" })).toEqual({
+      status: "promo",
+      savings: 20,
+    });
+  });
+});
+
+describe("wishlistOffers", () => {
+  it("trie CFS et boutiques partenaires du moins cher au plus cher", () => {
+    const offers = wishlistOffers({ cfs: cfs(90, 70), partnerOffers: [parc(65, 80)], size: null });
+    expect(offers.map((o) => o.shop)).toEqual(["parc", "cfs"]);
+  });
+
+  it("prend le prix promo CFS avec le prix normal en référence", () => {
+    const [offer] = wishlistOffers({ cfs: cfs(90, 70), partnerOffers: [], size: null });
+    expect(offer).toMatchObject({ shop: "cfs", price: 70, compareAtPrice: 90, discount: 22 });
+  });
+
+  it("écarte une offre partenaire qui n'a pas la taille voulue", () => {
+    const offers = wishlistOffers({ cfs: cfs(90, 70), partnerOffers: [parc(65, 80)], size: "M" });
+    expect(offers.map((o) => o.shop)).toEqual(["cfs"]);
+  });
+
+  it("garde une offre partenaire qui a la taille voulue", () => {
+    const offers = wishlistOffers({ cfs: null, partnerOffers: [parc(65, 80)], size: "L" });
+    expect(offers.map((o) => o.shop)).toEqual(["parc"]);
+  });
+
+  it("accepte des prix CFS en chaîne (forme passée à la carte web)", () => {
+    const [offer] = wishlistOffers({
+      cfs: { price: "90.00", promoPrice: null, affiliateUrl: "u" },
+      partnerOffers: [],
+      size: null,
+    });
+    expect(offer).toMatchObject({ price: 90, compareAtPrice: null, discount: 0 });
+  });
+
+  it("renvoie une liste vide sans offre", () => {
+    expect(wishlistOffers({ cfs: null, partnerOffers: [], size: null })).toEqual([]);
   });
 });

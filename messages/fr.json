@@ -1066,7 +1066,49 @@
     "wishlistOf": "Wishlist de {name}",
     "discoverWishlist": "Découvrez la wishlist de",
     "user": "Utilisateur",
-    "noJerseysInWishlistYet": "{name} n'a pas encore ajouté de maillots à sa wishlist."
+    "noJerseysInWishlistYet": "{name} n'a pas encore ajouté de maillots à sa wishlist.",
+    "reservation": {
+      "cta": "Je l'offre",
+      "namePlaceholder": "Ton prénom",
+      "confirm": "Réserver ce maillot",
+      "hint": "Les autres proches verront ton prénom. La personne qui a fait la liste, non.",
+      "youGiveIt": "Tu l'offres",
+      "cancel": "Annuler",
+      "reservedBy": "Réservé par {name}",
+      "alreadyReserved": "Quelqu'un vient de le réserver.",
+      "tooManyRequests": "Trop de tentatives, réessaie dans une minute.",
+      "error": "Réservation impossible, réessaie.",
+      "close": "Fermer"
+    },
+    "liveShare": {
+      "jerseyCount": "{count, plural, one {# maillot} other {# maillots}}",
+      "ownerHidden": "C'est ta liste : les réservations de tes proches sont cachées pour garder la surprise.",
+      "goneNotice": "{count, plural, one {Un maillot que tu offrais n'est plus dans la liste.} other {# maillots que tu offrais ne sont plus dans la liste.}}",
+      "empty": "Cette liste est vide pour l'instant.",
+      "favorite": "Coup de cœur",
+      "size": "Taille",
+      "sizeValue": "Taille {size}",
+      "version": "Version",
+      "flock": "Flocage",
+      "flockValue": "Flocage {flock}",
+      "at": "chez {shop}",
+      "createdWith": "Liste créée avec Le Vestiaire"
+    },
+    "gift": {
+      "edit": "Infos cadeau",
+      "received": "Je l'ai reçu",
+      "title": "Infos cadeau",
+      "subtitle": "Visibles par tes proches sur ta liste partagée, pour qu'ils prennent le bon maillot.",
+      "size": "Taille",
+      "version": "Version",
+      "flockName": "Flocage : nom",
+      "flockNumber": "Numéro",
+      "favorite": "Coup de cœur",
+      "noPreference": "Peu importe",
+      "save": "Enregistrer",
+      "error": "Une erreur est survenue, réessaie.",
+      "receivedDone": "Ajouté à ta collection, retiré de ta wishlist"
+    }
   },
   "Login": {
     "title": "Content de vous retrouver",

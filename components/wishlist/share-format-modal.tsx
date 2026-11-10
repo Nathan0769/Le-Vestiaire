@@ -36,6 +36,8 @@ interface ShareFormatModalProps {
   title: string;
   message: string;
   theme: Theme;
+  /** Toute la wishlist : le lien suivra aussi les maillots ajoutés plus tard. */
+  shareAll?: boolean;
 }
 
 type FormatType = "link" | "image" | "pdf";
@@ -47,6 +49,7 @@ export function ShareFormatModal({
   title,
   message,
   theme,
+  shareAll = false,
 }: ShareFormatModalProps) {
   const t = useTranslations("Wishlist.shareFormatModal");
   const locale = useLocale();
@@ -83,18 +86,16 @@ export function ShareFormatModal({
 
   const generateLink = async () => {
     try {
-      const response = await fetch("/api/wishlist/shorten", {
+      const response = await fetch("/api/wishlist/shares", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
           title,
-          message,
+          message: message || null,
           theme,
-          jerseys: selectedItems.map((item) => ({
-            id: item.jersey.id,
-          })),
+          jerseyIds: shareAll ? [] : selectedItems.map((item) => item.jersey.id),
         }),
       });
 
@@ -102,8 +103,8 @@ export function ShareFormatModal({
         throw new Error("Erreur lors de la création du lien");
       }
 
-      const { shortUrl } = await response.json();
-      setGeneratedLink(shortUrl);
+      const { url } = await response.json();
+      setGeneratedLink(url);
       toast.success(t("toast.linkGenerated"));
     } catch (error) {
       console.error("Erreur génération lien:", error);

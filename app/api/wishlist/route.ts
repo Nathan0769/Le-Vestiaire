@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import prisma from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { getPartnerOffers } from "@/lib/partner-shops/offers";
+import { findOwnerWishlistItems } from "@/lib/wishlist-items";
 
 export async function GET() {
   try {
@@ -10,58 +9,8 @@ export async function GET() {
       return NextResponse.json({ error: "Non authentifié" }, { status: 401 });
     }
 
-    const wishlistItems = await prisma.wishlist.findMany({
-      where: { userId: currentUser.id },
-      select: {
-        id: true,
-        jerseyId: true,
-        priority: true,
-        createdAt: true,
-        jersey: {
-          include: {
-            club: {
-              include: {
-                league: true,
-              },
-            },
-            cfsAvailability: {
-              select: {
-                id: true,
-                price: true,
-                promoPrice: true,
-                affiliateUrl: true,
-              },
-            },
-          },
-        },
-      },
-      orderBy: { createdAt: "desc" },
-    });
-
-    const partnerOffers = await getPartnerOffers(wishlistItems.map((item) => item.jerseyId));
-
-    const formatted = wishlistItems.map((item) => ({
-      ...item,
-      jersey: {
-        ...item.jersey,
-        retailPrice: item.jersey.retailPrice
-          ? Number(item.jersey.retailPrice)
-          : null,
-        cfsAvailability: item.jersey.cfsAvailability
-          ? {
-              ...item.jersey.cfsAvailability,
-              price: Number(item.jersey.cfsAvailability.price),
-              promoPrice:
-                item.jersey.cfsAvailability.promoPrice !== null
-                  ? Number(item.jersey.cfsAvailability.promoPrice)
-                  : null,
-            }
-          : null,
-        partnerOffers: partnerOffers.get(item.jerseyId) ?? [],
-      },
-    }));
-
-    return NextResponse.json(formatted);
+    const items = await findOwnerWishlistItems({ userId: currentUser.id });
+    return NextResponse.json(items);
   } catch (error) {
     console.error("Erreur GET /api/wishlist:", error);
     return NextResponse.json({ error: "Erreur serveur" }, { status: 500 });

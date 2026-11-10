@@ -9,6 +9,10 @@ import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
 import { wishlistOfferSummary } from "@/lib/wishlist-offers";
+import { withCfsSubId } from "@/lib/cfs-affiliate";
+import { WishlistGiftActions } from "@/components/wishlist/wishlist-gift-actions";
+import { mostFrequentSize } from "@/lib/wishlist-gift-fields";
+import type { Size } from "@prisma/client";
 
 export const dynamic = "force-dynamic";
 
@@ -70,9 +74,8 @@ export default async function WishlistPage() {
           },
         },
       },
-      orderBy: {
-        createdAt: "desc",
-      },
+      // Coups de cœur en tête de chaque section, puis les plus récents.
+      orderBy: [{ priority: "desc" }, { createdAt: "desc" }],
       take: 1000,
     });
   } catch (error) {
@@ -102,6 +105,9 @@ export default async function WishlistPage() {
   }, {} as Record<string, number>);
 
   const partnerOffers = await getPartnerOffers(wishlistItems.map((item) => item.jersey.id));
+  // Taille proposée par défaut dans les infos cadeau : la plus portée de sa collection.
+  const collectionSizes = await prisma.userJersey.findMany({ where: { userId: user.id }, select: { size: true } });
+  const suggestedSize = mostFrequentSize(collectionSizes.map((c) => c.size)) as Size | null;
   const summaries = new Map(
     wishlistItems.map((item) => {
       const av = item.jersey.cfsAvailability;
@@ -109,9 +115,14 @@ export default async function WishlistPage() {
         item.id,
         wishlistOfferSummary({
           cfs: av
-            ? { price: Number(av.price), promoPrice: av.promoPrice === null ? null : Number(av.promoPrice) }
+            ? {
+                price: Number(av.price),
+                promoPrice: av.promoPrice === null ? null : Number(av.promoPrice),
+                affiliateUrl: av.affiliateUrl,
+              }
             : null,
           partnerOffers: partnerOffers.get(item.jersey.id) ?? [],
+          size: item.size,
         }),
       ];
     })
@@ -320,12 +331,42 @@ export default async function WishlistPage() {
                             promoPrice: av.promoPrice
                               ? av.promoPrice.toString()
                               : null,
-                            affiliateUrl: av.affiliateUrl,
+                            affiliateUrl: withCfsSubId(av.affiliateUrl, `wishlist-${item.jersey.id}`),
                           }
                         : null
                     }
                     partnerOffers={partnerOffers.get(item.jersey.id) ?? []}
+                    size={item.size}
+                    favorite={item.priority >= 2}
                   />
+                  <div className="mt-2">
+                    <WishlistGiftActions
+                      wishlistId={item.id}
+                      suggestedSize={suggestedSize}
+                      gift={{
+                        size: item.size,
+                        version: item.version,
+                        flockName: item.flockName,
+                        flockNumber: item.flockNumber,
+                        priority: item.priority,
+                      }}
+                      jersey={{
+                        id: item.jersey.id,
+                        name: item.jersey.name,
+                        imageUrl: item.jersey.imageUrl,
+                        type: item.jersey.type,
+                        variant: item.jersey.variant ?? 1,
+                        season: item.jersey.season,
+                        brand: item.jersey.brand ?? "",
+                        club: {
+                          name: item.jersey.club.name,
+                          shortName: item.jersey.club.shortName,
+                          logoUrl: item.jersey.club.logoUrl,
+                          league: { name: item.jersey.club.league.name },
+                        },
+                      }}
+                    />
+                  </div>
                 </div>
               );
             })}

@@ -1061,7 +1061,49 @@
     "priorities": "Prioritäten",
     "priorityHigh": "Hoch",
     "priorityMedium": "Mittel",
-    "priorityLow": "Niedrig"
+    "priorityLow": "Niedrig",
+    "reservation": {
+      "cta": "Ich schenke es",
+      "namePlaceholder": "Dein Vorname",
+      "confirm": "Dieses Trikot reservieren",
+      "hint": "Die anderen sehen deinen Namen. Die Person, die die Liste erstellt hat, nicht.",
+      "youGiveIt": "Du schenkst es",
+      "cancel": "Abbrechen",
+      "reservedBy": "Reserviert von {name}",
+      "alreadyReserved": "Jemand hat es gerade reserviert.",
+      "tooManyRequests": "Zu viele Versuche, versuche es in einer Minute erneut.",
+      "error": "Reservierung fehlgeschlagen, bitte erneut versuchen.",
+      "close": "Schließen"
+    },
+    "liveShare": {
+      "jerseyCount": "{count, plural, one {# Trikot} other {# Trikots}}",
+      "ownerHidden": "Das ist deine Liste: Reservierungen sind ausgeblendet, damit die Überraschung bleibt.",
+      "goneNotice": "{count, plural, one {Ein Trikot, das du schenken wolltest, ist nicht mehr auf der Liste.} other {# Trikots, die du schenken wolltest, sind nicht mehr auf der Liste.}}",
+      "empty": "Diese Liste ist noch leer.",
+      "favorite": "Favorit",
+      "size": "Größe",
+      "sizeValue": "Größe {size}",
+      "version": "Version",
+      "flock": "Beflockung",
+      "flockValue": "Beflockung {flock}",
+      "at": "bei {shop}",
+      "createdWith": "Liste erstellt mit Le Vestiaire"
+    },
+    "gift": {
+      "edit": "Geschenk-Infos",
+      "received": "Bekommen",
+      "title": "Geschenk-Infos",
+      "subtitle": "Für deine Liebsten auf deiner geteilten Liste sichtbar, damit sie das richtige Trikot nehmen.",
+      "size": "Größe",
+      "version": "Version",
+      "flockName": "Beflockung: Name",
+      "flockNumber": "Nummer",
+      "favorite": "Favorit",
+      "noPreference": "Egal",
+      "save": "Speichern",
+      "error": "Ein Fehler ist aufgetreten, bitte erneut versuchen.",
+      "receivedDone": "Zur Sammlung hinzugefügt, von der Wunschliste entfernt"
+    }
   },
   "Login": {
     "title": "Willkommen zurück",

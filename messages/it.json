@@ -1061,7 +1061,49 @@
     "priorities": "Priorità",
     "priorityHigh": "Alta",
     "priorityMedium": "Media",
-    "priorityLow": "Bassa"
+    "priorityLow": "Bassa",
+    "reservation": {
+      "cta": "Lo regalo io",
+      "namePlaceholder": "Il tuo nome",
+      "confirm": "Prenota questa maglia",
+      "hint": "Gli altri vedranno il tuo nome. Chi ha creato la lista no.",
+      "youGiveIt": "La regali tu",
+      "cancel": "Annulla",
+      "reservedBy": "Prenotata da {name}",
+      "alreadyReserved": "Qualcuno l'ha appena prenotata.",
+      "tooManyRequests": "Troppi tentativi, riprova tra un minuto.",
+      "error": "Prenotazione non riuscita, riprova.",
+      "close": "Chiudi"
+    },
+    "liveShare": {
+      "jerseyCount": "{count, plural, one {# maglia} other {# maglie}}",
+      "ownerHidden": "È la tua lista: le prenotazioni sono nascoste per mantenere la sorpresa.",
+      "goneNotice": "{count, plural, one {Una maglia che volevi regalare non è più nella lista.} other {# maglie che volevi regalare non sono più nella lista.}}",
+      "empty": "Questa lista è vuota per ora.",
+      "favorite": "Preferita",
+      "size": "Taglia",
+      "sizeValue": "Taglia {size}",
+      "version": "Versione",
+      "flock": "Personalizzazione",
+      "flockValue": "Personalizzazione {flock}",
+      "at": "da {shop}",
+      "createdWith": "Lista creata con Le Vestiaire"
+    },
+    "gift": {
+      "edit": "Info regalo",
+      "received": "L'ho ricevuta",
+      "title": "Info regalo",
+      "subtitle": "Visibili ai tuoi cari sulla lista condivisa, per scegliere la maglia giusta.",
+      "size": "Taglia",
+      "version": "Versione",
+      "flockName": "Personalizzazione: nome",
+      "flockNumber": "Numero",
+      "favorite": "Preferita",
+      "noPreference": "Indifferente",
+      "save": "Salva",
+      "error": "Si è verificato un errore, riprova.",
+      "receivedDone": "Aggiunta alla collezione, rimossa dalla wishlist"
+    }
   },
   "Login": {
     "title": "Bentornato",

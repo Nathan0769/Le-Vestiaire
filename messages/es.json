@@ -1061,7 +1061,49 @@
     "priorities": "Prioridades",
     "priorityHigh": "Alta",
     "priorityMedium": "Media",
-    "priorityLow": "Baja"
+    "priorityLow": "Baja",
+    "reservation": {
+      "cta": "Yo la regalo",
+      "namePlaceholder": "Tu nombre",
+      "confirm": "Reservar esta camiseta",
+      "hint": "Los demás verán tu nombre. La persona que hizo la lista, no.",
+      "youGiveIt": "Tú la regalas",
+      "cancel": "Cancelar",
+      "reservedBy": "Reservada por {name}",
+      "alreadyReserved": "Alguien acaba de reservarla.",
+      "tooManyRequests": "Demasiados intentos, vuelve a probar en un minuto.",
+      "error": "No se pudo reservar, inténtalo de nuevo.",
+      "close": "Cerrar"
+    },
+    "liveShare": {
+      "jerseyCount": "{count, plural, one {# camiseta} other {# camisetas}}",
+      "ownerHidden": "Es tu lista: las reservas están ocultas para mantener la sorpresa.",
+      "goneNotice": "{count, plural, one {Una camiseta que ibas a regalar ya no está en la lista.} other {# camisetas que ibas a regalar ya no están en la lista.}}",
+      "empty": "Esta lista está vacía por ahora.",
+      "favorite": "Favorita",
+      "size": "Talla",
+      "sizeValue": "Talla {size}",
+      "version": "Versión",
+      "flock": "Estampado",
+      "flockValue": "Estampado {flock}",
+      "at": "en {shop}",
+      "createdWith": "Lista creada con Le Vestiaire"
+    },
+    "gift": {
+      "edit": "Datos del regalo",
+      "received": "Ya la tengo",
+      "title": "Datos del regalo",
+      "subtitle": "Visibles para los tuyos en tu lista compartida, para que elijan bien.",
+      "size": "Talla",
+      "version": "Versión",
+      "flockName": "Estampado: nombre",
+      "flockNumber": "Número",
+      "favorite": "Favorita",
+      "noPreference": "Me da igual",
+      "save": "Guardar",
+      "error": "Ha ocurrido un error, inténtalo de nuevo.",
+      "receivedDone": "Añadida a tu colección, quitada de tu wishlist"
+    }
   },
   "Login": {
     "title": "Bienvenido de nuevo",

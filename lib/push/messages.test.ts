@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildPushMessage } from "./messages";
+import { buildPushMessage, buildWishlistPromoMessage } from "./messages";
 
 describe("buildPushMessage", () => {
   it("construit le message en français", () => {
@@ -36,5 +36,22 @@ describe("buildPushMessage", () => {
       title: "Le Vestiaire",
       body: "You have a new notification",
     });
+  });
+});
+
+describe("buildWishlistPromoMessage", () => {
+  it("résume plusieurs promos avec la plus grosse économie", () => {
+    expect(buildWishlistPromoMessage(3, "25 €", "fr")).toEqual({
+      title: "Promo sur ta wishlist",
+      body: "3 maillots de ta wishlist sont en promo, jusqu'à -25 €",
+    });
+  });
+
+  it("passe au singulier pour une seule promo", () => {
+    expect(buildWishlistPromoMessage(1, "£20", "en").body).toBe("A jersey on your wishlist is on sale: £20 off");
+  });
+
+  it("retombe sur le français pour une langue inconnue", () => {
+    expect(buildWishlistPromoMessage(2, "10 €", "ja").title).toBe("Promo sur ta wishlist");
   });
 });

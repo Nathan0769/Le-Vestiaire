@@ -39,13 +39,16 @@ export function WishlistShareButton({
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
   const [theme, setTheme] = useState<Theme>("christmas");
+  const [shareAll, setShareAll] = useState(false);
 
   const handleShareAll = () => {
+    setShareAll(true);
     setIsDropdownOpen(false);
     setShowThemeModal(true);
   };
 
   const handleShareSelection = () => {
+    setShareAll(false);
     setShowSelectionModal(true);
     setIsDropdownOpen(false);
   };
@@ -150,6 +153,7 @@ export function WishlistShareButton({
         title={title}
         message={message}
         theme={theme}
+        shareAll={shareAll}
       />
     </>
   );

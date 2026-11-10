@@ -10,6 +10,8 @@ interface PushInput {
   type: PushType;
   postId?: string | null;
   followRequestId?: string | null;
+  /** Texte propre au type (ex. alerte promo), par langue d'appareil. Défaut : `buildPushMessage`. */
+  message?: (locale: string | null) => { title: string; body: string };
 }
 
 /**
@@ -71,7 +73,10 @@ export async function pushForNotification(input: PushInput): Promise<void> {
         sendApns(
           t.token,
           // Texte dans la langue de chaque appareil.
-          { ...buildPushMessage(input.type, actorName, t.locale), data },
+          {
+            ...(input.message ? input.message(t.locale) : buildPushMessage(input.type, actorName, t.locale)),
+            data,
+          },
           t.environment
         )
       )
