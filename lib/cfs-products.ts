@@ -26,6 +26,16 @@ export interface CfsProductState extends SeenCfsProduct {
 
 const displayedPrice = (p: { price: number; promoPrice: number | null }) => p.promoPrice ?? p.price;
 
+/**
+ * Les euros de l'API CFS suivent le taux de change chaque jour : sans marge,
+ * ~150 000 produits étaient réécrits par nuit et le cron n'allait jamais au bout
+ * (2026-11-10). Une vraie baisse CFS dépasse largement 3 %.
+ */
+export const CFS_FX_PRICE_TOLERANCE = 0.03;
+
+const withinFx = (stored: number | null, seen: number | null) =>
+  stored !== null && seen !== null && Math.abs(seen - stored) / stored < CFS_FX_PRICE_TOLERANCE;
+
 const sameState = (a: CfsProductState, b: CfsProductState) =>
   a.name === b.name &&
   a.price === b.price &&
@@ -65,8 +75,25 @@ export function nextCfsProductState(
     soldPrice = null;
   }
 
-  const state = { ...seen, soldAt, soldPrice };
+  const state = {
+    ...seen,
+    price: withinFx(stored.price, seen.price) ? stored.price : seen.price,
+    promoPrice: withinFx(stored.promoPrice, seen.promoPrice) ? stored.promoPrice : seen.promoPrice,
+    soldAt,
+    soldPrice,
+  };
   return { state, changed: !sameState(stored, state), sale, cancelled };
+}
+
+/**
+ * Ordre d'écriture quand un passage ne peut pas tout écrire : stock, ventes et
+ * promos d'abord (0), simples changements de prix ensuite (1), rattrapés les
+ * nuits suivantes.
+ */
+export function cfsUpdatePriority(stored: CfsProductState, next: CfsProductState): 0 | 1 {
+  const priceOnly = sameState({ ...stored, price: next.price, promoPrice: next.promoPrice }, next) &&
+    (stored.promoPrice === null) === (next.promoPrice === null);
+  return priceOnly ? 1 : 0;
 }
 
 const CONDITION_RANK: Record<Condition, number> = { MINT: 4, EXCELLENT: 3, GOOD: 2, FAIR: 1, POOR: 0 };

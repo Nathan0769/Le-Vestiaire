@@ -6,7 +6,14 @@ import { cfsSitePrices } from "@/lib/cfs-price";
 import { getRatesToEur } from "@/lib/fx";
 import { fetchCfsTeams, fetchTeamProducts, isAllowedCfsUrl, type CfsItem } from "@/lib/cfs-constructor";
 import { isReferenceListing, listingTraits } from "@/lib/market-value/listing-traits";
-import { nextCfsProductState, pickDisplayedOffer, type CfsProductState, type SeenCfsProduct } from "@/lib/cfs-products";
+import {
+  cfsUpdatePriority,
+  nextCfsProductState,
+  pickDisplayedOffer,
+  type CfsProductState,
+  type SeenCfsProduct,
+} from "@/lib/cfs-products";
+import { bulkUpdateCfsProducts } from "@/lib/cfs-products-bulk";
 import { normalizeClubName } from "@/lib/partner-shops/club-name";
 import { seasonCandidates, spanSeasons } from "@/lib/partner-shops/season-candidates";
 import type { Condition } from "@/lib/market-value/types";
@@ -24,10 +31,18 @@ const TEAM_FETCH_CONCURRENCY = 6;
 const UPSERT_CONCURRENCY = 8;
 const CREATE_BATCH = 1_000;
 const CREATE_CONCURRENCY = 4;
-const TOUCH_BATCH = 5_000;
-const STALE_THRESHOLD_HOURS = 48;
-/** Marge sous le maxDuration de 300 s du cron. */
-const DEFAULT_BUDGET_MS = 240_000;
+const DELETE_BATCH = 5_000;
+/**
+ * Temps laissé à la lecture de CFS (~90 s mesurées le 2026-11-10) : le reste des
+ * 300 s du cron va aux écritures. Avant, 240 s ne laissaient presque rien.
+ */
+const DEFAULT_BUDGET_MS = 150_000;
+/**
+ * Lignes modifiées écrites par passage. Mesuré en prod le 2026-11-10 : 30 000
+ * lignes ~150 s, passage normal ~500 lignes et 135 s au total (lecture CFS ~105 s).
+ * Au-delà, les simples changements de prix attendent la nuit suivante : le cron finit toujours.
+ */
+const MAX_UPDATES_PER_RUN = 10_000;
 // Au moins une taille de XS à XXL : une pièce en 3XL ou 4XL seulement n'intéresse presque personne.
 const TARGET_SIZES = new Set(["XS", "S", "M", "L", "XL", "XXL"]);
 // Coupe femme : pas un maillot du catalogue (le filtre de l'API ne la distingue pas).
@@ -50,7 +65,9 @@ interface ScrapeStats {
   /** Passages en rupture (ventes déduites) et retours sous 48 h. */
   sales: number;
   cancelledSales: number;
-  /** Lignes CfsProduct non vues depuis 48 h, supprimées. */
+  /** Lignes modifiées reportées au passage suivant (plafond par passage). */
+  productsDeferred: number;
+  /** Lignes CfsProduct absentes du passage (équipe lue), supprimées. */
   purged: number;
   /** Offres affichées (CfsAvailability) écrites, et retirées faute de produit en stock. */
   written: number;
@@ -295,6 +312,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     productsInStock: 0,
     sales: 0,
     cancelledSales: 0,
+    productsDeferred: 0,
     purged: 0,
     written: 0,
     removed: 0,
@@ -331,6 +349,8 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
 
   const clubIndex = await buildClubNameIndex(aliases);
   const jerseyIndex = await buildJerseyIndex([...new Set(clubIndex.values())]);
+  const clubOfJersey = new Map([...jerseyIndex].map(([key, jerseyId]) => [jerseyId, key.split("|")[0]]));
+  const unreached: { name: string; clubId?: string }[] = [];
 
   // Clé `${cfsId}|${jerseyId}` : un produit vu dans son équipe et dans un groupe ne compte qu'une fois.
   // sitePrices : prix affiché par le site, pour l'offre de la fiche ; `product.price`
@@ -344,6 +364,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     queue.map((team) =>
       limit(async () => {
         if (Date.now() > deadline) {
+          unreached.push(team);
           stats.teamsNotReached.push(team.name);
           return;
         }
@@ -352,6 +373,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
           products = await fetchTeamProducts(team.name);
         } catch (err) {
           console.error(`[cfs-availability] ${team.name} :`, err);
+          unreached.push(team);
           stats.teamsNotReached.push(team.name);
           return;
         }
@@ -379,14 +401,19 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
   );
 
   const now = new Date();
-  const staleThreshold = new Date(now.getTime() - STALE_THRESHOLD_HOURS * 60 * 60 * 1000);
+  // Un produit absent n'a vraiment quitté CFS que si son équipe a été lue. Équipe
+  // non lue : ses clubs sont épargnés ; groupe non lu (clubs mêlés) : rien n'est retiré.
+  const skippedClubs = new Set(unreached.flatMap((t) => (t.clubId ? [t.clubId] : [])));
+  const canRemove = unreached.some((t) => !t.clubId)
+    ? () => false
+    : (jerseyId: string) => !skippedClubs.has(clubOfJersey.get(jerseyId) ?? "");
 
-  // 1. Produits : création, mise à jour des lignes changées, date de passage des autres.
+  // 1. Produits : création et mise à jour des seules lignes changées. Les lignes
+  // inchangées ne sont plus réécrites (lastSeenAt = dernière écriture).
   const stored = await loadStoredProducts();
 
   const toCreate: (CfsProductState & { cfsId: string; jerseyId: string })[] = [];
-  const toUpdate: { id: string; state: CfsProductState }[] = [];
-  const unchangedIds: string[] = [];
+  const toUpdate: { id: string; state: CfsProductState; priority: 0 | 1 }[] = [];
   // État courant de chaque produit encore valable, par maillot, pour l'offre affichée.
   const productsByJersey = new Map<string, CfsProductState[]>();
   const keep = (jerseyId: string, state: CfsProductState) => {
@@ -408,18 +435,12 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     if (next.sale) stats.sales++;
     if (next.cancelled) stats.cancelledSales++;
     if (!old) toCreate.push({ ...next.state, cfsId, jerseyId });
-    else if (next.changed) toUpdate.push({ id: old.id, state: next.state });
-    else unchangedIds.push(old.id);
+    else if (next.changed) toUpdate.push({ id: old.id, state: next.state, priority: cfsUpdatePriority(oldState!, next.state) });
     keep(jerseyId, { ...next.state, ...sitePrices });
   }
-  // Maillot sans produit revu mais avec des produits récents (équipe non atteinte
-  // cette nuit) : son offre affichée reste telle quelle jusqu'à la purge de 48 h.
-  const untouchedJerseys = new Set<string>();
-  for (const [key, old] of stored) {
-    if (!seen.has(key) && old.lastSeenAt >= staleThreshold && !productsByJersey.has(old.jerseyId)) {
-      untouchedJerseys.add(old.jerseyId);
-    }
-  }
+  const goneIds = [...stored]
+    .filter(([key, old]) => !seen.has(key) && canRemove(old.jerseyId))
+    .map(([, old]) => old.id);
   stored.clear();
 
   const createLimit = pLimit(CREATE_CONCURRENCY);
@@ -433,22 +454,20 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
       )
     )
   );
-  const upsertLimit = pLimit(UPSERT_CONCURRENCY);
-  await Promise.all(
-    toUpdate.map(({ id, state }) =>
-      upsertLimit(() => prisma.cfsProduct.update({ where: { id }, data: { ...state, lastSeenAt: now } }))
-    )
-  );
-  for (const ids of chunk(unchangedIds, TOUCH_BATCH)) {
-    await prisma.cfsProduct.updateMany({ where: { id: { in: ids } }, data: { lastSeenAt: now } });
+  toUpdate.sort((a, b) => a.priority - b.priority);
+  await bulkUpdateCfsProducts(toUpdate.slice(0, MAX_UPDATES_PER_RUN), now);
+  stats.productsDeferred = Math.max(0, toUpdate.length - MAX_UPDATES_PER_RUN);
+
+  let purgedCount = 0;
+  for (const ids of chunk(goneIds, DELETE_BATCH)) {
+    purgedCount += (await prisma.cfsProduct.deleteMany({ where: { id: { in: ids } } })).count;
   }
-  const purged = await prisma.cfsProduct.deleteMany({ where: { lastSeenAt: { lt: staleThreshold } } });
 
   stats.products = seen.size;
   stats.productsCreated = toCreate.length;
   stats.productsUpdated = toUpdate.length;
   stats.productsInStock = [...seen.values()].filter((s) => s.product.inStock).length;
-  stats.purged = purged.count;
+  stats.purged = purgedCount;
 
   // 2. Offre affichée : le produit en stock le moins cher de chaque maillot.
   const displayed = new Map<string, CfsAvailabilityUpsertData>();
@@ -488,6 +507,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     const old = before.get(jerseyId);
     return !old || !sameCfsOffer(old, offer);
   });
+  const upsertLimit = pLimit(UPSERT_CONCURRENCY);
   await Promise.all(
     toWrite.map(([jerseyId, data]) =>
       upsertLimit(() =>
@@ -499,9 +519,9 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
       )
     )
   );
-  // Plus aucun produit en stock : le lien disparaît de la fiche.
-  const removedIds = [...before.keys()].filter((id) => !displayed.has(id) && !untouchedJerseys.has(id));
-  for (const ids of chunk(removedIds, TOUCH_BATCH)) {
+  // Plus aucun produit en stock : le lien disparaît de la fiche (équipe lue seulement).
+  const removedIds = [...before.keys()].filter((id) => !displayed.has(id) && canRemove(id));
+  for (const ids of chunk(removedIds, DELETE_BATCH)) {
     await prisma.cfsAvailability.deleteMany({ where: { jerseyId: { in: ids } } });
   }
   stats.written = toWrite.length;

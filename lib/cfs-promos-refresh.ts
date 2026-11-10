@@ -1,4 +1,4 @@
-import { scrapeCfsPromos } from "@/lib/cfs-scraper";
+import { scrapeCfsPromos, MIN_PROMOS_TO_REPLACE } from "@/lib/cfs-scraper";
 import { resolveCfsMatch, loadCfsAliasMap } from "@/lib/cfs-matcher";
 import prisma from "@/lib/prisma";
 
@@ -15,12 +15,16 @@ export interface RefreshCfsPromosResult {
 
 /**
  * Scrape CFS promos, resolve each to a catalog jersey, and atomically replace the
- * cfs_promos table. Shared by the admin route (manual) and the cron route (12h).
+ * cfs_promos table. Shared by the admin route, the cron route (12h) and scripts/market/scrape-cfs-promos.ts.
  */
 export async function refreshCfsPromos(
   maxResults = 20
 ): Promise<RefreshCfsPromosResult> {
   const promos = await scrapeCfsPromos({ maxResults });
+  // Passage anormal (CFS en panne, clé changée) : on garde le bloc actuel de la home.
+  if (promos.length < MIN_PROMOS_TO_REPLACE) {
+    throw new Error(`Promos CFS : ${promos.length} trouvées (minimum ${MIN_PROMOS_TO_REPLACE}), table conservée`);
+  }
 
   const aliasMap = await loadCfsAliasMap();
   const enriched = await Promise.all(

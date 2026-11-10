@@ -3,6 +3,7 @@ import {
   nextCfsProductState,
   pickDisplayedOffer,
   toCfsSignals,
+  cfsUpdatePriority,
   type CfsProductState,
 } from "@/lib/cfs-products";
 
@@ -67,6 +68,32 @@ describe("nextCfsProductState", () => {
 
   it("signale un changement de prix", () => {
     expect(nextCfsProductState(stored(), seen({ promoPrice: 29.99 }), now).changed).toBe(true);
+  });
+
+  // Les euros de l'API CFS suivent le taux de change chaque jour (~150 000 lignes réécrites par nuit).
+  it("ignore une variation de prix de change de moins de 3 % et garde le prix enregistré", () => {
+    const next = nextCfsProductState(stored(), seen({ price: 104.59, promoPrice: 39.99 }), now);
+    expect([next.changed, next.state.price, next.state.promoPrice]).toEqual([false, 105.59, 39.59]);
+  });
+
+  it("enregistre une variation de prix de 3 % ou plus", () => {
+    const next = nextCfsProductState(stored({ promoPrice: null }), seen({ price: 99.99, promoPrice: null }), now);
+    expect([next.changed, next.state.price]).toEqual([true, 99.99]);
+  });
+
+  it("enregistre une promo qui commence, même petite", () => {
+    const next = nextCfsProductState(stored({ promoPrice: null }), seen({ promoPrice: 104.99 }), now);
+    expect([next.changed, next.state.promoPrice]).toEqual([true, 104.99]);
+  });
+});
+
+describe("cfsUpdatePriority", () => {
+  it("passe le stock et les ventes avant les seuls changements de prix", () => {
+    const priceOnly = { stored: stored({ promoPrice: null }), state: { ...stored({ promoPrice: null }), price: 90 } };
+    const stock = { stored: stored(), state: { ...stored(), inStock: false, soldAt: now, soldPrice: 39.59 } };
+    expect(cfsUpdatePriority(stock.stored, stock.state)).toBeLessThan(
+      cfsUpdatePriority(priceOnly.stored, priceOnly.state)
+    );
   });
 });
 

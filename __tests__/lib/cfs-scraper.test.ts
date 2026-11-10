@@ -1,200 +1,140 @@
 import { describe, it, expect } from "vitest";
-import { parseInStockSizes, parseCollectionIdFromUrl } from "@/lib/cfs-scraper";
+import { selectCfsPromos, buildClearanceUrl, MIN_PROMOS_TO_REPLACE } from "@/lib/cfs-scraper";
+import type { CfsRawItem } from "@/lib/cfs-constructor";
 
-function makeHtml(opts: {
-  options?: Array<{ label: string; variantId: string }>;
-  quantities?: Record<string, number>;
-  sku?: Record<string, string>;
-}): string {
-  const parts: string[] = [];
-
-  if (opts.options) {
-    const entries = opts.options
-      .map(
-        ({ label, variantId }) =>
-          `{"id":"opt_${variantId}","label":"${label}","products":["${variantId}"]}`
-      )
-      .join(",");
-    parts.push(`"options":[${entries}]`);
-  }
-
-  if (opts.quantities) {
-    const entries = Object.entries(opts.quantities)
-      .map(([id, qty]) => `"${id}":${qty}`)
-      .join(",");
-    parts.push(`"quantities":{${entries}}`);
-  }
-
-  if (opts.sku) {
-    const entries = Object.entries(opts.sku)
-      .map(([id, s]) => `"${id}":"${s}"`)
-      .join(",");
-    parts.push(`"sku":{${entries}}`);
-  }
-
-  return parts.join(",");
+// Sans prix en livres : cfsSitePrices garde les euros de l'API, plus simple à lire.
+function item(
+  name: string,
+  opts: { price?: number; special?: number | null; stock?: Record<string, boolean>; brand?: string } = {}
+): CfsRawItem & { data: { brand?: string } } {
+  const stock = opts.stock ?? { S: true, M: true, L: true };
+  return {
+    data: {
+      id: name,
+      name,
+      url: `https://www.classicfootballshirts.com/${encodeURIComponent(name)}.html`,
+      image_url: "https://img.example/x.jpg",
+      price_eur: opts.price ?? 100,
+      special_price_eur: opts.special === undefined ? 60 : opts.special,
+      brand: opts.brand ?? "Nike",
+    },
+    variations: Object.entries(stock).map(([size, inStock]) => ({
+      data: { size_product: [size], in_stock: inStock ? "1" : "0" },
+    })),
+  };
 }
 
-describe("parseInStockSizes", () => {
-  describe("fallback options labels (quantities absent)", () => {
-    it("extrait les tailles depuis le champ options", () => {
-      const html = makeHtml({
-        options: [
-          { label: "S", variantId: "1" },
-          { label: "M", variantId: "2" },
-          { label: "L", variantId: "3" },
-        ],
-      });
-      expect(parseInStockSizes(html).sort()).toEqual(["L", "M", "S"]);
-    });
+const GBP = 1.17;
 
-    it("ignore les tailles non-adultes dans options", () => {
-      const html = makeHtml({
-        options: [
-          { label: "S", variantId: "1" },
-          { label: "M", variantId: "2" },
-          { label: "6", variantId: "3" },
-          { label: "28", variantId: "4" },
-        ],
-      });
-      const sizes = parseInStockSizes(html);
-      expect(sizes).toContain("S");
-      expect(sizes).toContain("M");
-      expect(sizes).not.toContain("6");
-      expect(sizes).not.toContain("28");
-    });
-
-    it("ne duplique pas les tailles", () => {
-      const html = makeHtml({
-        options: [
-          { label: "M", variantId: "1" },
-          { label: "M", variantId: "2" },
-        ],
-      });
-      expect(parseInStockSizes(html)).toEqual(["M"]);
-    });
-
-    it("gère toutes les tailles adultes reconnues", () => {
-      const html = makeHtml({
-        options: [
-          { label: "XS", variantId: "1" },
-          { label: "S", variantId: "2" },
-          { label: "M", variantId: "3" },
-          { label: "L", variantId: "4" },
-          { label: "XL", variantId: "5" },
-          { label: "XXL", variantId: "6" },
-          { label: "3XL", variantId: "7" },
-          { label: "4XL", variantId: "8" },
-        ],
-      });
-      expect(parseInStockSizes(html).sort()).toEqual(
-        ["XS", "S", "M", "L", "XL", "XXL", "3XL", "4XL"].sort()
-      );
-    });
+describe("selectCfsPromos", () => {
+  it("garde un maillot d'un club connu en promo avec 2 tailles courantes en stock", () => {
+    const promos = selectCfsPromos([item("2024-25 Arsenal Home Shirt")], GBP, 20);
+    expect(promos.map((p) => [p.name, p.sizes, p.discountPct])).toEqual([
+      ["2024-25 Arsenal Home Shirt", ["S", "M", "L"], 40],
+    ]);
   });
 
-  describe("source de vérité (quantities prime sur options)", () => {
-    it("exclut une taille listée dans options mais absente de quantities (vendue)", () => {
-      // Bug réel CFS : l'array options est une liste d'affichage qui conserve
-      // les tailles vendues. Seul quantities/sku reflète le stock réel.
-      const html = makeHtml({
-        options: [
-          { label: "S", variantId: "1" },
-          { label: "M", variantId: "2" },
-          { label: "L", variantId: "3" },
-        ],
-        quantities: { "1": 4, "2": 2 },
-        sku: { "1": "AB123-S", "2": "AB123-M", "3": "AB123-L" },
-      });
-      const sizes = parseInStockSizes(html);
-      expect(sizes.sort()).toEqual(["M", "S"]);
-      expect(sizes).not.toContain("L");
-    });
-
-    it("exclut une taille en options dont qty = 0", () => {
-      const html = makeHtml({
-        options: [
-          { label: "S", variantId: "1" },
-          { label: "M", variantId: "2" },
-        ],
-        quantities: { "1": 0, "2": 3 },
-        sku: { "1": "AB123-S", "2": "AB123-M" },
-      });
-      expect(parseInStockSizes(html)).toEqual(["M"]);
-    });
+  it("lit le stock taille par taille : une taille épuisée n'est pas proposée", () => {
+    const promos = selectCfsPromos(
+      [item("2024-25 Arsenal Home Shirt", { stock: { S: false, M: true, L: true } })],
+      GBP,
+      20
+    );
+    expect(promos[0].sizes).toEqual(["M", "L"]);
   });
 
-  describe("fallback (quantities + sku)", () => {
-    it("utilise quantities+sku si options absent", () => {
-      const html = makeHtml({
-        quantities: { "100": 5, "101": 3 },
-        sku: { "100": "JY0247-S", "101": "JY0247-M" },
-      });
-      expect(parseInStockSizes(html).sort()).toEqual(["M", "S"]);
-    });
-
-    it("exclut les variantes avec qty = 0", () => {
-      const html = makeHtml({
-        quantities: { "100": 0, "101": 3 },
-        sku: { "100": "JY0247-S", "101": "JY0247-M" },
-      });
-      const sizes = parseInStockSizes(html);
-      expect(sizes).not.toContain("S");
-      expect(sizes).toContain("M");
-    });
-
-    it("exclut les variantes absentes de quantities", () => {
-      const html = makeHtml({
-        quantities: { "101": 2 },
-        sku: { "100": "JY0247-S", "101": "JY0247-L" },
-      });
-      const sizes = parseInStockSizes(html);
-      expect(sizes).not.toContain("S");
-      expect(sizes).toContain("L");
-    });
-
-    it("ignore les SKU dont le suffixe n'est pas une taille adulte", () => {
-      const html = makeHtml({
-        quantities: { "100": 1 },
-        sku: { "100": "JY0247-CUSTOM" },
-      });
-      expect(parseInStockSizes(html)).toEqual([]);
-    });
+  it("écarte un maillot avec moins de 2 tailles S-XL en stock", () => {
+    const promos = selectCfsPromos(
+      [item("2024-25 Arsenal Home Shirt", { stock: { S: false, M: true, XXL: true } })],
+      GBP,
+      20
+    );
+    expect(promos).toEqual([]);
   });
 
-  describe("cas limites", () => {
-    it("retourne [] si le HTML ne contient aucune donnée de taille", () => {
-      expect(parseInStockSizes("<html><body>nothing here</body></html>")).toEqual([]);
-    });
+  it("écarte une remise sous 20 %", () => {
+    expect(selectCfsPromos([item("2024-25 Arsenal Home Shirt", { special: 85 })], GBP, 20)).toEqual([]);
+  });
 
-    it("retourne [] si quantities et sku sont absents et options aussi", () => {
-      expect(parseInStockSizes('{"price":99}')).toEqual([]);
-    });
+  it("écarte un club peu connu", () => {
+    expect(selectCfsPromos([item("2024-25 Unknown Town Home Shirt")], GBP, 20)).toEqual([]);
+  });
+
+  it("écarte les maillots enfant et les training", () => {
+    const promos = selectCfsPromos(
+      [item("2024-25 Arsenal Home Shirt (Kids)"), item("2024-25 Arsenal Training Shirt")],
+      GBP,
+      20
+    );
+    expect(promos).toEqual([]);
+  });
+
+  it("garde au plus 2 maillots par équipe", () => {
+    const promos = selectCfsPromos(
+      [
+        item("2024-25 Arsenal Home Shirt"),
+        item("2024-25 Arsenal Away Shirt"),
+        item("2024-25 Arsenal Third Shirt"),
+      ],
+      GBP,
+      20
+    );
+    expect(promos).toHaveLength(2);
+  });
+
+  it("met les clubs les plus populaires en tête, puis la plus forte remise", () => {
+    const promos = selectCfsPromos(
+      [
+        item("2024-25 Napoli Home Shirt", { special: 30 }),
+        item("2024-25 Arsenal Home Shirt", { special: 70 }),
+        item("2024-25 Chelsea Home Shirt", { special: 50 }),
+      ],
+      GBP,
+      20
+    );
+    expect(promos.map((p) => p.name)).toEqual([
+      "2024-25 Chelsea Home Shirt",
+      "2024-25 Arsenal Home Shirt",
+      "2024-25 Napoli Home Shirt",
+    ]);
+  });
+
+  it("dédoublonne les variantes notées /10 du même maillot", () => {
+    const promos = selectCfsPromos(
+      [item("2024-25 Arsenal Home Shirt - 9/10"), item("2024-25 Arsenal Home Shirt - 8/10")],
+      GBP,
+      20
+    );
+    expect(promos).toHaveLength(1);
+  });
+
+  it("s'arrête à maxResults", () => {
+    const promos = selectCfsPromos(
+      [item("2024-25 Arsenal Home Shirt"), item("2024-25 Chelsea Home Shirt")],
+      GBP,
+      1
+    );
+    expect(promos).toHaveLength(1);
+  });
+
+  it("renvoie un lien affilié .co.uk", () => {
+    const [promo] = selectCfsPromos([item("2024-25 Arsenal Home Shirt")], GBP, 20);
+    expect(new URL(promo.affiliateUrl).hostname).toBe("www.classicfootballshirts.co.uk");
   });
 });
 
-describe("parseCollectionIdFromUrl", () => {
-  it("extrait le collection_id d'une requête browse Constructor", () => {
-    const url =
-      "https://ac.cnstrc.com/browse/collection_id/cfs-weekly-deals-aug?key=key_x&num_results_per_page=24&page=1";
-    expect(parseCollectionIdFromUrl(url)).toBe("cfs-weekly-deals-aug");
+describe("buildClearanceUrl", () => {
+  it("demande le stock caché et filtre les maillots adultes de la liquidation", () => {
+    const url = new URL(buildClearanceUrl(2));
+    expect(url.pathname).toBe("/browse/department/Clearance");
+    expect(url.searchParams.get("page")).toBe("2");
+    expect(url.searchParams.get("fmt_options[show_hidden_fields]")).toBe("true");
+    expect(url.searchParams.getAll("filters[product_style]")).toContain("Home");
   });
+});
 
-  it("décode un id url-encodé", () => {
-    const url =
-      "https://ac.cnstrc.com/browse/collection_id/weekly%20deals?key=key_x&page=1";
-    expect(parseCollectionIdFromUrl(url)).toBe("weekly deals");
-  });
-
-  it("retourne null pour un browse par facette (department)", () => {
-    const url =
-      "https://ac.cnstrc.com/browse/department/Clearance?key=key_x&page=1";
-    expect(parseCollectionIdFromUrl(url)).toBeNull();
-  });
-
-  it("retourne null pour une URL sans collection_id", () => {
-    expect(
-      parseCollectionIdFromUrl("https://www.classicfootballshirts.com/theme/x.html")
-    ).toBeNull();
+describe("MIN_PROMOS_TO_REPLACE", () => {
+  it("vaut au moins le nombre de cartes affichées sur la home", () => {
+    expect(MIN_PROMOS_TO_REPLACE).toBeGreaterThanOrEqual(6);
   });
 });

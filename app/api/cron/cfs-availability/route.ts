@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidateJerseysByIds } from "@/lib/catalog-revalidation";
 import { scrapeCfsAvailability } from "@/lib/cfs-availability-scraper";
+import { reportError } from "@/lib/report-error";
 
 export const maxDuration = 300;
 
@@ -15,7 +16,7 @@ export async function GET(request: Request) {
     const revalidated = await revalidateJerseysByIds(changedJerseyIds);
     return NextResponse.json({ stats, changed: changedJerseyIds.length, revalidated });
   } catch (err) {
-    console.error("GET /api/cron/cfs-availability error:", err);
+    await reportError("cron.cfs-availability", err);
     return NextResponse.json({ error: "Erreur lors du scraping" }, { status: 500 });
   }
 }
