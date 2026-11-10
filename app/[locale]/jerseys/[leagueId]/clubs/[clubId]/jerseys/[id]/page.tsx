@@ -340,6 +340,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     cfs: cfsAvailability,
     // La recherche générique n'existe que si le lien affilié CFS est configuré.
     cfsSearchName: process.env.NEXT_PUBLIC_AFFILIATE_LINK_CFS ? cfsSearchName : null,
+    subIds: { offer: `fiche-${jersey.id}`, search: `club-${jersey.club.id}` },
   });
 
   const [clubJerseys, seasonLeagueEntry, seasonTrophies, seasonSquad] =

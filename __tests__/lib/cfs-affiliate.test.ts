@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildCfsAffiliateUrl, selectFeaturedCfsPromos } from "@/lib/cfs-affiliate";
+import { buildCfsAffiliateUrl, parseCfsSubId, selectFeaturedCfsPromos, withCfsSubId } from "@/lib/cfs-affiliate";
 
 type P = { id: string; club: string | null; source: string };
 const mk = (id: string, club: string | null, source = "clearance"): P => ({
@@ -124,5 +124,34 @@ describe("buildCfsAffiliateUrl", () => {
     expect(buildCfsAffiliateUrl("https://www.classicfootballshirts.co.uk/x.html?colour=red")).toBe(
       "https://www.classicfootballshirts.co.uk/x.html?colour=red&ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate"
     );
+  });
+});
+
+describe("withCfsSubId", () => {
+  const url = buildCfsAffiliateUrl("https://www.classicfootballshirts.com/2024-25-servette-away-shirt.html");
+
+  it("ajoute l'emplacement en paramètre Tapfiliate, sans toucher au ref", () => {
+    const tagged = new URL(withCfsSubId(url, "fiche-cm123"));
+    expect(tagged.searchParams.get("tm_subid")).toBe("fiche-cm123");
+    expect(tagged.searchParams.get("ref")).toBe("mgi4mta");
+    expect(tagged.host).toBe("www.classicfootballshirts.co.uk");
+  });
+
+  it("remplace un sub ID déjà présent", () => {
+    const tagged = new URL(withCfsSubId(withCfsSubId(url, "fiche-a"), "wishlist-a"));
+    expect(tagged.searchParams.getAll("tm_subid")).toEqual(["wishlist-a"]);
+  });
+});
+
+describe("parseCfsSubId", () => {
+  it.each([
+    ["fiche-cm123", { placement: "fiche", targetId: "cm123" }],
+    ["ios-wishlist-cm123", { placement: "ios-wishlist", targetId: "cm123" }],
+    ["club-cm9", { placement: "club", targetId: "cm9" }],
+    ["menu", { placement: "menu", targetId: null }],
+    ["test-nathan", { placement: null, targetId: null }],
+    [null, { placement: null, targetId: null }],
+  ])("%s -> %j", (subId, expected) => {
+    expect(parseCfsSubId(subId)).toEqual(expected);
   });
 });

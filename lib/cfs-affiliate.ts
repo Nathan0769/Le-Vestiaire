@@ -15,6 +15,30 @@ export function buildCfsAffiliateUrl(productUrl: string): string {
   return `${base}${url.search ? "&" : "?"}${AFFILIATE_PARAMS}`;
 }
 
+/**
+ * Paramètre Tapfiliate qui porte l'emplacement du clic, renvoyé dans le postback
+ * (`click_subid`). Spec : docs/specs/2026-11-09-ventes-affiliees-cfs.md.
+ */
+export const CFS_SUBID_PARAM = "tm_subid";
+
+/** Emplacements d'un lien CFS ; la cible (maillot, club, promo) suit après un tiret. */
+export const CFS_PLACEMENTS = ["ios-wishlist", "ios-fiche", "fiche", "club", "wishlist", "share", "home", "menu"] as const;
+export type CfsPlacement = (typeof CFS_PLACEMENTS)[number];
+
+/** Lien affilié marqué de son emplacement, ajouté à l'affichage (jamais stocké). */
+export function withCfsSubId(affiliateUrl: string, subId: string): string {
+  const url = new URL(affiliateUrl);
+  url.searchParams.set(CFS_SUBID_PARAM, subId);
+  return url.toString();
+}
+
+export function parseCfsSubId(subId: string | null): { placement: CfsPlacement | null; targetId: string | null } {
+  // Les emplacements composés ("ios-wishlist") passent avant leur suffixe.
+  const placement = subId ? CFS_PLACEMENTS.find((p) => subId === p || subId.startsWith(`${p}-`)) : undefined;
+  if (!subId || !placement) return { placement: null, targetId: null };
+  return { placement, targetId: subId.slice(placement.length + 1) || null };
+}
+
 const WEEKLY_DEALS_SOURCE = "cfs-weekly-deals";
 
 interface FeaturablePromo {

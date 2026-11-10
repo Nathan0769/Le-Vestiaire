@@ -7,6 +7,7 @@ import {
   checkRateLimit,
 } from "@/lib/rate-limit";
 import { getCurrentUser } from "@/lib/get-current-user";
+import { withCfsSubId } from "@/lib/cfs-affiliate";
 
 const querySchema = z.object({
   search: z.string().min(1).optional(),
@@ -94,6 +95,8 @@ export async function GET(request: NextRequest) {
       cfsAvailability: j.cfsAvailability
         ? {
             ...j.cfsAvailability,
+            // Route appelée par l'app seule (le web lit la base) : emplacement iOS.
+            affiliateUrl: withCfsSubId(j.cfsAvailability.affiliateUrl, `ios-fiche-${j.id}`),
             price: Number(j.cfsAvailability.price),
             promoPrice:
               j.cfsAvailability.promoPrice !== null

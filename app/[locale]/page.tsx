@@ -25,6 +25,7 @@ import { CfsPromoSection } from "@/components/home/cfs-promo-section";
 import { selectFeaturedCfsPromos } from "@/lib/cfs-affiliate";
 import { HomeFeedSection } from "@/components/home/home-feed-section";
 import { getUserPurchaseTotal } from "@/lib/user-purchase-total";
+import { withCfsSubId } from "@/lib/cfs-affiliate";
 
 export const dynamic = "force-dynamic";
 
@@ -432,7 +433,7 @@ async function getGlobalStats(): Promise<{
 
 async function getCfsPromos() {
   try {
-    return await prisma.cfsPromo.findMany({
+    const promos = await prisma.cfsPromo.findMany({
       where: { isActive: true },
       orderBy: [{ position: "asc" }, { createdAt: "desc" }],
       select: {
@@ -448,6 +449,7 @@ async function getCfsPromos() {
         sizes: true,
       },
     });
+    return promos.map((p) => ({ ...p, affiliateUrl: withCfsSubId(p.affiliateUrl, `home-${p.id}`) }));
   } catch {
     return [];
   }

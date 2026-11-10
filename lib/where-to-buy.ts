@@ -1,3 +1,4 @@
+import { withCfsSubId } from "@/lib/cfs-affiliate";
 import { parseCfsClub } from "@/lib/cfs-name-parser";
 import type { PartnerOffer } from "@/lib/partner-shops/offers";
 
@@ -39,7 +40,10 @@ export function buildWhereToBuy(input: {
   partnerOffers: PartnerOffer[];
   cfs: { price: number; promoPrice: number | null; affiliateUrl: string } | null;
   cfsSearchName: string | null;
+  /** Emplacement des liens CFS (offre du maillot, recherche du club), pour Tapfiliate. */
+  subIds?: { offer: string; search: string };
 }): WhereToBuy {
+  const tag = (url: string, subId: string | undefined) => (subId ? withCfsSubId(url, subId) : url);
   const links: WhereToBuyLink[] = input.partnerOffers.map((o) => ({
     shop: o.shop,
     name: o.shopName,
@@ -60,7 +64,7 @@ export function buildWhereToBuy(input: {
       price: inPromo ? input.cfs.promoPrice! : input.cfs.price,
       compareAtPrice: inPromo ? input.cfs.price : null,
       sizes: [],
-      url: input.cfs.affiliateUrl,
+      url: tag(input.cfs.affiliateUrl, input.subIds?.offer),
       promoCode: null,
     });
   }
@@ -69,7 +73,8 @@ export function buildWhereToBuy(input: {
     return { kind: "offers", links: links.sort((a, b) => a.price - b.price) };
   }
   if (input.cfsSearchName) {
-    return { kind: "search", url: `${CFS_SEARCH_BASE_URL}&q=${encodeURIComponent(input.cfsSearchName)}` };
+    const url = `${CFS_SEARCH_BASE_URL}&q=${encodeURIComponent(input.cfsSearchName)}`;
+    return { kind: "search", url: tag(url, input.subIds?.search) };
   }
   return null;
 }

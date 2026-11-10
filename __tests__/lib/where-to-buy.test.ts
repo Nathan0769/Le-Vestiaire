@@ -73,6 +73,29 @@ describe("buildWhereToBuy", () => {
     expect(r).toEqual({ kind: "search", url: `${CFS_SEARCH_BASE_URL}&q=Paris%20Saint-Germain%20%26%20co` });
   });
 
+  it("marque l'offre CFS de son emplacement", () => {
+    const r = buildWhereToBuy({
+      partnerOffers: [],
+      cfs: cfs(80),
+      cfsSearchName: null,
+      subIds: { offer: "fiche-j1", search: "club-c1" },
+    });
+    const link = r?.kind === "offers" ? r.links[0].url : "";
+    expect(new URL(link).searchParams.get("tm_subid")).toBe("fiche-j1");
+  });
+
+  it("marque la recherche CFS générique de son emplacement", () => {
+    const r = buildWhereToBuy({
+      partnerOffers: [],
+      cfs: null,
+      cfsSearchName: "Lebanon",
+      subIds: { offer: "fiche-j1", search: "club-c1" },
+    });
+    const url = new URL(r?.kind === "search" ? r.url : "");
+    expect(url.searchParams.get("tm_subid")).toBe("club-c1");
+    expect(url.searchParams.get("q")).toBe("Lebanon");
+  });
+
   it("dispo nulle part, sans nom anglais : rien", () => {
     expect(buildWhereToBuy({ partnerOffers: [], cfs: null, cfsSearchName: null })).toBeNull();
   });
