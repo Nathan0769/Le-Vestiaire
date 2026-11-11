@@ -7,7 +7,7 @@ export const runtime = "nodejs";
 export const revalidate = 600;
 export const contentType = "image/png";
 export const size = { width: 1200, height: 630 };
-export const alt = "Le Vestiaire";
+export const alt = "Le Vestiaire Foot";
 
 interface OgProps {
   params: Promise<{ id: string; locale: string }>;
@@ -48,7 +48,7 @@ export default async function OpengraphImage({ params }: OgProps) {
   const theme: OgTheme =
     (["christmas", "birthday", "valentine"] as const).find((th) => th === meta?.theme) ?? (meta ? "default" : "christmas");
   const p = PALETTES[theme];
-  const name = meta?.username ? `@${meta.username}` : t("someone");
+  const name = meta?.ownerName ?? t("someone");
   const images = meta?.imageUrls ?? [];
   const bold = await loadBoldFont();
   const display = bold ? "Archivo" : undefined;
@@ -81,7 +81,7 @@ export default async function OpengraphImage({ params }: OgProps) {
             <div style={{ display: "flex", fontSize: 30, color: p.soft }}>{t("jerseys", { count: meta.count })}</div>
           )}
           <div style={{ display: "flex", fontSize: 22, color: p.soft, marginTop: 26, opacity: 0.9 }}>{t("footer")}</div>
-          <div style={{ display: "flex", fontSize: 26, fontWeight: 800, color: p.accent, marginTop: 6, fontFamily: display }}>Le Vestiaire</div>
+          <div style={{ display: "flex", fontSize: 26, fontWeight: 800, color: p.accent, marginTop: 6, fontFamily: display }}>Le Vestiaire Foot</div>
         </div>
 
         {images.length > 0 && (

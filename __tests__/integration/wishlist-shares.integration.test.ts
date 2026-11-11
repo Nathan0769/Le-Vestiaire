@@ -107,7 +107,7 @@ describe("partage vivant et je l'offre", () => {
     expect(meta).toEqual({
       theme: "christmas",
       title: "Ma liste de Noël",
-      username: owner.username,
+      ownerName: expect.any(String),
       count: 1,
       imageUrls: [expect.any(String)],
     });

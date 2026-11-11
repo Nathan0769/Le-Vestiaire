@@ -25,7 +25,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   if (!meta) return { robots };
 
   const t = await getTranslations({ locale, namespace: "Wishlist.liveShare.og" });
-  const name = meta.username ? `@${meta.username}` : t("someone");
+  const name = meta.ownerName ?? t("someone");
   const theme = (["christmas", "birthday", "valentine"] as const).find((th) => th === meta.theme) ?? "default";
   const title = t(`title.${theme}`, { name });
   const description = t("description", { count: meta.count, name });

@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import prisma from "@/lib/prisma";
 import type { Theme } from "@/types/theme";
+import { shareOwnerName } from "@/lib/share-owner-name";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
 import { cfsOfferInput, wishlistOffers, type WishlistOffer } from "@/lib/wishlist-offers";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
@@ -69,13 +70,14 @@ const OG_READABLE_IMAGE = /\.(jpe?g|png)(\?|$)/i;
 export async function getShareMeta(shareId: string): Promise<{
   theme: Theme;
   title: string;
-  username: string | null;
+  /** Prénom, sinon @pseudo (`shareOwnerName`). */
+  ownerName: string | null;
   count: number;
   imageUrls: string[];
 } | null> {
   const share = await prisma.wishlistShare.findFirst({
     where: { id: shareId, revokedAt: null },
-    select: { theme: true, title: true, jerseyIds: true, userId: true, user: { select: { username: true } } },
+    select: { theme: true, title: true, jerseyIds: true, userId: true, user: { select: { name: true, username: true } } },
   });
   if (!share) return null;
   const where = {
@@ -94,7 +96,7 @@ export async function getShareMeta(shareId: string): Promise<{
   return {
     theme: share.theme as Theme,
     title: share.title,
-    username: share.user.username,
+    ownerName: shareOwnerName(share.user.name, share.user.username),
     count,
     imageUrls: items
       .map((i) => i.jersey.imageUrl)
