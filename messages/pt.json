@@ -1106,8 +1106,18 @@
         "from": "de {name}",
         "someone": "um adepto",
         "jerseys": "{count, plural, =0 {Nenhuma camisola por agora} one {# camisola para oferecer} other {# camisolas para oferecer}}",
-        "description": "{count, plural, =0 {Nenhuma camisola por agora.} one {# camisola para oferecer.} other {# camisolas para oferecer.}} Escolhe a que ofereces, {name} não vai saber.",
-        "footer": "Escolhe a camisola que ofereces, a surpresa fica intacta"
+        "footer": {
+          "christmas": "Reserva a tua prenda, o Pai Natal guarda o segredo",
+          "birthday": "Reserva a tua prenda, a surpresa fica intacta",
+          "valentine": "Reserva a tua prenda com toda a discrição",
+          "default": "Escolhe a camisola que ofereces, a surpresa fica intacta"
+        },
+        "tail": {
+          "christmas": "Escolhe a que vais pôr debaixo da árvore, {name} não vai saber.",
+          "birthday": "Escolhe a que ofereces no aniversário, {name} não vai saber.",
+          "valentine": "Escolhe a que ofereces no Dia dos Namorados, {name} não vai saber.",
+          "default": "Escolhe a que ofereces, {name} não vai saber."
+        }
       }
     },
     "gift": {

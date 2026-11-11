@@ -1106,8 +1106,18 @@
         "from": "from {name}",
         "someone": "a fan",
         "jerseys": "{count, plural, =0 {No shirts yet} one {# shirt to give} other {# shirts to give}}",
-        "description": "{count, plural, =0 {No shirts yet.} one {# shirt to give.} other {# shirts to give.}} Pick the one you're giving, {name} won't know.",
-        "footer": "Pick the shirt you're giving, the surprise stays intact"
+        "footer": {
+          "christmas": "Claim your gift, Santa keeps the secret",
+          "birthday": "Claim your gift, the surprise stays intact",
+          "valentine": "Claim your gift, discreetly",
+          "default": "Pick the shirt you're giving, the surprise stays intact"
+        },
+        "tail": {
+          "christmas": "Pick the one you'll put under the tree, {name} won't know.",
+          "birthday": "Pick the one you're giving for their birthday, {name} won't know.",
+          "valentine": "Pick the one you're giving for Valentine's Day, {name} won't know.",
+          "default": "Pick the one you're giving, {name} won't know."
+        }
       }
     },
     "gift": {

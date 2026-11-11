@@ -1106,8 +1106,18 @@
         "from": "de {name}",
         "someone": "un aficionado",
         "jerseys": "{count, plural, =0 {Ninguna camiseta por ahora} one {# camiseta para regalar} other {# camisetas para regalar}}",
-        "description": "{count, plural, =0 {Ninguna camiseta por ahora.} one {# camiseta para regalar.} other {# camisetas para regalar.}} Elige la que regalas, {name} no se enterará.",
-        "footer": "Elige la camiseta que regalas, la sorpresa sigue intacta"
+        "footer": {
+          "christmas": "Reserva tu regalo, Papá Noel guarda el secreto",
+          "birthday": "Reserva tu regalo, la sorpresa sigue intacta",
+          "valentine": "Reserva tu regalo con total discreción",
+          "default": "Elige la camiseta que regalas, la sorpresa sigue intacta"
+        },
+        "tail": {
+          "christmas": "Elige la que dejarás bajo el árbol, {name} no se enterará.",
+          "birthday": "Elige la que regalas por su cumpleaños, {name} no se enterará.",
+          "valentine": "Elige la que regalas por San Valentín, {name} no se enterará.",
+          "default": "Elige la que regalas, {name} no se enterará."
+        }
       }
     },
     "gift": {

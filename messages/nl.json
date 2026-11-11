@@ -1106,8 +1106,18 @@
         "from": "van {name}",
         "someone": "een fan",
         "jerseys": "{count, plural, =0 {Nog geen shirts} one {# shirt om te geven} other {# shirts om te geven}}",
-        "description": "{count, plural, =0 {Nog geen shirts.} one {# shirt om te geven.} other {# shirts om te geven.}} Kies het shirt dat je geeft, {name} weet van niets.",
-        "footer": "Kies het shirt dat je geeft, de verrassing blijft"
+        "footer": {
+          "christmas": "Reserveer je cadeau, de Kerstman houdt het geheim",
+          "birthday": "Reserveer je cadeau, de verrassing blijft",
+          "valentine": "Reserveer je cadeau, helemaal discreet",
+          "default": "Kies het shirt dat je geeft, de verrassing blijft"
+        },
+        "tail": {
+          "christmas": "Kies het shirt voor onder de boom, {name} weet van niets.",
+          "birthday": "Kies het shirt dat je voor de verjaardag geeft, {name} weet van niets.",
+          "valentine": "Kies het shirt dat je voor Valentijn geeft, {name} weet van niets.",
+          "default": "Kies het shirt dat je geeft, {name} weet van niets."
+        }
       }
     },
     "gift": {

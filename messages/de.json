@@ -1106,8 +1106,18 @@
         "from": "von {name}",
         "someone": "einem Fan",
         "jerseys": "{count, plural, =0 {Noch keine Trikots} one {# Trikot zum Verschenken} other {# Trikots zum Verschenken}}",
-        "description": "{count, plural, =0 {Noch keine Trikots.} one {# Trikot zum Verschenken.} other {# Trikots zum Verschenken.}} Wähle das, das du schenkst, {name} erfährt nichts.",
-        "footer": "Wähle das Trikot, das du schenkst, die Überraschung bleibt"
+        "footer": {
+          "christmas": "Reserviere dein Geschenk, der Weihnachtsmann schweigt",
+          "birthday": "Reserviere dein Geschenk, die Überraschung bleibt",
+          "valentine": "Reserviere dein Geschenk ganz diskret",
+          "default": "Wähle das Trikot, das du schenkst, die Überraschung bleibt"
+        },
+        "tail": {
+          "christmas": "Wähle das, das unter den Baum kommt, {name} erfährt nichts.",
+          "birthday": "Wähle das, das du zum Geburtstag schenkst, {name} erfährt nichts.",
+          "valentine": "Wähle das, das du zum Valentinstag schenkst, {name} erfährt nichts.",
+          "default": "Wähle das, das du schenkst, {name} erfährt nichts."
+        }
       }
     },
     "gift": {

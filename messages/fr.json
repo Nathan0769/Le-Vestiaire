@@ -1111,8 +1111,18 @@
         "from": "de {name}",
         "someone": "un supporter",
         "jerseys": "{count, plural, =0 {Aucun maillot pour l'instant} one {# maillot à offrir} other {# maillots à offrir}}",
-        "description": "{count, plural, =0 {Aucun maillot pour l'instant.} one {# maillot à offrir.} other {# maillots à offrir.}} Choisis celui que tu offres, {name} n'en saura rien.",
-        "footer": "Choisis le maillot que tu offres, la surprise reste entière"
+        "footer": {
+          "christmas": "Réserve ton cadeau, le père Noël garde le secret",
+          "birthday": "Réserve ton cadeau, la surprise reste entière",
+          "valentine": "Réserve ton cadeau en toute discrétion",
+          "default": "Choisis le maillot que tu offres, la surprise reste entière"
+        },
+        "tail": {
+          "christmas": "Choisis celui que tu glisses sous le sapin, {name} n'en saura rien.",
+          "birthday": "Choisis celui que tu offres pour son anniversaire, {name} n'en saura rien.",
+          "valentine": "Choisis celui que tu offres pour la Saint-Valentin, {name} n'en saura rien.",
+          "default": "Choisis celui que tu offres, {name} n'en saura rien."
+        }
       }
     },
     "gift": {

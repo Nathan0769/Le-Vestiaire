@@ -80,7 +80,7 @@ export default async function OpengraphImage({ params }: OgProps) {
           {meta && (
             <div style={{ display: "flex", fontSize: 30, color: p.soft }}>{t("jerseys", { count: meta.count })}</div>
           )}
-          <div style={{ display: "flex", fontSize: 22, color: p.soft, marginTop: 26, opacity: 0.9 }}>{t("footer")}</div>
+          <div style={{ display: "flex", fontSize: 22, color: p.soft, marginTop: 26, opacity: 0.9 }}>{t(`footer.${theme}`)}</div>
           <div style={{ display: "flex", fontSize: 26, fontWeight: 800, color: p.accent, marginTop: 6, fontFamily: display }}>Le Vestiaire Foot</div>
         </div>
 

@@ -1106,8 +1106,18 @@
         "from": "di {name}",
         "someone": "un tifoso",
         "jerseys": "{count, plural, =0 {Nessuna maglia per ora} one {# maglia da regalare} other {# maglie da regalare}}",
-        "description": "{count, plural, =0 {Nessuna maglia per ora.} one {# maglia da regalare.} other {# maglie da regalare.}} Scegli quella che regali, {name} non lo saprà.",
-        "footer": "Scegli la maglia che regali, la sorpresa resta intatta"
+        "footer": {
+          "christmas": "Prenota il tuo regalo, Babbo Natale mantiene il segreto",
+          "birthday": "Prenota il tuo regalo, la sorpresa resta intatta",
+          "valentine": "Prenota il tuo regalo con discrezione",
+          "default": "Scegli la maglia che regali, la sorpresa resta intatta"
+        },
+        "tail": {
+          "christmas": "Scegli quella da mettere sotto l'albero, {name} non lo saprà.",
+          "birthday": "Scegli quella che regali per il suo compleanno, {name} non lo saprà.",
+          "valentine": "Scegli quella che regali per San Valentino, {name} non lo saprà.",
+          "default": "Scegli quella che regali, {name} non lo saprà."
+        }
       }
     },
     "gift": {

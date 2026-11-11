@@ -28,7 +28,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const name = meta.ownerName ?? t("someone");
   const theme = (["christmas", "birthday", "valentine"] as const).find((th) => th === meta.theme) ?? "default";
   const title = t(`title.${theme}`, { name });
-  const description = t("description", { count: meta.count, name });
+  // Phrase propre à l'occasion : on ne glisse pas un cadeau de Saint-Valentin sous le sapin.
+  const description = `${t("jerseys", { count: meta.count })}. ${t(`tail.${theme}`, { name })}`;
   return {
     title,
     description,
