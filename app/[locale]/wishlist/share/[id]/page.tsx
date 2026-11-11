@@ -2,18 +2,40 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getSharedWishlist } from "@/lib/shorten-wishlist";
 import { getCurrentUser } from "@/lib/get-current-user";
-import { SHARE_ID_LENGTH, getPublicShare } from "@/lib/wishlist-shares";
+import { getTranslations } from "next-intl/server";
+import { SHARE_ID_LENGTH, getPublicShare, getShareMeta } from "@/lib/wishlist-shares";
 import SharedWishlistClient from "./shared-wishlist-client";
 import LiveSharedWishlist from "./live-shared-wishlist";
 
 // Réservations et wishlist lues en direct à chaque visite.
 export const dynamic = "force-dynamic";
 
-// Liste personnelle : jamais indexée.
-export const metadata: Metadata = { robots: { index: false, follow: false } };
-
 interface PageProps {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string; locale: string }>;
+}
+
+/**
+ * Aperçu du lien (iMessage, WhatsApp) : « La liste de Noël de @nathan », pas
+ * le titre générique du site. Liste personnelle : jamais indexée.
+ */
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { id, locale } = await params;
+  const robots = { index: false, follow: false };
+  const meta = id.length === SHARE_ID_LENGTH ? await getShareMeta(id) : null;
+  if (!meta) return { robots };
+
+  const t = await getTranslations({ locale, namespace: "Wishlist.liveShare.og" });
+  const name = meta.username ? `@${meta.username}` : t("someone");
+  const theme = (["christmas", "birthday", "valentine"] as const).find((th) => th === meta.theme) ?? "default";
+  const title = t(`title.${theme}`, { name });
+  const description = t("description", { count: meta.count, name });
+  return {
+    title,
+    description,
+    robots,
+    openGraph: { title, description, type: "website" },
+    twitter: { card: "summary_large_image", title, description },
+  };
 }
 
 export default async function SharedWishlistPage({ params }: PageProps) {

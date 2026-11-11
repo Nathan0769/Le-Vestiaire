@@ -1089,7 +1089,26 @@
       "flockValue": "Estampado {flock}",
       "at": "en {shop}",
       "createdWith": "Lista creada con Le Vestiaire",
-      "otherSizes": "en {sizes}"
+      "otherSizes": "en {sizes}",
+      "og": {
+        "title": {
+          "christmas": "La lista de Navidad de {name}",
+          "birthday": "La lista de cumpleaños de {name}",
+          "valentine": "La lista de San Valentín de {name}",
+          "default": "La wishlist de {name}"
+        },
+        "headline": {
+          "christmas": "Lista de Navidad",
+          "birthday": "Lista de cumpleaños",
+          "valentine": "San Valentín",
+          "default": "Wishlist"
+        },
+        "from": "de {name}",
+        "someone": "un aficionado",
+        "jerseys": "{count, plural, =0 {Ninguna camiseta por ahora} one {# camiseta para regalar} other {# camisetas para regalar}}",
+        "description": "{count, plural, =0 {Ninguna camiseta por ahora.} one {# camiseta para regalar.} other {# camisetas para regalar.}} Elige la que regalas, {name} no se enterará.",
+        "footer": "Elige la camiseta que regalas, la sorpresa sigue intacta"
+      }
     },
     "gift": {
       "edit": "Datos del regalo",

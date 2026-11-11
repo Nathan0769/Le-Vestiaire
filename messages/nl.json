@@ -1089,7 +1089,26 @@
       "flockValue": "Bedrukking {flock}",
       "at": "bij {shop}",
       "createdWith": "Lijst gemaakt met Le Vestiaire",
-      "otherSizes": "in {sizes}"
+      "otherSizes": "in {sizes}",
+      "og": {
+        "title": {
+          "christmas": "Kerstlijst van {name}",
+          "birthday": "Verjaardagslijst van {name}",
+          "valentine": "Valentijnslijst van {name}",
+          "default": "Wishlist van {name}"
+        },
+        "headline": {
+          "christmas": "Kerstlijst",
+          "birthday": "Verjaardagslijst",
+          "valentine": "Valentijnsdag",
+          "default": "Wishlist"
+        },
+        "from": "van {name}",
+        "someone": "een fan",
+        "jerseys": "{count, plural, =0 {Nog geen shirts} one {# shirt om te geven} other {# shirts om te geven}}",
+        "description": "{count, plural, =0 {Nog geen shirts.} one {# shirt om te geven.} other {# shirts om te geven.}} Kies het shirt dat je geeft, {name} weet van niets.",
+        "footer": "Kies het shirt dat je geeft, de verrassing blijft"
+      }
     },
     "gift": {
       "edit": "Cadeau-info",

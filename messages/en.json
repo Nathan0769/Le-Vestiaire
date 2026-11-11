@@ -1089,7 +1089,26 @@
       "flockValue": "Printing {flock}",
       "at": "at {shop}",
       "createdWith": "List made with Le Vestiaire",
-      "otherSizes": "in {sizes}"
+      "otherSizes": "in {sizes}",
+      "og": {
+        "title": {
+          "christmas": "{name}'s Christmas list",
+          "birthday": "{name}'s birthday list",
+          "valentine": "{name}'s Valentine's list",
+          "default": "{name}'s wishlist"
+        },
+        "headline": {
+          "christmas": "Christmas list",
+          "birthday": "Birthday list",
+          "valentine": "Valentine's Day",
+          "default": "Wishlist"
+        },
+        "from": "from {name}",
+        "someone": "a fan",
+        "jerseys": "{count, plural, =0 {No shirts yet} one {# shirt to give} other {# shirts to give}}",
+        "description": "{count, plural, =0 {No shirts yet.} one {# shirt to give.} other {# shirts to give.}} Pick the one you're giving, {name} won't know.",
+        "footer": "Pick the shirt you're giving, the surprise stays intact"
+      }
     },
     "gift": {
       "edit": "Gift details",

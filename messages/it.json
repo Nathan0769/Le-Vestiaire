@@ -1089,7 +1089,26 @@
       "flockValue": "Personalizzazione {flock}",
       "at": "da {shop}",
       "createdWith": "Lista creata con Le Vestiaire",
-      "otherSizes": "in {sizes}"
+      "otherSizes": "in {sizes}",
+      "og": {
+        "title": {
+          "christmas": "La lista di Natale di {name}",
+          "birthday": "La lista di compleanno di {name}",
+          "valentine": "La lista di San Valentino di {name}",
+          "default": "La wishlist di {name}"
+        },
+        "headline": {
+          "christmas": "Lista di Natale",
+          "birthday": "Lista di compleanno",
+          "valentine": "San Valentino",
+          "default": "Wishlist"
+        },
+        "from": "di {name}",
+        "someone": "un tifoso",
+        "jerseys": "{count, plural, =0 {Nessuna maglia per ora} one {# maglia da regalare} other {# maglie da regalare}}",
+        "description": "{count, plural, =0 {Nessuna maglia per ora.} one {# maglia da regalare.} other {# maglie da regalare.}} Scegli quella che regali, {name} non lo saprà.",
+        "footer": "Scegli la maglia che regali, la sorpresa resta intatta"
+      }
     },
     "gift": {
       "edit": "Info regalo",

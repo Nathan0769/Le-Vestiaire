@@ -1089,7 +1089,26 @@
       "flockValue": "Beflockung {flock}",
       "at": "bei {shop}",
       "createdWith": "Liste erstellt mit Le Vestiaire",
-      "otherSizes": "in {sizes}"
+      "otherSizes": "in {sizes}",
+      "og": {
+        "title": {
+          "christmas": "Weihnachtsliste von {name}",
+          "birthday": "Geburtstagsliste von {name}",
+          "valentine": "Valentinsliste von {name}",
+          "default": "Wunschliste von {name}"
+        },
+        "headline": {
+          "christmas": "Weihnachtsliste",
+          "birthday": "Geburtstagsliste",
+          "valentine": "Valentinstag",
+          "default": "Wunschliste"
+        },
+        "from": "von {name}",
+        "someone": "einem Fan",
+        "jerseys": "{count, plural, =0 {Noch keine Trikots} one {# Trikot zum Verschenken} other {# Trikots zum Verschenken}}",
+        "description": "{count, plural, =0 {Noch keine Trikots.} one {# Trikot zum Verschenken.} other {# Trikots zum Verschenken.}} Wähle das, das du schenkst, {name} erfährt nichts.",
+        "footer": "Wähle das Trikot, das du schenkst, die Überraschung bleibt"
+      }
     },
     "gift": {
       "edit": "Geschenk-Infos",

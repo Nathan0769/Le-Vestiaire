@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import type { User } from "@prisma/client";
 import { prismaTest } from "@/__tests__/helpers/db";
 import { createTestUser, createTestLeague, createTestClub, createTestJersey } from "@/__tests__/helpers/fixtures";
-import { createShare, getPublicShare, revokeShare } from "@/lib/wishlist-shares";
+import { createShare, getPublicShare, getShareMeta, revokeShare } from "@/lib/wishlist-shares";
 import { cancelGift, reserveGift } from "@/lib/gift-reservations";
 import "@/__tests__/setup.integration";
 
@@ -99,5 +99,23 @@ describe("partage vivant et je l'offre", () => {
     await reserveGift(share.id, favoriteId, "Marie");
     await prismaTest.wishlist.delete({ where: { id: favoriteId } });
     expect(await prismaTest.giftReservation.count()).toBe(0);
+  });
+
+  it("aperçu du lien : thème, auteur, nombre de maillots et photos, sans réservation", async () => {
+    const share = await newShare([otherJerseyId]);
+    const meta = await getShareMeta(share.id);
+    expect(meta).toEqual({
+      theme: "christmas",
+      title: "Ma liste de Noël",
+      username: owner.username,
+      count: 1,
+      imageUrls: [expect.any(String)],
+    });
+  });
+
+  it("aperçu d'un lien révoqué : rien", async () => {
+    const share = await newShare();
+    await revokeShare(owner.id, share.id);
+    expect(await getShareMeta(share.id)).toBeNull();
   });
 });

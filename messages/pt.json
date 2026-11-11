@@ -1089,7 +1089,26 @@
       "flockValue": "Personalização {flock}",
       "at": "na {shop}",
       "createdWith": "Lista criada com Le Vestiaire",
-      "otherSizes": "em {sizes}"
+      "otherSizes": "em {sizes}",
+      "og": {
+        "title": {
+          "christmas": "A lista de Natal de {name}",
+          "birthday": "A lista de aniversário de {name}",
+          "valentine": "A lista de Dia dos Namorados de {name}",
+          "default": "A wishlist de {name}"
+        },
+        "headline": {
+          "christmas": "Lista de Natal",
+          "birthday": "Lista de aniversário",
+          "valentine": "Dia dos Namorados",
+          "default": "Wishlist"
+        },
+        "from": "de {name}",
+        "someone": "um adepto",
+        "jerseys": "{count, plural, =0 {Nenhuma camisola por agora} one {# camisola para oferecer} other {# camisolas para oferecer}}",
+        "description": "{count, plural, =0 {Nenhuma camisola por agora.} one {# camisola para oferecer.} other {# camisolas para oferecer.}} Escolhe a que ofereces, {name} não vai saber.",
+        "footer": "Escolhe a camisola que ofereces, a surpresa fica intacta"
+      }
     },
     "gift": {
       "edit": "Info do presente",

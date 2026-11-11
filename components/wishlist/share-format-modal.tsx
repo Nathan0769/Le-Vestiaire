@@ -11,8 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Link,
-  ImageIcon,
-  FileText,
   Smartphone,
   Share,
   Copy,
@@ -20,14 +18,9 @@ import {
   Loader2,
 } from "lucide-react";
 import { toast } from "sonner";
-import { useTranslations, useLocale } from "next-intl";
-import {
-  generateWishlistImage,
-  downloadImage,
-} from "@/lib/generate-wishlist-image";
+import { useTranslations } from "next-intl";
 import type { Theme } from "@/types/theme";
 import type { ShareableWishlistItem } from "@/types/wishlist-share";
-import { trackEvent } from "@/lib/analytics";
 
 interface ShareFormatModalProps {
   isOpen: boolean;
@@ -40,7 +33,8 @@ interface ShareFormatModalProps {
   shareAll?: boolean;
 }
 
-type FormatType = "link" | "image" | "pdf";
+// Lien seulement : l'image et le PDF rendaient mal et échouaient souvent (choix de Nathan, 2026-11-11).
+type FormatType = "link";
 
 export function ShareFormatModal({
   isOpen,
@@ -52,7 +46,6 @@ export function ShareFormatModal({
   shareAll = false,
 }: ShareFormatModalProps) {
   const t = useTranslations("Wishlist.shareFormatModal");
-  const locale = useLocale();
   type NavigatorWithShare = Navigator & {
     share?: (data: ShareData) => Promise<void>;
   };
@@ -69,13 +62,7 @@ export function ShareFormatModal({
     setIsGenerating(true);
 
     try {
-      if (format === "link") {
-        await generateLink();
-      } else if (format === "image") {
-        await generateImage();
-      } else if (format === "pdf") {
-        await generatePDF();
-      }
+      await generateLink();
     } catch (error) {
       console.error("Erreur génération:", error);
       toast.error(t("toast.linkError"));
@@ -113,107 +100,6 @@ export function ShareFormatModal({
     }
   };
 
-  const generateImage = async () => {
-    try {
-      const data = {
-        title,
-        message,
-        items: selectedItems.map((item) => ({
-          id: item.jersey.id,
-          name: item.jersey.name,
-          imageUrl: item.jersey.imageUrl,
-          type: item.jersey.type,
-          variant: item.jersey.variant ?? 1,
-          season: item.jersey.season,
-          clubName: item.jersey.club.name,
-        })),
-      };
-
-      const blob = await generateWishlistImage({
-        title: data.title,
-        message: data.message,
-        items: data.items,
-        theme: theme,
-        locale: locale,
-      });
-
-      const now = new Date();
-      const filename = `wishlist-${now.getFullYear()}-${(now.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}.png`;
-
-      downloadImage(blob, filename);
-      toast.success(t("toast.imageDownloaded"));
-    } catch (error) {
-      console.error("Erreur génération image:", error);
-      toast.error(t("toast.imageError"));
-      throw error;
-    }
-  };
-
-  const generatePDF = async () => {
-    try {
-      const data = {
-        title,
-        message,
-        items: selectedItems.map((item) => ({
-          id: item.jersey.id,
-          name: item.jersey.name,
-          imageUrl: item.jersey.imageUrl,
-          type: item.jersey.type,
-          variant: item.jersey.variant ?? 1,
-          season: item.jersey.season,
-          clubName: item.jersey.club.name,
-        })),
-        theme,
-        locale,
-      };
-
-      // Appeler la nouvelle API Puppeteer
-      const response = await fetch("/api/wishlist/generate-pdf", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || t("toast.pdfError"));
-      }
-
-      // Récupérer le blob du PDF
-      const blob = await response.blob();
-
-      // Télécharger le PDF
-      const now = new Date();
-      const filename = `wishlist-${now.getFullYear()}-${(now.getMonth() + 1)
-        .toString()
-        .padStart(2, "0")}-${now.getDate().toString().padStart(2, "0")}.pdf`;
-
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement("a");
-      link.href = url;
-      link.download = filename;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-
-      trackEvent({
-        name: "wishlist_pdf_generated",
-        params: { jersey_count: selectedItems.length },
-      });
-
-      toast.success(t("toast.pdfDownloaded"));
-    } catch (error) {
-      console.error("Erreur génération PDF:", error);
-      toast.error(t("toast.pdfError"));
-      throw error;
-    }
-  };
-
   const copyLink = async () => {
     if (generatedLink) {
       await navigator.clipboard.writeText(generatedLink);
@@ -244,20 +130,6 @@ export function ShareFormatModal({
       title: t("formats.link.title"),
       description: t("formats.link.description"),
       color: "bg-blue-500/20 text-blue-700 border-blue-200",
-    },
-    {
-      id: "image",
-      icon: ImageIcon,
-      title: t("formats.image.title"),
-      description: t("formats.image.description"),
-      color: "bg-green-500/20 text-green-700 border-green-200",
-    },
-    {
-      id: "pdf",
-      icon: FileText,
-      title: t("formats.pdf.title"),
-      description: t("formats.pdf.description"),
-      color: "bg-orange-500/20 text-orange-700 border-orange-200",
     },
   ];
 
@@ -328,11 +200,7 @@ export function ShareFormatModal({
                 <div>
                   <h3 className="font-medium mb-2">{t("generating")}</h3>
                   <p className="text-muted-foreground text-sm">
-                    {selectedFormat === "link"
-                      ? t("creatingLink")
-                      : selectedFormat === "image"
-                      ? t("creatingImage")
-                      : t("creatingPdf")}
+                    {t("creatingLink")}
                   </p>
                 </div>
               </>

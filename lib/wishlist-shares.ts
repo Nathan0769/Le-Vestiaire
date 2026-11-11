@@ -57,6 +57,52 @@ export async function revokeShare(userId: string, shareId: string): Promise<bool
   return count > 0;
 }
 
+/** Photos montrées dans l'aperçu du lien (iMessage, WhatsApp). */
+const SHARE_META_IMAGES = 4;
+// Le générateur d'image (next/og) ne lit ni WebP ni AVIF : la photo resterait blanche.
+const OG_READABLE_IMAGE = /\.(jpe?g|png)(\?|$)/i;
+
+/**
+ * Aperçu d'un partage pour son titre et son image de lien : lecture légère,
+ * sans offres ni réservations. Null si le lien n'existe pas ou est révoqué.
+ */
+export async function getShareMeta(shareId: string): Promise<{
+  theme: Theme;
+  title: string;
+  username: string | null;
+  count: number;
+  imageUrls: string[];
+} | null> {
+  const share = await prisma.wishlistShare.findFirst({
+    where: { id: shareId, revokedAt: null },
+    select: { theme: true, title: true, jerseyIds: true, userId: true, user: { select: { username: true } } },
+  });
+  if (!share) return null;
+  const where = {
+    userId: share.userId,
+    ...(share.jerseyIds.length > 0 ? { jerseyId: { in: share.jerseyIds } } : {}),
+  };
+  const [count, items] = await Promise.all([
+    prisma.wishlist.count({ where }),
+    prisma.wishlist.findMany({
+      where,
+      select: { jersey: { select: { imageUrl: true } } },
+      orderBy: [{ priority: "desc" }, { createdAt: "desc" }],
+      take: SHARE_META_IMAGES * 3,
+    }),
+  ]);
+  return {
+    theme: share.theme as Theme,
+    title: share.title,
+    username: share.user.username,
+    count,
+    imageUrls: items
+      .map((i) => i.jersey.imageUrl)
+      .filter((url) => OG_READABLE_IMAGE.test(url))
+      .slice(0, SHARE_META_IMAGES),
+  };
+}
+
 export interface PublicShareItem {
   wishlistId: string;
   favorite: boolean;
