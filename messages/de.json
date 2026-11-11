@@ -755,7 +755,8 @@
       "badge": {
         "discount": "Verfügbar -{percent}% bei {shop}",
         "available": "Verfügbar bei {shop}"
-      }
+      },
+      "otherSizes": "in {sizes}"
     },
     "button": {
       "loading": "Wird geladen...",
@@ -1087,7 +1088,8 @@
       "flock": "Beflockung",
       "flockValue": "Beflockung {flock}",
       "at": "bei {shop}",
-      "createdWith": "Liste erstellt mit Le Vestiaire"
+      "createdWith": "Liste erstellt mit Le Vestiaire",
+      "otherSizes": "in {sizes}"
     },
     "gift": {
       "edit": "Geschenk-Infos",

@@ -10,6 +10,7 @@ import {
   cfsUpdatePriority,
   nextCfsProductState,
   pickDisplayedOffer,
+  pickSizeOffers,
   type CfsProductState,
   type SeenCfsProduct,
 } from "@/lib/cfs-products";
@@ -84,7 +85,11 @@ interface CfsAvailabilityUpsertData {
   imageUrl: string;
   isReference: boolean;
   condition: Condition | null;
+  /** Null : jamais écrites (ligne antérieure au 2026-11-11). */
+  sizeOffers: CfsSizeOffer[] | null;
 }
+
+type CfsSizeOffer = { size: string; price: number; promoPrice: number | null; affiliateUrl: string };
 
 type DisplayedOffer = { price: number; promoPrice: number | null; affiliateUrl: string };
 
@@ -125,7 +130,9 @@ export function toProduct(item: CfsItem): SeenCfsProduct | null {
   };
 }
 
-const toDisplayed = (p: SeenCfsProduct): CfsAvailabilityUpsertData => ({
+type DisplayCandidate = SeenCfsProduct & { inStockSizes: string[] };
+
+const toDisplayed = (p: SeenCfsProduct, products: DisplayCandidate[]): CfsAvailabilityUpsertData => ({
   price: p.price,
   promoPrice: p.promoPrice,
   productUrl: p.productUrl,
@@ -133,6 +140,12 @@ const toDisplayed = (p: SeenCfsProduct): CfsAvailabilityUpsertData => ({
   imageUrl: p.imageUrl,
   isReference: p.isReference,
   condition: p.condition,
+  sizeOffers: pickSizeOffers(products).map(({ size, product }) => ({
+    size,
+    price: product.price,
+    promoPrice: product.promoPrice,
+    affiliateUrl: buildCfsAffiliateUrl(product.productUrl),
+  })),
 });
 
 const STORED_READ_BATCH = 20_000;
@@ -295,7 +308,10 @@ export const sameCfsOffer = (a: CfsAvailabilityUpsertData, b: CfsAvailabilityUps
   a.affiliateUrl === b.affiliateUrl &&
   a.imageUrl === b.imageUrl &&
   a.isReference === b.isReference &&
-  a.condition === b.condition;
+  a.condition === b.condition &&
+  a.sizeOffers !== null &&
+  b.sizeOffers !== null &&
+  JSON.stringify(a.sizeOffers) === JSON.stringify(b.sizeOffers);
 
 export async function scrapeCfsAvailability(options: { budgetMs?: number } = {}): Promise<ScrapeStats> {
   const deadline = Date.now() + (options.budgetMs ?? DEFAULT_BUDGET_MS);
@@ -357,7 +373,13 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
   // (euros de l'API) reste la base de la cote, calibrée dessus.
   const seen = new Map<
     string,
-    { cfsId: string; jerseyId: string; product: SeenCfsProduct; sitePrices: { price: number; promoPrice: number | null } }
+    {
+      cfsId: string;
+      jerseyId: string;
+      product: SeenCfsProduct;
+      sitePrices: { price: number; promoPrice: number | null };
+      inStockSizes: string[];
+    }
   >();
   const limit = pLimit(TEAM_FETCH_CONCURRENCY);
   await Promise.all(
@@ -393,7 +415,13 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
           stats.matched++;
           const sitePrices = cfsSitePrices({ ...product, priceGbp: item.priceGbp, promoPriceGbp: item.promoPriceGbp }, rates.GBP);
           for (const jerseyId of jerseyIds) {
-            seen.set(`${item.cfsId}|${jerseyId}`, { cfsId: item.cfsId, jerseyId, product, sitePrices });
+            seen.set(`${item.cfsId}|${jerseyId}`, {
+              cfsId: item.cfsId,
+              jerseyId,
+              product,
+              sitePrices,
+              inStockSizes: item.inStockSizes,
+            });
           }
         }
       })
@@ -415,14 +443,14 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
   const toCreate: (CfsProductState & { cfsId: string; jerseyId: string })[] = [];
   const toUpdate: { id: string; state: CfsProductState; priority: 0 | 1 }[] = [];
   // État courant de chaque produit encore valable, par maillot, pour l'offre affichée.
-  const productsByJersey = new Map<string, CfsProductState[]>();
-  const keep = (jerseyId: string, state: CfsProductState) => {
+  const productsByJersey = new Map<string, (CfsProductState & { inStockSizes: string[] })[]>();
+  const keep = (jerseyId: string, state: CfsProductState & { inStockSizes: string[] }) => {
     const list = productsByJersey.get(jerseyId);
     if (list) list.push(state);
     else productsByJersey.set(jerseyId, [state]);
   };
 
-  for (const [key, { cfsId, jerseyId, product, sitePrices }] of seen) {
+  for (const [key, { cfsId, jerseyId, product, sitePrices, inStockSizes }] of seen) {
     const old = stored.get(key);
     // Textes non relus (mémoire) : réputés inchangés, réécrits au prochain vrai changement.
     const oldState = old && {
@@ -436,7 +464,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
     if (next.cancelled) stats.cancelledSales++;
     if (!old) toCreate.push({ ...next.state, cfsId, jerseyId });
     else if (next.changed) toUpdate.push({ id: old.id, state: next.state, priority: cfsUpdatePriority(oldState!, next.state) });
-    keep(jerseyId, { ...next.state, ...sitePrices });
+    keep(jerseyId, { ...next.state, ...sitePrices, inStockSizes });
   }
   const goneIds = [...stored]
     .filter(([key, old]) => !seen.has(key) && canRemove(old.jerseyId))
@@ -473,7 +501,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
   const displayed = new Map<string, CfsAvailabilityUpsertData>();
   for (const [jerseyId, products] of productsByJersey) {
     const best = pickDisplayedOffer(products);
-    if (best) displayed.set(jerseyId, toDisplayed(best));
+    if (best) displayed.set(jerseyId, toDisplayed(best, products));
   }
 
   const existing = await prisma.cfsAvailability.findMany({
@@ -486,6 +514,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
       imageUrl: true,
       isReference: true,
       condition: true,
+      sizeOffers: true,
     },
   });
   const before = new Map<string, CfsAvailabilityUpsertData>(
@@ -499,6 +528,7 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
         imageUrl: e.imageUrl,
         isReference: e.isReference,
         condition: e.condition,
+        sizeOffers: Array.isArray(e.sizeOffers) ? (e.sizeOffers as CfsSizeOffer[]) : null,
       },
     ])
   );
@@ -509,15 +539,12 @@ export async function scrapeCfsAvailability(options: { budgetMs?: number } = {})
   });
   const upsertLimit = pLimit(UPSERT_CONCURRENCY);
   await Promise.all(
-    toWrite.map(([jerseyId, data]) =>
-      upsertLimit(() =>
-        prisma.cfsAvailability.upsert({
-          where: { jerseyId },
-          create: { jerseyId, ...data, lastSeenAt: now },
-          update: { ...data, lastSeenAt: now },
-        })
-      )
-    )
+    toWrite.map(([jerseyId, offer]) => {
+      const data = { ...offer, sizeOffers: offer.sizeOffers ?? [], lastSeenAt: now };
+      return upsertLimit(() =>
+        prisma.cfsAvailability.upsert({ where: { jerseyId }, create: { jerseyId, ...data }, update: data })
+      );
+    })
   );
   // Plus aucun produit en stock : le lien disparaît de la fiche (équipe lue seulement).
   const removedIds = [...before.keys()].filter((id) => !displayed.has(id) && canRemove(id));

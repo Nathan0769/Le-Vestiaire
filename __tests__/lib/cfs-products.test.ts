@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   nextCfsProductState,
   pickDisplayedOffer,
+  pickSizeOffers,
   toCfsSignals,
   cfsUpdatePriority,
   type CfsProductState,
@@ -117,6 +118,27 @@ describe("pickDisplayedOffer", () => {
       product({ price: 50, condition: "EXCELLENT", productUrl: "excellent" }),
     ]);
     expect(offer?.productUrl).toBe("excellent");
+  });
+});
+
+describe("pickSizeOffers", () => {
+  const product = (price: number, inStockSizes: string[], productUrl: string) => ({
+    ...stored({ promoPrice: null, price, productUrl }),
+    inStockSizes,
+  });
+
+  it("donne pour chaque taille en stock le produit le moins cher qui l'a, dans l'ordre des tailles", () => {
+    const offers = pickSizeOffers([product(50, ["XS", "S"], "petit"), product(80, ["S", "L"], "grand")]);
+    expect(offers.map((o) => [o.size, o.product.productUrl])).toEqual([
+      ["XS", "petit"],
+      ["S", "petit"],
+      ["L", "grand"],
+    ]);
+  });
+
+  it("ignore les produits en rupture et les tailles hors XS-XXL", () => {
+    const offers = pickSizeOffers([{ ...product(40, ["M"], "rupture"), inStock: false }, product(60, ["3XL"], "3xl")]);
+    expect(offers).toEqual([]);
   });
 });
 

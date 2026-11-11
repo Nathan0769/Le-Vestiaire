@@ -2,8 +2,7 @@ import { nanoid } from "nanoid";
 import prisma from "@/lib/prisma";
 import type { Theme } from "@/types/theme";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
-import { wishlistOffers, type WishlistOffer } from "@/lib/wishlist-offers";
-import { withCfsSubId } from "@/lib/cfs-affiliate";
+import { cfsOfferInput, wishlistOffers, type WishlistOffer } from "@/lib/wishlist-offers";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
 
 /**
@@ -137,7 +136,7 @@ export async function getPublicShare(shareId: string, viewerId: string | null): 
           season: true,
           slug: true,
           club: { select: { id: true, name: true, shortName: true, logoUrl: true, leagueId: true } },
-          cfsAvailability: { select: { price: true, promoPrice: true, affiliateUrl: true } },
+          cfsAvailability: { select: { price: true, promoPrice: true, affiliateUrl: true, sizeOffers: true } },
         },
       },
     },
@@ -166,13 +165,7 @@ export async function getPublicShare(shareId: string, viewerId: string | null): 
         flockNumber: item.flockNumber,
         jersey: { ...jersey, variant: jersey.variant ?? 1 },
         offers: wishlistOffers({
-          cfs: av
-            ? {
-                price: Number(av.price),
-                promoPrice: av.promoPrice === null ? null : Number(av.promoPrice),
-                affiliateUrl: withCfsSubId(av.affiliateUrl, `share-${item.jerseyId}`),
-              }
-            : null,
+          cfs: av ? cfsOfferInput(av, `share-${item.jerseyId}`) : null,
           partnerOffers: partnerOffers.get(item.jerseyId) ?? [],
           size: item.size,
         }),

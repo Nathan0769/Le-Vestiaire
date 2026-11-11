@@ -120,6 +120,21 @@ export function pickDisplayedOffer<T extends SeenCfsProduct>(products: T[]): T |
   return best;
 }
 
+const WISHLIST_SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
+
+/**
+ * Meilleure offre de chaque taille (XS à XXL) : pour une envie en L, la
+ * wishlist prend le produit le moins cher qui a du L, pas le moins cher tout court.
+ */
+export function pickSizeOffers<T extends SeenCfsProduct & { inStockSizes: string[] }>(
+  products: T[]
+): { size: string; product: T }[] {
+  return WISHLIST_SIZES.flatMap((size) => {
+    const product = pickDisplayedOffer(products.filter((p) => p.inStockSizes.includes(size)));
+    return product ? [{ size, product }] : [];
+  });
+}
+
 /**
  * Signaux de cote des produits CFS d'un maillot : maillots de référence
  * seulement, ruptures comprises (un prix CFS reste un prix CFS). Une vente

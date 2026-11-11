@@ -21,6 +21,7 @@ const offer = (
   imageUrl: "https://example.com/x.jpg",
   isReference,
   condition,
+  sizeOffers: [] as { size: string; price: number; promoPrice: number | null; affiliateUrl: string }[] | null,
 });
 
 describe("cfsChangedJerseyIds", () => {
@@ -189,5 +190,15 @@ describe("sameCfsOffer", () => {
     expect(sameCfsOffer(before, { ...before, affiliateUrl: "https://www.classicfootballshirts.co.uk/x?ref=mgi4mta" })).toBe(
       false
     );
+  });
+
+  it("voit un changement de tailles en stock", () => {
+    const before = { ...offer(true, 50), sizeOffers: [{ size: "S", price: 50, promoPrice: null, affiliateUrl: "u" }] };
+    expect(sameCfsOffer(before, { ...before, sizeOffers: [] })).toBe(false);
+  });
+
+  it("réécrit une offre dont les tailles n'ont jamais été écrites", () => {
+    const before = { ...offer(true, 50), sizeOffers: null };
+    expect(sameCfsOffer(before, { ...before, sizeOffers: [] })).toBe(false);
   });
 });

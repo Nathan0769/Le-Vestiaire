@@ -755,7 +755,8 @@
       "badge": {
         "discount": "Beschikbaar -{percent}% bij {shop}",
         "available": "Beschikbaar bij {shop}"
-      }
+      },
+      "otherSizes": "in {sizes}"
     },
     "button": {
       "loading": "Laden...",
@@ -1087,7 +1088,8 @@
       "flock": "Bedrukking",
       "flockValue": "Bedrukking {flock}",
       "at": "bij {shop}",
-      "createdWith": "Lijst gemaakt met Le Vestiaire"
+      "createdWith": "Lijst gemaakt met Le Vestiaire",
+      "otherSizes": "in {sizes}"
     },
     "gift": {
       "edit": "Cadeau-info",

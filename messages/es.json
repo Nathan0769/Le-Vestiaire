@@ -755,7 +755,8 @@
       "badge": {
         "discount": "Disponible -{percent}% en {shop}",
         "available": "Disponible en {shop}"
-      }
+      },
+      "otherSizes": "en {sizes}"
     },
     "button": {
       "loading": "Cargando...",
@@ -1087,7 +1088,8 @@
       "flock": "Estampado",
       "flockValue": "Estampado {flock}",
       "at": "en {shop}",
-      "createdWith": "Lista creada con Le Vestiaire"
+      "createdWith": "Lista creada con Le Vestiaire",
+      "otherSizes": "en {sizes}"
     },
     "gift": {
       "edit": "Datos del regalo",

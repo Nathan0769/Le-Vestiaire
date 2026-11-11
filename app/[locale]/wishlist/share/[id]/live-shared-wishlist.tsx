@@ -180,7 +180,10 @@ export default function LiveSharedWishlist({ share }: { share: PublicShare }) {
                               {formatMoney(best.compareAtPrice, "EUR", locale)}
                             </span>
                           )}
-                          <span className="text-xs text-gray-600">{t("at", { shop: best.shopName })}</span>
+                          <span className="text-xs text-gray-600">
+                            {t("at", { shop: best.shopName })}
+                            {best.otherSizes.length > 0 && ` · ${t("otherSizes", { sizes: best.otherSizes.join(", ") })}`}
+                          </span>
                         </span>
                         <ExternalLink className="w-3.5 h-3.5 text-gray-500" />
                       </a>

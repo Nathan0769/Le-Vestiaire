@@ -91,6 +91,7 @@ async function seed() {
       productUrl: "https://example.com/produit",
       affiliateUrl: "https://example.com/affilie",
       imageUrl: "https://example.com/image.jpg",
+      sizeOffers: [{ size: "M", price: 89.99, promoPrice: 59.99, affiliateUrl: "https://example.com/affilie-m" }],
     },
   });
   // Offre de boutique partenaire : la fixture wishlist doit montrer sa forme complète à l'app.

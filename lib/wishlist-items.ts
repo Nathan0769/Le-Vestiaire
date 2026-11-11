@@ -1,6 +1,7 @@
 import type { Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
+import { cfsOfferInput } from "@/lib/wishlist-offers";
 
 /**
  * Forme d'une envie renvoyée au propriétaire (GET /api/wishlist, PATCH
@@ -20,7 +21,7 @@ const WISHLIST_ITEM_SELECT = {
     include: {
       club: { include: { league: true } },
       cfsAvailability: {
-        select: { id: true, price: true, promoPrice: true, affiliateUrl: true },
+        select: { id: true, price: true, promoPrice: true, affiliateUrl: true, sizeOffers: true },
       },
     },
   },
@@ -40,15 +41,9 @@ export async function findOwnerWishlistItems(where: Prisma.WishlistWhereInput) {
     jersey: {
       ...item.jersey,
       retailPrice: item.jersey.retailPrice ? Number(item.jersey.retailPrice) : null,
+      // `sizes` : meilleure offre par taille en stock, null tant que le cron ne l'a pas écrite.
       cfsAvailability: item.jersey.cfsAvailability
-        ? {
-            ...item.jersey.cfsAvailability,
-            price: Number(item.jersey.cfsAvailability.price),
-            promoPrice:
-              item.jersey.cfsAvailability.promoPrice !== null
-                ? Number(item.jersey.cfsAvailability.promoPrice)
-                : null,
-          }
+        ? { id: item.jersey.cfsAvailability.id, ...cfsOfferInput(item.jersey.cfsAvailability) }
         : null,
       partnerOffers: partnerOffers.get(item.jerseyId) ?? [],
     },

@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
-import { wishlistOffers } from "@/lib/wishlist-offers";
+import { cfsOfferInput, wishlistOffers } from "@/lib/wishlist-offers";
 import { selectPromoAlerts, silenceSmallerHalfAtLaunch, type PromoAlertRow } from "@/lib/wishlist-promo-alerts";
 import { createNotification } from "@/lib/notifications/create";
 import { pushForNotification } from "@/lib/push/notify";
@@ -36,7 +36,9 @@ export async function runWishlistPromoAlerts(
       jerseyId: true,
       size: true,
       promoNotifiedPrice: true,
-      jersey: { select: { cfsAvailability: { select: { price: true, promoPrice: true, affiliateUrl: true } } } },
+      jersey: {
+        select: { cfsAvailability: { select: { price: true, promoPrice: true, affiliateUrl: true, sizeOffers: true } } },
+      },
     },
   });
 
@@ -46,9 +48,7 @@ export async function runWishlistPromoAlerts(
   for (const item of items) {
     const av = item.jersey.cfsAvailability;
     const offers = wishlistOffers({
-      cfs: av
-        ? { price: Number(av.price), promoPrice: av.promoPrice === null ? null : Number(av.promoPrice), affiliateUrl: av.affiliateUrl }
-        : null,
+      cfs: av ? cfsOfferInput(av) : null,
       partnerOffers: partnerOffers.get(item.jerseyId) ?? [],
       size: item.size,
     });

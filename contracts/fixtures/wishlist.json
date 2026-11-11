@@ -45,7 +45,15 @@
         "id": "cmw94uew9002wynxbecka0ey7",
         "price": 89.99,
         "promoPrice": 59.99,
-        "affiliateUrl": "https://example.com/affilie"
+        "affiliateUrl": "https://example.com/affilie",
+        "sizes": [
+          {
+            "size": "M",
+            "price": 89.99,
+            "promoPrice": 59.99,
+            "affiliateUrl": "https://example.com/affilie-m"
+          }
+        ]
       },
       "partnerOffers": [
         {

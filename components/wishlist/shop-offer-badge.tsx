@@ -9,11 +9,13 @@ interface ShopOfferBadgeProps {
   price: number;
   compareAtPrice: number | null;
   discount: number;
+  /** Taille voisine proposée quand la taille voulue manque ("en M, XL"). */
+  sizeNote?: string;
   onClick: (e: React.MouseEvent) => void;
 }
 
 // Un badge par boutique qui a le maillot : le nom reste visible quand plusieurs s'empilent.
-export function ShopOfferBadge({ shopName, ariaLabel, price, compareAtPrice, discount, onClick }: ShopOfferBadgeProps) {
+export function ShopOfferBadge({ shopName, ariaLabel, price, compareAtPrice, discount, sizeNote, onClick }: ShopOfferBadgeProps) {
   const inPromo = discount > 0 && compareAtPrice !== null;
 
   return (
@@ -32,7 +34,7 @@ export function ShopOfferBadge({ shopName, ariaLabel, price, compareAtPrice, dis
         {inPromo && (
           <span className="text-[10px] font-bold bg-white/20 rounded px-1 py-0.5 shrink-0">-{discount}%</span>
         )}
-        <span className="text-[10px] opacity-80 truncate">{shopName}</span>
+        <span className="text-[10px] opacity-80 truncate">{sizeNote ? `${shopName} · ${sizeNote}` : shopName}</span>
       </div>
       <ExternalLink className="w-3 h-3 shrink-0" />
     </button>

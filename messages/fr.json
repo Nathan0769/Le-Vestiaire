@@ -760,7 +760,8 @@
       "badge": {
         "discount": "Dispo -{percent}% chez {shop}",
         "available": "Dispo chez {shop}"
-      }
+      },
+      "otherSizes": "en {sizes}"
     },
     "button": {
       "loading": "Chargement...",
@@ -1092,7 +1093,8 @@
       "flock": "Flocage",
       "flockValue": "Flocage {flock}",
       "at": "chez {shop}",
-      "createdWith": "Liste créée avec Le Vestiaire"
+      "createdWith": "Liste créée avec Le Vestiaire",
+      "otherSizes": "en {sizes}"
     },
     "gift": {
       "edit": "Infos cadeau",

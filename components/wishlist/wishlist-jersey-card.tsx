@@ -37,7 +37,7 @@ import { jerseyTypeLabel } from "@/lib/jersey-utils";
 import { trackEvent } from "@/lib/analytics";
 import type { PartnerOffer } from "@/lib/partner-shops/offers";
 import { ShopOfferBadge } from "@/components/wishlist/shop-offer-badge";
-import { wishlistOffers, type WishlistOffer } from "@/lib/wishlist-offers";
+import { wishlistOffers, type WishlistCfsInput, type WishlistOffer } from "@/lib/wishlist-offers";
 
 interface Props {
   jersey: {
@@ -57,12 +57,8 @@ interface Props {
     logoUrl: string;
     leagueId: string;
   };
-  cfsAvailability: {
-    id: string;
-    price: string;
-    promoPrice: string | null;
-    affiliateUrl: string;
-  } | null;
+  /** Offre CFS déjà passée par `cfsOfferInput` (liens marqués, tailles en stock). */
+  cfsAvailability: (WishlistCfsInput & { id: string }) | null;
   partnerOffers?: PartnerOffer[];
   /** Taille voulue : écarte les boutiques qui ne l'ont pas. */
   size?: string | null;
@@ -186,11 +182,8 @@ export function WishlistJerseyCard({ jersey, club, cfsAvailability, partnerOffer
         in_promo: inPromo ? 1 : 0,
       },
     });
-    window.open(
-      cfsAvailability.affiliateUrl,
-      "_blank",
-      "noopener,noreferrer"
-    );
+    // Lien de la taille voulue (ou voisine), pas forcément le produit le moins cher.
+    window.open(offer.url, "_blank", "noopener,noreferrer");
   };
 
   const secondaryLine = [jersey.season, jersey.brand]
@@ -245,6 +238,7 @@ export function WishlistJerseyCard({ jersey, club, cfsAvailability, partnerOffer
                 price={offer.price}
                 compareAtPrice={offer.compareAtPrice}
                 discount={offer.discount}
+                sizeNote={offer.otherSizes.length > 0 ? tShop("otherSizes", { sizes: offer.otherSizes.join(", ") }) : undefined}
                 onClick={handleOfferClick(offer)}
               />
             ))}

@@ -8,8 +8,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
-import { wishlistOfferSummary } from "@/lib/wishlist-offers";
-import { withCfsSubId } from "@/lib/cfs-affiliate";
+import { cfsOfferInput, wishlistOfferSummary } from "@/lib/wishlist-offers";
 import { WishlistGiftActions } from "@/components/wishlist/wishlist-gift-actions";
 import { mostFrequentSize } from "@/lib/wishlist-gift-fields";
 import type { Size } from "@prisma/client";
@@ -69,6 +68,7 @@ export default async function WishlistPage() {
                 price: true,
                 promoPrice: true,
                 affiliateUrl: true,
+                sizeOffers: true,
               },
             },
           },
@@ -114,13 +114,7 @@ export default async function WishlistPage() {
       return [
         item.id,
         wishlistOfferSummary({
-          cfs: av
-            ? {
-                price: Number(av.price),
-                promoPrice: av.promoPrice === null ? null : Number(av.promoPrice),
-                affiliateUrl: av.affiliateUrl,
-              }
-            : null,
+          cfs: av ? cfsOfferInput(av) : null,
           partnerOffers: partnerOffers.get(item.jersey.id) ?? [],
           size: item.size,
         }),
@@ -324,16 +318,7 @@ export default async function WishlistPage() {
                       leagueId: item.jersey.club.league.id,
                     }}
                     cfsAvailability={
-                      av
-                        ? {
-                            id: av.id,
-                            price: av.price.toString(),
-                            promoPrice: av.promoPrice
-                              ? av.promoPrice.toString()
-                              : null,
-                            affiliateUrl: withCfsSubId(av.affiliateUrl, `wishlist-${item.jersey.id}`),
-                          }
-                        : null
+                      av ? { id: av.id, ...cfsOfferInput(av, `wishlist-${item.jersey.id}`) } : null
                     }
                     partnerOffers={partnerOffers.get(item.jersey.id) ?? []}
                     size={item.size}

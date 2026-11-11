@@ -755,7 +755,8 @@
       "badge": {
         "discount": "Available -{percent}% at {shop}",
         "available": "Available at {shop}"
-      }
+      },
+      "otherSizes": "in {sizes}"
     },
     "button": {
       "loading": "Loading...",
@@ -1087,7 +1088,8 @@
       "flock": "Printing",
       "flockValue": "Printing {flock}",
       "at": "at {shop}",
-      "createdWith": "List made with Le Vestiaire"
+      "createdWith": "List made with Le Vestiaire",
+      "otherSizes": "in {sizes}"
     },
     "gift": {
       "edit": "Gift details",
