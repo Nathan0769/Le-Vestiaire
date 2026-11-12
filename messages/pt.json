@@ -3594,11 +3594,20 @@
         "main": {
           "title": "A tua wishlist de Natal",
           "text": "Faz a tua lista, partilha-a e deixa as promoções virem até ti.",
-          "points": [
-            "Indica o teu tamanho, a versão e a personalização: mostramos a melhor oferta no teu tamanho, as favoritas primeiro.",
-            "Envia um só link aos teus. Reservam a camisola que te oferecem, e tu não vês nada.",
-            "Uma camisola da tua lista baixa pelo menos 20 %? Recebes um alerta, nunca mais do que um a cada 3 dias."
-          ]
+          "items": {
+            "list": {
+              "title": "A tua carta ao Pai Natal",
+              "text": "Tamanho, versão, personalização: mostramos a melhor oferta no teu tamanho."
+            },
+            "share": {
+              "title": "Um link para os teus",
+              "text": "Reservam a camisola que te oferecem, e tu não vês nada."
+            },
+            "alerts": {
+              "title": "As promoções vêm até ti",
+              "text": "Um alerta quando uma camisola da tua lista baixa pelo menos 20 %, nunca mais do que um a cada 3 dias."
+            }
+          }
         }
       }
     }

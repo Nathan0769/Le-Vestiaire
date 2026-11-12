@@ -5,7 +5,7 @@ const ann = (id: string, publishedAt: string, over: Partial<Announcement> = {}):
   id,
   publishedAt,
   ctaTarget: "wishlist",
-  cards: [{ key: "a", image: { web: `announcements/${id}/a-web.jpg`, ios: `announcements/${id}/a-ios.jpg` } }],
+  cards: [{ key: "a", items: [], image: { web: `announcements/${id}/a-web.jpg`, ios: `announcements/${id}/a-ios.jpg` } }],
   ...over,
 });
 

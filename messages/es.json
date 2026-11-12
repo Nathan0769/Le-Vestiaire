@@ -3594,11 +3594,20 @@
         "main": {
           "title": "Tu wishlist de Navidad",
           "text": "Haz tu lista, compártela y deja que las ofertas vengan a ti.",
-          "points": [
-            "Indica tu talla, la versión y el dorsal: te mostramos la mejor oferta en tu talla, tus favoritas primero.",
-            "Envía un solo enlace a los tuyos. Reservan la camiseta que te regalan, y tú no ves nada.",
-            "¿Una camiseta de tu lista baja al menos un 20 %? Recibes un aviso, nunca más de uno cada 3 días."
-          ]
+          "items": {
+            "list": {
+              "title": "Tu carta a los Reyes",
+              "text": "Talla, versión, dorsal: te mostramos la mejor oferta en tu talla."
+            },
+            "share": {
+              "title": "Un enlace para los tuyos",
+              "text": "Reservan la camiseta que te regalan, y tú no ves nada."
+            },
+            "alerts": {
+              "title": "Las ofertas vienen a ti",
+              "text": "Un aviso cuando una camiseta de tu lista baja al menos un 20 %, nunca más de uno cada 3 días."
+            }
+          }
         }
       }
     }

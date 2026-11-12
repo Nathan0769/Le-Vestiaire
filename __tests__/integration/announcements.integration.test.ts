@@ -13,22 +13,22 @@ describe("annonces de nouveautés", () => {
   // Admin : voit l'annonce de Noël avant sa sortie, le test ne dépend pas de la date du jour.
   const admin = () => createTestUser({ role: "admin" });
 
-  it("montre l'annonce traduite sur une page, avec ses points, son image et son bouton", async () => {
+  it("montre l'annonce traduite sur une page, en lignes icône, titre, phrase, sans image", async () => {
     const user = await admin();
     const current = await getCurrentAnnouncement(user, { kind: "web" }, "en");
-    expect([current?.cards.length, current?.cards[0].title, current?.cards[0].points.length, current?.cta.target, current?.cards[0].imageUrl]).toEqual([
+    expect([current?.cards.length, current?.cards[0].title, current?.cards[0].items.map((i) => i.icon), current?.cards[0].imageUrl, current?.cta.target]).toEqual([
       1,
       "Your Christmas wishlist",
-      3,
+      ["gift", "link", "bell"],
+      null,
       "wishlist",
-      "https://test.r2.dev/announcements/2026-12-wishlist-noel/main-web.jpg",
     ]);
   });
 
-  it("donne à l'iOS les captures de l'app", async () => {
+  it("traduit les lignes pour l'iOS", async () => {
     const user = await admin();
     const current = await getCurrentAnnouncement(user, { kind: "ios", version: "1.7" }, "fr");
-    expect(current?.cards[0].imageUrl).toBe("https://test.r2.dev/announcements/2026-12-wishlist-noel/main-ios.jpg");
+    expect(current?.cards[0].items[1].title).toBe("Un lien pour tes proches");
   });
 
   it("vue sur iPhone, elle ne revient pas sur le web", async () => {

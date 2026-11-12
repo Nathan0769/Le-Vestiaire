@@ -3599,11 +3599,20 @@
         "main": {
           "title": "Ta wishlist de Noël",
           "text": "Fais ta liste, partage-la, et laisse les promos venir à toi.",
-          "points": [
-            "Indique ta taille, la version et le flocage : on te montre la meilleure offre dans ta taille, tes coups de cœur en premier.",
-            "Envoie un seul lien à tes proches. Ils réservent le maillot qu'ils t'offrent, et toi tu ne vois rien.",
-            "Un maillot de ta liste baisse d'au moins 20 % ? Tu reçois une alerte, jamais plus d'une tous les 3 jours."
-          ]
+          "items": {
+            "list": {
+              "title": "Ta liste au Père Noël",
+              "text": "Taille, version, flocage : on te montre la meilleure offre dans ta taille."
+            },
+            "share": {
+              "title": "Un lien pour tes proches",
+              "text": "Ils réservent le maillot qu'ils t'offrent, et toi tu ne vois rien."
+            },
+            "alerts": {
+              "title": "Les promos viennent à toi",
+              "text": "Une alerte quand un maillot de ta liste baisse d'au moins 20 %, jamais plus d'une tous les 3 jours."
+            }
+          }
         }
       }
     }

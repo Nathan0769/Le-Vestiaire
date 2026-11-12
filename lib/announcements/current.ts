@@ -5,6 +5,7 @@ import { ANNOUNCEMENTS } from "@/lib/announcements/catalog";
 import {
   idsToMarkSeen,
   pickAnnouncement,
+  type AnnouncementIcon,
   type AnnouncementPlatform,
   type AnnouncementTarget,
 } from "@/lib/announcements/pick";
@@ -13,8 +14,13 @@ import type { Locale } from "@/i18n/locales";
 /** Forme envoyée au web et à l'iOS (contrat `announcement-current`). */
 export interface CurrentAnnouncement {
   id: string;
-  /** `points` : courtes phrases sous le texte, toujours présent (vide s'il n'y en a pas). */
-  cards: { title: string; text: string; points: string[]; imageUrl: string }[];
+  /** `items` : lignes icône, titre, phrase ; `imageUrl` null quand la carte n'a pas d'image. */
+  cards: {
+    title: string;
+    text: string;
+    items: { icon: AnnouncementIcon; title: string; text: string }[];
+    imageUrl: string | null;
+  }[];
   cta: { label: string; target: AnnouncementTarget };
 }
 
@@ -42,8 +48,12 @@ export async function getCurrentAnnouncement(
     cards: announcement.cards.map((card) => ({
       title: t(`cards.${card.key}.title`),
       text: t(`cards.${card.key}.text`),
-      points: t.has(`cards.${card.key}.points`) ? (t.raw(`cards.${card.key}.points`) as string[]) : [],
-      imageUrl: getR2PublicUrl(STATIC_BUCKET, card.image[platform.kind]),
+      items: card.items.map((item) => ({
+        icon: item.icon,
+        title: t(`cards.${card.key}.items.${item.key}.title`),
+        text: t(`cards.${card.key}.items.${item.key}.text`),
+      })),
+      imageUrl: card.image ? getR2PublicUrl(STATIC_BUCKET, card.image[platform.kind]) : null,
     })),
     cta: { label: t("cta"), target: announcement.ctaTarget },
   };

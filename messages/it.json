@@ -3594,11 +3594,20 @@
         "main": {
           "title": "La tua wishlist di Natale",
           "text": "Fai la tua lista, condividila e lascia che le offerte arrivino da te.",
-          "points": [
-            "Indica taglia, versione e personalizzazione: ti mostriamo l'offerta migliore nella tua taglia, le preferite per prime.",
-            "Invia un solo link ai tuoi cari. Prenotano la maglia che ti regalano, e tu non vedi nulla.",
-            "Una maglia della tua lista cala di almeno il 20 %? Ricevi un avviso, mai più di uno ogni 3 giorni."
-          ]
+          "items": {
+            "list": {
+              "title": "La tua letterina a Babbo Natale",
+              "text": "Taglia, versione, personalizzazione: ti mostriamo l'offerta migliore nella tua taglia."
+            },
+            "share": {
+              "title": "Un link per i tuoi cari",
+              "text": "Prenotano la maglia che ti regalano, e tu non vedi nulla."
+            },
+            "alerts": {
+              "title": "Le offerte arrivano da te",
+              "text": "Un avviso quando una maglia della tua lista cala di almeno il 20 %, mai più di uno ogni 3 giorni."
+            }
+          }
         }
       }
     }

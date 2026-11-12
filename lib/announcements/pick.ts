@@ -8,14 +8,19 @@ import { compareVersions } from "@/lib/app-version";
 /** Écran ouvert par le bouton de la dernière carte, traduit en lien par chaque app. */
 export type AnnouncementTarget = "wishlist" | "collection" | "feed" | "profile";
 
+/** Icône d'une ligne, traduite par chaque app (lucide sur le web, SF Symbols sur iOS). */
+export type AnnouncementIcon = "gift" | "link" | "bell" | "tag" | "star" | "chart" | "users" | "shirt";
+
 export interface AnnouncementCard {
-  /** Clé des textes : `Announcements.<id>.cards.<key>.title|text|points` (points facultatifs). */
-  key: string;
   /**
-   * Chemins dans le bucket R2 `static`, un par plateforme : le web montre le site,
-   * l'iOS montre l'app (jamais l'écran de l'autre).
+   * Clé des textes : `Announcements.<id>.cards.<key>.title|text`, et pour chaque
+   * ligne `cards.<key>.items.<itemKey>.title|text`.
    */
-  image: { web: string; ios: string };
+  key: string;
+  /** Lignes « icône, titre, phrase » (format des apps Apple, sans capture). */
+  items: { key: string; icon: AnnouncementIcon }[];
+  /** Image facultative, chemins R2 `static` par plateforme (le web montre le site, l'iOS l'app). */
+  image?: { web: string; ios: string };
 }
 
 export interface Announcement {

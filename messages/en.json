@@ -3594,11 +3594,20 @@
         "main": {
           "title": "Your Christmas wishlist",
           "text": "Make your list, share it, and let the deals come to you.",
-          "points": [
-            "Add your size, version and printing: we show you the best deal in your size, your favourites first.",
-            "Send one link to your family. They claim the shirt they're giving you, and you see nothing.",
-            "A shirt on your list drops by at least 20%? You get an alert, never more than one every 3 days."
-          ]
+          "items": {
+            "list": {
+              "title": "Your letter to Santa",
+              "text": "Size, version, printing: we show you the best deal in your size."
+            },
+            "share": {
+              "title": "One link for your family",
+              "text": "They claim the shirt they're giving you, and you see nothing."
+            },
+            "alerts": {
+              "title": "Deals come to you",
+              "text": "An alert when a shirt on your list drops by at least 20%, never more than one every 3 days."
+            }
+          }
         }
       }
     }

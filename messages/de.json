@@ -3594,11 +3594,20 @@
         "main": {
           "title": "Deine Weihnachts-Wunschliste",
           "text": "Erstelle deine Liste, teile sie und lass die Angebote zu dir kommen.",
-          "points": [
-            "Gib Größe, Version und Beflockung an: Wir zeigen dir das beste Angebot in deiner Größe, Favoriten zuerst.",
-            "Schick deiner Familie einen einzigen Link. Sie reserviert das Trikot, das sie dir schenkt, und du siehst nichts.",
-            "Ein Trikot deiner Liste wird um mindestens 20 % günstiger? Du bekommst eine Benachrichtigung, höchstens eine alle 3 Tage."
-          ]
+          "items": {
+            "list": {
+              "title": "Deine Liste fürs Christkind",
+              "text": "Größe, Version, Beflockung: Wir zeigen dir das beste Angebot in deiner Größe."
+            },
+            "share": {
+              "title": "Ein Link für deine Familie",
+              "text": "Sie reserviert das Trikot, das sie dir schenkt, und du siehst nichts."
+            },
+            "alerts": {
+              "title": "Angebote kommen zu dir",
+              "text": "Eine Benachrichtigung, wenn ein Trikot deiner Liste um mindestens 20 % günstiger wird, höchstens eine alle 3 Tage."
+            }
+          }
         }
       }
     }

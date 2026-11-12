@@ -19,7 +19,7 @@ async function main() {
   const announcement = ANNOUNCEMENTS.find((a) => a.id === id);
   if (!announcement) throw new Error(`annonce inconnue : ${id}`);
 
-  const expected = new Set(announcement.cards.flatMap((c) => [c.image.web, c.image.ios]));
+  const expected = new Set(announcement.cards.flatMap((c) => (c.image ? [c.image.web, c.image.ios] : [])));
   for (const file of readdirSync(dir).filter((f) => f.endsWith(".jpg"))) {
     const key = `announcements/${id}/${file}`;
     if (!expected.has(key)) throw new Error(`${file} ne correspond à aucune carte de ${id}`);
