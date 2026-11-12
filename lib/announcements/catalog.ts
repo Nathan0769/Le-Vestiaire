@@ -13,10 +13,9 @@ export const ANNOUNCEMENTS: Announcement[] = [
     publishedAt: "2026-12-05",
     minIosVersion: "1.7",
     ctaTarget: "wishlist",
+    // Une seule page (choix de Nathan) : la wishlist en image, le reste en trois points.
     cards: [
-      { key: "list", image: "announcements/2026-12-wishlist-noel/list-v2.jpg" },
-      { key: "share", image: "announcements/2026-12-wishlist-noel/share.jpg" },
-      { key: "alerts", image: "announcements/2026-12-wishlist-noel/alerts.jpg" },
+      { key: "main", image: { web: "announcements/2026-12-wishlist-noel/main-web.jpg", ios: "announcements/2026-12-wishlist-noel/main-ios.jpg" } },
     ],
   },
 ];

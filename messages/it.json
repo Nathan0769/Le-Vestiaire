@@ -3452,7 +3452,8 @@
       "POST_COMMENTED": "ha commentato il tuo post",
       "FOLLOW_REQUEST_APPROVED": "ha accettato la tua richiesta",
       "FOLLOW_REQUEST_RECEIVED": "vuole seguirti",
-      "COMMENT_REPLIED": "ha risposto al tuo commento"
+      "COMMENT_REPLIED": "ha risposto al tuo commento",
+      "WISHLIST_PROMO": "Promo su maglie della tua wishlist"
     },
     "someone": "Qualcuno",
     "metadataTitle": "Notifiche - Le Vestiaire Foot",
@@ -3590,17 +3591,14 @@
     "2026-12-wishlist-noel": {
       "cta": "Vedi la mia wishlist",
       "cards": {
-        "list": {
-          "title": "La tua letterina a Babbo Natale",
-          "text": "Indica taglia, versione e personalizzazione. Ti mostriamo l'offerta migliore nella tua taglia, le preferite per prime."
-        },
-        "share": {
-          "title": "Condividila con i tuoi cari",
-          "text": "Un solo link che segue la tua lista. La tua famiglia prenota la maglia che ti regala, e tu non vedi nulla."
-        },
-        "alerts": {
-          "title": "Le offerte arrivano da te",
-          "text": "Una maglia della tua lista cala di almeno il 20 %? Ricevi un avviso. Mai più di uno ogni 3 giorni."
+        "main": {
+          "title": "La tua wishlist di Natale",
+          "text": "Fai la tua lista, condividila e lascia che le offerte arrivino da te.",
+          "points": [
+            "Indica taglia, versione e personalizzazione: ti mostriamo l'offerta migliore nella tua taglia, le preferite per prime.",
+            "Invia un solo link ai tuoi cari. Prenotano la maglia che ti regalano, e tu non vedi nulla.",
+            "Una maglia della tua lista cala di almeno il 20 %? Ricevi un avviso, mai più di uno ogni 3 giorni."
+          ]
         }
       }
     }

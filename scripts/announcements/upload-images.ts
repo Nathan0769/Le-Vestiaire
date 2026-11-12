@@ -1,7 +1,7 @@
 /**
  * Envoie les images d'une annonce de nouveautés sur R2 `static`.
  *   pnpm exec tsx scripts/announcements/upload-images.ts <id-annonce> <dossier>
- * Chaque <dossier>/<carte>.jpg devient announcements/<id>/<carte>.jpg, comme
+ * Chaque <dossier>/<carte>-web.jpg et <carte>-ios.jpg devient announcements/<id>/<fichier>, comme
  * déclaré dans lib/announcements/catalog.ts. Spec : docs/specs/2026-11-11-annonces-nouveautes.md.
  */
 import { config } from "dotenv";
@@ -19,7 +19,7 @@ async function main() {
   const announcement = ANNOUNCEMENTS.find((a) => a.id === id);
   if (!announcement) throw new Error(`annonce inconnue : ${id}`);
 
-  const expected = new Set(announcement.cards.map((c) => c.image));
+  const expected = new Set(announcement.cards.flatMap((c) => [c.image.web, c.image.ios]));
   for (const file of readdirSync(dir).filter((f) => f.endsWith(".jpg"))) {
     const key = `announcements/${id}/${file}`;
     if (!expected.has(key)) throw new Error(`${file} ne correspond à aucune carte de ${id}`);

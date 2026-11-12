@@ -13,7 +13,8 @@ import type { Locale } from "@/i18n/locales";
 /** Forme envoyée au web et à l'iOS (contrat `announcement-current`). */
 export interface CurrentAnnouncement {
   id: string;
-  cards: { title: string; text: string; imageUrl: string }[];
+  /** `points` : courtes phrases sous le texte, toujours présent (vide s'il n'y en a pas). */
+  cards: { title: string; text: string; points: string[]; imageUrl: string }[];
   cta: { label: string; target: AnnouncementTarget };
 }
 
@@ -41,7 +42,8 @@ export async function getCurrentAnnouncement(
     cards: announcement.cards.map((card) => ({
       title: t(`cards.${card.key}.title`),
       text: t(`cards.${card.key}.text`),
-      imageUrl: getR2PublicUrl(STATIC_BUCKET, card.image),
+      points: t.has(`cards.${card.key}.points`) ? (t.raw(`cards.${card.key}.points`) as string[]) : [],
+      imageUrl: getR2PublicUrl(STATIC_BUCKET, card.image[platform.kind]),
     })),
     cta: { label: t("cta"), target: announcement.ctaTarget },
   };

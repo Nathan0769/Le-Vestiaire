@@ -9,6 +9,7 @@ import { formatDistanceToNow } from "date-fns";
 import { fr, enUS, es, it, de, nl, pt } from "date-fns/locale";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Tag } from "lucide-react";
 import type { NotificationItem as NotificationItemT } from "@/types/notifications";
 
 const DATE_LOCALES: Record<string, typeof fr> = {
@@ -59,13 +60,17 @@ export function NotificationItem({ notification, onClick }: Props) {
   });
 
   const isFollowRequest = notification.type === "FOLLOW_REQUEST_RECEIVED";
+  // Alerte du cron wishlist-promos : pas d'acteur, mène à la wishlist (comme l'iOS).
+  const isWishlistPromo = notification.type === "WISHLIST_PROMO";
   const actor = notification.actor;
 
   const label = isFollowRequest
     ? t("types.FOLLOW_REQUEST_RECEIVED")
     : t(`types.${notification.type}` as never);
 
-  const href = notification.postId
+  const href = isWishlistPromo
+    ? "/wishlist"
+    : notification.postId
     ? notification.type === "POST_COMMENTED" ||
       notification.type === "COMMENT_REPLIED"
       ? `/feed?post=${notification.postId}&comments=1`
@@ -81,7 +86,11 @@ export function NotificationItem({ notification, onClick }: Props) {
 
   const content = (
     <>
-      {actor ? (
+      {isWishlistPromo ? (
+        <div className="w-8 h-8 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-400 flex items-center justify-center flex-shrink-0">
+          <Tag className="w-4 h-4" aria-hidden />
+        </div>
+      ) : actor ? (
         <UserAvatar
           src={actor.avatarUrl ?? undefined}
           name={actor.name}
@@ -93,12 +102,16 @@ export function NotificationItem({ notification, onClick }: Props) {
         <div className="w-8 h-8 rounded-full bg-muted flex-shrink-0" />
       )}
       <div className="flex-1 min-w-0 text-sm">
-        <p className="truncate">
-          <span className={cn("font-medium", actor?.isSupporter && "cos-name-gold")}>
-            {actor?.name ?? t("someone")}
-          </span>{" "}
-          <span className="text-muted-foreground">{label}</span>
-        </p>
+        {isWishlistPromo ? (
+          <p className="line-clamp-2 font-medium">{label}</p>
+        ) : (
+          <p className="truncate">
+            <span className={cn("font-medium", actor?.isSupporter && "cos-name-gold")}>
+              {actor?.name ?? t("someone")}
+            </span>{" "}
+            <span className="text-muted-foreground">{label}</span>
+          </p>
+        )}
         <p className="text-xs text-muted-foreground mt-0.5">{timeAgo}</p>
       </div>
       {!notification.readAt && !isFollowRequest && (

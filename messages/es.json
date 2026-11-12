@@ -3452,7 +3452,8 @@
       "POST_COMMENTED": "comentó tu publicación",
       "FOLLOW_REQUEST_APPROVED": "aceptó tu solicitud",
       "FOLLOW_REQUEST_RECEIVED": "quiere seguirte",
-      "COMMENT_REPLIED": "respondió a tu comentario"
+      "COMMENT_REPLIED": "respondió a tu comentario",
+      "WISHLIST_PROMO": "Ofertas en camisetas de tu lista de deseos"
     },
     "someone": "Alguien",
     "metadataTitle": "Notificaciones - Le Vestiaire Foot",
@@ -3590,17 +3591,14 @@
     "2026-12-wishlist-noel": {
       "cta": "Ver mi wishlist",
       "cards": {
-        "list": {
-          "title": "Tu carta a los Reyes",
-          "text": "Indica tu talla, la versión y el dorsal. Te mostramos la mejor oferta en tu talla, tus favoritas primero."
-        },
-        "share": {
-          "title": "Compártela con los tuyos",
-          "text": "Un solo enlace que sigue tu lista. Tu familia reserva la camiseta que te regala, y tú no ves nada."
-        },
-        "alerts": {
-          "title": "Las ofertas vienen a ti",
-          "text": "¿Una camiseta de tu lista baja al menos un 20 %? Recibes un aviso. Nunca más de uno cada 3 días."
+        "main": {
+          "title": "Tu wishlist de Navidad",
+          "text": "Haz tu lista, compártela y deja que las ofertas vengan a ti.",
+          "points": [
+            "Indica tu talla, la versión y el dorsal: te mostramos la mejor oferta en tu talla, tus favoritas primero.",
+            "Envía un solo enlace a los tuyos. Reservan la camiseta que te regalan, y tú no ves nada.",
+            "¿Una camiseta de tu lista baja al menos un 20 %? Recibes un aviso, nunca más de uno cada 3 días."
+          ]
         }
       }
     }

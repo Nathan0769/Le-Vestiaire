@@ -9,10 +9,13 @@ import { compareVersions } from "@/lib/app-version";
 export type AnnouncementTarget = "wishlist" | "collection" | "feed" | "profile";
 
 export interface AnnouncementCard {
-  /** Clé des textes : `Announcements.<id>.cards.<key>.title|text`. */
+  /** Clé des textes : `Announcements.<id>.cards.<key>.title|text|points` (points facultatifs). */
   key: string;
-  /** Chemin dans le bucket R2 `static`. */
-  image: string;
+  /**
+   * Chemins dans le bucket R2 `static`, un par plateforme : le web montre le site,
+   * l'iOS montre l'app (jamais l'écran de l'autre).
+   */
+  image: { web: string; ios: string };
 }
 
 export interface Announcement {

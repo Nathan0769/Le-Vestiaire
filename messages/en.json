@@ -3452,7 +3452,8 @@
       "POST_COMMENTED": "commented on your post",
       "FOLLOW_REQUEST_APPROVED": "accepted your follow request",
       "FOLLOW_REQUEST_RECEIVED": "wants to follow you",
-      "COMMENT_REPLIED": "replied to your comment"
+      "COMMENT_REPLIED": "replied to your comment",
+      "WISHLIST_PROMO": "Sale on shirts in your wishlist"
     },
     "someone": "Someone",
     "metadataTitle": "Notifications - Le Vestiaire Foot",
@@ -3590,17 +3591,14 @@
     "2026-12-wishlist-noel": {
       "cta": "See my wishlist",
       "cards": {
-        "list": {
-          "title": "Your letter to Santa",
-          "text": "Add your size, version and printing. We show you the best deal in your size, your favourites first."
-        },
-        "share": {
-          "title": "Share it with your family",
-          "text": "One link that follows your list. Your family claims the shirt they're giving you, and you see nothing."
-        },
-        "alerts": {
-          "title": "Deals come to you",
-          "text": "A shirt on your list drops by at least 20%? You get an alert. Never more than one every 3 days."
+        "main": {
+          "title": "Your Christmas wishlist",
+          "text": "Make your list, share it, and let the deals come to you.",
+          "points": [
+            "Add your size, version and printing: we show you the best deal in your size, your favourites first.",
+            "Send one link to your family. They claim the shirt they're giving you, and you see nothing.",
+            "A shirt on your list drops by at least 20%? You get an alert, never more than one every 3 days."
+          ]
         }
       }
     }

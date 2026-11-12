@@ -3452,7 +3452,8 @@
       "POST_COMMENTED": "hat deinen Beitrag kommentiert",
       "FOLLOW_REQUEST_APPROVED": "hat deine Folgeanfrage akzeptiert",
       "FOLLOW_REQUEST_RECEIVED": "möchte dir folgen",
-      "COMMENT_REPLIED": "hat auf deinen Kommentar geantwortet"
+      "COMMENT_REPLIED": "hat auf deinen Kommentar geantwortet",
+      "WISHLIST_PROMO": "Rabatt auf Trikots aus deiner Wunschliste"
     },
     "someone": "Jemand",
     "metadataTitle": "Benachrichtigungen - Le Vestiaire Foot",
@@ -3590,17 +3591,14 @@
     "2026-12-wishlist-noel": {
       "cta": "Meine Wunschliste ansehen",
       "cards": {
-        "list": {
-          "title": "Deine Liste fürs Christkind",
-          "text": "Gib Größe, Version und Beflockung an. Wir zeigen dir das beste Angebot in deiner Größe, Favoriten zuerst."
-        },
-        "share": {
-          "title": "Teile sie mit deiner Familie",
-          "text": "Ein einziger Link, der deiner Liste folgt. Deine Familie reserviert das Trikot, das sie dir schenkt, und du siehst nichts."
-        },
-        "alerts": {
-          "title": "Angebote kommen zu dir",
-          "text": "Ein Trikot deiner Liste wird um mindestens 20 % günstiger? Du bekommst eine Benachrichtigung. Höchstens eine alle 3 Tage."
+        "main": {
+          "title": "Deine Weihnachts-Wunschliste",
+          "text": "Erstelle deine Liste, teile sie und lass die Angebote zu dir kommen.",
+          "points": [
+            "Gib Größe, Version und Beflockung an: Wir zeigen dir das beste Angebot in deiner Größe, Favoriten zuerst.",
+            "Schick deiner Familie einen einzigen Link. Sie reserviert das Trikot, das sie dir schenkt, und du siehst nichts.",
+            "Ein Trikot deiner Liste wird um mindestens 20 % günstiger? Du bekommst eine Benachrichtigung, höchstens eine alle 3 Tage."
+          ]
         }
       }
     }

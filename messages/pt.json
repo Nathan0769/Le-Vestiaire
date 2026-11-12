@@ -3452,7 +3452,8 @@
       "POST_COMMENTED": "comentou sua publicação",
       "FOLLOW_REQUEST_APPROVED": "aceitou sua solicitação",
       "FOLLOW_REQUEST_RECEIVED": "quer te seguir",
-      "COMMENT_REPLIED": "respondeu ao seu comentário"
+      "COMMENT_REPLIED": "respondeu ao seu comentário",
+      "WISHLIST_PROMO": "Promoção em camisolas da tua wishlist"
     },
     "someone": "Alguém",
     "metadataTitle": "Notificações - Le Vestiaire Foot",
@@ -3590,17 +3591,14 @@
     "2026-12-wishlist-noel": {
       "cta": "Ver a minha wishlist",
       "cards": {
-        "list": {
-          "title": "A tua carta ao Pai Natal",
-          "text": "Indica o teu tamanho, a versão e a personalização. Mostramos a melhor oferta no teu tamanho, as favoritas primeiro."
-        },
-        "share": {
-          "title": "Partilha-a com os teus",
-          "text": "Um só link, que acompanha a tua lista. A tua família reserva a camisola que te oferece, e tu não vês nada."
-        },
-        "alerts": {
-          "title": "As promoções vêm até ti",
-          "text": "Uma camisola da tua lista baixa pelo menos 20 %? Recebes um alerta. Nunca mais do que um a cada 3 dias."
+        "main": {
+          "title": "A tua wishlist de Natal",
+          "text": "Faz a tua lista, partilha-a e deixa as promoções virem até ti.",
+          "points": [
+            "Indica o teu tamanho, a versão e a personalização: mostramos a melhor oferta no teu tamanho, as favoritas primeiro.",
+            "Envia um só link aos teus. Reservam a camisola que te oferecem, e tu não vês nada.",
+            "Uma camisola da tua lista baixa pelo menos 20 %? Recebes um alerta, nunca mais do que um a cada 3 dias."
+          ]
         }
       }
     }

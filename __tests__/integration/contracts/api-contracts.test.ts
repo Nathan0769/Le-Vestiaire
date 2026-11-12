@@ -21,6 +21,7 @@ import { GET as getPublicProfile } from "@/app/api/users/[username]/route";
 import { GET as getAppConfig } from "@/app/api/app/config/route";
 import { GET as getAnnouncement } from "@/app/api/announcements/current/route";
 import "@/__tests__/setup.integration";
+vi.mock("next-intl/server", async () => (await import("@/__tests__/helpers/next-intl-server")).nextIntlServerMock());
 
 /**
  * Contrat web ↔ iOS. Chaque route clé est appelée sur des données seedées et

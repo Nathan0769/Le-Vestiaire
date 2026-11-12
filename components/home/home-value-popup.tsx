@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Lock } from "lucide-react";
 import { Link } from "@/i18n/routing";
 import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { useCurrentAnnouncement } from "@/hooks/useCurrentAnnouncement";
 
 const GOLD = "text-[oklch(0.66_0.11_88)] dark:text-[oklch(0.82_0.11_90)]";
 const GOLD_HEX = "oklch(0.72 0.115 90)";
@@ -49,10 +50,13 @@ export function HomeValuePopup() {
   const isSupporter = !!user?.isSupporter;
   const [open, setOpen] = useState(false);
   const [msgIndex, setMsgIndex] = useState(0);
+  // Une annonce « Quoi de neuf » passe avant : pas deux fenêtres à la fois.
+  const { announcement, isPending: announcementPending } = useCurrentAnnouncement();
+  const announcementShown = announcementPending || !!announcement;
 
   useEffect(() => {
     // On ne cible que les connectés non-Supporters.
-    if (!user || isSupporter) return;
+    if (!user || isSupporter || announcementShown) return;
 
     const state = readState();
     if (state.shows >= MESSAGE_COUNT) return; // tous les messages ont été vus
@@ -72,7 +76,7 @@ export function HomeValuePopup() {
     }, OPEN_DELAY_MS);
 
     return () => clearTimeout(timer);
-  }, [user, isSupporter]);
+  }, [user, isSupporter, announcementShown]);
 
   if (!user || isSupporter) return null;
 

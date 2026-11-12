@@ -3452,7 +3452,8 @@
       "POST_COMMENTED": "reageerde op je post",
       "FOLLOW_REQUEST_APPROVED": "heeft je volgverzoek geaccepteerd",
       "FOLLOW_REQUEST_RECEIVED": "wil je volgen",
-      "COMMENT_REPLIED": "reageerde op je reactie"
+      "COMMENT_REPLIED": "reageerde op je reactie",
+      "WISHLIST_PROMO": "Korting op shirts uit je verlanglijst"
     },
     "someone": "Iemand",
     "metadataTitle": "Meldingen - Le Vestiaire Foot",
@@ -3590,17 +3591,14 @@
     "2026-12-wishlist-noel": {
       "cta": "Bekijk mijn wishlist",
       "cards": {
-        "list": {
-          "title": "Je verlanglijstje voor de feestdagen",
-          "text": "Geef je maat, versie en bedrukking op. We tonen het beste aanbod in jouw maat, favorieten eerst."
-        },
-        "share": {
-          "title": "Deel het met je familie",
-          "text": "Eén link die je lijst volgt. Je familie reserveert het shirt dat ze je geven, en jij ziet niets."
-        },
-        "alerts": {
-          "title": "Aanbiedingen komen naar jou",
-          "text": "Een shirt op je lijst zakt minstens 20 % in prijs? Je krijgt een melding. Nooit meer dan één per 3 dagen."
+        "main": {
+          "title": "Je kerstwishlist",
+          "text": "Maak je lijst, deel hem en laat de aanbiedingen naar jou komen.",
+          "points": [
+            "Geef je maat, versie en bedrukking op: we tonen het beste aanbod in jouw maat, favorieten eerst.",
+            "Stuur één link naar je familie. Ze reserveren het shirt dat ze je geven, en jij ziet niets.",
+            "Een shirt op je lijst zakt minstens 20 % in prijs? Je krijgt een melding, nooit meer dan één per 3 dagen."
+          ]
         }
       }
     }
