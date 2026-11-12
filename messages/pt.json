@@ -3581,5 +3581,28 @@
       "m3t": "Acompanha o valor da tua coleção ao longo do tempo",
       "m3s": "Um gráfico estilo bolsa para veres a tua coleção evoluir."
     }
+  },
+  "Announcements": {
+    "kicker": "Novo no Le Vestiaire",
+    "later": "Mais tarde",
+    "next": "Seguinte",
+    "close": "Fechar",
+    "2026-12-wishlist-noel": {
+      "cta": "Ver a minha wishlist",
+      "cards": {
+        "list": {
+          "title": "A tua carta ao Pai Natal",
+          "text": "Indica o teu tamanho, a versão e a personalização. Mostramos a melhor oferta no teu tamanho, as favoritas primeiro."
+        },
+        "share": {
+          "title": "Partilha-a com os teus",
+          "text": "Um só link, que acompanha a tua lista. A tua família reserva a camisola que te oferece, e tu não vês nada."
+        },
+        "alerts": {
+          "title": "As promoções vêm até ti",
+          "text": "Uma camisola da tua lista baixa pelo menos 20 %? Recebes um alerta. Nunca mais do que um a cada 3 dias."
+        }
+      }
+    }
   }
 }

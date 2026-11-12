@@ -3581,5 +3581,28 @@
       "m3t": "Verfolge den Wert deiner Sammlung über die Zeit",
       "m3s": "Ein Chart im Börsenstil, um deine Sammlung zu beobachten."
     }
+  },
+  "Announcements": {
+    "kicker": "Neu bei Le Vestiaire",
+    "later": "Später",
+    "next": "Weiter",
+    "close": "Schließen",
+    "2026-12-wishlist-noel": {
+      "cta": "Meine Wunschliste ansehen",
+      "cards": {
+        "list": {
+          "title": "Deine Liste fürs Christkind",
+          "text": "Gib Größe, Version und Beflockung an. Wir zeigen dir das beste Angebot in deiner Größe, Favoriten zuerst."
+        },
+        "share": {
+          "title": "Teile sie mit deiner Familie",
+          "text": "Ein einziger Link, der deiner Liste folgt. Deine Familie reserviert das Trikot, das sie dir schenkt, und du siehst nichts."
+        },
+        "alerts": {
+          "title": "Angebote kommen zu dir",
+          "text": "Ein Trikot deiner Liste wird um mindestens 20 % günstiger? Du bekommst eine Benachrichtigung. Höchstens eine alle 3 Tage."
+        }
+      }
+    }
   }
 }

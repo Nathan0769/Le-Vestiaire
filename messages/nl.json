@@ -3581,5 +3581,28 @@
       "m3t": "Volg de waarde van je collectie in de tijd",
       "m3s": "Een grafiek in beursstijl om je collectie te zien groeien."
     }
+  },
+  "Announcements": {
+    "kicker": "Nieuw in Le Vestiaire",
+    "later": "Later",
+    "next": "Volgende",
+    "close": "Sluiten",
+    "2026-12-wishlist-noel": {
+      "cta": "Bekijk mijn wishlist",
+      "cards": {
+        "list": {
+          "title": "Je verlanglijstje voor de feestdagen",
+          "text": "Geef je maat, versie en bedrukking op. We tonen het beste aanbod in jouw maat, favorieten eerst."
+        },
+        "share": {
+          "title": "Deel het met je familie",
+          "text": "Eén link die je lijst volgt. Je familie reserveert het shirt dat ze je geven, en jij ziet niets."
+        },
+        "alerts": {
+          "title": "Aanbiedingen komen naar jou",
+          "text": "Een shirt op je lijst zakt minstens 20 % in prijs? Je krijgt een melding. Nooit meer dan één per 3 dagen."
+        }
+      }
+    }
   }
 }

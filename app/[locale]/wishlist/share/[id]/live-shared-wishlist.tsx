@@ -98,7 +98,7 @@ export default function LiveSharedWishlist({ share }: { share: PublicShare }) {
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-gray-800 leading-tight">{share.title}</h1>
           {share.message && <p className="max-w-2xl mx-auto text-lg text-gray-600 leading-relaxed">{share.message}</p>}
-          <Badge variant="outline" className="bg-white/60">
+          <Badge variant="outline" className="bg-white/60 text-gray-800 border-gray-300">
             {t("jerseyCount", { count: share.items.length })}
           </Badge>
         </header>
@@ -143,7 +143,7 @@ export default function LiveSharedWishlist({ share }: { share: PublicShare }) {
                   </div>
 
                   {(item.size || item.version || flock) && (
-                    <dl className="flex flex-wrap gap-1.5 text-xs">
+                    <dl className="flex flex-wrap gap-1.5 text-xs text-gray-800">
                       {item.size && (
                         <div className="rounded-md bg-gray-100 px-2 py-1">
                           <dt className="sr-only">{t("size")}</dt>

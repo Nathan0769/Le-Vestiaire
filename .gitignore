@@ -43,6 +43,7 @@ next-env.d.ts
 /app/generated/prisma
 scripts/*
 !scripts/check-package-freshness.mjs
+!scripts/announcements/
 
 # commands directory
 /commands

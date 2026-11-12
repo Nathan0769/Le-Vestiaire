@@ -56,6 +56,7 @@ model User {
   descriptionProposals        DescriptionProposal[]
   jerseyProposals             JerseyProposal[]
   pushTokens                  PushToken[]
+  announcementViews           AnnouncementView[]
   ratings                     Rating[]
   sessions                    Session[]
   favoriteClub                Club?                 @relation(fields: [favoriteClubId], references: [id])
@@ -1135,4 +1136,17 @@ enum PartnerMatchStatus {
   PARSE_FAILED
   NO_JERSEY
   IGNORED
+}
+
+/// Annonce de nouveautés vue (ou fermée) par un compte : jamais remontrée,
+/// sur web comme sur iOS. Les annonces vivent dans lib/announcements/catalog.ts.
+/// Spec : docs/specs/2026-11-11-annonces-nouveautes.md.
+model AnnouncementView {
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  announcementId String
+  seenAt         DateTime @default(now())
+
+  @@id([userId, announcementId])
+  @@map("announcement_views")
 }

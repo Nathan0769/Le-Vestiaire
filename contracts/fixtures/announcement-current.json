@@ -1,0 +1,26 @@
+{
+  "announcement": {
+    "id": "2026-12-wishlist-noel",
+    "cards": [
+      {
+        "title": "Ta liste au Père Noël",
+        "text": "Indique ta taille, la version et le flocage. On te montre la meilleure offre dans ta taille, tes coups de cœur en premier.",
+        "imageUrl": "https://test.r2.dev/announcements/2026-12-wishlist-noel/list-v2.jpg"
+      },
+      {
+        "title": "Partage-la à tes proches",
+        "text": "Un seul lien, qui suit ta liste. Ta famille réserve le maillot qu'elle t'offre, et toi tu ne vois rien.",
+        "imageUrl": "https://test.r2.dev/announcements/2026-12-wishlist-noel/share.jpg"
+      },
+      {
+        "title": "Les promos viennent à toi",
+        "text": "Un maillot de ta liste baisse d'au moins 20 % ? Tu reçois une alerte. Jamais plus d'une tous les 3 jours.",
+        "imageUrl": "https://test.r2.dev/announcements/2026-12-wishlist-noel/alerts.jpg"
+      }
+    ],
+    "cta": {
+      "label": "Voir ma wishlist",
+      "target": "wishlist"
+    }
+  }
+}

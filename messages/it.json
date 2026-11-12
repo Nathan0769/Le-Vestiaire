@@ -3581,5 +3581,28 @@
       "m3t": "Segui il valore della tua collezione nel tempo",
       "m3s": "Un grafico stile borsa per veder crescere la tua collezione."
     }
+  },
+  "Announcements": {
+    "kicker": "Novità su Le Vestiaire",
+    "later": "Più tardi",
+    "next": "Avanti",
+    "close": "Chiudi",
+    "2026-12-wishlist-noel": {
+      "cta": "Vedi la mia wishlist",
+      "cards": {
+        "list": {
+          "title": "La tua letterina a Babbo Natale",
+          "text": "Indica taglia, versione e personalizzazione. Ti mostriamo l'offerta migliore nella tua taglia, le preferite per prime."
+        },
+        "share": {
+          "title": "Condividila con i tuoi cari",
+          "text": "Un solo link che segue la tua lista. La tua famiglia prenota la maglia che ti regala, e tu non vedi nulla."
+        },
+        "alerts": {
+          "title": "Le offerte arrivano da te",
+          "text": "Una maglia della tua lista cala di almeno il 20 %? Ricevi un avviso. Mai più di uno ogni 3 giorni."
+        }
+      }
+    }
   }
 }

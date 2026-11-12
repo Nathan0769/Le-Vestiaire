@@ -3581,5 +3581,28 @@
       "m3t": "Sigue el valor de tu colección en el tiempo",
       "m3s": "Un gráfico tipo bolsa para ver evolucionar tu colección."
     }
+  },
+  "Announcements": {
+    "kicker": "Novedad en Le Vestiaire",
+    "later": "Más tarde",
+    "next": "Siguiente",
+    "close": "Cerrar",
+    "2026-12-wishlist-noel": {
+      "cta": "Ver mi wishlist",
+      "cards": {
+        "list": {
+          "title": "Tu carta a los Reyes",
+          "text": "Indica tu talla, la versión y el dorsal. Te mostramos la mejor oferta en tu talla, tus favoritas primero."
+        },
+        "share": {
+          "title": "Compártela con los tuyos",
+          "text": "Un solo enlace que sigue tu lista. Tu familia reserva la camiseta que te regala, y tú no ves nada."
+        },
+        "alerts": {
+          "title": "Las ofertas vienen a ti",
+          "text": "¿Una camiseta de tu lista baja al menos un 20 %? Recibes un aviso. Nunca más de uno cada 3 días."
+        }
+      }
+    }
   }
 }

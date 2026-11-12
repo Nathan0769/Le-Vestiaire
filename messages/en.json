@@ -3581,5 +3581,28 @@
       "m3t": "Track your collection's value over time",
       "m3s": "A stock-style chart to watch your collection evolve."
     }
+  },
+  "Announcements": {
+    "kicker": "New in Le Vestiaire",
+    "later": "Later",
+    "next": "Next",
+    "close": "Close",
+    "2026-12-wishlist-noel": {
+      "cta": "See my wishlist",
+      "cards": {
+        "list": {
+          "title": "Your letter to Santa",
+          "text": "Add your size, version and printing. We show you the best deal in your size, your favourites first."
+        },
+        "share": {
+          "title": "Share it with your family",
+          "text": "One link that follows your list. Your family claims the shirt they're giving you, and you see nothing."
+        },
+        "alerts": {
+          "title": "Deals come to you",
+          "text": "A shirt on your list drops by at least 20%? You get an alert. Never more than one every 3 days."
+        }
+      }
+    }
   }
 }

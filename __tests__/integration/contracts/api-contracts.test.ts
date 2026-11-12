@@ -19,6 +19,7 @@ import { GET as getFeed } from "@/app/api/feed/route";
 import { GET as getJerseys } from "@/app/api/jerseys/route";
 import { GET as getPublicProfile } from "@/app/api/users/[username]/route";
 import { GET as getAppConfig } from "@/app/api/app/config/route";
+import { GET as getAnnouncement } from "@/app/api/announcements/current/route";
 import "@/__tests__/setup.integration";
 
 /**
@@ -43,7 +44,11 @@ vi.mock("@/lib/rate-limit", () => ({
 
 vi.mock("@/lib/r2-storage", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@/lib/r2-storage")>();
-  return { ...actual, getR2PresignedUrl: vi.fn().mockResolvedValue("https://test.r2.dev/photo.jpg") };
+  return {
+    ...actual,
+    getR2PresignedUrl: vi.fn().mockResolvedValue("https://test.r2.dev/photo.jpg"),
+    getR2PublicUrl: vi.fn((_bucket: string, p: string) => `https://test.r2.dev/${p}`),
+  };
 });
 
 const FIXTURES_DIR = path.resolve(__dirname, "../../../contracts/fixtures");
@@ -279,6 +284,16 @@ describe("Contrats API web ↔ iOS", () => {
       params: Promise.resolve({ username: author.username! }),
     });
     await expectContract("public-profile.full", response);
+  });
+
+  it("annonce de nouveautés", async () => {
+    // Admin : voit l'annonce avant sa date de sortie, la forme complète est donc remplie.
+    const admin = await createTestUser({ role: "admin" });
+    await signIn(admin);
+    const request = new Request("http://localhost/api/announcements/current", {
+      headers: { "x-app-version": "1.7", "accept-language": "fr" },
+    });
+    await expectContract("announcement-current", await getAnnouncement(request));
   });
 
   it("config de l'app", async () => {

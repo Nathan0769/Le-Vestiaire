@@ -16,6 +16,7 @@ import { Toaster } from "sonner";
 import { CookieConsent } from "@/components/ui/cookie-consent";
 import { AnalyticsWrapper } from "@/components/analytics-wrapper";
 import { FavoriteClubBanner } from "@/components/home/favorite-club-banner";
+import { WhatsNewDialog } from "@/components/announcements/whats-new-dialog";
 import { MotionConfig } from "motion/react";
 
 export default function ClientWrapper({
@@ -62,6 +63,7 @@ export default function ClientWrapper({
                 <NotificationBell />
               </div>
               <FavoriteClubBanner />
+              <WhatsNewDialog />
               {children}
               <AnalyticsWrapper />
             </main>
