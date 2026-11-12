@@ -1,6 +1,7 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
+import { nativeBridgeLocation } from "@/lib/mobile-oauth";
 
 export const dynamic = "force-dynamic";
 
@@ -15,13 +16,11 @@ export const dynamic = "force-dynamic";
  * Le token de session EST le Bearer token (cf. lib/get-current-user.ts qui
  * fait un lookup direct `prisma.session.findUnique({ where: { token } })`).
  */
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const session = await auth.api.getSession({ headers: await headers() });
-    const token = session?.session?.token;
-    const location = token
-      ? `levestiaire://auth?token=${encodeURIComponent(token)}`
-      : `levestiaire://auth?error=nosession`;
+    const error = new URL(request.url).searchParams.get("error");
+    const session = error === null ? await auth.api.getSession({ headers: await headers() }) : null;
+    const location = nativeBridgeLocation({ token: session?.session?.token ?? null, error });
     return new NextResponse(null, { status: 302, headers: { Location: location } });
   } catch (error) {
     console.error("native-bridge error:", error);

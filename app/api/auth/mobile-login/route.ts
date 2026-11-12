@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { mobileLoginSignInBody } from "@/lib/mobile-oauth";
 
 export const dynamic = "force-dynamic";
 
@@ -14,15 +15,15 @@ export const dynamic = "force-dynamic";
  * Après consentement Google → callback Better Auth (cookie state présent) →
  * session posée → redirection vers /api/auth/native-bridge → deep link
  * levestiaire://auth?token=… capturé par l'app.
+ *
+ * Échec au retour de Google : une relance (`retry=1`), puis retour à l'app
+ * (cf. `mobileLoginSignInBody`). Jamais la page d'accueil du site.
  */
 export async function GET(request: Request) {
-  const provider = new URL(request.url).searchParams.get("provider") ?? "google";
-  const safeProvider = /^[a-z]+$/.test(provider) ? provider : "google";
-
-  const body = JSON.stringify({
-    provider: safeProvider,
-    callbackURL: "https://le-vestiaire-foot.fr/api/auth/native-bridge",
-  });
+  const params = new URL(request.url).searchParams;
+  const body = JSON.stringify(
+    mobileLoginSignInBody(params.get("provider") ?? "google", params.get("retry") === "1"),
+  );
 
   const html = `<!doctype html>
 <html lang="fr"><head><meta charset="utf-8">

@@ -6,6 +6,7 @@ import prisma from "./prisma";
 import { resend, FROM_EMAIL, APP_URL } from "./email";
 import { ResetPasswordEmail } from "@/emails/reset-password";
 import { generateSlugBasedUsername } from "@/lib/username-generator";
+import { googleClientIds } from "@/lib/mobile-oauth";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
@@ -61,7 +62,9 @@ export const auth = betterAuth({
     google: {
       prompt: "select_account",
       accessType: "offline",
-      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      // Web en tête (URL d'autorisation du site) + client iOS : l'app envoie
+      // un idToken Google natif à /sign-in/social, audience = client iOS.
+      clientId: googleClientIds(process.env.GOOGLE_CLIENT_ID as string),
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     },
     // Sign in with Apple — flux NATIF uniquement (app iOS).
