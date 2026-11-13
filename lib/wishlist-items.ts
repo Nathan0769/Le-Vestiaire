@@ -43,7 +43,11 @@ export async function findOwnerWishlistItems(where: Prisma.WishlistWhereInput) {
       retailPrice: item.jersey.retailPrice ? Number(item.jersey.retailPrice) : null,
       // `sizes` : meilleure offre par taille en stock, null tant que le cron ne l'a pas écrite.
       cfsAvailability: item.jersey.cfsAvailability
-        ? { id: item.jersey.cfsAvailability.id, ...cfsOfferInput(item.jersey.cfsAvailability) }
+        ? {
+            id: item.jersey.cfsAvailability.id,
+            // Liens lus par l'app seule (le web recharge sa page après un PATCH) : emplacement iOS.
+            ...cfsOfferInput(item.jersey.cfsAvailability, `ios-wishlist-${item.jerseyId}`),
+          }
         : null,
       partnerOffers: partnerOffers.get(item.jerseyId) ?? [],
     },

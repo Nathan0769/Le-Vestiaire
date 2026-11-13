@@ -56,6 +56,7 @@ export async function cleanDatabase() {
   await prismaTest.club.deleteMany();
   await prismaTest.league.deleteMany();
   await prismaTest.errorEvent.deleteMany();
+  await prismaTest.affiliateConversion.deleteMany();
 }
 
 /**

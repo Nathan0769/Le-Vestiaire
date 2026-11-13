@@ -1150,3 +1150,29 @@ model AnnouncementView {
   @@id([userId, announcementId])
   @@map("announcement_views")
 }
+
+/// Vente d'un programme d'affiliation, reçue par postback (Tapfiliate pour CFS).
+/// Spec : docs/specs/2026-11-09-ventes-affiliees-cfs.md.
+model AffiliateConversion {
+  id           String    @id @default(cuid())
+  network      String
+  conversionId String
+  programId    String?
+  amount       Decimal?  @db.Decimal(10, 2)
+  commission   Decimal?  @db.Decimal(10, 2)
+  currency     String?
+  status       String?
+  /// Sub ID du lien cliqué (tm_subid), ex. "fiche-<jerseyId>".
+  subId        String?
+  /// Emplacement et cible lus dans le sub ID (parseCfsSubId) ; null si absent ou inconnu.
+  placement    String?
+  targetId     String?
+  clickedAt    DateTime?
+  convertedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([network, conversionId])
+  @@index([placement])
+  @@map("affiliate_conversions")
+}
