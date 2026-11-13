@@ -3453,14 +3453,16 @@
       "FOLLOW_REQUEST_APPROVED": "aceitou sua solicitação",
       "FOLLOW_REQUEST_RECEIVED": "quer te seguir",
       "COMMENT_REPLIED": "respondeu ao seu comentário",
-      "WISHLIST_PROMO": "Promoção em camisolas da tua wishlist"
+      "WISHLIST_PROMO": "Promoção em camisolas da tua wishlist",
+      "ACHIEVEMENT_UNLOCKED": "Nova conquista desbloqueada"
     },
     "someone": "Alguém",
     "metadataTitle": "Notificações - Le Vestiaire Foot",
     "accept": "Aceitar",
     "reject": "Recusar",
     "accepted": "Aceito",
-    "rejected": "Recusado"
+    "rejected": "Recusado",
+    "achievementUnlocked": "Conquista desbloqueada: {title}"
   },
   "Moderation": {
     "reportPost": "Denunciar esta publicação",

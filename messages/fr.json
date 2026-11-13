@@ -3458,14 +3458,16 @@
       "FOLLOW_REQUEST_APPROVED": "a accepté ta demande de suivi",
       "FOLLOW_REQUEST_RECEIVED": "veut te suivre",
       "COMMENT_REPLIED": "a répondu à ton commentaire",
-      "WISHLIST_PROMO": "Promo sur des maillots de ta wishlist"
+      "WISHLIST_PROMO": "Promo sur des maillots de ta wishlist",
+      "ACHIEVEMENT_UNLOCKED": "Nouveau succès débloqué"
     },
     "someone": "Quelqu'un",
     "metadataTitle": "Notifications - Le Vestiaire Foot",
     "accept": "Accepter",
     "reject": "Refuser",
     "accepted": "Accepté",
-    "rejected": "Refusé"
+    "rejected": "Refusé",
+    "achievementUnlocked": "Succès débloqué : {title}"
   },
   "Moderation": {
     "reportPost": "Signaler ce post",

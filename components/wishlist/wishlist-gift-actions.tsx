@@ -104,11 +104,12 @@ export function WishlistGiftActions({ wishlistId, jersey, gift, suggestedSize }:
 
   return (
     <>
-      <div className="flex gap-2" onClick={(e) => e.stopPropagation()}>
-        <Button variant="outline" size="sm" className="flex-1 cursor-pointer" onClick={() => setEditOpen(true)}>
+      {/* Côte à côte s'il y a la place, sinon l'un sous l'autre (carte étroite en 4 colonnes). */}
+      <div className="flex flex-wrap gap-2" onClick={(e) => e.stopPropagation()}>
+        <Button variant="outline" size="sm" className="flex-1 basis-32 min-w-0 cursor-pointer" onClick={() => setEditOpen(true)}>
           <Gift className="w-3.5 h-3.5" /> {t("edit")}
         </Button>
-        <Button variant="outline" size="sm" className="flex-1 cursor-pointer" onClick={() => setReceivedOpen(true)}>
+        <Button variant="outline" size="sm" className="flex-1 basis-32 min-w-0 cursor-pointer" onClick={() => setReceivedOpen(true)}>
           <PackageCheck className="w-3.5 h-3.5" /> {t("received")}
         </Button>
       </div>

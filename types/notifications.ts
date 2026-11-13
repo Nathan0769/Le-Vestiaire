@@ -25,6 +25,9 @@ export interface NotificationItem {
   postId: string | null;
   commentId: string | null;
   followRequestId?: string;
+  /** Succès débloqué (ACHIEVEMENT_UNLOCKED) : titre traduit et badge, null sinon. */
+  achievementTitle?: string | null;
+  badgeImageUrl?: string | null;
   actor: NotificationActor | null;
 }
 

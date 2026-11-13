@@ -3453,14 +3453,16 @@
       "FOLLOW_REQUEST_APPROVED": "heeft je volgverzoek geaccepteerd",
       "FOLLOW_REQUEST_RECEIVED": "wil je volgen",
       "COMMENT_REPLIED": "reageerde op je reactie",
-      "WISHLIST_PROMO": "Korting op shirts uit je verlanglijst"
+      "WISHLIST_PROMO": "Korting op shirts uit je verlanglijst",
+      "ACHIEVEMENT_UNLOCKED": "Nieuwe prestatie ontgrendeld"
     },
     "someone": "Iemand",
     "metadataTitle": "Meldingen - Le Vestiaire Foot",
     "accept": "Accepteren",
     "reject": "Weigeren",
     "accepted": "Geaccepteerd",
-    "rejected": "Geweigerd"
+    "rejected": "Geweigerd",
+    "achievementUnlocked": "Prestatie ontgrendeld: {title}"
   },
   "Moderation": {
     "reportPost": "Deze post melden",

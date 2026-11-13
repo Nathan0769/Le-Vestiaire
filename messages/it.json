@@ -3453,14 +3453,16 @@
       "FOLLOW_REQUEST_APPROVED": "ha accettato la tua richiesta",
       "FOLLOW_REQUEST_RECEIVED": "vuole seguirti",
       "COMMENT_REPLIED": "ha risposto al tuo commento",
-      "WISHLIST_PROMO": "Promo su maglie della tua wishlist"
+      "WISHLIST_PROMO": "Promo su maglie della tua wishlist",
+      "ACHIEVEMENT_UNLOCKED": "Nuovo obiettivo sbloccato"
     },
     "someone": "Qualcuno",
     "metadataTitle": "Notifiche - Le Vestiaire Foot",
     "accept": "Accetta",
     "reject": "Rifiuta",
     "accepted": "Accettato",
-    "rejected": "Rifiutato"
+    "rejected": "Rifiutato",
+    "achievementUnlocked": "Obiettivo sbloccato: {title}"
   },
   "Moderation": {
     "reportPost": "Segnala questo post",

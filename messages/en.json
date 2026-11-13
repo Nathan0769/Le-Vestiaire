@@ -3453,14 +3453,16 @@
       "FOLLOW_REQUEST_APPROVED": "accepted your follow request",
       "FOLLOW_REQUEST_RECEIVED": "wants to follow you",
       "COMMENT_REPLIED": "replied to your comment",
-      "WISHLIST_PROMO": "Sale on shirts in your wishlist"
+      "WISHLIST_PROMO": "Sale on shirts in your wishlist",
+      "ACHIEVEMENT_UNLOCKED": "New achievement unlocked"
     },
     "someone": "Someone",
     "metadataTitle": "Notifications - Le Vestiaire Foot",
     "accept": "Accept",
     "reject": "Decline",
     "accepted": "Accepted",
-    "rejected": "Declined"
+    "rejected": "Declined",
+    "achievementUnlocked": "Achievement unlocked: {title}"
   },
   "Moderation": {
     "reportPost": "Report this post",
