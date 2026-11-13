@@ -38,6 +38,11 @@ describe("parseTapfiliatePostback", () => {
     expect(parseTapfiliatePostback(params({ conversion_amount: "10" }))).toBeNull();
   });
 
+  it("lit le texte \"null\" envoyé par Tapfiliate comme une valeur absente", () => {
+    const row = parseTapfiliatePostback(params({ conversion_id: "conv_1", click_subid: "null" }));
+    expect(row).toMatchObject({ subId: null, placement: null });
+  });
+
   it("ignore un montant ou une date illisible, et une variable non remplacée", () => {
     const row = parseTapfiliatePostback(
       params({

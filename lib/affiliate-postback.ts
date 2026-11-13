@@ -7,13 +7,13 @@ import { parseCfsSubId } from "@/lib/cfs-affiliate";
  * docs/specs/2026-11-09-ventes-affiliees-cfs.md.
  */
 
-// Tapfiliate laisse la variable telle quelle ("${click_subid}") quand il n'a pas de valeur.
+// Sans valeur, Tapfiliate envoie "null" (vu au test du 2026-11-13) ou laisse la variable ("${click_subid}").
 const text = z
   .string()
   .trim()
   .max(255)
   .optional()
-  .transform((v) => (v && !v.startsWith("${") ? v : null));
+  .transform((v) => (v && v !== "null" && !v.startsWith("${") ? v : null));
 
 const schema = z.object({
   conversion_id: z.string().trim().min(1).max(255),
