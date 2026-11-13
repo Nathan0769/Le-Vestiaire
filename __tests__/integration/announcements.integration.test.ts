@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect, vi, beforeAll, afterAll } from "vitest";
 import { createTestUser } from "@/__tests__/helpers/fixtures";
 import { getCurrentAnnouncement, markAnnouncementSeen } from "@/lib/announcements/current";
 import "@/__tests__/setup.integration";
@@ -10,8 +10,16 @@ vi.mock("@/lib/r2-storage", async (importOriginal) => {
 });
 
 describe("annonces de nouveautés", () => {
-  // Admin : voit l'annonce de Noël avant sa sortie, le test ne dépend pas de la date du jour.
+  // Admin, la veille de la sortie : voit l'annonce de Noël quel que soit le jour où
+  // tourne le test (seule la date est simulée, pas les minuteurs de la base).
   const admin = () => createTestUser({ role: "admin" });
+  beforeAll(() => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-11-10T12:00:00Z"));
+  });
+  afterAll(() => {
+    vi.useRealTimers();
+  });
 
   it("montre l'annonce traduite sur une page, en lignes icône, titre, phrase, sans image", async () => {
     const user = await admin();

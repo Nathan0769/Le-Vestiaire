@@ -288,13 +288,20 @@ describe("Contrats API web ↔ iOS", () => {
   });
 
   it("annonce de nouveautés", async () => {
-    // Admin : voit l'annonce avant sa date de sortie, la forme complète est donc remplie.
+    // Admin, la veille de la sortie de l'annonce de Noël : la forme complète est remplie
+    // quel que soit le jour du test (seule la date est simulée).
     const admin = await createTestUser({ role: "admin" });
     await signIn(admin);
-    const request = new Request("http://localhost/api/announcements/current", {
-      headers: { "x-app-version": "1.7", "accept-language": "fr" },
-    });
-    await expectContract("announcement-current", await getAnnouncement(request));
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-11-10T12:00:00Z"));
+    try {
+      const request = new Request("http://localhost/api/announcements/current", {
+        headers: { "x-app-version": "1.7", "accept-language": "fr" },
+      });
+      await expectContract("announcement-current", await getAnnouncement(request));
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("config de l'app", async () => {
