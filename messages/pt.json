@@ -1133,7 +1133,9 @@
       "noPreference": "Tanto faz",
       "save": "Guardar",
       "error": "Ocorreu um erro, tenta de novo.",
-      "receivedDone": "Adicionada à tua coleção, retirada da wishlist"
+      "receivedDone": "Adicionada à tua coleção, retirada da wishlist",
+      "later": "Mais tarde",
+      "saved": "Info do presente guardada"
     }
   },
   "Login": {

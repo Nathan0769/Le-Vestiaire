@@ -1133,7 +1133,9 @@
       "noPreference": "Egal",
       "save": "Speichern",
       "error": "Ein Fehler ist aufgetreten, bitte erneut versuchen.",
-      "receivedDone": "Zur Sammlung hinzugefügt, von der Wunschliste entfernt"
+      "receivedDone": "Zur Sammlung hinzugefügt, von der Wunschliste entfernt",
+      "later": "Später",
+      "saved": "Geschenk-Infos gespeichert"
     }
   },
   "Login": {

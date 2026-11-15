@@ -1133,7 +1133,9 @@
       "noPreference": "Indifferente",
       "save": "Salva",
       "error": "Si è verificato un errore, riprova.",
-      "receivedDone": "Aggiunta alla collezione, rimossa dalla wishlist"
+      "receivedDone": "Aggiunta alla collezione, rimossa dalla wishlist",
+      "later": "Più tardi",
+      "saved": "Info regalo salvate"
     }
   },
   "Login": {

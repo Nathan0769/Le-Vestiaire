@@ -12,6 +12,8 @@ import { usePendingIntent } from "@/hooks/usePendingIntent";
 import { buildReturnTo } from "@/lib/auth-gate";
 import { trackEvent } from "@/lib/analytics";
 import { handleNewAchievements } from "@/lib/achievements/handle-response";
+import { EMPTY_GIFT, WishlistGiftDialog } from "@/components/wishlist/wishlist-gift-dialog";
+import type { Size } from "@prisma/client";
 
 interface WishlistButtonProps {
   jerseyId: string;
@@ -33,6 +35,8 @@ export function WishlistButton({
   const [isInWishlist, setIsInWishlist] = useState(initialIsInWishlist);
   const [isLoading, setIsLoading] = useState(false);
   const [showAuthGate, setShowAuthGate] = useState(false);
+  // Envie tout juste ajoutée : on propose ses infos cadeau dans la foulée.
+  const [giftTarget, setGiftTarget] = useState<{ wishlistId: string; suggestedSize: Size | null } | null>(null);
   const { user } = useAuth();
   const pathname = usePathname();
 
@@ -84,6 +88,9 @@ export function WishlistButton({
           });
           toast.success(t("toast.added"));
           handleNewAchievements(data, tRoot);
+          if (typeof data.wishlistId === "string") {
+            setGiftTarget({ wishlistId: data.wishlistId, suggestedSize: data.suggestedSize ?? null });
+          }
         } else {
           trackEvent({
             name: "jersey_removed_from_wishlist",
@@ -147,6 +154,18 @@ export function WishlistButton({
           </div>
         )}
       </Button>
+
+      {giftTarget && (
+        <WishlistGiftDialog
+          open
+          onOpenChange={(open) => !open && setGiftTarget(null)}
+          wishlistId={giftTarget.wishlistId}
+          gift={EMPTY_GIFT}
+          suggestedSize={giftTarget.suggestedSize}
+          afterAdd
+          onSaved={() => toast.success(tRoot("Wishlist.gift.saved"))}
+        />
+      )}
 
       <AuthGateModal
         open={showAuthGate}

@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { checkAchievements } from "@/lib/achievements/check";
+import { mostFrequentSize } from "@/lib/wishlist-gift-fields";
 
 export async function GET(
   request: Request,
@@ -98,13 +99,18 @@ export async function POST(
         isFirst: false,
       });
     } else {
-      await prisma.wishlist.create({
-        data: {
-          userId: user.id,
-          jerseyId,
-          priority: 1,
-        },
-      });
+      const [created, collectionSizes] = await Promise.all([
+        prisma.wishlist.create({
+          data: {
+            userId: user.id,
+            jerseyId,
+            priority: 1,
+          },
+          select: { id: true },
+        }),
+        // Taille proposée dans les infos cadeau ouvertes juste après l'ajout.
+        prisma.userJersey.findMany({ where: { userId: user.id }, select: { size: true } }),
+      ]);
 
       let newAchievements: Awaited<ReturnType<typeof checkAchievements>> = [];
       try {
@@ -119,6 +125,8 @@ export async function POST(
         message: "Maillot ajouté à votre wishlist",
         isInWishlist: true,
         isFirst: totalWishlistCount === 0,
+        wishlistId: created.id,
+        suggestedSize: mostFrequentSize(collectionSizes.map((c) => c.size)),
         newAchievements,
       });
     }

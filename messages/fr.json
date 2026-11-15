@@ -1138,7 +1138,9 @@
       "noPreference": "Peu importe",
       "save": "Enregistrer",
       "error": "Une erreur est survenue, réessaie.",
-      "receivedDone": "Ajouté à ta collection, retiré de ta wishlist"
+      "receivedDone": "Ajouté à ta collection, retiré de ta wishlist",
+      "later": "Plus tard",
+      "saved": "Infos cadeau enregistrées"
     }
   },
   "Login": {

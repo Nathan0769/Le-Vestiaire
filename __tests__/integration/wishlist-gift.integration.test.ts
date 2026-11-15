@@ -4,10 +4,12 @@ import { prismaTest } from "@/__tests__/helpers/db";
 import { createTestUser, createTestLeague, createTestClub, createTestJersey } from "@/__tests__/helpers/fixtures";
 import { GET as getWishlist } from "@/app/api/wishlist/route";
 import { PATCH as patchWishlistItem } from "@/app/api/wishlist/[id]/route";
+import { POST as toggleJerseyWishlist } from "@/app/api/jerseys/[id]/wishlist/route";
 import { getCurrentUser } from "@/lib/get-current-user";
 import "@/__tests__/setup.integration";
 
 vi.mock("@/lib/get-current-user", () => ({ getCurrentUser: vi.fn() }));
+vi.mock("@/lib/achievements/check", () => ({ checkAchievements: vi.fn().mockResolvedValue([]) }));
 
 vi.mock("@/lib/rate-limit", () => ({
   standardRateLimit: {},
@@ -78,5 +80,39 @@ describe("infos cadeau d'une envie", () => {
     expect(text).not.toContain("Marie");
     expect(text).not.toContain("reservation");
     expect(text).not.toContain("promoNotifiedPrice");
+  });
+});
+
+describe("ajout d'une envie depuis la fiche maillot", () => {
+  afterEach(() => vi.clearAllMocks());
+
+  it("renvoie l'id de l'envie et la taille la plus portée, pour ouvrir les infos cadeau", async () => {
+    const owner = await createTestUser();
+    const league = await createTestLeague();
+    const club = await createTestClub(league.id);
+    const [owned1, owned2, owned3, wanted] = [
+      await createTestJersey(club.id, { variant: 1 }),
+      await createTestJersey(club.id, { variant: 2 }),
+      await createTestJersey(club.id, { variant: 3 }),
+      await createTestJersey(club.id, { variant: 4 }),
+    ];
+    await prismaTest.userJersey.createMany({
+      data: [
+        { userId: owner.id, jerseyId: owned1.id, size: "L", condition: "MINT" },
+        { userId: owner.id, jerseyId: owned2.id, size: "L", condition: "MINT" },
+        { userId: owner.id, jerseyId: owned3.id, size: "M", condition: "MINT" },
+      ],
+    });
+
+    asUser(owner);
+    const res = await toggleJerseyWishlist(
+      new Request(`http://localhost/api/jerseys/${wanted.id}/wishlist`, { method: "POST" }),
+      { params: Promise.resolve({ id: wanted.id }) }
+    );
+    const body = await res.json();
+    const row = await prismaTest.wishlist.findUniqueOrThrow({
+      where: { userId_jerseyId: { userId: owner.id, jerseyId: wanted.id } },
+    });
+    expect(body).toMatchObject({ isInWishlist: true, wishlistId: row.id, suggestedSize: "L" });
   });
 });

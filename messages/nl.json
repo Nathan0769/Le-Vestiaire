@@ -1133,7 +1133,9 @@
       "noPreference": "Maakt niet uit",
       "save": "Opslaan",
       "error": "Er ging iets mis, probeer opnieuw.",
-      "receivedDone": "Toegevoegd aan je collectie, verwijderd van je wishlist"
+      "receivedDone": "Toegevoegd aan je collectie, verwijderd van je wishlist",
+      "later": "Later",
+      "saved": "Cadeau-info opgeslagen"
     }
   },
   "Login": {

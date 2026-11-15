@@ -1133,7 +1133,9 @@
       "noPreference": "Any",
       "save": "Save",
       "error": "Something went wrong, please try again.",
-      "receivedDone": "Added to your collection, removed from your wishlist"
+      "receivedDone": "Added to your collection, removed from your wishlist",
+      "later": "Later",
+      "saved": "Gift details saved"
     }
   },
   "Login": {
