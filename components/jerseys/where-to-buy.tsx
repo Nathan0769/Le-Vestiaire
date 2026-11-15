@@ -15,15 +15,20 @@ export async function WhereToBuy({ data }: WhereToBuyProps) {
   return (
     <div className="flex items-start justify-between gap-2 py-2 border-b border-border/50 min-w-0">
       <span className="text-sm font-medium text-muted-foreground shrink-0">{t("findOnCFS")}</span>
-      {data.kind === "search" ? (
+      {data.kind === "club" ? (
         <a
           href={data.url}
           target="_blank"
           rel="sponsored nofollow noopener noreferrer"
-          className="text-sm text-primary hover:text-primary/80 hover:underline transition-colors flex items-center gap-1.5"
+          className="group flex flex-col items-end text-right"
         >
-          <span>Classic Football Shirts</span>
-          <Image src={CFS_LOGO_URL} alt="Classic Football Shirts" width={16} height={16} className="object-contain" />
+          <span className="flex items-center gap-1.5 text-sm text-primary group-hover:text-primary/80 group-hover:underline transition-colors">
+            <Image src={CFS_LOGO_URL} alt="Classic Football Shirts" width={16} height={16} className="object-contain" />
+            <span>Classic Football Shirts</span>
+          </span>
+          <span className="text-xs text-muted-foreground">
+            {t("cfsClubOffer", { price: data.price.toFixed(2) })}
+          </span>
         </a>
       ) : (
         <div className="flex flex-wrap justify-end gap-x-4 gap-y-1.5 min-w-0">

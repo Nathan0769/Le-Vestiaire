@@ -2267,6 +2267,7 @@
     "brand": "Marca",
     "type": "Tipo",
     "findOnCFS": "Onde comprar",
+    "cfsClubOffer": "Outra camisola do clube desde {price} €",
     "promoCode": "Código {code}",
     "averageRating": "Avaliação média",
     "collectorStats": "Estatísticas de colecionadores",

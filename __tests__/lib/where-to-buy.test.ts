@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildWhereToBuy, cfsClubSearchName, CFS_SEARCH_BASE_URL } from "@/lib/where-to-buy";
+import { buildWhereToBuy, cheapestCfsOffer } from "@/lib/where-to-buy";
 import type { PartnerOffer } from "@/lib/partner-shops/offers";
 
 const parc = (price: number): PartnerOffer => ({
@@ -22,7 +22,7 @@ const cfs = (price: number, promoPrice: number | null = null) => ({
 
 describe("buildWhereToBuy", () => {
   it("dispo au Parc seulement : un lien Parc", () => {
-    const r = buildWhereToBuy({ partnerOffers: [parc(49.99)], cfs: null, cfsSearchName: null });
+    const r = buildWhereToBuy({ partnerOffers: [parc(49.99)], cfs: null, cfsClubOffer: null });
     expect(r).toEqual({
       kind: "offers",
       links: [
@@ -41,7 +41,7 @@ describe("buildWhereToBuy", () => {
   });
 
   it("dispo chez CFS seulement : un lien produit CFS, prix promo et prix barré", () => {
-    const r = buildWhereToBuy({ partnerOffers: [], cfs: cfs(80, 60), cfsSearchName: "Lebanon" });
+    const r = buildWhereToBuy({ partnerOffers: [], cfs: cfs(80, 60), cfsClubOffer: null });
     expect(r).toMatchObject({
       kind: "offers",
       links: [
@@ -57,62 +57,52 @@ describe("buildWhereToBuy", () => {
   });
 
   it("dispo chez les deux : deux liens, du moins cher au plus cher", () => {
-    const r = buildWhereToBuy({ partnerOffers: [parc(49.99)], cfs: cfs(45), cfsSearchName: null });
+    const r = buildWhereToBuy({ partnerOffers: [parc(49.99)], cfs: cfs(45), cfsClubOffer: null });
     expect(r?.kind === "offers" && r.links.map((l) => l.shop)).toEqual(["cfs", "leparcamaillots"]);
-  });
-
-  it("dispo nulle part, nom anglais connu : recherche CFS sur ce nom", () => {
-    expect(buildWhereToBuy({ partnerOffers: [], cfs: null, cfsSearchName: "Lebanon" })).toEqual({
-      kind: "search",
-      url: `${CFS_SEARCH_BASE_URL}&q=Lebanon`,
-    });
-  });
-
-  it("encode le nom de recherche", () => {
-    const r = buildWhereToBuy({ partnerOffers: [], cfs: null, cfsSearchName: "Paris Saint-Germain & co" });
-    expect(r).toEqual({ kind: "search", url: `${CFS_SEARCH_BASE_URL}&q=Paris%20Saint-Germain%20%26%20co` });
   });
 
   it("marque l'offre CFS de son emplacement", () => {
     const r = buildWhereToBuy({
       partnerOffers: [],
       cfs: cfs(80),
-      cfsSearchName: null,
-      subIds: { offer: "fiche-j1", search: "club-c1" },
+      cfsClubOffer: null,
+      subIds: { offer: "fiche-j1", club: "club-c1" },
     });
     const link = r?.kind === "offers" ? r.links[0].url : "";
     expect(new URL(link).searchParams.get("tm_subid")).toBe("fiche-j1");
   });
 
-  it("marque la recherche CFS générique de son emplacement", () => {
+  it("dispo nulle part : lien vers le maillot CFS le moins cher du club, au prix promo", () => {
+    expect(buildWhereToBuy({ partnerOffers: [], cfs: null, cfsClubOffer: cfs(80, 55) })).toEqual({
+      kind: "club",
+      price: 55,
+      url: "https://www.classicfootballshirts.co.uk/x.html?ref=mgi4mta",
+    });
+  });
+
+  it("marque le lien vers un autre maillot du club de son emplacement", () => {
     const r = buildWhereToBuy({
       partnerOffers: [],
       cfs: null,
-      cfsSearchName: "Lebanon",
-      subIds: { offer: "fiche-j1", search: "club-c1" },
+      cfsClubOffer: cfs(80),
+      subIds: { offer: "fiche-j1", club: "club-c1" },
     });
-    const url = new URL(r?.kind === "search" ? r.url : "");
-    expect(url.searchParams.get("tm_subid")).toBe("club-c1");
-    expect(url.searchParams.get("q")).toBe("Lebanon");
+    expect(new URL(r?.kind === "club" ? r.url : "").searchParams.get("tm_subid")).toBe("club-c1");
   });
 
-  it("dispo nulle part, sans nom anglais : rien", () => {
-    expect(buildWhereToBuy({ partnerOffers: [], cfs: null, cfsSearchName: null })).toBeNull();
+  it("dispo nulle part, aucun maillot du club chez CFS : rien", () => {
+    expect(buildWhereToBuy({ partnerOffers: [], cfs: null, cfsClubOffer: null })).toBeNull();
   });
 });
 
-describe("cfsClubSearchName", () => {
-  it("prend le nom de l'alias CFS du club", () => {
-    expect(cfsClubSearchName({ aliasName: "Manchester United", productName: "1999-00 Man Utd Home Shirt" })).toBe(
-      "Manchester United"
-    );
+describe("cheapestCfsOffer", () => {
+  it("compare le prix promo des uns au prix normal des autres", () => {
+    const promo = { ...cfs(90, 60), affiliateUrl: "https://a" };
+    const normal = { ...cfs(50), affiliateUrl: "https://b" };
+    expect(cheapestCfsOffer([promo, normal])?.affiliateUrl).toBe("https://b");
   });
 
-  it("sans alias, lit le club dans le nom d'un produit CFS du club (groupes CFS)", () => {
-    expect(cfsClubSearchName({ aliasName: null, productName: "2024-25 Servette Away Shirt - As New" })).toBe("Servette");
-  });
-
-  it("sans alias ni produit CFS, ne propose pas de recherche (elle ne trouverait rien)", () => {
-    expect(cfsClubSearchName({ aliasName: null, productName: null })).toBeNull();
+  it("sans offre : null", () => {
+    expect(cheapestCfsOffer([null, null])).toBeNull();
   });
 });

@@ -2267,6 +2267,7 @@
     "brand": "Marke",
     "type": "Typ",
     "findOnCFS": "Wo kaufen",
+    "cfsClubOffer": "Ein anderes Vereinstrikot ab {price} €",
     "promoCode": "Code {code}",
     "averageRating": "Durchschnittsbewertung",
     "collectorStats": "Sammlerstatistiken",

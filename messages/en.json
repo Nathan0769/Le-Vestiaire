@@ -2267,6 +2267,7 @@
     "brand": "Brand",
     "type": "Type",
     "findOnCFS": "Where to buy",
+    "cfsClubOffer": "Another club shirt from €{price}",
     "promoCode": "Code {code}",
     "averageRating": "Average rating",
     "collectorStats": "Collector statistics",

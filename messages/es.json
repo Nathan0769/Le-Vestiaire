@@ -2267,6 +2267,7 @@
     "brand": "Marca",
     "type": "Tipo",
     "findOnCFS": "Dónde comprar",
+    "cfsClubOffer": "Otra camiseta del club desde {price} €",
     "promoCode": "Código {code}",
     "averageRating": "Nota media",
     "collectorStats": "Estadísticas de coleccionistas",

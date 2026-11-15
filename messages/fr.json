@@ -2272,6 +2272,7 @@
     "brand": "Marque",
     "type": "Type",
     "findOnCFS": "Où acheter",
+    "cfsClubOffer": "Un autre maillot du club dès {price} €",
     "promoCode": "Code {code}",
     "averageRating": "Note moyenne",
     "collectorStats": "Statistiques des collectionneurs",

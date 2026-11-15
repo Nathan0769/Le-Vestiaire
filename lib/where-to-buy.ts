@@ -1,20 +1,19 @@
 import { withCfsSubId } from "@/lib/cfs-affiliate";
-import { parseCfsClub } from "@/lib/cfs-name-parser";
 import type { PartnerOffer } from "@/lib/partner-shops/offers";
-
-/** Recherche CFS affiliée, sans le terme recherché (ajouté en `&q=`). */
-export const CFS_SEARCH_BASE_URL =
-  "https://www.classicfootballshirts.co.uk/catalogsearch/result/?ref=mgi4mta&utm_source=Affiliates&utm_medium=referral&utm_campaign=Tapfiliate";
 
 export const CFS_LOGO_URL = "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/logo-app/logo-cfs.png";
 
-/**
- * Nom du club pour la recherche CFS générique : l'alias CFS, sinon le club tel
- * que CFS l'écrit dans le nom d'un de ses produits (clubs des groupes CFS, sans
- * alias). Sans l'un ni l'autre, CFS n'a rien pour ce club : pas de recherche.
- */
-export function cfsClubSearchName(input: { aliasName: string | null; productName: string | null }): string | null {
-  return input.aliasName ?? (input.productName ? parseCfsClub(input.productName) : null);
+type CfsOffer = { price: number; promoPrice: number | null; affiliateUrl: string };
+
+const effectivePrice = (o: CfsOffer) =>
+  o.promoPrice !== null && o.promoPrice < o.price ? o.promoPrice : o.price;
+
+/** Offre CFS la moins chère, promo comprise. */
+export function cheapestCfsOffer(offers: (CfsOffer | null)[]): CfsOffer | null {
+  return offers.reduce<CfsOffer | null>(
+    (best, o) => (o && (!best || effectivePrice(o) < effectivePrice(best)) ? o : best),
+    null
+  );
 }
 
 export interface WhereToBuyLink {
@@ -28,20 +27,23 @@ export interface WhereToBuyLink {
   promoCode: string | null;
 }
 
-export type WhereToBuy = { kind: "offers"; links: WhereToBuyLink[] } | { kind: "search"; url: string } | null;
+export type WhereToBuy =
+  | { kind: "offers"; links: WhereToBuyLink[] }
+  | { kind: "club"; url: string; price: number }
+  | null;
 
 /**
  * Ligne "Où acheter" de la fiche maillot (règle de Nathan) : un lien par boutique
- * qui a le maillot (CFS et partenaires côte à côte). Sans aucune dispo, une
- * recherche CFS sur le nom anglais du club ; sans nom anglais, rien (une
- * recherche sur le nom français ne trouve rien, ex. "Liban").
+ * qui a le maillot (CFS et partenaires côte à côte). Sans aucune dispo, le
+ * maillot CFS le moins cher du même club : la recherche CFS redirige vers la
+ * page du club en perdant `ref`, Tapfiliate ne comptait pas le clic (2026-11-15).
  */
 export function buildWhereToBuy(input: {
   partnerOffers: PartnerOffer[];
-  cfs: { price: number; promoPrice: number | null; affiliateUrl: string } | null;
-  cfsSearchName: string | null;
-  /** Emplacement des liens CFS (offre du maillot, recherche du club), pour Tapfiliate. */
-  subIds?: { offer: string; search: string };
+  cfs: CfsOffer | null;
+  cfsClubOffer: CfsOffer | null;
+  /** Emplacement des liens CFS (offre du maillot, autre maillot du club), pour Tapfiliate. */
+  subIds?: { offer: string; club: string };
 }): WhereToBuy {
   const tag = (url: string, subId: string | undefined) => (subId ? withCfsSubId(url, subId) : url);
   const links: WhereToBuyLink[] = input.partnerOffers.map((o) => ({
@@ -56,13 +58,13 @@ export function buildWhereToBuy(input: {
   }));
 
   if (input.cfs) {
-    const inPromo = input.cfs.promoPrice !== null && input.cfs.promoPrice < input.cfs.price;
+    const price = effectivePrice(input.cfs);
     links.push({
       shop: "cfs",
       name: "Classic Football Shirts",
       logoUrl: CFS_LOGO_URL,
-      price: inPromo ? input.cfs.promoPrice! : input.cfs.price,
-      compareAtPrice: inPromo ? input.cfs.price : null,
+      price,
+      compareAtPrice: price < input.cfs.price ? input.cfs.price : null,
       sizes: [],
       url: tag(input.cfs.affiliateUrl, input.subIds?.offer),
       promoCode: null,
@@ -72,9 +74,9 @@ export function buildWhereToBuy(input: {
   if (links.length > 0) {
     return { kind: "offers", links: links.sort((a, b) => a.price - b.price) };
   }
-  if (input.cfsSearchName) {
-    const url = `${CFS_SEARCH_BASE_URL}&q=${encodeURIComponent(input.cfsSearchName)}`;
-    return { kind: "search", url: tag(url, input.subIds?.search) };
+  if (input.cfsClubOffer) {
+    const o = input.cfsClubOffer;
+    return { kind: "club", url: tag(o.affiliateUrl, input.subIds?.club), price: effectivePrice(o) };
   }
   return null;
 }

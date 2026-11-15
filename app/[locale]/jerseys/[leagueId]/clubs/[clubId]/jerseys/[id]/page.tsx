@@ -28,7 +28,7 @@ import prisma from "@/lib/prisma";
 import { JerseyNavigator } from "@/components/jerseys/jersey-navigator";
 import { WhereToBuy } from "@/components/jerseys/where-to-buy";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
-import { buildWhereToBuy, cfsClubSearchName } from "@/lib/where-to-buy";
+import { buildWhereToBuy, cheapestCfsOffer } from "@/lib/where-to-buy";
 
 // Rendu à chaque visite : le cache ISR du catalogue coûtait plus en écritures
 // Vercel (1,23 M unités en 6 jours) qu'il ne faisait gagner sur Neon (retour
@@ -107,17 +107,25 @@ const getCachedPartnerOffers = cache(
   async (jerseyId: string) => (await getPartnerOffers([jerseyId])).get(jerseyId) ?? []
 );
 
-// Nom anglais du club chez CFS : une recherche sur le nom français ne trouve rien ("Liban").
-const getCachedCfsSearchName = cache(async (clubId: string) => {
-  const alias = await prisma.cfsClubAlias.findFirst({
-    where: { clubId },
-    orderBy: { createdAt: "asc" },
-    select: { cfsName: true },
-  });
-  const product = alias
-    ? null
-    : await prisma.cfsProduct.findFirst({ where: { jersey: { clubId } }, select: { name: true } });
-  return cfsClubSearchName({ aliasName: alias?.cfsName ?? null, productName: product?.name ?? null });
+// Maillot CFS le moins cher du club, proposé quand celui-ci n'est en vente nulle part.
+// Deux lectures (promo, prix normal) : Prisma ne trie pas sur COALESCE(promoPrice, price).
+const getCachedCfsClubOffer = cache(async (clubId: string) => {
+  const select = { price: true, promoPrice: true, affiliateUrl: true } as const;
+  const [promo, regular] = await Promise.all([
+    prisma.cfsAvailability.findFirst({
+      where: { jersey: { clubId }, promoPrice: { not: null } },
+      orderBy: { promoPrice: "asc" },
+      select,
+    }),
+    prisma.cfsAvailability.findFirst({ where: { jersey: { clubId } }, orderBy: { price: "asc" }, select }),
+  ]);
+  const toOffer = (o: typeof promo) =>
+    o && {
+      price: Number(o.price),
+      promoPrice: o.promoPrice == null ? null : Number(o.promoPrice),
+      affiliateUrl: o.affiliateUrl,
+    };
+  return cheapestCfsOffer([toOffer(promo), toOffer(regular)]);
 });
 
 const OG_LOCALES: Record<string, string> = {
@@ -328,19 +336,22 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     );
   }
 
-  const [ratingData, statsData, cfsAvailability, partnerOffers, cfsSearchName] = await Promise.all([
+  const [ratingData, statsData, cfsAvailability, partnerOffers] = await Promise.all([
     getCachedRating(jersey.id),
     getCachedStats(jersey.id),
     getCachedCfsAvailability(jersey.id),
     getCachedPartnerOffers(jersey.id),
-    getCachedCfsSearchName(jersey.club.id),
   ]);
+  // Lu seulement sans aucune offre pour ce maillot, et si le lien affilié CFS est configuré.
+  const cfsClubOffer =
+    !cfsAvailability && partnerOffers.length === 0 && process.env.NEXT_PUBLIC_AFFILIATE_LINK_CFS
+      ? await getCachedCfsClubOffer(jersey.club.id)
+      : null;
   const whereToBuy = buildWhereToBuy({
     partnerOffers,
     cfs: cfsAvailability,
-    // La recherche générique n'existe que si le lien affilié CFS est configuré.
-    cfsSearchName: process.env.NEXT_PUBLIC_AFFILIATE_LINK_CFS ? cfsSearchName : null,
-    subIds: { offer: `fiche-${jersey.id}`, search: `club-${jersey.club.id}` },
+    cfsClubOffer,
+    subIds: { offer: `fiche-${jersey.id}`, club: `club-${jersey.club.id}` },
   });
 
   const [clubJerseys, seasonLeagueEntry, seasonTrophies, seasonSquad] =

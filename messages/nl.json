@@ -2267,6 +2267,7 @@
     "brand": "Merk",
     "type": "Type",
     "findOnCFS": "Waar te kopen",
+    "cfsClubOffer": "Een ander shirt van de club vanaf € {price}",
     "promoCode": "Code {code}",
     "averageRating": "Gemiddelde beoordeling",
     "collectorStats": "Verzamelaarsstatistieken",
