@@ -2219,9 +2219,8 @@
     }
   },
   "CookieConsent": {
-    "title": "Utilização de Cookies",
-    "defaultDescription": "Utilizamos cookies para melhorar a sua experiência no Le Vestiaire. Estes cookies permitem-nos analisar a utilização do site e melhorar os nossos serviços.",
-    "acceptInfo": "Ao clicar em \"Aceitar\", aceita a utilização de cookies de análise. Os cookies essenciais permanecem ativos.",
+    "message": "Utilizamos cookies para medir a audiência e mostrar publicidade (Google AdSense).",
+    "ariaLabel": "Consentimento de cookies",
     "learnMore": "Saber mais",
     "decline": "Recusar",
     "accept": "Aceitar"

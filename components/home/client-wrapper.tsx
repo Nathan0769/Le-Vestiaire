@@ -71,10 +71,7 @@ export default function ClientWrapper({
         </AuthProvider>
       </QueryProvider>
       <Toaster position="top-right" duration={1500} richColors />
-      <CookieConsent
-        variant="default"
-        learnMoreHref="/politique-cookies"
-      />
+      <CookieConsent learnMoreHref="/politique-cookies" />
     </ThemeProvider>
     </MotionConfig>
   );

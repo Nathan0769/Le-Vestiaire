@@ -1,22 +1,12 @@
 "use client";
 
 import * as React from "react";
-import { Cookie } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { setConsent, declineConsent } from "@/lib/cookie-consent";
 
 interface CookieConsentProps extends React.HTMLAttributes<HTMLDivElement> {
-  variant?: "default" | "small" | "mini";
   demo?: boolean;
   onAcceptCallback?: () => void;
   onDeclineCallback?: () => void;
@@ -24,10 +14,16 @@ interface CookieConsentProps extends React.HTMLAttributes<HTMLDivElement> {
   learnMoreHref?: string;
 }
 
+/**
+ * Thin consent bar: full-width at the bottom on mobile (most visitors land on
+ * a jersey page from Google, the bar must not hide the photo or the price),
+ * small card in the bottom-left corner from `sm` up.
+ * Refuse and accept share the same variant and size: the CNIL requires
+ * refusing to be as easy and visible as accepting.
+ */
 const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
   (
     {
-      variant = "default",
       demo = false,
       onAcceptCallback = () => {},
       onDeclineCallback = () => {},
@@ -41,8 +37,6 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
     const t = useTranslations("CookieConsent");
     const [isOpen, setIsOpen] = React.useState(false);
     const [hide, setHide] = React.useState(false);
-
-    const defaultDescription = t("defaultDescription");
 
     const handleAccept = React.useCallback(() => {
       setIsOpen(false);
@@ -82,133 +76,56 @@ const CookieConsent = React.forwardRef<HTMLDivElement, CookieConsentProps>(
 
     if (hide) return null;
 
-    const containerClasses = cn(
-      "fixed z-50 transition-all duration-700",
-      !isOpen ? "translate-y-full opacity-0" : "translate-y-0 opacity-100",
-      className
+    return (
+      <div
+        ref={ref}
+        role="region"
+        aria-label={t("ariaLabel")}
+        className={cn(
+          "fixed inset-x-0 bottom-0 z-50 transition-all duration-700",
+          "sm:inset-x-auto sm:bottom-4 sm:left-4 sm:w-full sm:max-w-sm",
+          !isOpen ? "translate-y-full opacity-0" : "translate-y-0 opacity-100",
+          className
+        )}
+        {...props}
+      >
+        <div
+          className={cn(
+            "flex flex-col gap-2 border-t bg-card text-card-foreground shadow-lg",
+            "px-4 pt-2.5 pb-[calc(0.625rem+env(safe-area-inset-bottom))]",
+            "sm:gap-3 sm:rounded-xl sm:border sm:p-4"
+          )}
+        >
+          <p className="text-xs leading-4 text-muted-foreground sm:text-sm sm:leading-5">
+            {description || t("message")}{" "}
+            <a
+              href={learnMoreHref}
+              className="whitespace-nowrap text-foreground underline underline-offset-2 hover:no-underline"
+            >
+              {t("learnMore")}
+            </a>
+          </p>
+          <div className="flex gap-2">
+            <Button
+              onClick={handleDecline}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              {t("decline")}
+            </Button>
+            <Button
+              onClick={handleAccept}
+              variant="outline"
+              size="sm"
+              className="flex-1"
+            >
+              {t("accept")}
+            </Button>
+          </div>
+        </div>
+      </div>
     );
-
-    const commonWrapperProps = {
-      ref,
-      className: cn(
-        containerClasses,
-        variant === "mini"
-          ? "left-0 right-0 sm:left-4 bottom-4 w-full sm:max-w-3xl"
-          : "bottom-0 left-0 right-0 sm:left-4 sm:bottom-4 w-full sm:max-w-md"
-      ),
-      ...props,
-    };
-
-    if (variant === "default") {
-      return (
-        <div {...commonWrapperProps}>
-          <Card className="m-3 shadow-lg">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-lg">{t("title")}</CardTitle>
-              <Cookie className="h-5 w-5" />
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <CardDescription className="text-sm">
-                {description || defaultDescription}
-              </CardDescription>
-              <p className="text-xs text-muted-foreground">
-                {t("acceptInfo")}
-              </p>
-              <a
-                href={learnMoreHref}
-                className="text-xs text-primary underline underline-offset-4 hover:no-underline"
-              >
-                {t("learnMore")}
-              </a>
-            </CardContent>
-            <CardFooter className="flex gap-2 pt-2">
-              <Button
-                onClick={handleDecline}
-                variant="secondary"
-                className="flex-1 cursor-pointer"
-              >
-                {t("decline")}
-              </Button>
-              <Button onClick={handleAccept} className="flex-1 cursor-pointer">
-                {t("accept")}
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-      );
-    }
-
-    if (variant === "small") {
-      return (
-        <div {...commonWrapperProps}>
-          <Card className="m-3 shadow-lg">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 h-0 px-4">
-              <CardTitle className="text-base">
-                {t("title")}
-              </CardTitle>
-              <Cookie className="h-4 w-4" />
-            </CardHeader>
-            <CardContent className="pt-0 pb-2 px-4">
-              <CardDescription className="text-sm">
-                {description || defaultDescription}
-              </CardDescription>
-            </CardContent>
-            <CardFooter className="flex gap-2 h-0 py-2 px-4">
-              <Button
-                onClick={handleDecline}
-                variant="secondary"
-                size="sm"
-                className="flex-1 rounded-full cursor-pointer"
-              >
-                {t("decline")}
-              </Button>
-              <Button
-                onClick={handleAccept}
-                size="sm"
-                className="flex-1 rounded-full cursor-pointer"
-              >
-                {t("accept")}
-              </Button>
-            </CardFooter>
-          </Card>
-        </div>
-      );
-    }
-
-    if (variant === "mini") {
-      return (
-        <div {...commonWrapperProps}>
-          <Card className="mx-3 p-0 py-3 shadow-lg">
-            <CardContent className="sm:flex grid gap-4 p-0 px-3.5">
-              <CardDescription className="text-xs sm:text-sm flex-1">
-                {description || defaultDescription}
-              </CardDescription>
-              <div className="flex items-center gap-2 justify-end sm:gap-3">
-                <Button
-                  onClick={handleDecline}
-                  size="sm"
-                  variant="secondary"
-                  className="text-xs h-7 cursor-pointer"
-                >
-                  {t("decline")}
-                  <span className="sr-only sm:hidden">{t("decline")}</span>
-                </Button>
-                <Button
-                  onClick={handleAccept}
-                  size="sm"
-                  className="text-xs h-7 cursor-pointer"
-                >
-                  {t("accept")}
-                  <span className="sr-only sm:hidden">{t("accept")}</span>
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      );
-    }
-
-    return null;
   }
 );
 
