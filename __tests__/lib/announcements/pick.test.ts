@@ -14,7 +14,7 @@ const now = new Date("2026-12-10T10:00:00Z");
 const member = { createdAt: new Date("2026-01-01"), isAdmin: false };
 const web = { kind: "web" } as const;
 const pick = (over: Partial<Parameters<typeof pickAnnouncement>[0]> = {}) =>
-  pickAnnouncement({ catalog, now, user: member, seenIds: new Set(), platform: web, ...over })?.id ?? null;
+  pickAnnouncement({ catalog, now, user: member, seenIds: new Set(), platform: web, locale: "fr", ...over })?.id ?? null;
 
 describe("pickAnnouncement", () => {
   it("montre la plus récente annonce publiée et pas encore vue", () => {
@@ -48,6 +48,28 @@ describe("pickAnnouncement", () => {
 
   it("iOS sans version connue : rien d'exigeant une version", () => {
     expect(pick({ platform: { kind: "ios", version: null }, seenIds: new Set(["old"]) })).toBeNull();
+  });
+
+  describe("annonce réservée à une langue et à l'app", () => {
+    const appDe = ann("app-de", "2026-12-08", { minIosVersion: "1.7.1", locales: ["de"], platforms: ["ios"] });
+    const ios = { kind: "ios", version: "1.7.1" } as const;
+    const withDe = (over: Partial<Parameters<typeof pickAnnouncement>[0]> = {}) => pick({ catalog: [...catalog, appDe], ...over });
+
+    it("montrée à l'app en allemand", () => {
+      expect(withDe({ platform: ios, locale: "de" })).toBe("app-de");
+    });
+
+    it("dans une autre langue, ne cache pas l'annonce précédente", () => {
+      expect(withDe({ platform: ios, locale: "fr" })).toBe("noel");
+    });
+
+    it("app pas encore à jour, ne cache pas l'annonce précédente", () => {
+      expect(withDe({ platform: { kind: "ios", version: "1.7" }, locale: "de" })).toBe("noel");
+    });
+
+    it("sur le web, ne cache pas l'annonce précédente", () => {
+      expect(withDe({ locale: "de" })).toBe("noel");
+    });
   });
 });
 

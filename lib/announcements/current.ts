@@ -39,6 +39,7 @@ export async function getCurrentAnnouncement(
     user: { createdAt: new Date(user.createdAt), isAdmin: user.role === "admin" || user.role === "superadmin" },
     seenIds: new Set(seen.map((s) => s.announcementId)),
     platform,
+    locale,
   });
   if (!announcement) return null;
 

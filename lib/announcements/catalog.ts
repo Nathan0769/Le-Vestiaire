@@ -26,4 +26,24 @@ export const ANNOUNCEMENTS: Announcement[] = [
       },
     ],
   },
+  {
+    id: "2026-12-app-de",
+    // App en allemand (iOS 1.7.1) ; le web était déjà traduit. minIosVersion la
+    // retient jusqu'à la mise à jour, d'où une date au jour de l'écriture.
+    publishedAt: "2026-11-17",
+    minIosVersion: "1.7.1",
+    locales: ["de"],
+    platforms: ["ios"],
+    ctaTarget: "wishlist",
+    cards: [
+      {
+        key: "main",
+        items: [
+          { key: "language", icon: "shirt" },
+          { key: "shop", icon: "tag" },
+          { key: "gift", icon: "gift" },
+        ],
+      },
+    ],
+  },
 ];

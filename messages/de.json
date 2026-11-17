@@ -3619,6 +3619,29 @@
           }
         }
       }
+    },
+    "2026-12-app-de": {
+      "cta": "Meine Wunschliste ansehen",
+      "cards": {
+        "main": {
+          "title": "Le Vestiaire spricht jetzt Deutsch",
+          "text": "Die ganze App ist übersetzt, dazu gibt es Neues für deine Wunschliste.",
+          "items": {
+            "language": {
+              "title": "Alles auf Deutsch",
+              "text": "Sammlung, Wunschliste, Erfolge, Rangliste: Jeder Bildschirm ist jetzt übersetzt."
+            },
+            "shop": {
+              "title": "Direkt zum Shop",
+              "text": "Tippe in deiner Wunschliste auf den Preis, um das Trikot in deiner Größe im Shop zu öffnen."
+            },
+            "gift": {
+              "title": "Geschenkinfos sofort",
+              "text": "Gleich nach dem Hinzufügen gibst du Größe, Version und Beflockung an."
+            }
+          }
+        }
+      }
     }
   }
 }

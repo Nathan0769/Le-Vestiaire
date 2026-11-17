@@ -1,4 +1,5 @@
 import { compareVersions } from "@/lib/app-version";
+import type { Locale } from "@/i18n/locales";
 
 /**
  * Annonces de nouveautés : qui voit quelle annonce. Pur, testé.
@@ -29,6 +30,10 @@ export interface Announcement {
   publishedAt: string;
   /** Version iOS qui contient la nouveauté ; absente = toutes. */
   minIosVersion?: string;
+  /** Langues qui la voient ; absente = toutes. */
+  locales?: Locale[];
+  /** Plateformes qui la voient ; absente = web et iOS. */
+  platforms?: AnnouncementPlatform["kind"][];
   ctaTarget: AnnouncementTarget;
   cards: AnnouncementCard[];
 }
@@ -58,10 +63,16 @@ export function pickAnnouncement(input: {
   user: { createdAt: Date; isAdmin: boolean };
   seenIds: Set<string>;
   platform: AnnouncementPlatform;
+  locale: Locale;
 }): Announcement | null {
   const { now, user } = input;
   const candidates = input.catalog
     .filter((a) => {
+      // Écartée avant le tri : une annonce ciblée, ou pas encore dans cette version
+      // de l'app, ne cache pas la précédente.
+      if (a.locales && !a.locales.includes(input.locale)) return false;
+      if (a.platforms && !a.platforms.includes(input.platform.kind)) return false;
+      if (!iosAllows(a, input.platform)) return false;
       const published = publishedDate(a);
       const isLive = published <= now;
       if (!isLive && !user.isAdmin) return false;
@@ -71,7 +82,7 @@ export function pickAnnouncement(input: {
     .sort((a, b) => publishedDate(b).getTime() - publishedDate(a).getTime());
 
   const latest = candidates[0];
-  if (!latest || input.seenIds.has(latest.id) || !iosAllows(latest, input.platform)) return null;
+  if (!latest || input.seenIds.has(latest.id)) return null;
   return latest;
 }
 
