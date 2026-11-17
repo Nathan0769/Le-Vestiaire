@@ -1090,6 +1090,7 @@
       "at": "at {shop}",
       "createdWith": "List made with Le Vestiaire",
       "otherSizes": "in {sizes}",
+      "cfsClubOffer": "Another club shirt at CFS from {price}",
       "og": {
         "title": {
           "christmas": "{name}'s Christmas list",

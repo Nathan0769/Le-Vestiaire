@@ -5,6 +5,8 @@ import { shareOwnerName } from "@/lib/share-owner-name";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
 import { cfsOfferInput, wishlistOffers, type WishlistOffer } from "@/lib/wishlist-offers";
 import { getR2PresignedUrl, AVATARS_BUCKET } from "@/lib/r2-storage";
+import { getCfsClubOffers } from "@/lib/cfs-club-offer";
+import { buildWhereToBuy, type CfsOffer } from "@/lib/where-to-buy";
 
 /**
  * Partage vivant d'une wishlist (`/w/{id}`) : le lien lit la wishlist en
@@ -123,6 +125,11 @@ export interface PublicShareItem {
     club: { id: string; name: string; shortName: string; logoUrl: string; leagueId: string };
   };
   offers: WishlistOffer[];
+  /**
+   * Sans aucune offre : le maillot CFS le moins cher du même club (lien affilié
+   * marqué `share-<jerseyId>`), comme la fiche maillot. Null sinon.
+   */
+  cfsClubOffer: { url: string; price: number } | null;
   /** Prénom du proche qui l'offre ; toujours null pour le propriétaire (surprise). */
   reservedBy: string | null;
 }
@@ -195,6 +202,31 @@ export async function getPublicShare(shareId: string, viewerId: string | null): 
   const partnerOffers = await getPartnerOffers(items.map((i) => i.jerseyId));
   const avatarUrl = share.user.avatar ? await getR2PresignedUrl(AVATARS_BUCKET, share.user.avatar, 60 * 60) : null;
 
+  const offersOf = new Map(
+    items.map((item) => {
+      const av = item.jersey.cfsAvailability;
+      return [
+        item.id,
+        wishlistOffers({
+          cfs: av ? cfsOfferInput(av, `share-${item.jerseyId}`) : null,
+          partnerOffers: partnerOffers.get(item.jerseyId) ?? [],
+          size: item.size,
+        }),
+      ] as const;
+    })
+  );
+  // Une seule lecture pour tous les clubs dont un maillot n'a aucune offre ; seulement
+  // si le lien affilié CFS est configuré (même règle que la fiche maillot).
+  // Une envie en vente chez CFS hors de la taille voulue n'est pas « un autre maillot du club ».
+  const withoutOffer = items.filter((i) => offersOf.get(i.id)?.length === 0);
+  const clubOffers =
+    withoutOffer.length > 0 && process.env.NEXT_PUBLIC_AFFILIATE_LINK_CFS
+      ? await getCfsClubOffers(
+          withoutOffer.map((i) => i.jersey.club.id),
+          withoutOffer.filter((i) => i.jersey.cfsAvailability).map((i) => i.jerseyId)
+        )
+      : new Map<string, CfsOffer>();
+
   return {
     id: share.id,
     theme: (SHARE_THEMES as readonly string[]).includes(share.theme) ? (share.theme as Theme) : "default",
@@ -203,7 +235,17 @@ export async function getPublicShare(shareId: string, viewerId: string | null): 
     owner: { username: share.user.username, avatarUrl },
     viewerIsOwner,
     items: items.map((item) => {
-      const { cfsAvailability: av, ...jersey } = item.jersey;
+      const { cfsAvailability: _av, ...jersey } = item.jersey;
+      const offers = offersOf.get(item.id) ?? [];
+      const clubLink =
+        offers.length === 0
+          ? buildWhereToBuy({
+              partnerOffers: [],
+              cfs: null,
+              cfsClubOffer: clubOffers.get(jersey.club.id) ?? null,
+              subIds: { offer: `share-${item.jerseyId}`, club: `share-${item.jerseyId}` },
+            })
+          : null;
       return {
         wishlistId: item.id,
         favorite: item.priority >= 2,
@@ -212,11 +254,8 @@ export async function getPublicShare(shareId: string, viewerId: string | null): 
         flockName: item.flockName,
         flockNumber: item.flockNumber,
         jersey: { ...jersey, variant: jersey.variant ?? 1 },
-        offers: wishlistOffers({
-          cfs: av ? cfsOfferInput(av, `share-${item.jerseyId}`) : null,
-          partnerOffers: partnerOffers.get(item.jerseyId) ?? [],
-          size: item.size,
-        }),
+        offers,
+        cfsClubOffer: clubLink?.kind === "club" ? { url: clubLink.url, price: clubLink.price } : null,
         reservedBy: viewerIsOwner ? null : (item.reservation?.name ?? null),
       };
     }),

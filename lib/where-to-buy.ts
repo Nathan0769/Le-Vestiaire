@@ -3,7 +3,7 @@ import type { PartnerOffer } from "@/lib/partner-shops/offers";
 
 export const CFS_LOGO_URL = "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/logo-app/logo-cfs.png";
 
-type CfsOffer = { price: number; promoPrice: number | null; affiliateUrl: string };
+export type CfsOffer = { price: number; promoPrice: number | null; affiliateUrl: string };
 
 const effectivePrice = (o: CfsOffer) =>
   o.promoPrice !== null && o.promoPrice < o.price ? o.promoPrice : o.price;
@@ -14,6 +14,16 @@ export function cheapestCfsOffer(offers: (CfsOffer | null)[]): CfsOffer | null {
     (best, o) => (o && (!best || effectivePrice(o) < effectivePrice(best)) ? o : best),
     null
   );
+}
+
+/** Offre CFS la moins chère de chaque club, à partir des offres de ses maillots. */
+export function cheapestCfsOfferByClub(rows: (CfsOffer & { clubId: string })[]): Map<string, CfsOffer> {
+  const byClub = new Map<string, CfsOffer>();
+  for (const { clubId, ...offer } of rows) {
+    const best = cheapestCfsOffer([byClub.get(clubId) ?? null, offer]);
+    if (best) byClub.set(clubId, best);
+  }
+  return byClub;
 }
 
 export interface WhereToBuyLink {

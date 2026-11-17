@@ -1090,6 +1090,7 @@
       "at": "bij {shop}",
       "createdWith": "Lijst gemaakt met Le Vestiaire",
       "otherSizes": "in {sizes}",
+      "cfsClubOffer": "Een ander shirt van de club bij CFS vanaf {price}",
       "og": {
         "title": {
           "christmas": "Kerstlijst van {name}",

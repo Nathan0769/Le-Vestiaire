@@ -1090,6 +1090,7 @@
       "at": "en {shop}",
       "createdWith": "Lista creada con Le Vestiaire",
       "otherSizes": "en {sizes}",
+      "cfsClubOffer": "Otra camiseta del club en CFS desde {price}",
       "og": {
         "title": {
           "christmas": "La lista de Navidad de {name}",

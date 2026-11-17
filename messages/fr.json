@@ -1095,6 +1095,7 @@
       "at": "chez {shop}",
       "createdWith": "Liste créée avec Le Vestiaire",
       "otherSizes": "en {sizes}",
+      "cfsClubOffer": "Un autre maillot du club chez CFS dès {price}",
       "og": {
         "title": {
           "christmas": "La liste de Noël de {name}",

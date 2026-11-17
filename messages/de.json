@@ -1090,6 +1090,7 @@
       "at": "bei {shop}",
       "createdWith": "Liste erstellt mit Le Vestiaire",
       "otherSizes": "in {sizes}",
+      "cfsClubOffer": "Ein anderes Vereinstrikot bei CFS ab {price}",
       "og": {
         "title": {
           "christmas": "Weihnachtsliste von {name}",

@@ -28,7 +28,8 @@ import prisma from "@/lib/prisma";
 import { JerseyNavigator } from "@/components/jerseys/jersey-navigator";
 import { WhereToBuy } from "@/components/jerseys/where-to-buy";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
-import { buildWhereToBuy, cheapestCfsOffer } from "@/lib/where-to-buy";
+import { buildWhereToBuy } from "@/lib/where-to-buy";
+import { getCfsClubOffer } from "@/lib/cfs-club-offer";
 
 // Rendu à chaque visite : le cache ISR du catalogue coûtait plus en écritures
 // Vercel (1,23 M unités en 6 jours) qu'il ne faisait gagner sur Neon (retour
@@ -107,26 +108,7 @@ const getCachedPartnerOffers = cache(
   async (jerseyId: string) => (await getPartnerOffers([jerseyId])).get(jerseyId) ?? []
 );
 
-// Maillot CFS le moins cher du club, proposé quand celui-ci n'est en vente nulle part.
-// Deux lectures (promo, prix normal) : Prisma ne trie pas sur COALESCE(promoPrice, price).
-const getCachedCfsClubOffer = cache(async (clubId: string) => {
-  const select = { price: true, promoPrice: true, affiliateUrl: true } as const;
-  const [promo, regular] = await Promise.all([
-    prisma.cfsAvailability.findFirst({
-      where: { jersey: { clubId }, promoPrice: { not: null } },
-      orderBy: { promoPrice: "asc" },
-      select,
-    }),
-    prisma.cfsAvailability.findFirst({ where: { jersey: { clubId } }, orderBy: { price: "asc" }, select }),
-  ]);
-  const toOffer = (o: typeof promo) =>
-    o && {
-      price: Number(o.price),
-      promoPrice: o.promoPrice == null ? null : Number(o.promoPrice),
-      affiliateUrl: o.affiliateUrl,
-    };
-  return cheapestCfsOffer([toOffer(promo), toOffer(regular)]);
-});
+const getCachedCfsClubOffer = cache(getCfsClubOffer);
 
 const OG_LOCALES: Record<string, string> = {
   fr: "fr_FR",

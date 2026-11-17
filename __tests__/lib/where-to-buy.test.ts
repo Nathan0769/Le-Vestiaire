@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildWhereToBuy, cheapestCfsOffer } from "@/lib/where-to-buy";
+import { buildWhereToBuy, cheapestCfsOffer, cheapestCfsOfferByClub } from "@/lib/where-to-buy";
 import type { PartnerOffer } from "@/lib/partner-shops/offers";
 
 const parc = (price: number): PartnerOffer => ({
@@ -104,5 +104,22 @@ describe("cheapestCfsOffer", () => {
 
   it("sans offre : null", () => {
     expect(cheapestCfsOffer([null, null])).toBeNull();
+  });
+});
+
+describe("cheapestCfsOfferByClub", () => {
+  it("garde par club l'offre la moins chère, promo comprise", () => {
+    const rows = [
+      { clubId: "psg", ...cfs(90, 60), affiliateUrl: "https://psg-promo" },
+      { clubId: "psg", ...cfs(70), affiliateUrl: "https://psg-normal" },
+      { clubId: "om", ...cfs(80), affiliateUrl: "https://om" },
+    ];
+    const byClub = cheapestCfsOfferByClub(rows);
+    expect(byClub.get("psg")?.affiliateUrl).toBe("https://psg-promo");
+    expect(byClub.get("om")?.affiliateUrl).toBe("https://om");
+  });
+
+  it("club sans ligne : absent", () => {
+    expect(cheapestCfsOfferByClub([]).has("psg")).toBe(false);
   });
 });

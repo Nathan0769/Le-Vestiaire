@@ -188,6 +188,17 @@ export default function LiveSharedWishlist({ share }: { share: PublicShare }) {
                         <ExternalLink className="w-3.5 h-3.5 text-gray-500" />
                       </a>
                     )}
+                    {!best && item.cfsClubOffer && (
+                      <a
+                        href={item.cfsClubOffer.url}
+                        target="_blank"
+                        rel="noopener noreferrer sponsored"
+                        className="flex items-center justify-between gap-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 hover:bg-gray-50 cursor-pointer"
+                      >
+                        <span>{t("cfsClubOffer", { price: formatMoney(item.cfsClubOffer.price, "EUR", locale) })}</span>
+                        <ExternalLink className="w-3.5 h-3.5 shrink-0 text-gray-500" />
+                      </a>
+                    )}
                     {!share.viewerIsOwner && tokens !== null && (
                       <GiftReservationButton
                         key={`${item.wishlistId}-${tokens[item.wishlistId] ?? ""}`}
