@@ -13,7 +13,7 @@ const row = (over: Partial<PromoAlertRow>): PromoAlertRow => ({
 describe("selectPromoAlerts", () => {
   it("retient une promo jamais notifiée", () => {
     const { byUser } = selectPromoAlerts([row({})]);
-    expect(byUser.get("u1")).toEqual({ count: 1, maxSaving: 20, wishlistIds: ["w1"], prices: { w1: 70 } });
+    expect(byUser.get("u1")).toEqual({ count: 1, maxSaving: 20, wishlistIds: ["w1"], topWishlistId: "w1", prices: { w1: 70 } });
   });
 
   it("ignore une promo déjà notifiée au même prix ou moins bas", () => {
@@ -38,6 +38,14 @@ describe("selectPromoAlerts", () => {
       row({ wishlistId: "w2", bestPrice: 50, comparePrice: 85 }),
     ]);
     expect(byUser.get("u1")).toMatchObject({ count: 2, maxSaving: 35, wishlistIds: ["w1", "w2"] });
+  });
+
+  it("retient l'envie à la plus grosse économie, pour la nommer dans le push", () => {
+    const { byUser } = selectPromoAlerts([
+      row({ wishlistId: "w1", bestPrice: 50, comparePrice: 85 }),
+      row({ wishlistId: "w2", bestPrice: 70, comparePrice: 90 }),
+    ]);
+    expect(byUser.get("u1")?.topWishlistId).toBe("w1");
   });
 
   it("sépare les utilisateurs", () => {

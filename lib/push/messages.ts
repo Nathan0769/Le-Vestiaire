@@ -106,57 +106,33 @@ export function buildPushMessage(
 
 interface PromoText {
   title: string;
-  /** `{saving}` = plus grosse économie, déjà formatée dans la devise du compte. */
+  /** `{jersey}` = maillot à la plus grosse économie, `{saving}` = cette économie, déjà formatée. */
   one: string;
-  /** `{count}` maillots en promo, `{saving}` comme ci-dessus. */
-  many: string;
+  /** Ajouté quand une seule autre promo l'accompagne. */
+  othersOne: string;
+  /** Ajouté quand `{n}` autres promos l'accompagnent. */
+  othersMany: string;
 }
 
-// Alerte quotidienne « promo sur ta wishlist » (cron wishlist-promos).
+// Alerte quotidienne « promo sur ta wishlist » (cron wishlist-promos) : le maillot est nommé.
 const PROMO_TEXTS: Record<Locale, PromoText> = {
-  fr: {
-    title: "Promo sur ta wishlist",
-    one: "Un maillot de ta wishlist est en promo : -{saving}",
-    many: "{count} maillots de ta wishlist sont en promo, jusqu'à -{saving}",
-  },
-  en: {
-    title: "Wishlist sale",
-    one: "A jersey on your wishlist is on sale: {saving} off",
-    many: "{count} jerseys on your wishlist are on sale, up to {saving} off",
-  },
-  es: {
-    title: "Oferta en tu wishlist",
-    one: "Una camiseta de tu wishlist está en oferta: -{saving}",
-    many: "{count} camisetas de tu wishlist están en oferta, hasta -{saving}",
-  },
-  de: {
-    title: "Angebot auf deiner Wunschliste",
-    one: "Ein Trikot auf deiner Wunschliste ist reduziert: -{saving}",
-    many: "{count} Trikots auf deiner Wunschliste sind reduziert, bis zu -{saving}",
-  },
-  pt: {
-    title: "Promoção na tua wishlist",
-    one: "Uma camisola da tua wishlist está em promoção: -{saving}",
-    many: "{count} camisolas da tua wishlist estão em promoção, até -{saving}",
-  },
-  nl: {
-    title: "Aanbieding op je wishlist",
-    one: "Een shirt op je wishlist is in de aanbieding: -{saving}",
-    many: "{count} shirts op je wishlist zijn in de aanbieding, tot -{saving}",
-  },
-  it: {
-    title: "Offerta nella tua wishlist",
-    one: "Una maglia della tua wishlist è in offerta: -{saving}",
-    many: "{count} maglie della tua wishlist sono in offerta, fino a -{saving}",
-  },
+  fr: { title: "Promo sur ta wishlist", one: "{jersey}\u00a0: -{saving}", othersOne: ", et 1 autre maillot", othersMany: ", et {n} autres maillots" },
+  en: { title: "Wishlist sale", one: "{jersey}: {saving} off", othersOne: ", and 1 more", othersMany: ", and {n} more" },
+  es: { title: "Oferta en tu wishlist", one: "{jersey}: -{saving}", othersOne: " y 1 más", othersMany: " y {n} más" },
+  de: { title: "Angebot auf deiner Wunschliste", one: "{jersey}: -{saving}", othersOne: " und 1 weiteres", othersMany: " und {n} weitere" },
+  pt: { title: "Promoção na tua wishlist", one: "{jersey}: -{saving}", othersOne: " e mais 1", othersMany: " e mais {n}" },
+  nl: { title: "Aanbieding op je wishlist", one: "{jersey}: -{saving}", othersOne: " en nog 1", othersMany: " en nog {n}" },
+  it: { title: "Offerta nella tua wishlist", one: "{jersey}: -{saving}", othersOne: " e un'altra", othersMany: " e altre {n}" },
 };
 
 export function buildWishlistPromoMessage(
   count: number,
   saving: string,
   locale: string | null | undefined,
+  jersey: string,
 ): { title: string; body: string } {
   const text = PROMO_TEXTS[locale && isLocale(locale) ? locale : defaultLocale];
-  const body = (count === 1 ? text.one : text.many).replace("{count}", String(count)).replace("{saving}", saving);
-  return { title: text.title, body };
+  const others = count - 1;
+  const tail = others <= 0 ? "" : others === 1 ? text.othersOne : text.othersMany.replace("{n}", String(others));
+  return { title: text.title, body: text.one.replace("{jersey}", jersey).replace("{saving}", saving) + tail };
 }

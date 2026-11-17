@@ -40,18 +40,28 @@ describe("buildPushMessage", () => {
 });
 
 describe("buildWishlistPromoMessage", () => {
-  it("résume plusieurs promos avec la plus grosse économie", () => {
-    expect(buildWishlistPromoMessage(3, "25 €", "fr")).toEqual({
+  const jersey = "Maillot Domicile Liverpool 2025-26";
+
+  it("nomme le maillot et son économie pour une seule promo", () => {
+    expect(buildWishlistPromoMessage(1, "48 €", "fr", jersey)).toEqual({
       title: "Promo sur ta wishlist",
-      body: "3 maillots de ta wishlist sont en promo, jusqu'à -25 €",
+      body: "Maillot Domicile Liverpool 2025-26\u00a0: -48 €",
     });
   });
 
-  it("passe au singulier pour une seule promo", () => {
-    expect(buildWishlistPromoMessage(1, "£20", "en").body).toBe("A jersey on your wishlist is on sale: £20 off");
+  it("compte les autres promos au singulier", () => {
+    expect(buildWishlistPromoMessage(2, "48 €", "fr", jersey).body).toBe(
+      "Maillot Domicile Liverpool 2025-26\u00a0: -48 €, et 1 autre maillot"
+    );
+  });
+
+  it("compte les autres promos au pluriel", () => {
+    expect(buildWishlistPromoMessage(3, "£40", "en", "Liverpool Home Jersey 2025-26").body).toBe(
+      "Liverpool Home Jersey 2025-26: £40 off, and 2 more"
+    );
   });
 
   it("retombe sur le français pour une langue inconnue", () => {
-    expect(buildWishlistPromoMessage(2, "10 €", "ja").title).toBe("Promo sur ta wishlist");
+    expect(buildWishlistPromoMessage(2, "10 €", "ja", jersey).title).toBe("Promo sur ta wishlist");
   });
 });

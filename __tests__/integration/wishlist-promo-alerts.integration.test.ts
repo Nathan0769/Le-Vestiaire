@@ -3,13 +3,14 @@ import type { JerseyType, User } from "@prisma/client";
 import { prismaTest } from "@/__tests__/helpers/db";
 import { createTestUser, createTestLeague, createTestClub, createTestJersey } from "@/__tests__/helpers/fixtures";
 import { runWishlistPromoAlerts } from "@/lib/wishlist-promo-alerts-run";
+import { pushForNotification } from "@/lib/push/notify";
 import "@/__tests__/setup.integration";
 
 vi.mock("@/lib/push/notify", () => ({ pushForNotification: vi.fn() }));
 vi.mock("@/lib/fx", () => ({ getRatesToEur: vi.fn().mockResolvedValue({ EUR: 1 }) }));
 
-async function jerseyOnSale(clubId: string, type: JerseyType, price: number, promoPrice: number | null) {
-  const jersey = await createTestJersey(clubId, { type });
+async function jerseyOnSale(clubId: string, type: JerseyType, price: number, promoPrice: number | null, name?: string) {
+  const jersey = await createTestJersey(clubId, { type, ...(name ? { name } : {}) });
   await prismaTest.cfsAvailability.create({
     data: {
       jerseyId: jersey.id,
@@ -34,7 +35,7 @@ describe("alertes promo wishlist", () => {
     const league = await createTestLeague();
     const club = await createTestClub(league.id);
     const a = await jerseyOnSale(club.id, "HOME", 90, 70);
-    const b = await jerseyOnSale(club.id, "AWAY", 85, 50);
+    const b = await jerseyOnSale(club.id, "AWAY", 85, 50, "Maillot Extérieur Test 2025-26");
     await prismaTest.wishlist.createMany({
       data: [
         { userId: user.id, jerseyId: a.id },
@@ -47,6 +48,14 @@ describe("alertes promo wishlist", () => {
     await run();
     const notifications = await prismaTest.notification.findMany({ where: { userId: user.id, type: "WISHLIST_PROMO" } });
     expect(notifications).toHaveLength(1);
+  });
+
+  it("nomme dans le push le maillot à la plus grosse économie", async () => {
+    vi.mocked(pushForNotification).mockClear();
+    await run();
+    const input = vi.mocked(pushForNotification).mock.calls[0][0];
+    // Premier passage : la plus petite promo est rendue silencieuse, une seule est annoncée.
+    expect(input.message?.("fr").body).toMatch(/^Maillot Extérieur Test 2025-26\u00a0: -35\s€$/u);
   });
 
   it("ne renvoie pas la même promo le lendemain", async () => {

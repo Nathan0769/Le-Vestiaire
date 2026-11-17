@@ -33,6 +33,8 @@ export interface UserPromoAlert {
   count: number;
   maxSaving: number;
   wishlistIds: string[];
+  /** Envie à la plus grosse économie : c'est elle que le push nomme. */
+  topWishlistId: string;
   /** Prix à enregistrer comme notifié, par envie. */
   prices: Record<string, number>;
 }
@@ -69,9 +71,12 @@ export function selectPromoAlerts(
     if (r.notifiedPrice !== null && r.bestPrice > r.notifiedPrice - PROMO_MIN_EXTRA_DROP_EUR) continue;
     if (inCooldown(r.userId)) continue;
 
-    const alert = byUser.get(r.userId) ?? { count: 0, maxSaving: 0, wishlistIds: [], prices: {} };
+    const alert = byUser.get(r.userId) ?? { count: 0, maxSaving: 0, wishlistIds: [], topWishlistId: r.wishlistId, prices: {} };
     alert.count += 1;
-    alert.maxSaving = Math.max(alert.maxSaving, saving);
+    if (saving > alert.maxSaving) {
+      alert.maxSaving = saving;
+      alert.topWishlistId = r.wishlistId;
+    }
     alert.wishlistIds.push(r.wishlistId);
     alert.prices[r.wishlistId] = r.bestPrice;
     byUser.set(r.userId, alert);

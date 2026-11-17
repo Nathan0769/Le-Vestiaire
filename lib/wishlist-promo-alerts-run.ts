@@ -5,6 +5,17 @@ import { selectPromoAlerts, silenceSmallerHalfAtLaunch, type PromoAlertRow } fro
 import { createNotification } from "@/lib/notifications/create";
 import { pushForNotification } from "@/lib/push/notify";
 import { buildWishlistPromoMessage } from "@/lib/push/messages";
+import { translateJerseyName } from "@/lib/translate-jersey-name";
+import { jerseyTypeLabel } from "@/lib/jersey-utils";
+import { defaultLocale, isLocale, type Locale } from "@/i18n/locales";
+import type { JerseyType } from "@/types/jersey";
+import fr from "@/messages/fr.json";
+import en from "@/messages/en.json";
+import es from "@/messages/es.json";
+import de from "@/messages/de.json";
+import pt from "@/messages/pt.json";
+import nl from "@/messages/nl.json";
+import it from "@/messages/it.json";
 import { getRatesToEur } from "@/lib/fx";
 import { formatMoney } from "@/lib/format-money";
 import { DEFAULT_CURRENCY, fromEur, isSupportedCurrency } from "@/lib/currency";
@@ -37,7 +48,14 @@ export async function runWishlistPromoAlerts(
       size: true,
       promoNotifiedPrice: true,
       jersey: {
-        select: { cfsAvailability: { select: { price: true, promoPrice: true, affiliateUrl: true, sizeOffers: true } } },
+        select: {
+          name: true,
+          type: true,
+          season: true,
+          variant: true,
+          club: { select: { shortName: true } },
+          cfsAvailability: { select: { price: true, promoPrice: true, affiliateUrl: true, sizeOffers: true } },
+        },
       },
     },
   });
@@ -106,6 +124,7 @@ export async function runWishlistPromoAlerts(
   const currencyOf = new Map(users.map((u) => [u.id, u.currency]));
   const rates = await getRatesToEur();
 
+  const itemById = new Map(items.map((i) => [i.id, i]));
   let notified = 0;
   for (const [userId, alert] of byUser) {
     try {
@@ -120,6 +139,7 @@ export async function runWishlistPromoAlerts(
       const currency = stored && isSupportedCurrency(stored) ? stored : DEFAULT_CURRENCY;
       const saving = fromEur(alert.maxSaving, currency, rates) ?? alert.maxSaving;
 
+      const top = itemById.get(alert.topWishlistId);
       const notification = await createNotification({ userId, type: "WISHLIST_PROMO" });
       if (!notification) continue;
 
@@ -127,7 +147,12 @@ export async function runWishlistPromoAlerts(
         recipientId: userId,
         type: "WISHLIST_PROMO",
         message: (locale) =>
-          buildWishlistPromoMessage(alert.count, formatMoney(saving, currency, locale ?? "fr"), locale),
+          buildWishlistPromoMessage(
+            alert.count,
+            formatMoney(saving, currency, locale ?? "fr"),
+            locale,
+            top ? promoJerseyName(top.jersey, locale) : ""
+          ),
       });
       notified += 1;
     } catch (err) {
@@ -136,4 +161,23 @@ export async function runWishlistPromoAlerts(
   }
 
   return { notified, reset: toReset.length, silencedAtLaunch };
+}
+
+const TYPE_LABELS: Record<Locale, Record<string, string>> = {
+  fr: fr.JerseyType, en: en.JerseyType, es: es.JerseyType, de: de.JerseyType,
+  pt: pt.JerseyType, nl: nl.JerseyType, it: it.JerseyType,
+};
+
+/** Nom du maillot dans la langue de l'appareil (même règle que les pages du catalogue). */
+function promoJerseyName(
+  jersey: { name: string; type: string; season: string; variant: number; club: { shortName: string } },
+  locale: string | null
+): string {
+  const lang: Locale = locale && isLocale(locale) ? locale : defaultLocale;
+  const type = jersey.type as JerseyType;
+  return translateJerseyName({
+    jersey: { name: jersey.name, type, season: jersey.season, clubShortName: jersey.club.shortName },
+    locale: lang,
+    typeTranslation: jerseyTypeLabel(TYPE_LABELS[lang][type] ?? type, type, jersey.variant),
+  });
 }
