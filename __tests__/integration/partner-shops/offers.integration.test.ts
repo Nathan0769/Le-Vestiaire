@@ -91,7 +91,7 @@ describe("getPartnerOffers", () => {
         price: 49.99,
         compareAtPrice: 90,
         sizes: ["S", "XL"],
-        url: "https://leparcamaillots.com/products/p1?utm_source=levestiaire&utm_medium=referral",
+        url: "https://leparcamaillots.com/products/p1?dt_id=3660554&utm_source=levestiaire&utm_medium=referral",
         promoCode: null,
       },
     ]);

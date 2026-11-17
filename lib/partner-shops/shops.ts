@@ -2,8 +2,13 @@ import type { PartnerShop } from "./types";
 
 const LOGO_BASE_URL = "https://pub-ad003198168b4f5c8a2c78eb57da8afd.r2.dev/logo-app";
 
-function withTracking(url: string): string {
+// Identifiant Shopify Collabs de Le Vestiaire : sans lui, Collabs n'attribue pas la vente
+// (format produit validé avec Le Parc le 2026-11-10).
+const LE_PARC_COLLABS_ID = "3660554";
+
+function withTracking(url: string, collabsId?: string): string {
   const u = new URL(url);
+  if (collabsId) u.searchParams.set("dt_id", collabsId);
   u.searchParams.set("utm_source", "levestiaire");
   u.searchParams.set("utm_medium", "referral");
   return u.toString();
@@ -25,7 +30,7 @@ export const PARTNER_SHOPS: PartnerShop[] = [
     // Mesure du 2026-11-02 : prix neuf = 1,03 × médiane eBay (32 maillots). Une fois
     // ramené à GOOD (÷ 1,25), il tombe au niveau eBay sans abattement.
     askingAbatement: 1.0,
-    productLink: withTracking,
+    productLink: (url) => withTracking(url, LE_PARC_COLLABS_ID),
     active: true,
   },
 ];

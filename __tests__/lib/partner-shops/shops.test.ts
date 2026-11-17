@@ -54,9 +54,9 @@ describe("isAllowedImageUrl", () => {
 });
 
 describe("productLink", () => {
-  it("ajoute le tracking Le Vestiaire à l'URL produit", () => {
+  it("ajoute l'identifiant d'affiliation Collabs et le tracking Le Vestiaire à l'URL produit", () => {
     expect(shop.productLink("https://leparcamaillots.com/products/x")).toBe(
-      "https://leparcamaillots.com/products/x?utm_source=levestiaire&utm_medium=referral"
+      "https://leparcamaillots.com/products/x?dt_id=3660554&utm_source=levestiaire&utm_medium=referral"
     );
   });
 });
