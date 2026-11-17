@@ -3272,11 +3272,15 @@
     "ratingSuffix": " - Bewertung {rating}/5 ⭐",
     "descriptionTemplate": "{clubName} {typeLower}-Trikot {season} von {brand}. Füge dieses {leagueName}-Trikot deiner Sammlung hinzu, bewerte es und tritt der Sammler-Community auf Le Vestiaire bei.",
     "descriptionTemplateWithShort": "{clubName} {typeLower}-Trikot {season} ({shortSeason}) von {brand}. Füge dieses {leagueName}-Trikot deiner Sammlung hinzu, bewerte es und tritt der Community bei.",
-    "descriptionCollectors": "{clubName} {typeLower}-Trikot {season} von {brand}. {count} Sammler besitzen es bereits auf Le Vestiaire. Füge es deiner Sammlung hinzu, bewerte es und vergleiche dich mit der Community.",
-    "descriptionCollectorsWithShort": "{clubName} {typeLower}-Trikot {season} ({shortSeason}) von {brand}. {count} Sammler besitzen es bereits. Füge es deiner Sammlung hinzu, bewerte es und vergleiche dich mit der Community.",
+    "descriptionCollectors": "{clubName} {typeLower}-Trikot {season} von {brand}. {count, plural, one {# Sammler besitzt es} other {# Sammler besitzen es}} bereits auf Le Vestiaire. Füge es deiner Sammlung hinzu, bewerte es und vergleiche dich mit der Community.",
+    "descriptionCollectorsWithShort": "{clubName} {typeLower}-Trikot {season} ({shortSeason}) von {brand}. {count, plural, one {# Sammler besitzt es} other {# Sammler besitzen es}} bereits. Füge es deiner Sammlung hinzu, bewerte es und vergleiche dich mit der Community.",
     "ogDescription": "{clubName} {typeLower}-Trikot von {brand}. {leagueName} • Saison {season}",
     "twitterDescription": "{brand}-Trikot • {leagueName}",
-    "pageDescription": "{clubName} {typeLower}-Trikot für die Saison {season}, entworfen von {brand}. {leagueName}."
+    "pageDescription": "{clubName} {typeLower}-Trikot für die Saison {season}, entworfen von {brand}. {leagueName}.",
+    "titleWithPrice": "{clubName} {typeLower}-Trikot {season} - ab {price} | Le Vestiaire",
+    "titleWithPriceGeneric": "{translatedName} - ab {price} | Le Vestiaire",
+    "descriptionOffer": "{clubName} {typeLower}-Trikot {season} von {brand}, erhältlich ab {price}. Vergleiche die Shops und füge es deiner Sammlung auf Le Vestiaire hinzu.",
+    "descriptionPromo": "{clubName} {typeLower}-Trikot {season} von {brand}, im Angebot mit -{discount} %: erhältlich ab {price}. Vergleiche die Shops und füge es deiner Sammlung auf Le Vestiaire hinzu."
   },
   "ClubMetadata": {
     "notFoundTitle": "Verein nicht gefunden - Le Vestiaire",

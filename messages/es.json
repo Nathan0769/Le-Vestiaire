@@ -3272,11 +3272,15 @@
     "ratingSuffix": " - Nota {rating}/5 ⭐",
     "descriptionTemplate": "Camiseta {typeLower} {clubName} temporada {season} por {brand}. Ficha completa de la camiseta {leagueName} con valoraciones de la comunidad, historia y detalles de colección.",
     "descriptionTemplateWithShort": "Camiseta {typeLower} {clubName} temporada {season} ({shortSeason}) por {brand}. Ficha completa de la camiseta {leagueName} con valoraciones de la comunidad, historia y detalles de colección.",
-    "descriptionCollectors": "Camiseta {typeLower} {clubName} {season} por {brand}. {count} coleccionistas ya la tienen en Le Vestiaire. Añádela a tu colección, puntúala y compárate con la comunidad.",
-    "descriptionCollectorsWithShort": "Camiseta {typeLower} {clubName} {season} ({shortSeason}) por {brand}. {count} coleccionistas ya la tienen. Añádela a tu colección, puntúala y compárate con la comunidad.",
+    "descriptionCollectors": "Camiseta {typeLower} {clubName} {season} por {brand}. {count, plural, one {# coleccionista ya la tiene} other {# coleccionistas ya la tienen}} en Le Vestiaire. Añádela a tu colección, puntúala y compárate con la comunidad.",
+    "descriptionCollectorsWithShort": "Camiseta {typeLower} {clubName} {season} ({shortSeason}) por {brand}. {count, plural, one {# coleccionista ya la tiene} other {# coleccionistas ya la tienen}}. Añádela a tu colección, puntúala y compárate con la comunidad.",
     "ogDescription": "Camiseta {typeLower} {clubName} por {brand}. {leagueName} • Temporada {season}",
     "twitterDescription": "Camiseta {brand} • {leagueName}",
-    "pageDescription": "Camiseta {typeLower} del {clubName} para la temporada {season}, diseñada por {brand}. {leagueName}."
+    "pageDescription": "Camiseta {typeLower} del {clubName} para la temporada {season}, diseñada por {brand}. {leagueName}.",
+    "titleWithPrice": "Camiseta {clubName} {typeLower} {season} - desde {price} | El Vestuario",
+    "titleWithPriceGeneric": "{translatedName} - desde {price} | El Vestuario",
+    "descriptionOffer": "Camiseta {typeLower} {clubName} {season} por {brand}, disponible desde {price}. Compara las tiendas y añádela a tu colección en Le Vestiaire.",
+    "descriptionPromo": "Camiseta {typeLower} {clubName} {season} por {brand}, en oferta con un -{discount} %: disponible desde {price}. Compara las tiendas y añádela a tu colección en Le Vestiaire."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club no encontrado - El Vestuario",

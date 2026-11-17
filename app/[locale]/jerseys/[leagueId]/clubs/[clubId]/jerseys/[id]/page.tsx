@@ -30,6 +30,7 @@ import { WhereToBuy } from "@/components/jerseys/where-to-buy";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
 import { buildWhereToBuy } from "@/lib/where-to-buy";
 import { getCfsClubOffer } from "@/lib/cfs-club-offer";
+import { buildJerseyMetaPrice } from "@/lib/jersey-meta-price";
 
 // Rendu à chaque visite : le cache ISR du catalogue coûtait plus en écritures
 // Vercel (1,23 M unités en 6 jours) qu'il ne faisait gagner sur Neon (retour
@@ -164,10 +165,18 @@ export async function generateMetadata({
       typeTranslation: typeLabel,
     });
 
-    const [rating, stats] = await Promise.all([
+    const [rating, stats, cfsAvailability, partnerOffers] = await Promise.all([
       getCachedRating(jersey.id),
       getCachedStats(jersey.id),
+      getCachedCfsAvailability(jersey.id),
+      getCachedPartnerOffers(jersey.id),
     ]);
+    // Prix dans le titre et la description pour capter les recherches d'achat.
+    // Le repli « autre maillot du club » ne vend pas celui-ci : pas lu ici.
+    const metaPrice = buildJerseyMetaPrice(
+      buildWhereToBuy({ partnerOffers, cfs: cfsAvailability, cfsClubOffer: null }),
+      locale
+    );
     const ratingSuffix =
       rating.totalRatings > 0
         ? tMeta("ratingSuffix", { rating: rating.averageRating.toFixed(1) })
@@ -178,8 +187,20 @@ export async function generateMetadata({
       ? `${shortSeasonMatch[2]}/${shortSeasonMatch[4]}`
       : null;
 
-    const title =
-      locale === "fr"
+    // Avec un prix, la marque et la note sortent du titre pour rester lisible dans Google.
+    const title = metaPrice
+      ? locale === "fr"
+        ? tMeta("titleWithPrice", {
+            clubName: jersey.club.name,
+            typeLower,
+            season: jersey.season,
+            price: metaPrice.price,
+          })
+        : tMeta("titleWithPriceGeneric", {
+            translatedName: translatedJerseyName,
+            price: metaPrice.price,
+          })
+      : locale === "fr"
         ? tMeta("titleTemplate", {
             clubName: jersey.club.name,
             typeLower,
@@ -204,7 +225,24 @@ export async function generateMetadata({
       ? "descriptionTemplateWithShort"
       : "descriptionTemplate";
 
-    const description = tMeta(descriptionKey, {
+    const description = metaPrice
+      ? metaPrice.discountPercent
+        ? tMeta("descriptionPromo", {
+            typeLower,
+            clubName: jersey.club.name,
+            season: jersey.season,
+            brand: jersey.brand,
+            price: metaPrice.price,
+            discount: metaPrice.discountPercent,
+          })
+        : tMeta("descriptionOffer", {
+            typeLower,
+            clubName: jersey.club.name,
+            season: jersey.season,
+            brand: jersey.brand,
+            price: metaPrice.price,
+          })
+      : tMeta(descriptionKey, {
       typeLower,
       clubName: jersey.club.name,
       season: jersey.season,

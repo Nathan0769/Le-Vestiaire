@@ -3272,11 +3272,15 @@
     "ratingSuffix": " - Nota {rating}/5 ⭐",
     "descriptionTemplate": "Camisola {typeLower} {clubName} época {season} pela {brand}. Ficha completa da camisola {leagueName} com avaliações da comunidade, história e detalhes de coleção.",
     "descriptionTemplateWithShort": "Camisola {typeLower} {clubName} época {season} ({shortSeason}) pela {brand}. Ficha completa da camisola {leagueName} com avaliações da comunidade, história e detalhes de coleção.",
-    "descriptionCollectors": "Camisola {typeLower} {clubName} {season} pela {brand}. {count} colecionadores já a têm no Le Vestiaire. Adiciona-a à tua coleção, avalia-a e compara-te com a comunidade.",
-    "descriptionCollectorsWithShort": "Camisola {typeLower} {clubName} {season} ({shortSeason}) pela {brand}. {count} colecionadores já a têm. Adiciona-a à tua coleção, avalia-a e compara-te com a comunidade.",
+    "descriptionCollectors": "Camisola {typeLower} {clubName} {season} pela {brand}. {count, plural, one {# colecionador já a tem} other {# colecionadores já a têm}} no Le Vestiaire. Adiciona-a à tua coleção, avalia-a e compara-te com a comunidade.",
+    "descriptionCollectorsWithShort": "Camisola {typeLower} {clubName} {season} ({shortSeason}) pela {brand}. {count, plural, one {# colecionador já a tem} other {# colecionadores já a têm}}. Adiciona-a à tua coleção, avalia-a e compara-te com a comunidade.",
     "ogDescription": "Camisola {typeLower} {clubName} pela {brand}. {leagueName} • Época {season}",
     "twitterDescription": "Camisola {brand} • {leagueName}",
-    "pageDescription": "Camisola {typeLower} do {clubName} para a época {season}, concebida por {brand}. {leagueName}."
+    "pageDescription": "Camisola {typeLower} do {clubName} para a época {season}, concebida por {brand}. {leagueName}.",
+    "titleWithPrice": "Camisola {clubName} {typeLower} {season} - desde {price} | Le Vestiaire",
+    "titleWithPriceGeneric": "{translatedName} - desde {price} | Le Vestiaire",
+    "descriptionOffer": "Camisola {typeLower} {clubName} {season} pela {brand}, disponível desde {price}. Compara as lojas e adiciona-a à tua coleção no Le Vestiaire.",
+    "descriptionPromo": "Camisola {typeLower} {clubName} {season} pela {brand}, em promoção a -{discount}%: disponível desde {price}. Compara as lojas e adiciona-a à tua coleção no Le Vestiaire."
   },
   "ClubMetadata": {
     "notFoundTitle": "Clube não encontrado - Le Vestiaire",

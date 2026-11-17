@@ -3272,11 +3272,15 @@
     "ratingSuffix": " - Rated {rating}/5 ⭐",
     "descriptionTemplate": "{clubName} {typeLower} jersey {season} by {brand}. Add this {leagueName} jersey to your collection, rate it and join the collectors' community on Le Vestiaire.",
     "descriptionTemplateWithShort": "{clubName} {typeLower} jersey {season} ({shortSeason}) by {brand}. Add this {leagueName} jersey to your collection, rate it and join the community on Le Vestiaire.",
-    "descriptionCollectors": "{clubName} {typeLower} jersey {season} by {brand}. {count} collectors already own it on Le Vestiaire. Add it to your collection, rate it and compare with the community.",
-    "descriptionCollectorsWithShort": "{clubName} {typeLower} jersey {season} ({shortSeason}) by {brand}. {count} collectors already own it. Add it to your collection, rate it and compare with the community.",
+    "descriptionCollectors": "{clubName} {typeLower} jersey {season} by {brand}. {count, plural, one {# collector already owns it} other {# collectors already own it}} on Le Vestiaire. Add it to your collection, rate it and compare with the community.",
+    "descriptionCollectorsWithShort": "{clubName} {typeLower} jersey {season} ({shortSeason}) by {brand}. {count, plural, one {# collector already owns it} other {# collectors already own it}}. Add it to your collection, rate it and compare with the community.",
     "ogDescription": "{clubName} {typeLower} jersey by {brand}. {leagueName} • {season} season",
     "twitterDescription": "{brand} jersey • {leagueName}",
-    "pageDescription": "{clubName} {typeLower} jersey for the {season} season, designed by {brand}. {leagueName}."
+    "pageDescription": "{clubName} {typeLower} jersey for the {season} season, designed by {brand}. {leagueName}.",
+    "titleWithPrice": "{clubName} {typeLower} jersey {season} - from {price} | The Locker Room",
+    "titleWithPriceGeneric": "{translatedName} - from {price} | The Locker Room",
+    "descriptionOffer": "{clubName} {typeLower} jersey {season} by {brand}, available from {price}. Compare shops and add it to your collection on Le Vestiaire.",
+    "descriptionPromo": "{clubName} {typeLower} jersey {season} by {brand}, on sale at -{discount}%: available from {price}. Compare shops and add it to your collection on Le Vestiaire."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club not found - The Locker Room",
