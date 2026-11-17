@@ -1,6 +1,6 @@
 # Politique de Cookies
 
-**Dernière mise à jour** : Novembre 2025
+**Dernière mise à jour** : Novembre 2026
 
 ## Qu'est-ce qu'un cookie ?
 
@@ -15,14 +15,12 @@ Ces cookies sont essentiels au fonctionnement du site et ne peuvent pas être d�
 - **Cookies d'authentification** : Permettent de vous connecter et maintenir votre session active
 - **cookieConsent** : Mémorise votre choix concernant les cookies
 
-### 2. Cookies d'analyse et de performance
+### 2. Mesure d'audience et de performance
 
-Ces cookies nous aident à comprendre comment vous utilisez le site pour améliorer nos services.
+- **Vercel Analytics** et **Vercel Speed Insights** : statistiques de visite et mesure des performances, anonymes et agrégées. Ils ne déposent aucun cookie et ne suivent pas votre navigation sur d'autres sites ; conformément aux lignes directrices de la CNIL sur la mesure d'audience, ils ne nécessitent pas votre consentement.
+- **Google Analytics** : analyse du trafic. Il dépose des cookies et n'est chargé que si vous les acceptez via la bannière de consentement.
 
-- **Vercel Analytics** : Analyse du trafic et du comportement des utilisateurs
-- **Vercel Speed Insights** : Mesure des performances du site
-
-Vous pouvez refuser ces cookies via la bannière de consentement sans affecter votre expérience de navigation.
+Refuser les cookies n'affecte pas votre expérience de navigation.
 
 ### 3. Cookies publicitaires (Google AdSense)
 
@@ -47,7 +45,7 @@ Vous pouvez à tout moment modifier vos préférences concernant les cookies :
 
 - **Cookies de session** : Supprimés à la fermeture du navigateur
 - **Cookie de consentement** : Conservé jusqu'en 2099 ou jusqu'à suppression manuelle
-- **Cookies d'analytics** : 13 mois maximum
+- **Cookies Google Analytics** : 13 mois maximum
 - **Cookies publicitaires (Google AdSense)** : jusqu'à 13 mois selon le cookie
 
 ## Vos droits (RGPD)

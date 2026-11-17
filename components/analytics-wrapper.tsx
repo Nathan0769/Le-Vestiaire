@@ -29,13 +29,15 @@ export function AnalyticsWrapper() {
     };
   }, []);
 
-  if (!hasConsent) return null;
-
+  // Vercel Analytics et Speed Insights : mesure d'audience anonyme sans cookie,
+  // exemptée de consentement (CNIL). Derrière le bandeau, ils perdaient la moitié
+  // des visites quand le bandeau est devenu discret. Google Analytics pose des
+  // cookies : il attend l'accord.
   return (
     <>
       <Analytics />
       <SpeedInsights />
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? ""} />
+      {hasConsent && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ?? ""} />}
     </>
   );
 }

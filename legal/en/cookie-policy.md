@@ -1,6 +1,6 @@
 # Cookie Policy
 
-**Last updated**: November 2025
+**Last updated**: November 2026
 
 ## What is a cookie?
 
@@ -15,14 +15,12 @@ These cookies are essential for the site to function and cannot be disabled.
 - **Authentication cookies**: Allow you to log in and maintain your active session
 - **cookieConsent**: Remembers your cookie preferences
 
-### 2. Analytics and Performance Cookies
+### 2. Audience and Performance Measurement
 
-These cookies help us understand how you use the site to improve our services.
+- **Vercel Analytics** and **Vercel Speed Insights**: anonymous, aggregated visit statistics and performance measurement. They set no cookies and do not track you across other sites, so under the CNIL guidelines on audience measurement they do not require your consent.
+- **Google Analytics**: traffic analysis. It sets cookies and is only loaded if you accept them via the consent banner.
 
-- **Vercel Analytics**: Traffic analysis and user behavior tracking
-- **Vercel Speed Insights**: Site performance measurement
-
-You can refuse these cookies via the consent banner without affecting your browsing experience.
+Refusing cookies does not affect your browsing experience.
 
 ## Managing Your Preferences
 
@@ -36,7 +34,7 @@ You can modify your cookie preferences at any time:
 
 - **Session cookies**: Deleted when the browser is closed
 - **Consent cookie**: Kept until 2099 or until manual deletion
-- **Analytics cookies**: 13 months maximum
+- **Google Analytics cookies**: 13 months maximum
 
 ## Your Rights (GDPR)
 
