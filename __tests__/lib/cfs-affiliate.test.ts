@@ -111,6 +111,48 @@ describe("selectFeaturedCfsPromos", () => {
   });
 });
 
+describe("selectFeaturedCfsPromos avec preferClubIds", () => {
+  type C = P & { clubId: string | null };
+  const mkc = (id: string, club: string | null, clubId: string | null, source = "clearance"): C => ({
+    id,
+    club,
+    clubId,
+    source,
+  });
+
+  const input = [
+    mkc("a1", "Arsenal", "ars"),
+    mkc("b1", "Barcelona", "bar"),
+    mkc("c1", "Chelsea", "che"),
+    mkc("d1", "Dortmund", "dor"),
+    mkc("w1", "Xamax", "xam", "cfs-weekly-deals"),
+    mkc("e1", "Everton", "eve"),
+    mkc("l1", "Lyon", "lyo"),
+    mkc("l2", "Olympique Lyonnais", "lyo"),
+    mkc("l3", "Lyon", "lyo"),
+  ];
+
+  it("place les promos du club préféré en tête, reliées par clubId même si le nom diffère", () => {
+    const out = selectFeaturedCfsPromos(input, { preferClubIds: ["lyo"] });
+    expect(out.slice(0, 2).map((p) => p.id)).toEqual(["l1", "l2"]);
+  });
+
+  it("limite le club préféré à 2 promos visibles pour garder de la variété", () => {
+    const featured = selectFeaturedCfsPromos(input, { preferClubIds: ["lyo"] }).slice(0, 6);
+    expect(featured.filter((p) => p.clubId === "lyo")).toHaveLength(2);
+    expect(featured.map((p) => p.id)).toContain("w1");
+  });
+
+  it("garde l'ordre actuel quand aucune promo ne correspond au club préféré", () => {
+    expect(selectFeaturedCfsPromos(input, { preferClubIds: ["psg"] })).toEqual(selectFeaturedCfsPromos(input));
+  });
+
+  it("ne perd ni ne duplique aucune promo", () => {
+    const out = selectFeaturedCfsPromos(input, { preferClubIds: ["lyo"] });
+    expect(idsSorted(out)).toEqual(idsSorted(input));
+  });
+});
+
 describe("buildCfsAffiliateUrl", () => {
   it("pointe vers le .co.uk : Tapfiliate ne compte pas les visites du .com", () => {
     expect(

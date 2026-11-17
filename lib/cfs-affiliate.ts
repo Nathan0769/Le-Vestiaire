@@ -44,6 +44,8 @@ const WEEKLY_DEALS_SOURCE = "cfs-weekly-deals";
 interface FeaturablePromo {
   club: string | null;
   source: string;
+  /** Club du catalogue via le maillot relié (`jersey.clubId`) ; absent si la promo n'est pas reliée. */
+  clubId?: string | null;
 }
 
 /**
@@ -51,6 +53,10 @@ interface FeaturablePromo {
  * are curated: distinct clubs, and up to `weeklyTarget` weekly-deals picks drawn
  * from the top `weeklyPool` weekly deals. The remaining promos keep their original
  * order behind the featured block. No promo is dropped or duplicated.
+ *
+ * `preferClubIds` (club favori de l'utilisateur) : jusqu'à `preferredLimit` promos
+ * de ces clubs, reconnues par `clubId` (le texte `club` varie selon la source),
+ * passent en tête. La limite garde de la variété dans les cartes visibles.
  */
 export function selectFeaturedCfsPromos<T extends FeaturablePromo>(
   promos: T[],
@@ -58,7 +64,15 @@ export function selectFeaturedCfsPromos<T extends FeaturablePromo>(
     visibleCount = 6,
     weeklyTarget = 2,
     weeklyPool = 3,
-  }: { visibleCount?: number; weeklyTarget?: number; weeklyPool?: number } = {}
+    preferClubIds = [],
+    preferredLimit = 2,
+  }: {
+    visibleCount?: number;
+    weeklyTarget?: number;
+    weeklyPool?: number;
+    preferClubIds?: string[];
+    preferredLimit?: number;
+  } = {}
 ): T[] {
   const featured: T[] = [];
   const usedIdx = new Set<number>();
@@ -77,6 +91,21 @@ export function selectFeaturedCfsPromos<T extends FeaturablePromo>(
     if (key) usedClubs.add(key);
     return true;
   };
+
+  // 0. Favorite club first. Its promos can share a club name, so they skip the
+  // distinct-club check; the club is then marked used for the rest of the block.
+  if (preferClubIds.length > 0) {
+    const preferred = new Set(preferClubIds);
+    const limit = Math.min(preferredLimit, visibleCount);
+    for (let i = 0; i < promos.length && featured.length < limit; i++) {
+      const clubId = promos[i].clubId;
+      if (!clubId || !preferred.has(clubId)) continue;
+      featured.push(promos[i]);
+      usedIdx.add(i);
+      const key = clubKey(promos[i]);
+      if (key) usedClubs.add(key);
+    }
+  }
 
   // 1. Seed with weekly deals from the top of the pool, distinct clubs only.
   const weeklyIndices = promos

@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 import { CFS_CLEARANCE_URL } from "@/lib/cfs-affiliate";
 import { TRANSLATION_ORDER, translateJerseyName, type TermKey } from "@/lib/cfs-translate";
 
+// Téléphone (grille de 2) : 2 lignes seulement, le bloc est placé haut dans la page.
+const INITIAL_VISIBLE_MOBILE = 4;
 const INITIAL_VISIBLE = 6;
 
 interface CfsPromo {
@@ -57,11 +59,12 @@ export function CfsPromoSection({ promos }: CfsPromoSectionProps) {
 
   const visible = expanded ? promos : promos.slice(0, INITIAL_VISIBLE);
   const hasMore = promos.length > INITIAL_VISIBLE;
+  const hasMoreMobile = promos.length > INITIAL_VISIBLE_MOBILE;
 
   return (
-    <section className="py-16 px-6 bg-muted/30">
+    <section className="py-10 sm:py-16 px-6 bg-muted/30">
       <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-12">
+        <div className="text-center mb-8 sm:mb-12">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">{t("title")}</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             {t("subtitle")}
@@ -69,7 +72,7 @@ export function CfsPromoSection({ promos }: CfsPromoSectionProps) {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 mb-8">
-          {visible.map((promo) => {
+          {visible.map((promo, index) => {
             const price = parseFloat(promo.price);
             const promoPrice = parseFloat(promo.promoPrice);
             const discount = Math.round(((price - promoPrice) / price) * 100);
@@ -84,7 +87,9 @@ export function CfsPromoSection({ promos }: CfsPromoSectionProps) {
                 href={promo.affiliateUrl}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
-                className="group relative"
+                className={`group relative${
+                  !expanded && index >= INITIAL_VISIBLE_MOBILE ? " hidden sm:block" : ""
+                }`}
               >
                 <div className="relative">
                   {discount > 0 && (
@@ -140,13 +145,24 @@ export function CfsPromoSection({ promos }: CfsPromoSectionProps) {
         </div>
 
         <div className="flex flex-col items-center gap-3">
-          {hasMore && (
+          {hasMoreMobile && (
             <Button
               variant="outline"
               onClick={() => setExpanded((e) => !e)}
-              className="mb-1"
+              className={`mb-1${hasMore ? "" : " sm:hidden"}`}
             >
-              {expanded ? t("showLess") : t("showMore", { count: promos.length - INITIAL_VISIBLE })}
+              {expanded ? (
+                t("showLess")
+              ) : (
+                <>
+                  <span className="sm:hidden">
+                    {t("showMore", { count: promos.length - INITIAL_VISIBLE_MOBILE })}
+                  </span>
+                  <span className="hidden sm:inline">
+                    {t("showMore", { count: promos.length - INITIAL_VISIBLE })}
+                  </span>
+                </>
+              )}
             </Button>
           )}
           <Button asChild className="gap-2">

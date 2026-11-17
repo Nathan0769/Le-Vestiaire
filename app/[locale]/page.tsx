@@ -447,11 +447,30 @@ async function getCfsPromos() {
         brand: true,
         source: true,
         sizes: true,
+        jersey: { select: { clubId: true } },
       },
     });
-    return promos.map((p) => ({ ...p, affiliateUrl: withCfsSubId(p.affiliateUrl, `home-${p.id}`) }));
+    return promos.map(({ jersey, ...p }) => ({
+      ...p,
+      clubId: jersey?.clubId ?? null,
+      affiliateUrl: withCfsSubId(p.affiliateUrl, `home-${p.id}`),
+    }));
   } catch {
     return [];
+  }
+}
+
+// La session Better Auth n'expose pas favoriteClubId : lecture dédiée.
+async function getFavoriteClubId(userId?: string): Promise<string | null> {
+  if (!userId) return null;
+  try {
+    const row = await prisma.user.findUnique({
+      where: { id: userId },
+      select: { favoriteClubId: true },
+    });
+    return row?.favoriteClubId ?? null;
+  } catch {
+    return null;
   }
 }
 
@@ -796,8 +815,8 @@ export default async function HomePage({
   const { locale } = await params;
   const user = await getCurrentUser();
 
-  const [{ topRatedJerseys, recentJerseys, userStats, globalStats }, cfsPromos] =
-    await Promise.all([getHomeData(user?.id), getCfsPromos()]);
+  const [{ topRatedJerseys, recentJerseys, userStats, globalStats }, cfsPromos, favoriteClubId] =
+    await Promise.all([getHomeData(user?.id), getCfsPromos(), getFavoriteClubId(user?.id)]);
 
   const content = schemaContent[locale] ?? schemaContent.fr;
   const pageUrl = `https://le-vestiaire-foot.fr/${locale}`;
@@ -882,17 +901,19 @@ export default async function HomePage({
       />
 
       {user && userStats && <UserStatsSection userStats={userStats} />}
+      <CfsPromoSection
+        promos={selectFeaturedCfsPromos(cfsPromos, {
+          preferClubIds: favoriteClubId ? [favoriteClubId] : [],
+        }).map(({ clubId: _clubId, ...p }) => ({
+          ...p,
+          price: p.price.toString(),
+          promoPrice: p.promoPrice.toString(),
+        }))}
+      />
       {user && <HomeFeedSection userId={user.id} />}
       {user && <HomeValuePopup />}
       <TopRatedSection jerseys={topRatedJerseys} />
       <RecentSection jerseys={recentJerseys} />
-      <CfsPromoSection promos={selectFeaturedCfsPromos(cfsPromos).map((p) => ({
-        ...p,
-        price: p.price.toString(),
-        promoPrice: p.promoPrice.toString(),
-        source: p.source,
-        sizes: p.sizes,
-      }))} />
 
       <StatsSection
         userCount={globalStats.userCount}
