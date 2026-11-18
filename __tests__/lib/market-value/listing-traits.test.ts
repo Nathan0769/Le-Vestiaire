@@ -29,6 +29,33 @@ describe("listingTraits : version", () => {
   });
 });
 
+describe("listingTraits : rééditions", () => {
+  it.each([
+    "Nike PSG 2004 Home Shirt Reissue M",
+    "Newcastle 1995-97 Home Shirt adidas Originals Remake",
+    "Maillot France 1998 Réédition officielle",
+    "Score Draw Manchester City 2000 Retro Home Shirt",
+    "Copa Football Ajax 1995 Retro Shirt",
+    "Toffs Liverpool 1977 Retro Jersey",
+    "Japan 1998 Home Jersey adidas Bringback",
+    "Argentinien Trikot 1986 Neuauflage",
+    "Camiseta Real Madrid 2002 reedición",
+    "Maglia Milan 1988 riedizione",
+  ])("%s -> REISSUE, hors base", (title) => {
+    const traits = listingTraits(title);
+    expect(traits.version).toBe("REISSUE");
+    expect(isReferenceListing(traits)).toBe(false);
+  });
+
+  // "retro" seul : vendeurs eBay pour de vrais anciens maillots.
+  it.each([
+    "Arsenal 1998 Retro Vintage Home Shirt Nike L",
+    "Maillot OM 1993 vintage rétro Adidas",
+  ])("%s -> REPLICA (original)", (title) => {
+    expect(listingTraits(title).version).toBe("REPLICA");
+  });
+});
+
 describe("listingTraits : manches longues", () => {
   it.each([
     "Aalborg Extérieur LS 2025-26 (XL)",

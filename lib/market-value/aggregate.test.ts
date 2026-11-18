@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { aggregate, valueForCondition, valueForItem } from "./aggregate";
+import { aggregate, usesMarketBase, valueForCondition, valueForItem } from "./aggregate";
 import type { PriceSignal } from "./types";
 
 const sold = (price: number, source: PriceSignal["source"] = "ebay", condition?: PriceSignal["condition"]): PriceSignal => ({
@@ -141,4 +141,16 @@ describe("valueForCondition", () => {
     expect(valueForCondition(100, "GOOD")).toBe(100);
     expect(valueForCondition(100, "POOR")).toBe(60);
   });
+});
+
+describe("usesMarketBase", () => {
+  it("une réédition ne prend jamais la cote de l'original", () => {
+    expect(usesMarketBase("REISSUE")).toBe(false);
+  });
+  it.each(["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN", undefined])(
+    "%s utilise la cote",
+    (version) => {
+      expect(usesMarketBase(version)).toBe(true);
+    }
+  );
 });

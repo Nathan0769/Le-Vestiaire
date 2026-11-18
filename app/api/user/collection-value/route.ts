@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
-import { valueForItem } from "@/lib/market-value/aggregate";
+import { usesMarketBase, valueForItem } from "@/lib/market-value/aggregate";
 import { isSupporter } from "@/lib/subscription";
 import type { Condition } from "@/lib/market-value/types";
 import { DEFAULT_CURRENCY, fromEur, toEur } from "@/lib/currency";
@@ -14,7 +14,8 @@ export const dynamic = "force-dynamic";
  * Données de la page "Valeur de ma collection" : résumé (valeur totale, investi,
  * plus-value, moyenne) + valeur par maillot. Couverture 100% : un maillot sans
  * cote marché est estimé à son prix d'achat (le tien, sinon la moyenne des achats
- * de ce maillot sur le site).
+ * de ce maillot sur le site). Une réédition ne prend que son propre prix d'achat :
+ * la cote et la moyenne des achats sont celles de l'original.
  *
  * Calculs en EUR (cote et prix d'achat convertis), montants renvoyés dans la
  * devise du user (`currency`).
@@ -81,7 +82,12 @@ export async function GET() {
     // Groupé aussi par devise : une moyenne SQL mélangerait R$ et €.
     prisma.userJersey.groupBy({
       by: ["jerseyId", "purchaseCurrency"],
-      where: { jerseyId: { in: jerseyIds }, isGift: false, purchasePrice: { gt: 0 } },
+      where: {
+        jerseyId: { in: jerseyIds },
+        isGift: false,
+        purchasePrice: { gt: 0 },
+        version: { not: "REISSUE" },
+      },
       _sum: { purchasePrice: true },
       _count: { _all: true },
     }),
@@ -111,7 +117,10 @@ export async function GET() {
     let source: "market" | "purchase" | "unknown";
     let confidence: string | null = null;
 
-    if (base != null && base > 0) {
+    if (!usesMarketBase(item.version)) {
+      value = ownBuy != null ? Math.round(ownBuy * 100) / 100 : null;
+      source = value != null ? "purchase" : "unknown";
+    } else if (base != null && base > 0) {
       value = valueForItem(base, {
         condition: item.condition as unknown as Condition,
         version: item.version,

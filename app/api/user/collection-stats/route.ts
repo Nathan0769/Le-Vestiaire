@@ -2,7 +2,7 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { pickCoverageClub } from "@/lib/club-coverage";
 import prisma from "@/lib/prisma";
 import { Prisma } from "@prisma/client";
-import { valueForItem } from "@/lib/market-value/aggregate";
+import { usesMarketBase, valueForItem } from "@/lib/market-value/aggregate";
 import type { Condition } from "@/lib/market-value/types";
 import { DEFAULT_CURRENCY, fromEur } from "@/lib/currency";
 import { getRatesToEur } from "@/lib/fx";
@@ -306,7 +306,8 @@ export async function GET() {
 
     for (const item of collection) {
       const base = baseByJersey.get(item.jerseyId);
-      if (base == null) continue;
+      // Réédition : la cote est celle de l'original, elle n'est donc pas cotée.
+      if (base == null || !usesMarketBase(item.version)) continue;
       const value = valueForItem(base, {
         condition: item.condition as unknown as Condition,
         version: item.version,

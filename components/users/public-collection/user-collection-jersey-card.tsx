@@ -20,6 +20,7 @@ import { isLightColor } from "@/lib/color-contrast";
 
 type JerseyVersionKey =
   | "REPLICA"
+  | "REISSUE"
   | "AUTHENTIC"
   | "STOCK_PRO"
   | "PLAYER_ISSUE"
@@ -29,6 +30,7 @@ type ConditionKey = "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR";
 
 const VERSION_BADGE_CLASSES: Record<JerseyVersionKey, string> = {
   REPLICA: "bg-sky-600/90 text-white",
+  REISSUE: "bg-teal-700/90 text-white",
   AUTHENTIC: "bg-purple-600/90 text-white",
   STOCK_PRO: "bg-cyan-600/90 text-white",
   PLAYER_ISSUE: "bg-amber-500/95 text-white",

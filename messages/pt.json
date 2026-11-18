@@ -92,6 +92,7 @@
   },
   "JerseyVersion": {
     "REPLICA": "Padrão",
+    "REISSUE": "Reedição",
     "AUTHENTIC": "Loja - Versão jogador",
     "STOCK_PRO": "Stock Pro",
     "PLAYER_ISSUE": "Preparado / Player Issue",
@@ -691,6 +692,7 @@
       "jerseysCount": "{count, plural, one {# camisola} other {# camisolas}}",
       "labels": {
         "REPLICA": "Padrão",
+        "REISSUE": "Reedição",
         "AUTHENTIC": "Loja - Versão jogador",
         "STOCK_PRO": "Stock Pro",
         "PLAYER_ISSUE": "Player Issue",
@@ -3386,6 +3388,7 @@
       "size": "Tamanho {size}",
       "versions": {
         "REPLICA": "Padrão",
+        "REISSUE": "Reedição",
         "AUTHENTIC": "Versão jogador",
         "STOCK_PRO": "Stock Pro",
         "PLAYER_ISSUE": "Player Issue",

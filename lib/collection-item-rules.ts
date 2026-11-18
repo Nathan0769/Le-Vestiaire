@@ -10,7 +10,7 @@ import { isSupportedCurrency, CURRENCY_ERROR_MESSAGES, SUPPORTED_CURRENCIES } fr
  */
 
 /** Miroir de l'enum Prisma `JerseyVersion`. */
-export const JERSEY_VERSIONS = ["REPLICA", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"] as const;
+export const JERSEY_VERSIONS = ["REPLICA", "REISSUE", "AUTHENTIC", "STOCK_PRO", "PLAYER_ISSUE", "MATCH_WORN"] as const;
 
 /** Miroir de l'enum Prisma `Condition`. */
 export const JERSEY_CONDITIONS = ["MINT", "EXCELLENT", "GOOD", "FAIR", "POOR"] as const;

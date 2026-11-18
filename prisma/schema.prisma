@@ -708,6 +708,7 @@ enum CfsMatchStatus {
 
 enum JerseyVersion {
   REPLICA
+  REISSUE
   AUTHENTIC
   STOCK_PRO
   PLAYER_ISSUE

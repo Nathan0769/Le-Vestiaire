@@ -27,16 +27,21 @@ function getConditionColor(condition: string) {
   }
 }
 
+// Même palette que les cartes de collection et l'app iOS (Labels.versionColor).
 function getVersionAccent(version: string | null | undefined): string {
   switch (version) {
-    case "MATCH_WORN":
-      return "text-amber-700 bg-amber-500/15 border-amber-300";
-    case "PLAYER_ISSUE":
+    case "REPLICA":
+      return "text-sky-700 bg-sky-500/15 border-sky-300";
+    case "REISSUE":
+      return "text-teal-700 bg-teal-500/15 border-teal-300";
+    case "AUTHENTIC":
       return "text-purple-700 bg-purple-500/15 border-purple-300";
     case "STOCK_PRO":
-      return "text-blue-700 bg-blue-500/15 border-blue-300";
-    case "AUTHENTIC":
-      return "text-slate-700 bg-slate-500/10 border-slate-300";
+      return "text-cyan-700 bg-cyan-500/15 border-cyan-300";
+    case "PLAYER_ISSUE":
+      return "text-amber-700 bg-amber-500/15 border-amber-300";
+    case "MATCH_WORN":
+      return "text-red-700 bg-red-500/15 border-red-300";
     default:
       return "";
   }

@@ -12,6 +12,7 @@ interface VersionDistributionChartProps {
 
 const VERSION_COLORS: Record<string, string> = {
   REPLICA: "oklch(0.65 0.08 250)",
+  REISSUE: "oklch(0.51 0.09 186)",
   AUTHENTIC: "oklch(0.55 0.22 250)",
   STOCK_PRO: "oklch(0.60 0.22 290)",
   PLAYER_ISSUE: "oklch(0.70 0.22 50)",

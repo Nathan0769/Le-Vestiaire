@@ -5,7 +5,7 @@
  * (version, manches longues) est appliquée ensuite par valueForItem.
  */
 
-export type ListingVersion = "REPLICA" | "AUTHENTIC" | "STOCK_PRO" | "PLAYER_ISSUE" | "OTHER";
+export type ListingVersion = "REPLICA" | "REISSUE" | "AUTHENTIC" | "STOCK_PRO" | "PLAYER_ISSUE" | "OTHER";
 
 export interface ListingTraits {
   version: ListingVersion;
@@ -19,6 +19,28 @@ export interface ListingTraits {
 // Termes comparés en mots entiers sur le titre normalisé (minuscules, sans
 // accents, ponctuation remplacée par des espaces sauf "/").
 const VERSION_TERMS: { version: Exclude<ListingVersion, "REPLICA">; terms: string[] }[] = [
+  // Rééditions officielles d'anciens maillots : prix neuf stable, sans rapport
+  // avec l'original. "retro" seul n'y est pas : les vendeurs l'emploient aussi
+  // pour de vrais maillots d'époque.
+  {
+    version: "REISSUE",
+    terms: [
+      "remake",
+      "reissue",
+      "re issue",
+      "reedition",
+      "re edition",
+      "reedicion",
+      "riedizione",
+      "reedicao",
+      "neuauflage",
+      "heruitgave",
+      "score draw",
+      "copa football",
+      "toffs",
+      "bringback",
+    ],
+  },
   { version: "PLAYER_ISSUE", terms: ["player issue", "player issued", "match issue", "issued to player"] },
   { version: "STOCK_PRO", terms: ["stock pro", "pro stock"] },
   {

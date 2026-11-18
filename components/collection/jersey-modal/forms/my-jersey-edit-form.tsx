@@ -26,15 +26,9 @@ import type {
   UpdateCollectionData,
 } from "@/types/collection";
 import type { UserJerseyPatchInput } from "@/types/patch";
-import { JERSEY_CONDITIONS } from "@/lib/collection-item-rules";
+import { JERSEY_CONDITIONS, JERSEY_VERSIONS } from "@/lib/collection-item-rules";
 
-const VERSION_ORDER: JerseyVersion[] = [
-  "REPLICA",
-  "AUTHENTIC",
-  "STOCK_PRO",
-  "PLAYER_ISSUE",
-  "MATCH_WORN",
-];
+const VERSION_ORDER: readonly JerseyVersion[] = JERSEY_VERSIONS;
 
 interface MyJerseyEditFormProps {
   jerseyId: string;

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
-import { valueForItem } from "@/lib/market-value/aggregate";
+import { usesMarketBase, valueForItem } from "@/lib/market-value/aggregate";
 import { isSupporter } from "@/lib/subscription";
 import type { Condition } from "@/lib/market-value/types";
 import { DEFAULT_CURRENCY, fromEur } from "@/lib/currency";
@@ -96,6 +96,7 @@ export async function GET() {
     let total = 0;
     for (const it of items) {
       if (it.createdAt.getTime() > cutoff) continue; // pas encore possédé
+      if (!usesMarketBase(it.version)) continue; // réédition : pas de cote
       const base = baseAt(it.jerseyId, cutoff);
       if (base == null || base <= 0) continue;
       total += valueForItem(base, {

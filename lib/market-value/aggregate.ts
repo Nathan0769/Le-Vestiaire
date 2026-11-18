@@ -88,6 +88,14 @@ export interface ItemValuationAttributes {
 }
 
 /**
+ * Une réédition ne prend jamais la cote du maillot : elle est celle de
+ * l'original (époque, fabricant d'origine), alors qu'une réédition vaut son prix neuf.
+ */
+export function usesMarketBase(version?: string | null): boolean {
+  return version !== "REISSUE";
+}
+
+/**
  * Valeur d'un exemplaire précis à partir de la valeur de base (état de référence
  * GOOD, ≈ replica). Compose les multiplicateurs : état × version × manches × signé.
  * La base eBay/CFS étant surtout du replica, un authentic vaut logiquement plus.
