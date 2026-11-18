@@ -100,7 +100,7 @@ export async function generateMetadata({
       },
     },
     // Smart App Banner de Safari iOS sur toutes les pages (héritée par les pages,
-    // aucune ne redéfinit `itunes`). Safari la masque d'elle-même si l'app est installée.
+    // aucune ne redéfinit `itunes`). Si l'app est installée, son bouton devient « Ouvrir ».
     itunes: {
       appId: "6808174449",
     },
