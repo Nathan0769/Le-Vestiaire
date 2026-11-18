@@ -3,7 +3,6 @@ import { getCurrentUser } from "@/lib/get-current-user";
 import { HeroSection } from "@/components/home/hero-section";
 import { UserStatsSection } from "@/components/home/user-stats-section";
 import { HomeValuePopup } from "@/components/home/home-value-popup";
-import { IosAppBanner } from "@/components/home/ios-app-banner";
 import { TopRatedSection } from "@/components/home/top-rated-section";
 import { RecentSection } from "@/components/home/recent-section";
 import prisma from "@/lib/prisma";
@@ -887,7 +886,6 @@ export default async function HomePage({
         />
       )}
       <div className="min-h-screen">
-      <IosAppBanner />
       <HeroSection
         user={user}
         userStats={

@@ -17,6 +17,7 @@ import { CookieConsent } from "@/components/ui/cookie-consent";
 import { AnalyticsWrapper } from "@/components/analytics-wrapper";
 import { FavoriteClubBanner } from "@/components/home/favorite-club-banner";
 import { WhatsNewDialog } from "@/components/announcements/whats-new-dialog";
+import { IosAppBanner } from "@/components/home/ios-app-banner";
 import { MotionConfig } from "motion/react";
 
 export default function ClientWrapper({
@@ -66,6 +67,7 @@ export default function ClientWrapper({
               <WhatsNewDialog />
               {children}
               <AnalyticsWrapper />
+              <IosAppBanner />
             </main>
           </SidebarProvider>
         </AuthProvider>

@@ -1,28 +1,38 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useState, useSyncExternalStore, type CSSProperties } from "react";
 import { useTranslations } from "next-intl";
+import { needsCustomIosBanner } from "@/lib/ios-app-banner-target";
 
 const DISMISS_KEY = "ios-app-banner-dismissed-v1";
 const APP_STORE_URL = "https://apps.apple.com/fr/app/le-vestiaire-foot/id6808174449";
 
+const noSubscription = () => () => {};
+
+function isEligible(): boolean {
+  if (!needsCustomIosBanner(navigator.userAgent, navigator.maxTouchPoints)) return false;
+  try {
+    return localStorage.getItem(DISMISS_KEY) !== "1";
+  } catch {
+    return true;
+  }
+}
+
 /**
- * Bandeau "app iOS disponible" en haut de la homepage.
- * - Gaté par NEXT_PUBLIC_APP_STORE_URL : invisible tant que le lien n'est pas
- *   renseigné (rien ne fuite avant la mise en ligne).
+ * Bandeau "app iOS disponible", en bas de toutes les pages (layout commun).
+ * Safari iOS a déjà la Smart App Banner (metadata `itunes` du layout) : ce bandeau
+ * ne s'affiche que sur iPhone/iPad hors Safari, où la bannière native n'existe pas
+ * (`needsCustomIosBanner`). Rien côté serveur ni hors iOS.
  * - Fermeture persistée (localStorage).
  * Design fourni (DA Nuit de Stade), responsive via <style> scopé sur l'id.
  */
 export function IosAppBanner() {
   const t = useTranslations("HomePage.iosBanner");
   const url = process.env.NEXT_PUBLIC_APP_STORE_URL || APP_STORE_URL;
-  const [hidden, setHidden] = useState(true);
+  const eligible = useSyncExternalStore(noSubscription, isEligible, () => false);
+  const [dismissed, setDismissed] = useState(false);
 
-  useEffect(() => {
-    setHidden(localStorage.getItem(DISMISS_KEY) === "1");
-  }, []);
-
-  if (hidden) return null;
+  if (!eligible || dismissed) return null;
 
   const dismiss = () => {
     try {
@@ -30,7 +40,7 @@ export function IosAppBanner() {
     } catch {
       /* ignore */
     }
-    setHidden(true);
+    setDismissed(true);
   };
 
   return (

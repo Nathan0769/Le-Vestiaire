@@ -99,6 +99,11 @@ export async function generateMetadata({
         "max-snippet": -1,
       },
     },
+    // Smart App Banner de Safari iOS sur toutes les pages (héritée par les pages,
+    // aucune ne redéfinit `itunes`). Safari la masque d'elle-même si l'app est installée.
+    itunes: {
+      appId: "6808174449",
+    },
     other: {
       "google-adsense-account": "ca-pub-1296292175464272",
     },
