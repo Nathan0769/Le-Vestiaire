@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { GoogleIcon } from "@/components/icons/Google-icon";
 import { useAuth } from "@/hooks/useAuth";
-import { buildAuthUrl, type AuthGateIntent } from "@/lib/auth-gate";
+import { buildAuthUrl, withRef, type AuthGateIntent } from "@/lib/auth-gate";
 import { trackEvent } from "@/lib/analytics";
 
 interface AuthGateModalProps {
@@ -63,7 +63,7 @@ export function AuthGateModal({
       params: { intent, provider: "google" },
     });
     try {
-      await signInWithGoogle(returnTo);
+      await signInWithGoogle(withRef(returnTo, window.location.search));
     } catch (err) {
       console.error("AuthGate Google error:", err);
     }
@@ -75,7 +75,7 @@ export function AuthGateModal({
       name: "auth_gate_signup_clicked",
       params: { intent, provider: "email" },
     });
-    router.push(buildAuthUrl("signUp", returnTo));
+    router.push(buildAuthUrl("signUp", withRef(returnTo, window.location.search)));
   };
 
   const handleSignIn = () => {
@@ -84,7 +84,7 @@ export function AuthGateModal({
       name: "auth_gate_login_clicked",
       params: { intent },
     });
-    router.push(buildAuthUrl("login", returnTo));
+    router.push(buildAuthUrl("login", withRef(returnTo, window.location.search)));
   };
 
   const handleOpenChange = (newOpen: boolean) => {

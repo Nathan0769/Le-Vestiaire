@@ -19,6 +19,7 @@ Ces cookies sont essentiels au fonctionnement du site et ne peuvent pas être d�
 
 - **Vercel Analytics** et **Vercel Speed Insights** : statistiques de visite et mesure des performances, anonymes et agrégées. Ils ne déposent aucun cookie et ne suivent pas votre navigation sur d'autres sites ; conformément aux lignes directrices de la CNIL sur la mesure d'audience, ils ne nécessitent pas votre consentement.
 - **Google Analytics** : analyse du trafic. Il dépose des cookies et n'est chargé que si vous les acceptez via la bannière de consentement.
+- **Première page vue** (`lv_first_path`, stockage de session du navigateur) : seulement si vous acceptez la mesure d'audience. Garde l'adresse de la première page vue pendant la visite, pour savoir d'où vient une inscription. Effacée à la fermeture de l'onglet.
 
 Refuser les cookies n'affecte pas votre expérience de navigation.
 
@@ -45,6 +46,7 @@ Vous pouvez à tout moment modifier vos préférences concernant les cookies :
 
 - **Cookies de session** : Supprimés à la fermeture du navigateur
 - **Cookie de consentement** : Conservé jusqu'en 2099 ou jusqu'à suppression manuelle
+- **Première page vue** (`lv_first_path`) : jusqu'à la fermeture de l'onglet
 - **Cookies Google Analytics** : 13 mois maximum
 - **Cookies publicitaires (Google AdSense)** : jusqu'à 13 mois selon le cookie
 

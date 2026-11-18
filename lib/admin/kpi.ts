@@ -1,6 +1,7 @@
 import { unstable_cache } from "next/cache";
 import { Prisma } from "@prisma/client";
 import prisma from "@/lib/prisma";
+import { summarizeSignupSources, type SignupSourcesSummary } from "@/lib/signup-attribution";
 import {
   buildCohortMatrix,
   COHORT_WEEKS,
@@ -361,6 +362,44 @@ async function comparisonSeries(
   return splitComparisonSeries(filled, period, CHART_METRICS);
 }
 
+/**
+ * Source des inscrits de la période. Même filtre que la tuile « Inscriptions »
+ * (staff et bannis exclus, plateforme) pour que les totaux concordent ; un
+ * compte sans ligne (créé avant le suivi) est compté « inconnu ».
+ */
+export async function getSignupSources(
+  range: DateRange,
+  platform: PlatformFilter
+): Promise<SignupSourcesSummary> {
+  const rows = await prisma.$queryRaw<
+    {
+      has_attribution: boolean;
+      platform: string | null;
+      referrer_host: string | null;
+      ref: string | null;
+      entry_path: string | null;
+      first_path: string | null;
+    }[]
+  >`
+    SELECT s.user_id IS NOT NULL AS has_attribution, s.platform, s.referrer_host,
+           s.ref, s.entry_path, s.first_path
+    FROM "user" u
+    LEFT JOIN signup_attributions s ON s.user_id = u.id
+    WHERE u."createdAt" >= ${range.start} AND u."createdAt" < ${range.end}
+      ${userFilter(Prisma.raw("u.id"), platform)}
+  `;
+  return summarizeSignupSources(
+    rows.map((r) => ({
+      hasAttribution: r.has_attribution,
+      platform: r.platform,
+      referrerHost: r.referrer_host,
+      ref: r.ref,
+      entryPath: r.entry_path,
+      firstPath: r.first_path,
+    }))
+  );
+}
+
 async function countUsers(platform: PlatformFilter, where: Prisma.Sql = Prisma.empty) {
   const [row] = await prisma.$queryRaw<{ n: bigint }[]>`
     SELECT COUNT(*)::bigint AS n FROM "user"
@@ -402,6 +441,7 @@ async function computeAdminKpis(
     proposalsRejected,
     cohortRows,
     series,
+    signupSources,
   ] = await Promise.all([
     countUsers(platform),
     countUsers("all"),
@@ -428,6 +468,7 @@ async function computeAdminKpis(
     countEvents("rejected", ranges.current, platform),
     getCohortRows(now, source, platform),
     comparisonSeries(period, now, source, platform),
+    getSignupSources(ranges.current, platform),
   ]);
 
   const byMetric = Object.fromEntries(
@@ -456,6 +497,7 @@ async function computeAdminKpis(
       googleShare: ratio(googleSignups, byMetric.signups.current),
     },
     platforms: { ...split, iosShare: ratio(iosUsers, allUsers) },
+    signupSources,
     content: { catalogSize, proposalsPending, proposalsApproved, proposalsRejected },
     cohorts: buildCohortMatrix(cohortRows, now),
   };

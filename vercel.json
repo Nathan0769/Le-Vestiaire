@@ -76,6 +76,10 @@
     {
       "path": "/api/cron/wishlist-promos",
       "schedule": "0 7 * * *"
+    },
+    {
+      "path": "/api/cron/purge-data",
+      "schedule": "10 3 1 * *"
     }
   ]
 }

@@ -6,6 +6,7 @@ import { KpiTile } from "@/components/admin/kpi/kpi-tile";
 import { KpiComparisonChart } from "@/components/admin/kpi/kpi-comparison-chart";
 import { CohortTable, formatWeek } from "@/components/admin/kpi/cohort-table";
 import { PlatformSplitBar } from "@/components/admin/kpi/platform-split-bar";
+import { SignupSources } from "@/components/admin/kpi/signup-sources";
 import { KpiUsersSheet, type KpiUsersQuery } from "@/components/admin/kpi/kpi-users-sheet";
 import type { AdminKpis, ChartMetric } from "@/types/admin-kpi";
 
@@ -178,6 +179,17 @@ export function KpiDashboard({ kpis }: { kpis: AdminKpis }) {
         <Card>
           <CardContent className="pt-6">
             <PlatformSplitBar split={platforms} />
+          </CardContent>
+        </Card>
+      </Section>
+
+      <Section
+        title="Source des inscriptions"
+        description={`Inscrits des ${period} derniers jours. ${EXCLUDED} Page d'arrivée = première page vue si le visiteur a accepté la mesure d'audience, sinon page d'où part l'inscription. Inconnu = compte créé avant le suivi (18/11/2026) ou source non transmise.`}
+      >
+        <Card>
+          <CardContent className="pt-6">
+            <SignupSources summary={kpis.signupSources} />
           </CardContent>
         </Card>
       </Section>

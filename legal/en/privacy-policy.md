@@ -1,6 +1,6 @@
 # Privacy Policy
 
-**Last updated**: September 23, 2025
+**Last updated**: November 18, 2026
 
 ## 1. General Information
 
@@ -22,6 +22,10 @@ Le Vestiaire (accessible via le-vestiaire-foot.fr) is a web application for coll
 - Public jersey ratings (average ratings)
 - Browsing data via Vercel Analytics
 
+### Sign-up origin
+
+When your account is created, we record where the sign-up came from: the platform (website or iOS app), the method (email, Google, Apple), the page of the site you signed up from (address without parameters), the site that referred you (its domain name only, for example google.com) and, where applicable, the Le Vestiaire link you followed (referral, recap, shared wishlist). If you have accepted audience measurement, we also record the first page viewed during that visit. Nothing is kept in your browser before sign-up without your consent.
+
 ### Payment data (Supporter subscribers)
 
 - Subscription status and payment history, via our provider Stripe
@@ -32,7 +36,7 @@ Le Vestiaire (accessible via le-vestiaire-foot.fr) is a web application for coll
 We process your data based on:
 
 - **Your consent**: For registration and use of the service
-- **Legitimate interest**: For service improvement and analytics
+- **Legitimate interest**: For service improvement and analytics, and to measure how well our acquisition channels work (sign-up origin)
 
 ## 4. Use of Data
 
@@ -42,6 +46,7 @@ Your data is used to:
 - Manage your user account
 - Calculate average jersey ratings (aggregated data)
 - Improve user experience through analytics
+- Understand which channels bring new members (internal statistics on sign-up origin)
 - Contact you regarding your account if necessary
 
 ## 5. Data Sharing
@@ -68,6 +73,7 @@ Your data may be transferred to countries outside the European Union through our
 ## 7. Retention Period
 
 - **Active account**: Indefinite retention as long as your account exists
+- **Sign-up origin**: 25 months after account creation, then deleted automatically (or earlier if you delete your account)
 - **Google authentication**: Reconnection required every 14 days
 - **Deletion**: Complete deletion upon your request
 

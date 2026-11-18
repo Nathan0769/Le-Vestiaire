@@ -24,6 +24,12 @@ describe("mobileLoginSignInBody", () => {
     expect(mobileLoginSignInBody("google", false).callbackURL).toBe(BRIDGE);
   });
 
+  it("se déclare iOS pour la source d'inscription", () => {
+    expect(mobileLoginSignInBody("google", false).additionalData).toEqual({
+      signupContext: { platform: "ios" },
+    });
+  });
+
   it("un provider inattendu retombe sur google", () => {
     expect(mobileLoginSignInBody("goo<script>", false).provider).toBe("google");
   });

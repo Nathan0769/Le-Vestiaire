@@ -1,5 +1,6 @@
 import { createAuthClient } from "better-auth/react";
 import { adminClient, lastLoginMethodClient } from "better-auth/client/plugins";
+import { currentSignupContext } from "@/lib/signup-context-client";
 
 export const authClient = createAuthClient({
   baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL!,
@@ -15,6 +16,8 @@ export const handleGoogleSignIn = async (returnTo?: string) => {
   const { error } = await authClient.signIn.social({
     provider: "google",
     callbackURL,
+    // Relu au retour de Google si le compte est créé (source d'inscription)
+    additionalData: { signupContext: currentSignupContext(returnTo) },
   });
   if (error) console.error(error);
 };

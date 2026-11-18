@@ -1,6 +1,6 @@
 # Politique de Confidentialité
 
-**Dernière mise à jour** : 11 juin 2026
+**Dernière mise à jour** : 18 novembre 2026
 
 ## 1. Informations générales
 
@@ -22,6 +22,10 @@ Le Vestiaire (accessible via le-vestiaire-foot.fr) est une application web de co
 - Évaluations publiques des maillots (notes moyennes)
 - Données de navigation via Vercel Analytics
 
+### Origine de l'inscription
+
+À la création de votre compte, nous enregistrons d'où vient l'inscription : la plateforme (site ou app iOS), la méthode (email, Google, Apple), la page du site d'où vous vous êtes inscrit (adresse sans paramètres), le site qui vous a amené (son nom de domaine seulement, par exemple google.com) et, le cas échéant, le lien Le Vestiaire suivi (parrainage, récapitulatif, wishlist partagée). Si vous avez accepté la mesure d'audience, nous enregistrons aussi la première page vue lors de cette visite. Rien n'est conservé dans votre navigateur avant l'inscription sans votre accord.
+
 ### Données de paiement (abonnés Supporter)
 
 - Statut d'abonnement et historique de paiement, via notre prestataire Stripe
@@ -32,7 +36,7 @@ Le Vestiaire (accessible via le-vestiaire-foot.fr) est une application web de co
 Nous traitons vos données sur la base de :
 
 - **Votre consentement** : Pour l'inscription, l'utilisation du service et l'affichage de publicités personnalisées
-- **Intérêt légitime** : Pour l'amélioration du service et les analytics
+- **Intérêt légitime** : Pour l'amélioration du service et les analytics, et pour mesurer l'efficacité de nos canaux d'acquisition (origine de l'inscription)
 
 ## 4. Utilisation des données
 
@@ -42,6 +46,7 @@ Vos données sont utilisées pour :
 - Gérer votre compte utilisateur
 - Calculer les notes moyennes des maillots (données agrégées)
 - Améliorer l'expérience utilisateur via les analytics
+- Savoir quels canaux amènent de nouveaux membres (statistiques internes sur l'origine des inscriptions)
 - Vous contacter concernant votre compte si nécessaire
 
 ## 5. Partage des données
@@ -72,6 +77,7 @@ Vos données peuvent être transférées vers des pays hors Union Européenne vi
 ## 7. Durée de conservation
 
 - **Compte actif** : Conservation indéfinie tant que votre compte existe
+- **Origine de l'inscription** : 25 mois après la création du compte, puis suppression automatique (ou plus tôt si vous supprimez votre compte)
 - **Authentification Google** : Reconnexion requise tous les 14 jours
 - **Suppression** : Suppression complète sur demande de votre part
 

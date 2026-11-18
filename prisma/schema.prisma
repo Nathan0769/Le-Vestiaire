@@ -80,8 +80,33 @@ model User {
   notifications               Notification[]        @relation("NotificationRecipient")
   notificationsActedOn        Notification[]        @relation("NotificationActor")
   activityDays                UserActivityDay[]
+  signupAttribution           SignupAttribution?
 
   @@map("user")
+}
+
+/// Source d'une inscription, écrite à la création du compte (hook Better Auth).
+/// Table à part : finalité mesure d'acquisition, purgée à 25 mois (cron purge-data).
+/// Spec : docs/specs/2026-11-18-source-inscription.md
+model SignupAttribution {
+  userId       String   @id @map("user_id")
+  /// "web" | "ios"
+  platform     String
+  /// "email" | "google" | "apple" | "other"
+  method       String
+  /// Page d'où part l'inscription (chemin seul, sans langue ni query)
+  entryPath    String?  @map("entry_path")
+  /// Hôte du référent externe, jamais l'URL complète
+  referrerHost String?  @map("referrer_host")
+  /// ?ref= de nos liens (parrainage, récap, wishlist partagée)
+  ref          String?
+  /// Première page vue, seulement avec le consentement mesure d'audience
+  firstPath    String?  @map("first_path")
+  createdAt    DateTime @default(now()) @map("created_at")
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt])
+  @@map("signup_attributions")
 }
 
 model Session {

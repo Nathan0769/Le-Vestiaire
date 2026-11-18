@@ -7,6 +7,7 @@ import { resend, FROM_EMAIL, APP_URL } from "./email";
 import { ResetPasswordEmail } from "@/emails/reset-password";
 import { generateSlugBasedUsername } from "@/lib/username-generator";
 import { googleClientIds } from "@/lib/mobile-oauth";
+import { captureSignupAttribution, saveSignupAttribution } from "@/lib/signup-attribution-hook";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
@@ -24,7 +25,9 @@ export const auth = betterAuth({
   databaseHooks: {
     user: {
       create: {
-        before: async (user) => {
+        before: async (user, ctx) => {
+          // Source de l'inscription (docs/specs/2026-11-18-source-inscription.md)
+          await captureSignupAttribution(ctx);
           const username = await generateSlugBasedUsername(user.name ?? null);
           return {
             data: {
@@ -33,6 +36,9 @@ export const auth = betterAuth({
               usernameGenerated: true,
             },
           };
+        },
+        after: async (user, ctx) => {
+          await saveSignupAttribution(user.id, ctx);
         },
       },
     },

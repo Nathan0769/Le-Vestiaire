@@ -14,6 +14,8 @@ import { AuthUser, AuthContextValue } from "@/types/auth";
 import { useAnalyticsUser } from "@/hooks/useAnalyticsUser";
 import { trackEvent } from "@/lib/analytics";
 import { parsePendingIntent } from "@/lib/auth-gate";
+import { currentSignupContext } from "@/lib/signup-context-client";
+import { SIGNUP_CONTEXT_HEADER } from "@/lib/signup-attribution";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
@@ -133,6 +135,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         provider: "google",
         callbackURL: buildOnboardingUrl(returnTo),
         errorCallbackURL: "/auth/login",
+        // Relu au retour de Google si le compte est créé (source d'inscription)
+        additionalData: { signupContext: currentSignupContext(returnTo) },
       });
 
       if (error) throw new Error(error.message);
@@ -166,6 +170,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         email,
         password,
         name: email.split("@")[0],
+        fetchOptions: {
+          headers: { [SIGNUP_CONTEXT_HEADER]: JSON.stringify(currentSignupContext(returnTo)) },
+        },
       });
 
       if (error) throw new Error(error.message);

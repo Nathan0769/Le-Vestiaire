@@ -2,19 +2,21 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import { X, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { withRef } from "@/lib/auth-gate";
 
 export function AuthGateBanner() {
   const t = useTranslations("Profile.authBanner");
   const pathname = usePathname();
+  const searchParams = useSearchParams();
   const [dismissed, setDismissed] = useState(false);
 
   if (dismissed) return null;
 
-  const returnTo = encodeURIComponent(pathname);
+  const returnTo = encodeURIComponent(withRef(pathname, searchParams.toString()));
 
   return (
     <div className="relative rounded-lg border border-primary/20 bg-gradient-to-r from-primary/5 to-primary/10 p-4 md:p-5">

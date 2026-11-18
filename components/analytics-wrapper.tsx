@@ -9,12 +9,18 @@ import {
   COOKIE_CONSENT_EVENT_NAME,
   COOKIE_CONSENT_CHANNEL,
 } from "@/lib/cookie-consent";
+import { rememberFirstPath } from "@/lib/signup-context-client";
 
 export function AnalyticsWrapper() {
   const [hasConsent, setHasConsent] = useState(() => hasAnalyticsConsent());
 
   useEffect(() => {
-    const update = () => setHasConsent(hasAnalyticsConsent());
+    // Première page vue, seulement avec l'accord mesure d'audience (source d'inscription)
+    rememberFirstPath();
+    const update = () => {
+      setHasConsent(hasAnalyticsConsent());
+      rememberFirstPath();
+    };
     window.addEventListener(COOKIE_CONSENT_EVENT_NAME, update);
 
     const channel =

@@ -1,3 +1,5 @@
+import { normalizeRef } from "@/lib/signup-attribution";
+
 export const AUTH_GATE_INTENTS = ["add_collection", "add_wishlist", "report"] as const;
 export type AuthGateIntent = (typeof AUTH_GATE_INTENTS)[number];
 
@@ -15,6 +17,20 @@ export function buildReturnTo(currentPath: string, intent: AuthGateIntent): stri
   const [path, search = ""] = currentPath.split("?");
   const params = new URLSearchParams(search);
   params.set("intent", intent);
+  return `${path}?${params.toString()}`;
+}
+
+/**
+ * Garde le `?ref=` de nos liens (parrainage, récap, wishlist partagée) dans
+ * `returnTo`, pour qu'il survive au parcours d'inscription, OAuth compris.
+ */
+export function withRef(returnTo: string, currentSearch: string): string {
+  const ref = normalizeRef(new URLSearchParams(currentSearch).get("ref"));
+  if (!ref) return returnTo;
+  const [path, search = ""] = returnTo.split("?");
+  const params = new URLSearchParams(search);
+  if (params.has("ref")) return returnTo;
+  params.set("ref", ref);
   return `${path}?${params.toString()}`;
 }
 

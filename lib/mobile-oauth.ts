@@ -40,6 +40,9 @@ export function mobileLoginSignInBody(provider: string, isRetry: boolean) {
     provider: safeProvider,
     callbackURL: BRIDGE_URL,
     errorCallbackURL: isRetry ? BRIDGE_URL : retryURL,
+    // Relu par le hook de création de compte (lib/signup-attribution-hook.ts) :
+    // ce parcours passe par le navigateur, sans les en-têtes de l'app
+    additionalData: { signupContext: { platform: "ios" as const } },
   };
 }
 

@@ -5,6 +5,7 @@ import {
   buildReturnTo,
   buildAuthUrl,
   parsePendingIntent,
+  withRef,
 } from "@/lib/auth-gate";
 
 describe("isValidReturnTo", () => {
@@ -91,5 +92,20 @@ describe("parsePendingIntent", () => {
 describe("AUTH_GATE_INTENTS", () => {
   it("exposes the 3 supported intents", () => {
     expect(AUTH_GATE_INTENTS).toEqual(["add_collection", "add_wishlist", "report"]);
+  });
+});
+
+describe("withRef", () => {
+  it("reporte le ?ref= de la page courante dans returnTo", () => {
+    expect(withRef("/fr/w/abc?intent=add_wishlist", "?ref=recap&x=1")).toBe(
+      "/fr/w/abc?intent=add_wishlist&ref=recap"
+    );
+    expect(withRef("/u/nathan", "?ref=parrain")).toBe("/u/nathan?ref=parrain");
+  });
+
+  it("ne change rien sans ref, avec un ref invalide, ou si returnTo en a déjà un", () => {
+    expect(withRef("/jerseys", "")).toBe("/jerseys");
+    expect(withRef("/jerseys", "?ref=<x>")).toBe("/jerseys");
+    expect(withRef("/jerseys?ref=a", "?ref=b")).toBe("/jerseys?ref=a");
   });
 });

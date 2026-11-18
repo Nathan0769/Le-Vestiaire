@@ -1,6 +1,6 @@
 # Política de Privacidad
 
-**Última actualización**: 23 de septiembre de 2025
+**Última actualización**: 18 de noviembre de 2026
 
 ## 1. Información General
 
@@ -22,6 +22,10 @@ Le Vestiaire (accesible a través de le-vestiaire-foot.fr) es una aplicación we
 - Evaluaciones públicas de camisetas (calificaciones promedio)
 - Datos de navegación a través de Vercel Analytics
 
+### Origen del registro
+
+Al crear su cuenta, registramos de dónde procede el registro: la plataforma (sitio web o app iOS), el método (email, Google, Apple), la página del sitio desde la que se registró (dirección sin parámetros), el sitio que le trajo (solo su nombre de dominio, por ejemplo google.com) y, en su caso, el enlace de Le Vestiaire que siguió (invitación, resumen, wishlist compartida). Si ha aceptado la medición de audiencia, registramos también la primera página vista durante esa visita. No se guarda nada en su navegador antes del registro sin su consentimiento.
+
 ### Datos de pago (suscriptores Supporter)
 
 - Estado de la suscripción e historial de pagos, a través de nuestro proveedor Stripe
@@ -32,7 +36,7 @@ Le Vestiaire (accesible a través de le-vestiaire-foot.fr) es una aplicación we
 Procesamos sus datos basándonos en:
 
 - **Su consentimiento**: Para el registro y uso del servicio
-- **Interés legítimo**: Para la mejora del servicio y los análisis
+- **Interés legítimo**: Para la mejora del servicio y los análisis, y para medir la eficacia de nuestros canales de captación (origen del registro)
 
 ## 4. Uso de los Datos
 
@@ -42,6 +46,7 @@ Sus datos se utilizan para:
 - Gestionar su cuenta de usuario
 - Calcular las calificaciones promedio de las camisetas (datos agregados)
 - Mejorar la experiencia del usuario mediante análisis
+- Saber qué canales traen nuevos miembros (estadísticas internas sobre el origen de los registros)
 - Contactarle sobre su cuenta si es necesario
 
 ## 5. Compartir Datos
@@ -68,6 +73,7 @@ Sus datos pueden ser transferidos a países fuera de la Unión Europea a través
 ## 7. Período de Conservación
 
 - **Cuenta activa**: Conservación indefinida mientras exista su cuenta
+- **Origen del registro**: 25 meses tras la creación de la cuenta y después se elimina automáticamente (o antes si elimina su cuenta)
 - **Autenticación Google**: Reconexión requerida cada 14 días
 - **Eliminación**: Eliminación completa bajo su solicitud
 

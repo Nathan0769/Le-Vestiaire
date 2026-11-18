@@ -1,3 +1,4 @@
+import type { SignupSourcesSummary } from "@/lib/signup-attribution";
 export type KpiPeriod = 7 | 30 | 90;
 
 /** `ios` = utilisateurs vus sur l'app, `web` = jamais vus sur l'app. */
@@ -84,6 +85,8 @@ export type AdminKpis = {
   };
   /** Actifs 30 j, jamais filtrés par plateforme (c'est la répartition elle-même). */
   platforms: PlatformSplit & { iosShare: number };
+  /** Inscrits de la période choisie, par canal et page d'arrivée. */
+  signupSources: SignupSourcesSummary;
   content: {
     catalogSize: number;
     proposalsPending: number;
