@@ -3685,5 +3685,15 @@
         "cta": "Voir le catalogue"
       }
     }
+  },
+  "JerseySignupCard": {
+    "label": "Inscription gratuite",
+    "ownTitle": "Tu as ce maillot ?",
+    "ownAction": "Ajouter à ma collection",
+    "wantTitle": "Tu le veux ? On te prévient quand il est en promo",
+    "wantAction": "Ajouter à ma wishlist",
+    "free": "Gratuit, en 30 secondes.",
+    "teaser": "Cote de ta collection : <amount>1 240 €</amount> avec <plan>Premium</plan>",
+    "hiddenAmount": "montant masqué"
   }
 }

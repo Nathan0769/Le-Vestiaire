@@ -3680,5 +3680,15 @@
         "cta": "Ver el catálogo"
       }
     }
+  },
+  "JerseySignupCard": {
+    "label": "Registro gratuito",
+    "ownTitle": "¿Tienes esta camiseta?",
+    "ownAction": "Añadir a mi colección",
+    "wantTitle": "¿La quieres? Te avisamos cuando esté en oferta",
+    "wantAction": "Añadir a mi lista de deseos",
+    "free": "Gratis, en 30 segundos.",
+    "teaser": "Valor de tu colección: <amount>1240 €</amount> con <plan>Premium</plan>",
+    "hiddenAmount": "importe oculto"
   }
 }

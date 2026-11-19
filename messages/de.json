@@ -3703,5 +3703,15 @@
         "cta": "Zum Katalog"
       }
     }
+  },
+  "JerseySignupCard": {
+    "label": "Kostenlose Anmeldung",
+    "ownTitle": "Hast du dieses Trikot?",
+    "ownAction": "Zu meiner Sammlung hinzufügen",
+    "wantTitle": "Willst du es? Wir sagen dir Bescheid, wenn es im Angebot ist",
+    "wantAction": "Zu meiner Wunschliste hinzufügen",
+    "free": "Kostenlos, in 30 Sekunden.",
+    "teaser": "Wert deiner Sammlung: <amount>1.240 €</amount> mit <plan>Premium</plan>",
+    "hiddenAmount": "Betrag verborgen"
   }
 }

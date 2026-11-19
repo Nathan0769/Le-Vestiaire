@@ -3680,5 +3680,15 @@
         "cta": "Naar de catalogus"
       }
     }
+  },
+  "JerseySignupCard": {
+    "label": "Gratis aanmelden",
+    "ownTitle": "Heb je dit shirt?",
+    "ownAction": "Toevoegen aan mijn collectie",
+    "wantTitle": "Wil je het? We laten het je weten als het in de aanbieding is",
+    "wantAction": "Toevoegen aan mijn verlanglijst",
+    "free": "Gratis, in 30 seconden.",
+    "teaser": "Waarde van je collectie: <amount>€ 1.240</amount> met <plan>Premium</plan>",
+    "hiddenAmount": "bedrag verborgen"
   }
 }

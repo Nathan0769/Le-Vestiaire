@@ -6,6 +6,7 @@ import {
   buildAuthUrl,
   parsePendingIntent,
   withRef,
+  buildSignupCardReturnTo,
 } from "@/lib/auth-gate";
 
 describe("isValidReturnTo", () => {
@@ -107,5 +108,19 @@ describe("withRef", () => {
     expect(withRef("/jerseys", "")).toBe("/jerseys");
     expect(withRef("/jerseys", "?ref=<x>")).toBe("/jerseys");
     expect(withRef("/jerseys?ref=a", "?ref=b")).toBe("/jerseys?ref=a");
+  });
+});
+
+describe("buildSignupCardReturnTo", () => {
+  it("marque l'encart de la fiche avec ref=fiche-encart et garde l'intention", () => {
+    expect(
+      buildSignupCardReturnTo("/jerseys/l1/clubs/psg/jerseys/maillot-psg", "add_wishlist", "")
+    ).toBe("/jerseys/l1/clubs/psg/jerseys/maillot-psg?intent=add_wishlist&ref=fiche-encart");
+  });
+
+  it("laisse la priorité au ?ref= d'arrivée (parrainage, wishlist partagée)", () => {
+    expect(buildSignupCardReturnTo("/jerseys/x", "add_collection", "?ref=parrain")).toBe(
+      "/jerseys/x?intent=add_collection&ref=parrain"
+    );
   });
 });

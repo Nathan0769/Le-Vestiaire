@@ -3680,5 +3680,15 @@
         "cta": "Browse the catalogue"
       }
     }
+  },
+  "JerseySignupCard": {
+    "label": "Free sign-up",
+    "ownTitle": "Own this shirt?",
+    "ownAction": "Add to my collection",
+    "wantTitle": "Want it? We'll tell you when it's on sale",
+    "wantAction": "Add to my wishlist",
+    "free": "Free, in 30 seconds.",
+    "teaser": "Your collection's value: <amount>€1,240</amount> with <plan>Premium</plan>",
+    "hiddenAmount": "amount hidden"
   }
 }

@@ -3680,5 +3680,15 @@
         "cta": "Vai al catalogo"
       }
     }
+  },
+  "JerseySignupCard": {
+    "label": "Iscrizione gratuita",
+    "ownTitle": "Hai questa maglia?",
+    "ownAction": "Aggiungi alla mia collezione",
+    "wantTitle": "La vuoi? Ti avvisiamo quando è in offerta",
+    "wantAction": "Aggiungi alla mia lista dei desideri",
+    "free": "Gratis, in 30 secondi.",
+    "teaser": "Valore della tua collezione: <amount>1.240 €</amount> con <plan>Premium</plan>",
+    "hiddenAmount": "importo nascosto"
   }
 }

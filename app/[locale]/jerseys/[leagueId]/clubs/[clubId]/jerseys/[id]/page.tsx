@@ -31,6 +31,9 @@ import { getPartnerOffers } from "@/lib/partner-shops/offers";
 import { buildWhereToBuy } from "@/lib/where-to-buy";
 import { getCfsClubOffer } from "@/lib/cfs-club-offer";
 import { buildJerseyMetaPrice } from "@/lib/jersey-meta-price";
+import { headers } from "next/headers";
+import { getSessionCookie } from "better-auth/cookies";
+import { JerseySignupCard } from "@/components/jerseys/jersey-signup-card";
 
 // Rendu à chaque visite : le cache ISR du catalogue coûtait plus en écritures
 // Vercel (1,23 M unités en 6 jours) qu'il ne faisait gagner sur Neon (retour
@@ -356,6 +359,10 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
     );
   }
 
+  // Encart d'inscription : présence du cookie seulement, sans lecture de session
+  // en base. Rendu côté serveur pour le visiteur sans compte, donc sans saut.
+  const showSignupCard = getSessionCookie(await headers()) === null;
+
   const [ratingData, statsData, cfsAvailability, partnerOffers] = await Promise.all([
     getCachedRating(jersey.id),
     getCachedStats(jersey.id),
@@ -623,6 +630,12 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
               </div>
 
               <div className="flex flex-col gap-3 mt-8 pt-6 border-t border-border/50 min-w-0">
+                {/* Visiteur sans compte : l'encart remplace les boutons (ref=fiche-encart). */}
+                {showSignupCard ? (
+                  <JerseySignupCard
+                    jersey={{ id: jersey.id, name: translatedJerseyName, imageUrl: jersey.imageUrl }}
+                  />
+                ) : (
                 <div className="flex flex-col xl:flex-row gap-3 min-w-0">
                   <CollectionButton
                     jerseyId={jersey.id}
@@ -639,6 +652,7 @@ export default async function JerseyPage({ params }: JerseyPageProps) {
                     leagueId={jersey.club.league.id}
                   />
                 </div>
+                )}
               </div>
             </div>
           </div>
