@@ -1,96 +1,75 @@
 import { NextResponse } from "next/server";
-import { render } from "@react-email/components";
 import prisma from "@/lib/prisma";
-import { resend, FROM_EMAIL, buildUnsubscribeUrl, APP_URL } from "@/lib/email";
-import { ReminderNoJerseyEmail } from "@/emails/reminder-no-jersey";
+import { resend, FROM_EMAIL } from "@/lib/email";
+import { accountLocale } from "@/lib/account-locale";
+import { buildReminderEmail } from "@/lib/reminder-email";
+import {
+  MAX_REMINDER_STEP,
+  ageInDays,
+  dueReminderStep,
+  reminderCandidateWindow,
+  type ReminderStep,
+} from "@/lib/reminders";
 
 export const maxDuration = 60;
 
+/**
+ * Relances des comptes sans maillot (J+1, J+7, J+30), dans la langue du compte.
+ * Quotidien (vercel.json). Spec : docs/specs/2026-11-18-relances-traduites.md.
+ * Aucune purge ici : elles vont dans /api/cron/purge-data.
+ */
 export async function GET(request: Request) {
-  // Protection de l'endpoint cron
   const authHeader = request.headers.get("Authorization");
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
   }
 
   const now = new Date();
+  const { createdAfter, createdBefore } = reminderCandidateWindow(now);
 
-  const daysAgo = (days: number) => {
-    const d = new Date(now);
-    d.setDate(d.getDate() - days);
-    return d;
-  };
-
-  // Rappel 1 : inscrit depuis 7-14 jours, reminderStep = 0
-  const firstReminderUsers = await prisma.user.findMany({
+  const candidates = await prisma.user.findMany({
     where: {
       emailMarketing: true,
-      reminderStep: 0,
-      createdAt: { gte: daysAgo(14), lte: daysAgo(7) },
+      reminderStep: { lt: MAX_REMINDER_STEP },
+      createdAt: { gt: createdAfter, lte: createdBefore },
+      // Un compte qui ajoute un maillot sort du parcours
       collection: { none: {} },
     },
-    select: { id: true, email: true, name: true },
+    select: { id: true, email: true, name: true, locale: true, createdAt: true, reminderStep: true },
   });
 
-  // Rappel 2 : inscrit depuis 30-37 jours, reminderStep = 1
-  const secondReminderUsers = await prisma.user.findMany({
-    where: {
-      emailMarketing: true,
-      reminderStep: 1,
-      createdAt: { gte: daysAgo(37), lte: daysAgo(30) },
-      collection: { none: {} },
-    },
-    select: { id: true, email: true, name: true },
-  });
+  // Cité dans J+1 (« N maillots au catalogue ») : une seule requête par passage
+  const catalogCount = candidates.length > 0 ? await prisma.jersey.count() : 0;
 
+  const breakdown: Record<`d${ReminderStep}`, number> = { d1: 0, d7: 0, d30: 0 };
   let sent = 0;
   let failed = 0;
 
-  const sendReminder = async (user: { id: string; email: string; name: string }, step: number) => {
+  for (const user of candidates) {
+    const step = dueReminderStep(ageInDays(user.createdAt, now), user.reminderStep);
+    if (!step) continue;
+
     try {
-      const unsubscribeUrl = buildUnsubscribeUrl(user.id);
-      const html = await render(
-        ReminderNoJerseyEmail({
-          userName: user.name,
-          unsubscribeUrl,
-          appUrl: APP_URL,
-        })
-      );
-
-      await resend.emails.send({
-        from: FROM_EMAIL,
-        to: user.email,
-        subject: "Ta collection t'attend sur Le Vestiaire",
-        html,
+      const { subject, html } = await buildReminderEmail({
+        step,
+        locale: accountLocale(user.locale),
+        userId: user.id,
+        userName: user.name,
+        catalogCount,
       });
 
-      await prisma.user.update({
-        where: { id: user.id },
-        data: { reminderStep: step },
-      });
+      await resend.emails.send({ from: FROM_EMAIL, to: user.email, subject, html });
 
+      // Après l'envoi seulement : un échec sera retenté au prochain passage
+      await prisma.user.update({ where: { id: user.id }, data: { reminderStep: step } });
+
+      breakdown[`d${step}`]++;
       sent++;
     } catch (error) {
-      console.error(`Erreur envoi email pour ${user.id}:`, error);
+      console.error(`Erreur envoi relance pour ${user.id}:`, error);
       failed++;
     }
-  };
-
-  for (const user of firstReminderUsers) {
-    await sendReminder(user, 1);
   }
 
-  for (const user of secondReminderUsers) {
-    await sendReminder(user, 2);
-  }
-
-  return NextResponse.json({
-    sent,
-    failed,
-    total: firstReminderUsers.length + secondReminderUsers.length,
-    breakdown: {
-      firstReminder: firstReminderUsers.length,
-      secondReminder: secondReminderUsers.length,
-    },
-  });
+  return NextResponse.json({ sent, failed, candidates: candidates.length, breakdown });
 }

@@ -3623,5 +3623,62 @@
         }
       }
     }
+  },
+  "Emails": {
+    "common": {
+      "tagline": "Il sito e l'app dei collezionisti di maglie da calcio",
+      "stepsTitle": "Aggiungere una maglia in 3 passaggi",
+      "step1": "Cerca il tuo club o la tua maglia nel catalogo.",
+      "step2": "Apri la sua scheda e tocca «Aggiungi alla mia collezione».",
+      "step3": "Indica taglia e condizione: fatto."
+    },
+    "footer": {
+      "reason": "Ricevi questa e-mail perché sei iscritto a Le Vestiaire.",
+      "unsubscribe": "Annulla l'iscrizione"
+    },
+    "reminders": {
+      "d1": {
+        "subject": "Aggiungi la tua prima maglia",
+        "preview": "Cosa fa Le Vestiaire per la tua collezione e come iniziare",
+        "kicker": "Benvenuto",
+        "title": "Aggiungi la tua prima maglia",
+        "intro": "Ciao {name}, Le Vestiaire è il posto dove i collezionisti ordinano, seguono e mostrano le loro maglie da calcio. Nel catalogo ci sono già {count, number} maglie: le tue ci sono di sicuro. Inizia da una: con 3 maglie, la tua vetrina prende forma.",
+        "f1Title": "Tutta la tua collezione in un unico posto",
+        "f1Text": "Taglia, condizione, personalizzazione, prezzo d'acquisto e le tue foto, per ogni maglia.",
+        "f2Title": "I tuoi desideri e le offerte migliori",
+        "f2Text": "Segna le maglie che cerchi: confrontiamo i prezzi dei negozi e ti avvisiamo quando una scende.",
+        "f3Title": "La tua vetrina da collezionista",
+        "f3Text": "Un profilo da condividere, statistiche sulla tua collezione e traguardi da sbloccare.",
+        "cta": "Aggiungi la mia prima maglia"
+      },
+      "d7": {
+        "subject": "La tua prima maglia richiede meno di un minuto",
+        "preview": "Con la prima maglia, tutto si mette in moto",
+        "kicker": "La tua vetrina è vuota",
+        "title": "Mancano solo le tue maglie",
+        "intro": "Ciao {name}, ti sei iscritto a Le Vestiaire una settimana fa, ma la tua collezione è ancora vuota. Aggiungere una maglia richiede meno di un minuto, e poi:",
+        "f1Title": "Le tue statistiche si riempiono",
+        "f1Text": "Club, campionati, stagioni, totale speso: la tua collezione in cifre.",
+        "f2Title": "Entri nella community",
+        "f2Text": "Segui altri collezionisti, scopri i loro pezzi nel feed e mostra i tuoi.",
+        "f3Title": "Sblocchi i tuoi primi traguardi",
+        "f3Text": "Badge da conquistare man mano che la collezione cresce, e un posto in classifica.",
+        "cta": "Aggiungi la mia prima maglia"
+      },
+      "d30": {
+        "subject": "La maglia che cerchi potrebbe essere in offerta",
+        "preview": "Inizia dai tuoi desideri: teniamo d'occhio i prezzi per te",
+        "kicker": "Già un mese",
+        "title": "Inizia dai tuoi desideri",
+        "intro": "Ciao {name}, la tua collezione è ancora vuota. Nessun problema: puoi anche iniziare dalle maglie che vorresti avere.",
+        "f1Title": "Teniamo d'occhio i prezzi",
+        "f1Text": "Aggiungi una maglia ai tuoi desideri: confrontiamo i negozi e ti avvisiamo quando il prezzo scende.",
+        "f2Title": "Una lista da condividere",
+        "f2Text": "Invia la tua lista a parenti e amici, così ricevi la maglia giusta, nella taglia giusta.",
+        "f3Title": "La tua collezione, quando vuoi",
+        "f3Text": "Le tue maglie si aggiungono in pochi secondi dal catalogo.",
+        "cta": "Vai al catalogo"
+      }
+    }
   }
 }

@@ -3623,5 +3623,62 @@
         }
       }
     }
+  },
+  "Emails": {
+    "common": {
+      "tagline": "De website en app voor verzamelaars van voetbalshirts",
+      "stepsTitle": "Een shirt toevoegen in 3 stappen",
+      "step1": "Zoek je club of je shirt in de catalogus.",
+      "step2": "Open de pagina van het shirt en tik op ‘Toevoegen aan mijn collectie’.",
+      "step3": "Kies de maat en de staat: klaar."
+    },
+    "footer": {
+      "reason": "Je ontvangt deze e-mail omdat je je hebt aangemeld bij Le Vestiaire.",
+      "unsubscribe": "Afmelden"
+    },
+    "reminders": {
+      "d1": {
+        "subject": "Voeg je eerste shirt toe",
+        "preview": "Wat Le Vestiaire voor je collectie doet en hoe je begint",
+        "kicker": "Welkom",
+        "title": "Voeg je eerste shirt toe",
+        "intro": "Hoi {name}, Le Vestiaire is de plek waar verzamelaars hun voetbalshirts ordenen, volgen en laten zien. Er staan al {count, number} shirts in de catalogus: die van jou zitten er vast tussen. Begin met één: met 3 shirts krijgt je vitrine vorm.",
+        "f1Title": "Je hele collectie op één plek",
+        "f1Text": "Maat, staat, bedrukking, aankoopprijs en je eigen foto's, voor elk shirt.",
+        "f2Title": "Je verlanglijst en de beste deals",
+        "f2Text": "Zet de shirts die je zoekt op je lijst: we vergelijken de prijzen van winkels en laten het je weten als er een daalt.",
+        "f3Title": "Je verzamelvitrine",
+        "f3Text": "Een profiel om te delen, statistieken over je collectie en prestaties om te ontgrendelen.",
+        "cta": "Mijn eerste shirt toevoegen"
+      },
+      "d7": {
+        "subject": "Je eerste shirt kost minder dan een minuut",
+        "preview": "Met je eerste shirt valt alles op zijn plek",
+        "kicker": "Je vitrine is leeg",
+        "title": "Alleen je shirts ontbreken nog",
+        "intro": "Hoi {name}, je bent een week geleden lid geworden van Le Vestiaire, maar je collectie is nog leeg. Een shirt toevoegen kost minder dan een minuut, en daarna:",
+        "f1Title": "Je statistieken vullen zich",
+        "f1Text": "Clubs, competities, seizoenen, totaal besteed: je collectie in cijfers.",
+        "f2Title": "Je hoort bij de community",
+        "f2Text": "Volg andere verzamelaars, ontdek hun stukken in de feed en laat de jouwe zien.",
+        "f3Title": "Je ontgrendelt je eerste prestaties",
+        "f3Text": "Badges om te verdienen naarmate je collectie groeit, en een plek in het klassement.",
+        "cta": "Mijn eerste shirt toevoegen"
+      },
+      "d30": {
+        "subject": "Het shirt dat je zoekt is misschien in de aanbieding",
+        "preview": "Begin met je verlanglijst: wij houden de prijzen voor je in de gaten",
+        "kicker": "Al een maand",
+        "title": "Begin met je verlanglijst",
+        "intro": "Hoi {name}, je collectie is nog steeds leeg. Geen probleem: je kunt ook beginnen met de shirts die je graag zou hebben.",
+        "f1Title": "Wij houden de prijzen in de gaten",
+        "f1Text": "Zet een shirt op je verlanglijst: we vergelijken de winkels en laten het je weten als de prijs daalt.",
+        "f2Title": "Een lijst om te delen",
+        "f2Text": "Stuur je lijst naar familie en vrienden, zodat je het juiste shirt in de juiste maat krijgt.",
+        "f3Title": "Je collectie, wanneer je wilt",
+        "f3Text": "Je shirts voeg je in een paar seconden toe vanuit de catalogus.",
+        "cta": "Naar de catalogus"
+      }
+    }
   }
 }

@@ -3628,5 +3628,62 @@
         }
       }
     }
+  },
+  "Emails": {
+    "common": {
+      "tagline": "Le site et l'app des collectionneurs de maillots de foot",
+      "stepsTitle": "Ajouter un maillot, en 3 étapes",
+      "step1": "Cherche ton club ou ton maillot dans le catalogue.",
+      "step2": "Ouvre sa fiche et appuie sur « Ajouter à ma collection ».",
+      "step3": "Indique la taille et l'état : c'est rangé."
+    },
+    "footer": {
+      "reason": "Tu reçois cet e-mail car tu es inscrit sur Le Vestiaire.",
+      "unsubscribe": "Se désabonner"
+    },
+    "reminders": {
+      "d1": {
+        "subject": "Ajoute ton premier maillot",
+        "preview": "Ce que Le Vestiaire fait pour ta collection, et comment commencer",
+        "kicker": "Bienvenue",
+        "title": "Ajoute ton premier maillot",
+        "intro": "Salut {name}, Le Vestiaire, c'est l'endroit où les collectionneurs rangent, suivent et montrent leurs maillots de foot. {count, number} maillots sont déjà au catalogue : les tiens y sont sûrement. Commence par un : en 3 maillots, ta vitrine prend forme.",
+        "f1Title": "Toute ta collection au même endroit",
+        "f1Text": "Taille, état, flocage, prix d'achat et tes propres photos, pour chaque maillot.",
+        "f2Title": "Tes envies et les bonnes affaires",
+        "f2Text": "Note les maillots que tu cherches : on compare les prix des boutiques et on te prévient quand l'un d'eux baisse.",
+        "f3Title": "Ta vitrine de collectionneur",
+        "f3Text": "Un profil à partager, des stats sur ta collection et des succès à débloquer.",
+        "cta": "Ajouter mon premier maillot"
+      },
+      "d7": {
+        "subject": "Ton premier maillot prend moins d'une minute",
+        "preview": "Une fois ton premier maillot ajouté, tout se met en place",
+        "kicker": "Ta vitrine est vide",
+        "title": "Il ne manque plus que tes maillots",
+        "intro": "Salut {name}, tu as rejoint Le Vestiaire il y a une semaine, mais ta collection est encore vide. Ajouter un maillot prend moins d'une minute, et ensuite :",
+        "f1Title": "Tes stats se remplissent",
+        "f1Text": "Clubs, ligues, saisons, total investi : ta collection en chiffres.",
+        "f2Title": "Tu rejoins la communauté",
+        "f2Text": "Suis d'autres collectionneurs, découvre leurs pièces dans le fil et montre les tiennes.",
+        "f3Title": "Tu débloques tes premiers succès",
+        "f3Text": "Des badges à gagner au fil de ta collection, et une place au classement.",
+        "cta": "Ajouter mon premier maillot"
+      },
+      "d30": {
+        "subject": "Le maillot que tu cherches est peut-être en promo",
+        "preview": "Commence par tes envies : on surveille les prix pour toi",
+        "kicker": "Un mois déjà",
+        "title": "Commence par tes envies",
+        "intro": "Salut {name}, ta collection est toujours vide. Pas grave : tu peux aussi commencer par les maillots que tu aimerais avoir.",
+        "f1Title": "On surveille les prix",
+        "f1Text": "Ajoute un maillot à tes envies : on compare les boutiques et on te prévient quand il baisse.",
+        "f2Title": "Une liste à partager",
+        "f2Text": "Envoie ta liste à tes proches pour qu'on t'offre le bon maillot, dans la bonne taille.",
+        "f3Title": "Ta collection, quand tu veux",
+        "f3Text": "Tes maillots se rangent en quelques secondes depuis le catalogue.",
+        "cta": "Voir le catalogue"
+      }
+    }
   }
 }

@@ -8,6 +8,7 @@ import { ResetPasswordEmail } from "@/emails/reset-password";
 import { generateSlugBasedUsername } from "@/lib/username-generator";
 import { googleClientIds } from "@/lib/mobile-oauth";
 import { captureSignupAttribution, saveSignupAttribution } from "@/lib/signup-attribution-hook";
+import { signupLocaleFromHeaders } from "@/lib/account-locale";
 
 export const auth = betterAuth({
   database: prismaAdapter(prisma, { provider: "postgresql" }),
@@ -20,6 +21,8 @@ export const auth = betterAuth({
         input: false,
         defaultValue: false,
       },
+      // Langue des e-mails (docs/specs/2026-11-18-relances-traduites.md), fixée par le hook
+      locale: { type: "string", required: false, input: false },
     },
   },
   databaseHooks: {
@@ -34,6 +37,7 @@ export const auth = betterAuth({
               ...user,
               username,
               usernameGenerated: true,
+              locale: signupLocaleFromHeaders(ctx?.headers),
             },
           };
         },

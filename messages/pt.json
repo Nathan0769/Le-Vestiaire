@@ -3623,5 +3623,62 @@
         }
       }
     }
+  },
+  "Emails": {
+    "common": {
+      "tagline": "O site e a app dos colecionadores de camisolas de futebol",
+      "stepsTitle": "Adicionar uma camisola em 3 passos",
+      "step1": "Procure o seu clube ou a sua camisola no catálogo.",
+      "step2": "Abra a ficha e toque em «Adicionar à minha coleção».",
+      "step3": "Indique o tamanho e o estado: está feito."
+    },
+    "footer": {
+      "reason": "Recebe este e-mail porque se registou no Le Vestiaire.",
+      "unsubscribe": "Cancelar subscrição"
+    },
+    "reminders": {
+      "d1": {
+        "subject": "Adicione a sua primeira camisola",
+        "preview": "O que o Le Vestiaire faz pela sua coleção e como começar",
+        "kicker": "Bem-vindo",
+        "title": "Adicione a sua primeira camisola",
+        "intro": "Olá {name}, o Le Vestiaire é o lugar onde os colecionadores organizam, acompanham e mostram as suas camisolas de futebol. Já há {count, number} camisolas no catálogo: as suas devem estar lá. Comece por uma: com 3 camisolas, a sua vitrine ganha forma.",
+        "f1Title": "Toda a sua coleção num só lugar",
+        "f1Text": "Tamanho, estado, personalização, preço de compra e as suas próprias fotos, para cada camisola.",
+        "f2Title": "Os seus desejos e as melhores ofertas",
+        "f2Text": "Guarde as camisolas que procura: comparamos os preços das lojas e avisamos quando alguma baixa.",
+        "f3Title": "A sua vitrine de colecionador",
+        "f3Text": "Um perfil para partilhar, estatísticas da sua coleção e conquistas para desbloquear.",
+        "cta": "Adicionar a minha primeira camisola"
+      },
+      "d7": {
+        "subject": "A sua primeira camisola demora menos de um minuto",
+        "preview": "Com a primeira camisola, tudo se põe a andar",
+        "kicker": "A sua vitrine está vazia",
+        "title": "Só faltam as suas camisolas",
+        "intro": "Olá {name}, juntou-se ao Le Vestiaire há uma semana, mas a sua coleção ainda está vazia. Adicionar uma camisola demora menos de um minuto, e depois:",
+        "f1Title": "As suas estatísticas enchem-se",
+        "f1Text": "Clubes, ligas, épocas, total investido: a sua coleção em números.",
+        "f2Title": "Junta-se à comunidade",
+        "f2Text": "Siga outros colecionadores, descubra as peças deles no feed e mostre as suas.",
+        "f3Title": "Desbloqueia as primeiras conquistas",
+        "f3Text": "Medalhas para ganhar à medida que a coleção cresce, e um lugar na classificação.",
+        "cta": "Adicionar a minha primeira camisola"
+      },
+      "d30": {
+        "subject": "A camisola que procura pode estar em promoção",
+        "preview": "Comece pelos seus desejos: vigiamos os preços por si",
+        "kicker": "Já passou um mês",
+        "title": "Comece pelos seus desejos",
+        "intro": "Olá {name}, a sua coleção continua vazia. Não faz mal: também pode começar pelas camisolas que gostaria de ter.",
+        "f1Title": "Vigiamos os preços",
+        "f1Text": "Adicione uma camisola aos seus desejos: comparamos as lojas e avisamos quando o preço baixa.",
+        "f2Title": "Uma lista para partilhar",
+        "f2Text": "Envie a sua lista aos seus próximos para receber a camisola certa, no tamanho certo.",
+        "f3Title": "A sua coleção, quando quiser",
+        "f3Text": "As suas camisolas adicionam-se em segundos a partir do catálogo.",
+        "cta": "Ver o catálogo"
+      }
+    }
   }
 }

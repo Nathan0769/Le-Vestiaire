@@ -3623,5 +3623,62 @@
         }
       }
     }
+  },
+  "Emails": {
+    "common": {
+      "tagline": "The website and app for football jersey collectors",
+      "stepsTitle": "Add a jersey in 3 steps",
+      "step1": "Search for your club or your jersey in the catalogue.",
+      "step2": "Open its page and tap “Add to my collection”.",
+      "step3": "Pick the size and condition: done."
+    },
+    "footer": {
+      "reason": "You're receiving this email because you signed up for Le Vestiaire.",
+      "unsubscribe": "Unsubscribe"
+    },
+    "reminders": {
+      "d1": {
+        "subject": "Add your first jersey",
+        "preview": "What Le Vestiaire does for your collection, and how to start",
+        "kicker": "Welcome",
+        "title": "Add your first jersey",
+        "intro": "Hi {name}, Le Vestiaire is where collectors organise, track and show off their football jerseys. {count, number} jerseys are already in the catalogue: yours are probably there. Start with one: with 3 jerseys, your showcase takes shape.",
+        "f1Title": "Your whole collection in one place",
+        "f1Text": "Size, condition, printing, purchase price and your own photos, for every jersey.",
+        "f2Title": "Your wishlist and the best deals",
+        "f2Text": "Save the jerseys you're after: we compare shop prices and let you know when one drops.",
+        "f3Title": "Your collector's showcase",
+        "f3Text": "A profile to share, stats about your collection and achievements to unlock.",
+        "cta": "Add my first jersey"
+      },
+      "d7": {
+        "subject": "Your first jersey takes less than a minute",
+        "preview": "Once your first jersey is in, everything falls into place",
+        "kicker": "Your showcase is empty",
+        "title": "All that's missing is your jerseys",
+        "intro": "Hi {name}, you joined Le Vestiaire a week ago, but your collection is still empty. Adding a jersey takes less than a minute, and then:",
+        "f1Title": "Your stats fill up",
+        "f1Text": "Clubs, leagues, seasons, total spent: your collection in numbers.",
+        "f2Title": "You join the community",
+        "f2Text": "Follow other collectors, see their pieces in the feed and show off yours.",
+        "f3Title": "You unlock your first achievements",
+        "f3Text": "Badges to earn as your collection grows, and a spot on the leaderboard.",
+        "cta": "Add my first jersey"
+      },
+      "d30": {
+        "subject": "The jersey you want might be on sale",
+        "preview": "Start with your wishlist: we watch the prices for you",
+        "kicker": "One month already",
+        "title": "Start with your wishlist",
+        "intro": "Hi {name}, your collection is still empty. No problem: you can also start with the jerseys you'd like to own.",
+        "f1Title": "We watch the prices",
+        "f1Text": "Add a jersey to your wishlist: we compare shops and let you know when it drops.",
+        "f2Title": "A list to share",
+        "f2Text": "Send your list to friends and family so you get the right jersey, in the right size.",
+        "f3Title": "Your collection, whenever you like",
+        "f3Text": "Your jerseys are added in seconds from the catalogue.",
+        "cta": "Browse the catalogue"
+      }
+    }
   }
 }

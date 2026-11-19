@@ -38,7 +38,10 @@ model User {
   profileBanner               String?               @map("profile_accent")
   lastLoginMethod             String?
   emailMarketing              Boolean               @default(true) @map("email_marketing")
+  // Jour de la dernière relance « collection vide » envoyée : 0, 1, 7 ou 30 (lib/reminders.ts)
   reminderStep                Int                   @default(0) @map("reminder_step")
+  // Langue des e-mails (i18n/locales.ts), écrite à l'inscription. Null = français
+  locale                      String?
   notificationsEnabled        Boolean               @default(true) @map("notifications_enabled")
   disabledPushTypes           NotificationType[]    @default([]) @map("disabled_push_types")
   isPrivate                   Boolean               @default(false) @map("is_private")

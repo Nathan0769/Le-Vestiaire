@@ -3646,5 +3646,62 @@
         }
       }
     }
+  },
+  "Emails": {
+    "common": {
+      "tagline": "Die Website und App für Sammler von Fußballtrikots",
+      "stepsTitle": "Ein Trikot in 3 Schritten hinzufügen",
+      "step1": "Suche deinen Verein oder dein Trikot im Katalog.",
+      "step2": "Öffne die Trikotseite und tippe auf „Zu meiner Sammlung hinzufügen“.",
+      "step3": "Gib Größe und Zustand an: fertig."
+    },
+    "footer": {
+      "reason": "Du erhältst diese E-Mail, weil du bei Le Vestiaire registriert bist.",
+      "unsubscribe": "Abmelden"
+    },
+    "reminders": {
+      "d1": {
+        "subject": "Füge dein erstes Trikot hinzu",
+        "preview": "Was Le Vestiaire für deine Sammlung tut und wie du startest",
+        "kicker": "Willkommen",
+        "title": "Füge dein erstes Trikot hinzu",
+        "intro": "Hallo {name}, Le Vestiaire ist der Ort, an dem Sammler ihre Fußballtrikots ordnen, verfolgen und zeigen. {count, number} Trikots sind schon im Katalog: deine sind sicher dabei. Fang mit einem an: Mit 3 Trikots nimmt deine Vitrine Form an.",
+        "f1Title": "Deine ganze Sammlung an einem Ort",
+        "f1Text": "Größe, Zustand, Beflockung, Kaufpreis und deine eigenen Fotos, für jedes Trikot.",
+        "f2Title": "Deine Wunschliste und die besten Angebote",
+        "f2Text": "Merke dir die Trikots, die du suchst: Wir vergleichen die Shoppreise und sagen dir Bescheid, wenn eins günstiger wird.",
+        "f3Title": "Deine Sammler-Vitrine",
+        "f3Text": "Ein Profil zum Teilen, Statistiken zu deiner Sammlung und Erfolge zum Freischalten.",
+        "cta": "Mein erstes Trikot hinzufügen"
+      },
+      "d7": {
+        "subject": "Dein erstes Trikot dauert keine Minute",
+        "preview": "Mit deinem ersten Trikot kommt alles ins Rollen",
+        "kicker": "Deine Vitrine ist leer",
+        "title": "Es fehlen nur noch deine Trikots",
+        "intro": "Hallo {name}, du bist vor einer Woche Le Vestiaire beigetreten, aber deine Sammlung ist noch leer. Ein Trikot hinzuzufügen dauert keine Minute, und danach:",
+        "f1Title": "Deine Statistiken füllen sich",
+        "f1Text": "Vereine, Ligen, Saisons, Gesamtausgaben: deine Sammlung in Zahlen.",
+        "f2Title": "Du wirst Teil der Community",
+        "f2Text": "Folge anderen Sammlern, entdecke ihre Stücke im Feed und zeig deine.",
+        "f3Title": "Du schaltest deine ersten Erfolge frei",
+        "f3Text": "Abzeichen, die du mit deiner Sammlung verdienst, und ein Platz in der Rangliste.",
+        "cta": "Mein erstes Trikot hinzufügen"
+      },
+      "d30": {
+        "subject": "Dein Wunschtrikot ist vielleicht im Angebot",
+        "preview": "Starte mit deiner Wunschliste: Wir behalten die Preise für dich im Blick",
+        "kicker": "Schon ein Monat",
+        "title": "Starte mit deiner Wunschliste",
+        "intro": "Hallo {name}, deine Sammlung ist noch leer. Kein Problem: Du kannst auch mit den Trikots anfangen, die du gerne hättest.",
+        "f1Title": "Wir behalten die Preise im Blick",
+        "f1Text": "Setz ein Trikot auf deine Wunschliste: Wir vergleichen die Shops und sagen dir Bescheid, wenn es günstiger wird.",
+        "f2Title": "Eine Liste zum Teilen",
+        "f2Text": "Schick deine Liste an Familie und Freunde, damit du das richtige Trikot in der richtigen Größe bekommst.",
+        "f3Title": "Deine Sammlung, wann du willst",
+        "f3Text": "Deine Trikots sind in Sekunden aus dem Katalog hinzugefügt.",
+        "cta": "Zum Katalog"
+      }
+    }
   }
 }

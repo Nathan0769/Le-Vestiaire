@@ -3623,5 +3623,62 @@
         }
       }
     }
+  },
+  "Emails": {
+    "common": {
+      "tagline": "La web y la app de los coleccionistas de camisetas de fútbol",
+      "stepsTitle": "Añadir una camiseta en 3 pasos",
+      "step1": "Busca tu club o tu camiseta en el catálogo.",
+      "step2": "Abre su ficha y pulsa «Añadir a mi colección».",
+      "step3": "Indica la talla y el estado: listo."
+    },
+    "footer": {
+      "reason": "Recibes este correo porque te registraste en Le Vestiaire.",
+      "unsubscribe": "Darse de baja"
+    },
+    "reminders": {
+      "d1": {
+        "subject": "Añade tu primera camiseta",
+        "preview": "Qué hace Le Vestiaire por tu colección y cómo empezar",
+        "kicker": "Bienvenido",
+        "title": "Añade tu primera camiseta",
+        "intro": "Hola {name}: Le Vestiaire es el lugar donde los coleccionistas ordenan, siguen y muestran sus camisetas de fútbol. Ya hay {count, number} camisetas en el catálogo: seguro que las tuyas están. Empieza por una: con 3 camisetas, tu vitrina toma forma.",
+        "f1Title": "Toda tu colección en un solo lugar",
+        "f1Text": "Talla, estado, dorsal, precio de compra y tus propias fotos, para cada camiseta.",
+        "f2Title": "Tus deseos y las mejores ofertas",
+        "f2Text": "Apunta las camisetas que buscas: comparamos los precios de las tiendas y te avisamos cuando una baja.",
+        "f3Title": "Tu vitrina de coleccionista",
+        "f3Text": "Un perfil para compartir, estadísticas de tu colección y logros por desbloquear.",
+        "cta": "Añadir mi primera camiseta"
+      },
+      "d7": {
+        "subject": "Tu primera camiseta te lleva menos de un minuto",
+        "preview": "Con tu primera camiseta, todo se pone en marcha",
+        "kicker": "Tu vitrina está vacía",
+        "title": "Solo faltan tus camisetas",
+        "intro": "Hola {name}: te uniste a Le Vestiaire hace una semana, pero tu colección sigue vacía. Añadir una camiseta lleva menos de un minuto, y después:",
+        "f1Title": "Tus estadísticas se llenan",
+        "f1Text": "Clubes, ligas, temporadas, total invertido: tu colección en cifras.",
+        "f2Title": "Te unes a la comunidad",
+        "f2Text": "Sigue a otros coleccionistas, descubre sus piezas en el feed y enseña las tuyas.",
+        "f3Title": "Desbloqueas tus primeros logros",
+        "f3Text": "Insignias que ganar a medida que crece tu colección, y un puesto en la clasificación.",
+        "cta": "Añadir mi primera camiseta"
+      },
+      "d30": {
+        "subject": "La camiseta que buscas quizá esté en oferta",
+        "preview": "Empieza por tus deseos: vigilamos los precios por ti",
+        "kicker": "Ya un mes",
+        "title": "Empieza por tus deseos",
+        "intro": "Hola {name}: tu colección sigue vacía. No pasa nada: también puedes empezar por las camisetas que te gustaría tener.",
+        "f1Title": "Vigilamos los precios",
+        "f1Text": "Añade una camiseta a tus deseos: comparamos las tiendas y te avisamos cuando baja.",
+        "f2Title": "Una lista para compartir",
+        "f2Text": "Envía tu lista a tus allegados para que te regalen la camiseta correcta, en la talla correcta.",
+        "f3Title": "Tu colección, cuando quieras",
+        "f3Text": "Tus camisetas se añaden en segundos desde el catálogo.",
+        "cta": "Ver el catálogo"
+      }
+    }
   }
 }
