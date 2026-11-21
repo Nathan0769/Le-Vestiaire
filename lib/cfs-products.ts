@@ -137,8 +137,9 @@ export function pickSizeOffers<T extends SeenCfsProduct & { inStockSizes: string
 
 /**
  * Signaux de cote des produits CFS d'un maillot : maillots de référence
- * seulement, ruptures comprises (un prix CFS reste un prix CFS). Une vente
- * récente remplace le prix demandé du même produit.
+ * seulement. Une vente récente remplace le prix demandé du même produit. Un
+ * produit en rupture sans vente récente donne un prix `stale`, utilisé
+ * seulement si aucun autre signal n'existe (vague 1, 2026-11-21).
  */
 export function toCfsSignals(
   rows: (CfsProductState & { lastSeenAt: Date })[],
@@ -152,7 +153,9 @@ export function toCfsSignals(
     if (r.soldAt && r.soldPrice && r.soldAt.getTime() >= since) {
       signals.push({ price: r.soldPrice, type: "sold", source: "cfs", condition, date: r.soldAt });
     } else if (r.price > 0) {
-      signals.push({ price: r.price, type: "asking", source: "cfs", condition, date: r.lastSeenAt });
+      const signal: PriceSignal = { price: r.price, type: "asking", source: "cfs", condition, date: r.lastSeenAt };
+      if (!r.inStock) signal.stale = true;
+      signals.push(signal);
     }
   }
   return signals;

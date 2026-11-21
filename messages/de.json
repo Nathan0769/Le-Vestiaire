@@ -3593,7 +3593,8 @@
       "m2s": "Schätze ihren Wert Trikot für Trikot auf einen Blick.",
       "m3t": "Verfolge den Wert deiner Sammlung über die Zeit",
       "m3s": "Ein Chart im Börsenstil, um deine Sammlung zu beobachten."
-    }
+    },
+    "recalcNotice": "Marktwert am {date} anhand echter eBay-Verkäufe neu berechnet."
   },
   "Announcements": {
     "kicker": "Neu bei Le Vestiaire",

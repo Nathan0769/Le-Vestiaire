@@ -7,20 +7,31 @@ import type { Condition, SignalType, SourceName } from "./types";
  */
 
 /**
- * Facteur d'abattement par source : ramène un prix demandé au niveau d'un prix
- * de vente sur le marché de l'occasion (asking * facteur). Les sources ont des
- * poids égaux dans la cote, donc leurs niveaux doivent être alignés : eBay sert
- * d'étalon (marché le plus liquide, vendeurs peu évalués écartés) et les autres
- * sources sont calibrées sur lui. Mesure du 2026-11-04, depuis que tous les
- * produits CFS comptent : médiane des produits CFS de référence (état ramené à
- * GOOD) = 1,17 × médiane eBay pour un même maillot (1 034 maillots ; 1,16 sur
- * les seuls produits en stock) -> 0,85 / 1,17. Avant (un produit par maillot,
- * 218 maillots) : 1,29 -> 0,65.
+ * Version de la méthode de cote. 1 : collecte d'origine, abattements calés sur
+ * eBay. 2 (vague 1, 2026-11-22) : tri strict des annonces, neuf ramené à GOOD,
+ * abattements mesurés sur des ventes réelles. La version d'une cote suit celle
+ * de sa collecte eBay (`EbayMarketData.methodVersion`) : jamais de mélange.
  */
-export const ASKING_ABATEMENT: Record<"ebay" | "cfs", number> = {
-  // Best Offer / négociation courants sur eBay.
-  ebay: 0.85,
-  cfs: 0.73,
+export const MARKET_METHOD_VERSION = 2;
+export type MethodVersion = 1 | 2;
+
+/**
+ * Facteur d'abattement par source et par version : ramène un prix demandé au
+ * niveau d'un prix de vente (asking * facteur). Les sources ont des poids égaux
+ * dans la cote, donc leurs niveaux doivent être alignés.
+ *
+ * Version 1 : eBay 0,85 (négociation supposée), CFS 0,73 calé sur eBay
+ * (médiane CFS = 1,17 × médiane eBay, 1 034 maillots, 2026-11-04).
+ *
+ * Version 2 : mesuré sur ventes réelles (jeu de référence Terapeak du
+ * 2026-11-21, docs/market/2026-11-21-terapeak/, scripts/market/terapeak-backtest.ts) :
+ * vente ÷ prix demandé de la nouvelle collecte, 31 maillots à 5+ ventes propres,
+ * eBay 0,50 (moitiés 0,50 / 0,52), CFS 0,47 (moitiés 0,47 / 0,59). Validation
+ * croisée : erreur médiane 49 % -> 16 %, biais +49 % -> +3 %.
+ */
+export const ASKING_ABATEMENT: Record<MethodVersion, Record<"ebay" | "cfs", number>> = {
+  1: { ebay: 0.85, cfs: 0.73 },
+  2: { ebay: 0.5, cfs: 0.47 },
 };
 
 function partnerShopOf(source: SourceName) {
@@ -28,15 +39,30 @@ function partnerShopOf(source: SourceName) {
 }
 
 /** Facteur asking -> sold d'un signal ; null = source inconnue (boutique retirée du registre), signal ignoré. */
-export function signalAbatement(source: SourceName, type: SignalType): number | null {
+export function signalAbatement(
+  source: SourceName,
+  type: SignalType,
+  version: MethodVersion = MARKET_METHOD_VERSION
+): number | null {
   // Vente CFS déduite : faite au niveau de prix de CFS, abattue comme un prix
   // demandé CFS (à recalibrer à partir de 50 ventes).
-  if (source === "ebay" || source === "cfs") return ASKING_ABATEMENT[source];
+  if (source === "ebay" || source === "cfs") return ASKING_ABATEMENT[version][source];
   const shop = partnerShopOf(source);
   if (!shop) return null;
   // Une vente (même déduite) est déjà un prix de transaction.
   return type === "sold" ? 1 : shop.askingAbatement;
 }
+
+/**
+ * Une source compte dans la moyenne à partir de ce nombre d'observations, si
+ * une autre source l'atteint (choix de Nathan, 2026-11-21) : un produit CFS
+ * isolé ne fait plus la moitié de la cote face à 40 annonces eBay.
+ */
+export const MIN_SOURCE_OBSERVATIONS = 2;
+
+/** Âge d'une donnée eBay au-delà duquel la confiance perd un cran, puis où elle est ignorée. */
+export const EBAY_STALE_DAYS = 21;
+export const EBAY_MAX_AGE_DAYS = 60;
 
 /** État de référence : la valeur de base correspond à un maillot dans cet état. */
 export const REFERENCE_CONDITION: Condition = "GOOD";

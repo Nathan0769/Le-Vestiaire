@@ -1,18 +1,26 @@
-const toCents = (v: number) => Math.round(v * 100);
+/**
+ * Variation en dessous de laquelle un snapshot n'est pas écrit : une annonce
+ * qui apparaît ou disparaît ne doit pas dessiner une marche dans la courbe.
+ * Le point du jour de la courbe suit la cote actuelle, donc rien n'est perdu.
+ */
+export const SNAPSHOT_MIN_CHANGE = 0.02;
 
 /**
- * Snapshots à écrire : seulement les maillots dont la cote a changé (au centime)
- * depuis leur dernier snapshot. La courbe reprend la dernière valeur connue, donc
- * les doublons n'apportent rien et gonfleraient la table à chaque recalcul.
+ * Snapshots à écrire : maillots sans snapshot, dont la cote a bougé de plus de
+ * 2 % depuis le dernier, ou dont la méthode de cote a changé (point de raccord
+ * de la courbe, voir method-chain.ts).
  */
 export function snapshotsToWrite(
-  values: { jerseyId: string; baseValue: number }[],
-  last: Map<string, number>
-): { jerseyId: string; value: number }[] {
+  values: { jerseyId: string; baseValue: number; methodVersion: number }[],
+  last: Map<string, { value: number; methodVersion: number }>
+): { jerseyId: string; value: number; methodVersion: number }[] {
   return values
     .filter((v) => {
       const previous = last.get(v.jerseyId);
-      return previous == null || toCents(previous) !== toCents(v.baseValue);
+      if (!previous) return true;
+      if (previous.methodVersion !== v.methodVersion) return true;
+      if (previous.value <= 0) return v.baseValue > 0;
+      return Math.abs(v.baseValue / previous.value - 1) > SNAPSHOT_MIN_CHANGE;
     })
-    .map((v) => ({ jerseyId: v.jerseyId, value: v.baseValue }));
+    .map((v) => ({ jerseyId: v.jerseyId, value: v.baseValue, methodVersion: v.methodVersion }));
 }

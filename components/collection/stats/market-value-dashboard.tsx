@@ -36,6 +36,8 @@ interface ValueResponse {
   };
   rows: Row[];
   currency?: string;
+  /** Phrase « Cote recalculée… », déjà traduite, pendant 30 jours après un changement de méthode. */
+  notice?: string;
 }
 
 
@@ -58,9 +60,10 @@ export function MarketValueDashboard() {
   };
 
   const { data, isLoading } = useQuery<ValueResponse>({
-    queryKey: ["collection-value"],
+    queryKey: ["collection-value", locale],
     queryFn: async () => {
-      const res = await fetch("/api/user/collection-value");
+      // La langue du site, pas celle du navigateur, pour la phrase de recalcul.
+      const res = await fetch("/api/user/collection-value", { headers: { "Accept-Language": locale } });
       if (!res.ok) throw new Error("Failed to fetch value");
       return res.json();
     },
@@ -108,6 +111,7 @@ export function MarketValueDashboard() {
           {eur(s.estimated)}
         </p>
         <p className="mt-2 text-sm text-muted-foreground">{t("subtitle", { count: s.count })}</p>
+        {data?.notice && <p className="mt-1 text-xs text-muted-foreground">{data.notice}</p>}
       </div>
 
       {/* Chart */}

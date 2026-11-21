@@ -1,20 +1,20 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
-import { usesMarketBase, valueForItem } from "@/lib/market-value/aggregate";
+import { collectionHistory } from "@/lib/market-value/collection-valuation";
+import { loadValuationContext } from "@/lib/market-value/valuation-context";
 import { isSupporter } from "@/lib/subscription";
-import type { Condition } from "@/lib/market-value/types";
 import { DEFAULT_CURRENCY, fromEur } from "@/lib/currency";
 import { getRatesToEur } from "@/lib/fx";
 
 export const dynamic = "force-dynamic";
 
 /**
- * Série "valeur de la collection dans le temps" (option 2 : valeur de ce que
- * l'utilisateur POSSÉDAIT à chaque date, valorisé au prix de la date). Reconstruite
- * à partir des snapshots de cote par maillot (`JerseyMarketValueSnapshot`), écrits
- * par le cron quotidien quand une cote change. L'historique se construit donc au fil des jours.
- * Cotes en EUR, converties dans la devise du user au taux du jour.
+ * Série "valeur de la collection dans le temps" : valeur de ce que
+ * l'utilisateur possédait à chaque date, valorisé au prix de la date
+ * (`collectionHistory`, même règle que la page Valeur : le dernier point égale
+ * son total). Reconstruite à partir des snapshots de cote par maillot, écrits
+ * par le cron quotidien. Cotes en EUR, converties dans la devise du user au taux du jour.
  */
 export async function GET() {
   const user = await getCurrentUser();
@@ -35,6 +35,9 @@ export async function GET() {
     select: {
       jerseyId: true,
       createdAt: true,
+      purchaseDate: true,
+      purchasePrice: true,
+      purchaseCurrency: true,
       condition: true,
       version: true,
       hasLongSleeves: true,
@@ -50,65 +53,30 @@ export async function GET() {
   }
 
   const jerseyIds = [...new Set(items.map((i) => i.jerseyId))];
-  const snapshots = await prisma.jerseyMarketValueSnapshot.findMany({
-    where: { jerseyId: { in: jerseyIds } },
-    select: { jerseyId: true, value: true, date: true },
-    orderBy: { date: "asc" },
-  });
+  const [ctx, snapshotRows] = await Promise.all([
+    loadValuationContext(jerseyIds, rates),
+    prisma.jerseyMarketValueSnapshot.findMany({
+      where: { jerseyId: { in: jerseyIds } },
+      select: { jerseyId: true, value: true, date: true, methodVersion: true },
+      orderBy: { date: "asc" },
+    }),
+  ]);
 
-  if (snapshots.length === 0) {
-    return NextResponse.json({ points: [], currency });
+  const snapshots = new Map<string, { value: number; time: number; methodVersion: number }[]>();
+  for (const s of snapshotRows) {
+    const arr = snapshots.get(s.jerseyId) ?? [];
+    arr.push({ value: s.value, time: s.date.getTime(), methodVersion: s.methodVersion });
+    snapshots.set(s.jerseyId, arr);
   }
 
-  // Snapshots groupés par maillot, triés par date croissante.
-  const byJersey = new Map<string, { value: number; time: number }[]>();
-  for (const s of snapshots) {
-    const arr = byJersey.get(s.jerseyId) ?? [];
-    arr.push({ value: s.value, time: s.date.getTime() });
-    byJersey.set(s.jerseyId, arr);
-  }
-
-  // Dates distinctes (normalisées au jour) sur lesquelles on évalue la collection.
-  // Le jour courant est toujours inclus : les snapshots ne sont écrits que quand
-  // une cote change, la courbe doit quand même s'arrêter à aujourd'hui.
-  const dayKeys = [
-    ...new Set([
-      ...snapshots.map((s) => s.date.toISOString().slice(0, 10)),
-      new Date().toISOString().slice(0, 10),
-    ]),
-  ].sort();
-
-  // Dernière valeur de base connue pour un maillot à une date donnée (<=).
-  const baseAt = (jerseyId: string, cutoff: number): number | null => {
-    const arr = byJersey.get(jerseyId);
-    if (!arr) return null;
-    let base: number | null = null;
-    for (const snap of arr) {
-      if (snap.time <= cutoff) base = snap.value;
-      else break;
-    }
-    return base;
-  };
-
-  const points = dayKeys.map((day) => {
-    // Fin de journée : un snapshot pris ce jour-là compte pour ce point.
-    const cutoff = new Date(`${day}T23:59:59.999Z`).getTime();
-    let total = 0;
-    for (const it of items) {
-      if (it.createdAt.getTime() > cutoff) continue; // pas encore possédé
-      if (!usesMarketBase(it.version)) continue; // réédition : pas de cote
-      const base = baseAt(it.jerseyId, cutoff);
-      if (base == null || base <= 0) continue;
-      total += valueForItem(base, {
-        condition: it.condition as unknown as Condition,
-        version: it.version,
-        hasLongSleeves: it.hasLongSleeves,
-        isSigned: it.isSigned,
-      });
-    }
-    const value = fromEur(total, currency, rates) ?? total;
-    return { date: day, value: Math.round(value * 100) / 100 };
-  });
+  const pointsEur = collectionHistory(
+    items.map((i) => ({ ...i, since: i.purchaseDate ?? i.createdAt })),
+    { snapshots, ctx, today: new Date().toISOString().slice(0, 10) }
+  );
+  const points = pointsEur.map((p) => ({
+    date: p.date,
+    value: Math.round((fromEur(p.value, currency, rates) ?? p.value) * 100) / 100,
+  }));
 
   return NextResponse.json({ points, currency });
 }

@@ -1,12 +1,15 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/get-current-user";
 import prisma from "@/lib/prisma";
-import { usesMarketBase, valueForItem } from "@/lib/market-value/aggregate";
+import { valueItem } from "@/lib/market-value/collection-valuation";
+import { loadValuationContext } from "@/lib/market-value/valuation-context";
 import { isSupporter } from "@/lib/subscription";
-import type { Condition } from "@/lib/market-value/types";
-import { DEFAULT_CURRENCY, fromEur, toEur } from "@/lib/currency";
+import { DEFAULT_CURRENCY, fromEur } from "@/lib/currency";
 import { getRatesToEur } from "@/lib/fx";
 import { priceEur } from "@/lib/purchase-totals";
+import { getTranslations } from "next-intl/server";
+import { getRequestLocale } from "@/lib/request-locale";
+import { MARKET_RECALC_DATE, recalcNoticeDate } from "@/lib/market-value/recalc-notice";
 
 export const dynamic = "force-dynamic";
 
@@ -20,7 +23,17 @@ export const dynamic = "force-dynamic";
  * Calculs en EUR (cote et prix d'achat convertis), montants renvoyés dans la
  * devise du user (`currency`).
  */
-export async function GET() {
+/** Phrase de recalcul dans la langue de la requête (web : locale du site, iOS : Accept-Language), ou undefined. */
+async function recalcNotice(request: Request): Promise<string | undefined> {
+  const date = recalcNoticeDate(MARKET_RECALC_DATE, new Date());
+  if (!date) return undefined;
+  const locale = getRequestLocale(request);
+  const t = await getTranslations({ locale, namespace: "MarketValue" });
+  const formatted = new Intl.DateTimeFormat(locale, { day: "2-digit", month: "2-digit", timeZone: "UTC" }).format(date);
+  return t("recalcNotice", { date: formatted });
+}
+
+export async function GET(request: Request) {
   const user = await getCurrentUser();
   if (!user) {
     return NextResponse.json({ error: "Non autorisé" }, { status: 401 });
@@ -72,68 +85,12 @@ export async function GET() {
   }
 
   const jerseyIds = [...new Set(collection.map((i) => i.jerseyId))];
-
-  const [marketRows, avgRows] = await Promise.all([
-    prisma.jerseyMarketValue.findMany({
-      where: { jerseyId: { in: jerseyIds } },
-      select: { jerseyId: true, baseValue: true, confidence: true },
-    }),
-    // Prix d'achat moyen de ce maillot, tous utilisateurs confondus (repli).
-    // Groupé aussi par devise : une moyenne SQL mélangerait R$ et €.
-    prisma.userJersey.groupBy({
-      by: ["jerseyId", "purchaseCurrency"],
-      where: {
-        jerseyId: { in: jerseyIds },
-        isGift: false,
-        purchasePrice: { gt: 0 },
-        version: { not: "REISSUE" },
-      },
-      _sum: { purchasePrice: true },
-      _count: { _all: true },
-    }),
-  ]);
-
-  const baseByJersey = new Map(marketRows.map((m) => [m.jerseyId, m.baseValue]));
-  const confByJersey = new Map(marketRows.map((m) => [m.jerseyId, m.confidence]));
-  const buyTotals = new Map<string, { sumEur: number; count: number }>();
-  for (const r of avgRows) {
-    const sumEur = toEur(Number(r._sum.purchasePrice ?? 0), r.purchaseCurrency, rates);
-    if (sumEur === null) continue;
-    const t = buyTotals.get(r.jerseyId) ?? { sumEur: 0, count: 0 };
-    t.sumEur += sumEur;
-    t.count += r._count._all;
-    buyTotals.set(r.jerseyId, t);
-  }
-  const avgBuyByJersey = new Map(
-    [...buyTotals].map(([jerseyId, t]) => [jerseyId, t.count > 0 ? t.sumEur / t.count : 0])
-  );
+  const ctx = await loadValuationContext(jerseyIds, rates);
 
   const rows = collection.map((item) => {
-    const base = baseByJersey.get(item.jerseyId);
     const ownBuyEur = priceEur(item, rates);
     const ownBuy = ownBuyEur !== null && ownBuyEur > 0 ? ownBuyEur : null;
-
-    let value: number | null;
-    let source: "market" | "purchase" | "unknown";
-    let confidence: string | null = null;
-
-    if (!usesMarketBase(item.version)) {
-      value = ownBuy != null ? Math.round(ownBuy * 100) / 100 : null;
-      source = value != null ? "purchase" : "unknown";
-    } else if (base != null && base > 0) {
-      value = valueForItem(base, {
-        condition: item.condition as unknown as Condition,
-        version: item.version,
-        hasLongSleeves: item.hasLongSleeves,
-        isSigned: item.isSigned,
-      });
-      source = "market";
-      confidence = confByJersey.get(item.jerseyId) ?? "low";
-    } else {
-      const fallback = ownBuy ?? avgBuyByJersey.get(item.jerseyId) ?? null;
-      value = fallback && fallback > 0 ? Math.round(fallback * 100) / 100 : null;
-      source = value != null ? "purchase" : "unknown";
-    }
+    const { value, source, confidence } = valueItem(item, ctx);
 
     return {
       id: item.id,
@@ -196,5 +153,5 @@ export async function GET() {
     ownBuy: r.ownBuy != null ? round(r.ownBuy) : null,
   }));
 
-  return NextResponse.json({ summary, rows: displayRows, currency });
+  return NextResponse.json({ summary, rows: displayRows, currency, notice: await recalcNotice(request) });
 }

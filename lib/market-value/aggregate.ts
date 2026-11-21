@@ -1,5 +1,10 @@
 import {
   CONDITION_MULTIPLIER,
+  EBAY_MAX_AGE_DAYS,
+  EBAY_STALE_DAYS,
+  MARKET_METHOD_VERSION,
+  MIN_SOURCE_OBSERVATIONS,
+  type MethodVersion,
   LONG_SLEEVE_MULTIPLIER,
   REFERENCE_CONDITION,
   SIGNED_MULTIPLIER,
@@ -35,6 +40,16 @@ function confidenceFrom(observations: number, distinctSources: number): Confiden
   return "low";
 }
 
+const DOWNGRADE: Record<Confidence, Confidence> = { high: "medium", medium: "low", low: "low" };
+const DAY_MS = 86_400_000;
+
+export interface AggregateOptions {
+  /** Date de calcul, pour l'âge des données eBay (défaut : maintenant). */
+  now?: Date;
+  /** Version de méthode : choisit les abattements (défaut : la version courante). */
+  methodVersion?: MethodVersion;
+}
+
 /**
  * Agrège des signaux de prix en une estimation de valeur pour l'état de référence (GOOD).
  * - Prix demandé (asking) abattu vers un équivalent vente (facteur par source).
@@ -42,12 +57,29 @@ function confidenceFrom(observations: number, distinctSources: number): Confiden
  * - Chaque source est résumée par la médiane de ses signaux, puis la base est la
  *   moyenne des sources à poids égal : une source n'en écrase pas une autre.
  * Renvoie null si aucun signal.
+ *
+ * Avant cela (vague 1, 2026-11-21) : données eBay de plus de 60 jours ignorées ;
+ * signaux `stale` écartés s'il existe un signal frais ; une source sous
+ * MIN_SOURCE_OBSERVATIONS ne vote pas si une autre source l'atteint.
  */
-export function aggregate(allSignals: PriceSignal[]): MarketEstimate | null {
+export function aggregate(rawSignals: PriceSignal[], options: AggregateOptions = {}): MarketEstimate | null {
+  const now = (options.now ?? new Date()).getTime();
+  const ageDays = (s: PriceSignal) => (s.date ? (now - s.date.getTime()) / DAY_MS : 0);
+  const fresh = rawSignals.filter((s) => !(s.source === "ebay" && ageDays(s) > EBAY_MAX_AGE_DAYS));
+  const onlyStale = fresh.length > 0 && fresh.every((s) => s.stale);
+  const usable = onlyStale ? fresh : fresh.filter((s) => !s.stale);
+
+  const obsBySource = new Map<SourceName, number>();
+  for (const s of usable) obsBySource.set(s.source, (obsBySource.get(s.source) ?? 0) + (s.observations ?? 1));
+  const someSourceIsFed = [...obsBySource.values()].some((n) => n >= MIN_SOURCE_OBSERVATIONS);
+  const allSignals = someSourceIsFed
+    ? usable.filter((s) => (obsBySource.get(s.source) ?? 0) >= MIN_SOURCE_OBSERVATIONS)
+    : usable;
+
   const valuesBySource = new Map<SourceName, number[]>();
   const signals: PriceSignal[] = [];
   for (const s of allSignals) {
-    const abatement = signalAbatement(s.source, s.type);
+    const abatement = signalAbatement(s.source, s.type, options.methodVersion ?? MARKET_METHOD_VERSION);
     if (abatement === null) continue;
     const conditionMult = CONDITION_MULTIPLIER[s.condition ?? REFERENCE_CONDITION];
     const values = valuesBySource.get(s.source) ?? [];
@@ -66,9 +98,13 @@ export function aggregate(allSignals: PriceSignal[]): MarketEstimate | null {
   // Total des observations réelles (annonces) derrière les signaux.
   const observations = signals.reduce((sum, s) => sum + (s.observations ?? 1), 0);
 
+  let confidence = confidenceFrom(observations, sources.length);
+  if (onlyStale) confidence = "low";
+  if (signals.some((s) => s.source === "ebay" && ageDays(s) > EBAY_STALE_DAYS)) confidence = DOWNGRADE[confidence];
+
   return {
     baseValue,
-    confidence: confidenceFrom(observations, sources.length),
+    confidence,
     sampleSize: observations,
     sources,
   };

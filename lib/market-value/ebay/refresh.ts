@@ -2,9 +2,10 @@ import prisma from "@/lib/prisma";
 import { getEbayToken } from "./client";
 import { collectEbayForJersey, VALUE_MARKETS } from "./collect";
 import { getRatesToEur } from "@/lib/fx";
-import type { JerseyForQuery } from "./matching";
+import { isEbayComparable, type JerseyForQuery } from "./matching";
 import { buildRefreshQueue } from "./queue";
 import { computeJerseyMarketValue } from "../compute";
+import { MARKET_METHOD_VERSION } from "../config";
 
 /**
  * Rafraîchit les données marché eBay pour les maillots POSSÉDÉS par des users
@@ -35,6 +36,7 @@ interface JerseyToScan {
 const jerseyForQuery = {
   season: true,
   type: true,
+  variant: true,
   club: { select: { name: true } },
 } as const;
 
@@ -60,8 +62,9 @@ export async function refreshEbayMarketData(
   ]);
   const seenAt = new Map(existing.map((e) => [e.jerseyId, e.lastSeenAt.getTime()]));
 
+  // Maillots spéciaux, d'édition ou 2e variante : eBay ne sait pas les distinguer du maillot principal.
   const queue = buildRefreshQueue(
-    owned,
+    owned.filter((o) => isEbayComparable(o.jersey)),
     seenAt,
     new Set(supporterOwned.map((s) => s.jerseyId)),
     startedAt,
@@ -120,15 +123,23 @@ async function scanJerseys(
       const { medianPrice, sampleSize, currency } = result.agg;
       await prisma.ebayMarketData.upsert({
         where: { jerseyId },
-        create: { jerseyId, medianPrice, sampleSize, currency, marketId, query: result.query },
-        update: { medianPrice, sampleSize, currency, marketId, query: result.query, lastSeenAt: new Date() },
+        create: { jerseyId, medianPrice, sampleSize, currency, marketId, query: result.query, methodVersion: MARKET_METHOD_VERSION },
+        update: {
+          medianPrice,
+          sampleSize,
+          currency,
+          marketId,
+          query: result.query,
+          methodVersion: MARKET_METHOD_VERSION,
+          lastSeenAt: new Date(),
+        },
       });
     } else {
       // Pas de comparable : on marque la date pour ne pas le re-tenter en boucle.
       await prisma.ebayMarketData.upsert({
         where: { jerseyId },
-        create: { jerseyId, medianPrice: 0, sampleSize: 0, currency: "", marketId, query: result.query },
-        update: { lastSeenAt: new Date(), sampleSize: 0, medianPrice: 0 },
+        create: { jerseyId, medianPrice: 0, sampleSize: 0, currency: "", marketId, query: result.query, methodVersion: MARKET_METHOD_VERSION },
+        update: { lastSeenAt: new Date(), sampleSize: 0, medianPrice: 0, methodVersion: MARKET_METHOD_VERSION },
       });
     }
   }
@@ -155,12 +166,15 @@ const NEW_SUPPORTER_TIME_BUDGET_MS = 60_000;
  */
 export async function scanNewSupporterJerseys(userId: string): Promise<void> {
   const startedAt = Date.now();
-  const queue = await prisma.userJersey.findMany({
-    where: { userId, jersey: { ebayMarketData: null } },
-    distinct: ["jerseyId"],
-    take: NEW_SUPPORTER_MAX_JERSEYS,
-    select: { jerseyId: true, jersey: { select: jerseyForQuery } },
-  });
+  const queue = (
+    await prisma.userJersey.findMany({
+      where: { userId, jersey: { ebayMarketData: null } },
+      distinct: ["jerseyId"],
+      select: { jerseyId: true, jersey: { select: jerseyForQuery } },
+    })
+  )
+    .filter((o) => isEbayComparable(o.jersey))
+    .slice(0, NEW_SUPPORTER_MAX_JERSEYS);
   if (queue.length === 0) return;
 
   const { scannedIds } = await scanJerseys(queue, startedAt + NEW_SUPPORTER_TIME_BUDGET_MS);

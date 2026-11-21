@@ -39,6 +39,8 @@ const VERSION_TERMS: { version: Exclude<ListingVersion, "REPLICA">; terms: strin
       "copa football",
       "toffs",
       "bringback",
+      "reproduction",
+      "repro",
     ],
   },
   { version: "PLAYER_ISSUE", terms: ["player issue", "player issued", "match issue", "issued to player"] },
@@ -58,6 +60,7 @@ const VERSION_TERMS: { version: Exclude<ListingVersion, "REPLICA">; terms: strin
       "version jugador",
       "match version",
       "dri fit adv",
+      "drifit adv",
       "vapor",
       "vaporknit",
       "heat rdy",
@@ -89,11 +92,34 @@ const PRINTED_TERMS = ["nameset", "name set", "flocage", "floque", "flocked", "p
 
 // Numéro de joueur "#10" ou "# 10", lu sur le titre brut (le "#" disparaît à la normalisation).
 const SHIRT_NUMBER_RE = /#\s?\d{1,2}\b/;
+// "No.7", "no 7", "nr 7", "number 2", "n°7".
+const NUMBER_WORD_RE = /(?:^|[^a-z])(?:no\.?|nr\.?|number|n°)\s?\d{1,2}\b/i;
+
+// Nombres de 1 ou 2 chiffres qui ne sont pas un numéro de joueur : saisons,
+// tailles, âges, étoiles du blason, noms de compétitions ou de gammes.
+const NOT_A_PLAYER_NUMBER: RegExp[] = [
+  /\b\d{4}(?:\s|\/)\s?\d{2}(?:\d{2})?\b/g, // 2024/25, 2024 25, 1999/2000
+  /\b\d{4}\b/g,
+  /\b\d{1,2}\s?\/\s?\d{1,2}\b/g, // 24/25, 12/13, 9/10 (état)
+  /\b(?:size|sz|taille|talla|taglia|grosse|uk|eu|us|age)\s\d{1,2}\b/g,
+  /\b\d{1,2}\s(?:stars?|ans|yrs|years|y|cm|pack)\b/g,
+  /\b(?:ligue|league|liga|bundesliga|serie|division|euro|world cup|wc|italia|usa|mexico|france|total)\s\d{1,2}\b/g,
+  /\b\d\s(?:bundesliga|liga)\b/g,
+];
 
 // Garanties d'authenticité des vendeurs eBay ("100% authentic") : pas une version joueur.
-const AUTHENTICITY_CLAIMS = ["100 authentic", "authentic genuine", "genuine authentic"];
+const AUTHENTICITY_CLAIMS = [
+  "100 authentic",
+  "authentic genuine",
+  "genuine authentic",
+  "genuine and authentic",
+  "authentic and genuine",
+  "authentic football",
+  "authentic soccer",
+];
 
-function normalize(title: string): string {
+/** Titre en minuscules, sans accents, ponctuation remplacée par des espaces sauf "/". */
+export function normalizeTitle(title: string): string {
   return title
     .normalize("NFD")
     .replace(/\p{M}/gu, "")
@@ -102,12 +128,31 @@ function normalize(title: string): string {
     .trim();
 }
 
-function hasTerm(padded: string, terms: string[]): boolean {
+/** Un des termes, en mots entiers, dans un titre normalisé entouré d'espaces. */
+export function hasTerm(padded: string, terms: string[]): boolean {
   return terms.some((term) => padded.includes(` ${term} `));
 }
 
-export function listingTraits(title: string): ListingTraits {
-  let padded = ` ${normalize(title)} `;
+/**
+ * Floqué : "#10", "No.7", ou un numéro isolé de 1-2 chiffres une fois retirés
+ * saisons, tailles et autres nombres connus ("Saka 7", "Calhanoglu 20").
+ * `season` (ex. "1996") écarte aussi "Euro 96" pour un maillot de cette saison.
+ */
+function isPrinted(title: string, padded: string, season?: string): boolean {
+  if (SHIRT_NUMBER_RE.test(title) || NUMBER_WORD_RE.test(title)) return true;
+  let rest = padded;
+  for (const re of NOT_A_PLAYER_NUMBER) rest = rest.replace(re, " ");
+  if (season) {
+    const y = parseInt(season.slice(0, 4), 10);
+    for (const yy of [y % 100, (y + 1) % 100]) {
+      rest = rest.replace(new RegExp(`\\s${String(yy).padStart(2, "0")}\\s`, "g"), "  ");
+    }
+  }
+  return /\s\d{1,2}\s/.test(rest);
+}
+
+export function listingTraits(title: string, season?: string): ListingTraits {
+  let padded = ` ${normalizeTitle(title)} `;
   for (const claim of AUTHENTICITY_CLAIMS) padded = padded.replaceAll(` ${claim} `, " ");
 
   const version = VERSION_TERMS.find(({ terms }) => hasTerm(padded, terms))?.version ?? "REPLICA";
@@ -117,7 +162,7 @@ export function listingTraits(title: string): ListingTraits {
     longSleeve: hasTerm(padded, LONG_SLEEVE_TERMS),
     women: hasTerm(padded, WOMEN_TERMS),
     bundle: hasTerm(padded, BUNDLE_TERMS),
-    printed: SHIRT_NUMBER_RE.test(title) || hasTerm(padded, PRINTED_TERMS),
+    printed: hasTerm(padded, PRINTED_TERMS) || isPrinted(title, padded, season),
   };
 }
 

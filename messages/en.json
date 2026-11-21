@@ -3593,7 +3593,8 @@
       "m2s": "Estimate its value jersey by jersey at a glance.",
       "m3t": "Track your collection's value over time",
       "m3s": "A stock-style chart to watch your collection evolve."
-    }
+    },
+    "recalcNotice": "Values recalculated from real eBay sales on {date}."
   },
   "Announcements": {
     "kicker": "New in Le Vestiaire",

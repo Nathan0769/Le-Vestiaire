@@ -125,3 +125,51 @@ describe("isReferenceListing", () => {
     expect(isReferenceListing(listingTraits(title))).toBe(false);
   });
 });
+
+// Vague 1 (2026-11-21) : cas relevés sur les ventes réelles Terapeak.
+describe("listingTraits : flocage élargi", () => {
+  it.each([
+    "Arsenal 2023/24 Home Shirt Saka 7 Large",
+    "2024-25 Inter Milan CL Home Shirt Zielinski No.7",
+    "Nike Inter Milan 2024-25 Home Shirt Size S Denzel Dumfries number 2",
+    "Inter Milan Football Club UCL Home Shirt 2024/25 - Çalhanoğlu 20 - Medium",
+    "Maillot PSG 2022 Mbappé n°7",
+  ])("%s -> floqué", (title) => {
+    expect(listingTraits(title).printed).toBe(true);
+  });
+
+  it.each([
+    "Nike Inter Milan Home Shirt 2024/25 BNWT Black Blue Betsson Sport 2 Stars Mens",
+    "Arsenal 2024/25 Home Shirt Size 10 Mens",
+    "Portland Timbers 2024 Third Shirt 2025 MLS",
+    "Lille 2024-25 Home Shirt Ligue 1 Large",
+    "Arsenal 2004-06 Home Shirt (Excellent) L",
+    "Nike Total 90 Inter Milan 2004 Home Shirt",
+    "Real Madrid 1999/2000 Home Shirt XL",
+  ])("%s -> pas de flocage", (title) => {
+    expect(listingTraits(title).printed).toBe(false);
+  });
+});
+
+describe("listingTraits : rééditions et garanties d'authenticité", () => {
+  it.each([
+    "Olympique Marseille 1990-91 Reproduction Football Shirt Away Blue Size M. NWT",
+    "Arsenal 1971 Repro Home Shirt",
+  ])("%s -> REISSUE", (title) => {
+    expect(listingTraits(title).version).toBe("REISSUE");
+  });
+
+  it.each([
+    "Nike Inter Milan 2024/25 home jersey Size L - AUTHENTIC #football #soccer #BNWT",
+    "Juventus 2019 Home Shirt Genuine and Authentic",
+  ])("%s -> REPLICA (garantie du vendeur)", (title) => {
+    expect(listingTraits(title).version).toBe("REPLICA");
+  });
+});
+
+describe("listingTraits : saison connue", () => {
+  it("« 96 » d'un maillot 1996 n'est pas un numéro de joueur", () => {
+    expect(listingTraits("England Home Shirt 96 L", "1996").printed).toBe(false);
+    expect(listingTraits("England 1996 Home Shirt Gascoigne 8 L", "1996").printed).toBe(true);
+  });
+});

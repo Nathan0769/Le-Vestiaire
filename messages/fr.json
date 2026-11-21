@@ -3598,7 +3598,8 @@
       "m2s": "Estime sa valeur maillot par maillot en un coup d'œil.",
       "m3t": "Suis la valeur de ta collection dans le temps",
       "m3s": "Une courbe façon bourse pour voir ta collection évoluer."
-    }
+    },
+    "recalcNotice": "Cote recalculée sur les ventes réelles d'eBay le {date}."
   },
   "Announcements": {
     "kicker": "Nouveau dans Le Vestiaire",

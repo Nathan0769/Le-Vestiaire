@@ -3593,7 +3593,8 @@
       "m2s": "Stima il suo valore maglia per maglia in un colpo d'occhio.",
       "m3t": "Segui il valore della tua collezione nel tempo",
       "m3s": "Un grafico stile borsa per veder crescere la tua collezione."
-    }
+    },
+    "recalcNotice": "Quotazione ricalcolata sulle vendite reali di eBay il {date}."
   },
   "Announcements": {
     "kicker": "Novità su Le Vestiaire",

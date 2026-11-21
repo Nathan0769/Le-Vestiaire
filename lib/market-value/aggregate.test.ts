@@ -1,6 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { aggregate, usesMarketBase, valueForCondition, valueForItem } from "./aggregate";
+import { aggregate as realAggregate, usesMarketBase, valueForCondition, valueForItem, type AggregateOptions } from "./aggregate";
+import { ASKING_ABATEMENT } from "./config";
 import type { PriceSignal } from "./types";
+
+// Les cas historiques sont écrits avec les abattements de la méthode 1 (0,85 / 0,73).
+const aggregate = (signals: PriceSignal[], options: AggregateOptions = {}) =>
+  realAggregate(signals, { methodVersion: 1, ...options });
 
 const sold = (price: number, source: PriceSignal["source"] = "ebay", condition?: PriceSignal["condition"]): PriceSignal => ({
   price,
@@ -43,7 +48,7 @@ describe("aggregate", () => {
   });
 
   it("résume chaque source par sa médiane, puis fait la moyenne des sources à poids égal", () => {
-    const est = aggregate([asking(80, "ebay"), asking(120, "ebay"), asking(200, "cfs")]);
+    const est = aggregate([asking(80, "ebay"), asking(120, "ebay"), asking(200, "cfs"), asking(200, "cfs")]);
     // eBay : médiane de 68 et 102 = 85 ; CFS : 146 -> (85 + 146) / 2 = 115,5
     expect(est?.baseValue).toBe(115.5);
   });
@@ -60,7 +65,8 @@ describe("aggregate", () => {
   });
 
   it("palier moyen dès 4 observations si 2 sources concordent", () => {
-    const est = aggregate([asking(50, "ebay", 3), asking(60, "cfs", 1)]);
+    // Chaque source atteint le seuil de vote (2 observations).
+    const est = aggregate([asking(50, "ebay", 2), asking(60, "cfs", 2)]);
     // 4 observations + 2 sources -> medium
     expect(est?.confidence).toBe("medium");
   });
@@ -102,7 +108,7 @@ describe("aggregate : boutiques partenaires", () => {
       { price: 100, type: "asking", source: PARC, condition: "MINT" },
       { price: 100, type: "sold", source: PARC, condition: "MINT" },
       { price: 110, type: "sold", source: PARC, condition: "MINT" },
-      { price: 100, type: "asking", source: "ebay" },
+      { price: 100, type: "asking", source: "ebay", observations: 2 },
     ]);
     expect(est?.baseValue).toBe(82.5);
   });
@@ -153,4 +159,65 @@ describe("usesMarketBase", () => {
       expect(usesMarketBase(version)).toBe(true);
     }
   );
+});
+
+// Vague 1 (2026-11-21). Spec docs/specs/2026-11-21-cote-vague-1.md, décision 5.
+describe("aggregate : ruptures CFS (stale)", () => {
+  const stale = (price: number): PriceSignal => ({ price, type: "asking", source: "cfs", stale: true });
+
+  it("écarte les signaux stale dès qu'un signal frais existe", () => {
+    const est = aggregate([stale(200), stale(200), asking(100, "ebay", 40)]);
+    expect(est?.baseValue).toBe(85);
+    expect(est?.sources).toEqual(["ebay"]);
+  });
+
+  it("garde les signaux stale s'ils sont seuls, confiance basse", () => {
+    const est = aggregate(Array.from({ length: 30 }, () => stale(100)));
+    expect(est?.baseValue).toBe(73);
+    expect(est?.confidence).toBe("low");
+  });
+});
+
+describe("aggregate : seuil de vote (2 observations)", () => {
+  it("une source à 1 observation ne vote pas face à une source fournie", () => {
+    expect(aggregate([asking(100, "ebay", 40), asking(200, "cfs")])?.baseValue).toBe(85);
+  });
+  it("une source à 2 observations vote", () => {
+    // eBay 85, CFS médiane(146, 146) = 146 -> moyenne 115,5
+    expect(aggregate([asking(100, "ebay", 40), asking(200, "cfs"), asking(200, "cfs")])?.baseValue).toBe(115.5);
+  });
+  it("si aucune source n'atteint 2, toutes votent", () => {
+    // eBay 85, CFS 146 -> 115,5
+    expect(aggregate([asking(100, "ebay", 1), asking(200, "cfs")])?.baseValue).toBe(115.5);
+  });
+});
+
+describe("aggregate : fraîcheur eBay", () => {
+  const now = new Date("2026-11-21T00:00:00Z");
+  const ebayAt = (days: number): PriceSignal => ({
+    price: 100,
+    type: "asking",
+    source: "ebay",
+    observations: 40,
+    date: new Date(now.getTime() - days * 86_400_000),
+  });
+
+  it("perd un cran de confiance entre 21 et 60 jours", () => {
+    expect(aggregate([ebayAt(5)], { now })?.confidence).toBe("high");
+    expect(aggregate([ebayAt(30)], { now })?.confidence).toBe("medium");
+  });
+  it("ignoré au-delà de 60 jours", () => {
+    expect(aggregate([ebayAt(61)], { now })).toBeNull();
+  });
+});
+
+describe("aggregate : abattements par version de méthode", () => {
+  it("la méthode 2 applique les abattements mesurés sur les ventes réelles", () => {
+    const est = realAggregate([{ price: 100, type: "asking", source: "ebay", observations: 40 }], { methodVersion: 2 });
+    expect(est?.baseValue).toBe(Math.round(100 * ASKING_ABATEMENT[2].ebay * 100) / 100);
+    expect(ASKING_ABATEMENT[2].ebay).toBeLessThan(ASKING_ABATEMENT[1].ebay);
+  });
+  it("la méthode 1 garde les abattements d'origine", () => {
+    expect(realAggregate([{ price: 100, type: "asking", source: "cfs" }], { methodVersion: 1 })?.baseValue).toBe(73);
+  });
 });

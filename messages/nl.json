@@ -3593,7 +3593,8 @@
       "m2s": "Schat de waarde shirt voor shirt in één oogopslag.",
       "m3t": "Volg de waarde van je collectie in de tijd",
       "m3s": "Een grafiek in beursstijl om je collectie te zien groeien."
-    }
+    },
+    "recalcNotice": "Marktwaarde op {date} herberekend op basis van echte eBay-verkopen."
   },
   "Announcements": {
     "kicker": "Nieuw in Le Vestiaire",

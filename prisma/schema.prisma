@@ -197,15 +197,17 @@ model Jersey {
 /// Cote estimée d'un maillot (valeur pour l'état de référence GOOD) — voir
 /// docs/specs/2026-09-11-market-value.md. Recalculée périodiquement.
 model JerseyMarketValue {
-  id         String   @id @default(cuid())
-  jerseyId   String   @unique
-  jersey     Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-  baseValue  Float
-  confidence String
-  sampleSize Int
-  sources    Json
-  computedAt DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id            String   @id @default(cuid())
+  jerseyId      String   @unique
+  jersey        Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  baseValue     Float
+  confidence    String
+  sampleSize    Int
+  sources       Json
+  // Version de méthode (abattements et collecte) ayant produit cette cote
+  methodVersion Int      @default(1)
+  computedAt    DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@map("jersey_market_values")
 }
@@ -214,17 +216,19 @@ model JerseyMarketValue {
 /// IMPORTANT : PRIX AGRÉGÉS UNIQUEMENT — aucune donnée de vendeur/acheteur ni PII
 /// eBay n'est stockée (engagement d'exemption "Marketplace Account Deletion").
 model EbayMarketData {
-  id          String   @id @default(cuid())
-  jerseyId    String   @unique
-  jersey      Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-  medianPrice Float // médiane des annonces retenues, convertie en EUR
-  sampleSize  Int // nb d'annonces retenues après filtrage
-  currency    String // devise source du marché (ex: GBP) avant conversion
-  marketId    String // marketplace eBay interrogé (ex: EBAY_GB)
-  query       String // requête utilisée (tuning/debug)
-  lastSeenAt  DateTime @default(now())
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String   @id @default(cuid())
+  jerseyId      String   @unique
+  jersey        Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  medianPrice   Float // médiane des annonces retenues, convertie en EUR
+  sampleSize    Int // nb d'annonces retenues après filtrage
+  currency      String // devise source du marché (ex: GBP) avant conversion
+  marketId      String // marketplace eBay interrogé (ex: EBAY_GB)
+  query         String // requête utilisée (tuning/debug)
+  // Règles de collecte : 1 = avant le 2026-11-22, 2 = tri strict + neuf ramené à GOOD (medianPrice équivalent GOOD)
+  methodVersion Int      @default(1)
+  lastSeenAt    DateTime @default(now())
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   @@index([lastSeenAt])
   @@map("ebay_market_data")
@@ -232,11 +236,13 @@ model EbayMarketData {
 
 /// Historique de la cote (pour la tendance).
 model JerseyMarketValueSnapshot {
-  id       String   @id @default(cuid())
-  jerseyId String
-  jersey   Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-  value    Float
-  date     DateTime @default(now())
+  id            String   @id @default(cuid())
+  jerseyId      String
+  jersey        Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  value         Float
+  // Raccord de la courbe au changement de méthode (lib/market-value/method-chain.ts)
+  methodVersion Int      @default(1)
+  date          DateTime @default(now())
 
   @@index([jerseyId, date])
   @@map("jersey_market_value_snapshots")

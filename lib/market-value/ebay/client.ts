@@ -19,6 +19,8 @@ export interface EbayItem {
   condition?: string;
   buyingOptions?: string[];
   seller?: { feedbackScore?: number };
+  /** 1000 neuf avec étiquettes, 1500 neuf sans, 3000 occasion... */
+  conditionId?: string;
 }
 
 interface TokenResponse {
@@ -76,11 +78,14 @@ export async function browseSearch(
   token: string,
   query: string,
   marketId: string,
-  limit = 40
+  limit = 200
 ): Promise<EbayItem[]> {
   const url = new URL(`${BASE}/buy/browse/v1/item_summary/search`);
   url.searchParams.set("q", query);
+  // Le quota compte des appels, pas des annonces : on prend le maximum.
   url.searchParams.set("limit", String(limit));
+  // Le prix d'une enchère en cours est l'offre du moment, pas un prix de marché.
+  url.searchParams.set("filter", "buyingOptions:{FIXED_PRICE|BEST_OFFER}");
 
   const res = await fetch(url, {
     headers: {

@@ -24,6 +24,11 @@ export interface PriceSignal {
    * piloter la confiance, pas le simple nombre de signaux.
    */
   observations?: number;
+  /**
+   * Prix périmé : produit CFS en rupture sans vente récente. Écarté dès qu'un
+   * signal frais existe ; seul, il donne une cote de confiance basse.
+   */
+  stale?: boolean;
 }
 
 export type Confidence = "high" | "medium" | "low";

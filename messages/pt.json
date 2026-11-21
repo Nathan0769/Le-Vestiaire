@@ -3593,7 +3593,8 @@
       "m2s": "Estima o seu valor camisa a camisa num relance.",
       "m3t": "Acompanha o valor da tua coleção ao longo do tempo",
       "m3s": "Um gráfico estilo bolsa para veres a tua coleção evoluir."
-    }
+    },
+    "recalcNotice": "Cotação recalculada com vendas reais do eBay em {date}."
   },
   "Announcements": {
     "kicker": "Novo no Le Vestiaire",

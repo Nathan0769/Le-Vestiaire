@@ -168,4 +168,13 @@ describe("toCfsSignals", () => {
     const signals = toCfsSignals([row({ inStock: false, soldAt: hoursAgo(181 * 24), soldPrice: 39.59 })], now);
     expect(signals.map((s) => s.type)).toEqual(["asking"]);
   });
+
+  // Vague 1 (2026-11-21) : 54 % des maillots CFS n'avaient que des ruptures.
+  it("marque stale le prix d'un produit en rupture sans vente récente", () => {
+    const signals = toCfsSignals(
+      [row(), row({ inStock: false, price: 80 }), row({ inStock: false, soldAt: hoursAgo(181 * 24), soldPrice: 39.59 })],
+      now
+    );
+    expect(signals.map((s) => s.stale ?? false)).toEqual([false, true, true]);
+  });
 });
