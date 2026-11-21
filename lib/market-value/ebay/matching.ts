@@ -86,14 +86,13 @@ export const NAME_FR_TO_EN: Record<string, string> = {
   "Red Bull Salzbourg": "Red Bull Salzburg",
 };
 
+/** Mot-clé de type ajouté à la requête (les éditions passent par leurs mots distinctifs). */
 const TYPE_KEYWORD: Record<string, string> = {
   HOME: "home",
   AWAY: "away",
   THIRD: "third",
   GOALKEEPER: "goalkeeper",
-  // FOURTH / SPECIAL : pas de mot-clé fiable. Ces maillots ne sont plus scannés (isEbayComparable).
-  FOURTH: "",
-  SPECIAL: "",
+  FOURTH: "fourth",
 };
 
 /** Mots qui désignent un type de maillot dans un titre (normalisé). */
@@ -101,19 +100,94 @@ const TYPE_TERMS: Record<string, string[]> = {
   HOME: ["home", "domicile", "heim", "casa", "local", "thuis"],
   AWAY: ["away", "exterieur", "auswarts", "trasferta", "visitante", "uit"],
   THIRD: ["third", "3rd", "troisieme", "ausweich"],
+  FOURTH: ["fourth", "4th", "quatrieme"],
   GOALKEEPER: ["goalkeeper", "gk", "keeper", "gardien", "torwart", "portiere", "portero"],
 };
 
-/** Seuls ces types ont un mot-clé eBay qui les distingue du maillot principal. */
-const EBAY_COMPARABLE_TYPES = new Set(["HOME", "AWAY", "THIRD", "GOALKEEPER"]);
+/** Types principaux : la saison, le club et le type suffisent à trouver les comparables. */
+const MAIN_TYPES = new Set(["HOME", "AWAY", "THIRD", "GOALKEEPER"]);
+
+/** Maillot principal (type courant, variante 1) : aucun mot distinctif nécessaire. */
+export function isMainJersey(jersey: { type: string; variant: number }): boolean {
+  return MAIN_TYPES.has(jersey.type) && jersey.variant === 1;
+}
 
 /**
- * Un maillot dont eBay sait trouver les comparables : type principal et
- * variante 1. Une 2e variante ou un maillot d'édition (anniversaire, Octobre
- * rose...) recevrait les annonces du maillot principal.
+ * Mots d'un 4e maillot ou d'une édition, que l'annonce doit contenir. Le premier
+ * part dans la requête. RETRO et SPECIAL n'en ont pas : rétro se confond avec
+ * les rééditions, SPECIAL prend les mots de son nom.
  */
-export function isEbayComparable(jersey: { type: string; variant: number }): boolean {
-  return EBAY_COMPARABLE_TYPES.has(jersey.type) && jersey.variant === 1;
+const EDITION_TERMS: Record<string, string[]> = {
+  FOURTH: ["fourth", "4th", "quatrieme"],
+  ANNIVERSARY: ["anniversary", "anniversaire", "aniversario", "anniversario", "jubilaum"],
+  CENTENAIRE: ["centenary", "centenaire", "centenario", "centennial", "100 years"],
+  OCTOBRE_ROSE: ["pink", "octobre rose", "breast cancer"],
+  HALLOWEEN: ["halloween"],
+  OKTOBERFEST: ["oktoberfest", "wiesn"],
+  HUMANRACE: ["human race", "humanrace"],
+  ONE_PLANET: ["one planet"],
+  ANTI_RACISME: ["anti racism", "no to racism", "no room for racism"],
+  HOMMAGE: ["tribute", "hommage", "homage"],
+  NOUVEL_AN_CHINOIS: ["chinese new year", "lunar new year"],
+  OFF_WHITE: ["off white", "offwhite"],
+  KOCHE: ["koche"],
+  CHAMPION: ["champion", "champions", "campeon", "campione"],
+};
+
+/** Mots du nom catalogue (français) traduits comme les écrivent les vendeurs. */
+const NAME_WORD_EN: Record<string, string> = {
+  anniversaire: "anniversary",
+  centenaire: "centenary",
+  rose: "pink",
+  hommage: "tribute",
+  noir: "black",
+  blanc: "white",
+  rouge: "red",
+  bleu: "blue",
+  vert: "green",
+  jaune: "yellow",
+  or: "gold",
+  dore: "gold",
+  gris: "grey",
+  violet: "purple",
+  bordeaux: "burgundy",
+  limitee: "limited",
+};
+
+/** Mots du nom qui ne distinguent rien. */
+const NAME_STOPWORDS = new Set([
+  "maillot", "shirt", "jersey", "kit", "domicile", "exterieur", "third", "home", "away", "gardien", "goalkeeper",
+  "special", "speciale", "edition", "version", "saison", "season", "de", "du", "des", "la", "le", "les", "et", "x",
+  "the", "of", "and", "fc", "ans", "years", "4e", "quatrieme", "fourth",
+]);
+
+/**
+ * Mots que l'annonce doit contenir pour être ce maillot-là, ou null s'il n'est
+ * pas cherchable sur eBay (il garde CFS, les boutiques ou son prix d'achat).
+ * - Maillot principal : [].
+ * - 4e maillot, édition : mots du type (EDITION_TERMS).
+ * - Variante 2+ ou SPECIAL : mots de son nom absents du nom de la variante 1
+ *   (`baseName`), traduits ; aucun -> null, sinon il prendrait le prix du principal.
+ */
+export function ebaySearchKeywords(
+  jersey: { type: string; variant: number; name: string; season: string; club: { name: string } },
+  baseName?: string | null
+): string[] | null {
+  if (isMainJersey(jersey)) return [];
+  if (jersey.type === "RETRO") return null;
+  if (EDITION_TERMS[jersey.type] && jersey.variant === 1) return EDITION_TERMS[jersey.type];
+
+  const ignore = new Set([
+    ...normalizeTitle(baseName ?? "").split(" "),
+    ...normalizeTitle(jersey.club.name).split(" "),
+    ...normalizeTitle(searchName(jersey.club)).split(" "),
+  ]);
+  const words = normalizeTitle(jersey.name)
+    .split(" ")
+    .filter((w) => w.length >= 2 && !/\d/.test(w) && !NAME_STOPWORDS.has(w) && !ignore.has(w));
+  const keywords = [...new Set(words.flatMap((w) => (NAME_WORD_EN[w] ? [NAME_WORD_EN[w], w] : [w])))];
+  if (keywords.length === 0) return null;
+  return [...(EDITION_TERMS[jersey.type] ?? []), ...keywords];
 }
 
 /** Pièces hors comparable (normalisées, en mots entiers). */
@@ -171,6 +245,8 @@ export interface JerseyForQuery {
   season: string;
   type: string;
   club: { name: string; country?: string | null };
+  /** Mots distinctifs (ebaySearchKeywords) : l'annonce doit en contenir un ; le premier part dans la requête. */
+  keywords?: string[];
 }
 
 /** Retire les suffixes verbeux et les formes juridiques d'un nom de club pour la recherche. */
@@ -223,7 +299,8 @@ export function seasonShort(season: string): string {
 export function buildQueries(j: JerseyForQuery): string[] {
   const club = searchName(j.club);
   const type = TYPE_KEYWORD[j.type] ?? "";
-  const suffix = type ? `${type} shirt` : "shirt";
+  const extra = type ? "" : (j.keywords?.[0] ?? "");
+  const suffix = [type, extra, "shirt"].filter(Boolean).join(" ");
   const variants = [
     `${club} ${seasonSlash(j.season)} ${suffix}`,
     `${club} ${seasonShort(j.season)} ${suffix}`,
@@ -297,7 +374,8 @@ function clubTerms(club: { name: string }): string[] {
 /** Un autre type de maillot que celui cherché est nommé dans le titre. */
 function otherTypeNamed(padded: string, type: string): boolean {
   // Un maillot de gardien s'annonce souvent "home goalkeeper shirt" : seul le gardien compte.
-  if (type === "GOALKEEPER") return false;
+  // Une édition (Octobre rose, anniversaire...) peut être annoncée "home" : son mot propre la filtre.
+  if (type === "GOALKEEPER" || !TYPE_TERMS[type]) return false;
   return Object.entries(TYPE_TERMS).some(([t, words]) => t !== type && hasTerm(padded, words));
 }
 
@@ -325,6 +403,7 @@ export function rejectReason(item: EbayItem, jersey: JerseyForQuery): string | n
   if (!seasonMatches(padded, jersey.season)) return "season";
   if (!hasTerm(padded, clubTerms(jersey.club))) return "club";
   if (otherTypeNamed(padded, jersey.type)) return "type";
+  if (jersey.keywords?.length && !hasTerm(padded, jersey.keywords.map(normalizeTitle))) return "keyword";
   return null;
 }
 

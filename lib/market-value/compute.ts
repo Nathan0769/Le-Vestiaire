@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import { aggregate } from "./aggregate";
 import { MARKET_METHOD_VERSION, type MethodVersion } from "./config";
-import { isEbayComparable } from "./ebay/matching";
+import { isMainJersey } from "./ebay/matching";
 import { CFS_PRODUCT_SIGNAL_SELECT, cfsRowToState, cfsSignals } from "./providers/cfs";
 import { toCfsSignals } from "@/lib/cfs-products";
 import { ebaySignals } from "./providers/ebay";
@@ -131,12 +131,13 @@ export async function recomputeAllMarketValues(): Promise<{
   for (const c of cfs) {
     for (const signal of toCfsSignals([cfsRowToState(c)], now)) add(c.jerseyId, signal);
   }
-  // Maillots sans comparable eBay fiable (spéciaux, éditions, 2e variante) :
-  // leurs anciennes lignes sont ignorées puis supprimées.
+  // Lignes de la méthode 1 pour un maillot non principal (variante, édition,
+  // 4e maillot) : collectées sans mot distinctif, donc avec les annonces du
+  // maillot principal. Ignorées puis supprimées ; la méthode 2 les recollecte.
   const notComparable: string[] = [];
   const ebayVersion = new Map<string, MethodVersion>();
   for (const e of ebay) {
-    if (!isEbayComparable(e.jersey)) {
+    if (!isMainJersey(e.jersey) && e.methodVersion < 2) {
       notComparable.push(e.jerseyId);
       continue;
     }

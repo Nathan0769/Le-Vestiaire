@@ -4,7 +4,8 @@ import {
   aggregateEbay,
   buildQueries,
   filterItems,
-  isEbayComparable,
+  isMainJersey,
+  ebaySearchKeywords,
   itemPriceEur,
   searchName,
   seasonShort,
@@ -236,13 +237,57 @@ describe("aggregateEbay : état", () => {
   });
 });
 
-describe("isEbayComparable", () => {
+describe("isMainJersey", () => {
   it("vrai pour les types principaux en variante 1 seulement", () => {
-    expect(isEbayComparable({ type: "HOME", variant: 1 })).toBe(true);
-    expect(isEbayComparable({ type: "GOALKEEPER", variant: 1 })).toBe(true);
-    expect(isEbayComparable({ type: "FOURTH", variant: 1 })).toBe(false);
-    expect(isEbayComparable({ type: "ANNIVERSARY", variant: 1 })).toBe(false);
-    expect(isEbayComparable({ type: "HOME", variant: 2 })).toBe(false);
+    expect(isMainJersey({ type: "HOME", variant: 1 })).toBe(true);
+    expect(isMainJersey({ type: "GOALKEEPER", variant: 1 })).toBe(true);
+    expect(isMainJersey({ type: "FOURTH", variant: 1 })).toBe(false);
+    expect(isMainJersey({ type: "HOME", variant: 2 })).toBe(false);
+  });
+});
+
+// Choix de Nathan (2026-11-22) : chercher aussi 4e maillots, éditions et variantes,
+// avec un mot qui les distingue du maillot principal.
+describe("ebaySearchKeywords", () => {
+  const j = (type: string, variant: number, name: string) => ({ type, variant, name, season: "2024-25", club: { name: "Arsenal" } });
+
+  it("maillot principal : aucun mot en plus", () => {
+    expect(ebaySearchKeywords(j("HOME", 1, "Maillot Domicile Arsenal 2024-25"))).toEqual([]);
+  });
+  it("4e maillot et éditions : le mot du type", () => {
+    expect(ebaySearchKeywords(j("FOURTH", 1, "Arsenal 4e maillot 2024-25"))).toEqual(expect.arrayContaining(["fourth", "4th"]));
+    expect(ebaySearchKeywords(j("OCTOBRE_ROSE", 1, "Maillot Octobre Rose Arsenal 2024-25"))).toContain("pink");
+  });
+  it("variante : les mots de son nom absents du maillot principal, traduits", () => {
+    expect(
+      ebaySearchKeywords(j("HOME", 2, "Maillot Domicile Arsenal 2024-25 Anniversaire Noir"), "Maillot Domicile Arsenal 2024-25")
+    ).toEqual(expect.arrayContaining(["anniversary", "black"]));
+  });
+  it("variante sans mot distinctif, ou rétro : pas cherchable", () => {
+    expect(ebaySearchKeywords(j("HOME", 2, "Maillot Domicile Arsenal 2024-25"), "Maillot Domicile Arsenal 2024-25")).toBeNull();
+    expect(ebaySearchKeywords(j("RETRO", 1, "Maillot Rétro Arsenal 2024-25"))).toBeNull();
+  });
+});
+
+describe("filterItems : mots distinctifs", () => {
+  const fourth: JerseyForQuery = { season: "2024-25", type: "FOURTH", club: { name: "Arsenal" }, keywords: ["fourth", "4th"] };
+  it("exige le mot du 4e maillot et écarte les autres types", () => {
+    const kept = filterItems(
+      [
+        item("Arsenal 2024/25 4th shirt", "40"),
+        item("Arsenal 2024/25 shirt", "40"),
+        item("Arsenal 2024/25 third shirt", "40"),
+      ],
+      fourth
+    );
+    expect(titles(kept)).toEqual(["Arsenal 2024/25 4th shirt"]);
+  });
+  it("une édition n'est pas écartée pour « home »", () => {
+    const pink: JerseyForQuery = { season: "2024-25", type: "OCTOBRE_ROSE", club: { name: "Olympique de Marseille" }, keywords: ["pink", "octobre rose"] };
+    expect(filterItems([item("Marseille 2024/25 Octobre Rose home shirt", "60")], pink)).toHaveLength(1);
+  });
+  it("la requête porte le mot distinctif", () => {
+    expect(buildQueries(fourth)[0]).toBe("Arsenal 2024/25 fourth shirt");
   });
 });
 

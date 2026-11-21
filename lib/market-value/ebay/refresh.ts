@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import { getEbayToken } from "./client";
 import { collectEbayForJersey, VALUE_MARKETS } from "./collect";
 import { getRatesToEur } from "@/lib/fx";
-import { isEbayComparable, type JerseyForQuery } from "./matching";
+import { ebaySearchKeywords, type JerseyForQuery } from "./matching";
 import { buildRefreshQueue } from "./queue";
 import { computeJerseyMarketValue } from "../compute";
 import { MARKET_METHOD_VERSION } from "../config";
@@ -34,11 +34,52 @@ interface JerseyToScan {
 }
 
 const jerseyForQuery = {
+  name: true,
+  clubId: true,
   season: true,
   type: true,
   variant: true,
   club: { select: { name: true } },
 } as const;
+
+type CatalogJersey = {
+  name: string;
+  clubId: string;
+  season: string;
+  type: string;
+  variant: number;
+  club: { name: string };
+};
+
+/**
+ * Ajoute à chaque maillot ses mots distinctifs eBay et écarte ceux qui ne sont
+ * pas cherchables (variante sans mot distinctif, rétro). Les variantes sont
+ * comparées au nom de leur variante 1, lu en une requête.
+ */
+export async function withSearchKeywords<T extends { jerseyId: string; jersey: CatalogJersey }>(
+  rows: T[]
+): Promise<(Omit<T, "jersey"> & { jersey: JerseyForQuery })[]> {
+  const variants = rows.filter((r) => r.jersey.variant > 1);
+  const bases = variants.length
+    ? await prisma.jersey.findMany({
+        where: {
+          variant: 1,
+          OR: variants.map((v) => ({ clubId: v.jersey.clubId, season: v.jersey.season, type: v.jersey.type as never })),
+        },
+        select: { clubId: true, season: true, type: true, name: true },
+      })
+    : [];
+  const baseName = (j: CatalogJersey) =>
+    bases.find((b) => b.clubId === j.clubId && b.season === j.season && b.type === j.type)?.name ?? null;
+
+  const out: (Omit<T, "jersey"> & { jersey: JerseyForQuery })[] = [];
+  for (const r of rows) {
+    const keywords = ebaySearchKeywords(r.jersey, r.jersey.variant > 1 ? baseName(r.jersey) : null);
+    if (keywords === null) continue;
+    out.push({ ...r, jersey: { season: r.jersey.season, type: r.jersey.type, club: r.jersey.club, keywords } });
+  }
+  return out;
+}
 
 export async function refreshEbayMarketData(
   limit = 60
@@ -62,9 +103,9 @@ export async function refreshEbayMarketData(
   ]);
   const seenAt = new Map(existing.map((e) => [e.jerseyId, e.lastSeenAt.getTime()]));
 
-  // Maillots spéciaux, d'édition ou 2e variante : eBay ne sait pas les distinguer du maillot principal.
+  // Variantes, 4e maillots et éditions : cherchés avec leurs mots distinctifs, ou pas du tout.
   const queue = buildRefreshQueue(
-    owned.filter((o) => isEbayComparable(o.jersey)),
+    await withSearchKeywords(owned),
     seenAt,
     new Set(supporterOwned.map((s) => s.jerseyId)),
     startedAt,
@@ -102,7 +143,7 @@ async function scanJerseys(
     try {
       result = await collectEbayForJersey(
         token,
-        { season: jersey.season, type: jersey.type, club: jersey.club },
+        jersey,
         VALUE_MARKETS,
         rates
       );
@@ -167,14 +208,14 @@ const NEW_SUPPORTER_TIME_BUDGET_MS = 60_000;
 export async function scanNewSupporterJerseys(userId: string): Promise<void> {
   const startedAt = Date.now();
   const queue = (
-    await prisma.userJersey.findMany({
-      where: { userId, jersey: { ebayMarketData: null } },
-      distinct: ["jerseyId"],
-      select: { jerseyId: true, jersey: { select: jerseyForQuery } },
-    })
-  )
-    .filter((o) => isEbayComparable(o.jersey))
-    .slice(0, NEW_SUPPORTER_MAX_JERSEYS);
+    await withSearchKeywords(
+      await prisma.userJersey.findMany({
+        where: { userId, jersey: { ebayMarketData: null } },
+        distinct: ["jerseyId"],
+        select: { jerseyId: true, jersey: { select: jerseyForQuery } },
+      })
+    )
+  ).slice(0, NEW_SUPPORTER_MAX_JERSEYS);
   if (queue.length === 0) return;
 
   const { scannedIds } = await scanJerseys(queue, startedAt + NEW_SUPPORTER_TIME_BUDGET_MS);

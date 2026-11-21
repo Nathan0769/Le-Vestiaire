@@ -1,5 +1,5 @@
 import prisma from "@/lib/prisma";
-import { isEbayComparable } from "../ebay/matching";
+import { isMainJersey } from "../ebay/matching";
 import type { PriceSignal } from "../types";
 
 /**
@@ -22,7 +22,8 @@ export async function ebaySignals(
       jersey: { select: { type: true, variant: true } },
     },
   });
-  if (!row || !isEbayComparable(row.jersey)) return { signals: [], row: null };
+  // Ligne méthode 1 d'un maillot non principal : annonces du maillot principal, ignorée.
+  if (!row || (!isMainJersey(row.jersey) && row.methodVersion < 2)) return { signals: [], row: null };
   if (row.sampleSize <= 0 || row.medianPrice <= 0) return { signals: [], row };
 
   return {
