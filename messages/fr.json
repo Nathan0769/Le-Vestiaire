@@ -457,7 +457,20 @@
           "connectionError": "Erreur de connexion. Veuillez réessayer.",
           "deleted": "Maillot supprimé de votre collection"
         },
-        "purchaseCurrency": "Devise du prix"
+        "purchaseCurrency": "Devise du prix",
+        "purchaseSource": "Où",
+        "purchaseSourcePlaceholder": "Facultatif",
+        "purchaseSources": {
+          "OFFICIAL_STORE": "Boutique officielle (club ou marque)",
+          "SPORTS_RETAILER": "Magasin ou site de sport",
+          "CFS": "Classic Football Shirts",
+          "LE_PARC": "Le Parc à Maillots",
+          "VINTED": "Vinted",
+          "EBAY": "eBay",
+          "LEBONCOIN": "Leboncoin",
+          "VINTAGE_SHOP": "Autre boutique vintage",
+          "OTHER": "Autre"
+        }
       },
       "delete": {
         "title": "Supprimer le maillot ?",
@@ -3561,9 +3574,9 @@
     "sortClub": "Club",
     "seeMore": "Voir plus ({count})",
     "seeLess": "Voir moins",
-    "confHigh": "élevée",
-    "confMedium": "moyenne",
-    "confIndicative": "indicative",
+    "confHigh": "fiable",
+    "confMedium": "correcte",
+    "confIndicative": "peu de données",
     "confPurchase": "prix d'achat",
     "note": "Estimation indicative basée sur les prix du marché actuel (annonces eBay UK/DE/IT/ES/FR et Classic Football Shirts, converties en euros au taux du jour). Un maillot sans assez de comparables est estimé à son prix d'achat.",
     "emptyTitle": "Pas encore de valeur estimée",
@@ -3599,7 +3612,15 @@
       "m3t": "Suis la valeur de ta collection dans le temps",
       "m3s": "Une courbe façon bourse pour voir ta collection évoluer."
     },
-    "recalcNotice": "Cote recalculée sur les ventes réelles d'eBay le {date}."
+    "recalcNotice": "Cote recalculée sur les ventes réelles d'eBay le {date}.",
+    "heroRange": "entre {low} et {high}",
+    "printed": "Floqué",
+    "noteUnique": "Pièce unique, non estimable : prix d'achat",
+    "noteUncertified": "Dédicace non certifiée",
+    "srcEbay": "{count, plural, one {# annonce eBay} other {# annonces eBay}}",
+    "srcCfs": "{count, plural, one {# produit CFS} other {# produits CFS}}",
+    "srcMembers": "{count, plural, one {# achat de membre} other {# achats de membres}}",
+    "srcPartner": "{count, plural, one {# offre Le Parc à Maillots} other {# offres Le Parc à Maillots}}"
   },
   "Announcements": {
     "kicker": "Nouveau dans Le Vestiaire",
@@ -3624,6 +3645,29 @@
             "alerts": {
               "title": "Les promos viennent à toi",
               "text": "Une alerte quand un maillot de ta liste baisse d'au moins 20 %, jamais plus d'une tous les 3 jours."
+            }
+          }
+        }
+      }
+    },
+    "2026-11-cote-precise": {
+      "cta": "Voir ma collection",
+      "cards": {
+        "main": {
+          "title": "Une cote plus juste",
+          "text": "La valeur de tes maillots suit maintenant les vraies ventes.",
+          "items": {
+            "sales": {
+              "title": "Calculée sur de vraies ventes",
+              "text": "Fourchette de prix et sources affichées pour chaque maillot."
+            },
+            "jersey": {
+              "title": "Ton exemplaire compte",
+              "text": "Flocage pris en compte, dédicace valorisée avec certificat."
+            },
+            "where": {
+              "title": "Où l'as-tu acheté ?",
+              "text": "Indique-le à l'ajout : tes achats affinent la cote de tous."
             }
           }
         }

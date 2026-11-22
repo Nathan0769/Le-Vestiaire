@@ -46,4 +46,22 @@ export const ANNOUNCEMENTS: Announcement[] = [
       },
     ],
   },
+  {
+    id: "2026-11-cote-precise",
+    // Phase 2 de la cote (spec docs/specs/2026-11-22-cote-phase-2.md). Sur iOS, la
+    // page Valeur n'affiche fourchette et sources qu'à partir de la 1.7.2.
+    publishedAt: "2026-11-22",
+    minIosVersion: "1.7.2",
+    ctaTarget: "collection",
+    cards: [
+      {
+        key: "main",
+        items: [
+          { key: "sales", icon: "chart" },
+          { key: "jersey", icon: "shirt" },
+          { key: "where", icon: "tag" },
+        ],
+      },
+    ],
+  },
 ];

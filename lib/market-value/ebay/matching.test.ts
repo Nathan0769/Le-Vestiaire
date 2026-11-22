@@ -363,3 +363,11 @@ describe("filterItems : titres traduits par eBay et état « 9/10 »", () => {
     expect(filterItems([item("AS Monaco Away Shirt 2013/14 (M) (Used; Condition 9/10)", "40")], monaco)).toHaveLength(1);
   });
 });
+
+describe("aggregateEbay : quartiles", () => {
+  it("renvoie P25 et P75 des annonces retenues", () => {
+    const t = "France 2020 home shirt";
+    const agg = aggregateEbay(["10", "20", "30", "40", "50"].map((p) => item(t, p, "EUR")), FRANCE_2020);
+    expect([agg?.p25Price, agg?.medianPrice, agg?.p75Price]).toEqual([20, 30, 40]);
+  });
+});

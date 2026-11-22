@@ -97,3 +97,42 @@ describe("collectionHistory", () => {
     expect(points.map((p) => p.value)).toEqual([36, 36, 36]);
   });
 });
+
+// Phase 2 (2026-11-22) : notes sur la valeur d'un exemplaire.
+describe("valueItem : notes", () => {
+  const withMarket = ctx({ marketBase: new Map([["j1", 40]]), marketConfidence: new Map([["j1", "high"]]) });
+  it("match worn : prix d'achat, pièce unique", () => {
+    expect(valueItem(item({ version: "MATCH_WORN", purchasePrice: 420 }), withMarket)).toEqual({
+      value: 420,
+      source: "purchase",
+      confidence: null,
+      valueNote: "uniquePiece",
+    });
+  });
+  it("signé sans certificat : cote du maillot non signé, dédicace non certifiée", () => {
+    expect(valueItem(item({ isSigned: true }), withMarket)).toEqual({
+      value: 40,
+      source: "market",
+      confidence: "high",
+      valueNote: "uncertifiedSignature",
+    });
+  });
+  it("floqué : ×1,38", () => {
+    expect(valueItem(item({ playerName: "Lautaro", playerNumber: 10 }), withMarket).value).toBe(55.2);
+  });
+});
+
+describe("valueItem : fourchette et sources", () => {
+  it("fourchette de l'exemplaire = fourchette de la base × ses coefficients", () => {
+    const v = valueItem(
+      item({ condition: "MINT" }),
+      ctx({
+        marketBase: new Map([["j1", 40]]),
+        marketConfidence: new Map([["j1", "high"]]),
+        marketRange: new Map([["j1", { low: 32, high: 48 }]]),
+        marketSources: new Map([["j1", { ebay: 12, cfs: 2 }]]),
+      })
+    );
+    expect(v).toMatchObject({ value: 50, low: 40, high: 60, sources: { ebay: 12, cfs: 2 } });
+  });
+});

@@ -1,6 +1,7 @@
 import prisma from "@/lib/prisma";
 import { getEbayToken } from "./client";
-import { collectEbayForJersey, VALUE_MARKETS } from "./collect";
+import { collectEbayForJersey, VALUE_MARKETS, type CollectResult } from "./collect";
+import { smoothEbay } from "./smoothing";
 import { getRatesToEur } from "@/lib/fx";
 import { ebaySearchKeywords, type JerseyForQuery } from "./matching";
 import { buildRefreshQueue } from "./queue";
@@ -157,32 +158,7 @@ async function scanJerseys(
 
     apiCalls += result.calls;
     scannedIds.push(jerseyId);
-    const marketId = (result.marketsUsed.length ? result.marketsUsed : VALUE_MARKETS).join(",");
-
-    if (result.agg) {
-      matched++;
-      const { medianPrice, sampleSize, currency } = result.agg;
-      await prisma.ebayMarketData.upsert({
-        where: { jerseyId },
-        create: { jerseyId, medianPrice, sampleSize, currency, marketId, query: result.query, methodVersion: MARKET_METHOD_VERSION },
-        update: {
-          medianPrice,
-          sampleSize,
-          currency,
-          marketId,
-          query: result.query,
-          methodVersion: MARKET_METHOD_VERSION,
-          lastSeenAt: new Date(),
-        },
-      });
-    } else {
-      // Pas de comparable : on marque la date pour ne pas le re-tenter en boucle.
-      await prisma.ebayMarketData.upsert({
-        where: { jerseyId },
-        create: { jerseyId, medianPrice: 0, sampleSize: 0, currency: "", marketId, query: result.query, methodVersion: MARKET_METHOD_VERSION },
-        update: { lastSeenAt: new Date(), sampleSize: 0, medianPrice: 0, methodVersion: MARKET_METHOD_VERSION },
-      });
-    }
+    if (await saveEbayScan(jerseyId, result)) matched++;
   }
 
   return {
@@ -195,6 +171,54 @@ async function scanJerseys(
     },
     scannedIds,
   };
+}
+
+/**
+ * Enregistre le résultat d'un scan : médiane et quartiles lissés avec le scan
+ * précédent (smoothEbay), médiane brute gardée pour le suivi. Sans comparable,
+ * la ligne est vidée et datée pour ne pas re-tenter le maillot en boucle.
+ * Renvoie vrai si le scan a trouvé des annonces.
+ */
+export async function saveEbayScan(jerseyId: string, result: CollectResult): Promise<boolean> {
+  const marketId = (result.marketsUsed.length ? result.marketsUsed : VALUE_MARKETS).join(",");
+  const now = new Date();
+  if (!result.agg) {
+    await prisma.ebayMarketData.upsert({
+      where: { jerseyId },
+      create: { jerseyId, medianPrice: 0, sampleSize: 0, currency: "", marketId, query: result.query, methodVersion: MARKET_METHOD_VERSION },
+      update: {
+        lastSeenAt: now,
+        sampleSize: 0,
+        medianPrice: 0,
+        rawMedianPrice: null,
+        p25Price: null,
+        p75Price: null,
+        methodVersion: MARKET_METHOD_VERSION,
+      },
+    });
+    return false;
+  }
+  const previous = await prisma.ebayMarketData.findUnique({
+    where: { jerseyId },
+    select: { medianPrice: true, p25Price: true, p75Price: true, sampleSize: true, methodVersion: true, lastSeenAt: true },
+  });
+  const { medianPrice, p25Price, p75Price, sampleSize, currency } = result.agg;
+  const smoothed = smoothEbay(previous, { medianPrice, p25Price, p75Price }, now);
+  const data = {
+    ...smoothed,
+    rawMedianPrice: medianPrice,
+    sampleSize,
+    currency,
+    marketId,
+    query: result.query,
+    methodVersion: MARKET_METHOD_VERSION,
+  };
+  await prisma.ebayMarketData.upsert({
+    where: { jerseyId },
+    create: { jerseyId, ...data },
+    update: { ...data, lastSeenAt: now },
+  });
+  return true;
 }
 
 const NEW_SUPPORTER_MAX_JERSEYS = 30;

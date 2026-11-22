@@ -42,6 +42,9 @@ export async function GET() {
       version: true,
       hasLongSleeves: true,
       isSigned: true,
+      hasAuthCertificate: true,
+      playerName: true,
+      playerNumber: true,
     },
   });
 

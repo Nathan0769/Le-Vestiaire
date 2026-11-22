@@ -452,7 +452,20 @@
           "connectionError": "Verbindingsfout. Probeer het opnieuw.",
           "deleted": "Shirt verwijderd uit je collectie"
         },
-        "purchaseCurrency": "Valuta van de prijs"
+        "purchaseCurrency": "Valuta van de prijs",
+        "purchaseSource": "Waar",
+        "purchaseSourcePlaceholder": "Optioneel",
+        "purchaseSources": {
+          "OFFICIAL_STORE": "Officiële winkel (club of merk)",
+          "SPORTS_RETAILER": "Sportwinkel of -website",
+          "CFS": "Classic Football Shirts",
+          "LE_PARC": "Le Parc à Maillots",
+          "VINTED": "Vinted",
+          "EBAY": "eBay",
+          "LEBONCOIN": "Leboncoin",
+          "VINTAGE_SHOP": "Andere vintagewinkel",
+          "OTHER": "Overig"
+        }
       },
       "delete": {
         "title": "Shirt verwijderen?",
@@ -3556,9 +3569,9 @@
     "sortClub": "Club",
     "seeMore": "Meer tonen ({count})",
     "seeLess": "Minder tonen",
-    "confHigh": "hoog",
-    "confMedium": "gemiddeld",
-    "confIndicative": "indicatief",
+    "confHigh": "betrouwbaar",
+    "confMedium": "redelijk",
+    "confIndicative": "weinig gegevens",
     "confPurchase": "aankoopprijs",
     "note": "Indicatieve schatting op basis van de huidige marktprijzen (eBay-advertenties UK/DE/IT/ES/FR en Classic Football Shirts, omgerekend naar euro tegen de dagkoers). Een shirt zonder voldoende vergelijkbare items wordt geschat op de aankoopprijs.",
     "emptyTitle": "Nog geen geschatte waarde",
@@ -3594,7 +3607,15 @@
       "m3t": "Volg de waarde van je collectie in de tijd",
       "m3s": "Een grafiek in beursstijl om je collectie te zien groeien."
     },
-    "recalcNotice": "Marktwaarde op {date} herberekend op basis van echte eBay-verkopen."
+    "recalcNotice": "Marktwaarde op {date} herberekend op basis van echte eBay-verkopen.",
+    "heroRange": "tussen {low} en {high}",
+    "printed": "Bedrukt",
+    "noteUnique": "Uniek stuk, niet gewaardeerd: aankoopprijs",
+    "noteUncertified": "Niet-gecertificeerde handtekening",
+    "srcEbay": "{count, plural, one {# eBay-advertentie} other {# eBay-advertenties}}",
+    "srcCfs": "{count, plural, one {# CFS-product} other {# CFS-producten}}",
+    "srcMembers": "{count, plural, one {# aankoop van een lid} other {# aankopen van leden}}",
+    "srcPartner": "{count, plural, one {# aanbieding van Le Parc à Maillots} other {# aanbiedingen van Le Parc à Maillots}}"
   },
   "Announcements": {
     "kicker": "Nieuw in Le Vestiaire",
@@ -3619,6 +3640,29 @@
             "alerts": {
               "title": "Aanbiedingen komen naar jou",
               "text": "Een melding als een shirt op je lijst minstens 20 % goedkoper wordt, nooit meer dan één per 3 dagen."
+            }
+          }
+        }
+      }
+    },
+    "2026-11-cote-precise": {
+      "cta": "Mijn collectie bekijken",
+      "cards": {
+        "main": {
+          "title": "Een eerlijkere marktwaarde",
+          "text": "De waarde van je shirts volgt nu echte verkopen.",
+          "items": {
+            "sales": {
+              "title": "Berekend op echte verkopen",
+              "text": "Prijsbereik en bronnen bij elk shirt."
+            },
+            "jersey": {
+              "title": "Jouw exemplaar telt",
+              "text": "Bedrukking meegerekend, handtekeningen met certificaat gewaardeerd."
+            },
+            "where": {
+              "title": "Waar heb je het gekocht?",
+              "text": "Geef het aan bij het toevoegen: jouw aankopen verfijnen ieders waarde."
             }
           }
         }

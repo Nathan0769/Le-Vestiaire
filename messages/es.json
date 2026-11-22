@@ -452,7 +452,20 @@
           "connectionError": "Error de conexión. Por favor, inténtalo de nuevo.",
           "deleted": "Camiseta eliminada de tu colección"
         },
-        "purchaseCurrency": "Moneda del precio"
+        "purchaseCurrency": "Moneda del precio",
+        "purchaseSource": "Dónde",
+        "purchaseSourcePlaceholder": "Opcional",
+        "purchaseSources": {
+          "OFFICIAL_STORE": "Tienda oficial (club o marca)",
+          "SPORTS_RETAILER": "Tienda o web de deportes",
+          "CFS": "Classic Football Shirts",
+          "LE_PARC": "Le Parc à Maillots",
+          "VINTED": "Vinted",
+          "EBAY": "eBay",
+          "LEBONCOIN": "Leboncoin",
+          "VINTAGE_SHOP": "Otra tienda vintage",
+          "OTHER": "Otro"
+        }
       },
       "delete": {
         "title": "¿Eliminar camiseta?",
@@ -3556,9 +3569,9 @@
     "sortClub": "Club",
     "seeMore": "Ver más ({count})",
     "seeLess": "Ver menos",
-    "confHigh": "alta",
-    "confMedium": "media",
-    "confIndicative": "indicativa",
+    "confHigh": "fiable",
+    "confMedium": "correcta",
+    "confIndicative": "pocos datos",
     "confPurchase": "precio de compra",
     "note": "Estimación indicativa basada en los precios de mercado actuales (anuncios de eBay UK/DE/IT/ES/FR y Classic Football Shirts, convertidos a euros al cambio del día). Una camiseta sin suficientes comparables se estima a su precio de compra.",
     "emptyTitle": "Aún no hay valor estimado",
@@ -3594,7 +3607,15 @@
       "m3t": "Sigue el valor de tu colección en el tiempo",
       "m3s": "Un gráfico tipo bolsa para ver evolucionar tu colección."
     },
-    "recalcNotice": "Cotización recalculada con ventas reales de eBay el {date}."
+    "recalcNotice": "Cotización recalculada con ventas reales de eBay el {date}.",
+    "heroRange": "entre {low} y {high}",
+    "printed": "Personalizada",
+    "noteUnique": "Pieza única, sin cotización: precio de compra",
+    "noteUncertified": "Firma no certificada",
+    "srcEbay": "{count, plural, one {# anuncio de eBay} other {# anuncios de eBay}}",
+    "srcCfs": "{count, plural, one {# producto de CFS} other {# productos de CFS}}",
+    "srcMembers": "{count, plural, one {# compra de miembro} other {# compras de miembros}}",
+    "srcPartner": "{count, plural, one {# oferta de Le Parc à Maillots} other {# ofertas de Le Parc à Maillots}}"
   },
   "Announcements": {
     "kicker": "Novedad en Le Vestiaire",
@@ -3619,6 +3640,29 @@
             "alerts": {
               "title": "Las ofertas vienen a ti",
               "text": "Un aviso cuando una camiseta de tu lista baja al menos un 20 %, nunca más de uno cada 3 días."
+            }
+          }
+        }
+      }
+    },
+    "2026-11-cote-precise": {
+      "cta": "Ver mi colección",
+      "cards": {
+        "main": {
+          "title": "Una cotización más justa",
+          "text": "El valor de tus camisetas sigue ahora las ventas reales.",
+          "items": {
+            "sales": {
+              "title": "Calculada con ventas reales",
+              "text": "Horquilla de precios y fuentes para cada camiseta."
+            },
+            "jersey": {
+              "title": "Tu ejemplar cuenta",
+              "text": "Personalización incluida, firmas valoradas con certificado."
+            },
+            "where": {
+              "title": "¿Dónde la compraste?",
+              "text": "Indícalo al añadirla: tus compras afinan la cotización de todos."
             }
           }
         }

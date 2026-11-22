@@ -458,6 +458,8 @@ function median(sorted: number[]): number {
 
 export interface EbayAggregate {
   medianPrice: number; // EUR, équivalent état de référence (GOOD)
+  p25Price: number;
+  p75Price: number;
   sampleSize: number;
   currency: string; // devise source dominante (avant conversion)
 }
@@ -494,8 +496,16 @@ export function aggregateEbay(
   for (const p of priced) counts.set(p.cur, (counts.get(p.cur) ?? 0) + 1);
   const currency = [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0];
 
+  const q = (p: number) => {
+    const pos = (values.length - 1) * p;
+    const lo = Math.floor(pos);
+    return values[lo] + (values[Math.ceil(pos)] - values[lo]) * (pos - lo);
+  };
+  const r2 = (n: number) => Math.round(n * 100) / 100;
   return {
-    medianPrice: Math.round(median(values) * 100) / 100,
+    medianPrice: r2(median(values)),
+    p25Price: r2(q(0.25)),
+    p75Price: r2(q(0.75)),
     sampleSize: priced.length,
     currency,
   };

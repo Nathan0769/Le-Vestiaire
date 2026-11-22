@@ -204,6 +204,10 @@ model JerseyMarketValue {
   confidence    String
   sampleSize    Int
   sources       Json
+  // Fourchette de la base (moyenne des quartiles abattus des sources) et nombre d'observations par source
+  lowValue      Float?
+  highValue     Float?
+  sourceCounts  Json?
   // Version de méthode (abattements et collecte) ayant produit cette cote
   methodVersion Int      @default(1)
   computedAt    DateTime @default(now())
@@ -216,19 +220,23 @@ model JerseyMarketValue {
 /// IMPORTANT : PRIX AGRÉGÉS UNIQUEMENT — aucune donnée de vendeur/acheteur ni PII
 /// eBay n'est stockée (engagement d'exemption "Marketplace Account Deletion").
 model EbayMarketData {
-  id            String   @id @default(cuid())
-  jerseyId      String   @unique
-  jersey        Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
-  medianPrice   Float // médiane des annonces retenues, convertie en EUR
-  sampleSize    Int // nb d'annonces retenues après filtrage
-  currency      String // devise source du marché (ex: GBP) avant conversion
-  marketId      String // marketplace eBay interrogé (ex: EBAY_GB)
-  query         String // requête utilisée (tuning/debug)
+  id             String   @id @default(cuid())
+  jerseyId       String   @unique
+  jersey         Jersey   @relation(fields: [jerseyId], references: [id], onDelete: Cascade)
+  medianPrice    Float // médiane des annonces retenues, convertie en EUR
+  sampleSize     Int // nb d'annonces retenues après filtrage
+  currency       String // devise source du marché (ex: GBP) avant conversion
+  marketId       String // marketplace eBay interrogé (ex: EBAY_GB)
+  query          String // requête utilisée (tuning/debug)
   // Règles de collecte : 1 = avant le 2026-11-22, 2 = tri strict + neuf ramené à GOOD (medianPrice équivalent GOOD)
-  methodVersion Int      @default(1)
-  lastSeenAt    DateTime @default(now())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  // Médiane du dernier scan avant lissage, quartiles (lissés) des annonces retenues
+  rawMedianPrice Float?
+  p25Price       Float?
+  p75Price       Float?
+  methodVersion  Int      @default(1)
+  lastSeenAt     DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   @@index([lastSeenAt])
   @@map("ebay_market_data")
@@ -309,6 +317,8 @@ model UserJersey {
   purchasePrice      Decimal?
   // ISO 4217 du purchasePrice tel que saisi, jamais converti à l'écriture
   purchaseCurrency   String            @default("EUR")
+  // Lieu d'achat (PURCHASE_SOURCES, lib/collection-item-rules.ts), facultatif : source « achats des membres » de la cote
+  purchaseSource     String?
   purchaseDate       DateTime?
   notes              String?
   userPhotoUrls      String[]          @default([])

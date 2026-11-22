@@ -6,6 +6,8 @@ import { CFS_PRODUCT_SIGNAL_SELECT, cfsRowToState, cfsSignals } from "./provider
 import { toCfsSignals } from "@/lib/cfs-products";
 import { ebaySignals } from "./providers/ebay";
 import { loadPartnerSignals } from "./providers/partners";
+import { loadMemberSignals } from "./providers/members";
+import { getRatesToEur } from "@/lib/fx";
 import { snapshotsToWrite } from "./snapshots";
 import type { MarketEstimate, PriceSignal } from "./types";
 
@@ -15,20 +17,24 @@ import type { MarketEstimate, PriceSignal } from "./types";
  * des abattements v2.
  */
 export function methodVersionFor(ebayRow: { methodVersion: number } | null | undefined): MethodVersion {
-  return (ebayRow ? ebayRow.methodVersion : MARKET_METHOD_VERSION) as MethodVersion;
+  // Collecte méthode 2 ou plus : même collecte que la version courante.
+  if (!ebayRow || ebayRow.methodVersion >= 2) return MARKET_METHOD_VERSION;
+  return 1;
 }
 
 /** Rassemble les signaux de toutes les sources pour un maillot, et la version de méthode à appliquer. */
 export async function collectSignals(
   jerseyId: string
 ): Promise<{ signals: PriceSignal[]; methodVersion: MethodVersion }> {
-  const [cfs, ebay, partners] = await Promise.all([
+  const rates = await getRatesToEur();
+  const [cfs, ebay, partners, members] = await Promise.all([
     cfsSignals(jerseyId),
     ebaySignals(jerseyId),
     loadPartnerSignals([jerseyId]),
+    loadMemberSignals(rates, [jerseyId]),
   ]);
   return {
-    signals: [...cfs, ...ebay.signals, ...(partners.get(jerseyId) ?? [])],
+    signals: [...cfs, ...ebay.signals, ...(partners.get(jerseyId) ?? []), ...(members.get(jerseyId) ?? [])],
     methodVersion: methodVersionFor(ebay.row),
   };
 }
@@ -57,6 +63,9 @@ export async function computeJerseyMarketValue(
       confidence: estimate.confidence,
       sampleSize: estimate.sampleSize,
       sources: estimate.sources,
+      lowValue: estimate.low,
+      highValue: estimate.high,
+      sourceCounts: estimate.sourceCounts,
       methodVersion,
     },
     update: {
@@ -64,6 +73,9 @@ export async function computeJerseyMarketValue(
       confidence: estimate.confidence,
       sampleSize: estimate.sampleSize,
       sources: estimate.sources,
+      lowValue: estimate.low,
+      highValue: estimate.high,
+      sourceCounts: estimate.sourceCounts,
       methodVersion,
     },
   });
@@ -97,7 +109,8 @@ export async function recomputeAllMarketValues(): Promise<{
   computed: number;
   cleared: number;
 }> {
-  const [cfs, ebay, partners, lastSnapshots] = await Promise.all([
+  const rates = await getRatesToEur();
+  const [cfs, ebay, partners, members, lastSnapshots] = await Promise.all([
     prisma.cfsProduct.findMany({
       where: { price: { gt: 0 }, isReference: true },
       select: CFS_PRODUCT_SIGNAL_SELECT,
@@ -106,6 +119,8 @@ export async function recomputeAllMarketValues(): Promise<{
       select: {
         jerseyId: true,
         medianPrice: true,
+        p25Price: true,
+        p75Price: true,
         sampleSize: true,
         lastSeenAt: true,
         methodVersion: true,
@@ -113,6 +128,7 @@ export async function recomputeAllMarketValues(): Promise<{
       },
     }),
     loadPartnerSignals(),
+    loadMemberSignals(rates),
     // DISTINCT ON côté Postgres : `distinct` Prisma chargerait tout l'historique.
     prisma.$queryRaw<{ jerseyId: string; value: number; methodVersion: number }[]>`
       SELECT DISTINCT ON ("jerseyId") "jerseyId", "value", "methodVersion"
@@ -149,10 +165,14 @@ export async function recomputeAllMarketValues(): Promise<{
       source: "ebay",
       date: e.lastSeenAt,
       observations: e.sampleSize,
+      ...(e.p25Price != null && e.p75Price != null && { p25: e.p25Price, p75: e.p75Price }),
     });
   }
 
   for (const [jerseyId, signals] of partners) {
+    for (const signal of signals) add(jerseyId, signal);
+  }
+  for (const [jerseyId, signals] of members) {
     for (const signal of signals) add(jerseyId, signal);
   }
 
@@ -162,6 +182,9 @@ export async function recomputeAllMarketValues(): Promise<{
     confidence: string;
     sampleSize: number;
     sources: PriceSignal["source"][];
+    lowValue: number;
+    highValue: number;
+    sourceCounts: Partial<Record<PriceSignal["source"], number>>;
     methodVersion: MethodVersion;
   }[] = [];
   for (const [jerseyId, signals] of signalsByJersey) {
@@ -174,6 +197,9 @@ export async function recomputeAllMarketValues(): Promise<{
       confidence: estimate.confidence,
       sampleSize: estimate.sampleSize,
       sources: estimate.sources,
+      lowValue: estimate.low,
+      highValue: estimate.high,
+      sourceCounts: estimate.sourceCounts,
       methodVersion,
     });
   }

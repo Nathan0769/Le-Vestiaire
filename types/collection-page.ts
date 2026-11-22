@@ -29,6 +29,7 @@ export type CollectionItemWithJersey = {
   playerNumber?: number | null;
   purchasePrice?: number | null;
   purchaseCurrency?: string;
+  purchaseSource?: string | null;
   purchaseDate?: Date | null;
   notes?: string | null;
   isGift: boolean;

@@ -19,6 +19,27 @@ export { VALID_SIZES as JERSEY_SIZES };
 
 export { SUPPORTED_CURRENCIES as PURCHASE_CURRENCIES };
 
+/**
+ * Lieux d'achat proposés (champ facultatif). Source « achats des membres » de
+ * la cote : boutique officielle et magasin de sport = prix public d'un neuf,
+ * les autres = prix de revente (spec docs/specs/2026-11-22-cote-phase-2.md).
+ */
+export const PURCHASE_SOURCES = [
+  "OFFICIAL_STORE",
+  "SPORTS_RETAILER",
+  "CFS",
+  "LE_PARC",
+  "VINTED",
+  "EBAY",
+  "LEBONCOIN",
+  "VINTAGE_SHOP",
+  "OTHER",
+] as const;
+export type PurchaseSource = (typeof PURCHASE_SOURCES)[number];
+
+/** Achat au prix public d'un maillot neuf (pas un prix de marché). */
+export const RETAIL_PURCHASE_SOURCES: readonly PurchaseSource[] = ["OFFICIAL_STORE", "SPORTS_RETAILER"];
+
 export const COLLECTION_ITEM_LIMITS = {
   playerNameMax: 100,
   playerNumberMin: 1,
@@ -41,6 +62,7 @@ export type CollectionItemFields = {
   purchasePrice?: unknown;
   purchaseCurrency?: unknown;
   purchaseDate?: unknown;
+  purchaseSource?: unknown;
   notes?: unknown;
   signedBy?: unknown;
   matchDescription?: unknown;
@@ -117,6 +139,15 @@ export function collectionItemFieldError(f: CollectionItemFields): CollectionIte
 
   if (f.purchaseCurrency !== null && f.purchaseCurrency !== undefined && !isSupportedCurrency(f.purchaseCurrency)) {
     return { error: CURRENCY_ERROR_MESSAGES.PURCHASE_CURRENCY_INVALID, code: "PURCHASE_CURRENCY_INVALID" };
+  }
+
+  if (
+    f.purchaseSource !== null &&
+    f.purchaseSource !== undefined &&
+    f.purchaseSource !== "" &&
+    !(PURCHASE_SOURCES as readonly unknown[]).includes(f.purchaseSource)
+  ) {
+    return { error: "Lieu d'achat invalide", code: "PURCHASE_SOURCE_INVALID" };
   }
 
   return null;

@@ -452,7 +452,20 @@
           "connectionError": "Connection error. Please try again.",
           "deleted": "Jersey removed from your collection"
         },
-        "purchaseCurrency": "Price currency"
+        "purchaseCurrency": "Price currency",
+        "purchaseSource": "Where",
+        "purchaseSourcePlaceholder": "Optional",
+        "purchaseSources": {
+          "OFFICIAL_STORE": "Official store (club or brand)",
+          "SPORTS_RETAILER": "Sports shop or website",
+          "CFS": "Classic Football Shirts",
+          "LE_PARC": "Le Parc à Maillots",
+          "VINTED": "Vinted",
+          "EBAY": "eBay",
+          "LEBONCOIN": "Leboncoin",
+          "VINTAGE_SHOP": "Other vintage shop",
+          "OTHER": "Other"
+        }
       },
       "delete": {
         "title": "Delete jersey?",
@@ -3556,9 +3569,9 @@
     "sortClub": "Club",
     "seeMore": "Show more ({count})",
     "seeLess": "Show less",
-    "confHigh": "high",
-    "confMedium": "medium",
-    "confIndicative": "indicative",
+    "confHigh": "reliable",
+    "confMedium": "fair",
+    "confIndicative": "little data",
     "confPurchase": "purchase price",
     "note": "Indicative estimate based on current market prices (eBay UK/DE/IT/ES/FR listings and Classic Football Shirts, converted to euros at today's rate). A jersey without enough comparables is estimated at its purchase price.",
     "emptyTitle": "No estimated value yet",
@@ -3594,7 +3607,15 @@
       "m3t": "Track your collection's value over time",
       "m3s": "A stock-style chart to watch your collection evolve."
     },
-    "recalcNotice": "Values recalculated from real eBay sales on {date}."
+    "recalcNotice": "Values recalculated from real eBay sales on {date}.",
+    "heroRange": "between {low} and {high}",
+    "printed": "Printed",
+    "noteUnique": "One-off piece, not valued: purchase price",
+    "noteUncertified": "Uncertified signature",
+    "srcEbay": "{count, plural, one {# eBay listing} other {# eBay listings}}",
+    "srcCfs": "{count, plural, one {# CFS product} other {# CFS products}}",
+    "srcMembers": "{count, plural, one {# member purchase} other {# member purchases}}",
+    "srcPartner": "{count, plural, one {# Le Parc à Maillots offer} other {# Le Parc à Maillots offers}}"
   },
   "Announcements": {
     "kicker": "New in Le Vestiaire",
@@ -3619,6 +3640,29 @@
             "alerts": {
               "title": "Deals come to you",
               "text": "An alert when a shirt on your list drops by at least 20%, never more than one every 3 days."
+            }
+          }
+        }
+      }
+    },
+    "2026-11-cote-precise": {
+      "cta": "See my collection",
+      "cards": {
+        "main": {
+          "title": "A fairer value",
+          "text": "Your shirts' value now follows real sales.",
+          "items": {
+            "sales": {
+              "title": "Based on real sales",
+              "text": "Price range and sources shown for every shirt."
+            },
+            "jersey": {
+              "title": "Your shirt counts",
+              "text": "Printing taken into account, signatures valued with a certificate."
+            },
+            "where": {
+              "title": "Where did you buy it?",
+              "text": "Add it when you log a shirt: your purchases sharpen everyone's values."
             }
           }
         }

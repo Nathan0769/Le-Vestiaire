@@ -452,7 +452,20 @@
           "connectionError": "Verbindungsfehler. Bitte versuche es erneut.",
           "deleted": "Trikot aus deiner Sammlung entfernt"
         },
-        "purchaseCurrency": "Währung des Preises"
+        "purchaseCurrency": "Währung des Preises",
+        "purchaseSource": "Wo",
+        "purchaseSourcePlaceholder": "Optional",
+        "purchaseSources": {
+          "OFFICIAL_STORE": "Offizieller Shop (Verein oder Marke)",
+          "SPORTS_RETAILER": "Sportgeschäft oder -website",
+          "CFS": "Classic Football Shirts",
+          "LE_PARC": "Le Parc à Maillots",
+          "VINTED": "Vinted",
+          "EBAY": "eBay",
+          "LEBONCOIN": "Leboncoin",
+          "VINTAGE_SHOP": "Anderer Vintage-Shop",
+          "OTHER": "Sonstiges"
+        }
       },
       "delete": {
         "title": "Trikot löschen?",
@@ -3556,9 +3569,9 @@
     "sortClub": "Verein",
     "seeMore": "Mehr anzeigen ({count})",
     "seeLess": "Weniger anzeigen",
-    "confHigh": "hoch",
-    "confMedium": "mittel",
-    "confIndicative": "indikativ",
+    "confHigh": "verlässlich",
+    "confMedium": "ordentlich",
+    "confIndicative": "wenig Daten",
     "confPurchase": "Kaufpreis",
     "note": "Indikative Schätzung auf Basis der aktuellen Marktpreise (eBay-Angebote UK/DE/IT/ES/FR und Classic Football Shirts, zum Tageskurs in Euro umgerechnet). Ein Trikot ohne ausreichende Vergleichswerte wird mit seinem Kaufpreis geschätzt.",
     "emptyTitle": "Noch kein geschätzter Wert",
@@ -3594,7 +3607,15 @@
       "m3t": "Verfolge den Wert deiner Sammlung über die Zeit",
       "m3s": "Ein Chart im Börsenstil, um deine Sammlung zu beobachten."
     },
-    "recalcNotice": "Marktwert am {date} anhand echter eBay-Verkäufe neu berechnet."
+    "recalcNotice": "Marktwert am {date} anhand echter eBay-Verkäufe neu berechnet.",
+    "heroRange": "zwischen {low} und {high}",
+    "printed": "Beflockt",
+    "noteUnique": "Einzelstück, nicht bewertet: Kaufpreis",
+    "noteUncertified": "Unzertifiziertes Autogramm",
+    "srcEbay": "{count, plural, one {# eBay-Angebot} other {# eBay-Angebote}}",
+    "srcCfs": "{count, plural, one {# CFS-Produkt} other {# CFS-Produkte}}",
+    "srcMembers": "{count, plural, one {# Mitgliederkauf} other {# Mitgliederkäufe}}",
+    "srcPartner": "{count, plural, one {# Angebot von Le Parc à Maillots} other {# Angebote von Le Parc à Maillots}}"
   },
   "Announcements": {
     "kicker": "Neu bei Le Vestiaire",
@@ -3642,6 +3663,29 @@
             "gift": {
               "title": "Geschenkinfos sofort",
               "text": "Gleich nach dem Hinzufügen gibst du Größe, Version und Beflockung an."
+            }
+          }
+        }
+      }
+    },
+    "2026-11-cote-precise": {
+      "cta": "Meine Sammlung ansehen",
+      "cards": {
+        "main": {
+          "title": "Ein fairerer Marktwert",
+          "text": "Der Wert deiner Trikots folgt jetzt echten Verkäufen.",
+          "items": {
+            "sales": {
+              "title": "Auf echten Verkäufen berechnet",
+              "text": "Preisspanne und Quellen für jedes Trikot."
+            },
+            "jersey": {
+              "title": "Dein Exemplar zählt",
+              "text": "Beflockung berücksichtigt, Autogramme mit Zertifikat aufgewertet."
+            },
+            "where": {
+              "title": "Wo hast du es gekauft?",
+              "text": "Gib es beim Hinzufügen an: deine Käufe verfeinern die Werte für alle."
             }
           }
         }

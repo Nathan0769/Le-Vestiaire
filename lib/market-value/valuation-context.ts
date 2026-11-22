@@ -12,7 +12,7 @@ export async function loadValuationContext(jerseyIds: string[], rates: RatesToEu
   const [marketRows, avgRows] = await Promise.all([
     prisma.jerseyMarketValue.findMany({
       where: { jerseyId: { in: jerseyIds } },
-      select: { jerseyId: true, baseValue: true, confidence: true },
+      select: { jerseyId: true, baseValue: true, confidence: true, lowValue: true, highValue: true, sourceCounts: true },
     }),
     prisma.userJersey.groupBy({
       by: ["jerseyId", "purchaseCurrency"],
@@ -42,5 +42,15 @@ export async function loadValuationContext(jerseyIds: string[], rates: RatesToEu
     marketConfidence: new Map(marketRows.map((m) => [m.jerseyId, m.confidence])),
     siteAverageBuy: new Map([...totals].map(([id, t]) => [id, t.count > 0 ? t.sumEur / t.count : 0])),
     rates,
+    marketRange: new Map(
+      marketRows
+        .filter((m) => m.lowValue != null && m.highValue != null)
+        .map((m) => [m.jerseyId, { low: m.lowValue!, high: m.highValue! }])
+    ),
+    marketSources: new Map(
+      marketRows
+        .filter((m) => m.sourceCounts && typeof m.sourceCounts === "object" && !Array.isArray(m.sourceCounts))
+        .map((m) => [m.jerseyId, m.sourceCounts as Record<string, number>])
+    ),
   };
 }

@@ -119,6 +119,7 @@ export function CollectionJerseyModal({
     // formulaire proposer la préférence du user.
     purchaseCurrency: collectionItem.purchasePrice ? collectionItem.purchaseCurrency : undefined,
     purchaseDate: collectionItem.purchaseDate || undefined,
+    purchaseSource: collectionItem.purchaseSource || undefined,
     notes: collectionItem.notes || "",
     isGift: collectionItem.isGift || false,
     isFromMysteryBox: collectionItem.isFromMysteryBox || false,
@@ -197,6 +198,7 @@ export function CollectionJerseyModal({
           ? { purchaseCurrency: dataToSave.purchaseCurrency }
           : {}),
         purchaseDate: dataToSave.purchaseDate || null,
+        purchaseSource: dataToSave.purchaseSource || null,
         notes: dataToSave.notes || null,
         isGift: dataToSave.isGift ?? false,
         isFromMysteryBox: dataToSave.isFromMysteryBox ?? false,

@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
+  PURCHASE_SOURCES,
   collectionItemFieldError,
   normalizePatchInputs,
   COLLECTION_ITEM_LIMITS,
@@ -75,5 +76,28 @@ describe("normalizePatchInputs", () => {
   it("refuse un patch vide et une valeur qui n'est pas un tableau", () => {
     expect(normalizePatchInputs([{}]).ok).toBe(false);
     expect(normalizePatchInputs("x").ok).toBe(false);
+  });
+});
+
+// Phase 2 de la cote (2026-11-22) : lieu d'achat, source « achats des membres ».
+describe("lieu d'achat", () => {
+  it("liste les 9 lieux proposés", () => {
+    expect(PURCHASE_SOURCES).toEqual([
+      "OFFICIAL_STORE",
+      "SPORTS_RETAILER",
+      "CFS",
+      "LE_PARC",
+      "VINTED",
+      "EBAY",
+      "LEBONCOIN",
+      "VINTAGE_SHOP",
+      "OTHER",
+    ]);
+  });
+  it("refuse un lieu hors liste, accepte vide ou absent", () => {
+    expect(collectionItemFieldError({ ...valid, purchaseSource: "AMAZON" })?.code).toBe("PURCHASE_SOURCE_INVALID");
+    expect(collectionItemFieldError({ ...valid, purchaseSource: "VINTED" })).toBeNull();
+    expect(collectionItemFieldError({ ...valid, purchaseSource: null })).toBeNull();
+    expect(collectionItemFieldError(valid)).toBeNull();
   });
 });

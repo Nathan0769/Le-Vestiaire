@@ -5,8 +5,8 @@
 
 export type SignalType = "sold" | "asking";
 
-/** Sources intégrées, plus une par boutique partenaire (`partner:<slug>` du registre). */
-export type SourceName = "ebay" | "cfs" | `partner:${string}`;
+/** Sources intégrées (dont les achats déclarés des membres), plus une par boutique partenaire (`partner:<slug>` du registre). */
+export type SourceName = "ebay" | "cfs" | "members" | `partner:${string}`;
 
 export type Condition = "MINT" | "EXCELLENT" | "GOOD" | "FAIR" | "POOR";
 
@@ -29,6 +29,9 @@ export interface PriceSignal {
    * signal frais existe ; seul, il donne une cote de confiance basse.
    */
   stale?: boolean;
+  /** Quartiles d'un signal déjà agrégé (médiane eBay de N annonces), même unité que `price`. */
+  p25?: number;
+  p75?: number;
 }
 
 export type Confidence = "high" | "medium" | "low";
@@ -41,4 +44,9 @@ export interface MarketEstimate {
   sampleSize: number;
   /** Sources distinctes ayant contribué. */
   sources: SourceName[];
+  /** Fourchette de la base : moyenne des quartiles abattus des sources (± 25 % sans quartile). */
+  low: number;
+  high: number;
+  /** Observations par source qui a voté. */
+  sourceCounts: Partial<Record<SourceName, number>>;
 }

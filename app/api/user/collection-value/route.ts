@@ -57,6 +57,9 @@ export async function GET(request: Request) {
       version: true,
       hasLongSleeves: true,
       isSigned: true,
+      hasAuthCertificate: true,
+      playerName: true,
+      playerNumber: true,
       purchasePrice: true,
       purchaseCurrency: true,
       isGift: true,
@@ -90,7 +93,7 @@ export async function GET(request: Request) {
   const rows = collection.map((item) => {
     const ownBuyEur = priceEur(item, rates);
     const ownBuy = ownBuyEur !== null && ownBuyEur > 0 ? ownBuyEur : null;
-    const { value, source, confidence } = valueItem(item, ctx);
+    const { value, source, confidence, valueNote, low, high, sources } = valueItem(item, ctx);
 
     return {
       id: item.id,
@@ -104,6 +107,12 @@ export async function GET(request: Request) {
       value,
       source,
       confidence,
+      // Fourchette, sources (nombres seulement) et note : facultatifs, ajoutés en phase 2.
+      low: low ?? null,
+      high: high ?? null,
+      sources: sources ?? null,
+      valueNote: valueNote ?? null,
+      isPrinted: !!item.playerName?.trim() || item.playerNumber !== null,
       ownBuy,
       isGift: item.isGift,
       addedAt: item.createdAt.toISOString(),
@@ -118,6 +127,8 @@ export async function GET(request: Request) {
   //   (hors cadeaux). Investi vs valeur actuelle de CES mêmes maillots -> plus-value
   //   qui se réconcilie (investi + plus-value = valeur actuelle du périmètre).
   let estimated = 0;
+  let estimatedLow = 0;
+  let estimatedHigh = 0;
   let valued = 0;
   let invested = 0;
   let pricedCurrentValue = 0;
@@ -125,6 +136,9 @@ export async function GET(request: Request) {
   for (const r of rows) {
     if (r.value != null) {
       estimated += r.value;
+      // Maillot sans fourchette (prix d'achat) : sa valeur compte des deux côtés.
+      estimatedLow += r.low ?? r.value;
+      estimatedHigh += r.high ?? r.value;
       valued += 1;
     }
     if (!r.isGift && r.ownBuy != null && r.value != null) {
@@ -138,6 +152,8 @@ export async function GET(request: Request) {
   const round = (n: number) => Math.round((fromEur(n, currency, rates) ?? n) * 100) / 100;
   const summary = {
     estimated: round(estimated),
+    estimatedLow: round(estimatedLow),
+    estimatedHigh: round(estimatedHigh),
     count: valued,
     invested: round(invested),
     currentValuePriced: round(pricedCurrentValue),
@@ -150,6 +166,8 @@ export async function GET(request: Request) {
   const displayRows = rows.map((r) => ({
     ...r,
     value: r.value != null ? round(r.value) : null,
+    low: r.low != null ? round(r.low) : null,
+    high: r.high != null ? round(r.high) : null,
     ownBuy: r.ownBuy != null ? round(r.ownBuy) : null,
   }));
 

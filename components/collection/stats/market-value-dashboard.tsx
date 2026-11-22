@@ -20,12 +20,20 @@ interface Row {
   value: number | null;
   source: "market" | "purchase" | "unknown";
   confidence: string | null;
+  /** Fourchette, sources (nombres) et note : ajoutés en phase 2, absents d'un serveur plus ancien. */
+  low?: number | null;
+  high?: number | null;
+  sources?: Record<string, number> | null;
+  valueNote?: "uniquePiece" | "uncertifiedSignature" | null;
+  isPrinted?: boolean;
   addedAt: string;
 }
 
 interface ValueResponse {
   summary: {
     estimated: number;
+    estimatedLow?: number;
+    estimatedHigh?: number;
     count: number;
     invested: number;
     currentValuePriced: number;
@@ -69,6 +77,17 @@ export function MarketValueDashboard() {
     },
   });
   const eur = (n: number) => formatMoney(Math.round(n), data?.currency ?? DEFAULT_CURRENCY, locale);
+  const sourcesText = (sources: Record<string, number> | null | undefined) => {
+    if (!sources) return null;
+    const parts: string[] = [];
+    if (sources.ebay) parts.push(t("srcEbay", { count: sources.ebay }));
+    if (sources.cfs) parts.push(t("srcCfs", { count: sources.cfs }));
+    if (sources.members) parts.push(t("srcMembers", { count: sources.members }));
+    for (const [key, count] of Object.entries(sources)) {
+      if (key.startsWith("partner:") && count) parts.push(t("srcPartner", { count }));
+    }
+    return parts.length ? parts.join(" · ") : null;
+  };
 
   const rows = useMemo(() => {
     const r = [...(data?.rows ?? [])];
@@ -111,6 +130,11 @@ export function MarketValueDashboard() {
           {eur(s.estimated)}
         </p>
         <p className="mt-2 text-sm text-muted-foreground">{t("subtitle", { count: s.count })}</p>
+        {s.estimatedLow != null && s.estimatedHigh != null && s.estimatedHigh > s.estimatedLow && (
+          <p className="mt-0.5 text-xs tabular-nums text-muted-foreground">
+            {t("heroRange", { low: eur(s.estimatedLow), high: eur(s.estimatedHigh) })}
+          </p>
+        )}
         {data?.notice && <p className="mt-1 text-xs text-muted-foreground">{data.notice}</p>}
       </div>
 
@@ -200,7 +224,21 @@ export function MarketValueDashboard() {
               <p className="truncate text-sm font-semibold">{r.clubName}</p>
               <p className="truncate text-[11.5px] text-muted-foreground">
                 {r.season} · {tType(r.type)} · {tCondition(r.condition)}
+                {r.isPrinted && r.source === "market" && (
+                  <span className="ml-1.5 rounded bg-muted px-1.5 py-px text-[10.5px] font-medium text-foreground">
+                    {t("printed")}
+                  </span>
+                )}
               </p>
+              {(r.valueNote || sourcesText(r.sources)) && (
+                <p className="truncate text-[11px] text-muted-foreground">
+                  {r.valueNote === "uniquePiece"
+                    ? t("noteUnique")
+                    : [r.valueNote === "uncertifiedSignature" ? t("noteUncertified") : null, sourcesText(r.sources)]
+                        .filter(Boolean)
+                        .join(" · ")}
+                </p>
+              )}
             </div>
             <span className="hidden shrink-0 rounded-md bg-muted px-2 py-0.5 text-[11px] font-medium text-muted-foreground sm:inline-block">
               {tVersion(r.version)}
@@ -209,13 +247,22 @@ export function MarketValueDashboard() {
               <ConfDot source={r.source} confidence={r.confidence} />
               <span className="truncate">{confLabel(r.source, r.confidence)}</span>
             </div>
-            <span
-              className={`w-[74px] shrink-0 text-right text-[15px] font-bold tabular-nums ${
-                r.source === "purchase" ? "text-muted-foreground" : ""
-              }`}
-            >
-              {r.value != null ? eur(r.value) : "—"}
-            </span>
+            <div className="w-[92px] shrink-0 text-right">
+              <p
+                className={`text-[15px] font-bold tabular-nums ${r.source === "purchase" ? "text-muted-foreground" : ""}`}
+              >
+                {r.value != null ? eur(r.value) : "—"}
+              </p>
+              {r.low != null && r.high != null && r.high > r.low && (
+                <p className="text-[10.5px] tabular-nums text-muted-foreground">
+                  {eur(r.low)} – {eur(r.high)}
+                </p>
+              )}
+              <p className="flex items-center justify-end gap-1 text-[10.5px] text-muted-foreground md:hidden">
+                <ConfDot source={r.source} confidence={r.confidence} />
+                {confLabel(r.source, r.confidence)}
+              </p>
+            </div>
           </div>
         ))}
         {rows.length > 6 && (
@@ -236,14 +283,15 @@ export function MarketValueDashboard() {
   );
 }
 
+// Or champagne de la marque pour « fiable », gris pour « correcte », rond vide pour « peu de données ».
 function ConfDot({ source, confidence }: { source: string; confidence: string | null }) {
-  const color =
+  const style =
     source === "purchase"
       ? "bg-muted-foreground/40"
       : confidence === "high"
-        ? "bg-emerald-500"
+        ? "bg-[oklch(0.66_0.11_88)] dark:bg-[oklch(0.82_0.11_90)]"
         : confidence === "medium"
-          ? "bg-amber-500"
-          : "bg-muted-foreground/50";
-  return <span className={`h-2 w-2 rounded-full ${color}`} />;
+          ? "bg-muted-foreground/60"
+          : "border border-muted-foreground/60";
+  return <span className={`h-2 w-2 shrink-0 rounded-full ${style}`} />;
 }

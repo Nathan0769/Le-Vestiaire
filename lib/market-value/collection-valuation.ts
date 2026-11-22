@@ -16,6 +16,9 @@ export interface ValuedItem extends PricedItem {
   version: string;
   hasLongSleeves: boolean | null;
   isSigned: boolean;
+  hasAuthCertificate?: boolean;
+  playerName?: string | null;
+  playerNumber?: number | null;
 }
 
 export interface ValuationContext {
@@ -25,13 +28,26 @@ export interface ValuationContext {
   /** Prix d'achat moyen de ce maillot sur le site, en EUR (repli). */
   siteAverageBuy: Map<string, number>;
   rates: RatesToEur;
+  /** Fourchette de la base par maillot (facultatif). */
+  marketRange?: Map<string, { low: number; high: number }>;
+  /** Observations par source, par maillot (facultatif). */
+  marketSources?: Map<string, Record<string, number>>;
 }
 
 export interface ItemValue {
   value: number | null;
   source: "market" | "purchase" | "unknown";
   confidence: string | null;
+  /** uniquePiece : match worn hors cote ; uncertifiedSignature : dédicace sans certificat, sans prime. */
+  valueNote?: "uniquePiece" | "uncertifiedSignature";
+  /** Fourchette de l'exemplaire (cote seulement). */
+  low?: number;
+  high?: number;
+  /** Observations par source derrière la cote. */
+  sources?: Record<string, number>;
 }
+
+const isPrinted = (item: ValuedItem) => !!item.playerName?.trim() || (item.playerNumber ?? null) !== null;
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
 
@@ -46,6 +62,8 @@ function valueFromBase(item: ValuedItem, base: number): number {
     version: item.version,
     hasLongSleeves: item.hasLongSleeves,
     isSigned: item.isSigned,
+    hasAuthCertificate: item.hasAuthCertificate,
+    isPrinted: isPrinted(item),
   });
 }
 
@@ -67,12 +85,25 @@ function fallbackValue(item: ValuedItem, ctx: ValuationContext): ItemValue {
  * est celle de l'original) ; sinon la cote si elle existe ; sinon le repli.
  */
 export function valueItem(item: ValuedItem, ctx: ValuationContext): ItemValue {
+  if (item.version === "MATCH_WORN") return { ...fallbackValue(item, ctx), valueNote: "uniquePiece" };
   if (!usesMarketBase(item.version)) return fallbackValue(item, ctx);
+  const note = item.isSigned && !item.hasAuthCertificate ? ("uncertifiedSignature" as const) : undefined;
   const base = ctx.marketBase.get(item.jerseyId);
   if (base != null && base > 0) {
-    return { value: valueFromBase(item, base), source: "market", confidence: ctx.marketConfidence.get(item.jerseyId) ?? "low" };
+    const value = valueFromBase(item, base);
+    const range = ctx.marketRange?.get(item.jerseyId);
+    const sources = ctx.marketSources?.get(item.jerseyId);
+    const factor = value / base;
+    return {
+      value,
+      source: "market",
+      confidence: ctx.marketConfidence.get(item.jerseyId) ?? "low",
+      ...(note && { valueNote: note }),
+      ...(range && { low: round2(range.low * factor), high: round2(range.high * factor) }),
+      ...(sources && { sources }),
+    };
   }
-  return fallbackValue(item, ctx);
+  return { ...fallbackValue(item, ctx), ...(note && { valueNote: note }) };
 }
 
 export interface HistorySnapshot {

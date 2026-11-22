@@ -25,6 +25,7 @@ export async function GET() {
         purchasePrice: true,
         purchaseCurrency: true,
         purchaseDate: true,
+        purchaseSource: true,
         notes: true,
         isGift: true,
         isFromMysteryBox: true,

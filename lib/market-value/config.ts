@@ -11,9 +11,11 @@ import type { Condition, SignalType, SourceName } from "./types";
  * eBay. 2 (vague 1, 2026-11-22) : tri strict des annonces, neuf ramené à GOOD,
  * abattements mesurés sur des ventes réelles. La version d'une cote suit celle
  * de sa collecte eBay (`EbayMarketData.methodVersion`) : jamais de mélange.
+ * 3 (phase 2, 2026-11-23) : achats des membres comme source, fourchette et
+ * confiance à points ; même collecte et mêmes abattements que la version 2.
  */
-export const MARKET_METHOD_VERSION = 2;
-export type MethodVersion = 1 | 2;
+export const MARKET_METHOD_VERSION = 3;
+export type MethodVersion = 1 | 2 | 3;
 
 /**
  * Facteur d'abattement par source et par version : ramène un prix demandé au
@@ -32,6 +34,7 @@ export type MethodVersion = 1 | 2;
 export const ASKING_ABATEMENT: Record<MethodVersion, Record<"ebay" | "cfs", number>> = {
   1: { ebay: 0.85, cfs: 0.73 },
   2: { ebay: 0.5, cfs: 0.47 },
+  3: { ebay: 0.5, cfs: 0.47 },
 };
 
 function partnerShopOf(source: SourceName) {
@@ -47,6 +50,8 @@ export function signalAbatement(
   // Vente CFS déduite : faite au niveau de prix de CFS, abattue comme un prix
   // demandé CFS (à recalibrer à partir de 50 ventes).
   if (source === "ebay" || source === "cfs") return ASKING_ABATEMENT[version][source];
+  // Achats des membres : déjà des ventes ramenées à la référence (providers/members.ts).
+  if (source === "members") return 1;
   const shop = partnerShopOf(source);
   if (!shop) return null;
   // Une vente (même déduite) est déjà un prix de transaction.
@@ -89,11 +94,17 @@ export const VERSION_MULTIPLIER: Record<string, number> = {
   AUTHENTIC: 1.5,
   STOCK_PRO: 1.7,
   PLAYER_ISSUE: 2.35,
-  MATCH_WORN: 4.0, // très rare et spéculatif (les match worn sont exclus de la base)
+  // MATCH_WORN : hors cote (pièce unique), valorisé à son prix d'achat (usesMarketBase).
 };
 
 /** Premium manches longues (plus rares) : 1,32 mesuré sur eBay (85 maillots), arrondi à mi-chemin. */
 export const LONG_SLEEVE_MULTIPLIER = 1.2;
 
-/** Premium maillot signé (dédicace authentique). */
+/** Premium maillot signé, seulement avec certificat d'authenticité (choix de Nathan, 2026-11-22). */
 export const SIGNED_MULTIPLIER = 1.4;
+
+/**
+ * Premium maillot floqué (nom et/ou numéro) : floqué ÷ nu = 1,38 en médiane sur
+ * 21 maillots du jeu de référence Terapeak (2026-11-21), tout flocage confondu.
+ */
+export const PRINTED_MULTIPLIER = 1.38;

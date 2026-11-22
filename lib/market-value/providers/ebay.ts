@@ -16,6 +16,8 @@ export async function ebaySignals(
     where: { jerseyId },
     select: {
       medianPrice: true,
+      p25Price: true,
+      p75Price: true,
       sampleSize: true,
       lastSeenAt: true,
       methodVersion: true,
@@ -35,6 +37,7 @@ export async function ebaySignals(
         source: "ebay",
         date: row.lastSeenAt,
         observations: row.sampleSize,
+        ...(row.p25Price != null && row.p75Price != null && { p25: row.p25Price, p75: row.p75Price }),
       },
     ],
   };

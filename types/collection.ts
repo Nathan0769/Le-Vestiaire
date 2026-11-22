@@ -48,6 +48,7 @@ export interface UserJersey {
   purchasePrice?: number;
   purchaseCurrency?: string;
   purchaseDate?: Date;
+  purchaseSource?: string;
   notes?: string;
   isGift: boolean;
   isFromMysteryBox: boolean;
@@ -74,6 +75,7 @@ export interface AddToCollectionData {
   purchasePrice?: number;
   purchaseCurrency?: string;
   purchaseDate?: Date;
+  purchaseSource?: string;
   notes?: string;
   isGift: boolean;
   isFromMysteryBox: boolean;
@@ -100,6 +102,7 @@ export interface UpdateCollectionData {
   purchasePrice?: number;
   purchaseCurrency?: string;
   purchaseDate?: Date;
+  purchaseSource?: string;
   notes?: string;
   isGift: boolean;
   isFromMysteryBox: boolean;

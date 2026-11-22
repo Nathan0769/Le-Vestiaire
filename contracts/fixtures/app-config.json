@@ -55,6 +55,17 @@
       "THB",
       "ISK"
     ],
+    "purchaseSources": [
+      "OFFICIAL_STORE",
+      "SPORTS_RETAILER",
+      "CFS",
+      "LE_PARC",
+      "VINTED",
+      "EBAY",
+      "LEBONCOIN",
+      "VINTAGE_SHOP",
+      "OTHER"
+    ],
     "limits": {
       "playerNameMax": 100,
       "playerNumberMin": 1,

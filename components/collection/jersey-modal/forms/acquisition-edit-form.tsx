@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,18 @@ import { Label } from "@/components/ui/label";
 import type { UpdateCollectionData } from "@/types/collection";
 import { useUserCurrency } from "@/hooks/useUserCurrency";
 import { CurrencySelect } from "./currency-select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { PURCHASE_SOURCES } from "@/lib/collection-item-rules";
+
+/** Valeur interne du choix « aucun lieu » (Radix Select n'accepte pas une valeur vide). */
+const NO_SOURCE = "__none";
 
 interface AcquisitionEditFormProps {
   formData: UpdateCollectionData;
@@ -87,6 +99,35 @@ export function AcquisitionEditForm({
             }
           />
         </div>
+      </div>
+
+      {/* Lieu d'achat (facultatif) : source « achats des membres » de la cote. */}
+      <div className="space-y-1.5">
+        <Label htmlFor="purchaseSource">{t("purchaseSource")}</Label>
+        <Select
+          value={formData.purchaseSource ?? NO_SOURCE}
+          onValueChange={(v) =>
+            setFormData({ ...formData, purchaseSource: v === NO_SOURCE ? undefined : v })
+          }
+        >
+          <SelectTrigger id="purchaseSource" className="cursor-pointer">
+            <SelectValue placeholder={t("purchaseSourcePlaceholder")} />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value={NO_SOURCE} className="cursor-pointer text-muted-foreground">
+              {t("purchaseSourcePlaceholder")}
+            </SelectItem>
+            {PURCHASE_SOURCES.map((source, i) => (
+              <Fragment key={source}>
+                {/* Séparateurs : prix public | revente | autre */}
+                {(i === 2 || i === PURCHASE_SOURCES.length - 1) && <SelectSeparator />}
+                <SelectItem value={source} className="cursor-pointer">
+                  {t(`purchaseSources.${source}`)}
+                </SelectItem>
+              </Fragment>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="space-y-2 pt-1">
