@@ -5,6 +5,7 @@ import {
   classifyPage,
   detectMethod,
   detectPlatform,
+  encodeSignupContextHeader,
   normalizePath,
   normalizeRef,
   parseSignupContext,
@@ -45,6 +46,24 @@ describe("parseSignupContext", () => {
   it("absent ou null donne un contexte vide", () => {
     expect(parseSignupContext(null)).toEqual({});
     expect(parseSignupContext(undefined)).toEqual({});
+  });
+
+  it("un en-tête encodé mal formé donne un contexte vide", () => {
+    expect(parseSignupContext("%E0%A4%A")).toEqual({});
+  });
+});
+
+describe("encodeSignupContextHeader", () => {
+  // Un navigateur refuse tout en-tête hors ISO-8859-1 (« œ », « ’ », emoji) :
+  // fetch levait une erreur et le compte n'était pas créé.
+  const context = { entryPath: "/fr/jerseys?q=cœur d’ivoire ⚽", ref: "recap" };
+
+  it("ne produit que de l'ASCII imprimable, valide dans un en-tête HTTP", () => {
+    expect(encodeSignupContextHeader(context)).toMatch(/^[\x20-\x7e]*$/);
+  });
+
+  it("est relu à l'identique par parseSignupContext", () => {
+    expect(parseSignupContext(encodeSignupContextHeader(context))).toEqual(context);
   });
 });
 

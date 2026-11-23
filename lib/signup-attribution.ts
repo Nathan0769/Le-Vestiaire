@@ -38,13 +38,24 @@ const TEXT_FIELDS = ["entryPath", "referrer", "ref", "firstPath"] as const;
 const REF_PATTERN = /^[a-z0-9_:-]{1,64}$/;
 const LOCALE_PREFIX = new RegExp(`^/(${locales.join("|")})(?=/|$)`);
 
+/**
+ * Valeur de l'en-tête `x-signup-context`. Encodée : un navigateur refuse un
+ * en-tête hors ISO-8859-1 (« œ », « ’ », emoji) et fetch échouait, sans compte créé.
+ */
+export function encodeSignupContextHeader(context: SignupContext): string {
+  return encodeURIComponent(JSON.stringify(context));
+}
+
 /** Accepte la chaîne d'un en-tête ou l'objet de l'état OAuth ; tout écart donne `{}`. */
 export function parseSignupContext(raw: unknown): SignupContext {
   let value: unknown = raw;
   if (typeof raw === "string") {
-    if (raw.length > MAX_CONTEXT_BYTES) return {};
+    if (raw.length > MAX_CONTEXT_BYTES * 3) return {};
     try {
-      value = JSON.parse(raw);
+      // JSON brut accepté aussi : pages chargées avant le passage à l'encodage
+      const text = raw.startsWith("{") ? raw : decodeURIComponent(raw);
+      if (text.length > MAX_CONTEXT_BYTES) return {};
+      value = JSON.parse(text);
     } catch {
       return {};
     }

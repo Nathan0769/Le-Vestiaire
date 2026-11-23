@@ -15,7 +15,7 @@ import { useAnalyticsUser } from "@/hooks/useAnalyticsUser";
 import { trackEvent } from "@/lib/analytics";
 import { parsePendingIntent } from "@/lib/auth-gate";
 import { currentSignupContext } from "@/lib/signup-context-client";
-import { SIGNUP_CONTEXT_HEADER } from "@/lib/signup-attribution";
+import { SIGNUP_CONTEXT_HEADER, encodeSignupContextHeader } from "@/lib/signup-attribution";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
@@ -171,7 +171,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         password,
         name: email.split("@")[0],
         fetchOptions: {
-          headers: { [SIGNUP_CONTEXT_HEADER]: JSON.stringify(currentSignupContext(returnTo)) },
+          headers: { [SIGNUP_CONTEXT_HEADER]: encodeSignupContextHeader(currentSignupContext(returnTo)) },
         },
       });
 
