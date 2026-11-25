@@ -101,7 +101,7 @@ export function AcquisitionEditForm({
         </div>
       </div>
 
-      {/* Lieu d'achat (facultatif) : source « achats des membres » de la cote. */}
+      {/* Lieu d'achat, facultatif sans le dire : source « achats des membres » de la cote. */}
       <div className="space-y-1.5">
         <Label htmlFor="purchaseSource">{t("purchaseSource")}</Label>
         <Select
@@ -115,7 +115,7 @@ export function AcquisitionEditForm({
           </SelectTrigger>
           <SelectContent>
             <SelectItem value={NO_SOURCE} className="cursor-pointer text-muted-foreground">
-              {t("purchaseSourcePlaceholder")}
+              {t("purchaseSourceNone")}
             </SelectItem>
             {PURCHASE_SOURCES.map((source, i) => (
               <Fragment key={source}>
