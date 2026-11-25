@@ -453,8 +453,9 @@
           "deleted": "Trikot aus deiner Sammlung entfernt"
         },
         "purchaseCurrency": "Währung des Preises",
-        "purchaseSource": "Wo",
-        "purchaseSourcePlaceholder": "Optional",
+        "purchaseSource": "Gekauft bei",
+        "purchaseSourcePlaceholder": "Auswählen",
+        "purchaseSourceNone": "Keine Angabe",
         "purchaseSources": {
           "OFFICIAL_STORE": "Offizieller Shop (Verein oder Marke)",
           "SPORTS_RETAILER": "Sportgeschäft oder -website",
@@ -3282,20 +3283,14 @@
     "notFoundDescription": "Dieses Trikot existiert nicht oder ist nicht mehr verfügbar.",
     "fallbackTitle": "Fußballtrikot - Le Vestiaire",
     "fallbackDescription": "Sammlung von Vintage- und aktuellen Fußballtrikots",
-    "titleTemplate": "{clubName} {typeLower}-Trikot {season} - {brand}{ratingSuffix} | Le Vestiaire",
-    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Le Vestiaire",
-    "ratingSuffix": " - Bewertung {rating}/5 ⭐",
+    "seoTitle": "{clubName} {kind, select, HOME {Heimtrikot} AWAY {Auswärtstrikot} THIRD {Ausweichtrikot} FOURTH {Viertes Trikot} GOALKEEPER {Torwarttrikot{variantSuffix}} SPECIAL {Sondertrikot} ANNIVERSARY {Jubiläumstrikot} other {{type}-Trikot}} {season}",
     "descriptionTemplate": "{clubName} {typeLower}-Trikot {season} von {brand}. Füge dieses {leagueName}-Trikot deiner Sammlung hinzu, bewerte es und tritt der Sammler-Community auf Le Vestiaire bei.",
     "descriptionTemplateWithShort": "{clubName} {typeLower}-Trikot {season} ({shortSeason}) von {brand}. Füge dieses {leagueName}-Trikot deiner Sammlung hinzu, bewerte es und tritt der Community bei.",
     "descriptionCollectors": "{clubName} {typeLower}-Trikot {season} von {brand}. {count, plural, one {# Sammler besitzt es} other {# Sammler besitzen es}} bereits auf Le Vestiaire. Füge es deiner Sammlung hinzu, bewerte es und vergleiche dich mit der Community.",
     "descriptionCollectorsWithShort": "{clubName} {typeLower}-Trikot {season} ({shortSeason}) von {brand}. {count, plural, one {# Sammler besitzt es} other {# Sammler besitzen es}} bereits. Füge es deiner Sammlung hinzu, bewerte es und vergleiche dich mit der Community.",
     "ogDescription": "{clubName} {typeLower}-Trikot von {brand}. {leagueName} • Saison {season}",
     "twitterDescription": "{brand}-Trikot • {leagueName}",
-    "pageDescription": "{clubName} {typeLower}-Trikot für die Saison {season}, entworfen von {brand}. {leagueName}.",
-    "titleWithPrice": "{clubName} {typeLower}-Trikot {season} - ab {price} | Le Vestiaire",
-    "titleWithPriceGeneric": "{translatedName} - ab {price} | Le Vestiaire",
-    "descriptionOffer": "{clubName} {typeLower}-Trikot {season} von {brand}, erhältlich ab {price}. Vergleiche die Shops und füge es deiner Sammlung auf Le Vestiaire hinzu.",
-    "descriptionPromo": "{clubName} {typeLower}-Trikot {season} von {brand}, im Angebot mit -{discount} %: erhältlich ab {price}. Vergleiche die Shops und füge es deiner Sammlung auf Le Vestiaire hinzu."
+    "pageDescription": "{clubName} {typeLower}-Trikot für die Saison {season}, entworfen von {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Verein nicht gefunden - Le Vestiaire",

@@ -30,7 +30,7 @@ import { WhereToBuy } from "@/components/jerseys/where-to-buy";
 import { getPartnerOffers } from "@/lib/partner-shops/offers";
 import { buildWhereToBuy } from "@/lib/where-to-buy";
 import { getCfsClubOffer } from "@/lib/cfs-club-offer";
-import { buildJerseyMetaPrice } from "@/lib/jersey-meta-price";
+import { seasonForTitle, specialJerseyTitle } from "@/lib/jersey-seo-title";
 import { headers } from "next/headers";
 import { getSessionCookie } from "better-auth/cookies";
 import { JerseySignupCard } from "@/components/jerseys/jersey-signup-card";
@@ -168,53 +168,33 @@ export async function generateMetadata({
       typeTranslation: typeLabel,
     });
 
-    const [rating, stats, cfsAvailability, partnerOffers] = await Promise.all([
-      getCachedRating(jersey.id),
-      getCachedStats(jersey.id),
-      getCachedCfsAvailability(jersey.id),
-      getCachedPartnerOffers(jersey.id),
-    ]);
-    // Prix dans le titre et la description pour capter les recherches d'achat.
-    // Le repli « autre maillot du club » ne vend pas celui-ci : pas lu ici.
-    const metaPrice = buildJerseyMetaPrice(
-      buildWhereToBuy({ partnerOffers, cfs: cfsAvailability, cfsClubOffer: null }),
-      locale
-    );
-    const ratingSuffix =
-      rating.totalRatings > 0
-        ? tMeta("ratingSuffix", { rating: rating.averageRating.toFixed(1) })
-        : "";
+    const stats = await getCachedStats(jersey.id);
 
     const shortSeasonMatch = jersey.season.match(/^(\d{2})(\d{2})-(\d{2})(\d{2})$/);
     const shortSeason = shortSeasonMatch
       ? `${shortSeasonMatch[2]}/${shortSeasonMatch[4]}`
       : null;
 
-    // Avec un prix, la marque et la note sortent du titre pour rester lisible dans Google.
-    const title = metaPrice
-      ? locale === "fr"
-        ? tMeta("titleWithPrice", {
+    // Ni marque, ni note, ni nom du site (Google l'affiche au-dessus) : le titre
+    // tient dans les ~60 caractères visibles sur mobile. Nom complet du club :
+    // le nom court est un surnom (« Real », « Thionville ») que personne ne tape.
+    // Maillot spécial : l'événement (« FA Cup Final ») passe avant la saison,
+    // un nom propre (« Maillot Totti AS Roma ») est repris tel quel en français.
+    const special =
+      jersey.type === "SPECIAL"
+        ? specialJerseyTitle(jersey.name, jersey.season)
+        : { event: null, customName: null };
+    const title =
+      locale === "fr" && special.customName
+        ? special.customName
+        : tMeta("seoTitle", {
             clubName: jersey.club.name,
+            type: typeLabel,
             typeLower,
-            season: jersey.season,
-            price: metaPrice.price,
-          })
-        : tMeta("titleWithPriceGeneric", {
-            translatedName: translatedJerseyName,
-            price: metaPrice.price,
-          })
-      : locale === "fr"
-        ? tMeta("titleTemplate", {
-            clubName: jersey.club.name,
-            typeLower,
-            season: jersey.season,
-            brand: jersey.brand,
-            ratingSuffix,
-          })
-        : tMeta("titleTemplateGeneric", {
-            translatedName: translatedJerseyName,
-            brand: jersey.brand,
-            ratingSuffix,
+            // Mot composé allemand par type (Heimtrikot, Ausweichtrikot...)
+            kind: jersey.type,
+            variantSuffix: jersey.type === "GOALKEEPER" && (jersey.variant ?? 1) > 1 ? ` ${jersey.variant}` : "",
+            season: [special.event, seasonForTitle(jersey.season)].filter(Boolean).join(" "),
           });
 
     // Description orientée collectionneur : preuve sociale (nombre de collectionneurs)
@@ -228,24 +208,7 @@ export async function generateMetadata({
       ? "descriptionTemplateWithShort"
       : "descriptionTemplate";
 
-    const description = metaPrice
-      ? metaPrice.discountPercent
-        ? tMeta("descriptionPromo", {
-            typeLower,
-            clubName: jersey.club.name,
-            season: jersey.season,
-            brand: jersey.brand,
-            price: metaPrice.price,
-            discount: metaPrice.discountPercent,
-          })
-        : tMeta("descriptionOffer", {
-            typeLower,
-            clubName: jersey.club.name,
-            season: jersey.season,
-            brand: jersey.brand,
-            price: metaPrice.price,
-          })
-      : tMeta(descriptionKey, {
+    const description = tMeta(descriptionKey, {
       typeLower,
       clubName: jersey.club.name,
       season: jersey.season,

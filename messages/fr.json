@@ -458,8 +458,9 @@
           "deleted": "Maillot supprimé de votre collection"
         },
         "purchaseCurrency": "Devise du prix",
-        "purchaseSource": "Où",
-        "purchaseSourcePlaceholder": "Facultatif",
+        "purchaseSource": "Acheté chez",
+        "purchaseSourcePlaceholder": "Choisir",
+        "purchaseSourceNone": "Ne pas préciser",
         "purchaseSources": {
           "OFFICIAL_STORE": "Boutique officielle (club ou marque)",
           "SPORTS_RETAILER": "Magasin ou site de sport",
@@ -3287,20 +3288,14 @@
     "notFoundDescription": "Ce maillot n'existe pas ou n'est plus disponible.",
     "fallbackTitle": "Maillot de football - Le Vestiaire",
     "fallbackDescription": "Collection de maillots de football vintage et récents",
-    "titleTemplate": "Maillot {clubName} {typeLower} {season} - {brand}{ratingSuffix} | Le Vestiaire",
-    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Le Vestiaire",
-    "ratingSuffix": " - Note {rating}/5 ⭐",
+    "seoTitle": "Maillot {clubName} {typeLower} {season}",
     "descriptionTemplate": "Maillot {typeLower} {clubName} {season} par {brand}. Ajoute ce maillot {leagueName} à ta collection, note-le et rejoins la communauté de collectionneurs sur Le Vestiaire.",
     "descriptionTemplateWithShort": "Maillot {typeLower} {clubName} {season} ({shortSeason}) par {brand}. Ajoute ce maillot {leagueName} à ta collection, note-le et rejoins la communauté sur Le Vestiaire.",
     "descriptionCollectors": "Maillot {typeLower} {clubName} {season} par {brand}. {count, plural, one {# collectionneur l'a déjà} other {# collectionneurs l'ont déjà}} sur Le Vestiaire. Ajoute-le à ta collection, note-le et compare-toi à la communauté.",
     "descriptionCollectorsWithShort": "Maillot {typeLower} {clubName} {season} ({shortSeason}) par {brand}. {count, plural, one {# collectionneur l'a déjà} other {# collectionneurs l'ont déjà}}. Ajoute-le à ta collection, note-le et compare-toi à la communauté.",
     "ogDescription": "Maillot {typeLower} {clubName} par {brand}. {leagueName} • Saison {season}",
     "twitterDescription": "Maillot {brand} • {leagueName}",
-    "pageDescription": "Maillot {typeLower} du {clubName} pour la saison {season}, conçu par {brand}. {leagueName}.",
-    "titleWithPrice": "Maillot {clubName} {typeLower} {season} - dès {price} | Le Vestiaire",
-    "titleWithPriceGeneric": "{translatedName} - dès {price} | Le Vestiaire",
-    "descriptionOffer": "Maillot {typeLower} {clubName} {season} par {brand} disponible dès {price}. Compare les boutiques, puis ajoute-le à ta collection sur Le Vestiaire.",
-    "descriptionPromo": "Maillot {typeLower} {clubName} {season} par {brand} en promo à -{discount} % : disponible dès {price}. Compare les boutiques, puis ajoute-le à ta collection sur Le Vestiaire."
+    "pageDescription": "Maillot {typeLower} du {clubName} pour la saison {season}, conçu par {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club introuvable - Le Vestiaire",

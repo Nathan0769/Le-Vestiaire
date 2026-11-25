@@ -453,8 +453,9 @@
           "deleted": "Shirt verwijderd uit je collectie"
         },
         "purchaseCurrency": "Valuta van de prijs",
-        "purchaseSource": "Waar",
-        "purchaseSourcePlaceholder": "Optioneel",
+        "purchaseSource": "Gekocht bij",
+        "purchaseSourcePlaceholder": "Kiezen",
+        "purchaseSourceNone": "Niet opgeven",
         "purchaseSources": {
           "OFFICIAL_STORE": "Officiële winkel (club of merk)",
           "SPORTS_RETAILER": "Sportwinkel of -website",
@@ -3282,20 +3283,14 @@
     "notFoundDescription": "Dit shirt bestaat niet of is niet meer beschikbaar.",
     "fallbackTitle": "Voetbalshirt - Le Vestiaire",
     "fallbackDescription": "Collectie van vintage en recente voetbalshirts",
-    "titleTemplate": "{clubName} {typeLower} shirt {season} - {brand}{ratingSuffix} | Le Vestiaire",
-    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Le Vestiaire",
-    "ratingSuffix": " - Beoordeling {rating}/5 ⭐",
+    "seoTitle": "{clubName} {typeLower} shirt {season}",
     "descriptionTemplate": "{clubName} {typeLower} shirt seizoen {season} van {brand}. Volledige fiche van het {leagueName}-shirt met community-beoordelingen, historiek en collectiegegevens.",
     "descriptionTemplateWithShort": "{clubName} {typeLower} shirt seizoen {season} ({shortSeason}) van {brand}. Volledige fiche van het {leagueName}-shirt met community-beoordelingen, historiek en collectiegegevens.",
     "descriptionCollectors": "{clubName} {typeLower} shirt {season} van {brand}. {count, plural, one {# verzamelaar heeft het} other {# verzamelaars hebben het}} al op Le Vestiaire. Voeg het toe aan je collectie, beoordeel het en vergelijk met de community.",
     "descriptionCollectorsWithShort": "{clubName} {typeLower} shirt {season} ({shortSeason}) van {brand}. {count, plural, one {# verzamelaar heeft het} other {# verzamelaars hebben het}} al. Voeg het toe aan je collectie, beoordeel het en vergelijk met de community.",
     "ogDescription": "{clubName} {typeLower} shirt van {brand}. {leagueName} • Seizoen {season}",
     "twitterDescription": "{brand} shirt • {leagueName}",
-    "pageDescription": "{clubName} {typeLower} shirt voor het seizoen {season}, ontworpen door {brand}. {leagueName}.",
-    "titleWithPrice": "{clubName} {typeLower} shirt {season} - vanaf {price} | Le Vestiaire",
-    "titleWithPriceGeneric": "{translatedName} - vanaf {price} | Le Vestiaire",
-    "descriptionOffer": "{clubName} {typeLower} shirt {season} van {brand}, verkrijgbaar vanaf {price}. Vergelijk de winkels en voeg het toe aan je collectie op Le Vestiaire.",
-    "descriptionPromo": "{clubName} {typeLower} shirt {season} van {brand}, in de aanbieding met -{discount}%: verkrijgbaar vanaf {price}. Vergelijk de winkels en voeg het toe aan je collectie op Le Vestiaire."
+    "pageDescription": "{clubName} {typeLower} shirt voor het seizoen {season}, ontworpen door {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club niet gevonden - Le Vestiaire",

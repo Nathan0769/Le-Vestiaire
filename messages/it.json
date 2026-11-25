@@ -453,8 +453,9 @@
           "deleted": "Maglia rimossa dalla tua collezione"
         },
         "purchaseCurrency": "Valuta del prezzo",
-        "purchaseSource": "Dove",
-        "purchaseSourcePlaceholder": "Facoltativo",
+        "purchaseSource": "Acquistato da",
+        "purchaseSourcePlaceholder": "Scegli",
+        "purchaseSourceNone": "Non specificare",
         "purchaseSources": {
           "OFFICIAL_STORE": "Store ufficiale (club o marchio)",
           "SPORTS_RETAILER": "Negozio o sito sportivo",
@@ -3282,20 +3283,14 @@
     "notFoundDescription": "Questa maglia non esiste o non è più disponibile.",
     "fallbackTitle": "Maglia da calcio - Lo Spogliatoio",
     "fallbackDescription": "Collezione di maglie da calcio vintage e recenti",
-    "titleTemplate": "Maglia {clubName} {typeLower} {season} - {brand}{ratingSuffix} | Lo Spogliatoio",
-    "titleTemplateGeneric": "{translatedName} {brand}{ratingSuffix} | Lo Spogliatoio",
-    "ratingSuffix": " - Valutazione {rating}/5 ⭐",
+    "seoTitle": "Maglia {clubName} {typeLower} {season}",
     "descriptionTemplate": "Maglia {typeLower} {clubName} stagione {season} di {brand}. Scheda completa della maglia {leagueName} con valutazioni della community, storia e dettagli da collezione.",
     "descriptionTemplateWithShort": "Maglia {typeLower} {clubName} stagione {season} ({shortSeason}) di {brand}. Scheda completa della maglia {leagueName} con valutazioni della community, storia e dettagli da collezione.",
     "descriptionCollectors": "Maglia {typeLower} {clubName} {season} di {brand}. {count, plural, one {# collezionista la possiede} other {# collezionisti la possiedono}} già su Le Vestiaire. Aggiungila alla tua collezione, valutala e confrontati con la community.",
     "descriptionCollectorsWithShort": "Maglia {typeLower} {clubName} {season} ({shortSeason}) di {brand}. {count, plural, one {# collezionista la possiede} other {# collezionisti la possiedono}} già. Aggiungila alla tua collezione, valutala e confrontati con la community.",
     "ogDescription": "Maglia {typeLower} {clubName} di {brand}. {leagueName} • Stagione {season}",
     "twitterDescription": "Maglia {brand} • {leagueName}",
-    "pageDescription": "Maglia {typeLower} del {clubName} per la stagione {season}, disegnata da {brand}. {leagueName}.",
-    "titleWithPrice": "Maglia {clubName} {typeLower} {season} - da {price} | Lo Spogliatoio",
-    "titleWithPriceGeneric": "{translatedName} - da {price} | Lo Spogliatoio",
-    "descriptionOffer": "Maglia {typeLower} {clubName} {season} di {brand}, disponibile da {price}. Confronta i negozi e aggiungila alla tua collezione su Le Vestiaire.",
-    "descriptionPromo": "Maglia {typeLower} {clubName} {season} di {brand}, in offerta al -{discount}%: disponibile da {price}. Confronta i negozi e aggiungila alla tua collezione su Le Vestiaire."
+    "pageDescription": "Maglia {typeLower} del {clubName} per la stagione {season}, disegnata da {brand}. {leagueName}."
   },
   "ClubMetadata": {
     "notFoundTitle": "Club non trovato - Lo Spogliatoio",
