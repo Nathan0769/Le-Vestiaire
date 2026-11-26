@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ClubGrid } from "./clubs-grid";
 import { useTranslations } from "next-intl";
+import { matchesSearch } from "@/lib/search-text";
 
 type Props = {
   clubs: Club[];
@@ -16,7 +17,7 @@ export function ClubList({ clubs, leagueId }: Props) {
   const [search, setSearch] = useState("");
 
   const filtered = clubs.filter((club) =>
-    club.name.toLowerCase().includes(search.toLowerCase())
+    matchesSearch(club.name, search)
   );
 
   return (

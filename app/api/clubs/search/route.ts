@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { findClubIdsBySearch } from "@/lib/club-search";
 import {
   standardRateLimit,
   getRateLimitIdentifier,
@@ -23,18 +24,14 @@ export async function GET(request: NextRequest) {
       return NextResponse.json([]);
     }
 
+    const ids = await findClubIdsBySearch(query, { country, limit: 10 });
+
+    if (ids.length === 0) {
+      return NextResponse.json([]);
+    }
+
     const clubs = await prisma.club.findMany({
-      where: {
-        AND: [
-          {
-            OR: [
-              { name: { contains: query, mode: "insensitive" } },
-              { shortName: { contains: query, mode: "insensitive" } },
-            ],
-          },
-          ...(country ? [{ league: { country } }] : []),
-        ],
-      },
+      where: { id: { in: ids } },
       select: {
         id: true,
         name: true,

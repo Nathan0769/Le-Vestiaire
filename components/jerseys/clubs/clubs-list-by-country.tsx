@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { ClubGrid } from "./clubs-grid";
 import { useTranslations } from "next-intl";
+import { matchesSearch } from "@/lib/search-text";
 
 type Entry = { club: Club; originCountry: string | null };
 
@@ -21,8 +22,7 @@ export function ClubListByCountry({ entries, leagueId }: Props) {
 
   const filtered = useMemo(() => {
     if (!search) return entries;
-    const q = search.toLowerCase();
-    return entries.filter((e) => e.club.name.toLowerCase().includes(q));
+    return entries.filter((e) => matchesSearch(e.club.name, search));
   }, [entries, search]);
 
   const groups = useMemo(() => {

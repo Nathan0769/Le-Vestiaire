@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { useSearchClubs } from "@/hooks/useSearchClubs";
 import { ClubCard } from "@/components/jerseys/clubs/clubs-card";
 import { Loader2 } from "lucide-react";
+import { matchesSearch } from "@/lib/search-text";
 
 interface LeaguesPageClientProps {
   leagues: League[];
@@ -19,7 +20,7 @@ export function LeaguesPageClient({ leagues }: LeaguesPageClientProps) {
   const { clubs, isLoading: isSearchingClubs } = useSearchClubs(search);
 
   const filteredLeagues = leagues.filter((league) =>
-    league.name.toLowerCase().includes(search.toLowerCase())
+    matchesSearch(league.name, search)
   );
 
   const hasSearch = search.length >= 2;

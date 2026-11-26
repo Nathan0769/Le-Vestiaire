@@ -8,6 +8,7 @@ import {
 } from "@/lib/rate-limit";
 import { getCurrentUser } from "@/lib/get-current-user";
 import { withCfsSubId } from "@/lib/cfs-affiliate";
+import { findClubIdsBySearch } from "@/lib/club-search";
 
 const querySchema = z.object({
   search: z.string().min(1).optional(),
@@ -55,9 +56,16 @@ export async function GET(request: NextRequest) {
     const { search, clubId, leagueId, type, season, page, limit } = parsed.data;
     const skip = (page - 1) * limit;
 
+    // Le nom du maillot reste comparé tel quel (normaliser 56 000 noms en SQL
+    // coûte ~600 ms) ; le club, lui, est trouvé sans accents ("nimes" → Nîmes).
+    const searchClubIds = search ? await findClubIdsBySearch(search) : [];
+
     const where = {
       ...(search && {
-        name: { contains: search, mode: "insensitive" as const },
+        OR: [
+          { name: { contains: search, mode: "insensitive" as const } },
+          ...(searchClubIds.length > 0 ? [{ clubId: { in: searchClubIds } }] : []),
+        ],
       }),
       ...(clubId && { clubId }),
       ...(leagueId && { club: { leagueId } }),

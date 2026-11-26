@@ -33,6 +33,7 @@ import { JerseyType } from "@prisma/client";
 import { CreateProposalData } from "@/types/proposal";
 import { useTranslations } from "next-intl";
 import { isCalendarYearLeague } from "@/lib/patches/calendar-year-leagues";
+import { matchesSearch } from "@/lib/search-text";
 
 interface Club {
   id: string;
@@ -94,11 +95,10 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
 
   const filteredClubs = useMemo(() => {
     if (!clubSearchQuery.trim()) return clubs;
-    const query = clubSearchQuery.toLowerCase();
     return clubs.filter(
       (club) =>
-        club.name.toLowerCase().includes(query) ||
-        club.id.toLowerCase().includes(query),
+        matchesSearch(club.name, clubSearchQuery) ||
+        club.id.toLowerCase().includes(clubSearchQuery.toLowerCase()),
     );
   }, [clubs, clubSearchQuery]);
 
