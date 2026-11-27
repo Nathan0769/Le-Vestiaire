@@ -33,6 +33,7 @@ import { JerseyType } from "@prisma/client";
 import { CreateProposalData } from "@/types/proposal";
 import { useTranslations } from "next-intl";
 import { isCalendarYearLeague } from "@/lib/patches/calendar-year-leagues";
+import { isNationalTeamLeague } from "@/lib/patches/confederation-by-league";
 import { matchesSearch } from "@/lib/search-text";
 
 interface Club {
@@ -72,8 +73,6 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
   const [seasonError, setSeasonError] = useState<string | null>(null);
-
-  const NATIONAL_TEAM_LEAGUES = ["conmebol", "caf", "concacaf", "uefa", "afc"];
 
   useEffect(() => {
     const loadClubs = async () => {
@@ -137,7 +136,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
     if (!selectedClub) return null;
 
     const leagueId = selectedClub.league.id.toLowerCase();
-    const isYearFormat = NATIONAL_TEAM_LEAGUES.includes(leagueId) ||
+    const isYearFormat = isNationalTeamLeague(leagueId) ||
                         isCalendarYearLeague(leagueId);
 
     if (isYearFormat) {
@@ -410,7 +409,7 @@ export function ProposeJerseyForm({ onSuccess }: ProposeJerseyFormProps) {
                 const leagueId = clubs
                   .find((club) => club.id === formData.clubId)!
                   .league.id.toLowerCase();
-                return NATIONAL_TEAM_LEAGUES.includes(leagueId) ||
+                return isNationalTeamLeague(leagueId) ||
                        isCalendarYearLeague(leagueId);
               })()
                 ? t("seasonPlaceholderNationalTeam")
